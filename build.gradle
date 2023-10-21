@@ -1,0 +1,145 @@
+/*
+ * Copyright 2022 ConsenSys Software Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software dis-
+ * tributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+//  Taken from the EVM dafny repo, and slightly modified.
+
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+// Apply eclipse plugin to add support for Eclipse
+apply plugin: 'eclipse'
+// Apply application plugin for generating start scripts
+apply plugin: 'application'
+
+// ======================================================================
+// Randomisation
+// ======================================================================
+final RANDOM_ITERATIONS = project.properties["randomize"]
+
+// Configure randomisation (if applicable)
+final RANDOMIZE_FLAG = project.hasProperty("randomize") ? ['--boogie','/randomSeedIterations:' + RANDOM_ITERATIONS] : []
+// Report whether randomisation is enabled.
+if(project.hasProperty("randomize")) {
+    project.logger.lifecycle('Randomize verification with ' + RANDOM_ITERATIONS + ' iterations.')
+}
+
+// ======================================================================
+// Configure Z3
+// ======================================================================
+
+def DAFNY_HOME = System.env.'DAFNY_HOME'
+// Configure Z3_PATH based on DAFNY_HOME
+def Z3_PATH = DAFNY_HOME != null ? DAFNY_HOME + "/z3/bin/z3-4.12.1" : null
+
+if(project.hasProperty("solver-path")) {
+  Z3_PATH = project.properties["solver-path"]
+}
+
+// Configure option for use with dafny command
+final Z3_OPTION = DAFNY_HOME != null ? ['--solver-path',Z3_PATH] : []
+
+// Report what happened
+def DAFNY_HOME_STR = DAFNY_HOME != null ? DAFNY_HOME : "(unset)"
+def Z3_PATH_STR = Z3_PATH != null ? Z3_PATH : "(unset)"
+println "DAFNY_HOME: $DAFNY_HOME_STR"
+println "Z3_PATH   : $Z3_PATH_STR"
+
+// ======================================================================
+// Constants (Dafny 4)
+// ======================================================================
+
+
+// Configure boogie-specific flags.
+final BOOGIE_FLAGS = RANDOMIZE_FLAG
+
+final DAFNY4_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','java',
+    '--output','build/libs/evm',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
+final DAFNY4_VERIFY_FLAGS = [
+    '/dafnyVerify:1',
+    '/compile:0',
+    '/rlimit:10000000',
+    // '--resource-limit','10000000',
+    // '--verify-included-files',
+    // '--log-format','csv;LogFileName=build/logs/verify.csv',
+    // '--relax-definite-assignment',
+    // '--function-syntax','4',
+    // '--quantifier-syntax','4',
+    '/vcsCores:12', 
+] 
+// + Z3_OPTION + BOOGIE_FLAGS
+
+final DAFNY4_TEST_FLAGS = [
+    'test',
+    '--target','java',
+    '--function-syntax','4',
+    '--quantifier-syntax','4'
+]  + Z3_OPTION
+
+// ======================================================================
+// Dafny Build
+// ======================================================================
+
+// Verify the DafnyEVM, whilst producing suitable logs
+task verify {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/logs/').include('verify.csv'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Create build directory (Dafny doesn't do this for us)
+        mkdir "build/logs"
+        // Generate Dafny Source
+        // exec {
+        //     executable DAFNY_HOME + 'dafny'
+        //     args DAFNY4_VERIFY_FLAGS + ['src/dafny/evm.dfy']
+        // }
+        // doLast {
+        // Verify and execute all Dafny tests found in the test
+        // directory.
+        fileTree("src/dafny").include('**/*.dfy').each {
+            File file -> {
+                // Construct logging option
+                def name = file.name.take(file.name.lastIndexOf('.'))
+                // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
+                def logging = '/verificationLogger:csv;LogFileName=build/logs/' + name + '.csv'
+                // Run test
+                // project.logger.info('my info message')
+                project.logger.lifecycle('Verifying ' + [file])
+                exec {
+                    executable DAFNY_HOME + '/dafny'
+                    args DAFNY4_VERIFY_FLAGS + logging + [file]
+                }
+            }
+        }
+    // }
+    }
+}
+
+task cleanDafny {
+    doLast {
+        delete "build/logs"
+    }
+}
+
+clean.dependsOn cleanDafny
+
