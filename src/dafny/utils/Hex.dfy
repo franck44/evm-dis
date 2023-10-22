@@ -13,7 +13,7 @@
  */
 
 
-include "./Option.dfy"
+include "./MiscTypes.dfy"
 include "./int.dfy"
 
 /**
@@ -21,7 +21,7 @@ include "./int.dfy"
   */
 module Hex {
 
-  import opened Option
+  import opened MiscTypes
   import Int
 
   /**
