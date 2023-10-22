@@ -40,6 +40,7 @@ if(project.hasProperty("randomize")) {
 def DAFNY_HOME = System.env.'DAFNY_HOME'
 // Configure Z3_PATH based on DAFNY_HOME
 def Z3_PATH = DAFNY_HOME != null ? DAFNY_HOME + "/z3/bin/z3-4.12.1" : null
+def JAVA_HOME = System.env.'JAVA_HOME'
 
 if(project.hasProperty("solver-path")) {
   Z3_PATH = project.properties["solver-path"]
@@ -51,8 +52,11 @@ final Z3_OPTION = DAFNY_HOME != null ? ['--solver-path',Z3_PATH] : []
 // Report what happened
 def DAFNY_HOME_STR = DAFNY_HOME != null ? DAFNY_HOME : "(unset)"
 def Z3_PATH_STR = Z3_PATH != null ? Z3_PATH : "(unset)"
+def JAVA_HOME_STR = JAVA_HOME != null ? JAVA_HOME : "(unset)"
 println "DAFNY_HOME: $DAFNY_HOME_STR"
 println "Z3_PATH   : $Z3_PATH_STR"
+
+println "JAVA_HOME: $JAVA_HOME_STR"
 
 // ======================================================================
 // Constants (Dafny 4)
@@ -62,11 +66,47 @@ println "Z3_PATH   : $Z3_PATH_STR"
 // Configure boogie-specific flags.
 final BOOGIE_FLAGS = RANDOMIZE_FLAG
 
-final DAFNY4_BUILD_FLAGS = [
+final DAFNY4_JAVA_BUILD_FLAGS = [
     'build',
     '--no-verify',
     '--target','java',
-    '--output','build/libs/evm',
+    '--output','build/libs/Driver-java/evmdis.jar',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
+final DAFNY4_PY_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','py',
+    '--output','build/libs/driver',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
+final DAFNY4_RUST_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','rs',
+    '--output','build/libs/driver',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
+final DAFNY4_GO_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','go',
+    '--output','build/libs/driver',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
+final DAFNY4_JS_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','js',
+    '--output','build/libs/driver',
     '--function-syntax','4',
     '--quantifier-syntax','4',
 ]
@@ -85,12 +125,12 @@ final DAFNY4_VERIFY_FLAGS = [
 ] 
 // + Z3_OPTION + BOOGIE_FLAGS
 
-final DAFNY4_TEST_FLAGS = [
-    'test',
-    '--target','java',
-    '--function-syntax','4',
-    '--quantifier-syntax','4'
-]  + Z3_OPTION
+// final DAFNY4_TEST_FLAGS = [
+//     'test',
+//     '--target','java',
+//     '--function-syntax','4',
+//     '--quantifier-syntax','4'
+// ]  + Z3_OPTION
 
 // ======================================================================
 // Dafny Build
@@ -135,11 +175,175 @@ task verify {
     }
 }
 
+// Translate Dafny source into Java source
+task compileToJava {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/').include('libs/Driver-java/evmdis.jar'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_JAVA_BUILD_FLAGS + ['src/dafny/Driver.dfy']
+        }
+    }
+}
+
+task compileToPy {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/').include('libs/driver.py'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_PY_BUILD_FLAGS + ['src/dafny/Driver.dfy']
+        }
+        copy {
+            from "src/main/python"
+            into "build/libs/Driver-py"
+            include "*.py"
+        }
+    }
+    
+}
+
+task compileToRust {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/').include('libs/rust/driver.rs'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_RUST_BUILD_FLAGS + ['src/dafny/Driver.dfy']
+        }
+        // copy {
+        //     from "src/main/python"
+        //     into "build/libs/Driver-py"
+        //     include "*.py"
+        // }
+    }
+}
+
+task compileToGo {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/').include('libs/go/driver.go'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_GO_BUILD_FLAGS + ['src/dafny/Driver.dfy']
+        }
+        // copy {
+        //     from "src/main/python"
+        //     into "build/libs/Driver-py"
+        //     include "*.py"
+        // }
+    }
+}
+
+task compileToJs {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/').include('libs/js/driver.js'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_JS_BUILD_FLAGS + ['src/dafny/Driver.dfy']
+        }
+        // copy {
+        //     from "src/main/python"
+        //     into "build/libs/Driver-py"
+        //     include "*.py"
+        // }
+    }
+}
+
+
 task cleanDafny {
     doLast {
         delete "build/logs"
+        // delete "build/driver-java"
     }
 }
 
 clean.dependsOn cleanDafny
 
+// ======================================================================
+// Java Build
+// ======================================================================
+
+// repositories {
+//     // Use MavenCentral for resolving dependencies
+//     mavenCentral()
+// }
+
+// test {
+//     dependsOn verify
+//     // Specify inputs
+//     inputs.files(fileTree('tests').include('**/*.json'))
+//     // Ensure can see stdout
+//     testLogging.showStandardStreams = true
+//     // Ensure enough memory
+//     jvmArgs '-Xmx2G','-Xss4m'
+//     //
+//     useJUnitPlatform()
+//     filter {
+//         includeTestsMatching('dafnyevm.Tests')
+//         includeTestsMatching('dafnyevm.GeneralStateTests')
+//     }
+// }
+
+// Specify that should run compileDafny before compileJava.
+// Otherwise, the Java compiler cannot find up-to-date Dafny tests!
+// compileJava.dependsOn compileDafny
+
+// In this section you declare the dependencies for your production and test code
+// dependencies {
+//     implementation("commons-cli:commons-cli:1.5.0")
+//     implementation("org.apache.commons:commons-lang3:3.12.0")
+//     implementation("org.json:org.json:chargebee-1.0")
+//     implementation("org.web3j:utils:5.0.0")
+//     implementation("org.web3j:rlp:5.0.0")
+//     implementation("org.web3j:crypto:5.0.0")
+//     implementation("org.whiley:evmtools:0.3.27")
+//     implementation("org.dafny:DafnyRuntime:4.2.0")
+//     implementation files('build/libs/evm.jar')
+//     //
+//     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+//     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+//     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+// }
+
+
+// ======================================================================
+// Java Application
+// ======================================================================
+
+application {
+    mainClass = 'driver.Main'
+    applicationName = 'driver'
+}
