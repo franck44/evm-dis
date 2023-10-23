@@ -207,7 +207,7 @@ task compileToPy {
     // Specify inputs
     inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
     // Specify outputs
-    outputs.files(fileTree('build/').include('libs/driver.py'))
+    outputs.files(fileTree('build/').include('libs/evmdis.py'))
     // Enable caching
     outputs.cacheIf { true }
     // Specify actions
