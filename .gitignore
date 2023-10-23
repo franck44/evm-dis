@@ -70,5 +70,6 @@ scripts/__pycache__/pytesttests.cpython-37-pytest-5.4.1.pyc
 src/test/dafny/**/*.runtimeconfig.json
 src/dafny/**/*.runtimeconfig.json
 # /libs/
+**/logs/
 /bin/
 **/.vscode
