@@ -66,9 +66,9 @@ scripts/__pycache__/pytesttests.cpython-37-pytest-5.4.1.pyc
 **/*.code-workspace
 /target/
 /.gradle/
-/build/
+# /build/
 src/test/dafny/**/*.runtimeconfig.json
 src/dafny/**/*.runtimeconfig.json
-/libs/
+# /libs/
 /bin/
 **/.vscode
