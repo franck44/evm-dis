@@ -10,7 +10,7 @@ For instance the following binary string,  `prog` :
 ```
 600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
 ```
-is disassembled into the more readable^[But arguably still opaque!] EVM assembly code:
+is disassembled into the more readable (But arguably still opaque!) EVM assembly code:
 ```
 PUSH1 0x0a
 PUSH1 0x08
@@ -56,7 +56,7 @@ The diassembler is a useful tool but not the ultimate goal of this project.
 The main component, `Disassemble` builds a representation of the binary as a sequence of `Instructions`.
 This representation can be _printed out_ (this is the disassembler to generate the readable code), but also used to generate _proof objects_ that are Dafny programs that can be verified using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
 
-As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code^[The same can be done with Solidity code.]
+As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code (the same can be done with Solidity code.)
 ```solidity
 object "Runtime" {
   code {
