@@ -29,7 +29,7 @@ module EVMOpcodes {
     * @example      `POP`, 'ADD, etc are instructiopns with no parameters, 
     *               whereas `PUSH1` or `PUSH2` takes parameters.  
     */
-  datatype Instruction = Instruction(op: Opcode, arg: seq<char> := [])
+  datatype Instruction = Instruction(op: Opcode, arg: seq<char> := [], address: nat := 0)
   {
     function ToString(): string
     {
