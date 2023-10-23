@@ -22,7 +22,7 @@ include "./int.dfy"
 module Hex {
 
   import opened MiscTypes
-  import Int
+  import opened Int
 
   /**
     *   Decode a 2-digit hex number into a u8.
@@ -30,7 +30,7 @@ module Hex {
     *   @returns    The value in decimal of the 2-char hex number.
     *   @example    `0f` or 0F` is 15, `a1` is 10*16 + 1 = 161. 
     */
-  function HexToU8(s: string): Option<Int.u8>
+  function HexToU8(s: string): Option<u8>
     requires |s| == 2
   {
     match (HexVal(s[0]), HexVal(s[1]))
@@ -39,10 +39,50 @@ module Hex {
     case (Some(v1), Some(v2)) => Some(16 * v1 + v2)
   }
 
+  // Helpers to convert uint into hexadecimal strings.
+
+  function U8ToHex(n: u8): string
+    ensures |U8ToHex(n)| == 2
+  {
+    [DecToHex(n as nat / TWO_4)] + [DecToHex(n as nat % TWO_4)]
+  }
+
+  function U16ToHex(n: u16): string
+    ensures |U16ToHex(n)| == 4
+  {
+    U8ToHex((n as nat / TWO_8) as u8) + U8ToHex((n as nat % TWO_8) as u8)
+  }
+
+  function U32ToHex(n: u32): string
+    ensures |U32ToHex(n)| == 8
+  {
+    U16ToHex((n as nat / TWO_16) as u16) + U16ToHex((n as nat % TWO_16) as u16)
+  }
+
+  function U64ToHex(n: u64): string
+    ensures |U64ToHex(n)| == 16
+  {
+    U32ToHex((n as nat / TWO_32) as u32) + U32ToHex((n as nat % TWO_32) as u32)
+  }
+
+  function U128ToHex(n: u128): string
+    ensures |U128ToHex(n)| == 32
+  {
+    U64ToHex((n as nat / TWO_64) as u64) + U64ToHex((n as nat % TWO_64) as u64)
+  }
+
+  function U256ToHex(n: u256): string
+    ensures |U256ToHex(n)| == 64
+  {
+    U128ToHex((n as nat / TWO_128) as u128) + U128ToHex((n as nat % TWO_128) as u128)
+  }
+
+  // From hex to Decimal and back.
+
   /**
     *  Decode an Hex digit.
     */
-  function HexVal(c: char): Option<Int.u8>
+  function HexVal(c: char): Option<u8>
     ensures HexVal(c).Some? ==> HexVal(c).v <= 15
   {
     match c
@@ -69,6 +109,32 @@ module Hex {
     case 'f' => Some(15)
     case 'F' => Some(15)
     case _ => None
+  }
+
+  /**
+    *  Encode a decimal number into a Hex.
+    */
+  function DecToHex(n: nat): char
+    requires 0 <= n < 16
+    ensures '0' <= DecToHex(n) <= '9' || 'a' <= DecToHex(n) <= 'f'
+  {
+    match n
+    case 0 => '0'
+    case 1 => '1'
+    case 2 => '2'
+    case 3 => '3'
+    case 4 => '4'
+    case 5 => '5'
+    case 6 => '6'
+    case 7 => '7'
+    case 8 => '8'
+    case 9 => '9'
+    case 10 => 'a'
+    case 11 => 'b'
+    case 12 => 'c'
+    case 13 => 'd'
+    case 14 => 'e'
+    case 15 => 'f'
   }
 
 
