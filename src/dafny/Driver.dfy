@@ -35,7 +35,6 @@ module Driver {
     } else {
       var x := Disassemble(args[1], []);
       PrintInstructions(x);
-      print "OK0", "\n";
     }
   }
 
@@ -44,9 +43,7 @@ module Driver {
     */
   method {:tailrec} PrintInstructions(s: seq<Instruction>)
   {
-    if |s| == 0 {
-      print "OK1", "\n";
-    } else {
+    if |s| > 0 {
       print s[0].ToString(), "\n";
       PrintInstructions (s[1..]);
     }

@@ -12,7 +12,6 @@
  * under the License.
  */
 
-// include "./utils/EVMOpcodes.dfy"
 include "./OpcodeDecoder.dfy"
 include "../utils/Hex.dfy"
 
@@ -26,29 +25,6 @@ module BinaryDecoder {
   import opened OpcodeDecoder
   import opened EVMOpcodes
   import opened Hex
-
-  /**
-    *  Read the input string
-    */
-  //   method {:verify false} {:main} Main(args: seq<string>) {
-  //     if |args| < 2 {
-  //       print "Expected 1 arguments, got ", |args| - 1, "\n";
-  //     } else {
-  //       var x := Dis(args[1], []);
-  //       Print(InsToLines(x, []));
-  //       print "OK0", "\n";
-  //     }
-  //   }
-
-  //   method {:tailrec} Print(s: seq<string>)
-  //   {
-  //     if |s| == 0 {
-  //       print "OK1", "\n";
-  //     } else {
-  //       print s[0], "\n";
-  //       Print (s[1..]);
-  //     }
-  //   }
 
   /**
     *  Disassemble a string into a sequence of instructions.
@@ -78,11 +54,5 @@ module BinaryDecoder {
         else
           Disassemble(s[2..], p + [Instruction(op)])
   }
-
-// function Disassemble(s: string): (code: seq<Instruction>)
-// {
-//     DisassembleHelper(s, [])
-// }
-  
 }
 
