@@ -71,8 +71,17 @@ final DAFNY4_JAVA_BUILD_FLAGS = [
     '--no-verify',
     '--target','java',
     '--output','build/libs/Driver-java/evmdis.jar',
-    '--function-syntax','4',
+     '--function-syntax','4',
     '--quantifier-syntax','4',
+]
+
+final DAFNY4_JAVA_BUILD_FLAGS2 = [
+    'translate',
+    '--no-verify',
+    'java',
+    '--output','build/libs/Driver'
+    // '--function-syntax','4',
+    // '--quantifier-syntax','4',
 ]
 
 final DAFNY4_PY_BUILD_FLAGS = [
@@ -182,7 +191,8 @@ task compileToJava {
     // Specify outputs
     outputs.files(fileTree('build/').include('libs/Driver-java/evmdis.jar'))
     // Enable caching
-    outputs.cacheIf { true }
+    outputs.cacheIf { true }  
+    
     // Specify actions
     doLast {
         // Generate Dafny Source
@@ -213,7 +223,6 @@ task compileToPy {
             include "*.py"
         }
     }
-    
 }
 
 task compileToRust {
