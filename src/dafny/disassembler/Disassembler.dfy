@@ -28,8 +28,12 @@ module BinaryDecoder {
 
   /**
     *  Disassemble a string into a sequence of instructions.
+    *
+    *   @param  s       The string that remains to be disassembled.
+    *   @param  p       The part thathas already been disassembled.
+    *   @param  next    The next available address to store the instructions.
     */
-  function {:tailrec} Disassemble(s: string, p: seq<Instruction> := []): seq<Instruction>
+  function {:tailrec} Disassemble(s: string, p: seq<Instruction> := [], next: nat := 0): seq<Instruction>
     decreases |s|
   {
     if |s| == 0 then
@@ -50,9 +54,9 @@ module BinaryDecoder {
             p + [Instruction(Decode(INVALID))]
           else
             assert |s[2..][2 * op.Args()..]| < |s|;
-            Disassemble(s[2..][2 * op.Args()..], p + [Instruction(op, s[2..][..2 * op.Args()])])
+            Disassemble(s[2..][2 * op.Args()..], p + [Instruction(op, s[2..][..2 * op.Args()], next)], next + 1 + op.Args() )
         else
-          Disassemble(s[2..], p + [Instruction(op)])
+          Disassemble(s[2..], p + [Instruction(op, [], next)], next + 1)
   }
 }
 
