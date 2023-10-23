@@ -21,8 +21,6 @@ module EVMOpcodes {
 
   import opened Int
 
-  //   datatype T1 = Opcode(name: string, bin: u8)
-
   /**
     * An instruction.
     * @param    op  The opcode of the instruction.
@@ -80,18 +78,6 @@ module EVMOpcodes {
       name
     }
   }
-
-  //   predicate IsPUSH(x: u8) {
-  //     PUSH0 <= x <= PUSH32
-  //   }
-
-  //   function NumArgs(x: u8): (r: nat)
-  //     requires IsPUSH(x)
-  //     ensures 0 <= r <= 32
-  //   {
-  //     (x - PUSH0) as nat
-  //   }
-
 
   //    Constants. Borrowed from Dafny-EVM project.
 

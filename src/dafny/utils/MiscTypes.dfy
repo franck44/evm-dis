@@ -13,7 +13,7 @@
  */
 
 /**
-  * Provides Option type.. 
+  * Provides Option type.
   */
 module MiscTypes {
 
