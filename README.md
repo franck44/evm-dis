@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
-s![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f42ff.svg)](https://code.visualstudio.com/)
+![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f42ff.svg)](https://code.visualstudio.com/)
 
 # Overview
 
@@ -7,12 +7,11 @@ This project provides an EVM bytecode _disassembler_.
 The diassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and `RJump`s, [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
 
 The diassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it. 
-
 For instance the following binary string,  `prog` : 
 ```
 600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
 ```
-is disassembled into the more readable (But arguably still opaque!) EVM assembly code:
+is disassembled into the more readable (but arguably still opaque!) EVM assembly code:
 ```
 PUSH1 0x0a
 PUSH1 0x08
@@ -48,15 +47,15 @@ JUMP
 ## An EVM bytecode disassembler in Dafny
 
 The disassembler is written in [Dafny](https://github.com/dafny-lang/dafny) a verification-friendly programming language.
-Some code (e.g. the definition of `EVMPpcodes`, `Int`) is adapted from the [Dafny-EVM](https://github.com/Consensys/evm-dafny) project.
+Some code (e.g. the definition of `EVMOpcodes`, `Int`) is adapted from the [Dafny-EVM](https://github.com/Consensys/evm-dafny) project.
 
 
 
 ## Motivations
 
-The diassembler is a useful tool but not the ultimate goal of this project.
+The disassembler is a useful tool but not the ultimate goal of this project.
 The main component, `Disassemble` builds a representation of the binary as a sequence of `Instructions`.
-This representation can be _printed out_ (this is the disassembler to generate the readable code), but also used to generate _proof objects_ that are Dafny programs that can be verified using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
+This representation can be _printed out_ (this is how the disassembler generates the readable code), but also used to generate _proof objects_ that are Dafny programs that can be verified using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
 
 As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code (the same can be done with Solidity code.)
 ```solidity
@@ -73,11 +72,11 @@ object "Runtime" {
   }
 }
 ```
-can be compiled using `solc --yul` into the binary representation, and the result is `prog` given above.
+can be compiled using `solc --yul` into an (EVM) binary representation, and the result is the string `prog` given above.
 
-The disassembler we build here will ultimately be used to define a Dafny program to verify some properties of the previous code.
-From the binary representation `prog` we want to _automatically_ build a [Dafny-EVM](https://github.com/Consensys/evm-dafny) friendly program below.
-This program can be used to _reason_about the bytecode, thanks to the formal semantics provided by the  [Dafny-EVM](https://github.com/Consensys/evm-dafny) and the verification engine embedded in [Dafny](https://github.com/dafny-lang/dafny).
+The disassembler we build here will ultimately be used to generate a Dafny program to verify some properties of the previous code.
+From the binary representation `prog` we want to _automatically_ build a [Dafny-EVM](https://github.com/Consensys/evm-dafny) friendly program similar to the `OverFlowCheckerBytecode` below.
+This program can be used to _reason_ about the bytecode, thanks to the formal semantics provided by the  [Dafny-EVM](https://github.com/Consensys/evm-dafny) and the verification engine embedded in [Dafny](https://github.com/dafny-lang/dafny).
 
 ```rust
 module OverFlowCheckerBytecode {
