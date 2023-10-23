@@ -42,6 +42,30 @@ class default__:
                 return MiscTypes.Option_Some(((16) * (d_7_v1_)) + (d_6_v2_))
 
     @staticmethod
+    def U8ToHex(n):
+        return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_division(n, Int.default__.TWO__4))])) + (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__4))]))
+
+    @staticmethod
+    def U16ToHex(n):
+        return (default__.U8ToHex(_dafny.euclidian_division(n, Int.default__.TWO__8))) + (default__.U8ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__8)))
+
+    @staticmethod
+    def U32ToHex(n):
+        return (default__.U16ToHex(_dafny.euclidian_division(n, Int.default__.TWO__16))) + (default__.U16ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__16)))
+
+    @staticmethod
+    def U64ToHex(n):
+        return (default__.U32ToHex(_dafny.euclidian_division(n, Int.default__.TWO__32))) + (default__.U32ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__32)))
+
+    @staticmethod
+    def U128ToHex(n):
+        return (default__.U64ToHex(_dafny.euclidian_division(n, Int.default__.TWO__64))) + (default__.U64ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__64)))
+
+    @staticmethod
+    def U256ToHex(n):
+        return (default__.U128ToHex(_dafny.euclidian_division(n, Int.default__.TWO__128))) + (default__.U128ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__128)))
+
+    @staticmethod
     def HexVal(c):
         if (c) == (_dafny.CodePoint('0')):
             return MiscTypes.Option_Some(0)
@@ -89,4 +113,39 @@ class default__:
             return MiscTypes.Option_Some(15)
         elif True:
             return MiscTypes.Option_None()
+
+    @staticmethod
+    def DecToHex(n):
+        if (n) == (0):
+            return _dafny.CodePoint('0')
+        elif (n) == (1):
+            return _dafny.CodePoint('1')
+        elif (n) == (2):
+            return _dafny.CodePoint('2')
+        elif (n) == (3):
+            return _dafny.CodePoint('3')
+        elif (n) == (4):
+            return _dafny.CodePoint('4')
+        elif (n) == (5):
+            return _dafny.CodePoint('5')
+        elif (n) == (6):
+            return _dafny.CodePoint('6')
+        elif (n) == (7):
+            return _dafny.CodePoint('7')
+        elif (n) == (8):
+            return _dafny.CodePoint('8')
+        elif (n) == (9):
+            return _dafny.CodePoint('9')
+        elif (n) == (10):
+            return _dafny.CodePoint('a')
+        elif (n) == (11):
+            return _dafny.CodePoint('b')
+        elif (n) == (12):
+            return _dafny.CodePoint('c')
+        elif (n) == (13):
+            return _dafny.CodePoint('d')
+        elif (n) == (14):
+            return _dafny.CodePoint('e')
+        elif True:
+            return _dafny.CodePoint('f')
 

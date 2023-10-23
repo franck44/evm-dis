@@ -19,35 +19,39 @@ class default__:
         pass
 
     @staticmethod
-    def Disassemble(s, p):
+    def Disassemble(s, p, next):
         while True:
             with _dafny.label():
                 if (len(s)) == (0):
                     return p
                 elif (len(s)) == (1):
-                    return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]))]))
+                    return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]), 0)]))
                 elif True:
                     source4_ = Hex.default__.HexToU8(_dafny.SeqWithoutIsStrInference((s)[:2:]))
                     if source4_.is_None:
-                        return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]))]))
+                        return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]), 0)]))
                     elif True:
                         d_8___mcc_h0_ = source4_.v
                         d_9_v_ = d_8___mcc_h0_
                         d_10_op_ = OpcodeDecoder.default__.Decode(d_9_v_)
                         if ((d_10_op_).Args()) > (0):
                             if (len(_dafny.SeqWithoutIsStrInference((s)[2::]))) < ((2) * ((d_10_op_).Args())):
-                                return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]))]))
+                                return (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMOpcodes.default__.INVALID), _dafny.SeqWithoutIsStrInference([]), 0)]))
                             elif True:
                                 in0_ = _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[(2) * ((d_10_op_).Args())::])
-                                in1_ = (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(d_10_op_, _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_10_op_).Args()):]))]))
+                                in1_ = (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(d_10_op_, _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_10_op_).Args()):]), next)]))
+                                in2_ = ((next) + (1)) + ((d_10_op_).Args())
                                 s = in0_
                                 p = in1_
+                                next = in2_
                                 raise _dafny.TailCall()
                         elif True:
-                            in2_ = _dafny.SeqWithoutIsStrInference((s)[2::])
-                            in3_ = (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(d_10_op_, _dafny.SeqWithoutIsStrInference([]))]))
-                            s = in2_
-                            p = in3_
+                            in3_ = _dafny.SeqWithoutIsStrInference((s)[2::])
+                            in4_ = (p) + (_dafny.SeqWithoutIsStrInference([EVMOpcodes.Instruction_Instruction(d_10_op_, _dafny.SeqWithoutIsStrInference([]), next)]))
+                            in5_ = (next) + (1)
+                            s = in3_
+                            p = in4_
+                            next = in5_
                             raise _dafny.TailCall()
                 break
 

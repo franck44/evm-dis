@@ -462,7 +462,7 @@ class default__:
 class Instruction:
     @classmethod
     def default(cls, ):
-        return lambda: Instruction_Instruction(Opcode.default()(), _dafny.Seq({}))
+        return lambda: Instruction_Instruction(Opcode.default()(), _dafny.Seq({}), int(0))
     def __ne__(self, __o: object) -> bool:
         return not self.__eq__(__o)
     @property
@@ -473,11 +473,11 @@ class Instruction:
         return (((self).op).Name()) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x"))) + (d_0_x_) if (len(d_0_x_)) > (0) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))))
 
 
-class Instruction_Instruction(Instruction, NamedTuple('Instruction', [('op', Any), ('arg', Any)])):
+class Instruction_Instruction(Instruction, NamedTuple('Instruction', [('op', Any), ('arg', Any), ('address', Any)])):
     def __dafnystr__(self) -> str:
-        return f'EVMOpcodes.Instruction.Instruction({_dafny.string_of(self.op)}, {self.arg.VerbatimString(True)})'
+        return f'EVMOpcodes.Instruction.Instruction({_dafny.string_of(self.op)}, {self.arg.VerbatimString(True)}, {_dafny.string_of(self.address)})'
     def __eq__(self, __o: object) -> bool:
-        return isinstance(__o, Instruction_Instruction) and self.op == __o.op and self.arg == __o.arg
+        return isinstance(__o, Instruction_Instruction) and self.op == __o.op and self.arg == __o.arg and self.address == __o.address
     def __hash__(self) -> int:
         return super().__hash__()
 

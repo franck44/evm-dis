@@ -49,6 +49,9 @@ class default__:
     @_dafny.classproperty
     def MAX__U256(instance):
         return (default__.TWO__256) - (1)
+    @_dafny.classproperty
+    def TWO__4(instance):
+        return 16
 
 class u8:
     def  __init__(self):
