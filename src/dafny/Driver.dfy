@@ -22,7 +22,7 @@ include "./dafnyEVMbuilder/Splitter.dfy"
   */
 module Driver {
 
-  import opened BinaryDecoder
+  import opened BinaryDecoder 
   import opened EVMOpcodes
   import opened Splitter
     /**
@@ -55,13 +55,13 @@ module Driver {
     }
   }
 
-  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
+  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0) 
   {
     if |xs| > 0 {
       // 
       print "Segment ", num, "\n";
-      var k := WeakestPreOperands(xs[0]);
-      var l := WeakestPreCapacity(xs[0]);
+      var k := xs[0].WeakestPreOperands(0);
+      var l := xs[0].WeakestPreCapacity(0); 
       print "WeakestPre Operands:", k, "\n";
       print "WeakestPre Capacity:", l, "\n";
       PrintInstructions(xs[0].Ins());
