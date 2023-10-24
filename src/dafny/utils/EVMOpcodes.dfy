@@ -61,6 +61,24 @@ module EVMOpcodes {
     }
 
     /**
+     *  Determine the minimum of capacity needed before the
+     *  instruction is executed to ensure that
+     *  1. the instruction does not trigger a Stack overflow
+     *  2. there are at least k capacity on the stack after executing the instruction.
+     *
+     *  @example    POP: pushes 0, pops 1, minOperands 1, minCapacity = 0
+     *              k = 0 => Max(0, 0 + (-1)) = 0
+     *              k = 3 => Max(1, 3 + (- 1)) = 2
+     *  @example    SWAP2 pushes 0, pops 0, minOperands 3, minCapacity = 0
+     *              k = 0 => Max(0, 0 + 0) = 0
+     *              k = 1 => Max(0, 1 + 0) = 1
+     */
+    function WeakestPreCapacity(post: nat := 0): (r: nat)
+    {
+      Max(op.minCapacity, post + StackEffect())
+    }
+
+    /**
       * Whether an opcode is terminal (branching).
       */
     predicate IsTerminal()
@@ -82,18 +100,30 @@ module EVMOpcodes {
     * The different types of Opcodes supported by the EVM.
     */
   datatype Opcode =
-    | ArithOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | CompOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | BitwiseOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | KeccakOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | EnvOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
-    | MemOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | StorageOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | JumpOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | RunOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | StackOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | LogOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | SysOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | ArithOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | CompOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | BitwiseOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | KeccakOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | EnvOp(name: string, opcode: u8, minCapacity: nat := 1, 
+            minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
+    | MemOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | StorageOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | JumpOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | RunOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | StackOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | LogOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | SysOp(name: string, opcode: u8, minCapacity: nat := 0, 
+            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
   {
 
     // Helpers
