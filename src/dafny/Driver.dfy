@@ -12,17 +12,16 @@
  * under the License.
  */
 
-// include "./utils/EVMOpcodes.dfy"
 include "./disassembler/Disassembler.dfy"
-  // include "../utils/Hex.dfy"
-include "./dafnyEVMbuilder/Splitter.dfy"
+include "./proofobjectbuilder/Splitter.dfy"
+include "./proofobjectbuilder/SegmentBuilder.dfy"
 
 /**
   *  Provides input reader and write out to stout.
   */
 module Driver {
 
-  import opened BinaryDecoder 
+  import opened BinaryDecoder
   import opened EVMOpcodes
   import opened Splitter
   import opened SegBuilder
@@ -58,13 +57,17 @@ module Driver {
     }
   }
 
-  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0) 
+  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
   {
     if |xs| > 0 {
       // 
       print "Segment ", num, "\n";
       var k := xs[0].WeakestPreOperands(0);
-      var l := xs[0].WeakestPreCapacity(0); 
+      var l := xs[0].WeakestPreCapacity(0);
+      if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
+        //  Print the stack tracker value
+        print "JUMP/JUMPI: ", JUMPResolver(xs[0]), "\n";
+      }
       print "WeakestPre Operands:", k, "\n";
       print "WeakestPre Capacity:", l, "\n";
       PrintInstructions(xs[0].Ins());
