@@ -15,19 +15,19 @@
 // include "./utils/EVMOpcodes.dfy"
 include "./disassembler/Disassembler.dfy"
   // include "../utils/Hex.dfy"
+include "./dafnyEVMbuilder/Splitter.dfy"
 
 /**
   *  Provides input reader and write out to stout.
   */
 module Driver {
 
-
   import opened BinaryDecoder
   import opened EVMOpcodes
-
-  /**
-    *  Read the input string
-    */
+  import opened Splitter
+    /**
+      *  Read the input string
+      */
   method {:verify true} {:main} Main(args: seq<string>)
   {
     if |args| < 2 {
@@ -35,6 +35,10 @@ module Driver {
     } else {
       var x := Disassemble(args[1], []);
       PrintInstructions(x);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      PrintSegments(y);
     }
   }
 
@@ -48,6 +52,18 @@ module Driver {
       var formattedAddress := if s[0].address < Int.TWO_32 then Hex.U32ToHex(s[0].address as Int.u32) else "OutofRange";
       print formattedAddress, ": ", s[0].ToString(), "\n";
       PrintInstructions (s[1..]);
+    }
+  }
+
+  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
+  {
+    if |xs| > 0 {
+      // 
+      print "Segment ", num, "\n";
+      var k := WeakestPreOperands(xs[0]);
+      print "WeakestPre Operands:", k, "\n";
+      PrintInstructions(xs[0].Ins());
+      PrintSegments (xs[1..], num + 1);
     }
   }
 }
