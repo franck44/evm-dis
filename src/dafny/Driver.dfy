@@ -28,9 +28,9 @@ module Driver {
   import opened SegBuilder
   import opened Instructions
 
-    /**
-      *  Read the input string
-      */
+  /**
+    *  Read the input string
+    */
   method {:verify true} {:main} Main(args: seq<string>)
   {
     if |args| < 2 {
