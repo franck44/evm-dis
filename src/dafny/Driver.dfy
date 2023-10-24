@@ -61,7 +61,9 @@ module Driver {
       // 
       print "Segment ", num, "\n";
       var k := WeakestPreOperands(xs[0]);
+      var l := WeakestPreCapacity(xs[0]);
       print "WeakestPre Operands:", k, "\n";
+      print "WeakestPre Capacity:", l, "\n";
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
     }
