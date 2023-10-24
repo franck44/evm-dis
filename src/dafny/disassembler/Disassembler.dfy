@@ -20,8 +20,6 @@ include "../utils/Hex.dfy"
   */
 module BinaryDecoder {
 
-  datatype Option<T> = None | Some(v: T)
-
   import opened OpcodeDecoder
   import opened EVMOpcodes
   import opened Hex
