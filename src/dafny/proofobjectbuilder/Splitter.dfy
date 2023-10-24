@@ -14,7 +14,7 @@
 
 include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
-
+include "../utils/Instructions.dfy" 
 /**
   *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
   */
@@ -22,6 +22,8 @@ module Splitter {
 
   import opened EVMOpcodes
   import opened MiscTypes
+  import opened Instructions
+  import opened EVMConstants
 
   /**
     *   A linear seg,ent of bytecode.
@@ -36,17 +38,17 @@ module Splitter {
     *               segment of type RETURN.
     */
   datatype LinSeg =
-      JUMPSeg(ins: seq<Instruction>)
-    |   JUMPISeg(ins: seq<Instruction>)
-    |   RETURNSeg(ins: seq<Instruction>)
-    |   STOPSeg(ins: seq<Instruction>)
-    |   UNKNOWNSeg(ins: seq<Instruction>)
+      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction)
+    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction)
+    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction)
+    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction)
+    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction)
   {
     /**
       *  The instructions in a segment.
       */
     function Ins(): seq<Instruction> {
-      this.ins
+      this.ins + [this.lastIns]
     }
 
     /**
@@ -56,7 +58,7 @@ module Splitter {
       */
     function WeakestPreOperands(n: nat): Option<nat>
     {
-      WeakestPreOperandsHelper(this.ins)
+      WeakestPreOperandsHelper(this.Ins())
     }
 
     /**
@@ -66,8 +68,9 @@ module Splitter {
       */
     function WeakestPreCapacity(n: nat): Option<nat>
     {
-      WeakestPreCapacityHelper(this.ins)
+      WeakestPreCapacityHelper(this.Ins())
     }
+
   }
 
   // Helpers
@@ -79,11 +82,11 @@ module Splitter {
   function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
   {
     match lastInst.op.opcode
-    case JUMP   => JUMPSeg(xs + [lastInst])
-    case JUMPI  => JUMPISeg(xs + [lastInst])
-    case RETURN => RETURNSeg(xs + [lastInst])
-    case STOP   => STOPSeg(xs + [lastInst])
-    case _      => UNKNOWNSeg(xs + [lastInst])
+    case JUMP   => JUMPSeg(xs, lastInst)
+    case JUMPI  => JUMPISeg(xs, lastInst)
+    case RETURN => RETURNSeg(xs, lastInst)
+    case STOP   => STOPSeg(xs, lastInst)
+    case _      => UNKNOWNSeg(xs, lastInst)
   }
 
   /**  
