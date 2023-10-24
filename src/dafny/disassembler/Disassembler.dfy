@@ -23,6 +23,9 @@ module BinaryDecoder {
   import opened OpcodeDecoder
   import opened EVMOpcodes
   import opened Hex
+  import opened Int
+  import opened EVMConstants
+  import opened Instructions
 
   /**
     *  Disassemble a string into a sequence of instructions.

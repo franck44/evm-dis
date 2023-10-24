@@ -22,6 +22,7 @@ module OpcodeDecoder {
 
   import opened Int
   import opened EVMOpcodes
+  import opened EVMConstants
 
   /**
     *   Decode an opcode.

@@ -25,6 +25,9 @@ module Driver {
   import opened BinaryDecoder 
   import opened EVMOpcodes
   import opened Splitter
+  import opened SegBuilder
+  import opened Instructions
+
     /**
       *  Read the input string
       */
