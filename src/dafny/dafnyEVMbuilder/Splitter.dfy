@@ -54,5 +54,18 @@ module Splitter {
             None
   }
 
+  function WeakestPreCapacity(x: LinSeg, postCond: nat := 0): Option<nat> 
+    decreases |x.ins|
+  {
+    if |x.Ins()| == 0 then Some(postCond)
+    else 
+        var lastI := x.Ins()[|x.Ins()| - 1];
+        var e := lastI.WeakestPreCapacity(postCond);
+        if e >= 0 then 
+            WeakestPreCapacity(LinSeg(x.Ins()[..|x.Ins()| - 1]), e) 
+        else
+            None
+  }
+
 }
 
