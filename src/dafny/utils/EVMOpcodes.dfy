@@ -36,24 +36,64 @@ module EVMOpcodes {
       var x: string := arg;
       op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
+
+    function StackEffect(): int
+    {
+      op.pushes - op.pops
+    }
+
+    /**
+     *  Determine the minimum of operands needed before the
+     *  instruction is executed to ensure that
+     *  1. the instruction does not trigger a Stack underflow
+     *  2. there are at least k operands on the stack after execuitng the instruction.
+     *
+     *  @example    POP: pushes 0, pops 1, minOperands 1
+     *              k = 0 => Max(1, 0 -(-1)) = 1 
+     *              k = 3 => Max(1, 3 - (- 1)) = 4
+     *  @example    SWAP2 pushes 0, pops 0, minOperands 3
+     *              k = 0 => r = 0 
+     *              k = 1 => 
+     */
+    function WeakestPreOperands(post: nat := 0): (r: nat)
+    {
+      Max(op.minOperands, post - StackEffect())
+    }
+
+    /**
+      * Whether an opcode is terminal (branching).
+      */
+    predicate IsTerminal()
+    {
+      match this.op.opcode
+      case STOP   => true
+      case JUMP   => true
+      case JUMPI  => true
+      case RJUMP  => true
+      case RJUMPI => true
+      case RJUMPV => true
+      case RETURN => true
+      case REVERT => true
+      case _      => false
+    }
   }
 
   /**
-    * The different types of Opcodes supported by the EVM,
+    * The different types of Opcodes supported by the EVM.
     */
   datatype Opcode =
-    | ArithOp(name: string, opcode: u8)
-    | CompOp(name: string, opcode: u8)
-    | BitwiseOp(name: string, opcode: u8)
-    | KeccakOp(name: string, opcode: u8)
-    | EnvOp(name: string, opcode: u8)
-    | MemOp(name: string, opcode: u8)
-    | StorageOp(name: string, opcode: u8)
-    | JumpOp(name: string, opcode: u8)
-    | RunOp(name: string, opcode: u8)
-    | StackOp(name: string, opcode: u8)
-    | LogOp(name: string, opcode: u8)
-    | SysOp(name: string, opcode: u8)
+    | ArithOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | CompOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | BitwiseOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | KeccakOp(name: string, opcode: u8, minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | EnvOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
+    | MemOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | StorageOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | JumpOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | RunOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | StackOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | LogOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | SysOp(name: string, opcode: u8, minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
   {
 
     // Helpers
