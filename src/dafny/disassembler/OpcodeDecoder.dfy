@@ -170,11 +170,11 @@ module OpcodeDecoder {
     case SWAP15 => StackOp("SWAP15", SWAP15, minCapacity := 0, minOperands := 15 + 1)
     case SWAP16 => StackOp("SWAP16", SWAP16, minCapacity := 0, minOperands := 16 + 1)
     // 0xA0s: Log operations
-    case LOG0 => LogOp("LOG0", LOG0, 0, 0 + 2, 0 + 2, 0 + 2)
-    case LOG1 => LogOp("LOG1", LOG1, 0, 1 + 2, 1 + 2, 1 + 2)
-    case LOG2 => LogOp("LOG2", LOG2, 0, 2 + 2, 2 + 2, 2 + 2)
-    case LOG3 => LogOp("LOG3", LOG3, 0, 3 + 2, 3 + 2, 3 + 2)
-    case LOG4 => LogOp("LOG4", LOG4, 0, 4 + 2, 4 + 2, 4 + 2)
+    case LOG0 => LogOp("LOG0", LOG0, 0, 0 + 2, 0, 0 + 2)
+    case LOG1 => LogOp("LOG1", LOG1, 0, 1 + 2, 0, 1 + 2)
+    case LOG2 => LogOp("LOG2", LOG2, 0, 2 + 2, 0, 2 + 2)
+    case LOG3 => LogOp("LOG3", LOG3, 0, 3 + 2, 0, 3 + 2)
+    case LOG4 => LogOp("LOG4", LOG4, 0, 4 + 2, 0, 4 + 2)
     // 0xf0
     case CREATE => SysOp("CREATE", CREATE, 3, 0, 2, 3)
     //  @todo: verify call efeect on stack
