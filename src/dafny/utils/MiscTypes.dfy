@@ -26,4 +26,19 @@ module MiscTypes {
     }
   }
 
+  datatype Either<T, U> = Left(l: T) | Right(r: U)
+  {
+    function Left(): T
+      requires this.Left?
+    {
+      this.l
+    }
+
+    function Right(): U
+      requires this.Right?
+    {
+      this.r
+    }
+  }
+
 }
