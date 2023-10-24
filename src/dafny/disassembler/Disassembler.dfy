@@ -40,12 +40,12 @@ module BinaryDecoder {
     if |s| == 0 then
       p
     else if |s| == 1 then
-      p + [Instruction(Decode(INVALID))]
+      p + [Instruction(Decode(INVALID), [], next)]
     else
       assert |s| >= 2;
       // Try to decode next instruction
       match HexToU8(s[..2])
-      case None => p + [Instruction(Decode(INVALID))]
+      case None => p + [Instruction(Decode(INVALID), [], next)]
       case Some(v) =>
         //  Try to read parameters of opcode
         var op := Decode(v);
