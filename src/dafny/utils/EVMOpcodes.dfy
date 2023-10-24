@@ -53,7 +53,8 @@ module EVMOpcodes {
      *              k = 3 => Max(1, 3 - (- 1)) = 4
      *  @example    SWAP2 pushes 0, pops 0, minOperands 3
      *              k = 0 => r = 0 
-     *              k = 1 => 
+     *              k = 1 => r = 1
+     *              k => r = k!
      */
     function WeakestPreOperands(post: nat := 0): (r: nat)
     {
@@ -64,12 +65,12 @@ module EVMOpcodes {
      *  Determine the minimum of capacity needed before the
      *  instruction is executed to ensure that
      *  1. the instruction does not trigger a Stack overflow
-     *  2. there are at least k capacity on the stack after executing the instruction.
+     *  2. there are at least k free slots on the stack after executing the instruction.
      *
-     *  @example    POP: pushes 0, pops 1, minOperands 1, minCapacity = 0
+     *  @example    POP: pushes 0, pops 1, minCapacity = 0
      *              k = 0 => Max(0, 0 + (-1)) = 0
      *              k = 3 => Max(1, 3 + (- 1)) = 2
-     *  @example    SWAP2 pushes 0, pops 0, minOperands 3, minCapacity = 0
+     *  @example    SWAP2 pushes 0, pops 0, minCapacity = 0
      *              k = 0 => Max(0, 0 + 0) = 0
      *              k = 1 => Max(0, 1 + 0) = 1
      */
