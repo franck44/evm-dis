@@ -15,6 +15,7 @@
 include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
+include "./proofobjectbuilder/ProofObjectBuilder.dfy"
 include "./prettyprinters/Pretty.dfy"
 
 /**
@@ -25,6 +26,7 @@ module Driver {
   import opened BinaryDecoder
   import opened Splitter
   import opened PrettyPrinters
+  import opened ProofObjectBuilder
 
   /**
     *  Read the input string
@@ -40,7 +42,10 @@ module Driver {
     }
   }
 
-  method {:verify true} {:main} Main2(args: seq<string>)
+  /**
+    *   Print segments 
+    */
+  method {:verify true} {:main2} Main2(args: seq<string>)
   {
     if |args| < 2 {
       print "Expected 1 arguments, got ", |args| - 1, "\n";
@@ -51,6 +56,23 @@ module Driver {
       //    Print the segments
       var y := SplitUpToTerminal(x, [], []);
       PrintSegments(y);
+    }
+  }
+
+  /**
+    *   Print proof objects
+    */
+  method {:verify true} {:main} Main3(args: seq<string>)
+  {
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      var z := BuildProofObject(y);
+      PrintProofObject(z);
     }
   }
 }

@@ -26,7 +26,7 @@ module ProofObject {
   /**
     *   Either a segment terninating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
     */
-  datatype ProofObject =
+  datatype ProofObj =
     |  JUMP(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>, tgt: Either<seq<char>, nat>)
     |  TERMINAL(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>)
 

@@ -15,6 +15,7 @@
 include "../utils/Hex.dfy"
 include "../utils/Instructions.dfy"
 include "../utils/LinSegments.dfy"
+include "../utils/ProofObject.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
 
 /**
@@ -28,6 +29,7 @@ module PrettyPrinters {
   import opened Instructions
   import opened LinSegments
   import SegBuilder
+  import opened ProofObject
 
   /**
     *  Print disassembled code to stdout.
@@ -47,16 +49,33 @@ module PrettyPrinters {
     if |xs| > 0 {
       // 
       print "Segment ", num, "\n";
-      var k := xs[0].WeakestPreOperands(0);
-      var l := xs[0].WeakestPreCapacity(0);
-      if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
-        //  Print the stack tracker value
-        print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n"; 
-      }
-      print "WeakestPre Operands:", k, "\n";
-      print "WeakestPre Capacity:", l, "\n";
+      //   var k := xs[0].WeakestPreOperands(0);
+      //   var l := xs[0].WeakestPreCapacity(0);
+      //   if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
+      //     //  Print the stack tracker value
+      //     print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n";
+      //   }
+      //   print "WeakestPre Operands:", k, "\n";
+      //   print "WeakestPre Capacity:", l, "\n";
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
+    }
+  }
+
+  method {:tailrec} PrintProofObject(xs: seq<ProofObj>, num: nat := 0)
+  {
+    if |xs| > 0 {
+      // 
+      print "Proof Object ", num, "\n";
+      print "WeakestPre Operands:", xs[0].wpOp, "\n";
+      print "WeakestPre Capacity:", xs[0].wpCap, "\n";
+      if xs[0].JUMP? {
+        //  Print the stack tracker value
+        print "JUMP/JUMPI: ", xs[0].tgt, "\n";
+      }
+
+      PrintInstructions(xs[0].s.Ins());
+      PrintProofObject(xs[1..], num + 1);
     }
   }
 }

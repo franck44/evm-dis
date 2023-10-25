@@ -30,15 +30,21 @@ module ProofObjectBuilder {
   /**
     *    Given a linear segment, build a proof object.
     */
-  function BuildProofObject(x: LinSeg): ProofObject
+  function BuildProofObject(xs: seq<LinSeg>): seq<ProofObj>
+    ensures |xs| == |BuildProofObject(xs)|
   {
-    var wpOp := x.WeakestPreOperands(0);
-    var wpCap := x.WeakestPreCapacity(0);
-    if x.JUMPSeg? || x.JUMPISeg? then
-      var tgt :=  SegBuilder.JUMPResolver(x);
-      JUMP(x, wpOp, wpCap, tgt)
-    else
-      TERMINAL(x, wpOp, wpCap)
+    if |xs| == 0 then []
+    else 
+        var wpOp := xs[0].WeakestPreOperands(0);
+        var wpCap := xs[0].WeakestPreCapacity(0);
+        var obj := (if xs[0].JUMPSeg? || xs[0].JUMPISeg? then
+            var tgt :=  SegBuilder.JUMPResolver(xs[0]);
+            JUMP(xs[0], wpOp, wpCap, tgt)
+        else
+            TERMINAL(xs[0], wpOp, wpCap)
+        );
+        [obj] + BuildProofObject(xs[1..])
   }
+
 }
 
