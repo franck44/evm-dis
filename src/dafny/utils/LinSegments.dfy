@@ -73,39 +73,6 @@ module LinSegments {
 
   }
 
-  // Helpers
-
-//   /**
-//     *   Determnine the type of the segment according to the last instruction.
-//     *   @returns    A segment with instructions xs + [lastIns].
-//     */
-//   function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
-//   {
-//     match lastInst.op.opcode
-//     case JUMP   => JUMPSeg(xs, lastInst)
-//     case JUMPI  => JUMPISeg(xs, lastInst)
-//     case RETURN => RETURNSeg(xs, lastInst)
-//     case STOP   => STOPSeg(xs, lastInst)
-//     case _      => UNKNOWNSeg(xs, lastInst)
-//   }
-
-//   /**  
-//     *   
-//     */
-//   function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<LinSeg> := []): seq<LinSeg>
-//   {
-//     if |xs| == 0 then collected
-//     else
-//     //  if xs[0] is terminal then start a new seg, otherwise continue previous
-//     if xs[0].IsTerminal() then
-//       var newSeg := curseq + [xs[0]];
-//       SplitUpToTerminal(xs[1..], [], collected + [BuildSeg(curseq, xs[0])])
-//     else
-//       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
-//   }
-
-  //    Helpers 
-
   /** 
     *   Compute the weakest pre condition on operands to ensure that 
     *   the sequence xs can be executed without a stack underflow, and 
