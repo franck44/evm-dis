@@ -21,9 +21,12 @@ include "../utils/EVMOpcodes.dfy"
 module Instructions {
 
   import opened Int
-  import opened MiscTypes 
+  import opened MiscTypes
   import opened EVMOpcodes
   import opened EVMConstants
+
+  /** Make sur op is a correctly constructed Opcode */
+  type ValidOpcode = x: Opcode | x.IsValid() witness SysOp("STOP", STOP)
 
   /**
     * An instruction.
@@ -33,8 +36,9 @@ module Instructions {
     * @example      `POP`, 'ADD, etc are instructiopns with no parameters, 
     *               whereas `PUSH1` or `PUSH2` takes parameters.  
     */
-  datatype Instruction = Instruction(op: Opcode, arg: seq<char> := [], address: nat := 0)
+  datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
+
     function ToString(): string
     {
       var x: string := arg;
@@ -42,13 +46,16 @@ module Instructions {
     }
 
     /**
-      * Whether an instruction pcode is terminal (branching).
+      * Whether an instruction Opcode is terminal (branching).
       */
     predicate IsTerminal()
     {
       this.op.IsTerminal()
     }
 
+    /**
+      * The next effect on the stack size.
+      */
     function StackEffect(): int
     {
       op.StackEffect()
@@ -112,11 +119,11 @@ module Instructions {
       case EnvOp(_, _, _, _, _, _)        => Right(0)
       case MemOp(_, _, _, _, _, _)        => Right(0)
       case StorageOp(_, _, _, _, _, _)    => Right(0)
-      case JumpOp(_, opcode, _, _, _, _)       => 
-        if opcode == JUMPDEST then 
-            Right(pos')
-        else 
-            Right(0)
+      case JumpOp(_, opcode, _, _, _, _)       =>
+        if opcode == JUMPDEST then
+          Right(pos')
+        else
+          Right(0)
       case RunOp(_, _, _, _, _, _)        => Right(0)
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
@@ -128,15 +135,13 @@ module Instructions {
         else if SWAP1 <= opcode <= SWAP16 then
           // SWAP1 to SWAP16
           Right(0)
-        else if opcode == POP then 
-            // POP
-            Right(pos' + 1)
-        else 
-            //  This should not occur
-            Left(['b', 'a', 'd'])
+        else // Thanks to the Valid constraint on the opcode type, this can only be OP.
+          assert opcode == POP;
+          Right(pos' + 1)
+
 
       case LogOp(_, _, _, _, _, _) => Right(0)
       case SysOp(_, _, _, _, _, _) => Right(0)
-    } 
+    }
   }
 }

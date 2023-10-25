@@ -15,15 +15,15 @@
 include "./int.dfy"
 include "../utils/MiscTypes.dfy"
 include "./OpcodesConstants.dfy"
-/**
-  *  Provides EVM Opcodes.
-  */
+  /**
+    *  Provides EVM Opcodes.
+    */
 module EVMOpcodes {
 
   import opened Int
-  import opened MiscTypes 
-    import opened EVMConstants
-    
+  import opened MiscTypes
+  import opened EVMConstants
+
   /**
     * The different types of Opcodes supported by the EVM.
     */
@@ -54,6 +54,22 @@ module EVMOpcodes {
             minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
   {
 
+    predicate IsValid()
+    {
+      match this
+      case ArithOp(_, op, _, _, _, _)     => ADD <= op <= SIGNEXTEND
+      case CompOp(_, op, _, _, _, _)      => LT <= op <= ISZERO
+      case BitwiseOp(_, op, _, _, _, _)   => AND <= op <= SAR
+      case KeccakOp(_, op, _, _, _, _)    => op == KECCAK256
+      case EnvOp(_, op, _, _, _, _)       => ADDRESS <= op <= BASEFEE
+      case MemOp(_, op, _, _, _, _)       => MLOAD <= op <= MSTORE8
+      case StorageOp(_, op, _, _, _, _)   => SLOAD <= op <= SSTORE
+      case JumpOp(_, op, _, _, _, _)      => JUMP <= op <= JUMPI || JUMPDEST <= op <= RJUMPV
+      case RunOp(_, op, _, _, _, _)       => PC <= op <= GAS
+      case StackOp(_, op, _, _, _, _)     => op == POP || PUSH0 <= op <= SWAP16
+      case LogOp(_, op, _, _, _, _)       => LOG0 <= op <= LOG4
+      case SysOp(_, op, _, _, _, _)       => op == STOP || op == EOF || CREATE <= op <= SELFDESTRUCT
+    }
     // Helpers
 
     /**

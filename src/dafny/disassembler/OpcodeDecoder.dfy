@@ -30,7 +30,9 @@ module OpcodeDecoder {
     *   @returns    The readable opcode that corresponds to `op`.
     *   @note       If opcode is not in the set of EVM opcodes, returns `INVALID`.
     */
-  function Decode(op: u8): Opcode {
+  function Decode(op: u8): Opcode 
+    ensures Decode(op).IsValid() 
+  {
     match op
     case STOP       => SysOp("STOP", STOP)
     case ADD        => ArithOp("ADD", ADD)
@@ -97,6 +99,9 @@ module OpcodeDecoder {
     case SSTORE   => StorageOp("SSTORE", SSTORE, 0, 2, 0, 2)
     case JUMP     => JumpOp("JUMP", JUMP, 0, 1, 0, 1)
     case JUMPI    => JumpOp("JUMPI", JUMPI, 0, 2, 0, 2)
+    case RJUMP     => JumpOp("RJUMP", RJUMP, 0, 1, 0, 1)
+    case RJUMPI    => JumpOp("RJUMPI", RJUMPI, 0, 2, 0, 2)
+    case RJUMPV    => JumpOp("RJUMPV", RJUMPV, 0, 2, 0, 2)
     case PC       => RunOp("PC", PC, 1, 0, 1, 0)
     case MSIZE    => RunOp("MSIZE", MSIZE, 1, 0, 1, 0)
     case GAS      => RunOp("GAS", GAS, 1, 0, 1, 0)
