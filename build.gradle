@@ -205,6 +205,7 @@ task testDafny {
             }
         }
     }
+
 }
 
 
@@ -300,16 +301,20 @@ task compileToJs {
     }
 }
 
-
-task cleanDafny {
-    doLast {
-        delete "build/logs"
-        // delete "build/driver-java"
-        // delete "*.runtimeconfig.json"
+task deleteTestBuild(type: Delete) {
+    delete fileTree('test/dafny') {
+        include '**/*.dll',  '**/*.json'
     }
 }
 
-clean.dependsOn cleanDafny
+task cleanDafny(type: Delete) {
+    delete fileTree('src/dafny') {
+        include '**/*.dll',  '**/*.json'
+    }
+    delete "build/logs"
+}
+
+// clean.dependsOn cleanDafny, deleteTestBuild
 
 // ======================================================================
 // Java Build
