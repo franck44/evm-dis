@@ -12,9 +12,10 @@
  * under the License.
  */
 
-// include "./OpcodeDecoder.dfy"
 include "../utils/Hex.dfy"
 include "../utils/Instructions.dfy"
+include "../utils/LinSegments.dfy"
+include "../proofobjectbuilder/SegmentBuilder.dfy"
 
 /**
   *  Provides pretty printers.
@@ -25,6 +26,8 @@ module PrettyPrinters {
   import opened Hex
   import opened Int
   import opened Instructions
+  import opened LinSegments
+  import SegBuilder
 
   /**
     *  Print disassembled code to stdout.
@@ -36,6 +39,24 @@ module PrettyPrinters {
       var formattedAddress := if s[0].address < Int.TWO_32 then Hex.U32ToHex(s[0].address as Int.u32) else "OutofRange";
       print formattedAddress, ": ", s[0].ToString(), "\n";
       PrintInstructions (s[1..]);
+    }
+  }
+
+  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
+  {
+    if |xs| > 0 {
+      // 
+      print "Segment ", num, "\n";
+      var k := xs[0].WeakestPreOperands(0);
+      var l := xs[0].WeakestPreCapacity(0);
+      if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
+        //  Print the stack tracker value
+        print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n"; 
+      }
+      print "WeakestPre Operands:", k, "\n";
+      print "WeakestPre Capacity:", l, "\n";
+      PrintInstructions(xs[0].Ins());
+      PrintSegments (xs[1..], num + 1);
     }
   }
 }

@@ -13,8 +13,9 @@
  */
 
 include "../utils/EVMOpcodes.dfy"
-include "./Splitter.dfy"
+// include "./Splitter.dfy"
 include "../utils/MiscTypes.dfy"
+include "../utils/LinSegments.dfy"
 
 /**
   * Provides ability to generate Dafny code from segments.
@@ -23,7 +24,7 @@ include "../utils/MiscTypes.dfy"
 module SegBuilder {
 
   import opened EVMOpcodes
-  import opened Splitter
+  import opened LinSegments
   import opened MiscTypes
   import opened Instructions
 

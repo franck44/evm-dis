@@ -23,11 +23,8 @@ include "./prettyprinters/Pretty.dfy"
 module Driver {
 
   import opened BinaryDecoder
-//   import opened EVMOpcodes
   import opened Splitter
-  import opened SegBuilder
   import opened PrettyPrinters
-//   import opened Instructions
 
   /**
     *  Read the input string
@@ -54,24 +51,6 @@ module Driver {
       //    Print the segments
       var y := SplitUpToTerminal(x, [], []);
       PrintSegments(y);
-    }
-  }
-
-  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
-  {
-    if |xs| > 0 {
-      // 
-      print "Segment ", num, "\n";
-      var k := xs[0].WeakestPreOperands(0);
-      var l := xs[0].WeakestPreCapacity(0);
-      if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
-        //  Print the stack tracker value
-        print "JUMP/JUMPI: ", JUMPResolver(xs[0]), "\n";
-      }
-      print "WeakestPre Operands:", k, "\n";
-      print "WeakestPre Capacity:", l, "\n";
-      PrintInstructions(xs[0].Ins());
-      PrintSegments (xs[1..], num + 1);
     }
   }
 }
