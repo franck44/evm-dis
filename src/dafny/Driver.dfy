@@ -30,7 +30,7 @@ module Driver {
   /**
     *  Read the input string
     */
-  method {:verify true} {:main} Main(args: seq<string>)
+  method {:verify true} {:main2} Main(args: seq<string>)
   {
     if |args| < 2 {
       print "Expected 1 arguments, got ", |args| - 1, "\n";
@@ -41,7 +41,7 @@ module Driver {
     }
   }
 
-  method {:verify true} Main2(args: seq<string>)
+  method {:verify true} {:main} Main2(args: seq<string>)
   {
     if |args| < 2 {
       print "Expected 1 arguments, got ", |args| - 1, "\n";
