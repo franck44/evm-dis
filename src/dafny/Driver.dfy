@@ -62,7 +62,7 @@ module Driver {
   /**
     *   Print proof objects
     */
-  method {:verify true} {:main} Main3(args: seq<string>)
+  method {:verify true} {:main2} Main3(args: seq<string>)
   {
     if |args| < 2 {
       print "Expected 1 arguments, got ", |args| - 1, "\n";
@@ -73,6 +73,23 @@ module Driver {
       var y := SplitUpToTerminal(x, [], []);
       var z := BuildProofObject(y);
       PrintProofObject(z);
+    }
+  }
+
+  /**
+    *   Print proof objects to Dafny
+    */
+  method {:verify true} {:main} Main4(args: seq<string>)
+  {
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      var z := BuildProofObject(y);
+      PrintProofObjectToDafny(z);
     }
   }
 }

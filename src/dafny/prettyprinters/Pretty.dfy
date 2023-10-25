@@ -78,5 +78,35 @@ module PrettyPrinters {
       PrintProofObject(xs[1..], num + 1);
     }
   }
+
+  method {:tailrec} PrintProofObjectToDafny(xs: seq<ProofObj>, num: nat := 0)
+  {
+    if |xs| > 0 {
+      // 
+      print "function ExecuteFromTag_", num, "(st: EvmState.ExecutingState): (s': EvmState.State)\n";
+      print "  requires st.Operands() >= ", xs[0].wpOp, "\n";
+      print "  trequires st.Capacity() >= ", xs[0].wpCap, "\n";
+
+      print "  ensures s'.EXECUTING?\n";
+      print "{\n";
+        PrintInstructionsToDafny(xs[0].s.Ins());
+      print "}\n";
+      
+
+    //   print "WeakestPre Capacity:", xs[0].wpCap, "\n";
+    //   if xs[0].JUMP? {
+    //     //  Print the stack tracker value
+    //     print "JUMP/JUMPI: ", xs[0].tgt, "\n";
+    //   }
+
+    //   PrintInstructions(xs[0].s.Ins());
+      PrintProofObjectToDafny(xs[1..], num + 1);
+    }
+  }
+
+  method PrintInstructionsToDafny(xs:seq<Instruction>)
+  {
+    PrintInstructions(xs);
+  }
 }
 
