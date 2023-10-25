@@ -17,7 +17,8 @@ include "../utils/Instructions.dfy"
 include "../utils/LinSegments.dfy"
 include "../utils/ProofObject.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
-
+include "../utils/OpcodesConstants.dfy"
+include "./PrettyInstruction.dfy"
 /**
   *  Provides pretty printers.
   */
@@ -30,6 +31,8 @@ module PrettyPrinters {
   import opened LinSegments
   import SegBuilder
   import opened ProofObject
+  import opened EVMConstants
+  import opened PrettyIns
 
   /**
     *  Print disassembled code to stdout.
@@ -83,6 +86,7 @@ module PrettyPrinters {
   {
     if |xs| > 0 {
       // 
+      print "\n/** Code staring at 0x", NatToHex(xs[0].s.Ins()[0].address),  " */\n";
       print "function ExecuteFromTag_", num, "(st: EvmState.ExecutingState): (s': EvmState.State)\n";
       print "  requires st.Operands() >= ", xs[0].wpOp, "\n";
       print "  trequires st.Capacity() >= ", xs[0].wpCap, "\n";
@@ -91,22 +95,21 @@ module PrettyPrinters {
       print "{\n";
         PrintInstructionsToDafny(xs[0].s.Ins());
       print "}\n";
-      
-
-    //   print "WeakestPre Capacity:", xs[0].wpCap, "\n";
-    //   if xs[0].JUMP? {
-    //     //  Print the stack tracker value
-    //     print "JUMP/JUMPI: ", xs[0].tgt, "\n";
-    //   }
-
-    //   PrintInstructions(xs[0].s.Ins());
       PrintProofObjectToDafny(xs[1..], num + 1);
     }
   }
 
   method PrintInstructionsToDafny(xs:seq<Instruction>)
   {
-    PrintInstructions(xs);
+    // PrintInstructions(xs);
+    if |xs| > 0 {
+        var k := PrintInstructionToDafny(xs[0]);
+        print k, "\n";
+        PrintInstructionsToDafny(xs[1..]);
+    } 
   }
+
+    
+
 }
 
