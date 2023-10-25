@@ -38,6 +38,17 @@ module Driver {
       var x := Disassemble(args[1], []);
       PrintInstructions(x);
 
+    }
+  }
+
+  method {:verify true} Main2(args: seq<string>)
+  {
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+      PrintInstructions(x);
+
       //    Print the segments
       var y := SplitUpToTerminal(x, [], []);
       PrintSegments(y);

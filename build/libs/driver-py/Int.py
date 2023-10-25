@@ -13,6 +13,27 @@ class default__:
     def  __init__(self):
         pass
 
+    @staticmethod
+    def Abs(x):
+        if (x) >= (0):
+            return x
+        elif True:
+            return (0) - (x)
+
+    @staticmethod
+    def Max(i1, i2):
+        if (i1) >= (i2):
+            return i1
+        elif True:
+            return i2
+
+    @staticmethod
+    def Min(i1, i2):
+        if (i1) < (i2):
+            return i1
+        elif True:
+            return i2
+
     @_dafny.classproperty
     def TWO__8(instance):
         return 256
