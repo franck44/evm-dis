@@ -28,7 +28,11 @@ module PrettyIns {
   import opened Instructions
   import opened EVMConstants
 
-  function PrintInstructionToDafny(i: Instruction): string
+  /**
+    *   @param  src Name of the source state,
+    *   @param  tgt Name of the new target state.
+    */
+  function PrintInstructionToDafny(i: Instruction, src: nat, tgt: nat): string
   {
     match i.op.opcode
     // case STOP       => SysOp("STOP", STOP)
@@ -44,7 +48,7 @@ module PrettyIns {
     // case EXP        => ArithOp("EXP", EXP)
     // case SIGNEXTEND => ArithOp("SIGNEXTEND", SIGNEXTEND)
     // 0x10s: Comparison & Bitwise Logic
-    // case LT     => CompOp("LT", LT)
+    case LT     => "var s" + DecToString(tgt) + " := Bytecode.Lt(s" + DecToString(src) + ");"
     // case GT     => CompOp("GT", GT)
     // case SLT    => CompOp("SLT", SLT)
     // case SGT    => CompOp("SGT", SGT)
@@ -88,24 +92,24 @@ module PrettyIns {
     // case SELFBALANCE => EnvOp("SELFBALANCE", SELFBALANCE)
     // case BASEFEE     => EnvOp("BASEFEE", BASEFEE)
     // // 0x50s: Stack, Memory, Storage and Flow
-    // case POP      => StackOp("POP", POP, 0, 1, 0, 1)
+    case POP      => "var s" + DecToString(tgt) + " := Pop(s" + DecToString(src) + ");"
     // case MLOAD    => MemOp("MLOAD", MLOAD, 0, 1, 1, 1)
-    // case MSTORE   => MemOp("MSTORE", MSTORE, 0, 2, 0, 2)
+    case MSTORE   => "var s" + DecToString(tgt) + " := Bytecode.MStore(s" + DecToString(src) + ");"
     // case MSTORE8  => MemOp("MSTORE8", MSTORE8, 0, 2, 0, 2)
     // case SLOAD    => StorageOp("SLOAD", SLOAD, 0, 1, 1, 1)
     // case SSTORE   => StorageOp("SSTORE", SSTORE, 0, 2, 0, 2)
-    case JUMP     => "var s := Jump(s');"
-    case JUMPI    => "var s := JumpI(s');"
+    case JUMP     => "var s" + DecToString(tgt) + " := Jump(s" + DecToString(src) + ");"
+    case JUMPI    => "var s" + DecToString(tgt) + " := JumpI(s" + DecToString(src) + ");"
     // case RJUMP     => JumpOp("RJUMP", RJUMP, 0, 1, 0, 1)
     // case RJUMPI    => JumpOp("RJUMPI", RJUMPI, 0, 2, 0, 2)
     // case RJUMPV    => JumpOp("RJUMPV", RJUMPV, 0, 2, 0, 2)
     // case PC       => RunOp("PC", PC, 1, 0, 1, 0)
     // case MSIZE    => RunOp("MSIZE", MSIZE, 1, 0, 1, 0)
     // case GAS      => RunOp("GAS", GAS, 1, 0, 1, 0)
-    // case JUMPDEST => JumpOp("JUMPDEST", JUMPDEST, 0, 0, 0, 0)
-    // case PUSH0    => StackOp("PUSH0", PUSH0, 1, 0, 1, 0)
+    case JUMPDEST => "var s" + DecToString(tgt) + " := JumpDest(s" + DecToString(src) + ");"
+    case PUSH0    => "var s" + DecToString(tgt) + " := Push0(s" + DecToString(src) + ");"
     // // 0x60s & 0x70s: Push operations
-    // case PUSH1 => StackOp("PUSH1", PUSH1, 1, 0, 1, 0)
+    case PUSH1 => "var s" + DecToString(tgt) + " := Push1(s" + DecToString(src) + ", 0x" + i.arg + ");"
     // case PUSH2 => StackOp("PUSH2", PUSH2, 1, 0, 1, 0)
     // case PUSH3 => StackOp("PUSH3", PUSH3, 1, 0, 1, 0)
     // case PUSH4 => StackOp("PUSH4", PUSH4, 1, 0, 1, 0)
@@ -138,10 +142,10 @@ module PrettyIns {
     // case PUSH31 => StackOp("PUSH31", PUSH31, 1, 0, 1, 0)
     // case PUSH32 => StackOp("PUSH32", PUSH32, 1, 0, 1, 0)
     // // 0x80s: Duplicate operations
-    // case DUP1 => StackOp("DUP1", DUP1, minCapacity := 1, minOperands := 1, pushes := 1, pops := 0)
-    // case DUP2 => StackOp("DUP2", DUP2, minCapacity := 1, minOperands := 2, pushes := 1, pops := 0)
-    // case DUP3 => StackOp("DUP3", DUP3, minCapacity := 1, minOperands := 3, pushes := 1, pops := 0)
-    // case DUP4 => StackOp("DUP4", DUP4, minCapacity := 1, minOperands := 4, pushes := 1, pops := 0)
+    case DUP1 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 1);"
+    case DUP2 =>  "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 2);"
+    case DUP3 =>  "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 3);"
+    case DUP4 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 3);"
     // case DUP5 => StackOp("DUP5", DUP5, minCapacity := 1, minOperands := 5, pushes := 1, pops := 0)
     // case DUP6 => StackOp("DUP6", DUP6, minCapacity := 1, minOperands := 6, pushes := 1, pops := 0)
     // case DUP7 => StackOp("DUP7", DUP7, minCapacity := 1, minOperands := 7, pushes := 1, pops := 0)
@@ -155,7 +159,8 @@ module PrettyIns {
     // case DUP15 => StackOp("DUP15", DUP15, minCapacity := 1, minOperands := 15, pushes := 1, pops := 0)
     // case DUP16 => StackOp("DUP16", DUP16, minCapacity := 1, minOperands := 16, pushes := 1, pops := 0)
     // // 0x90s: Exchange operations
-    // case SWAP1 => StackOp("SWAP1", SWAP1, minCapacity := 0, minOperands := 1 + 1)
+    case SWAP1 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 1);"
+    case SWAP2 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 2);"
     // case SWAP2 => StackOp("SWAP2", SWAP2, minCapacity := 0, minOperands := 2 + 1)
     // case SWAP3 => StackOp("SWAP3", SWAP3, minCapacity := 0, minOperands := 3 + 1)
     // case SWAP4 => StackOp("SWAP4", SWAP4, minCapacity := 0, minOperands := 4 + 1)
@@ -182,7 +187,7 @@ module PrettyIns {
     // //  @todo: verify call efeect on stack
     // case CALL => SysOp("CALL", CALL, 0, 7, 7, 7)
     // case CALLCODE => SysOp("CALLCODE", CALLCODE, 0, 7, 7, 7)
-    // case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 0)
+    case RETURN => "var s" + DecToString(tgt) + " := Return(s" + DecToString(src) + ");"
     // case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 0, 6, 0, 6)
     // case CREATE2 => SysOp("CREATE2", CREATE2)
     // case STATICCALL => SysOp("STATICCALL", STATICCALL)
@@ -191,6 +196,33 @@ module PrettyIns {
     // case _ => SysOp("INVALID", INVALID)
     case _ => i.op.name
   }
+
+  /**
+    *  Encode a decimal number into a Hex.
+    */
+  function DecToChar(n: nat): char
+    requires 0 <= n < 10
+    ensures '0' <= DecToChar(n) <= '9' 
+  {
+    match n
+    case 0 => '0'
+    case 1 => '1'
+    case 2 => '2'
+    case 3 => '3'
+    case 4 => '4'
+    case 5 => '5'
+    case 6 => '6'
+    case 7 => '7'
+    case 8 => '8'
+    case 9 => '9'
+  }
+
+  function DecToString(n: nat): string
+  {
+    if n < 10 then [DecToChar(n)]
+    else DecToString(n / 10) + [DecToChar(n % 10)]
+  }
+
 
 }
 

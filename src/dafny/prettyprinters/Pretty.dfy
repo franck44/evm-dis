@@ -86,10 +86,12 @@ module PrettyPrinters {
   {
     if |xs| > 0 {
       // 
-      print "\n/** Code staring at 0x", NatToHex(xs[0].s.Ins()[0].address),  " */\n";
-      print "function ExecuteFromTag_", num, "(st: EvmState.ExecutingState): (s': EvmState.State)\n";
-      print "  requires st.Operands() >= ", xs[0].wpOp, "\n";
-      print "  trequires st.Capacity() >= ", xs[0].wpCap, "\n";
+      var startAddress := NatToHex(xs[0].s.Ins()[0].address);
+      print "\n/** Code staring at 0x", startAddress,  " */\n";
+      print "function ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
+      print "  requires s0.PC() == 0x", startAddress, " as nat\n";
+      print "  requires s0.Operands() >= ", xs[0].wpOp, "\n";
+      print "  requires s0.Capacity() >= ", xs[0].wpCap, "\n";
 
       print "  ensures s'.EXECUTING?\n";
       print "{\n";
@@ -99,13 +101,13 @@ module PrettyPrinters {
     }
   }
 
-  method PrintInstructionsToDafny(xs:seq<Instruction>)
+  method PrintInstructionsToDafny(xs:seq<Instruction>, pos: nat := 0)
   {
     // PrintInstructions(xs);
     if |xs| > 0 {
-        var k := PrintInstructionToDafny(xs[0]);
-        print k, "\n";
-        PrintInstructionsToDafny(xs[1..]);
+        var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
+        print "  ", k, "\n";
+        PrintInstructionsToDafny(xs[1..], pos + 1);
     } 
   }
 
