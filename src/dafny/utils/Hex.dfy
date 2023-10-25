@@ -77,6 +77,14 @@ module Hex {
     U128ToHex((n as nat / TWO_128) as u128) + U128ToHex((n as nat % TWO_128) as u128)
   }
 
+  function NatToHex(n: nat): string
+    // ensures |U256ToHex(n)| == 64
+  {
+    if n > 0 then NatToHex(n / 16) + [DecToHex(n % 16)]
+    else ""
+    // U128ToHex((n as nat / TWO_128) as u128) + U128ToHex((n as nat % TWO_128) as u128)
+  }
+
   // From hex to Decimal and back.
 
   /**
