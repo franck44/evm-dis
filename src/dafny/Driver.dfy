@@ -15,6 +15,7 @@
 include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
+include "./prettyprinters/Pretty.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -22,10 +23,11 @@ include "./proofobjectbuilder/SegmentBuilder.dfy"
 module Driver {
 
   import opened BinaryDecoder
-  import opened EVMOpcodes
+//   import opened EVMOpcodes
   import opened Splitter
   import opened SegBuilder
-  import opened Instructions
+  import opened PrettyPrinters
+//   import opened Instructions
 
   /**
     *  Read the input string
@@ -52,19 +54,6 @@ module Driver {
       //    Print the segments
       var y := SplitUpToTerminal(x, [], []);
       PrintSegments(y);
-    }
-  }
-
-  /**
-    *  Print disassembled code to stdout.
-    */
-  method {:tailrec} PrintInstructions(s: seq<Instruction>)
-  {
-    if |s| > 0 {
-      //  The addresses should fit within TWO_32, otherwise there is a problem.
-      var formattedAddress := if s[0].address < Int.TWO_32 then Hex.U32ToHex(s[0].address as Int.u32) else "OutofRange";
-      print formattedAddress, ": ", s[0].ToString(), "\n";
-      PrintInstructions (s[1..]);
     }
   }
 
