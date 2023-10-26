@@ -139,6 +139,12 @@ class default__:
             return EVMOpcodes.Opcode_JumpOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMP")), EVMConstants.default__.JUMP, 0, 1, 0, 1)
         elif (op) == (87):
             return EVMOpcodes.Opcode_JumpOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMPI")), EVMConstants.default__.JUMPI, 0, 2, 0, 2)
+        elif (op) == (92):
+            return EVMOpcodes.Opcode_JumpOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RJUMP")), EVMConstants.default__.RJUMP, 0, 1, 0, 1)
+        elif (op) == (93):
+            return EVMOpcodes.Opcode_JumpOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RJUMPI")), EVMConstants.default__.RJUMPI, 0, 2, 0, 2)
+        elif (op) == (94):
+            return EVMOpcodes.Opcode_JumpOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RJUMPV")), EVMConstants.default__.RJUMPV, 0, 2, 0, 2)
         elif (op) == (88):
             return EVMOpcodes.Opcode_RunOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "PC")), EVMConstants.default__.PC, 1, 0, 1, 0)
         elif (op) == (89):

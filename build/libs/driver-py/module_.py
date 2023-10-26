@@ -14,8 +14,13 @@ import OpcodeDecoder
 import Hex
 import Instructions
 import BinaryDecoder
+import LinSegments
 import Splitter
 import SegBuilder
+import ProofObject
+import PrettyIns
+import PrettyPrinters
+import ProofObjectBuilder
 import Driver
 
 # Module: module_

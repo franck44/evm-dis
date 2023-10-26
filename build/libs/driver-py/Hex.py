@@ -20,27 +20,27 @@ class default__:
 
     @staticmethod
     def HexToU8(s):
-        source0_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
-        d_0___mcc_h0_ = source0_[0]
-        d_1___mcc_h1_ = source0_[1]
-        source1_ = d_0___mcc_h0_
-        if source1_.is_None:
-            source2_ = d_1___mcc_h1_
-            if source2_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_2___mcc_h2_ = source2_.v
-                return MiscTypes.Option_None()
-        elif True:
-            d_3___mcc_h4_ = source1_.v
-            source3_ = d_1___mcc_h1_
+        source1_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
+        d_84___mcc_h0_ = source1_[0]
+        d_85___mcc_h1_ = source1_[1]
+        source2_ = d_84___mcc_h0_
+        if source2_.is_None:
+            source3_ = d_85___mcc_h1_
             if source3_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_4___mcc_h6_ = source3_.v
-                d_5_v2_ = d_4___mcc_h6_
-                d_6_v1_ = d_3___mcc_h4_
-                return MiscTypes.Option_Some(((16) * (d_6_v1_)) + (d_5_v2_))
+                d_86___mcc_h2_ = source3_.v
+                return MiscTypes.Option_None()
+        elif True:
+            d_87___mcc_h4_ = source2_.v
+            source4_ = d_85___mcc_h1_
+            if source4_.is_None:
+                return MiscTypes.Option_None()
+            elif True:
+                d_88___mcc_h6_ = source4_.v
+                d_89_v2_ = d_88___mcc_h6_
+                d_90_v1_ = d_87___mcc_h4_
+                return MiscTypes.Option_Some(((16) * (d_90_v1_)) + (d_89_v2_))
 
     @staticmethod
     def U8ToHex(n):
@@ -65,6 +65,20 @@ class default__:
     @staticmethod
     def U256ToHex(n):
         return (default__.U128ToHex(_dafny.euclidian_division(n, Int.default__.TWO__128))) + (default__.U128ToHex(_dafny.euclidian_modulus(n, Int.default__.TWO__128)))
+
+    @staticmethod
+    def NatToHex(n):
+        d_91___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        while True:
+            with _dafny.label():
+                if (n) < (16):
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(n)])) + (d_91___accumulator_)
+                elif True:
+                    d_91___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, 16))])) + (d_91___accumulator_)
+                    in0_ = _dafny.euclidian_division(n, 16)
+                    n = in0_
+                    raise _dafny.TailCall()
+                break
 
     @staticmethod
     def HexVal(c):
