@@ -122,14 +122,19 @@ module Instructions {
       case EnvOp(_, _, _, _, _, _)        => Left("Not implemented")
       case MemOp(_, _, _, _, _, _)        => Left("Not implemented")
       case StorageOp(_, _, _, _, _, _)    => Left("Not implemented")
+
       case JumpOp(_, opcode, _, _, _, _)       =>
         if opcode == JUMPDEST then
           Right(pos')
-        else
+        else if JUMP <= opcode <= JUMPI then 
           //    If JUMP +1, if JUMPI + 2 
           var k := opcode - JUMP + 1;
           Right(pos' + k as nat)
-      case RunOp(_, _, _, _, _, _)        => Right(0)
+        else 
+            Left("Not implemented")
+
+      case RunOp(_, _, _, _, _, _)        => Left("Not implemented")
+
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
           //  PUSH k
@@ -151,8 +156,8 @@ module Instructions {
           Right(pos' + 1)
 
 
-      case LogOp(_, _, _, _, _, _) => Right(0)
-      case SysOp(_, _, _, _, _, _) => Right(0)
+      case LogOp(_, _, _, _, _, _) => Left("Not implemented")
+      case SysOp(_, _, _, _, _, _) => Left("Not implemented")
     }
   }
 }
