@@ -31,34 +31,100 @@ module PosTrackerTests {
   import opened EVMConstants
   import opened Instructions
 
-  /** Arithnmetic instructions */
-  //   method {:test} Arith()
-  //   {
-  //     for k := ADD to SIGNEXTEND
-  //     {
-  //       var i := Decode(k);
-  //       var r1 := i.StackEffect();
-  //       var r2 := i.WeakestPreOperands(0);
-  //       var r3 := i.WeakestPreCapacity(0);
-  //       expect r1 == -1;
-  //       expect r2 == 2;
-  //       expect r3 == 0;
-  //     }
-  //   }
+  /** Arithmetic instruction. Proofs. */
+  method Ariths(k: nat, op: Int.u8)
+    requires ADD <= op <= SIGNEXTEND
+  {
+    {
+      var i := Instruction(Decode(op));
+      var r := i.StackPosBackWardTracker(k);
+      if k > 0 {
+        assert r == Right(k + 2);
+      } else {
+        assert r.Left?;
+      }
+    }
+  }
+
+  /** Concrete tests. */
+  method {:test} ArithsTests()
+  {
+    {
+      var i := Instruction(Decode(ADD));
+      var r := i.StackPosBackWardTracker(0);
+      assert r.Left?;
+    }
+
+    {
+      var i := Instruction(Decode(ADD));
+      var r := i.StackPosBackWardTracker(1);
+      assert r == Right(2);
+    }
+  }
 
   /** Comparison instructions. */
-  //   method {:test} Comp()
-  //   {
-  //     for k := LT to EQ
-  //     {
-  //       var i := Decode(k);
-  //       var r1 := i.StackEffect();
-  //       var r2 := i.WeakestPreOperands(0);
-  //       var r3 := i.WeakestPreCapacity(0);
-  //       expect r1 == -1;
-  //       expect r2 == 2;
-  //       expect r3 == 0;
-  //     }
+  method Comps1(k: nat, op: Int.u8)
+    requires LT <= op <= SGT
+  {
+    {
+      var i := Instruction(Decode(op));
+      var r := i.StackPosBackWardTracker(k);
+      if k > 0 {
+        assert r == Right(k + 2);
+      } else {
+        assert r.Left?;
+      }
+    }
+  }
+
+  method Comps2(k: nat, op: Int.u8)
+    requires EQ <= op <= ISZERO
+  {
+    {
+      var i := Instruction(Decode(op));
+      var r := i.StackPosBackWardTracker(k);
+      if k > 0 {
+        assert r == Right(k + 1);
+      } else {
+        assert r.Left?;
+      }
+    }
+  }
+
+  /** Concrete tests. */
+  method {:test} CompsTests()
+  {
+    {
+      var i := Instruction(Decode(GT));
+      var r := i.StackPosBackWardTracker(0);
+      assert r.Left?;
+    }
+
+    {
+      var i := Instruction(Decode(EQ));
+      var r := i.StackPosBackWardTracker(0);
+      assert r.Left?;
+    }
+
+    {
+      var i := Instruction(Decode(ISZERO));
+      var r := i.StackPosBackWardTracker(0);
+      assert r.Left?;
+    }
+
+    {
+      var i := Instruction(Decode(SLT));
+      var r := i.StackPosBackWardTracker(2);
+      assert r == Right(3);
+    }
+
+    {
+      var i := Instruction(Decode(ISZERO));
+      var r := i.StackPosBackWardTracker(12);
+      assert r == Right(13);
+    }
+  }
+
 
   // {
   //   var i := Decode(ISZERO);

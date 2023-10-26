@@ -115,23 +115,33 @@ module Instructions {
     function StackPosBackWardTracker(pos': nat := 0): Either<seq<char>, nat>
     {
       match this.op
-      case ArithOp(_, _, _, _, _, _)      => Left("Not implemented")
-      case CompOp(_, _, _, _, _, _)       => Left("Not implemented")
+      case ArithOp(_, _, _, _, pushes, pops)      =>
+        //  if pos' == 0, the value depends on two stack elements and
+        //  we don't track it
+        if pos' >= 1 then Right(pos' + pops - pushes)
+        else Left("More than one predecessor. Arithmetic operator with target 0")
+
+      case CompOp(_, _, _, _, pushes, pops)       => 
+        //  Same as Arithmetic operator, except some have only one operand.
+        if pos' >= 1 then 
+            Right(pos' + pops - pushes)
+        else Left("More than one predecessor. Comparison operator with target 0")
+
       case BitwiseOp(_, _, _, _, _, _)    => Left("Not implemented")
       case KeccakOp(_, _, _, _, _, _)     => Left("Not implemented")
       case EnvOp(_, _, _, _, _, _)        => Left("Not implemented")
       case MemOp(_, _, _, _, _, _)        => Left("Not implemented")
       case StorageOp(_, _, _, _, _, _)    => Left("Not implemented")
 
-      case JumpOp(_, opcode, _, _, _, _)       =>
+      case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then
           Right(pos')
-        else if JUMP <= opcode <= JUMPI then 
-          //    If JUMP +1, if JUMPI + 2 
+        else if JUMP <= opcode <= JUMPI then
+          //    If JUMP +1, if JUMPI + 2
           var k := opcode - JUMP + 1;
           Right(pos' + k as nat)
-        else 
-            Left("Not implemented")
+        else
+          Left("Not implemented")
 
       case RunOp(_, _, _, _, _, _)        => Left("Not implemented")
 
