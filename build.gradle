@@ -136,7 +136,7 @@ final DAFNY4_VERIFY_FLAGS = [
 
 final DAFNY4_TEST_FLAGS = [
     'test',
-    '--no-verify',
+    // '--no-verify',
     // '--target','java',
     // '--function-syntax','4',
     // '--quantifier-syntax','4'
