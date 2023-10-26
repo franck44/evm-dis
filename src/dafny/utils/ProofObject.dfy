@@ -29,6 +29,12 @@ module ProofObject {
   datatype ProofObj =
     |  JUMP(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>, tgt: Either<seq<char>, nat>)
     |  TERMINAL(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>)
+    {
+        function CollectJumpDest(): seq<nat> 
+        {   
+            s.CollectJumpDest()
+        }
+    }
 
 }
 

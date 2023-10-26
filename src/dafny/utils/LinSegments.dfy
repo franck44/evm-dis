@@ -51,6 +51,18 @@ module LinSegments {
       this.ins + [this.lastIns]
     }
 
+    //  LastIns cnnaot be a JUMPDEST
+    function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := ins): seq<nat>
+    {
+        if |rest| == 0 then []
+        else 
+            if rest[0].op.opcode == JUMPDEST then 
+                [rest[0].address] + CollectJumpDest(rest[1..])
+            else 
+                CollectJumpDest(rest[1..])
+    }
+ 
+
     /**
       *  The weakest precondition that guarantees that the segment can executed
       *  without a stack underflow, and such that at the end there are at least 
