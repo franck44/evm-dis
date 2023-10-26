@@ -158,6 +158,7 @@ task verify {
     doLast {
         // Create build directory (Dafny doesn't do this for us)
         mkdir "build/logs"
+        //
         fileTree("src/dafny").include('**/*.dfy').each {
             File file -> {
                 // Construct logging option
