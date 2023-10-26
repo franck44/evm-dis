@@ -28,69 +28,52 @@ module Driver {
   import opened PrettyPrinters
   import opened ProofObjectBuilder
 
+  const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
+
   /**
     *  Read the input string
+    *   @param  args    
+    *   @note   If one arg, this is the string to parse and disassemble.
+    *   @note   If two args, first one must be "-d" or "-p" or "-a" to select
+    *           the type of outputs.
     */
-  method {:verify true} {:main2} Main(args: seq<string>)
+  method {:verify true} {:main} Main(args: seq<string>)
   {
     if |args| < 2 {
-      print "Expected 1 arguments, got ", |args| - 1, "\n";
-    } else {
+      print "Not enough arguments\n";
+      print usageMsg, "\n";
+    } else if |args| == 2 {
+      //  Disassemble
+      print "Disassembling code", "\n";
       var x := Disassemble(args[1], []);
       PrintInstructions(x);
-
-    }
-  }
-
-  /**
-    *   Print segments 
-    */
-  method {:verify true} {:main2} Main2(args: seq<string>)
-  {
-    if |args| < 2 {
-      print "Expected 1 arguments, got ", |args| - 1, "\n";
     } else {
-      var x := Disassemble(args[1], []);
-      PrintInstructions(x);
+      assert |args| >= 3;
+      match args[1]
+      case "-d" =>
+        //  Disassemble
+        print "Disassembling code", "\n";
+        var x := Disassemble(args[2], []);
+        PrintInstructions(x);
 
-      //    Print the segments
-      var y := SplitUpToTerminal(x, [], []);
-      PrintSegments(y);
-    }
+      case "-p" =>
+        //  Disassemble and compute proof object
+        var x := Disassemble(args[2], []);
+        var y := SplitUpToTerminal(x, [], []);
+        var z := BuildProofObject(y);
+        PrintProofObjectToDafny(z);
+
+      case "-a" =>
+        var x := Disassemble(args[2], []);
+        PrintInstructions(x);
+        var y := SplitUpToTerminal(x, [], []);
+        var z := BuildProofObject(y);
+        PrintProofObjectToDafny(z);
+
+      case _ =>
+        print "Cannot parse arguments ", args[1], "\n";
+        print usageMsg, "\n";    }
   }
 
-  /**
-    *   Print proof objects
-    */
-  method {:verify true} {:main2} Main3(args: seq<string>)
-  {
-    if |args| < 2 {
-      print "Expected 1 arguments, got ", |args| - 1, "\n";
-    } else {
-      var x := Disassemble(args[1], []);
-
-      //    Print the segments
-      var y := SplitUpToTerminal(x, [], []);
-      var z := BuildProofObject(y);
-      PrintProofObject(z);
-    }
-  }
-
-  /**
-    *   Print proof objects to Dafny
-    */
-  method {:verify true} {:main} Main4(args: seq<string>)
-  {
-    if |args| < 2 {
-      print "Expected 1 arguments, got ", |args| - 1, "\n";
-    } else {
-      var x := Disassemble(args[1], []);
-
-      //    Print the segments
-      var y := SplitUpToTerminal(x, [], []);
-      var z := BuildProofObject(y);
-      PrintProofObjectToDafny(z);
-    }
-  }
 }
 
