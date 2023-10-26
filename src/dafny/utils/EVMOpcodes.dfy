@@ -85,7 +85,7 @@ module EVMOpcodes {
     }
 
     /**
-      * Whether an opcode is terminal (branching).
+      * Whether an opcode is terminal.
       */
     predicate IsTerminal()
     {
@@ -98,6 +98,23 @@ module EVMOpcodes {
       case RJUMPV => true
       case RETURN => true
       case REVERT => true
+      case _      => false
+    }
+
+    /**
+      * Whether an opcode is a jump (branching).
+      */
+    predicate IsJump()
+        requires IsValid()
+    {
+      match this.opcode
+      case JUMP   => true
+      case JUMPI  => true
+    //   case RJUMP  => true
+    //   case RJUMPI => true
+    //   case RJUMPV => true
+    //   case RETURN => true
+    //   case REVERT => true
       case _      => false
     }
 
