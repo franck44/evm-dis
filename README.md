@@ -4,9 +4,9 @@
 # Overview
 
 This project provides an EVM bytecode _disassembler_.
-The diassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and `RJump`s, [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
+The disassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and `RJump`s, [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
 
-The diassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it. 
+The disassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it. 
 For instance the following binary string,  `prog` : 
 ```
 600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
@@ -249,8 +249,8 @@ From Dafny, we can generate some target code in several languages. To begin with
 Python and Java code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
-### Python diassembler
-The Python diassembler is in `build/driver-py`.
+### Use the Python version of the disassembler
+The Python disassembler is in `build/driver-py`.
 
 It can be used with an input string as follows:
 ```zsh
@@ -268,9 +268,12 @@ To parse a binary representation from a file `file.evm` use:
 ```zsh
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py $(<file.evm)
 PUSH1 0x40
+```
 
+To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
+
+```zsh
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"      
-
 /** Code starting at 0x0 */
 function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
   requires s0.PC() == 0x0 as nat
@@ -284,9 +287,9 @@ function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
 
 ```
 
-### Java disassembler
+### Use the Java version of the disassembler
 
-The java diassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
+The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
 It can be used with an input string as follows:
 ```zsh
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
@@ -303,8 +306,10 @@ To parse a binary representation from a file `file.evm` use:
 ```zsh
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar $(<file.evm)
 PUSH1 0x40
-
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"
+```
+To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
+```zsh
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar -p "6040"    
 
 /** Code starting at 0x0 */
 function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
