@@ -41,19 +41,19 @@ module BinaryDecoder {
     if |s| == 0 then
       p
     else if |s| == 1 then
-      p + [Instruction(Decode(INVALID), [], next)]
+      p + [Instruction(Decode(INVALID), s, next)]
     else
       assert |s| >= 2;
       // Try to decode next instruction
       match HexToU8(s[..2])
-      case None => p + [Instruction(Decode(INVALID), [], next)]
+      case None => p + [Instruction(Decode(INVALID), s[..2], next)]
       case Some(v) =>
         //  Try to read parameters of opcode
         var op := Decode(v);
         if op.Args() > 0 then
           //  try to skip 2 * Args()
           if |s[2..]| < 2 * op.Args() then
-            p + [Instruction(Decode(INVALID))]
+            p + [Instruction(Decode(INVALID), "not enough arguments for " + s[2..], next)]
           else
             assert |s[2..][2 * op.Args()..]| < |s|;
             Disassemble(s[2..][2 * op.Args()..], p + [Instruction(op, s[2..][..2 * op.Args()], next)], next + 1 + op.Args() )

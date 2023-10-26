@@ -42,7 +42,10 @@ module Instructions {
     function ToString(): string
     {
       var x: string := arg;
-      op.Name() + (if |x| > 0 then " 0x" + x else "")
+      if op.opcode == INVALID then 
+        op.Name() + " " + x
+      else 
+        op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
 
     /**
