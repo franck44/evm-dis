@@ -35,7 +35,10 @@ class Instruction:
         return isinstance(self, Instruction_Instruction)
     def ToString(self):
         d_92_x_ = (self).arg
-        return (((self).op).Name()) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x"))) + (d_92_x_) if (len(d_92_x_)) > (0) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))))
+        if (((self).op).opcode) == (EVMConstants.default__.INVALID):
+            return (((self).op).Name()) + (d_92_x_)
+        elif True:
+            return (((self).op).Name()) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x"))) + (d_92_x_) if (len(d_92_x_)) > (0) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))))
 
     def IsTerminal(self):
         return ((self).op).IsTerminal()
