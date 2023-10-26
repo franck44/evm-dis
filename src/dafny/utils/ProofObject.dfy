@@ -29,12 +29,23 @@ module ProofObject {
   datatype ProofObj =
     |  JUMP(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>, tgt: Either<seq<char>, nat>)
     |  TERMINAL(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>)
+  {
+    /**
+      * The addresses of the JUMPDEST instructions.
+      */
+    function CollectJumpDest(): seq<nat>
     {
-        function CollectJumpDest(): seq<nat> 
-        {   
-            s.CollectJumpDest()
-        }
+      s.CollectJumpDest()
     }
+
+    /**
+      * The net stack effect of a sequence of instructions in a linear segment.
+      * @note   The number of pushes minus the number of pops.
+      */
+    function StackEffect(): int {
+      s.StackEffect()
+    }
+  }
 
 }
 

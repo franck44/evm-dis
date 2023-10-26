@@ -143,6 +143,16 @@ module PrettyPrinters {
         print "\n";
       }
 
+      //    Print the constraint for the net stack size effect  
+      var n := xs[0].StackEffect();
+      print "  ensures s'.Operands() == s0.Operands()";
+      if n >= 0 {
+        print " + ", n;
+      } else {
+        print " - ", -n;
+      }
+      print "\n";
+
       print "{\n";
       print "  ValidJumpDest(s0);\n";
       PrintInstructionsToDafny(xs[0].s.Ins());

@@ -51,7 +51,11 @@ module LinSegments {
       this.ins + [this.lastIns]
     }
 
-    //  LastIns cnnaot be a JUMPDEST
+    function StackEffect(xs: seq<Instruction> := Ins()) : int {
+        StackEffectHelper(xs)
+    }
+
+    //  LastIns cannot be a JUMPDEST
     function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := ins): seq<nat>
     {
         if |rest| == 0 then []
@@ -84,6 +88,14 @@ module LinSegments {
     }
 
   }
+
+  //    Helpers
+    function {:tailrecursion true} StackEffectHelper(xs: seq<Instruction>): int {
+        if |xs| == 0 then 0 
+        else 
+            xs[0].StackEffect() + StackEffectHelper(xs[1..])
+    }
+
 
   /** 
     *   Compute the weakest pre condition on operands to ensure that 
