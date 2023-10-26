@@ -28,7 +28,7 @@ module Splitter {
   import opened LinSegments
 
   /**
-    *   Determnine the type of the segment according to the last instruction.
+    *   Determine the type of the segment according to the last instruction.
     *   @returns    A segment with instructions xs + [lastIns].
     */
   function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
@@ -42,7 +42,8 @@ module Splitter {
   }
 
   /**  
-    *   
+    *   Split the sequence of instructions according to jumps.
+    *   @note   Build a LinSeg for each section ending with a Jump or until end of sequence.
     */
   function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<LinSeg> := []): seq<LinSeg>
   {
