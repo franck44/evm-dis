@@ -12,42 +12,84 @@
  * under the License.
  */
 
-// include "./utils/EVMOpcodes.dfy"
 include "./disassembler/Disassembler.dfy"
-  // include "../utils/Hex.dfy"
+include "./proofobjectbuilder/Splitter.dfy"
+include "./proofobjectbuilder/SegmentBuilder.dfy"
+include "./proofobjectbuilder/ProofObjectBuilder.dfy"
+include "./prettyprinters/Pretty.dfy"
 
 /**
   *  Provides input reader and write out to stout.
   */
 module Driver {
 
-
   import opened BinaryDecoder
-  import opened EVMOpcodes
+  import opened Splitter
+  import opened PrettyPrinters
+  import opened ProofObjectBuilder
 
   /**
     *  Read the input string
     */
-  method {:verify true} {:main} Main(args: seq<string>)
+  method {:verify true} {:main2} Main(args: seq<string>)
   {
     if |args| < 2 {
       print "Expected 1 arguments, got ", |args| - 1, "\n";
     } else {
       var x := Disassemble(args[1], []);
       PrintInstructions(x);
+
     }
   }
 
   /**
-    *  Print disassembled code to stdout.
+    *   Print segments 
     */
-  method {:tailrec} PrintInstructions(s: seq<Instruction>)
+  method {:verify true} {:main2} Main2(args: seq<string>)
   {
-    if |s| > 0 {
-      //  The addresses should fit within TWO_32, otherwise there is a problem.
-      var formattedAddress := if s[0].address < Int.TWO_32 then Hex.U32ToHex(s[0].address as Int.u32) else "OutofRange";
-      print formattedAddress, ": ", s[0].ToString(), "\n";
-      PrintInstructions (s[1..]);
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+      PrintInstructions(x);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      PrintSegments(y);
+    }
+  }
+
+  /**
+    *   Print proof objects
+    */
+  method {:verify true} {:main2} Main3(args: seq<string>)
+  {
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      var z := BuildProofObject(y);
+      PrintProofObject(z);
+    }
+  }
+
+  /**
+    *   Print proof objects to Dafny
+    */
+  method {:verify true} {:main} Main4(args: seq<string>)
+  {
+    if |args| < 2 {
+      print "Expected 1 arguments, got ", |args| - 1, "\n";
+    } else {
+      var x := Disassemble(args[1], []);
+
+      //    Print the segments
+      var y := SplitUpToTerminal(x, [], []);
+      var z := BuildProofObject(y);
+      PrintProofObjectToDafny(z);
     }
   }
 }

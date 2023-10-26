@@ -7,9 +7,10 @@ import module_
 import _dafny
 import System_
 import Int
+import MiscTypes
+import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
-import MiscTypes
 
 # Module: Hex
 
@@ -20,26 +21,26 @@ class default__:
     @staticmethod
     def HexToU8(s):
         source0_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
-        d_1___mcc_h0_ = source0_[0]
-        d_2___mcc_h1_ = source0_[1]
-        source1_ = d_1___mcc_h0_
+        d_0___mcc_h0_ = source0_[0]
+        d_1___mcc_h1_ = source0_[1]
+        source1_ = d_0___mcc_h0_
         if source1_.is_None:
-            source2_ = d_2___mcc_h1_
+            source2_ = d_1___mcc_h1_
             if source2_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_3___mcc_h2_ = source2_.v
+                d_2___mcc_h2_ = source2_.v
                 return MiscTypes.Option_None()
         elif True:
-            d_4___mcc_h4_ = source1_.v
-            source3_ = d_2___mcc_h1_
+            d_3___mcc_h4_ = source1_.v
+            source3_ = d_1___mcc_h1_
             if source3_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_5___mcc_h6_ = source3_.v
-                d_6_v2_ = d_5___mcc_h6_
-                d_7_v1_ = d_4___mcc_h4_
-                return MiscTypes.Option_Some(((16) * (d_7_v1_)) + (d_6_v2_))
+                d_4___mcc_h6_ = source3_.v
+                d_5_v2_ = d_4___mcc_h6_
+                d_6_v1_ = d_3___mcc_h4_
+                return MiscTypes.Option_Some(((16) * (d_6_v1_)) + (d_5_v2_))
 
     @staticmethod
     def U8ToHex(n):

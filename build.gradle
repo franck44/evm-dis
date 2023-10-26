@@ -134,12 +134,13 @@ final DAFNY4_VERIFY_FLAGS = [
 ] 
 // + Z3_OPTION + BOOGIE_FLAGS
 
-// final DAFNY4_TEST_FLAGS = [
-//     'test',
-//     '--target','java',
-//     '--function-syntax','4',
-//     '--quantifier-syntax','4'
-// ]  + Z3_OPTION
+final DAFNY4_TEST_FLAGS = [
+    'test',
+    '--no-verify',
+    // '--target','java',
+    // '--function-syntax','4',
+    // '--quantifier-syntax','4'
+]  + Z3_OPTION
 
 // ======================================================================
 // Dafny Build
@@ -157,14 +158,7 @@ task verify {
     doLast {
         // Create build directory (Dafny doesn't do this for us)
         mkdir "build/logs"
-        // Generate Dafny Source
-        // exec {
-        //     executable DAFNY_HOME + 'dafny'
-        //     args DAFNY4_VERIFY_FLAGS + ['src/dafny/evm.dfy']
-        // }
-        // doLast {
-        // Verify and execute all Dafny tests found in the test
-        // directory.
+        //
         fileTree("src/dafny").include('**/*.dfy').each {
             File file -> {
                 // Construct logging option
@@ -180,9 +174,41 @@ task verify {
                 }
             }
         }
-    // }
     }
 }
+
+task testDafny {
+    // Specify inputs
+    inputs.files(fileTree('test/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    outputs.files(fileTree('build/logs/tests').include('verify.csv'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Create build directory (Dafny doesn't do this for us)
+        mkdir "build/logs"
+        // Verify and execute all Dafny tests found in the test
+        // directory.
+        fileTree("test/dafny").include('**/*.dfy').each {
+            File file -> {
+                // Construct logging option
+                def name = file.name.take(file.name.lastIndexOf('.'))
+                // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
+                // def logging = '/verificationLogger:csv;LogFileName=build/logs/' + name + '.csv'
+                // Run test
+                // project.logger.info('my info message')
+                project.logger.lifecycle('Testing ' + [file])
+                exec {
+                    executable DAFNY_HOME + '/dafny'
+                    args DAFNY4_TEST_FLAGS + [file]
+                }
+            }
+        }
+    }
+
+}
+
 
 // Translate Dafny source into Java source
 task compileToJava {
@@ -239,11 +265,6 @@ task compileToRust {
             executable DAFNY_HOME + '/dafny'
             args DAFNY4_RUST_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
-        // copy {
-        //     from "src/main/python"
-        //     into "build/libs/Driver-py"
-        //     include "*.py"
-        // }
     }
 }
 
@@ -261,11 +282,6 @@ task compileToGo {
             executable DAFNY_HOME + '/dafny'
             args DAFNY4_GO_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
-        // copy {
-        //     from "src/main/python"
-        //     into "build/libs/Driver-py"
-        //     include "*.py"
-        // }
     }
 }
 
@@ -283,23 +299,23 @@ task compileToJs {
             executable DAFNY_HOME + '/dafny'
             args DAFNY4_JS_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
-        // copy {
-        //     from "src/main/python"
-        //     into "build/libs/Driver-py"
-        //     include "*.py"
-        // }
     }
 }
 
-
-task cleanDafny {
-    doLast {
-        delete "build/logs"
-        // delete "build/driver-java"
+task deleteTestBuild(type: Delete) {
+    delete fileTree('test/dafny') {
+        include '**/*.dll',  '**/*.json'
     }
 }
 
-clean.dependsOn cleanDafny
+task cleanDafny(type: Delete) {
+    delete fileTree('src/dafny') {
+        include '**/*.dll',  '**/*.json'
+    }
+    delete "build/logs"
+}
+
+// clean.dependsOn cleanDafny, deleteTestBuild
 
 // ======================================================================
 // Java Build

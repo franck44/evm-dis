@@ -90,4 +90,19 @@ module Int {
     newtype u128 = i:nat | 0 <= i <= MAX_U128
     newtype u256 = i:nat | 0 <= i <= MAX_U256
 
+    //  Helpers
+    // Compute absolute value
+    function Abs(x: int) : nat {
+        if x >= 0 then x else -x
+    }
+
+    // Determine maximum of two u256 integers.
+    function Max(i1: int, i2: int) : int {
+        if i1 >= i2 then i1 else i2
+    }
+
+    // Determine maximum of two u256 integers.
+    function Min(i1: int, i2: int) : int {
+        if i1 < i2 then i1 else i2
+    }
 }

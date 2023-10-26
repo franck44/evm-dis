@@ -1,0 +1,33 @@
+
+
+  tag_2
+  0x08
+  0x03
+  swap1
+  tag_1
+  jump  // in
+tag_2:
+  0x40
+  mstore
+  0x20
+  0x40
+  return
+tag_1:
+  swap2
+  swap1
+  dup1
+  dup4
+  lt
+  tag_3
+  jumpi
+tag_4:
+  pop
+  jump  // out
+tag_3:
+  swap1
+  swap2
+  pop
+  swap1
+  0x00
+  jump(tag_4)
+  

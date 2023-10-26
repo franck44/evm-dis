@@ -12,33 +12,29 @@
  * under the License.
  */
 
+include "../utils/MiscTypes.dfy"
+include "../utils/LinSegments.dfy"
+
 /**
-  * Provides Option type.
+  *  Provides proof objects types.
   */
-module MiscTypes {
+module ProofObject {
 
-  datatype Option<T> = None | Some(v: T)
-  {
-    function Extract(): T
-      requires this.Some?
-    {
-      this.v
-    }
-  }
+  import opened MiscTypes
+  import opened LinSegments
 
-  datatype Either<T, U> = Left(l: T) | Right(r: U)
-  {
-    function Left(): T
-      requires this.Left?
+  /**
+    *   Either a segment terninating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
+    */
+  datatype ProofObj =
+    |  JUMP(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>, tgt: Either<seq<char>, nat>)
+    |  TERMINAL(s: LinSeg, wpOp: Option<nat>, wpCap: Option<nat>)
     {
-      this.l
+        function CollectJumpDest(): seq<nat> 
+        {   
+            s.CollectJumpDest()
+        }
     }
-
-    function Right(): U
-      requires this.Right?
-    {
-      this.r
-    }
-  }
 
 }
+

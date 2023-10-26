@@ -1,0 +1,70 @@
+
+======= max.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let x := 8
+            let y := 3
+            let z := max(x, y)
+            mstore(0x40, z)
+        }
+        function max(x, y) -> result
+        {
+            result := x
+            if lt(x, y) { result := y }
+        }
+    }
+}
+
+
+Binary representation:
+600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
+
+Text representation:
+    /* "max.yul":301:310   */
+  tag_2
+    /* "max.yul":253:254   */
+  0x08
+    /* "max.yul":277:278   */
+  0x03
+    /* "max.yul":301:310   */
+  swap1
+  tag_1
+  jump	// in
+tag_2:
+    /* "max.yul":331:335   */
+  0x40
+    /* "max.yul":324:339   */
+  mstore
+    /* "max.yul":33:362   */
+  stop
+    /* "max.yul":51:218   */
+tag_1:
+  swap2
+  swap1
+    /* "max.yul":111:122   */
+  dup1
+  dup4
+    /* "max.yul":142:150   */
+  lt
+    /* "max.yul":139:203   */
+  tag_3
+  jumpi
+    /* "max.yul":93:218   */
+tag_4:
+    /* "max.yul":51:218   */
+  pop
+  jump	// out
+    /* "max.yul":151:203   */
+tag_3:
+    /* "max.yul":173:184   */
+  swap1
+  swap2
+  pop
+    /* "max.yul":151:203   */
+  swap1
+  0x00
+  jump(tag_4)
+
