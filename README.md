@@ -243,6 +243,7 @@ module OverFlowCheckerBytecode {
 
 ## Usage
 At the moment, only a disassembler into readable EVM assembly is provided.
+The Dafny proof object feature is experimental.
 
 From Dafny, we can generate some target code in several languages. To begin with we have generated
 Python and Java code.
