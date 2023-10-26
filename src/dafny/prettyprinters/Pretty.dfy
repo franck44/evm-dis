@@ -47,52 +47,46 @@ module PrettyPrinters {
     }
   }
 
+  /**
+    *   Not used but useful to debug.
+    */
   method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
   {
     if |xs| > 0 {
-      // 
+      //
       print "Segment ", num, "\n";
-      //   var k := xs[0].WeakestPreOperands(0);
-      //   var l := xs[0].WeakestPreCapacity(0);
-      //   if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
-      //     //  Print the stack tracker value
-      //     print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n";
-      //   }
-      //   print "WeakestPre Operands:", k, "\n";
-      //   print "WeakestPre Capacity:", l, "\n";
+      var k := xs[0].WeakestPreOperands(0);
+      var l := xs[0].WeakestPreCapacity(0);
+      if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
+        //  Print the stack tracker value
+        print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n";
+      }
+      print "WeakestPre Operands:", k, "\n";
+      print "WeakestPre Capacity:", l, "\n";
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
     }
   }
 
-  method {:tailrec} PrintProofObject(xs: seq<ProofObj>, num: nat := 0)
-  {
-    if |xs| > 0 {
-      // 
-      print "Proof Object ", num, "\n";
-      print "WeakestPre Operands:", xs[0].wpOp, "\n";
-      print "WeakestPre Capacity:", xs[0].wpCap, "\n";
-      if xs[0].JUMP? {
-        //  Print the stack tracker value
-        print "JUMP/JUMPI: ", xs[0].tgt, "\n";
-      }
+  //    Helpers
 
-      PrintInstructions(xs[0].s.Ins());
-      PrintProofObject(xs[1..], num + 1);
-    }
-  }
-
+  /** Collect the JUMPDEST addresses in proof objects. */
   function {:tailrecursion true} CollectJumpDest(xs: seq<ProofObj>): seq<nat> {
     if |xs| == 0 then []
     else xs[0].CollectJumpDest() + CollectJumpDest(xs[1..])
   }
 
+
+  /** Collect the JUMPDEST addresses as hex strings in proof objects. */
   function {:tailrecursion true} CollectJumpDestAsString(xs: seq<nat>): string {
     if |xs| == 0 then []
     else " ensures s.IsJumpDest(0x" + NatToHex(xs[0]) + " as u256)\n" + CollectJumpDestAsString(xs[1..])
   }
 
-
+  /**
+    *   Print out each linear segment as a Dafny function.
+    *   Instructions are the Dafny-EVM instructions.
+    */
   method {:tailrec} PrintProofObjectToDafny(xs: seq<ProofObj>, num: nat := 0)
   {
     // Print validJumpDests lemma
@@ -159,6 +153,9 @@ module PrettyPrinters {
     }
   }
 
+  /**
+    *   Print out a sequence of instructions in the Dafny-EVM format.
+    */
   method PrintInstructionsToDafny(xs:seq<Instruction>, pos: nat := 0)
   {
     // PrintInstructions(xs);
