@@ -143,39 +143,38 @@ module PrettyIns {
     // case PUSH32 => StackOp("PUSH32", PUSH32, 1, 0, 1, 0)
     // // 0x80s: Duplicate operations
     case DUP1 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 1);"
-    case DUP2 =>  "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 2);"
-    case DUP3 =>  "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 3);"
-    case DUP4 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 3);"
-    // case DUP5 => StackOp("DUP5", DUP5, minCapacity := 1, minOperands := 5, pushes := 1, pops := 0)
-    // case DUP6 => StackOp("DUP6", DUP6, minCapacity := 1, minOperands := 6, pushes := 1, pops := 0)
-    // case DUP7 => StackOp("DUP7", DUP7, minCapacity := 1, minOperands := 7, pushes := 1, pops := 0)
-    // case DUP8 => StackOp("DUP8", DUP8, minCapacity := 1, minOperands := 8, pushes := 1, pops := 0)
-    // case DUP9 => StackOp("DUP9", DUP9, minCapacity := 1, minOperands := 9, pushes := 1, pops := 0)
-    // case DUP10 => StackOp("DUP10", DUP10, minCapacity := 1, minOperands := 10, pushes := 1, pops := 0)
-    // case DUP11 => StackOp("DUP11", DUP11, minCapacity := 1, minOperands := 11, pushes := 1, pops := 0)
-    // case DUP12 => StackOp("DUP12", DUP12, minCapacity := 1, minOperands := 12, pushes := 1, pops := 0)
-    // case DUP13 => StackOp("DUP13", DUP13, minCapacity := 1, minOperands := 13, pushes := 1, pops := 0)
-    // case DUP14 => StackOp("DUP14", DUP14, minCapacity := 1, minOperands := 14, pushes := 1, pops := 0)
-    // case DUP15 => StackOp("DUP15", DUP15, minCapacity := 1, minOperands := 15, pushes := 1, pops := 0)
-    // case DUP16 => StackOp("DUP16", DUP16, minCapacity := 1, minOperands := 16, pushes := 1, pops := 0)
+    case DUP2 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 2);"
+    case DUP3 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 3);"
+    case DUP4 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 4);"
+    case DUP5 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 5);"
+    case DUP6 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 6);"
+    case DUP7 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 7);"
+    case DUP8 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 8);"
+    case DUP9 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 9);"
+    case DUP10 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 10);"
+    case DUP11 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 11);"
+    case DUP12 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 12);"
+    case DUP13 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 13);"
+    case DUP14 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 14);"
+    case DUP15 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 15);"
+    case DUP16 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 16);"
     // // 0x90s: Exchange operations
     case SWAP1 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 1);"
     case SWAP2 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 2);"
-    // case SWAP2 => StackOp("SWAP2", SWAP2, minCapacity := 0, minOperands := 2 + 1)
-    // case SWAP3 => StackOp("SWAP3", SWAP3, minCapacity := 0, minOperands := 3 + 1)
-    // case SWAP4 => StackOp("SWAP4", SWAP4, minCapacity := 0, minOperands := 4 + 1)
-    // case SWAP5 => StackOp("SWAP5", SWAP5, minCapacity := 0, minOperands := 5 + 1)
-    // case SWAP6 => StackOp("SWAP6", SWAP6, minCapacity := 0, minOperands := 6 + 1)
-    // case SWAP7 => StackOp("SWAP7", SWAP7, minCapacity := 0, minOperands := 7 + 1)
-    // case SWAP8 => StackOp("SWAP8", SWAP8, minCapacity := 0, minOperands := 8 + 1)
-    // case SWAP9 => StackOp("SWAP9", SWAP9, minCapacity := 0, minOperands := 9 + 1)
-    // case SWAP10 => StackOp("SWAP10", SWAP10, minCapacity := 0, minOperands := 10 + 1)
-    // case SWAP11 => StackOp("SWAP11", SWAP11, minCapacity := 0, minOperands := 11 + 1)
-    // case SWAP12 => StackOp("SWAP12", SWAP12, minCapacity := 0, minOperands := 12 + 1)
-    // case SWAP13 => StackOp("SWAP13", SWAP13, minCapacity := 0, minOperands := 13 + 1)
-    // case SWAP14 => StackOp("SWAP14", SWAP14, minCapacity := 0, minOperands := 14 + 1)
-    // case SWAP15 => StackOp("SWAP15", SWAP15, minCapacity := 0, minOperands := 15 + 1)
-    // case SWAP16 => StackOp("SWAP16", SWAP16, minCapacity := 0, minOperands := 16 + 1)
+    case SWAP3 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 3);"
+    case SWAP4 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 4);"
+    case SWAP5 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 5);"
+    case SWAP6 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 6);"
+    case SWAP7 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 7);"
+    case SWAP8 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 8);"
+    case SWAP9 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 9);"
+    case SWAP10 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 10);"
+    case SWAP11 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 11);"
+    case SWAP12 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 12);"
+    case SWAP13 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 13);"
+    case SWAP14 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 14);"
+    case SWAP15 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 15);"
+    case SWAP16 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 16);"
     // // 0xA0s: Log operations
     // case LOG0 => LogOp("LOG0", LOG0, 0, 0 + 2, 0, 0 + 2)
     // case LOG1 => LogOp("LOG1", LOG1, 0, 1 + 2, 0, 1 + 2)
