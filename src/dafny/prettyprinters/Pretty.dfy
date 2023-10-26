@@ -19,9 +19,9 @@ include "../utils/ProofObject.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
 include "../utils/OpcodesConstants.dfy"
 include "./PrettyInstruction.dfy"
-/**
-  *  Provides pretty printers.
-  */
+  /**
+    *  Provides pretty printers.
+    */
 module PrettyPrinters {
 
   import opened EVMOpcodes
@@ -82,20 +82,78 @@ module PrettyPrinters {
     }
   }
 
+  function {:tailrecursion true} CollectJumpDest(xs: seq<ProofObj>): seq<nat> {
+    if |xs| == 0 then []
+    else xs[0].CollectJumpDest() + CollectJumpDest(xs[1..])
+  }
+
+  function {:tailrecursion true} CollectJumpDestAsString(xs: seq<nat>): string {
+    if |xs| == 0 then []
+    else " ensures s.IsJumpDest(0x" + NatToHex(xs[0]) + " as u256)\n" + CollectJumpDestAsString(xs[1..])
+  }
+
+
   method {:tailrec} PrintProofObjectToDafny(xs: seq<ProofObj>, num: nat := 0)
   {
+    // Print validJumpDests lemma
+    var j := CollectJumpDestAsString(CollectJumpDest(xs));
+    if |j| > 0 && num == 0 {
+      print "/** Lemma for Jumpdest */", "\n";
+      print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
+      print j;
+      print "\n";
+    }
+
     if |xs| > 0 {
       // 
       var startAddress := NatToHex(xs[0].s.Ins()[0].address);
-      print "\n/** Code staring at 0x", startAddress,  " */\n";
+      print "\n/** Code starting at 0x", startAddress,  " */\n";
       print "function ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
       print "  requires s0.PC() == 0x", startAddress, " as nat\n";
-      print "  requires s0.Operands() >= ", xs[0].wpOp, "\n";
-      print "  requires s0.Capacity() >= ", xs[0].wpCap, "\n";
+      print "  requires s0.Operands() >= ";
+      if xs[0].wpOp.None? {
+        print "???" ;
+      } else {
+        print xs[0].wpOp.Extract();
+      }
+      print "\n";
+      print "  requires s0.Capacity() >= ";
+      if xs[0].wpCap.None? {
+        print  "???";
+      } else {
+        print xs[0].wpCap.Extract();
+      }
+      print "\n";
+      //    If jump and target of jump is known print it.
+      if xs[0].JUMP? && xs[0].s.lastIns.op.IsJump() {
+        { match xs[0].tgt
+          case Right(v) =>
+            print "  requires s0.IsJumpDest(s0.Peek(", v, "))\n";
+          case _ => print ""  ;
+        }
+      }
 
-      print "  ensures s'.EXECUTING?\n";
+      //    If jump and target of jump is known print it.
+      if xs[0].JUMP? && xs[0].s.lastIns.op.IsJump() {
+        print "  ensures s'.EXECUTING?\n";
+        print "  ensures s'.PC() ==  ";
+        { match xs[0].tgt
+          case Left(xc) => print "0x", xc;
+          case Right(v) =>
+            print "s0.Peek(", v, ") as nat";
+        }
+        //  If JUMPI PC could be either tgt or instruction after last.
+        if xs[0].s.lastIns.op.opcode == JUMPI {
+          print " || s'.PC() == 0x", NatToHex(xs[0].s.lastIns.address + 1);
+        }
+        print "\n";
+      }
+
       print "{\n";
-        PrintInstructionsToDafny(xs[0].s.Ins());
+      print "  ValidJumpDest(s0);\n";
+      PrintInstructionsToDafny(xs[0].s.Ins());
+      //    Return last state
+      print "  s", |xs[0].s.Ins()|, "\n";
       print "}\n";
       PrintProofObjectToDafny(xs[1..], num + 1);
     }
@@ -105,13 +163,13 @@ module PrettyPrinters {
   {
     // PrintInstructions(xs);
     if |xs| > 0 {
-        var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
-        print "  ", k, "\n";
-        PrintInstructionsToDafny(xs[1..], pos + 1);
-    } 
+      var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
+      print "  ", k, "\n";
+      PrintInstructionsToDafny(xs[1..], pos + 1);
+    }
   }
 
-    
+
 
 }
 
