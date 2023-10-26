@@ -14,11 +14,11 @@
 
 include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
-include "../utils/Instructions.dfy" 
-include "../utils/LinSegments.dfy" 
-/**
-  *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
-  */
+include "../utils/Instructions.dfy"
+include "../utils/LinSegments.dfy"
+  /**
+    *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
+    */
 module Splitter {
 
   import opened EVMOpcodes
@@ -47,9 +47,11 @@ module Splitter {
   function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<LinSeg> := []): seq<LinSeg>
   {
     if |xs| == 0 then collected
-    else
+    else if |xs| == 1 then
+      //  Last instruction in the code
+      collected + [BuildSeg(curseq, xs[0])]
     //  if xs[0] is terminal then start a new seg, otherwise continue previous
-    if xs[0].IsTerminal() then
+    else if xs[0].IsTerminal() then
       var newSeg := curseq + [xs[0]];
       SplitUpToTerminal(xs[1..], [], collected + [BuildSeg(curseq, xs[0])])
     else
