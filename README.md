@@ -49,8 +49,6 @@ JUMP
 The disassembler is written in [Dafny](https://github.com/dafny-lang/dafny) a verification-friendly programming language.
 Some code (e.g. the definition of `EVMOpcodes`, `Int`) is adapted from the [Dafny-EVM](https://github.com/Consensys/evm-dafny) project.
 
-
-
 ## Motivations
 
 The disassembler is a useful tool but not the ultimate goal of this project.
@@ -255,6 +253,13 @@ The Python diassembler is in `build/driver-py`.
 
 It can be used with an input string as follows:
 ```zsh
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py                 
+Not enough arguments
+Usage: 
+ -d <string> or <string>: disassemble <string>
+ -p <string>: Proof object
+ -a: both -d and -p
+
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  "6040"
 PUSH1 0x40
 ```
@@ -262,6 +267,20 @@ To parse a binary representation from a file `file.evm` use:
 ```zsh
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py $(<file.evm)
 PUSH1 0x40
+
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"      
+
+/** Code starting at 0x0 */
+function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
+  requires s0.PC() == 0x0 as nat
+  requires s0.Operands() >= 0
+  requires s0.Capacity() >= 1
+{
+  ValidJumpDest(s0);
+  var s1 := Push1(s0, 0x40);
+  s1
+}
+
 ```
 
 ### Java disassembler
@@ -269,6 +288,13 @@ PUSH1 0x40
 The java diassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
 It can be used with an input string as follows:
 ```zsh
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
+Not enough arguments
+Usage: 
+ -d <string> or <string>: disassemble <string>
+ -p <string>: Proof object
+ -a: both -d and -p
+
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar "6040"
 PUSH1 0x40
 ```
@@ -276,4 +302,18 @@ To parse a binary representation from a file `file.evm` use:
 ```zsh
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar $(<file.evm)
 PUSH1 0x40
+
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"
+
+/** Code starting at 0x0 */
+function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
+  requires s0.PC() == 0x0 as nat
+  requires s0.Operands() >= 0
+  requires s0.Capacity() >= 1
+{
+  ValidJumpDest(s0);
+  var s1 := Push1(s0, 0x40);
+  s1
+}
+
 ```
