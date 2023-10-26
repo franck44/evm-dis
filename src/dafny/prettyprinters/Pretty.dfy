@@ -102,7 +102,7 @@ module PrettyPrinters {
       // 
       var startAddress := NatToHex(xs[0].s.Ins()[0].address);
       print "\n/** Code starting at 0x", startAddress,  " */\n";
-      print "function ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
+      print "function {:opaque} ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
       print "  requires s0.PC() == 0x", startAddress, " as nat\n";
       print "  requires s0.Operands() >= ";
       if xs[0].wpOp.None? {
@@ -141,17 +141,17 @@ module PrettyPrinters {
           print " || s'.PC() == 0x", NatToHex(xs[0].s.lastIns.address + 1);
         }
         print "\n";
-      }
 
-      //    Print the constraint for the net stack size effect  
-      var n := xs[0].StackEffect();
-      print "  ensures s'.Operands() == s0.Operands()";
-      if n >= 0 {
-        print " + ", n;
-      } else {
-        print " - ", -n;
+        //    Print the constraint for the net stack size effect
+        var n := xs[0].StackEffect();
+        print "  ensures s'.Operands() == s0.Operands()";
+        if n >= 0 {
+          print " + ", n;
+        } else {
+          print " - ", -n;
+        }
+        print "\n";
       }
-      print "\n";
 
       print "{\n";
       print "  ValidJumpDest(s0);\n";
