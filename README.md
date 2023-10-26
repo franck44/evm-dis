@@ -52,10 +52,10 @@ Some code (e.g. the definition of `EVMOpcodes`, `Int`) is adapted from the [Dafn
 ## Motivations
 
 The disassembler is a useful tool but not the ultimate goal of this project.
-The main component, `Disassemble` builds a representation of the binary as a sequence of `Instructions`.
+The main component, `Disassemble`, builds a representation of the binary as a sequence of `Instructions`.
 This representation can be _printed out_ (this is how the disassembler generates the readable code), but also used to generate _proof objects_ that are Dafny programs that can be verified using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
 
-As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code (the same can be done with Solidity code.)
+As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code (the same can be done with Solidity code):
 ```solidity
 object "Runtime" {
   code {
@@ -245,11 +245,11 @@ module OverFlowCheckerBytecode {
 At the moment, only a disassembler into readable EVM assembly is provided.
 The Dafny proof object feature is experimental.
 
-From Dafny, we can generate some target code in several languages. To begin with we have generated
+Dafny code can be used to generate some target code in several languages. To begin with we have generated
 Python and Java code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
-### Use the Python version of the disassembler
+### Using the Python version of the disassembler
 The Python disassembler is in `build/driver-py`.
 
 It can be used with an input string as follows:
@@ -284,10 +284,9 @@ function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
   var s1 := Push1(s0, 0x40);
   s1
 }
-
 ```
 
-### Use the Java version of the disassembler
+### Using the Java version of the disassembler
 
 The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
 It can be used with an input string as follows:
