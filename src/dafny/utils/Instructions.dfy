@@ -38,13 +38,13 @@ module Instructions {
     */
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
-   
+
     function ToString(): string
     {
       var x: string := arg;
-      if op.opcode == INVALID then 
+      if op.opcode == INVALID then
         op.Name() + " " + x
-      else 
+      else
         op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
 
@@ -115,18 +115,20 @@ module Instructions {
     function StackPosBackWardTracker(pos': nat := 0): Either<seq<char>, nat>
     {
       match this.op
-      case ArithOp(_, _, _, _, _, _)      => Right(0)
-      case CompOp(_, _, _, _, _, _)       => Right(0)
-      case BitwiseOp(_, _, _, _, _, _)    => Right(0)
-      case KeccakOp(_, _, _, _, _, _)     => Right(0)
-      case EnvOp(_, _, _, _, _, _)        => Right(0)
-      case MemOp(_, _, _, _, _, _)        => Right(0)
-      case StorageOp(_, _, _, _, _, _)    => Right(0)
+      case ArithOp(_, _, _, _, _, _)      => Left("Not implemented")
+      case CompOp(_, _, _, _, _, _)       => Left("Not implemented")
+      case BitwiseOp(_, _, _, _, _, _)    => Left("Not implemented")
+      case KeccakOp(_, _, _, _, _, _)     => Left("Not implemented")
+      case EnvOp(_, _, _, _, _, _)        => Left("Not implemented")
+      case MemOp(_, _, _, _, _, _)        => Left("Not implemented")
+      case StorageOp(_, _, _, _, _, _)    => Left("Not implemented")
       case JumpOp(_, opcode, _, _, _, _)       =>
         if opcode == JUMPDEST then
           Right(pos')
         else
-          Right(0)
+          //    If JUMP +1, if JUMPI + 2 
+          var k := opcode - JUMP + 1;
+          Right(pos' + k as nat)
       case RunOp(_, _, _, _, _, _)        => Right(0)
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
@@ -134,10 +136,16 @@ module Instructions {
           if pos' == 0 then Left(this.arg) else Right(pos' - 1)
         else if DUP1 <= opcode <= DUP16 then
           //    DUP1 to DUP16
-          Right(if pos' == 0 then (opcode - 0x80) as nat  else pos' - 1)
+          Right(if pos' == 0 then (opcode - DUP1) as nat  else pos' - 1)
         else if SWAP1 <= opcode <= SWAP16 then
           // SWAP1 to SWAP16
-          Right(0)
+          // compute index of element to be swapped with top of stack
+          var k: nat  := (opcode - SWAP1) as nat + 1;
+          Right(
+            if pos' == 0 then k
+            else if pos' == k + 1 then 0
+            else pos'
+          )
         else // Thanks to the Valid constraint on the opcode type, this can only be OP.
           assert opcode == POP;
           Right(pos' + 1)
