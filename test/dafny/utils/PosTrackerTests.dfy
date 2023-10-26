@@ -39,7 +39,7 @@ module PosTrackerTests {
       var i := Instruction(Decode(op));
       var r := i.StackPosBackWardTracker(k);
       if k > 0 {
-        assert r == Right(k + 2);
+        assert r == Right(k + 1);
       } else {
         assert r.Left?;
       }
@@ -52,25 +52,25 @@ module PosTrackerTests {
     {
       var i := Instruction(Decode(ADD));
       var r := i.StackPosBackWardTracker(0);
-      assert r.Left?;
+      expect r.Left?;
     }
 
     {
       var i := Instruction(Decode(ADD));
       var r := i.StackPosBackWardTracker(1);
-      assert r == Right(2);
+      expect r == Right(2);
     }
   }
 
   /** Comparison instructions. */
   method Comps1(k: nat, op: Int.u8)
-    requires LT <= op <= SGT
+    requires LT <= op <= EQ
   {
     {
       var i := Instruction(Decode(op));
       var r := i.StackPosBackWardTracker(k);
-      if k > 0 {
-        assert r == Right(k + 2);
+      if k >= 1 {
+        assert r == Right(k + 1);
       } else {
         assert r.Left?;
       }
@@ -78,13 +78,13 @@ module PosTrackerTests {
   }
 
   method Comps2(k: nat, op: Int.u8)
-    requires EQ <= op <= ISZERO
+    requires op == ISZERO
   {
     {
       var i := Instruction(Decode(op));
       var r := i.StackPosBackWardTracker(k);
       if k > 0 {
-        assert r == Right(k + 1);
+        assert r == Right(k);
       } else {
         assert r.Left?;
       }
@@ -97,44 +97,33 @@ module PosTrackerTests {
     {
       var i := Instruction(Decode(GT));
       var r := i.StackPosBackWardTracker(0);
-      assert r.Left?;
+      expect r.Left?;
     }
 
     {
       var i := Instruction(Decode(EQ));
       var r := i.StackPosBackWardTracker(0);
-      assert r.Left?;
+      expect r.Left?;
     }
 
     {
       var i := Instruction(Decode(ISZERO));
       var r := i.StackPosBackWardTracker(0);
-      assert r.Left?;
+      expect r.Left?;
     }
 
     {
       var i := Instruction(Decode(SLT));
       var r := i.StackPosBackWardTracker(2);
-      assert r == Right(3);
+      expect r == Right(3);
     }
 
     {
       var i := Instruction(Decode(ISZERO));
       var r := i.StackPosBackWardTracker(12);
-      assert r == Right(13);
+      expect r == Right(12);
     }
   }
-
-
-  // {
-  //   var i := Decode(ISZERO);
-  //   var r1 := i.StackEffect();
-  //   var r2 := i.WeakestPreOperands(0);
-  //   var r3 := i.WeakestPreCapacity(0);
-  //   expect r1 == 0;
-  //   expect r2 == 1;
-  //   expect r3 == 0;
-  // }
 
   // for k := AND to XOR
   // {
