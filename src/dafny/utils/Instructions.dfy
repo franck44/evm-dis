@@ -38,7 +38,7 @@ module Instructions {
     */
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
-
+   
     function ToString(): string
     {
       var x: string := arg;
