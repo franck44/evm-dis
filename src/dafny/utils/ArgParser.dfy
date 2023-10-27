@@ -24,7 +24,18 @@ module ArgParser {
   import opened MiscTypes
   import Int
 
+  /**
+    *   An option.
+    *   @param  name    The name of the option. The is used to retrieve the value of
+    *                   of an option on the command line.
+    *   @param  numArgs The number of expected arguments for the option.
+    *   @param  desc    The text description for the option (help).
+    */
   datatype CLIOption = CLIOption(name: string, numArgs: nat, desc: string)
+
+  /**
+    *   Provides argument parser.
+    */
   class ArgumentParser {
 
 
@@ -36,6 +47,8 @@ module ArgParser {
 
     /** The list of known keys. Useful to iterate over keys in a map. */
     var knownKeys: seq<string>
+
+    var usageSuffix: string
 
     /**
       *  Ensure the list of keys is the same as the list of knownArgs keys.
@@ -50,9 +63,10 @@ module ArgParser {
     /**
       * Initialise the args.
       */
-    constructor()
+    constructor(s: string := "")
       ensures Inv()
     {
+      usageSuffix := s ;
       knownArgs := map["-h" := CLIOption("--help", 0, "Display help and exit")];
       knownNameArgs := map["--help" := "-h"];
       knownKeys := ["-h"];
@@ -98,6 +112,7 @@ module ArgParser {
           print  " arg", i;
         }
       }
+      print " ", usageSuffix;
       print "\n\n";
       //    Display option help one per line
       print "options", "\n";
@@ -150,7 +165,8 @@ module ArgParser {
           var r := args[1..][..numArgs];
           ParseArgs(args[1 + numArgs..], alreadyParsed[opt.name := r])
 
-      else ParseArgs(args[1..], alreadyParsed)
+      else 
+        ParseArgs(args[1..], alreadyParsed)
     }
 
     //  Helper
@@ -194,7 +210,7 @@ module ArgParser {
 
   method {:test} Main() {
     print "hello! Testing parseArg!\n";
-    var cli := new ArgumentParser();
+    var cli := new ArgumentParser("<filename>");
     cli.AddOption("-o", "--one");
     cli.AddOption("-tw", "--two", 2, "don't do that!");
 
