@@ -213,7 +213,6 @@ module ArgParser {
 
     }
     cli.PrintHelp();
-
   }
 
 
