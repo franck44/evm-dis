@@ -25,7 +25,7 @@ module ArgParser {
   import Int
 
   datatype CLIOption = CLIOption(name: string, numArgs: nat, desc: string)
-  class Args {
+  class ArgumentParser {
 
 
     /** The list of known options.
@@ -194,7 +194,7 @@ module ArgParser {
 
   method {:test} Main() {
     print "hello! Testing parseArg!\n";
-    var cli := new Args();
+    var cli := new ArgumentParser();
     cli.AddOption("-o", "--one");
     cli.AddOption("-tw", "--two", 2, "don't do that!");
 
