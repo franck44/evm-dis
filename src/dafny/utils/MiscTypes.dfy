@@ -17,6 +17,8 @@
   */
 module MiscTypes {
 
+  datatype Try<T> = Success(v: T) | Failure(msg: string)
+
   datatype Option<T> = None | Some(v: T)
   {
     function Extract(): T
