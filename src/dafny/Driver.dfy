@@ -17,18 +17,21 @@ include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
 include "./prettyprinters/Pretty.dfy"
-
-/**
-  *  Provides input reader and write out to stout.
-  */
+include "./utils/ArgParser.dfy"
+  /**
+    *  Provides input reader and write out to stout.
+    */
 module Driver {
 
   import opened BinaryDecoder
   import opened Splitter
   import opened PrettyPrinters
   import opened ProofObjectBuilder
+  import opened ArgParser
 
-  const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
+  //   const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
+
+
 
   /**
     *  Read the input string
@@ -39,40 +42,50 @@ module Driver {
     */
   method {:verify true} {:main} Main(args: seq<string>)
   {
+    var optionParser := new ArgumentParser("<filename>");
+
+    //  Register the options
+    optionParser.AddOption("-d", "--dis", 0, "Disassemble <filename>");
+    optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <filename>");
+    optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
+
     if |args| < 2 {
       print "Not enough arguments\n";
-      print usageMsg, "\n";
-    } else if |args| == 2 {
-      //  Disassemble
-      print "Disassembling code", "\n";
-      var x := Disassemble(args[1], []);
-      PrintInstructions(x);
+      optionParser.PrintHelp();
     } else {
-      assert |args| >= 3;
-      match args[1]
-      case "-d" =>
-        //  Disassemble
-        print "Disassembling code", "\n";
-        var x := Disassemble(args[2], []);
-        PrintInstructions(x);
+      //  Parse arguments
+      var arguments := optionParser.ParseArgs(args);
+      match arguments
+      {
+        case Success(m) =>
+          //  filename should be the last argument
+          var fname := args[|args| - 1];
+          var x := Disassemble(fname, []);
+          if |m.Keys| > 0 {
+            if "--dis" in m.Keys {
+              PrintInstructions(x);
+            }
+            if "--proof" in m.Keys {
+              var y := SplitUpToTerminal(x, [], []);
+              var z := BuildProofObject(y);
+              PrintProofObjectToDafny(z, "../evm-dafny/");
+            }
+            if "--all" in m.Keys {
+              PrintInstructions(x);
+              var y := SplitUpToTerminal(x, [], []);
+              var z := BuildProofObject(y);
+              PrintProofObjectToDafny(z, "../evm-dafny/");
+            }
+          } else {
+            //  no recognised arguments. disassemble.
+            PrintInstructions(x);
+          }
 
-      case "-p" =>
-        //  Disassemble and compute proof object
-        var x := Disassemble(args[2], []);
-        var y := SplitUpToTerminal(x, [], []);
-        var z := BuildProofObject(y);
-        PrintProofObjectToDafny(z);
-
-      case "-a" =>
-        var x := Disassemble(args[2], []);
-        PrintInstructions(x);
-        var y := SplitUpToTerminal(x, [], []);
-        var z := BuildProofObject(y);
-        PrintProofObjectToDafny(z);
-
-      case _ =>
-        print "Cannot parse arguments ", args[1], "\n";
-        print usageMsg, "\n";    }
+        case Failure(msg) =>
+            print msg, "\n";
+            optionParser.PrintHelp();
+      }
+    }
   }
 
 }
