@@ -34,11 +34,16 @@ module Splitter {
   function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
   {
     match lastInst.op.opcode
-    case JUMP   => JUMPSeg(xs, lastInst)
-    case JUMPI  => JUMPISeg(xs, lastInst)
-    case RETURN => RETURNSeg(xs, lastInst)
-    case STOP   => STOPSeg(xs, lastInst)
-    case _      => UNKNOWNSeg(xs, lastInst)
+    case JUMP   => 
+        JUMPSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
+    case JUMPI  => 
+        JUMPISeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
+    case RETURN => 
+        RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs), DeltaCapacityHelper(xs))
+    case STOP   => 
+        STOPSeg(xs, lastInst, DeltaOperandsHelper(xs), DeltaCapacityHelper(xs))
+    case _      => 
+        UNKNOWNSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
   }
 
   /**  
@@ -58,6 +63,25 @@ module Splitter {
     else
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }
+
+  function DeltaOperandsHelper(xs: seq<Instruction>, current: int := 0): int
+    decreases |xs|
+  {
+    if |xs| == 0 then current
+    else
+      var e := current + (xs[0].op.pushes - xs[0].op.pops);
+      DeltaOperandsHelper(xs[1..], e)
+  }
+
+  function DeltaCapacityHelper(xs: seq<Instruction>, current: int := 0): int
+    decreases |xs|
+  {
+    if |xs| == 0 then current
+    else
+      var e := current + (xs[0].op.pops - xs[0].op.pushes);
+      DeltaCapacityHelper(xs[1..], e)
+  }
+
 
 }
 
