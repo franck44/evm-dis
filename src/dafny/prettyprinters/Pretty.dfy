@@ -127,19 +127,18 @@ module PrettyPrinters {
       print "\n/** Code starting at 0x", startAddress,  " */\n";
       print "function {:opaque} ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
       print "  requires s0.PC() == 0x", startAddress, " as nat\n";
+      print "  // Net Operands effect " ;
+      print xs[0].s.netOpEffect ;
+      print "\n";
       print "  requires s0.Operands() >= ";
-      if xs[0].wpOp.None? {
-        print "???" ;
-      } else {
-        print xs[0].wpOp.Extract();
-      }
+      print xs[0].wpOp ;
+      print "\n";
+      print "  // Net Capacity effect " ;
+      print xs[0].s.netCapEffect ;
       print "\n";
       print "  requires s0.Capacity() >= ";
-      if xs[0].wpCap.None? {
-        print  "???";
-      } else {
-        print xs[0].wpCap.Extract();
-      }
+      print xs[0].wpCap;
+      
       print "\n";
       //    If jump and target of jump is known print it.
       if xs[0].JUMP? && xs[0].s.lastIns.op.IsJump() {
