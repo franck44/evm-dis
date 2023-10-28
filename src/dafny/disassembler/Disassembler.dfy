@@ -46,7 +46,7 @@ module BinaryDecoder {
       assert |s| >= 2;
       // Try to decode next instruction
       match HexToU8(s[..2])
-      case None => p + [Instruction(Decode(INVALID), s[..2], next)]
+      case None => p + [Instruction(Decode(INVALID), "'" + s[..2] + "' is not a known opcode", next)]
       case Some(v) =>
         //  Try to read parameters of opcode
         var op := Decode(v);
