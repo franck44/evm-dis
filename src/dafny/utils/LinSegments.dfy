@@ -14,10 +14,10 @@
 
 include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
-include "../utils/Instructions.dfy" 
-/**
-  *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
-  */
+include "../utils/Instructions.dfy"
+  /**
+    *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
+    */
 module LinSegments {
 
   import opened EVMOpcodes
@@ -38,11 +38,11 @@ module LinSegments {
     *               segment of type RETURN.
     */
   datatype LinSeg =
-      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction)
-    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction)
-    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction)
-    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction)
-    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction)
+      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
+    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
+    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
+    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
+    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
   {
     /**
       *  The instructions in a segment.
@@ -52,29 +52,29 @@ module LinSegments {
     }
 
     function StackEffect(xs: seq<Instruction> := Ins()) : int {
-        StackEffectHelper(xs)
+      StackEffectHelper(xs)
     }
 
     //  LastIns cannot be a JUMPDEST
     function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := ins): seq<nat>
     {
-        if |rest| == 0 then []
-        else 
-            if rest[0].op.opcode == JUMPDEST then 
-                [rest[0].address] + CollectJumpDest(rest[1..])
-            else 
-                CollectJumpDest(rest[1..])
+      if |rest| == 0 then []
+      else
+      if rest[0].op.opcode == JUMPDEST then
+        [rest[0].address] + CollectJumpDest(rest[1..])
+      else
+        CollectJumpDest(rest[1..])
     }
- 
+
 
     /**
       *  The weakest precondition that guarantees that the segment can executed
       *  without a stack underflow, and such that at the end there are at least 
       *  n operands on the stack.
       */
-    function WeakestPreOperands(n: nat): Option<nat>
+    function WeakestPreOperands(n: nat := 0): nat
     {
-      WeakestPreOperandsHelper(this.Ins())
+      WeakestPreOperandsHelper(this.Ins(), n)
     }
 
     /**
@@ -82,19 +82,18 @@ module LinSegments {
       *  without a stack overflow, and such that at the end there are at least 
       *  n free slots on the stack.
       */
-    function WeakestPreCapacity(n: nat): Option<nat>
+    function WeakestPreCapacity(n: nat := 0): nat
     {
-      WeakestPreCapacityHelper(this.Ins())
+      WeakestPreCapacityHelper(this.Ins(), n )
     }
-
   }
 
   //    Helpers
-    function {:tailrecursion true} StackEffectHelper(xs: seq<Instruction>): int {
-        if |xs| == 0 then 0 
-        else 
-            xs[0].StackEffect() + StackEffectHelper(xs[1..])
-    }
+  function {:tailrecursion true} StackEffectHelper(xs: seq<Instruction>): int {
+    if |xs| == 0 then 0
+    else
+      xs[0].StackEffect() + StackEffectHelper(xs[1..])
+  }
 
 
   /** 
@@ -104,17 +103,14 @@ module LinSegments {
     *
     *   @returns    The weakest pre cond as nat or None if the result is negative. 
     */
-  function WeakestPreOperandsHelper(xs: seq<Instruction>, postCond: nat := 0): Option<nat>
+  function WeakestPreOperandsHelper(xs: seq<Instruction>, postCond: nat := 0): nat
     decreases |xs|
   {
-    if |xs| == 0 then Some(postCond)
+    if |xs| == 0 then postCond
     else
       var lastI := xs[|xs| - 1];
       var e := lastI.WeakestPreOperands(postCond);
-      if e >= 0 then
         WeakestPreOperandsHelper(xs[..|xs| - 1], e)
-      else
-        None
   }
 
   /** 
@@ -124,17 +120,14 @@ module LinSegments {
     *
     *   @returns    The weakest pre cond as nat or None if the result is negative. 
     */
-  function WeakestPreCapacityHelper(xs: seq<Instruction>, postCond: nat := 0): Option<nat>
+  function WeakestPreCapacityHelper(xs: seq<Instruction>, postCond: nat := 0): nat
     decreases |xs|
   {
-    if |xs| == 0 then Some(postCond)
+    if |xs| == 0 then postCond
     else
       var lastI := xs[|xs| - 1];
       var e := lastI.WeakestPreCapacity(postCond);
-      if e >= 0 then
         WeakestPreCapacityHelper(xs[..|xs| - 1], e)
-      else
-        None
   }
 
 }
