@@ -51,7 +51,10 @@ module PrettyPrinters {
     *   Not used but useful to debug.
     */
   method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
+    // requires forall i:: 0 <= i < |xs.Ins()| ==> xs.Ins()[i].op.IsValid()
   {
+    assert forall i:: 0 <= i < |xs| ==> 
+        (forall k:: 0 <= k < |xs[i].Ins()| ==> xs[i].Ins()[k].op.IsValid());
     if |xs| > 0 {
       //
       print "Segment ", num, "\n";
