@@ -24,7 +24,7 @@ module ProofObject {
   import opened LinSegments
 
   /**
-    *   Either a segment terninating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
+    *   Either a segment terminating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
     */
   datatype ProofObj =
     |  JUMP(s: LinSeg, wpOp: nat, wpCap: nat, tgt: Either<seq<char>, nat>)
@@ -43,7 +43,7 @@ module ProofObject {
       * @note   The number of pushes minus the number of pops.
       */
     function StackEffect(): int {
-      s.StackEffect()
+      s.StackEffect() 
     }
   }
 
