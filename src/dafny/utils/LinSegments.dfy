@@ -38,11 +38,11 @@ module LinSegments {
     *               segment of type RETURN.
     */
   datatype LinSeg =
-      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
-    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
-    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
-    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
-    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int, netCapEffect: int)
+      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int )
+    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
+    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
+    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
+    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
   {
     /**
       *  The instructions in a segment.
@@ -51,8 +51,16 @@ module LinSegments {
       this.ins + [this.lastIns]
     }
 
+    function NetOpEffect() : int {
+        netOpEffect
+    }
+
+    function NetCapEffect() : int {
+        -netOpEffect
+    }
+
     function StackEffect(xs: seq<Instruction> := Ins()) : int {
-      StackEffectHelper(xs)
+        netOpEffect
     }
 
     //  LastIns cannot be a JUMPDEST
@@ -94,7 +102,6 @@ module LinSegments {
     else
       xs[0].StackEffect() + StackEffectHelper(xs[1..])
   }
-
 
   /** 
     *   Compute the weakest pre condition on operands to ensure that 

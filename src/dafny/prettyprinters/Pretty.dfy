@@ -127,14 +127,15 @@ module PrettyPrinters {
       print "\n/** Code starting at 0x", startAddress,  " */\n";
       print "function {:opaque} ExecuteFromTag_", num, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n";
       print "  requires s0.PC() == 0x", startAddress, " as nat\n";
+
       print "  // Net Operands effect " ;
-      print xs[0].s.netOpEffect ;
+      print xs[0].s.NetOpEffect() ;
       print "\n";
       print "  requires s0.Operands() >= ";
       print xs[0].wpOp ;
       print "\n";
       print "  // Net Capacity effect " ;
-      print xs[0].s.netCapEffect ;
+      print xs[0].s.NetCapEffect() ;
       print "\n";
       print "  requires s0.Capacity() >= ";
       print xs[0].wpCap;
