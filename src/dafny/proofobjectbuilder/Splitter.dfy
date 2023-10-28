@@ -34,16 +34,16 @@ module Splitter {
   function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
   {
     match lastInst.op.opcode
-    case JUMP   => 
-        JUMPSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
-    case JUMPI  => 
-        JUMPISeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
-    case RETURN => 
-        RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs), DeltaCapacityHelper(xs))
-    case STOP   => 
-        STOPSeg(xs, lastInst, DeltaOperandsHelper(xs), DeltaCapacityHelper(xs))
-    case _      => 
-        UNKNOWNSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]), DeltaCapacityHelper(xs + [lastInst]))
+    case JUMP   =>
+      JUMPSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+    case JUMPI  =>
+      JUMPISeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+    case RETURN =>
+      RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs))
+    case STOP   =>
+      STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
+    case _      =>
+      UNKNOWNSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
   }
 
   /**  
@@ -64,6 +64,9 @@ module Splitter {
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }
 
+  /**
+    *   The global effect of xs on the stack size.
+    */
   function DeltaOperandsHelper(xs: seq<Instruction>, current: int := 0): int
     decreases |xs|
   {
@@ -73,13 +76,48 @@ module Splitter {
       DeltaOperandsHelper(xs[1..], e)
   }
 
-  function DeltaCapacityHelper(xs: seq<Instruction>, current: int := 0): int
+  /**
+    *   The global effect of xs on the capacity.
+    */
+  ghost function DeltaCapacityHelper(xs: seq<Instruction>, current: int := 0): int
     decreases |xs|
   {
     if |xs| == 0 then current
     else
       var e := current + (xs[0].op.pops - xs[0].op.pushes);
       DeltaCapacityHelper(xs[1..], e)
+  }
+
+  /**
+    *   Increase or decrease in the stack size is the opposite 
+    *   of increase or decrease in capacity.
+    */
+  lemma PreserveDelta(xs: seq<Instruction>)
+    ensures DeltaCapacityHelper(xs, 0) == -DeltaOperandsHelper(xs, 0)
+  {
+    if |xs| > 0 {
+      var e := 0 + (xs[0].op.pushes - xs[0].op.pops);
+      var e' := 0 + (xs[0].op.pops - xs[0].op.pushes);
+      calc == {
+        DeltaCapacityHelper(xs, 0);
+        DeltaCapacityHelper(xs[1..], e');
+        { DistributeDelta(xs[1..], xs[0].op.pops - xs[0].op.pushes); }
+        (xs[0].op.pops - xs[0].op.pushes) + DeltaCapacityHelper(xs[1..], 0);
+        { PreserveDelta(xs[1..]); }
+        (xs[0].op.pops - xs[0].op.pushes) + (-DeltaOperandsHelper(xs[1..], 0));
+        (xs[0].op.pops - xs[0].op.pushes - DeltaOperandsHelper(xs[1..], 0));
+        { DistributeDelta(xs[1..], xs[0].op.pushes - xs[0].op.pops);}
+        -DeltaOperandsHelper(xs[1..], e);
+        -DeltaOperandsHelper(xs, 0);
+      }
+    }
+  }
+
+  lemma DistributeDelta(xs: seq<Instruction>, v1: int)
+    ensures DeltaCapacityHelper(xs, v1) == v1 + DeltaCapacityHelper(xs, 0)
+    ensures DeltaOperandsHelper(xs, v1) == v1 + DeltaOperandsHelper(xs, 0)
+  {
+    //  Thanks Dafny
   }
 
 
