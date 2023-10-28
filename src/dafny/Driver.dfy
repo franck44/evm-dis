@@ -48,42 +48,52 @@ module Driver {
     optionParser.AddOption("-d", "--dis", 0, "Disassemble <filename>");
     optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <filename>");
     optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
+    optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
 
-    if |args| < 2 {
+    if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
       optionParser.PrintHelp();
+    } else if |args| == 2 {
+      //  Disassemble
+      var x := Disassemble(args[1], []);
+      PrintInstructions(x);
+    } else if args[1] == "--help" || args[1] == "-h" {
+      //  Note that this does not work with the dafny run command as --help is a dafny run option
+      optionParser.PrintHelp();
     } else {
-      //  Parse arguments
-      var arguments := optionParser.ParseArgs(args);
-      match arguments
-      {
-        case Success(m) =>
-          //  filename should be the last argument
-          var fname := args[|args| - 1];
-          var x := Disassemble(fname, []);
-          if |m.Keys| > 0 {
-            if "--dis" in m.Keys {
-              PrintInstructions(x);
-            }
-            if "--proof" in m.Keys {
-              var y := SplitUpToTerminal(x, [], []);
-              var z := BuildProofObject(y);
-              PrintProofObjectToDafny(z, "../evm-dafny/");
-            }
-            if "--all" in m.Keys {
-              PrintInstructions(x);
-              var y := SplitUpToTerminal(x, [], []);
-              var z := BuildProofObject(y);
-              PrintProofObjectToDafny(z, "../evm-dafny/");
-            }
-          } else {
-            //  no recognised arguments. disassemble.
-            PrintInstructions(x);
-          }
 
-        case Failure(msg) =>
-            print msg, "\n";
-            optionParser.PrintHelp();
+      var stringToProcess := args[|args| - 1];
+      var optArgs := args[1..|args| - 1];
+      var x := Disassemble(stringToProcess, []);
+      //  Parse arguments
+      match optionParser.GetArgs("--dis", optArgs) {
+        case Success(_) => PrintInstructions(x);
+        case Failure(m) =>
+      }
+
+      match optionParser.GetArgs("--proof", optArgs) {
+        case Success(_) =>
+          var pathToDafnyLib :=
+            (match optionParser.GetArgs("--lib", optArgs)
+             case Success(p) => p[0]
+             case Failure(_) => "") ;
+          var y := SplitUpToTerminal(x, [], []);
+          var z := BuildProofObject(y);
+          PrintProofObjectToDafny(z, pathToDafnyLib);
+        case Failure(m) =>
+      }
+
+      match optionParser.GetArgs("--all", optArgs) {
+        case Success(_) =>
+          PrintInstructions(x);
+          var pathToDafnyLib :=
+            (match optionParser.GetArgs("--lib", optArgs)
+             case Success(p) => p[0]
+             case Failure(_) => "") ;
+          var y := SplitUpToTerminal(x, [], []);
+          var z := BuildProofObject(y);
+          PrintProofObjectToDafny(z, pathToDafnyLib);
+        case Failure(m) =>
       }
     }
   }
