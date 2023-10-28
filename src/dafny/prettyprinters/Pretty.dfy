@@ -83,11 +83,31 @@ module PrettyPrinters {
     else " ensures s.IsJumpDest(0x" + NatToHex(xs[0]) + " as u256)\n" + CollectJumpDestAsString(xs[1..])
   }
 
+
+  method PrintProofObjectToDafny(xs: seq<ProofObj>, pathToEVMDafny: string := "")
+  {
+    if |pathToEVMDafny| > 0 {
+          print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
+          print "include \"", pathToEVMDafny, "/src/dafny/bytecode.dfy\"", "\n";
+          print "\n";
+    }
+
+
+    print "module DafnyEVMProofObject {", "\n";
+
+    print "import opened Int", "\n";
+    print "import EvmState", "\n";
+    print "import opened Bytecode", "\n";
+    // print "{", "\n";
+    PrintProofObjectBody(xs);
+    print "}", "\n";
+  }
+
   /**
     *   Print out each linear segment as a Dafny function.
     *   Instructions are the Dafny-EVM instructions.
     */
-  method {:tailrec} PrintProofObjectToDafny(xs: seq<ProofObj>, num: nat := 0)
+  method {:tailrec} PrintProofObjectBody(xs: seq<ProofObj>, num: nat := 0)
   {
     // Print validJumpDests lemma
     var j := CollectJumpDestAsString(CollectJumpDest(xs));
@@ -159,7 +179,7 @@ module PrettyPrinters {
       //    Return last state
       print "  s", |xs[0].s.Ins()|, "\n";
       print "}\n";
-      PrintProofObjectToDafny(xs[1..], num + 1);
+      PrintProofObjectBody(xs[1..], num + 1);
     }
   }
 
