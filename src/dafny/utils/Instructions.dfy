@@ -25,7 +25,7 @@ module Instructions {
   import opened EVMOpcodes
   import opened EVMConstants
 
-  /** Make sur op is a correctly constructed Opcode */
+  /** Make sure op is a correctly constructed Opcode */
   type ValidOpcode = x: Opcode | x.IsValid() witness SysOp("STOP", STOP)
 
   /**
@@ -113,17 +113,20 @@ module Instructions {
       *  
       */
     function StackPosBackWardTracker(pos': nat := 0): Either<seq<char>, nat>
+        requires this.op.IsValid()
     {
       match this.op
       case ArithOp(_, _, _, _, pushes, pops)      =>
         //  if pos' == 0, the value depends on two stack elements and
-        //  we don't track it
+        //  we don't track it.
+        //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
         if pos' >= 1 then Right(pos' + pops - pushes)
         else Left("More than one predecessor. Arithmetic operator with target 0")
 
       case CompOp(_, _, _, _, pushes, pops)       => 
         //  Same as Arithmetic operator, except some have only one operand.
         if pos' >= 1 then 
+        //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
             Right(pos' + pops - pushes)
         else Left("More than one predecessor. Comparison operator with target 0")
 
