@@ -53,6 +53,7 @@ module SegBuilder {
      */
     function StackPositionTracker(xs: seq<Instruction>, pos: nat := 0): Either<seq<char>, nat>
     {
+        assert forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid();
         if |xs| == 0 then Right(pos) 
         else 
             //  Compute tracker on second last instruction
