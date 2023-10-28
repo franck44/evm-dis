@@ -43,10 +43,13 @@ module ArgParser {
       * Argument name, and number of expected arguments/help for the option.
       */
     var knownArgs: map<string, CLIOption>
+    /** The long name. e.g. "--file" associated with a short name e.g. "-f". */
     var knownNameArgs: map<string, string>
 
     /** The list of known keys. Useful to iterate over keys in a map. */
     var knownKeys: seq<string>
+
+    ghost var registeredOptions: set<string>
 
     var usageSuffix: string
 
@@ -57,7 +60,8 @@ module ArgParser {
       reads this
     {
       && multiset(knownArgs.Keys) == multiset(knownKeys)
-      && knownNameArgs.Values <= knownArgs.Keys
+      && knownArgs.Keys + knownNameArgs.Keys == registeredOptions
+         //   && (forall k:: k in registeredOptions ==> Canonical(k) in knownArgs.Keys)
     }
 
     /**
@@ -65,11 +69,14 @@ module ArgParser {
       */
     constructor(s: string := "")
       ensures Inv()
+      ensures (forall k:: k in registeredOptions ==> Canonical(k) in knownArgs.Keys)
     {
       usageSuffix := s ;
-      knownArgs := map["-h" := CLIOption("--help", 0, "Display help and exit")];
-      knownNameArgs := map["--help" := "-h"];
-      knownKeys := ["-h"];
+      knownArgs := map["--help" := CLIOption("-h", 0, "Display help and exit")];
+      knownNameArgs := map["-h" := "--help"];
+      knownKeys := ["--help"];
+
+      registeredOptions := { "--help", "-h" };
     }
 
     /**
@@ -85,14 +92,17 @@ module ArgParser {
       */
     method {:verify true} AddOption(opname: string, name: string, numArgs: nat := 0, help: string := "No help provided")
       requires Inv()
-      modifies `knownArgs, `knownKeys, `knownNameArgs
       ensures Inv()
+      ensures old(knownArgs.Keys) <= knownArgs.Keys
+      ensures name in knownArgs.Keys && knownArgs[name].numArgs == numArgs
+      modifies `knownArgs, `knownKeys, `knownNameArgs, `registeredOptions
     {
-      knownArgs := knownArgs[opname := CLIOption(name, numArgs, help)];
-      knownNameArgs := knownNameArgs[name := opname];
-      if opname !in knownKeys {
-        knownKeys := knownKeys + [opname];
+      knownArgs := knownArgs[name := CLIOption(opname, numArgs, help)];
+      knownNameArgs := knownNameArgs[opname := name];
+      if name !in knownKeys {
+        knownKeys := knownKeys + [name];
       }
+      registeredOptions := registeredOptions + {opname, name};
     }
 
     /**
@@ -122,54 +132,44 @@ module ArgParser {
         assert knownKeys[i] in multiset(knownKeys);
         var k := knownArgs[knownKeys[i]];
         SameMax(knownKeys);
-        print knownKeys[i], seq(maxL - |knownKeys[i]| + 2, _ => ' ') , " [", k.name, "] ", k.desc ; // , " ", k.0;
+        print knownKeys[i], seq(maxL - |knownKeys[i]| + 2, _ => ' ') , " [", k.name, "] ", k.desc ;
         print "\n";
       }
     }
 
-    /**
-      * Parse the commandline arguments and collect options' values.
-      *
-      * @param  args            The arguments to be parsed.
-      * @param  alreadyParsed   The already collected option values.
-      * @returns                A Success with a map, mapping option long names with their
-      *                         list of arguments or Failure is parsing fails.
-      *                         If it succeeds, the map contains the entries that correspond
-      *                         to options in the command line arguments.
-      *                         The key to the option is the long name, e.g. for am option "-f" with
-      *                         longname "--file", the entry for "-f" or "--file" will be at "--file".
-      * @example                if "--file" is declared with 1 argument, parsing "--file" filename
-      *                         succeeds. If ""-file" is not followed by one argument, it fails.
-      * @example                Note that "--file" "--quiet" will succeed and interpret "--quiet" as 
-      *                         the argument of "--file".
-      */
-    function ParseArgs(args: seq<string>, alreadyParsed: map<string, seq<string>> := map[]): Try<map<string, seq<string>>>
-      reads this
+    //
+    function GetArgs(key: string, s: seq<string>) : (r: Try<seq<string>>)
       requires Inv()
       ensures Inv()
+      ensures r.Success? ==> key in knownArgs.Keys && |r.v| == knownArgs[key].numArgs
+      reads this
     {
-      //  parse the seq and retrieve the values of known options.
-      if |args| == 0 then Success(alreadyParsed)
+      if |s| == 0 then Failure("Not found")
+      else if key !in knownArgs.Keys then Failure("Not a key")
       else
-      if args[0] in knownArgs.Keys || args[0] in knownNameArgs.Keys then
-        //  read the number of arguments if possible, and otherwise
-        //  fail.
-        // Retrieve option
-        var opt := if args[0] in knownArgs.Keys then knownArgs[args[0]]
-                   else knownArgs[knownNameArgs[args[0]]];
+      if Canonical(s[0]) == key then
+        var opt: CLIOption := knownArgs[key];
         var numArgs := opt.numArgs;
-        if |args[1..]| < numArgs then
-          Failure("argument " + args[0] + " needs more arguments")
+        if |s[1..]| < numArgs then
+          Failure("argument " + s[0] + " needs more arguments")
         else
           //   read them
-          var r := args[1..][..numArgs];
-          ParseArgs(args[1 + numArgs..], alreadyParsed[opt.name := r])
-
-      else 
-        ParseArgs(args[1..], alreadyParsed)
+          Success(s[1..][..numArgs])
+      else
+        GetArgs(key, s[1..])
     }
 
-    //  Helper
+    /**
+      *  Expand short names ot canonical.
+      */
+    function Canonical(s: string): string
+      reads `knownNameArgs
+    {
+      if s in knownNameArgs then knownNameArgs[s]
+      else s
+    }
+
+    //  Helpers and Lemmas
 
     /**
       *  Max length of elements in the sequence.
@@ -209,25 +209,25 @@ module ArgParser {
   }
 
   method {:test} Main() {
-    print "hello! Testing parseArg!\n";
+    print "hello! Testing ArgParser!\n";
     var cli := new ArgumentParser("<filename>");
     cli.AddOption("-o", "--one");
     cli.AddOption("-tw", "--two", 2, "don't do that!");
 
-    var r := cli.ParseArgs(["-one", "--two", "a1", "a2", "-unknwon"]);
+    var r := ["-one", "--two", "a1", "a2", "-unknwon"];
 
-    match r {
-      case Success(m) =>
-        if "-o" in m.Keys {
-          print "Success -o!", m["-o"], "\n" ;
-        }
-        if "--two" in m.Keys {
-          print "Success -two!", m["--two"], "\n" ;
-        }
-      case Failure(msg) =>
-        print msg, "\n";
+    match cli.GetArgs("-o", r) {
+      case Success(a) => print "Success -o! has arguments:", a, "\n" ;
 
+      case Failure(m) =>  print "No -o! ", "\n" ;
     }
+
+    match cli.GetArgs("--two", r) {
+      case Success(a) => print "Success -two! has arguments: ", a, "\n" ;
+
+      case Failure(m) =>  print "No --two! ", "\n" ;
+    }
+
     cli.PrintHelp();
   }
 
