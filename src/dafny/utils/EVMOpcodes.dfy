@@ -57,19 +57,20 @@ module EVMOpcodes {
     predicate IsValid()
     {
       match this
-      case ArithOp(_, op, _, _, _, _)     => ADD <= op <= SIGNEXTEND
-      case CompOp(_, op, _, _, _, _)      => LT <= op <= ISZERO
-      case BitwiseOp(_, op, _, _, _, _)   => AND <= op <= SAR
-      case KeccakOp(_, op, _, _, _, _)    => op == KECCAK256
-      case EnvOp(_, op, _, _, _, _)       => ADDRESS <= op <= BASEFEE
-      case MemOp(_, op, _, _, _, _)       => MLOAD <= op <= MSTORE8
-      case StorageOp(_, op, _, _, _, _)   => SLOAD <= op <= SSTORE
-      case JumpOp(_, op, _, _, _, _)      => JUMP <= op <= JUMPI || JUMPDEST <= op <= RJUMPV
-      case RunOp(_, op, _, _, _, _)       => PC <= op <= GAS
-      case StackOp(_, op, _, _, _, _)     => op == POP || PUSH0 <= op <= SWAP16
-      case LogOp(_, op, _, _, _, _)       => LOG0 <= op <= LOG4
-      case SysOp(_, op, _, _, _, _)       => op == STOP || op == EOF || CREATE <= op <= SELFDESTRUCT
+      case ArithOp(_, _, _, _, _, _)     => ADD <= opcode <= SIGNEXTEND && pops == 2 && pushes == 1
+      case CompOp(_, _, _, _, _, _)      => LT <= opcode <= ISZERO && pops >= pushes
+      case BitwiseOp(_, _, _, _, _, _)   => AND <= opcode <= SAR
+      case KeccakOp(_, _, _, _, _, _)    => opcode == KECCAK256
+      case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE
+      case MemOp(_, _, _, _, _, _)       => MLOAD <= opcode <= MSTORE8
+      case StorageOp(_, _, _, _, _, _)   => SLOAD <= opcode <= SSTORE
+      case JumpOp(_, _, _, _, _, _)      => JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV
+      case RunOp(_, _, _, _, _, _)       => PC <= opcode <= GAS
+      case StackOp(_, _, _, _, _, _)     => opcode == POP || PUSH0 <= opcode <= SWAP16
+      case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4
+      case SysOp(_, _, _, _, _, _)       => opcode == STOP || opcode == EOF || CREATE <= opcode <= SELFDESTRUCT
     }
+    
     // Helpers
 
     /**
