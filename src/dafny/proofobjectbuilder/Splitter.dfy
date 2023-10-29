@@ -31,7 +31,7 @@ module Splitter {
     *   Determine the type of the segment according to the last instruction.
     *   @returns    A segment with instructions xs + [lastIns].
     */
-  function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): LinSeg
+  function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): ValidLinSeg
   {
     match lastInst.op.opcode
     case JUMP   =>
@@ -42,6 +42,9 @@ module Splitter {
       RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case STOP   =>
       STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
+    case JUMPDEST =>
+      //  Continuation segment
+      CONTSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case _      =>
       UNKNOWNSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
   }
@@ -50,7 +53,7 @@ module Splitter {
     *   Split the sequence of instructions according to jumps.
     *   @note   Build a LinSeg for each section ending with a Jump or until end of sequence.
     */
-  function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<LinSeg> := []): seq<LinSeg>
+  function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<ValidLinSeg> := []): seq<ValidLinSeg>
   {
     if |xs| == 0 then collected
     else if |xs| == 1 then
@@ -60,6 +63,13 @@ module Splitter {
     else if xs[0].IsTerminal() then
       var newSeg := curseq + [xs[0]];
       SplitUpToTerminal(xs[1..], [], collected + [BuildSeg(curseq, xs[0])])
+    else if xs[0].op.opcode == JUMPDEST then
+      if |curseq| > 0 then
+        //  We have collected some instructions
+        SplitUpToTerminal(xs[1..], [xs[0]], collected + [BuildSeg(curseq[..|curseq| - 1], curseq[|curseq| - 1])])
+      else
+        //  No instruction before JUMPDEST
+        SplitUpToTerminal(xs[1..], [xs[0]], collected)
     else
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }
