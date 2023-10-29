@@ -14,6 +14,7 @@
 
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
+// include "../utils/LinSegments.dfy"
 
 /**
   *  Provides proof objects types.
@@ -22,14 +23,36 @@ module ProofObject {
 
   import opened MiscTypes
   import opened LinSegments
+  import opened Instructions
+  
 
+  /**
+    *   sp.Keys contaisn the tracked/needed stack positions AFTER
+    *   the last instruction.
+    *   They are either a known destination (string) or a stack element
+    *   of the incoming state.
+    */
+  datatype StackResolver = StackResolver(sp: map<nat, Either<string, nat>>)
+  {
+
+  }
+
+    
   /**
     *   Either a segment terminating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
     */
   datatype ProofObj =
-    |  JUMP(s: LinSeg, wpOp: nat, wpCap: nat, tgt: Either<seq<char>, nat>)
-    |  TERMINAL(s: LinSeg, wpOp: nat, wpCap: nat)
+    |  JUMP(s: ValidLinSeg, wpOp: nat, wpCap: nat, tgt: Either<seq<char>, nat>, stacks: StackResolver := StackResolver(map[]))
+    |   CONT(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[])) 
+    |  TERMINAL(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[]))
   {
+    predicate IsValid() {
+         match this 
+            case JUMP(_, _, _, _, _) => s.JUMPSeg? || s.JUMPISeg?
+            case CONT(_, _, _, _) => s.CONTSeg? 
+            case TERMINAL(_, _, _, _) => true  
+    } 
+
     /**
       * The addresses of the JUMPDEST instructions.
       */

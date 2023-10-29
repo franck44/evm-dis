@@ -26,7 +26,13 @@ module LinSegments {
   import opened EVMConstants
 
   /**
-    *   A linear seg,ent of bytecode.
+    *   A valid linear segment.
+    */
+  type ValidLinSeg = s: LinSeg | s.IsValid() witness CONTSeg([], Instruction(ArithOp("ADD" ,ADD)), 0)
+
+
+  /**
+    *   A linear segment of bytecode.
     *   @note   Linear segments are ... linear. They do not contain any
     *           jumps, returns, stops, except possibly the last instruction.
     *
@@ -42,8 +48,23 @@ module LinSegments {
     |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
     |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
     |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
+    |   CONTSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
     |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
   {
+    /**
+      * To be valid the type of the segment must agree with the type of
+      * the lastInst.
+      */
+    predicate IsValid() {
+      match this
+      case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
+      case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
+      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
+      case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP
+      case CONTSeg(_, _, _) => true
+      case UNKNOWNSeg(_, _, _) => true
+    }
+
     /**
       *  The instructions in a segment.
       */
@@ -51,20 +72,31 @@ module LinSegments {
       this.ins + [this.lastIns]
     }
 
+    /**
+      *  The net effect on the stack size.
+      */
     function NetOpEffect() : int {
-        netOpEffect
+      netOpEffect
     }
 
+    /**
+      *  The net effect on the capacity of the stack.
+      */
     function NetCapEffect() : int {
-        -netOpEffect
+      -netOpEffect
     }
 
-    function StackEffect(xs: seq<Instruction> := Ins()) : int {
-        netOpEffect
+    /**
+      *  The net effect on the stack size (synomym of NetOppEffect).
+      */
+    function StackEffect() : int {
+      netOpEffect
     }
 
-    //  LastIns cannot be a JUMPDEST
-    function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := ins): seq<nat>
+    /**
+      * Collect the JUMPDEST in a sequence of instructions.
+      */
+    function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := Ins()): seq<nat>
     {
       if |rest| == 0 then []
       else
@@ -117,7 +149,7 @@ module LinSegments {
     else
       var lastI := xs[|xs| - 1];
       var e := lastI.WeakestPreOperands(postCond);
-        WeakestPreOperandsHelper(xs[..|xs| - 1], e)
+      WeakestPreOperandsHelper(xs[..|xs| - 1], e)
   }
 
   /** 
@@ -134,7 +166,7 @@ module LinSegments {
     else
       var lastI := xs[|xs| - 1];
       var e := lastI.WeakestPreCapacity(postCond);
-        WeakestPreCapacityHelper(xs[..|xs| - 1], e)
+      WeakestPreCapacityHelper(xs[..|xs| - 1], e)
   }
 
 }
