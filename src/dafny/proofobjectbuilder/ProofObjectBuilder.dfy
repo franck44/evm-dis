@@ -30,8 +30,10 @@ module ProofObjectBuilder {
   /**
     *    Given a linear segment, build a proof object.
     */
-  function BuildProofObject(xs: seq<LinSeg>): seq<ProofObj>
-    ensures |xs| == |BuildProofObject(xs)|
+  function BuildProofObject(xs: seq<LinSeg>): (r: seq<ProofObj>)
+    requires forall i:: 0 <= i < |xs| ==> xs[i].IsValid()
+    ensures |xs| == |r|
+    ensures forall i:: 0 <= i < |r| ==> r[i].IsValid()
   {
     if |xs| == 0 then []
     else 
@@ -40,7 +42,9 @@ module ProofObjectBuilder {
         var obj := (if xs[0].JUMPSeg? || xs[0].JUMPISeg? then
             var tgt :=  SegBuilder.JUMPResolver(xs[0]);
             JUMP(xs[0], wpOp, wpCap, tgt)
-        else
+        else if xs[0].CONTSeg? then
+            CONT(xs[0], wpOp, wpCap) 
+        else 
             TERMINAL(xs[0], wpOp, wpCap)
         );
         [obj] + BuildProofObject(xs[1..])
