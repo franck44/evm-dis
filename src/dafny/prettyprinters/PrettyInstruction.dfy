@@ -36,17 +36,17 @@ module PrettyIns {
   {
     match i.op.opcode
     // case STOP       => SysOp("STOP", STOP)
-    // case ADD        => ArithOp("ADD", ADD)
-    // case MUL        => ArithOp("MUL", MUL)
-    // case SUB        => ArithOp("SUB", SUB)
-    // case DIV        => ArithOp("DIV", DIV)
-    // case SDIV       => ArithOp("SDIV", SDIV)
-    // case MOD        => ArithOp("MOD", MOD)
-    // case SMOD       => ArithOp("SMOD", SMOD)
-    // case ADDMOD     => ArithOp("ADDMOD", ADDMOD)
-    // case MULMOD     => ArithOp("MULMOD", MULMOD)
-    // case EXP        => ArithOp("EXP", EXP)
-    // case SIGNEXTEND => ArithOp("SIGNEXTEND", SIGNEXTEND)
+    case ADD         => "var s" + DecToString(tgt) + " := Add(s" + DecToString(src) + ");"
+    case MUL        => "var s" + DecToString(tgt) + " := Mul(s" + DecToString(src) + ");" 
+    case SUB        => "var s" + DecToString(tgt) + " := Sub(s" + DecToString(src) + ");" 
+    case DIV        => "var s" + DecToString(tgt) + " := Div(s" + DecToString(src) + ");" 
+    case SDIV       => "var s" + DecToString(tgt) + " := SDiv(s" + DecToString(src) + ");" 
+    case MOD        => "var s" + DecToString(tgt) + " := Mod(s" + DecToString(src) + ");" 
+    case SMOD       => "var s" + DecToString(tgt) + " := SMod(s" + DecToString(src) + ");" 
+    case ADDMOD     => "var s" + DecToString(tgt) + " := AddMod(s" + DecToString(src) + ");" 
+    case MULMOD     => "var s" + DecToString(tgt) + " := MulMod(s" + DecToString(src) + ");" 
+    case EXP        => "var s" + DecToString(tgt) + " := Exp(s" + DecToString(src) + ");" 
+    case SIGNEXTEND => "var s" + DecToString(tgt) + " := SignExtended(s" + DecToString(src) + ");" 
     // 0x10s: Comparison & Bitwise Logic
     case LT     => "var s" + DecToString(tgt) + " := Bytecode.Lt(s" + DecToString(src) + ");"
     // case GT     => CompOp("GT", GT)
