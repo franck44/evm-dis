@@ -31,7 +31,7 @@ module SegBuilder {
   /**
     *   Try to resolve target address of a JUMP
     */
-    function JUMPResolver(s: LinSeg): Either<seq<char>, nat>
+    function JUMPResolver(s: ValidLinSeg): Either<seq<char>, nat>
         requires s.JUMPSeg? || s.JUMPISeg?
     {
         // Track position of target address at Peek(0), and mark it as
