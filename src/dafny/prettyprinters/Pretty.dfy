@@ -50,11 +50,10 @@ module PrettyPrinters {
   /**
     *   Not used but useful to debug.
     */
-  method {:tailrec} PrintSegments(xs: seq<LinSeg>, num: nat := 0)
-    // requires forall i:: 0 <= i < |xs.Ins()| ==> xs.Ins()[i].op.IsValid()
+  method {:tailrec} PrintSegments(xs: seq<ValidLinSeg>, num: nat := 0)
   {
-    assert forall i:: 0 <= i < |xs| ==> 
-        (forall k:: 0 <= k < |xs[i].Ins()| ==> xs[i].Ins()[k].op.IsValid());
+    assert forall i:: 0 <= i < |xs| ==>
+                        (forall k:: 0 <= k < |xs[i].Ins()| ==> xs[i].Ins()[k].op.IsValid());
     if |xs| > 0 {
       //
       print "Segment ", num, "\n";
@@ -66,6 +65,7 @@ module PrettyPrinters {
       }
       print "WeakestPre Operands:", k, "\n";
       print "WeakestPre Capacity:", l, "\n";
+      print "Net Stack Effect:", xs[0].StackEffect(), "\n";
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
     }
@@ -90,9 +90,9 @@ module PrettyPrinters {
   method PrintProofObjectToDafny(xs: seq<ProofObj>, pathToEVMDafny: string := "")
   {
     if |pathToEVMDafny| > 0 {
-          print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
-          print "include \"", pathToEVMDafny, "/src/dafny/bytecode.dfy\"", "\n";
-          print "\n";
+      print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
+      print "include \"", pathToEVMDafny, "/src/dafny/bytecode.dfy\"", "\n";
+      print "\n";
     }
 
 
@@ -139,9 +139,10 @@ module PrettyPrinters {
       print "\n";
       print "  requires s0.Capacity() >= ";
       print xs[0].wpCap;
-      
+
       print "\n";
       //    If jump and target of jump is known print it.
+      assert xs[0].s.IsValid();
       if xs[0].JUMP? && xs[0].s.lastIns.op.IsJump() {
         { match xs[0].tgt
           case Right(v) =>
