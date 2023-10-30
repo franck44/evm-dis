@@ -92,6 +92,15 @@ module LinSegments {
     }
 
     /**
+      *  The address just aftee the last instruction in this segment.
+      */
+    function StartAddressNextSeg(): nat
+      requires this.JUMPSeg? || this.CONTSeg?
+    {
+      this.lastIns.address + 1 + |this.lastIns.arg|
+    }
+
+    /**
       * Collect the JUMPDEST in a sequence of instructions.
       */
     function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := Ins()): seq<nat>
