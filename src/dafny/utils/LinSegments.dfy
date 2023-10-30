@@ -92,12 +92,12 @@ module LinSegments {
     }
 
     /**
-      *  The address just aftee the last instruction in this segment.
+      *  The address just after the last instruction in this segment.
       */
     function StartAddressNextSeg(): nat
       requires this.JUMPSeg? || this.CONTSeg?
     {
-      this.lastIns.address + 1 + |this.lastIns.arg|
+      this.lastIns.address + 1 + |this.lastIns.arg|/2
     }
 
     /**
