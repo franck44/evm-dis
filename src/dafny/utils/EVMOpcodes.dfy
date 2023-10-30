@@ -70,7 +70,7 @@ module EVMOpcodes {
       case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4
       case SysOp(_, _, _, _, _, _)       => opcode == STOP || opcode == EOF || CREATE <= opcode <= SELFDESTRUCT
     }
-    
+
     // Helpers
 
     /**
@@ -106,17 +106,23 @@ module EVMOpcodes {
       * Whether an opcode is a jump (branching).
       */
     predicate IsJump()
-        requires IsValid()
+      requires IsValid()
     {
       match this.opcode
       case JUMP   => true
       case JUMPI  => true
-    //   case RJUMP  => true
-    //   case RJUMPI => true
-    //   case RJUMPV => true
-    //   case RETURN => true
-    //   case REVERT => true
+      //   case RJUMP  => true
+      //   case RJUMPI => true
+      //   case RJUMPV => true
+      //   case RETURN => true
+      //   case REVERT => true
       case _      => false
+    }
+
+    predicate IsJumpDest()
+      requires IsValid()
+    {
+      this.opcode == JUMPDEST
     }
 
     /**
