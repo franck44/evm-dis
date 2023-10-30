@@ -61,11 +61,17 @@ module PrettyPrinters {
       var l := xs[0].WeakestPreCapacity(0);
       if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
         //  Print the stack tracker value
-        print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n";
+        print "JUMP/JUMPI: tgt address at the end: ";
+        var r := SegBuilder.JUMPResolver(xs[0]);
+        match r {
+          case Left(address) => print "0x" + address;
+          case Right(stackPos) => print "Peek(", stackPos, ")";
+        }
+        print "\n";
       }
       if xs[0].CONTSeg?  {
         var nextPC := xs[0].StartAddressNextSeg();
-          print "  CONT PC of instruction after last is:" + " 0x" + NatToHex(nextPC) + "\n";
+        print "CONT: PC of instruction after last is: " + " 0x" + NatToHex(nextPC) + "\n";
       }
       print "WeakestPre Operands:", k, "\n";
       print "WeakestPre Capacity:", l, "\n";

@@ -42,11 +42,12 @@ module Driver {
     */
   method {:verify true} {:main} Main(args: seq<string>)
   {
-    var optionParser := new ArgumentParser("<filename>");
+    var optionParser := new ArgumentParser("<string>");
 
     //  Register the options
-    optionParser.AddOption("-d", "--dis", 0, "Disassemble <filename>");
-    optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <filename>");
+    optionParser.AddOption("-d", "--dis", 0, "Disassemble <string>");
+    optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <string>");
+    optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
     optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
 
@@ -68,6 +69,14 @@ module Driver {
       //  Parse arguments
       match optionParser.GetArgs("--dis", optArgs) {
         case Success(_) => PrintInstructions(x);
+        case Failure(m) =>
+      }
+
+      match optionParser.GetArgs("--segment", optArgs) {
+        case Success(_) =>
+          print "Segments:\n";
+          var y := SplitUpToTerminal(x, [], []);
+          PrintSegments(y);
         case Failure(m) =>
       }
 
