@@ -63,6 +63,10 @@ module PrettyPrinters {
         //  Print the stack tracker value
         print "JUMP/JUMPI: ", SegBuilder.JUMPResolver(xs[0]), "\n";
       }
+      if xs[0].CONTSeg?  {
+        //  Print the stack tracker value
+        print "CONT: ", SegBuilder.PCAtEnd(xs[0]), "\n";
+      }
       print "WeakestPre Operands:", k, "\n";
       print "WeakestPre Capacity:", l, "\n";
       print "Net Stack Effect:", xs[0].StackEffect(), "\n";
@@ -88,6 +92,7 @@ module PrettyPrinters {
 
 
   method PrintProofObjectToDafny(xs: seq<ProofObj>, pathToEVMDafny: string := "")
+    requires forall i:: 0 <= i < |xs| ==> xs[i].IsValid()
   {
     if |pathToEVMDafny| > 0 {
       print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
@@ -95,13 +100,22 @@ module PrettyPrinters {
       print "\n";
     }
 
-
     print "module DafnyEVMProofObject {", "\n";
 
     print "import opened Int", "\n";
     print "import EvmState", "\n";
     print "import opened Bytecode", "\n";
-    // print "{", "\n";
+
+    // Print validJumpDests lemma
+    var j := CollectJumpDestAsString(CollectJumpDest(xs));
+    if |j| > 0 {
+      print "/** Lemma for Jumpdest */", "\n";
+      print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
+      print j;
+      print "\n";
+    }
+
+
     PrintProofObjectBody(xs);
     print "}", "\n";
   }
@@ -111,15 +125,8 @@ module PrettyPrinters {
     *   Instructions are the Dafny-EVM instructions.
     */
   method {:tailrec} PrintProofObjectBody(xs: seq<ProofObj>, num: nat := 0)
+    requires forall i:: 0 <= i < |xs| ==> xs[i].IsValid()
   {
-    // Print validJumpDests lemma
-    var j := CollectJumpDestAsString(CollectJumpDest(xs));
-    if |j| > 0 && num == 0 {
-      print "/** Lemma for Jumpdest */", "\n";
-      print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
-      print j;
-      print "\n";
-    }
 
     if |xs| > 0 {
       // 
@@ -151,36 +158,45 @@ module PrettyPrinters {
         }
       }
 
-      //    If jump and target of jump is known print it.
-      if xs[0].JUMP? && xs[0].s.lastIns.op.IsJump() {
-        print "  ensures s'.EXECUTING?\n";
-        print "  ensures s'.PC() ==  ";
-        { match xs[0].tgt
-          case Left(xc) => print "0x", xc;
-          case Right(v) =>
-            print "s0.Peek(", v, ") as nat";
-        }
-        //  If JUMPI PC could be either tgt or instruction after last.
-        if xs[0].s.lastIns.op.opcode == JUMPI {
-          print " || s'.PC() == 0x", NatToHex(xs[0].s.lastIns.address + 1);
-        }
-        print "\n";
+      match xs[0] {
+        case JUMP(s, _, _, tgt, _) =>
+          print "  ensures s'.EXECUTING?\n";
+          print "  ensures s'.PC() ==  ";
+          { match tgt
+            case Left(xc) => print "0x", xc;
+            case Right(v) =>
+              print "s0.Peek(", v, ") as nat";
+          }
+          //  If JUMPI PC could be either tgt or instruction after last.
+          if s.lastIns.op.opcode == JUMPI {
+            print " || s'.PC() == 0x", NatToHex(s.lastIns.address + 1);
+          }
+          print "\n";
+          //    Print the constraint for the net stack size effect
+          var n := xs[0].StackEffect();
+          print "  ensures s'.Operands() == s0.Operands()";
+          if n >= 0 { print " + ", n; } else { print " - ", -n; }
+          print "\n";
 
-        //    Print the constraint for the net stack size effect
-        var n := xs[0].StackEffect();
-        print "  ensures s'.Operands() == s0.Operands()";
-        if n >= 0 {
-          print " + ", n;
-        } else {
-          print " - ", -n;
-        }
-        print "\n";
+        case CONT(s, _, _, _) =>
+          print "  ensures s'.EXECUTING?\n";
+          //    PC at the end is the address right after last instruction.
+          //   var nextPC := s.lastIns.address + 1 + |s.lastIns.arg|;
+          var nextPC := s.StartAddressNextSeg();
+          print "  ensures s'.PC() == 0x" + NatToHex(nextPC) + "\n";
+          //    Print the constraint for the net stack size effect
+          var n := xs[0].StackEffect();
+          print "  ensures s'.Operands() == s0.Operands()";
+          if n >= 0 { print " + ", n; } else { print " - ", -n; }
+          print "\n";
+
+        case TERMINAL(s, _, _, _) =>
+          print "  ensures s'.RETURNS?\n";
       }
 
       print "{\n";
       print "  ValidJumpDest(s0);\n";
       PrintInstructionsToDafny(xs[0].s.Ins());
-      //    Return last state
       print "  s", |xs[0].s.Ins()|, "\n";
       print "}\n";
       PrintProofObjectBody(xs[1..], num + 1);
@@ -192,15 +208,11 @@ module PrettyPrinters {
     */
   method PrintInstructionsToDafny(xs:seq<Instruction>, pos: nat := 0)
   {
-    // PrintInstructions(xs);
     if |xs| > 0 {
       var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
       print "  ", k, "\n";
       PrintInstructionsToDafny(xs[1..], pos + 1);
     }
   }
-
-
-
 }
 

@@ -50,7 +50,7 @@ module ProofObject {
          match this 
             case JUMP(_, _, _, _, _) => s.JUMPSeg? || s.JUMPISeg?
             case CONT(_, _, _, _) => s.CONTSeg? 
-            case TERMINAL(_, _, _, _) => true  
+            case TERMINAL(_, _, _, _) => s.RETURNSeg? || s.STOPSeg? 
     } 
 
     /**

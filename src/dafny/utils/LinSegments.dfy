@@ -49,7 +49,6 @@ module LinSegments {
     |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
     |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
     |   CONTSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
-    |   UNKNOWNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
   {
     /**
       * To be valid the type of the segment must agree with the type of
@@ -62,7 +61,6 @@ module LinSegments {
       case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
       case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP
       case CONTSeg(_, _, _) => true
-      case UNKNOWNSeg(_, _, _) => true
     }
 
     /**

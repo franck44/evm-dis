@@ -42,11 +42,21 @@ module Splitter {
       RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case STOP   =>
       STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
-    case JUMPDEST =>
+    case _ =>
       //  Continuation segment
-      CONTSeg(xs, lastInst, DeltaOperandsHelper(xs))
-    case _      =>
-      UNKNOWNSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+      CONTSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+  }
+
+  /**
+    *  Whether the first instruction of a seq is at the end of
+    *  a linear segment.
+    */
+  predicate EndOfSegment(xs: seq<Instruction>)
+    requires |xs| >= 1
+  {
+    if xs[0].IsTerminal() then true
+    else if |xs| > 1 && xs[1].IsJumpDest() then true
+    else false
   }
 
   /**  
@@ -60,16 +70,9 @@ module Splitter {
       //  Last instruction in the code
       collected + [BuildSeg(curseq, xs[0])]
     //  if xs[0] is terminal then start a new seg, otherwise continue previous
-    else if xs[0].IsTerminal() then
+    else if EndOfSegment(xs) then // xs[0].IsTerminal() then
       var newSeg := curseq + [xs[0]];
       SplitUpToTerminal(xs[1..], [], collected + [BuildSeg(curseq, xs[0])])
-    else if xs[0].op.opcode == JUMPDEST then
-      if |curseq| > 0 then
-        //  We have collected some instructions
-        SplitUpToTerminal(xs[1..], [xs[0]], collected + [BuildSeg(curseq[..|curseq| - 1], curseq[|curseq| - 1])])
-      else
-        //  No instruction before JUMPDEST
-        SplitUpToTerminal(xs[1..], [xs[0]], collected)
     else
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }

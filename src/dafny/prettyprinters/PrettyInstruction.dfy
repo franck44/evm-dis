@@ -193,7 +193,7 @@ module PrettyIns {
     // case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 0)
     // case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT)
     // case _ => SysOp("INVALID", INVALID)
-    case _ => i.op.name
+    case _ => "Unknwon instruction:" + i.op.name
   }
 
   /**
