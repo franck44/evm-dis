@@ -29,7 +29,7 @@ module SegBuilderTests {
   import opened SegBuilder
   import opened BinaryDecoder
 
-  method {:test} {:verify false} Test1()
+  method {:test} {:verify true} Test1()
   {
     //  Linear segment 
     var x := DisassembleU8([PUSH1, 0x0a, PUSH1, 0x08, PUSH1, 0x03, SWAP1, PUSH1, 0x13, JUMP] );
@@ -40,7 +40,7 @@ module SegBuilderTests {
     expect u == Left(['1', '3']);
   }
 
-  method {:test} {:verify false} Test2()
+  method {:test} {:verify true} Test2()
   {
     //  Linear segment 
     var x := DisassembleU8([JUMPDEST, POP, JUMP]);
@@ -51,7 +51,7 @@ module SegBuilderTests {
     expect u == Right(1);
   }
 
-  method {:test} {:verify false} Test3()
+  method {:test} {:verify true} Test3()
   {
     //  Linear segment 
     var x := DisassembleU8([JUMPDEST, SWAP2, SWAP1, DUP1, DUP4, LT, PUSH1, 0x1f, JUMPI]);
@@ -60,6 +60,16 @@ module SegBuilderTests {
     expect seg.JUMPISeg?;
     var u := JUMPResolver(seg);
     expect u == Left(['1', 'f']);
+  }
+
+  method {:test} {:verify true} Test4()
+  {
+    //  Linear segment 
+    var x := DisassembleU8([POP, DUP1]);
+    expect |x| == 2;
+    var seg := BuildSeg(x[..|x| - 1], x[|x| - 1]);
+    expect seg.CONTSeg?;
+    expect seg.StartAddressNextSeg() == 0x02;
   }
 
 }
