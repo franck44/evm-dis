@@ -13,7 +13,7 @@
  */
 
 include "../utils/EVMOpcodes.dfy"
-// include "./Splitter.dfy"
+  // include "./Splitter.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
 
@@ -31,37 +31,38 @@ module SegBuilder {
   /**
     *   Try to resolve target address of a JUMP
     */
-    function JUMPResolver(s: ValidLinSeg): Either<seq<char>, nat>
-        requires s.JUMPSeg? || s.JUMPISeg?
-    {
-        // Track position of target address at Peek(0), and mark it as
-        //  resolved if it is found constant in the segment.
-        //  Start after the last non-jump instruction in the segment, use ins instead Ins().
-        StackPositionTracker(s.ins, 0)
-    }
+  function JUMPResolver(s: ValidLinSeg): Either<seq<char>, nat>
+    requires s.JUMPSeg? || s.JUMPISeg?
+  {
+    // Track position of target address at Peek(0), and mark it as
+    //  resolved if it is found constant in the segment.
+    //  Start after the last non-jump instruction in the segment, use ins instead Ins().
+    assert forall i:: 0 <= i < |s.ins| ==> s.ins[i].op.IsValid();
+    StackPositionTracker(s.ins, 0)
+  }
 
-    /**
-     *  Track position of an element on the stack.
-     *  @param      pos     The position to track.
-     *  @returns            The position 
-     *
-     *  @example    After a PUSH, the stack position k is k + 1 in the new stack.
-     *              Hence the position k' in the new stack should be at k' - 1 in the source stack.
-     *  @example    After a POP, the stack position k > 0 is k - 1 in the new stack. 
-     *              Hence the position k' in the new stack should be at k' + 1 in the source stack.
-     *  
-     */
-    function StackPositionTracker(xs: seq<Instruction>, pos: nat := 0): Either<seq<char>, nat>
-    {
-        assert forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid();
-        if |xs| == 0 then Right(pos) 
-        else 
-            //  Compute tracker on second last instruction
-            var x := xs[|xs| - 1].StackPosBackWardTracker(pos);
-            match x 
-                case Left(v) => Left(v)
-                case Right(v) => StackPositionTracker(xs[..|xs| - 1], v)
-    }
+  /**
+    *  Track position of an element on the stack.
+    *  @param      pos     The position to track.
+    *  @returns            The position 
+    *
+    *  @example    After a PUSH, the stack position k is k + 1 in the new stack.
+    *              Hence the position k' in the new stack should be at k' - 1 in the source stack.
+    *  @example    After a POP, the stack position k > 0 is k - 1 in the new stack. 
+    *              Hence the position k' in the new stack should be at k' + 1 in the source stack.
+    *  
+    */
+  function StackPositionTracker(xs: seq<Instruction>, pos: nat := 0): Either<seq<char>, nat>
+      requires forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid()
+  {
+    if |xs| == 0 then Right(pos)
+    else
+      //  Compute tracker on second last instruction
+      var x := xs[|xs| - 1].StackPosBackWardTracker(pos);
+      match x
+      case Left(v) => Left(v)
+      case Right(v) => StackPositionTracker(xs[..|xs| - 1], v)
+  }
 
 }
 
