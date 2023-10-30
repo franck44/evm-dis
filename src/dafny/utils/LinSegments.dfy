@@ -64,7 +64,7 @@ module LinSegments {
     }
 
     /**
-      *  The instructions in a segment.
+      *  The instructions in this segment.
       */
     function Ins(): seq<Instruction> {
       this.ins + [this.lastIns]
