@@ -101,6 +101,8 @@ module Splitter {
       DeltaCapacityHelper(xs[1..], e)
   }
 
+  //  Helper lemmas
+
   /**
     *   Increase or decrease in the stack size is the opposite 
     *   of increase or decrease in capacity.
