@@ -57,6 +57,14 @@ module Instructions {
     }
 
     /**
+      * Whether an instruction Opcode is terminal (branching).
+      */
+    predicate IsJumpDest()
+    {
+      this.op.IsJumpDest() 
+    }
+
+    /**
       * The next effect on the stack size.
       */
     function StackEffect(): int
