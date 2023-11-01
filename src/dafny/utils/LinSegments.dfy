@@ -44,11 +44,11 @@ module LinSegments {
     *               segment of type RETURN.
     */
   datatype LinSeg =
-      JUMPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int )
-    |   JUMPISeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
-    |   RETURNSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
-    |   STOPSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
-    |   CONTSeg(ins: seq<Instruction>, lastIns: Instruction, netOpEffect: int)
+      JUMPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int )
+    |   JUMPISeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+    |   RETURNSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+    |   STOPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+    |   CONTSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
   {
     /**
       * To be valid the type of the segment must agree with the type of
@@ -96,6 +96,7 @@ module LinSegments {
       */
     function StartAddressNextSeg(): nat
       requires this.JUMPSeg? || this.CONTSeg?
+      requires |this.lastIns.arg| % 2 == 0
     {
       this.lastIns.address + 1 + |this.lastIns.arg|/2
     }

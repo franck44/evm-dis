@@ -31,7 +31,7 @@ module Splitter {
     *   Determine the type of the segment according to the last instruction.
     *   @returns    A segment with instructions xs + [lastIns].
     */
-  function BuildSeg(xs: seq<Instruction>, lastInst: Instruction): ValidLinSeg
+  function BuildSeg(xs: seq<ValidInstruction>, lastInst: ValidInstruction): ValidLinSeg
   {
     match lastInst.op.opcode
     case JUMP   =>
@@ -51,7 +51,7 @@ module Splitter {
     *  Whether the first instruction of a seq is at the end of
     *  a linear segment.
     */
-  predicate EndOfSegment(xs: seq<Instruction>)
+  predicate EndOfSegment(xs: seq<ValidInstruction>)
     requires |xs| >= 1
   {
     if xs[0].IsTerminal() then true
@@ -63,7 +63,7 @@ module Splitter {
     *   Split the sequence of instructions according to jumps.
     *   @note   Build a LinSeg for each section ending with a Jump or until end of sequence.
     */
-  function SplitUpToTerminal(xs: seq<Instruction>, curseq: seq<Instruction> := [], collected: seq<ValidLinSeg> := []): seq<ValidLinSeg>
+  function SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): seq<ValidLinSeg>
   {
     if |xs| == 0 then collected
     else if |xs| == 1 then

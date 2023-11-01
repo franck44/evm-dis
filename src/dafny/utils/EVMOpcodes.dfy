@@ -24,6 +24,10 @@ module EVMOpcodes {
   import opened MiscTypes
   import opened EVMConstants
 
+
+  /** Make sure op is a correctly constructed Opcode */
+  type ValidOpcode = x: Opcode | x.IsValid() witness SysOp("STOP", STOP)
+
   /**
     * The different types of Opcodes supported by the EVM.
     */

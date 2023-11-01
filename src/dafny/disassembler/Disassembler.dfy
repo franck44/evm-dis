@@ -35,7 +35,7 @@ module BinaryDecoder {
     *   @param  p       The part thathas already been disassembled.
     *   @param  next    The next available address to store the instructions.
     */
-  function {:tailrec} Disassemble(s: string, p: seq<Instruction> := [], next: nat := 0): seq<Instruction>
+  function {:tailrec} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
     decreases |s|
   {
     if |s| == 0 then
@@ -61,7 +61,7 @@ module BinaryDecoder {
           Disassemble(s[2..], p + [Instruction(op, [], next)], next + 1)
   }
 
-  function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<Instruction> := [], next: nat := 0): seq<Instruction>
+  function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
     decreases |s|
   {
     if |s| == 0 then
@@ -70,7 +70,7 @@ module BinaryDecoder {
       //  Try to read parameters of opcode
       var op := Decode(s[0]);
       if op.Args() > 0 then
-        //  try to skip 2 * Args()
+        //  try to skip Args()
         if |s[1..]| < op.Args() then
           p + [Instruction(Decode(INVALID))]
         else
@@ -82,6 +82,7 @@ module BinaryDecoder {
 
   function {:tailrecursion true} HexHelper(s: seq<u8>): string
     requires |s| <= 32
+    ensures |HexHelper(s)| % 2 == 0
   {
     if |s| == 0 then ""
     else U8ToHex(s[0]) + HexHelper(s[1..])

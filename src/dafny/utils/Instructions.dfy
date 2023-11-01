@@ -25,18 +25,19 @@ module Instructions {
   import opened EVMOpcodes
   import opened EVMConstants
 
-  /** Make sure op is a correctly constructed Opcode */
-  type ValidOpcode = x: Opcode | x.IsValid() witness SysOp("STOP", STOP)
+  type ValidInstruction = i:Instruction | 
+    i.op.opcode == INVALID ||
+    |i.arg| % 2 == 0 witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
     * An instruction.
     * @param    op  The opcode of the instruction.
     * @param    arg The (possibly empty) number of arguments in BYTES.
     *
-    * @example      `POP`, 'ADD, etc are instructiopns with no parameters, 
+    * @example      `POP`, 'ADD, etc are instructions with no parameters, 
     *               whereas `PUSH1` or `PUSH2` takes parameters.  
     * @note         The numbers of arguments as Hex is arg/2.
-    */
+    */ 
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
 

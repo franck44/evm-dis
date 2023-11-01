@@ -70,12 +70,16 @@ module PrettyPrinters {
         print "\n";
       }
       if xs[0].CONTSeg?  {
-        var nextPC := xs[0].StartAddressNextSeg();
-        print "CONT: PC of instruction after last is: " + " 0x" + NatToHex(nextPC) + "\n";
+        if xs[0].lastIns.op.opcode != INVALID {
+          var nextPC := xs[0].StartAddressNextSeg();
+          print "CONT: PC of instruction after last is: " + " 0x" + NatToHex(nextPC) + "\n";
+        }
+        print "WeakestPre Operands:", k, "\n";
+        print "WeakestPre Capacity:", l, "\n";
+        print "Net Stack Effect:", xs[0].StackEffect(), "\n";
+      } else {
+        print "CONT: has an invaid instructiom" + "\n";
       }
-      print "WeakestPre Operands:", k, "\n";
-      print "WeakestPre Capacity:", l, "\n";
-      print "Net Stack Effect:", xs[0].StackEffect(), "\n";
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
     }
@@ -188,12 +192,17 @@ module PrettyPrinters {
           print "  ensures s'.EXECUTING?\n";
           //    PC at the end is the address right after last instruction.
           //   var nextPC := s.lastIns.address + 1 + |s.lastIns.arg|;
-          var nextPC := s.StartAddressNextSeg();
-          print "  ensures s'.PC() == 0x" + NatToHex(nextPC) + "\n";
-          //    Print the constraint for the net stack size effect
-          var n := xs[0].StackEffect();
-          print "  ensures s'.Operands() == s0.Operands()";
-          if n >= 0 { print " + ", n; } else { print " - ", -n; }
+          //   assume |s.lastIns.arg| % 2 == 0;
+          if s.lastIns.op.opcode != INVALID {
+            var nextPC := s.StartAddressNextSeg();
+            print "  ensures s'.PC() == 0x" + NatToHex(nextPC) + "\n";
+            //    Print the constraint for the net stack size effect
+            var n := xs[0].StackEffect();
+            print "  ensures s'.Operands() == s0.Operands()";
+            if n >= 0 { print " + ", n; } else { print " - ", -n; }
+          } else {
+            print "  Last instruction is invalid";
+          }
           print "\n";
 
         case TERMINAL(s, _, _, _) =>
@@ -212,7 +221,7 @@ module PrettyPrinters {
   /**
     *   Print out a sequence of instructions in the Dafny-EVM format.
     */
-  method PrintInstructionsToDafny(xs:seq<Instruction>, pos: nat := 0)
+  method PrintInstructionsToDafny(xs:seq<ValidInstruction>, pos: nat := 0)
   {
     if |xs| > 0 {
       var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
