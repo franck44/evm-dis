@@ -36,18 +36,19 @@ module ProofObjectBuilder {
     ensures forall i:: 0 <= i < |r| ==> r[i].IsValid()
   {
     if |xs| == 0 then []
-    else 
-        var wpOp := xs[0].WeakestPreOperands(0);
-        var wpCap := xs[0].WeakestPreCapacity(0);
-        var obj := (if xs[0].JUMPSeg? || xs[0].JUMPISeg? then
-            var tgt :=  SegBuilder.JUMPResolver(xs[0]);
-            JUMP(xs[0], wpOp, wpCap, tgt)
-        else if xs[0].CONTSeg? then
-            CONT(xs[0], wpOp, wpCap) 
-        else 
-            TERMINAL(xs[0], wpOp, wpCap)
+    else
+      var wpOp := xs[0].WeakestPreOperands(0);
+      var wpCap := xs[0].WeakestPreCapacity(0);
+      var obj :=
+        (if xs[0].JUMPSeg? || xs[0].JUMPISeg? then
+           var tgt :=  SegBuilder.JUMPResolver(xs[0]);
+           JUMP(xs[0], wpOp, wpCap, tgt)
+         else if xs[0].CONTSeg? then
+           CONT(xs[0], wpOp, wpCap)
+         else
+           TERMINAL(xs[0], wpOp, wpCap)
         );
-        [obj] + BuildProofObject(xs[1..])
+      [obj] + BuildProofObject(xs[1..])
   }
 
 }
