@@ -1,0 +1,45 @@
+
+======= src/dafny/tests/src/simple/max.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let x := 8
+            let z := foo1(x)
+            mstore(0x40, z)
+            return(0x40, 32)
+        }
+        function foo1(x) -> r
+        { r := x }
+    }
+}
+
+
+Binary representation:
+600760086010565b60405260206040f35b9056
+
+Text representation:
+    /* "src/dafny/tests/src/simple/max.yul":156:163   */
+  tag_2
+    /* "src/dafny/tests/src/simple/max.yul":142:143   */
+  0x08
+    /* "src/dafny/tests/src/simple/max.yul":156:163   */
+  tag_1
+  jump	// in
+tag_2:
+    /* "src/dafny/tests/src/simple/max.yul":174:178   */
+  0x40
+    /* "src/dafny/tests/src/simple/max.yul":167:182   */
+  mstore
+    /* "src/dafny/tests/src/simple/max.yul":198:200   */
+  0x20
+    /* "src/dafny/tests/src/simple/max.yul":192:196   */
+  0x40
+    /* "src/dafny/tests/src/simple/max.yul":185:201   */
+  return
+    /* "src/dafny/tests/src/simple/max.yul":32:73   */
+tag_1:
+  swap1
+  jump	// out
+
