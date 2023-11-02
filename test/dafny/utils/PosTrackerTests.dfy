@@ -17,6 +17,7 @@ include "../../../src/dafny/utils/EVMOpcodes.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
   // include "../utils/MiscTypes.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
+include "../../../src/dafny/utils/int.dfy" 
   // include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 
 /**
@@ -30,6 +31,7 @@ module PosTrackerTests {
   import opened OpcodeDecoder
   import opened EVMConstants
   import opened Instructions
+  import Int
 
   /** Arithmetic instruction. Proofs. */
   method Ariths(k: nat, op: Int.u8)
