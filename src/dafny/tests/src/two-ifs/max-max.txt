@@ -1,0 +1,85 @@
+
+======= src/dafny/tests/src/two-ifs/max-max.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let x := 8
+            let y := 3
+            let z := 10
+            let r := max(x, y)
+            r := max(r, z)
+            mstore(0x40, r)
+            return(0x40, 32)
+        }
+        function max(x, y) -> result
+        {
+            result := x
+            if lt(x, y) { result := y }
+        }
+    }
+}
+
+
+Binary representation:
+60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456
+
+Text representation:
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":236:245   */
+  tag_2
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":171:172   */
+  0x08
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":217:226   */
+  tag_3
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":186:187   */
+  0x03
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":201:203   */
+  0x0a
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":217:226   */
+  swap3
+  tag_1
+  jump	// in
+tag_3:
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":236:245   */
+  tag_1
+  jump	// in
+tag_2:
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":260:264   */
+  0x40
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":253:268   */
+  mstore
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":286:288   */
+  0x20
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":280:284   */
+  0x40
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":273:289   */
+  return
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":38:157   */
+tag_1:
+  swap2
+  swap1
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":82:93   */
+  dup1
+  dup4
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":105:113   */
+  lt
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":102:150   */
+  tag_4
+  jumpi
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":72:157   */
+tag_5:
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":38:157   */
+  pop
+  jump	// out
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":114:150   */
+tag_4:
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":128:139   */
+  swap1
+  swap2
+  pop
+    /* "src/dafny/tests/src/two-ifs/max-max.yul":114:150   */
+  swap1
+  0x00
+  jump(tag_5)
+
