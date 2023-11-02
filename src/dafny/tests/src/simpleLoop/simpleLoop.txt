@@ -1,0 +1,65 @@
+
+======= src/dafny/tests/src/simpleLoop/simpleLoop.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let r := 0
+            let i := 0
+            for { } lt(i, 10) { }
+            { r := add(r, 1) }
+            mstore(0x40, r)
+            return(0x40, 32)
+        }
+    }
+}
+
+
+Binary representation:
+5f805b600a81106013575060405260206040f35b906001600a9101919050600256
+
+Text representation:
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":119:120   */
+  0x00
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":140:141   */
+  dup1
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":144:153   */
+tag_1:
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":150:152   */
+  0x0a
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":144:153   */
+  dup2
+  lt
+  tag_2
+  jumpi
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":197:212   */
+  pop
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":204:208   */
+  0x40
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":197:212   */
+  mstore
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":230:232   */
+  0x20
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":224:228   */
+  0x40
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":217:233   */
+  return
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":158:191   */
+tag_2:
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":173:182   */
+  swap1
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":180:181   */
+  0x01
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":150:152   */
+  0x0a
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":173:182   */
+  swap2
+  add
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":158:191   */
+  swap2
+    /* "src/dafny/tests/src/simpleLoop/simpleLoop.yul":154:157   */
+  swap1
+  pop
+  jump(tag_1)
+
