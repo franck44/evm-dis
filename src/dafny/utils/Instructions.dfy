@@ -25,9 +25,9 @@ module Instructions {
   import opened EVMOpcodes
   import opened EVMConstants
 
-  type ValidInstruction = i:Instruction | 
-    i.op.opcode == INVALID ||
-    |i.arg| % 2 == 0 witness Instruction(SysOp("STOP", STOP), [], 0)
+  type ValidInstruction = i:Instruction |
+      i.op.opcode == INVALID ||
+      |i.arg| % 2 == 0 witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
     * An instruction.
@@ -37,7 +37,7 @@ module Instructions {
     * @example      `POP`, 'ADD, etc are instructions with no parameters, 
     *               whereas `PUSH1` or `PUSH2` takes parameters.  
     * @note         The numbers of arguments as Hex is arg/2.
-    */ 
+    */
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
 
@@ -63,7 +63,7 @@ module Instructions {
       */
     predicate IsJumpDest()
     {
-      this.op.IsJumpDest() 
+      this.op.IsJumpDest()
     }
 
     /**
@@ -123,7 +123,7 @@ module Instructions {
       *  
       */
     function StackPosBackWardTracker(pos': nat := 0): Either<seq<char>, nat>
-        requires this.op.IsValid()
+      requires this.op.IsValid()
     {
       match this.op
       case ArithOp(_, _, _, _, pushes, pops)      =>
@@ -133,11 +133,11 @@ module Instructions {
         if pos' >= 1 then Right(pos' + pops - pushes)
         else Left("More than one predecessor. Arithmetic operator with target 0")
 
-      case CompOp(_, _, _, _, pushes, pops)       => 
+      case CompOp(_, _, _, _, pushes, pops)       =>
         //  Same as Arithmetic operator, except some have only one operand.
-        if pos' >= 1 then 
-        //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
-            Right(pos' + pops - pushes)
+        if pos' >= 1 then
+          //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
+          Right(pos' + pops - pushes)
         else Left("More than one predecessor. Comparison operator with target 0")
 
       case BitwiseOp(_, _, _, _, _, _)    => Left("Not implemented")
@@ -183,4 +183,5 @@ module Instructions {
       case SysOp(_, _, _, _, _, _) => Left("Not implemented")
     }
   }
+
 }
