@@ -13,7 +13,7 @@
  */
 
 include "./../utils/int.dfy"
-include "./../utils/EVMOpcodes.dfy"
+include "./../utils/EVMOpcodes.dfy" 
 
 /**
   * Provides EVM opcodes decoding into readable format.
