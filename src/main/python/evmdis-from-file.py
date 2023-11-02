@@ -20,15 +20,16 @@
 import sys
 import argparse
 import os.path
+import subprocess
 
 from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny  
+# import module_
+# import _dafny  
 
-import Driver
+# import Driver
 try:
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", help="Input filename")
@@ -37,27 +38,39 @@ try:
     args = parser.parse_args()
     # if arg is a filename, read file in a string
     if args.file:
-        print(args.file)
+        # print(args.file)
         # check if file exists
         if os.path.isfile(args.file) and os.access(args.file, os.R_OK):
             print("File exists and is readable")
-            text_file = open("file.txt", "r")
+            text_file = open(args.file, "r")
             # read whole file to a string
             data = text_file.read().strip('\n')
             # close file
             text_file.close()
         else:
-            print("Either the file is missing or not readable")
-            print("file does not exists or is not readable")
+            print("Either the file \"" + args.file + "\" is missing or not readable")
+            # print("file does not exists or is not readable")
             sys.exit(1)
     # If arg is a string, use the raw string as input
     if args.string:
         data = args.string 
 
-    dafnyArgs = [_dafny.Seq(a) for a in sys.argv]
+    # 
+    print(data)
+    result = subprocess.run(
+        ['python3','/Users/franck/development/evm-dis/build/libs/driver-py/__main__.py', '--proof', data.encode('utf-8')], 
+        stdout=subprocess.PIPE,
+        # input= ("run --no-verify /Users/franck/development/evm-dis/src/dafny/Driver.dfy --proof " + data).encode('utf-8') 
+        # input='00'.encode('utf-8')
+        )
+    print(result.stdout.decode('utf-8'))
+
+    # dafnyArgs = [_dafny.Seq(a) for a in sys.argv]
     # send file as a string or raw string to Dafny input arg number 1
-    dafnyArgs[1] = data
-    Driver.default__.Main(dafnyArgs)
-except _dafny.HaltException as e:
-    _dafny.print("[Program halted] " + e.message + "\n")
+    # dafnyArgs[1] = data
+    # Driver.default__.Main(dafnyArgs)
+except Exception as error:
+    # handle the exception
+    print("An exception occurred:", error) 
+    # print("[Exception occured] " + "\n")
     sys.exit(1)
