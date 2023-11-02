@@ -21,26 +21,26 @@ class default__:
     @staticmethod
     def HexToU8(s):
         source1_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
-        d_84___mcc_h0_ = source1_[0]
-        d_85___mcc_h1_ = source1_[1]
-        source2_ = d_84___mcc_h0_
+        d_72___mcc_h0_ = source1_[0]
+        d_73___mcc_h1_ = source1_[1]
+        source2_ = d_72___mcc_h0_
         if source2_.is_None:
-            source3_ = d_85___mcc_h1_
+            source3_ = d_73___mcc_h1_
             if source3_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_86___mcc_h2_ = source3_.v
+                d_74___mcc_h2_ = source3_.v
                 return MiscTypes.Option_None()
         elif True:
-            d_87___mcc_h4_ = source2_.v
-            source4_ = d_85___mcc_h1_
+            d_75___mcc_h4_ = source2_.v
+            source4_ = d_73___mcc_h1_
             if source4_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_88___mcc_h6_ = source4_.v
-                d_89_v2_ = d_88___mcc_h6_
-                d_90_v1_ = d_87___mcc_h4_
-                return MiscTypes.Option_Some(((16) * (d_90_v1_)) + (d_89_v2_))
+                d_76___mcc_h6_ = source4_.v
+                d_77_v2_ = d_76___mcc_h6_
+                d_78_v1_ = d_75___mcc_h4_
+                return MiscTypes.Option_Some(((16) * (d_78_v1_)) + (d_77_v2_))
 
     @staticmethod
     def U8ToHex(n):
@@ -68,13 +68,13 @@ class default__:
 
     @staticmethod
     def NatToHex(n):
-        d_91___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_79___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (16):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(n)])) + (d_91___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(n)])) + (d_79___accumulator_)
                 elif True:
-                    d_91___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, 16))])) + (d_91___accumulator_)
+                    d_79___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, 16))])) + (d_79___accumulator_)
                     in0_ = _dafny.euclidian_division(n, 16)
                     n = in0_
                     raise _dafny.TailCall()

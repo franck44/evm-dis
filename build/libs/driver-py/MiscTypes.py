@@ -11,6 +11,36 @@ import Int
 # Module: MiscTypes
 
 
+class Try:
+    @classmethod
+    def default(cls, ):
+        return lambda: Try_Failure(_dafny.Seq({}))
+    def __ne__(self, __o: object) -> bool:
+        return not self.__eq__(__o)
+    @property
+    def is_Success(self) -> bool:
+        return isinstance(self, Try_Success)
+    @property
+    def is_Failure(self) -> bool:
+        return isinstance(self, Try_Failure)
+
+class Try_Success(Try, NamedTuple('Success', [('v', Any)])):
+    def __dafnystr__(self) -> str:
+        return f'MiscTypes.Try.Success({_dafny.string_of(self.v)})'
+    def __eq__(self, __o: object) -> bool:
+        return isinstance(__o, Try_Success) and self.v == __o.v
+    def __hash__(self) -> int:
+        return super().__hash__()
+
+class Try_Failure(Try, NamedTuple('Failure', [('msg', Any)])):
+    def __dafnystr__(self) -> str:
+        return f'MiscTypes.Try.Failure({self.msg.VerbatimString(True)})'
+    def __eq__(self, __o: object) -> bool:
+        return isinstance(__o, Try_Failure) and self.msg == __o.msg
+    def __hash__(self) -> int:
+        return super().__hash__()
+
+
 class Option:
     @classmethod
     def default(cls, ):

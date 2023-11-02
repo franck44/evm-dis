@@ -21,6 +21,7 @@ import ProofObject
 import PrettyIns
 import PrettyPrinters
 import ProofObjectBuilder
+import ArgParser
 import Driver
 
 # Module: module_

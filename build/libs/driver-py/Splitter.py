@@ -25,15 +25,24 @@ class default__:
     @staticmethod
     def BuildSeg(xs, lastInst):
         if (((lastInst).op).opcode) == (86):
-            return LinSegments.LinSeg_JUMPSeg(xs, lastInst)
+            return LinSegments.LinSeg_JUMPSeg(xs, lastInst, default__.DeltaOperandsHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst])), 0))
         elif (((lastInst).op).opcode) == (87):
-            return LinSegments.LinSeg_JUMPISeg(xs, lastInst)
+            return LinSegments.LinSeg_JUMPISeg(xs, lastInst, default__.DeltaOperandsHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst])), 0))
         elif (((lastInst).op).opcode) == (243):
-            return LinSegments.LinSeg_RETURNSeg(xs, lastInst)
+            return LinSegments.LinSeg_RETURNSeg(xs, lastInst, default__.DeltaOperandsHelper(xs, 0))
         elif (((lastInst).op).opcode) == (0):
-            return LinSegments.LinSeg_STOPSeg(xs, lastInst)
+            return LinSegments.LinSeg_STOPSeg(xs, lastInst, default__.DeltaOperandsHelper(xs, 0))
         elif True:
-            return LinSegments.LinSeg_UNKNOWNSeg(xs, lastInst)
+            return LinSegments.LinSeg_CONTSeg(xs, lastInst, default__.DeltaOperandsHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst])), 0))
+
+    @staticmethod
+    def EndOfSegment(xs):
+        if ((xs)[0]).IsTerminal():
+            return True
+        elif ((len(xs)) > (1)) and (((xs)[1]).IsJumpDest()):
+            return True
+        elif True:
+            return False
 
     @staticmethod
     def SplitUpToTerminal(xs, curseq, collected):
@@ -43,22 +52,37 @@ class default__:
                     return collected
                 elif (len(xs)) == (1):
                     return (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
-                elif ((xs)[0]).IsTerminal():
-                    d_177_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in22_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in23_ = _dafny.SeqWithoutIsStrInference([])
-                    in24_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
-                    xs = in22_
-                    curseq = in23_
-                    collected = in24_
+                elif default__.EndOfSegment(xs):
+                    d_187_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in23_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in24_ = _dafny.SeqWithoutIsStrInference([])
+                    in25_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
+                    xs = in23_
+                    curseq = in24_
+                    collected = in25_
                     raise _dafny.TailCall()
                 elif True:
-                    in25_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in26_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in27_ = collected
-                    xs = in25_
-                    curseq = in26_
-                    collected = in27_
+                    in26_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in27_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in28_ = collected
+                    xs = in26_
+                    curseq = in27_
+                    collected = in28_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def DeltaOperandsHelper(xs, current):
+        while True:
+            with _dafny.label():
+                if (len(xs)) == (0):
+                    return current
+                elif True:
+                    d_188_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
+                    in29_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in30_ = d_188_e_
+                    xs = in29_
+                    current = in30_
                     raise _dafny.TailCall()
                 break
 

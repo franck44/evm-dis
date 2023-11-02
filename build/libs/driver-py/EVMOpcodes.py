@@ -64,107 +64,95 @@ class Opcode:
             d_3___mcc_h3_ = source0_.minOperands
             d_4___mcc_h4_ = source0_.pushes
             d_5___mcc_h5_ = source0_.pops
-            d_6_op_ = d_1___mcc_h1_
-            return ((EVMConstants.default__.ADD) <= (d_6_op_)) and ((d_6_op_) <= (EVMConstants.default__.SIGNEXTEND))
+            return ((((EVMConstants.default__.ADD) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SIGNEXTEND))) and (((self).pops) == (2))) and (((self).pushes) == (1))
         elif source0_.is_CompOp:
-            d_7___mcc_h6_ = source0_.name
-            d_8___mcc_h7_ = source0_.opcode
-            d_9___mcc_h8_ = source0_.minCapacity
-            d_10___mcc_h9_ = source0_.minOperands
-            d_11___mcc_h10_ = source0_.pushes
-            d_12___mcc_h11_ = source0_.pops
-            d_13_op_ = d_8___mcc_h7_
-            return ((EVMConstants.default__.LT) <= (d_13_op_)) and ((d_13_op_) <= (EVMConstants.default__.ISZERO))
+            d_6___mcc_h6_ = source0_.name
+            d_7___mcc_h7_ = source0_.opcode
+            d_8___mcc_h8_ = source0_.minCapacity
+            d_9___mcc_h9_ = source0_.minOperands
+            d_10___mcc_h10_ = source0_.pushes
+            d_11___mcc_h11_ = source0_.pops
+            return (((EVMConstants.default__.LT) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.ISZERO))) and (((self).pops) >= ((self).pushes))
         elif source0_.is_BitwiseOp:
-            d_14___mcc_h12_ = source0_.name
-            d_15___mcc_h13_ = source0_.opcode
-            d_16___mcc_h14_ = source0_.minCapacity
-            d_17___mcc_h15_ = source0_.minOperands
-            d_18___mcc_h16_ = source0_.pushes
-            d_19___mcc_h17_ = source0_.pops
-            d_20_op_ = d_15___mcc_h13_
-            return ((EVMConstants.default__.AND) <= (d_20_op_)) and ((d_20_op_) <= (EVMConstants.default__.SAR))
+            d_12___mcc_h12_ = source0_.name
+            d_13___mcc_h13_ = source0_.opcode
+            d_14___mcc_h14_ = source0_.minCapacity
+            d_15___mcc_h15_ = source0_.minOperands
+            d_16___mcc_h16_ = source0_.pushes
+            d_17___mcc_h17_ = source0_.pops
+            return ((EVMConstants.default__.AND) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SAR))
         elif source0_.is_KeccakOp:
-            d_21___mcc_h18_ = source0_.name
-            d_22___mcc_h19_ = source0_.opcode
-            d_23___mcc_h20_ = source0_.minCapacity
-            d_24___mcc_h21_ = source0_.minOperands
-            d_25___mcc_h22_ = source0_.pushes
-            d_26___mcc_h23_ = source0_.pops
-            d_27_op_ = d_22___mcc_h19_
-            return (d_27_op_) == (EVMConstants.default__.KECCAK256)
+            d_18___mcc_h18_ = source0_.name
+            d_19___mcc_h19_ = source0_.opcode
+            d_20___mcc_h20_ = source0_.minCapacity
+            d_21___mcc_h21_ = source0_.minOperands
+            d_22___mcc_h22_ = source0_.pushes
+            d_23___mcc_h23_ = source0_.pops
+            return ((self).opcode) == (EVMConstants.default__.KECCAK256)
         elif source0_.is_EnvOp:
-            d_28___mcc_h24_ = source0_.name
-            d_29___mcc_h25_ = source0_.opcode
-            d_30___mcc_h26_ = source0_.minCapacity
-            d_31___mcc_h27_ = source0_.minOperands
-            d_32___mcc_h28_ = source0_.pushes
-            d_33___mcc_h29_ = source0_.pops
-            d_34_op_ = d_29___mcc_h25_
-            return ((EVMConstants.default__.ADDRESS) <= (d_34_op_)) and ((d_34_op_) <= (EVMConstants.default__.BASEFEE))
+            d_24___mcc_h24_ = source0_.name
+            d_25___mcc_h25_ = source0_.opcode
+            d_26___mcc_h26_ = source0_.minCapacity
+            d_27___mcc_h27_ = source0_.minOperands
+            d_28___mcc_h28_ = source0_.pushes
+            d_29___mcc_h29_ = source0_.pops
+            return ((EVMConstants.default__.ADDRESS) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.BASEFEE))
         elif source0_.is_MemOp:
-            d_35___mcc_h30_ = source0_.name
-            d_36___mcc_h31_ = source0_.opcode
-            d_37___mcc_h32_ = source0_.minCapacity
-            d_38___mcc_h33_ = source0_.minOperands
-            d_39___mcc_h34_ = source0_.pushes
-            d_40___mcc_h35_ = source0_.pops
-            d_41_op_ = d_36___mcc_h31_
-            return ((EVMConstants.default__.MLOAD) <= (d_41_op_)) and ((d_41_op_) <= (EVMConstants.default__.MSTORE8))
+            d_30___mcc_h30_ = source0_.name
+            d_31___mcc_h31_ = source0_.opcode
+            d_32___mcc_h32_ = source0_.minCapacity
+            d_33___mcc_h33_ = source0_.minOperands
+            d_34___mcc_h34_ = source0_.pushes
+            d_35___mcc_h35_ = source0_.pops
+            return ((EVMConstants.default__.MLOAD) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.MSTORE8))
         elif source0_.is_StorageOp:
-            d_42___mcc_h36_ = source0_.name
-            d_43___mcc_h37_ = source0_.opcode
-            d_44___mcc_h38_ = source0_.minCapacity
-            d_45___mcc_h39_ = source0_.minOperands
-            d_46___mcc_h40_ = source0_.pushes
-            d_47___mcc_h41_ = source0_.pops
-            d_48_op_ = d_43___mcc_h37_
-            return ((EVMConstants.default__.SLOAD) <= (d_48_op_)) and ((d_48_op_) <= (EVMConstants.default__.SSTORE))
+            d_36___mcc_h36_ = source0_.name
+            d_37___mcc_h37_ = source0_.opcode
+            d_38___mcc_h38_ = source0_.minCapacity
+            d_39___mcc_h39_ = source0_.minOperands
+            d_40___mcc_h40_ = source0_.pushes
+            d_41___mcc_h41_ = source0_.pops
+            return ((EVMConstants.default__.SLOAD) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SSTORE))
         elif source0_.is_JumpOp:
-            d_49___mcc_h42_ = source0_.name
-            d_50___mcc_h43_ = source0_.opcode
-            d_51___mcc_h44_ = source0_.minCapacity
-            d_52___mcc_h45_ = source0_.minOperands
-            d_53___mcc_h46_ = source0_.pushes
-            d_54___mcc_h47_ = source0_.pops
-            d_55_op_ = d_50___mcc_h43_
-            return (((EVMConstants.default__.JUMP) <= (d_55_op_)) and ((d_55_op_) <= (EVMConstants.default__.JUMPI))) or (((EVMConstants.default__.JUMPDEST) <= (d_55_op_)) and ((d_55_op_) <= (EVMConstants.default__.RJUMPV)))
+            d_42___mcc_h42_ = source0_.name
+            d_43___mcc_h43_ = source0_.opcode
+            d_44___mcc_h44_ = source0_.minCapacity
+            d_45___mcc_h45_ = source0_.minOperands
+            d_46___mcc_h46_ = source0_.pushes
+            d_47___mcc_h47_ = source0_.pops
+            return (((EVMConstants.default__.JUMP) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.JUMPI))) or (((EVMConstants.default__.JUMPDEST) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.RJUMPV)))
         elif source0_.is_RunOp:
-            d_56___mcc_h48_ = source0_.name
-            d_57___mcc_h49_ = source0_.opcode
-            d_58___mcc_h50_ = source0_.minCapacity
-            d_59___mcc_h51_ = source0_.minOperands
-            d_60___mcc_h52_ = source0_.pushes
-            d_61___mcc_h53_ = source0_.pops
-            d_62_op_ = d_57___mcc_h49_
-            return ((EVMConstants.default__.PC) <= (d_62_op_)) and ((d_62_op_) <= (EVMConstants.default__.GAS))
+            d_48___mcc_h48_ = source0_.name
+            d_49___mcc_h49_ = source0_.opcode
+            d_50___mcc_h50_ = source0_.minCapacity
+            d_51___mcc_h51_ = source0_.minOperands
+            d_52___mcc_h52_ = source0_.pushes
+            d_53___mcc_h53_ = source0_.pops
+            return ((EVMConstants.default__.PC) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.GAS))
         elif source0_.is_StackOp:
-            d_63___mcc_h54_ = source0_.name
-            d_64___mcc_h55_ = source0_.opcode
-            d_65___mcc_h56_ = source0_.minCapacity
-            d_66___mcc_h57_ = source0_.minOperands
-            d_67___mcc_h58_ = source0_.pushes
-            d_68___mcc_h59_ = source0_.pops
-            d_69_op_ = d_64___mcc_h55_
-            return ((d_69_op_) == (EVMConstants.default__.POP)) or (((EVMConstants.default__.PUSH0) <= (d_69_op_)) and ((d_69_op_) <= (EVMConstants.default__.SWAP16)))
+            d_54___mcc_h54_ = source0_.name
+            d_55___mcc_h55_ = source0_.opcode
+            d_56___mcc_h56_ = source0_.minCapacity
+            d_57___mcc_h57_ = source0_.minOperands
+            d_58___mcc_h58_ = source0_.pushes
+            d_59___mcc_h59_ = source0_.pops
+            return (((self).opcode) == (EVMConstants.default__.POP)) or (((EVMConstants.default__.PUSH0) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SWAP16)))
         elif source0_.is_LogOp:
-            d_70___mcc_h60_ = source0_.name
-            d_71___mcc_h61_ = source0_.opcode
-            d_72___mcc_h62_ = source0_.minCapacity
-            d_73___mcc_h63_ = source0_.minOperands
-            d_74___mcc_h64_ = source0_.pushes
-            d_75___mcc_h65_ = source0_.pops
-            d_76_op_ = d_71___mcc_h61_
-            return ((EVMConstants.default__.LOG0) <= (d_76_op_)) and ((d_76_op_) <= (EVMConstants.default__.LOG4))
+            d_60___mcc_h60_ = source0_.name
+            d_61___mcc_h61_ = source0_.opcode
+            d_62___mcc_h62_ = source0_.minCapacity
+            d_63___mcc_h63_ = source0_.minOperands
+            d_64___mcc_h64_ = source0_.pushes
+            d_65___mcc_h65_ = source0_.pops
+            return ((EVMConstants.default__.LOG0) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.LOG4))
         elif True:
-            d_77___mcc_h66_ = source0_.name
-            d_78___mcc_h67_ = source0_.opcode
-            d_79___mcc_h68_ = source0_.minCapacity
-            d_80___mcc_h69_ = source0_.minOperands
-            d_81___mcc_h70_ = source0_.pushes
-            d_82___mcc_h71_ = source0_.pops
-            d_83_op_ = d_78___mcc_h67_
-            return (((d_83_op_) == (EVMConstants.default__.STOP)) or ((d_83_op_) == (EVMConstants.default__.EOF))) or (((EVMConstants.default__.CREATE) <= (d_83_op_)) and ((d_83_op_) <= (EVMConstants.default__.SELFDESTRUCT)))
+            d_66___mcc_h66_ = source0_.name
+            d_67___mcc_h67_ = source0_.opcode
+            d_68___mcc_h68_ = source0_.minCapacity
+            d_69___mcc_h69_ = source0_.minOperands
+            d_70___mcc_h70_ = source0_.pushes
+            d_71___mcc_h71_ = source0_.pops
+            return ((((self).opcode) == (EVMConstants.default__.STOP)) or (((self).opcode) == (EVMConstants.default__.EOF))) or (((EVMConstants.default__.CREATE) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SELFDESTRUCT)))
 
     def Args(self):
         if ((EVMConstants.default__.PUSH1) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.PUSH32)):
@@ -199,6 +187,9 @@ class Opcode:
             return True
         elif True:
             return False
+
+    def IsJumpDest(self):
+        return ((self).opcode) == (EVMConstants.default__.JUMPDEST)
 
     def Name(self):
         return (self).name

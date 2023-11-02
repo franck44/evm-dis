@@ -27,7 +27,29 @@ class default__:
 
     @staticmethod
     def PrintInstructionToDafny(i, src, tgt):
-        if (((i).op).opcode) == (16):
+        if (((i).op).opcode) == (1):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Add(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (2):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Mul(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (3):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Sub(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (4):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Div(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (5):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := SDiv(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (6):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Mod(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (7):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := SMod(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (8):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := AddMod(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (9):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := MulMod(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (10):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Exp(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (11):
+            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := SignExtended(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+        elif (((i).op).opcode) == (16):
             return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Bytecode.Lt(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         elif (((i).op).opcode) == (80):
             return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Pop(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
@@ -110,7 +132,7 @@ class default__:
         elif (((i).op).opcode) == (243):
             return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Return(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         elif True:
-            return ((i).op).name
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Unknwon instruction:"))) + (((i).op).name)
 
     @staticmethod
     def DecToChar(n):
@@ -137,15 +159,15 @@ class default__:
 
     @staticmethod
     def DecToString(n):
-        d_183___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_207___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_183___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_207___accumulator_)
                 elif True:
-                    d_183___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_183___accumulator_)
-                    in30_ = _dafny.euclidian_division(n, 10)
-                    n = in30_
+                    d_207___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_207___accumulator_)
+                    in33_ = _dafny.euclidian_division(n, 10)
+                    n = in33_
                     raise _dafny.TailCall()
                 break
 
