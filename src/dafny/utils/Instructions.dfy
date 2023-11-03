@@ -14,6 +14,7 @@
 
 include "./int.dfy"
 include "../utils/EVMOpcodes.dfy"
+include "../utils/State.dfy"
 
 /**
   *  Provides EVM Instruction types.
@@ -24,6 +25,7 @@ module Instructions {
   import opened MiscTypes
   import opened EVMOpcodes
   import opened EVMConstants
+  import opened State
 
   type ValidInstruction = i:Instruction |
       i.op.opcode == INVALID ||
@@ -182,6 +184,112 @@ module Instructions {
       case LogOp(_, _, _, _, _, _) => Left("Not implemented")
       case SysOp(_, _, _, _, _, _) => Left("Not implemented")
     }
-  }
 
+    /**
+      * Compute the next abstract state. The condition resolves non-determinism when needed,
+      * e.g. for JUMPs. Otherwise it shoudk be false as there is only one branch.
+      * 
+      * @param  s       The source state.
+      * @param  cond    The branch to take for conditional instructions, false for others.
+      */
+    function NextState(s: ValidState, cond: bool := false): AState
+      requires this.op.IsValid()
+    {
+      match this.op
+      case ArithOp(_, _, _, _, pushes, pops)      =>
+        if s.Size() >= pops && !cond then
+          assert pops == 2;
+          assert pushes == 1;
+          s.PopN(pops).Push(Random()).Skip(1)
+        else Error("Stack underflow")
+
+      case CompOp(_, _, _, _, pushes, pops)       =>
+        //  Same as Arithmetic operator, except some have only one operand.
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).Push(Random()).Skip(1)
+        else Error("Stack underflow")
+
+      case BitwiseOp(_, _, _, _, pushes, pops)    =>
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).Push(Random()).Skip(1)
+        else Error("Stack underflow")
+
+      case KeccakOp(_, _, _, _, pushes, pops)     =>
+        if s.Size() >= 2 && !cond then
+          assert pushes == 1;
+          assert pops == 2;
+          s.PopN(2).Push(Random()).Skip(1)
+        else Error("Stack underflow")
+
+      case EnvOp(_, _, _, _, pushes, pops)        =>
+        if !cond then
+          assert pops == 0;
+          assert pushes == 1;
+          s.Push(Random()).Skip(1)
+        else Error()
+
+      case MemOp(_, _, _, _, pushes, pops)        =>
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).Push(Random()).Skip(1)
+        else Error()
+
+      case StorageOp(_, _, _, _, pushes, pops)    =>
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).Push(Random()).Skip(1)
+        else Error()
+
+      case JumpOp(_, opcode, _, _, pushes, pops)  =>
+        assert pushes == 0;
+        if opcode == JUMPDEST && !cond then
+          s.Skip(1)
+        else if opcode == JUMP && s.Size() >= 1 && !cond then
+          match s.Peek(0)
+          case Value(v) => s.Pop().Goto(v as nat)
+          case Random() => Error()
+        else if opcode == JUMPI && s.Size() >= 2 then
+          match s.Peek(0)
+          case Value(v) =>
+            if cond then s.PopN(2).Goto(v as nat)
+            else s.PopN(2).Skip(1)
+          case Random() => Error()
+        else
+          //    RJUMP not implemented
+          Error("RJUMPs not implemented")
+
+      case RunOp(_, _, _, _, pushes, pops)        =>
+        if !cond then
+          assert pops == 0;
+          assert pushes == 1;
+          s.Push(Random()).Skip(1)
+        else Error()
+
+      case StackOp(_, opcode, _, _, pushes, pops) =>
+        if opcode == POP && s.Size() >= 1 && ! cond then
+          assert pushes == 0 && pops == 1;
+          s.Pop().Skip(1)
+        else if PUSH0 <= opcode <= PUSH32 && !cond then
+          assert pushes == 1;
+          assert pops == 0;
+          s.Push(Value(0)).Skip(1)
+        else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
+          assert pushes == 1 && pops == 0;
+          s.Dup((opcode - DUP1) as nat + 1).Skip(1)
+        else if SWAP1 <= opcode <= SWAP16 && s.Size() > (opcode - SWAP1) as nat + 1 && !cond then 
+          assert pushes == pops == 0;
+          s.Swap((opcode - SWAP1) as nat + 1).Skip(1)
+        else 
+            Error()
+
+      case LogOp(_, _, _, _, pushes, pops) =>
+        assert pushes == 0;
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).Skip(1)
+        else Error()
+
+      case SysOp(_, _, _, _, pushes, pops) =>
+        if s.Size() >= pops && !cond then
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
+        else Error()
+    }
+  }
 }
