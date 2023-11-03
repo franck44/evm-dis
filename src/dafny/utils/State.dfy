@@ -29,8 +29,10 @@ module State {
   /**
     *   A ValidState is a state from whihc we can execute an instruction.
     */
-  type ValidState = s: AState | s.EState? witness EState(0, [])
+  type ValidState = s: AState | s.EState? witness DEFAULT_VALIDSTATE
 
+
+  const DEFAULT_VALIDSTATE := EState(0, [])
   /**
     *   There are two types of abstract types: an 'executing' state from
     *   from which can execute the code and Error states from which we cannot.
@@ -113,7 +115,7 @@ module State {
     /** Duplicate element n. Push a copy of Peek(n). */
     function Dup(n: nat): AState
       requires this.EState?
-        requires 1 <= n <= 16
+      requires 1 <= n <= 16
       requires this.Size() >= n > 0
     {
       var nth := this.stack[n - 1];
@@ -123,7 +125,7 @@ module State {
     /** Swap Peek(n) and Peek(0). */
     function Swap(n: nat): AState
       requires this.EState?
-        requires 1 <= n <= 16
+      requires 1 <= n <= 16
       requires this.Size() > n > 0
     {
       var nth := this.stack[n];
