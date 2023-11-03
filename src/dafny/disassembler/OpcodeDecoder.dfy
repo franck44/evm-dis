@@ -102,9 +102,9 @@ module OpcodeDecoder {
     case RJUMP     => JumpOp("RJUMP", RJUMP, 0, 1, 0, 1)
     case RJUMPI    => JumpOp("RJUMPI", RJUMPI, 0, 2, 0, 2)
     case RJUMPV    => JumpOp("RJUMPV", RJUMPV, 0, 2, 0, 2)
-    case PC       => RunOp("PC", PC, 1, 0, 1, 0)
-    case MSIZE    => RunOp("MSIZE", MSIZE, 1, 0, 1, 0)
-    case GAS      => RunOp("GAS", GAS, 1, 0, 1, 0)
+    case PC       => RunOp("PC", PC)
+    case MSIZE    => RunOp("MSIZE", MSIZE)
+    case GAS      => RunOp("GAS", GAS)
     case JUMPDEST => JumpOp("JUMPDEST", JUMPDEST, 0, 0, 0, 0)
     case PUSH0    => StackOp("PUSH0", PUSH0, 1, 0, 1, 0)
     // 0x60s & 0x70s: Push operations

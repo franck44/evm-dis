@@ -48,8 +48,8 @@ module EVMOpcodes {
                 minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
     | JumpOp(name: string, opcode: u8, minCapacity: nat := 0,
              minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | RunOp(name: string, opcode: u8, minCapacity: nat := 0,
-            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | RunOp(name: string, opcode: u8, minCapacity: nat := 1,
+            minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
     | StackOp(name: string, opcode: u8, minCapacity: nat := 0,
               minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
     | LogOp(name: string, opcode: u8, minCapacity: nat := 0,
@@ -64,14 +64,16 @@ module EVMOpcodes {
       case ArithOp(_, _, _, _, _, _)     => ADD <= opcode <= SIGNEXTEND && pops == 2 && pushes == 1
       case CompOp(_, _, _, _, _, _)      => LT <= opcode <= ISZERO && pops >= pushes
       case BitwiseOp(_, _, _, _, _, _)   => AND <= opcode <= SAR
-      case KeccakOp(_, _, _, _, _, _)    => opcode == KECCAK256
-      case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE
+      case KeccakOp(_, _, _, _, _, _)    => opcode == KECCAK256 && pops == 2 && pushes == 1
+      case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE && pops == 0 && pushes == 1
       case MemOp(_, _, _, _, _, _)       => MLOAD <= opcode <= MSTORE8
       case StorageOp(_, _, _, _, _, _)   => SLOAD <= opcode <= SSTORE
-      case JumpOp(_, _, _, _, _, _)      => JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV
-      case RunOp(_, _, _, _, _, _)       => PC <= opcode <= GAS
-      case StackOp(_, _, _, _, _, _)     => opcode == POP || PUSH0 <= opcode <= SWAP16
-      case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4
+      case JumpOp(_, _, _, _, _, _)      => (JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV) && pushes == 0 
+      case RunOp(_, _, _, _, _, _)       => PC <= opcode <= GAS && pops == 0 && pushes == 1
+      case StackOp(_, _, _, _, _, _)     => (opcode == POP && pushes == 0 && pops == 1) 
+                                            || (PUSH0 <= opcode <= DUP16 && pushes == 1 && pops == 0) 
+                                            || (SWAP1 <= opcode <= SWAP16 && pushes == pops == 0)
+      case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4 && pushes == 0
       case SysOp(_, _, _, _, _, _)       => opcode == STOP || opcode == EOF || CREATE <= opcode <= SELFDESTRUCT
     }
 
