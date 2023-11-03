@@ -15,6 +15,7 @@
 include "./OpcodeDecoder.dfy"
 include "../utils/Hex.dfy"
 include "../utils/Instructions.dfy"
+include "../utils/MiscTypes.dfy"
 
 /**
   *  Provides binary decoder.
@@ -27,6 +28,7 @@ module BinaryDecoder {
   import opened Int
   import opened EVMConstants
   import opened Instructions
+  import opened MiscTypes
 
   /**
     *  Disassemble a string into a sequence of instructions.
@@ -62,7 +64,7 @@ module BinaryDecoder {
   }
 
   function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
-    decreases |s|
+    decreases |s| 
   {
     if |s| == 0 then
       p
@@ -86,6 +88,32 @@ module BinaryDecoder {
   {
     if |s| == 0 then ""
     else U8ToHex(s[0]) + HexHelper(s[1..])
+  }
+
+  function {:tailrecursion true} StringToU8Helper(s: string, decoded: seq<Int.u8> := []): (r : Option<seq<Int.u8>>)
+    // requires
+  {
+    if |s| == 0 then Some(decoded)
+    else if |s| == 1 then
+      match HexToU8("0" + [s[0]])
+      case Some(v) => Some(decoded + [v as Int.u8])
+      case None => None
+    else
+      match HexToU8(s[0..2])
+      case Some(v) => StringToU8Helper(s[2..], decoded + [v as Int.u8])
+      case None => None
+  }
+
+  lemma foo(s: string, d: seq<Int.u8>)
+    ensures StringToU8Helper(s, d).Some? ==> |StringToU8Helper(s, d).v| <= |s|/2 + 1 + |d|
+  {
+
+  }
+
+  lemma foo101(s: string)
+    ensures  StringToU8Helper(s).Some? ==> |StringToU8Helper(s).v| <= |s|/2 + 1
+  {
+    foo(s, []);
   }
 }
 
