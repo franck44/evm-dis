@@ -75,40 +75,37 @@ module PosTrackerTests {
 
   /** Comparison instructions. */
   method Comps1(k: nat, op: Int.u8)
-    requires LT <= op <= EQ
+    requires LT <= op <= ISZERO
   {
     {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(op));
-      var r := i.StackPosBackWardTracker(k);
-      if k >= 1 {
-        assert r == Right(k + 1);
-      } else {
-        assert r.Left?;
-      }
+      assert i.NextState(s, true).Error?;
+      assert op != ISZERO ==>  i.NextState(s, false).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
+      var i := Instruction(Decode(op));
+      assert i.NextState(s, true).Error?;
+      assert i.NextState(s, false).EState?;
     }
   }
 
-  method Comps2(k: nat, op: Int.u8)
-    requires op == ISZERO
-  {
-    {
-      var i := Instruction(Decode(op));
-      var r := i.StackPosBackWardTracker(k);
-      if k > 0 {
-        assert r == Right(k);
-      } else {
-        assert r.Left?;
-      }
-    }
-  }
 
   /** Concrete tests. */
   method {:test} CompsTests()
   {
     {
-      var i := Instruction(Decode(GT));
-      var r := i.StackPosBackWardTracker(0);
-      expect r.Left?;
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
+      var i := Instruction(Decode(LT));
+      assert i.NextState(s, true).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Value(10)]);
+      var i := Instruction(Decode(LT));
+      assert i.NextState(s, true).Error?; 
+      assert i.NextState(s, false).EState?; 
+      expect  i.NextState(s, false).pc == 5;
     }
 
     {
