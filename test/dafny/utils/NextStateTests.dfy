@@ -17,7 +17,7 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
   // include "../utils/MiscTypes.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
-include "../../../src/dafny/utils/int.dfy" 
+include "../../../src/dafny/utils/int.dfy"
   // include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 
 /**
@@ -26,13 +26,13 @@ include "../../../src/dafny/utils/int.dfy"
   */
 module PosTrackerTests {
 
-//   import opened EVMOpcodes
+  //   import opened EVMOpcodes
   import opened MiscTypes
   import opened OpcodeDecoder
   import opened EVMConstants
   import opened Instructions
   import Int
-  import opened State 
+  import opened State
 
   /** Arithmetic instruction. Proofs. */
   method Ariths(k: nat, op: Int.u8, s: ValidState)
@@ -46,7 +46,7 @@ module PosTrackerTests {
       var i := Instruction(Decode(op));
       if s.Size() >= 2 {
         assert i.NextState(s, false).EState?;
-        assert i.NextState(s, false).PC() == s.PC() + 1; 
+        assert i.NextState(s, false).PC() == s.PC() + 1;
         assert i.NextState(s, false).Size() == s.Size() - 1;
         assert i.NextState(s, false).stack[1..] == s.stack[2..];
       } else {
@@ -59,15 +59,17 @@ module PosTrackerTests {
   method {:test} ArithsTests()
   {
     {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
       var i := Instruction(Decode(ADD));
-      var r := i.StackPosBackWardTracker(0);
-      expect r.Left?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, true).Error?;
+      expect  i.NextState(s, false).pc == 5;
     }
-
     {
-      var i := Instruction(Decode(ADD));
-      var r := i.StackPosBackWardTracker(1);
-      expect r == Right(2);
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
+      var i := Instruction(Decode(SIGNEXTEND));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
     }
   }
 
