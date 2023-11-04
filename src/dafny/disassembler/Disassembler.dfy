@@ -54,13 +54,20 @@ module BinaryDecoder {
         var op := Decode(v);
         if op.Args() > 0 then
           //  try to skip 2 * Args()
-          if |s[2..]| < 2 * op.Args() then
+          if |s[2..]| < 2 * op.Args() || !IsHexString(s[2..][..2 * op.Args()]) then
             p + [Instruction(Decode(INVALID), "not enough arguments for " + s[2..], next)]
           else
             assert |s[2..][2 * op.Args()..]| < |s|;
+            // assert 
             Disassemble(s[2..][2 * op.Args()..], p + [Instruction(op, s[2..][..2 * op.Args()], next)], next + 1 + op.Args() )
         else
           Disassemble(s[2..], p + [Instruction(op, [], next)], next + 1)
+  }
+
+  predicate IsHexString(s: string) 
+    // ensures forall 
+  {
+    forall k :: 0 <= k < |s| ==> IsHex(s[k])
   }
 
   function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
@@ -85,6 +92,8 @@ module BinaryDecoder {
   function {:tailrecursion true} HexHelper(s: seq<u8>): string
     requires |s| <= 32
     ensures |HexHelper(s)| % 2 == 0
+    ensures |HexHelper(s)| == 2 * |s| <= 64
+    ensures IsHexString(HexHelper(s))
   {
     if |s| == 0 then ""
     else U8ToHex(s[0]) + HexHelper(s[1..])
