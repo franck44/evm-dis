@@ -24,7 +24,7 @@ include "../../../src/dafny/utils/int.dfy"
   * Test correct computation of back propagation of a given position.
   * 
   */
-module PosTrackerTests {
+module NextStateTests {
 
   //   import opened EVMOpcodes
   import opened MiscTypes
@@ -258,6 +258,19 @@ module PosTrackerTests {
       expect i.NextState(s, false).pc == 5;
       expect i.NextState(s, false).Peek(0) == Random();
       expect i.NextState(s, true).Error?;
+    }
+  }
+
+  //  Stack op tests
+  method {:test} PushTests()
+  {
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
+      var i := Instruction(Decode(PUSH1), "09");
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).pc == 6;
+      expect i.NextState(s, false).Peek(0) == Value(9);
     }
   }
 
