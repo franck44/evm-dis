@@ -13,6 +13,7 @@
  */
 
 include "./int.dfy"
+include "./Hex.dfy"
 include "../utils/EVMOpcodes.dfy"
 include "../utils/State.dfy"
 
@@ -22,14 +23,17 @@ include "../utils/State.dfy"
 module Instructions {
 
   import opened Int
+  import Hex
   import opened MiscTypes
   import opened EVMOpcodes
   import opened EVMConstants
   import opened State
 
-  type ValidInstruction = i:Instruction |
-      i.op.opcode == INVALID ||
-      |i.arg| % 2 == 0 witness Instruction(SysOp("STOP", STOP), [], 0)
+  type ValidInstruction = i:Instruction | i.IsValid()
+    //   i.op.opcode == INVALID ||
+    //   (|i.arg| % 2 == 0 && |i.arg| <= 64 && (forall k:: 0 <= k < |i.arg| ==>
+    //                                                       Hex.IsHex(i.arg[k])))
+    witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
     * An instruction.
@@ -42,6 +46,14 @@ module Instructions {
     */
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
+
+    predicate IsValid() {
+      op.opcode == INVALID ||
+      (|arg| % 2 == 0
+       && |arg| <= 64
+       && (forall k:: 0 <= k < |arg| ==>
+                        Hex.IsHex(arg[k])))
+    }
 
     function ToString(): string
     {
@@ -198,6 +210,7 @@ module Instructions {
       *                 and false, go to next instruction.
       */
     function NextState(s: ValidState, cond: bool := false): AState
+      requires this.IsValid()
       requires this.op.IsValid()
     {
       match this.op
@@ -275,15 +288,15 @@ module Instructions {
         else if PUSH0 <= opcode <= PUSH32 && !cond then
           assert pushes == 1;
           assert pops == 0;
-          s.Push(Value(0)).Skip(1 + (opcode - PUSH0) as nat)
+          s.Push(Value(GetArgValuePush(arg))).Skip(1 + (opcode - PUSH0) as nat)
         else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
           assert pushes == 1 && pops == 0;
           s.Dup((opcode - DUP1) as nat + 1).Skip(1)
-        else if SWAP1 <= opcode <= SWAP16 && s.Size() > (opcode - SWAP1) as nat + 1 && !cond then 
+        else if SWAP1 <= opcode <= SWAP16 && s.Size() > (opcode - SWAP1) as nat + 1 && !cond then
           assert pushes == pops == 0;
           s.Swap((opcode - SWAP1) as nat + 1).Skip(1)
-        else 
-            Error()
+        else
+          Error()
 
       case LogOp(_, _, _, _, pushes, pops) =>
         assert pushes == 0;
@@ -296,5 +309,14 @@ module Instructions {
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error()
     }
+  }
+
+  function GetArgValuePush(xc: seq<char>): u256
+    requires |xc| <= 64
+    requires forall k:: 0 <= k < |xc| ==> Hex.IsHex(xc[k])
+  {
+    var pad := seq(64 - |xc|, _ => '0');
+    //  HexToU256 is a u256 (not None)
+    Hex.HexToU256(pad + xc).v
   }
 }
