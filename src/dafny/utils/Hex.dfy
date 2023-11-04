@@ -36,7 +36,60 @@ module Hex {
     match (HexVal(s[0]), HexVal(s[1]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => Some(16 * v1 + v2)
+    case (Some(v1), Some(v2)) => Some((TWO_4 * v1 as nat + v2 as nat) as u8)
+  }
+
+  function HexToU16(s: string): Option<u16>
+    requires |s| == 4
+  {
+    match (HexToU8(s[..2]), HexToU8(s[2..]))
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(v1), Some(v2)) => 
+        Some(((TWO_8 * v1 as nat + v2 as nat) as u16)) 
+  }
+
+  function HexToU32(s: string): Option<u32>
+    requires |s| == 8
+  {
+    match (HexToU16(s[..4]), HexToU16(s[4..]))
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(v1), Some(v2)) => 
+        Some(((TWO_16 * v1 as nat + v2 as nat) as u32)) 
+  }
+
+  function HexToU64(s: string): Option<u64>
+    requires |s| == 16
+    ensures (forall k:: 0 <= k < |s| ==> IsHex(s[k])) ==> HexToU64(s).Some?
+  {
+    match (HexToU32(s[..8]), HexToU32(s[8..]))
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(v1), Some(v2)) => 
+        Some(((TWO_32 * v1 as nat + v2 as nat) as u64)) 
+  }
+
+  function HexToU128(s: string): Option<u128>
+    requires |s| == 32
+    ensures (forall k:: 0 <= k < |s| ==> IsHex(s[k])) ==> HexToU128(s).Some?
+  {
+    match (HexToU64(s[..16]), HexToU64(s[16..]))
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(v1), Some(v2)) => 
+        Some(((TWO_64 * v1 as nat + v2 as nat) as u128)) 
+  }
+
+  function HexToU256(s: string): Option<u256>
+    requires |s| == 64
+    ensures (forall k:: 0 <= k < |s| ==> IsHex(s[k])) ==> HexToU256(s).Some?
+  {
+    match (HexToU128(s[..32]), HexToU128(s[32..]))
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(v1), Some(v2)) => 
+        Some(((TWO_128 * v1 as nat + v2 as nat) as u256)) 
   }
 
   // Helpers to convert uint into hexadecimal strings.
@@ -89,6 +142,7 @@ module Hex {
     *  Decode an Hex digit.
     */
   function HexVal(c: char): Option<u8>
+    ensures IsHex(c) ==> HexVal(c).Some?
     ensures HexVal(c).Some? ==> HexVal(c).v <= 15
   {
     match c
@@ -141,6 +195,11 @@ module Hex {
     case 13 => 'd'
     case 14 => 'e'
     case 15 => 'f'
+  }
+
+  predicate IsHex(c: char) 
+  {
+    '0' <= c <= '9' || 'a' <= c <= 'f' || 'A' <= c <= 'F'
   }
 
 
