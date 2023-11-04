@@ -15,18 +15,15 @@
 
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
-  // include "../utils/MiscTypes.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 include "../../../src/dafny/utils/int.dfy"
-  // include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 
 /**
-  * Test correct computation of back propagation of a given position.
+  * Test correct computation of next State.
   * 
   */
 module NextStateTests {
 
-  //   import opened EVMOpcodes
   import opened MiscTypes
   import opened OpcodeDecoder
   import opened EVMConstants
@@ -91,7 +88,6 @@ module NextStateTests {
     }
   }
 
-
   /** Concrete tests. */
   method {:test} CompsTests()
   {
@@ -117,6 +113,7 @@ module NextStateTests {
     }
   }
 
+  /** Bitwise operators. */
   method {:test} BitWiseTests()
   {
     {
@@ -143,6 +140,7 @@ module NextStateTests {
     }
   }
 
+  /**   Keccak.  */
   method {:test} KeccakTests()
   {
     {
@@ -161,6 +159,7 @@ module NextStateTests {
     }
   }
 
+  /**   Env operators. */
   method {:test} EnvTests()
   {
     {
@@ -181,6 +180,7 @@ module NextStateTests {
     }
   }
 
+  /**   Memory operators. */
   method {:test} MemTests()
   {
     {
@@ -207,6 +207,7 @@ module NextStateTests {
     }
   }
 
+  /**   Storage operators. */
   method {:test} StorageTests()
   {
     {
@@ -233,6 +234,7 @@ module NextStateTests {
     }
   }
 
+  /** Runtime operators. */
   method {:test} RunTests()
   {
     {
@@ -261,7 +263,7 @@ module NextStateTests {
     }
   }
 
-  //  Stack op tests
+  /**   Push k */
   method {:test} PushTests()
   {
     {
@@ -284,6 +286,7 @@ module NextStateTests {
     }
   }
 
+  /**   POP  */
   method {:test} PopTests()
   {
     {
@@ -312,20 +315,9 @@ module NextStateTests {
     }
   }
 
+  /**   DUP  */
   method {:test} DupTests()
   {
-    {
-      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-      var i := Instruction(Decode(DUP1));
-      expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).Error?;
-    }
-    {
-      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(5, _ => Random()));
-      var i := Instruction(Decode(DUP6));
-      expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).Error?;
-    }
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(5, i requires 0 <= i < 5 => Value(i as Int.u256)));
       var i := Instruction(Decode(DUP5));
@@ -347,6 +339,29 @@ module NextStateTests {
       var i := Instruction(Decode(DUP1 + k));
       expect i.NextState(s, true).Error?;
       expect i.NextState(s, false).Error?;
+    }
+  }
+
+  /**   SWAP */
+  method {:test} SwapTests()
+  {
+    for k: Int.u8 := 0 to 15 {
+      var size := k as nat + 1;
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(size, i requires 0 <= i < size => Value(i as Int.u256)));
+      var i := Instruction(Decode(SWAP1 + k));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
+    }
+    for k: Int.u8 := 0 to 15 {
+      var size := k as nat + 2;
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(size, i requires 0 <= i < size => Value(i as Int.u256)));
+      var i := Instruction(Decode(SWAP1 + k));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).pc == 5;
+      expect i.NextState(s, false).Size() == k as nat + 2;
+      expect i.NextState(s, false).Peek(k as nat + 1) == Value(0);
+      expect i.NextState(s, false).Peek(0) == Value(k as Int.u256 + 1);
     }
   }
 
@@ -377,6 +392,7 @@ module NextStateTests {
     }
   }
 
+  /**   JUMPDEST */
   method {:test} JumpDests()
   {
     {
@@ -388,6 +404,7 @@ module NextStateTests {
     }
   }
 
+  /**   JUMPI */
   method {:test} JumpIs()
   {
     {
@@ -418,6 +435,7 @@ module NextStateTests {
     }
   }
 
+  /**   RJUMP (not implemented an result in Error). */
   method {:test} RJumps()
   {
     {
