@@ -286,7 +286,7 @@ module NextStateTests {
 
   method {:test} PopTests()
   {
-     {
+    {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(POP));
       expect i.NextState(s, true).Error?;
@@ -309,6 +309,44 @@ module NextStateTests {
       expect i.NextState(s, false).pc == 5;
       expect i.NextState(s, false).Size() == 1;
       expect i.NextState(s, false).Peek(0) == Value(3);
+    }
+  }
+
+  method {:test} DupTests()
+  {
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(DUP1));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(5, _ => Random()));
+      var i := Instruction(Decode(DUP6));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(5, i requires 0 <= i < 5 => Value(i as Int.u256)));
+      var i := Instruction(Decode(DUP5));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).Peek(0) == Value(4);
+    }
+    for k: Int.u8 := 0 to 15 {
+      var size := k as nat + 1;
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(size, i requires 0 <= i < size => Value(i as Int.u256)));
+      var i := Instruction(Decode(DUP1 + k));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).Peek(0) == Value(k as Int.u256);
+    }
+    for k: Int.u8 := 0 to 15 {
+      var size := k as nat;
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(size, i requires 0 <= i < size => Value(i as Int.u256)));
+      var i := Instruction(Decode(DUP1 + k));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
     }
   }
 
