@@ -30,9 +30,6 @@ module Instructions {
   import opened State
 
   type ValidInstruction = i:Instruction | i.IsValid()
-    //   i.op.opcode == INVALID ||
-    //   (|i.arg| % 2 == 0 && |i.arg| <= 64 && (forall k:: 0 <= k < |i.arg| ==>
-    //                                                       Hex.IsHex(i.arg[k])))
     witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
@@ -47,14 +44,17 @@ module Instructions {
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
 
+    /** Whether an instruction has been built correctly. */
     predicate IsValid() {
       op.opcode == INVALID ||
-      (|arg| % 2 == 0
-       && |arg| <= 64
-       && (forall k:: 0 <= k < |arg| ==>
-                        Hex.IsHex(arg[k])))
+      (
+        && |arg| % 2 == 0
+        && |arg| <= 64
+        && (forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k]))
+      )
     }
 
+    /** Print as a string. */
     function ToString(): string
     {
       var x: string := arg;
@@ -311,12 +311,14 @@ module Instructions {
     }
   }
 
+  /**   Convert a seq of chars to a u256. */
   function GetArgValuePush(xc: seq<char>): u256
     requires |xc| <= 64
     requires forall k:: 0 <= k < |xc| ==> Hex.IsHex(xc[k])
   {
     var pad := seq(64 - |xc|, _ => '0');
-    //  HexToU256 is a u256 (not None)
-    Hex.HexToU256(pad + xc).v
+    //  HexToU256 is a u256 (not None), so we can extract the value.
+    assert Hex.HexToU256(pad + xc).Some?;
+    Hex.HexToU256(pad + xc).Extract()
   }
 }
