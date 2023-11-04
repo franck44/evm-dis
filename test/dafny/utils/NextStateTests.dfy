@@ -272,6 +272,44 @@ module NextStateTests {
       expect i.NextState(s, false).pc == 6;
       expect i.NextState(s, false).Peek(0) == Value(9);
     }
+
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(2)]);
+      var i := Instruction(Decode(PUSH10), "0900000011");
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).pc == 15;
+      expect i.NextState(s, false).Peek(0) == Value(0x0900000011);
+      expect i.NextState(s, false).Peek(1) == Value(2);
+    }
+  }
+
+  method {:test} PopTests()
+  {
+     {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(POP));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
+      var i := Instruction(Decode(POP));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).pc == 5;
+      expect i.NextState(s, false).Size() == 0;
+    }
+
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(2), Value(3)]);
+      var i := Instruction(Decode(POP));
+      expect i.NextState(s, true).Error?;
+      expect i.NextState(s, false).EState?;
+      expect i.NextState(s, false).pc == 5;
+      expect i.NextState(s, false).Size() == 1;
+      expect i.NextState(s, false).Peek(0) == Value(3);
+    }
   }
 
   /**   Jump instructions.
