@@ -191,6 +191,11 @@ module Instructions {
       * 
       * @param  s       The source state.
       * @param  cond    The branch to take for conditional instructions, false for others.
+      * @note           The condition is true iff a JUMP/JUMPI is
+      *                 taken. For instance, if the instruction is
+      *                 JUMP only the true branch exists. If it is 
+      *                 JUMPI true means branch to top of stack, 
+      *                 and false, go to next instruction.
       */
     function NextState(s: ValidState, cond: bool := false): AState
       requires this.op.IsValid()
@@ -242,7 +247,7 @@ module Instructions {
         assert pushes == 0;
         if opcode == JUMPDEST && !cond then
           s.Skip(1)
-        else if opcode == JUMP && s.Size() >= 1 && !cond then
+        else if opcode == JUMP && s.Size() >= 1 && cond then
           match s.Peek(0)
           case Value(v) => s.Pop().Goto(v as nat)
           case Random() => Error()
@@ -270,7 +275,7 @@ module Instructions {
         else if PUSH0 <= opcode <= PUSH32 && !cond then
           assert pushes == 1;
           assert pops == 0;
-          s.Push(Value(0)).Skip(1)
+          s.Push(Value(0)).Skip(1 + (opcode - PUSH0) as nat)
         else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
           assert pushes == 1 && pops == 0;
           s.Dup((opcode - DUP1) as nat + 1).Skip(1)
