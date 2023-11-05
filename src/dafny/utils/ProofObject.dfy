@@ -15,6 +15,7 @@
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
 // include "../utils/LinSegments.dfy"
+include "../utils/StackElement.dfy" 
 
 /**
   *  Provides proof objects types.
@@ -24,6 +25,7 @@ module ProofObject {
   import opened MiscTypes
   import opened LinSegments
   import opened Instructions
+  import opened StackElement
   
 
   /**
@@ -37,12 +39,12 @@ module ProofObject {
 
   }
 
-    
+     
   /**
     *   Either a segment terminating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
     */
   datatype ProofObj =
-    |  JUMP(s: ValidLinSeg, wpOp: nat, wpCap: nat, tgt: Either<seq<char>, nat>, stacks: StackResolver := StackResolver(map[]))
+    |  JUMP(s: ValidLinSeg, wpOp: nat, wpCap: nat, tgt: Either<StackElem, nat>, stacks: StackResolver := StackResolver(map[]))
     |   CONT(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[])) 
     |  TERMINAL(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[]))
   {

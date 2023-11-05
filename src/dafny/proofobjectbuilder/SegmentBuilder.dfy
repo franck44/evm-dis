@@ -16,6 +16,7 @@ include "../utils/EVMOpcodes.dfy"
   // include "./Splitter.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
+include "../utils/StackElement.dfy"
 
 /**
   * Provides ability to generate Dafny code from segments.
@@ -27,11 +28,12 @@ module SegBuilder {
   import opened LinSegments
   import opened MiscTypes
   import opened Instructions
+  import opened StackElement 
 
   /**
-    *   Try to resolve target address of a JUMP
+    *   Try to resolve target address of a JUMP 
     */
-  function JUMPResolver(s: ValidLinSeg): Either<seq<char>, nat>
+  function JUMPResolver(s: ValidLinSeg): Either<StackElem, nat>
     requires s.JUMPSeg? || s.JUMPISeg?
   {
     // Track position of target address at Peek(0), and mark it as
@@ -42,7 +44,7 @@ module SegBuilder {
   }
 
   /**
-    *  Track position of an element on the stack.
+    *  Track position of an element on the stack. 
     *  @param      pos     The position to track.
     *  @returns            The position 
     *
@@ -52,8 +54,8 @@ module SegBuilder {
     *              Hence the position k' in the new stack should be at k' + 1 in the source stack.
     *  
     */
-  function StackPositionTracker(xs: seq<Instruction>, pos: nat := 0): Either<seq<char>, nat>
-      requires forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid()
+  function StackPositionTracker(xs: seq<ValidInstruction>, pos: nat := 0): Either<StackElem, nat>
+    //   requires forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid()
   {
     if |xs| == 0 then Right(pos)
     else

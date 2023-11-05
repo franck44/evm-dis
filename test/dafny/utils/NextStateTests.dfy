@@ -13,6 +13,7 @@
  */
 
 
+include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
@@ -30,6 +31,7 @@ module NextStateTests {
   import opened Instructions
   import Int
   import opened State
+  import opened StackElement 
 
   /** Arithmetic instruction. Proofs. */
   method Ariths(k: nat, op: Int.u8, s: ValidState)
@@ -40,7 +42,7 @@ module NextStateTests {
       assert i.NextState(s, true).Error?;
     }
     {
-      var i := Instruction(Decode(op));
+      var i := Instruction(Decode(op)); 
       if s.Size() >= 2 {
         assert i.NextState(s, false).EState?;
         assert i.NextState(s, false).PC() == s.PC() + 1;
@@ -55,7 +57,7 @@ module NextStateTests {
   /** Concrete tests. */
   method {:test} ArithsTests()
   {
-    {
+    { 
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
       var i := Instruction(Decode(ADD));
       expect i.NextState(s, false).EState?;

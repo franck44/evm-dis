@@ -13,6 +13,7 @@
  */
 
 include "../../../src/dafny/utils/MiscTypes.dfy"
+include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/proofobjectbuilder/SegmentBuilder.dfy"
 include "../../../src/dafny/disassembler/Disassembler.dfy"
@@ -28,6 +29,7 @@ module SegBuilderTests {
   import opened Splitter
   import opened SegBuilder
   import opened BinaryDecoder
+  import opened StackElement
 
   method {:test} {:verify true} Test1()
   {
@@ -37,7 +39,7 @@ module SegBuilderTests {
     var seg := BuildSeg(x[..|x| - 1], x[|x| - 1]);
     expect seg.JUMPSeg?;
     var u := JUMPResolver(seg);
-    expect u == Left(['1', '3']);
+    expect u == Left(Value(0x13));
   }
 
   method {:test} {:verify true} Test2()
@@ -59,7 +61,7 @@ module SegBuilderTests {
     var seg := BuildSeg(x[..|x| - 1], x[|x| - 1]);
     expect seg.JUMPISeg?;
     var u := JUMPResolver(seg);
-    expect u == Left(['1', 'f']);
+    expect u == Left(Value(0x1f));
   }
 
   method {:test} {:verify true} Test4()
@@ -69,6 +71,7 @@ module SegBuilderTests {
     expect |x| == 2;
     var seg := BuildSeg(x[..|x| - 1], x[|x| - 1]);
     expect seg.CONTSeg?;
+    expect |seg.lastIns.arg| % 2 == 0; 
     expect seg.StartAddressNextSeg() == 0x02;
   }
 

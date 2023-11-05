@@ -17,7 +17,8 @@ include "../../../src/dafny/utils/EVMOpcodes.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
   // include "../utils/MiscTypes.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
-include "../../../src/dafny/utils/int.dfy" 
+include "../../../src/dafny/utils/int.dfy"
+include "../../../src/dafny/utils/StackElement.dfy"
   // include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 
 /**
@@ -32,6 +33,7 @@ module PosTrackerTests {
   import opened EVMConstants
   import opened Instructions
   import Int
+  import opened StackElement
 
   /** Arithmetic instruction. Proofs. */
   method Ariths(k: nat, op: Int.u8)
@@ -267,21 +269,34 @@ module PosTrackerTests {
   //     }
   //   }
 
-
-  /** Pop and Push instructions. */
-  method PopAndPush(k: nat, offset: nat, arg: seq<char>)
-    requires 0 <= offset <= 32
+    /** Pops  */
+  method Pops(k: nat)
   {
     {
       var i := Instruction(Decode(POP));
+      assert i.arg == [];
+      assert i.IsValid();
+      assert i.op.IsValid();
       var r := i.StackPosBackWardTracker(k);
       assert r == Right(k + 1);
     }
+    
+  }
+
+  /** Push instructions. */
+  method Pushes(k: nat, offset: nat, arg: seq<char>)
+    requires 0 <= offset <= 32
+    requires |arg| <= 64 && |arg| % 2 == 0
+    requires |arg| == 2 * k
+    requires forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k])
+  {
     {
       var i := Instruction(Decode(PUSH0 + (offset) as Int.u8), arg);
+      assert i.IsValid();
+      assert i.op.IsValid();
       var r := i.StackPosBackWardTracker(k);
       if k == 0 {
-        assert r == Left(arg);
+        assert r == Left(Value(GetArgValuePush(arg)));
       } else {
         assert r == Right(k - 1);
       }

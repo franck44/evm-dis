@@ -15,21 +15,23 @@
 include "./int.dfy"
 include "./Hex.dfy"
 include "../utils/EVMOpcodes.dfy"
+include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
 
-/**
+/** 
   *  Provides EVM Instruction types.
   */
 module Instructions {
 
-  import opened Int
+  import opened Int 
   import Hex
   import opened MiscTypes
   import opened EVMOpcodes
   import opened EVMConstants
-  import opened State
+  import opened StackElement
+  import opened State 
 
-  type ValidInstruction = i:Instruction | i.IsValid()
+  type ValidInstruction = i:Instruction | i.IsValid() 
     witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
@@ -126,9 +128,16 @@ module Instructions {
     }
 
     /**
-      *  Track position of an element on the stack.
-      *  @param      pos     The position to track.
-      *  @returns            The position 
+      * Track position of an element on the stack.
+      * @param      pos     The position to track.
+      * @returns            Either a value, Left(val), if the instruction "kills" 
+      *                     the tracking (e.g. a PUSH for a pos == 0) or 
+      *                     a stack position Right(p) otherwise.   
+      *
+      * @note               This is meant to track the pc after an instruction and the 
+      *                     assumption is that pc values are pushes/popped/dupped/swapped
+      *                     but not computed (e.g. via 'ADD' etc). As a result, the tracking
+      *                     does not follow arithmetic etc.
       *
       *  @example    After a PUSH, the stack position k is k + 1 in the new stack.
       *              Hence the position k' in the new stack should be at k' - 1 in the source stack.
@@ -136,8 +145,9 @@ module Instructions {
       *              Hence the position k' in the new stack should be at k' + 1 in the source stack.
       *  
       */
-    function StackPosBackWardTracker(pos': nat := 0): Either<seq<char>, nat>
+    function StackPosBackWardTracker(pos': nat := 0): Either<StackElem, nat>
       requires this.op.IsValid()
+      requires this.IsValid()
     {
       match this.op
       case ArithOp(_, _, _, _, pushes, pops)      =>
@@ -145,20 +155,20 @@ module Instructions {
         //  we don't track it.
         //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
         if pos' >= 1 then Right(pos' + pops - pushes)
-        else Left("More than one predecessor. Arithmetic operator with target 0")
+        else Left(Random("More than one predecessor. Arithmetic operator with target 0"))
 
       case CompOp(_, _, _, _, pushes, pops)       =>
         //  Same as Arithmetic operator, except some have only one operand.
         if pos' >= 1 then
           //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
           Right(pos' + pops - pushes)
-        else Left("More than one predecessor. Comparison operator with target 0")
+        else Left(Random("More than one predecessor. Comparison operator with target 0"))
 
-      case BitwiseOp(_, _, _, _, _, _)    => Left("Not implemented")
-      case KeccakOp(_, _, _, _, _, _)     => Left("Not implemented")
-      case EnvOp(_, _, _, _, _, _)        => Left("Not implemented")
-      case MemOp(_, _, _, _, _, _)        => Left("Not implemented")
-      case StorageOp(_, _, _, _, _, _)    => Left("Not implemented")
+      case BitwiseOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
+      case KeccakOp(_, _, _, _, _, _)     => Left(Random("Not implemented"))
+      case EnvOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
+      case MemOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
+      case StorageOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
 
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then
@@ -168,14 +178,14 @@ module Instructions {
           var k := opcode - JUMP + 1;
           Right(pos' + k as nat)
         else
-          Left("Not implemented")
+          Left(Random("Not implemented"))
 
-      case RunOp(_, _, _, _, _, _)        => Left("Not implemented")
+      case RunOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
 
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
           //  PUSH k
-          if pos' == 0 then Left(this.arg) else Right(pos' - 1)
+          if pos' == 0 then Left(Value(GetArgValuePush(this.arg))) else Right(pos' - 1)
         else if DUP1 <= opcode <= DUP16 then
           //    DUP1 to DUP16
           Right(if pos' == 0 then (opcode - DUP1) as nat  else pos' - 1)
@@ -193,8 +203,8 @@ module Instructions {
           Right(pos' + 1)
 
 
-      case LogOp(_, _, _, _, _, _) => Left("Not implemented")
-      case SysOp(_, _, _, _, _, _) => Left("Not implemented")
+      case LogOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
+      case SysOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
     }
 
     /**
@@ -230,7 +240,7 @@ module Instructions {
       case BitwiseOp(_, _, _, _, pushes, pops)    =>
         if s.Size() >= pops && !cond then
           s.PopN(pops).Push(Random()).Skip(1)
-        else Error("Stack underflow")
+        else Error("Stack underflow") 
 
       case KeccakOp(_, _, _, _, pushes, pops)     =>
         if s.Size() >= 2 && !cond then
@@ -263,13 +273,13 @@ module Instructions {
         else if opcode == JUMP && s.Size() >= 1 && cond then
           match s.Peek(0)
           case Value(v) => s.Pop().Goto(v as nat)
-          case Random() => Error()
+          case Random(_) => Error()
         else if opcode == JUMPI && s.Size() >= 2 then
           match s.Peek(0)
           case Value(v) =>
             if cond then s.PopN(2).Goto(v as nat)
             else s.PopN(2).Skip(1)
-          case Random() => Error()
+          case Random(_) => Error()
         else
           //    RJUMP not implemented
           Error("RJUMPs not implemented")
