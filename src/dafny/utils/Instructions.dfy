@@ -323,7 +323,7 @@ module Instructions {
     }
 
     /**
-      * Weakest pre of a Cond.
+      * Weakest pre of a stack (post) Cond.
       *
       * @note   If the condition is trivila true or false it is back propagated.
       *         Otherwise, if a position p must have value v, several cases may arise:
