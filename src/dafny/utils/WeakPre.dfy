@@ -29,45 +29,61 @@ module WeakPre {
   import opened MiscTypes
   import opened StackElement
 
-  type ValidCond = c: Cond | c.IsValid() witness Cond([], [])
+  type ValidCond = c: Cond | c.IsValid() witness StCond([], [])
 
   /** Wpre */
-  datatype Cond = Cond(positions: seq<nat>, values: seq<StackElem>) {
+  datatype Cond =
+      StTrue()
+    | StFalse()
+    | StCond(trackedPos: seq<nat>, trackedVals: seq<u256>) {
 
     //  Helpers
     predicate IsValid() {
-      |positions| == |values|
+      this.StCond? ==> |trackedPos| == |trackedVals|
     }
 
-    function Pos(i: nat): nat 
-        requires IsValid()
-        requires i < this.Size()
+    function TrackedPos(): seq<nat>
+      requires IsValid()
+      requires StCond?
     {
-        positions[i]
+      trackedPos
     }
 
-    function ValAt(i: nat): StackElem 
-        requires IsValid()
-        requires i < this.Size()
+    function TrackedVals(): seq<u256>
+      requires IsValid()
+      requires StCond?
     {
-        values[i]
+      trackedVals
+    }
+
+    function TrackedPosAt(i: nat): nat
+      requires IsValid()
+      requires StCond?
+      requires i < this.Size()
+    {
+      trackedPos[i]
+    }
+
+    function TrackedValAt(i: nat): u256
+      requires IsValid()
+      requires StCond?
+      requires i < this.Size()
+    {
+      trackedVals[i]
     }
 
     function Size(): nat
-        requires IsValid()
+      requires IsValid()
+      requires StCond?
     {
-        |positions|
+      |trackedPos|
     }
 
     function Add(pos: u256, val: u256): (c' :Cond)
-        requires IsValid()
-        ensures c'.IsValid()
+      requires IsValid()
+      ensures c'.IsValid()
     {
       this
     }
-
   }
-
-
-
 }
