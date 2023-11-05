@@ -64,7 +64,11 @@ module PrettyPrinters {
         print "JUMP/JUMPI: tgt address at the end: ";
         var r := SegBuilder.JUMPResolver(xs[0]);
         match r {
-          case Left(address) => print "0x" + address;
+          case Left(v) =>
+            match v {
+              case Value(address) =>  print "0x" + NatToHex(address as nat);
+              case Random(msg) => print "Could not determine stack value";
+            }
           case Right(stackPos) => print "Peek(", stackPos, ")";
         }
         print "\n";
@@ -73,12 +77,12 @@ module PrettyPrinters {
         if xs[0].lastIns.op.opcode != INVALID {
           var nextPC := xs[0].StartAddressNextSeg();
           print "CONT: PC of instruction after last is: " + " 0x" + NatToHex(nextPC) + "\n";
+        } else {
+          print "CONT: has an invaid instructiom" + "\n";
         }
         print "WeakestPre Operands:", k, "\n";
         print "WeakestPre Capacity:", l, "\n";
         print "Net Stack Effect:", xs[0].StackEffect(), "\n";
-      } else {
-        print "CONT: has an invaid instructiom" + "\n";
       }
       PrintInstructions(xs[0].Ins());
       PrintSegments (xs[1..], num + 1);
@@ -173,7 +177,11 @@ module PrettyPrinters {
           print "  ensures s'.EXECUTING?\n";
           print "  ensures s'.PC() ==  ";
           { match tgt
-            case Left(xc) => print "0x", xc;
+            case Left(xc) => 
+                match xc {
+                    case Value(v) => print "0x", NatToHex(xc.Extract() as nat);
+                    case _ => print "Could not extract value ";
+                }
             case Right(v) =>
               print "s0.Peek(", v, ") as nat";
           }
