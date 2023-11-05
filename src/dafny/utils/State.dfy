@@ -13,6 +13,7 @@
  */
 
 include "./int.dfy"
+include "./StackElement.dfy" 
 
 /**
   *  Provides Abstract States.
@@ -20,11 +21,12 @@ include "./int.dfy"
 module State {
 
   import opened Int
+  import opened StackElement
 
   /** The stack elements can be either concrete valies of unknown which is
     * captured by Random().
     */
-  datatype StackElem = Value(v: u256) | Random()
+//   datatype StackElem = Value(v: u256) | Random(s: string := "")
 
   /**
     *   A ValidState is a state from whihc we can execute an instruction.
@@ -45,7 +47,7 @@ module State {
   {
 
     /** Size of the stack. */
-    function Size(): nat
+    function Size(): nat 
       requires this.EState?
     {
       |this.stack|
