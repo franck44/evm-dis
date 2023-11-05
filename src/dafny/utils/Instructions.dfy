@@ -323,27 +323,87 @@ module Instructions {
     }
 
     /**
-      *   Weakest pre of a Cond 
+      * Weakest pre of a Cond.
+      *
+      * @note   If the condition is trivila true or false it is back propagated.
+      *         Otherwise, if a position p must have value v, several cases may arise:
+      *         1. p is resolved by the instruction. 
+      *         2. p is not resolved and depends on a single position p'.
+      *         If 1. is true it must be the case that the resolver v' is the same as v. Otherwise
+      *         there is a mismatch between the request and the resolution. 
+      *         Either way, the result for this position is v == v' (true or false).
+      *         If 2. is true, the position p is not resolved by the instruction and back propagated.
+      *         The result is the position p' that should be tracked before the instruction to make sure
+      *         we know p after the instruction. This is a StackElem and maybe Random(), in that case
+      *         we cannot track p and this is resolved in StFalse.
       */
     function Wpre(c: ValidCond): ValidCond
       requires this.IsValid()
     {
-      //    Track each position in c.Pos
-      var x := seq(c.Size(), i requires 0 <= i < c.Size() => StackPosBackWardTracker(c.Pos(i)));
-      //    Each value is of the form: Left(value) or Left(random()) or Right(value)
-      //    If a position in x is Right(), it does not need to be tracked as it resolved by the instruction.
-      //    Example: let x map c.Pos to [Left_0, Left_1, Right_2, Left_3, Right_4]
-      //    The new condition is defined by Pos' = [Left_0, Left_1, Left_3] and values [Pos(0), Pos(1), Pos(3)]
-      var mappedPos: seq<(nat, Either<StackElem, nat>)> := Zip(c.positions, x);
-      var rest: seq<(nat, Either<StackElem, nat>)> := Filter(mappedPos, (x: (nat, Either<StackElem, nat>)) => x.1.Left?);
-      assert forall i:: 0 <= i < |rest| ==> rest[i].1.Left?;   
-      var (r0, r1) := UnZip(rest);
-      assert forall i:: 0 <= i < |r1| ==> r1[i] == rest[i].1; 
-      Cond(r0, seq(|r1|, i requires 0 <= i < |r1| => r1[i].Left()))
+      if c.StTrue? || c.StFalse? then
+        c
+      else
+        assert c.StCond?;
+        //    Track each position in c.trackedPos
+        var x := seq(c.Size(), i requires 0 <= i < c.Size() => StackPosBackWardTracker(c.TrackedPosAt(i)));
+        //  Each value in x is of the form: Left(value) or Left(random()) or Right(value).
+        //  Right(p) means tracked by stack position p. Left(random()) means unknown,
+        //  Left(value(v)) resolved by value v.
+        //  
+        //  example 1
+        //  pos= [ 12,             5,        ,       3       ,      0,               6]
+        //  x = [Left_0(0x10), Left_1(random), Right_2(2),    Left_3(random),    Right_4(5)]
+        //       resolved       havoced       replaced by 2     havoced        replaced by 5
+        //  In such a case we cannot track some positions (1, 3) and the weakest pre condition is StFalse.
+
+        //  example 2
+        //  pos [ 1,              3,           ,    2   ]
+        //  x = [Left_0(0x10), Right_1(2),     Right_2(5)]
+        //       resolved    replaced by 2  replaced by 5
+        //  In such a case we have resolved pos 0 (peek(1)), and have to track Peek(2) and Peek(5) instead
+        //  of Peek(3) and Peek(2). If 0x10 is the same as StackvaluesAt(0) this is good and this index
+        //  does not need to be tracked, otherwise there is mismatch and the pre condtiion is StFalse.
+
+        //  example 3
+        //  pos [ 1 ]
+        //  x = [Left_0(0x10)]
+        //       resolved
+        //  In such a case we have resolved pos 0 (peek(1)), and the pre cond is StTrue.
+
+        //  Compute the resolution map for each position. Equivalent to the table pos, x above.
+        // var mappedPos: seq<(nat, Either<StackElem, nat>)> := Zip(c.TrackedPos(), x);
+        var existsRandom := Exists(x, (x: Either<StackElem, nat>) => x.Left? && x.Left().Random?);
+        if existsRandom then
+          StFalse()
+        else
+          assert !existsRandom;
+          //    If we are here then each Left in x is a Left(Value())
+          assert forall k:: k in x ==> (k.Left? ==> k.Left().Value?);
+          var mappedValues: seq<(Either<StackElem, nat>, u256)> := Zip(x, c.TrackedVals());
+          //  now filter the Left(Value())
+          var leftValues : seq<(Either<StackElem, nat>, u256)> :=
+            Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Left?);
+          assert forall k:: k in leftValues ==> k.0.Left? && k.0.Left().Value?;
+          //    Now map the first component to the extracted value
+          var r := seq(|leftValues|,
+                   i requires 0 <= i < |leftValues| => (leftValues[i].0.l.Extract(), leftValues[i].1));
+          //  r should be of the form (x0, x0)(x1, x1) etc
+          if Exists(r, (x: (u256, u256)) => x.0 != x.1) then StFalse()
+          else 
+            //  every element in x is either a Right(k), or a Left(Value(k)) with k matching the 
+            //  required position at the end.
+            //  We just have to propagate the positions that have a Right(k)
+            var rightValues : seq<(Either<StackElem, nat>, u256)> :=
+                Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Right?);
+            //  Now UnZip and mat the right values to StackPositions
+            var (tPos, tVals) := UnZip(rightValues);
+            var rtPos := seq(|tPos|, i requires 0 <= i < |tPos| => tPos[i].Right());
+            StCond(rtPos, tVals)
+          
     }
   }
 
-    //  Helpers
+  //  Helpers
 
 
   /**   Convert a seq of chars to a u256. */
