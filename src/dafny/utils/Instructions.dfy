@@ -17,21 +17,23 @@ include "./Hex.dfy"
 include "../utils/EVMOpcodes.dfy"
 include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
+include "../utils/WeakPre.dfy"
 
 /** 
   *  Provides EVM Instruction types.
   */
 module Instructions {
 
-  import opened Int 
+  import opened Int
   import Hex
   import opened MiscTypes
   import opened EVMOpcodes
   import opened EVMConstants
   import opened StackElement
-  import opened State 
+  import opened State
+  import opened WeakPre
 
-  type ValidInstruction = i:Instruction | i.IsValid() 
+  type ValidInstruction = i:Instruction | i.IsValid()
     witness Instruction(SysOp("STOP", STOP), [], 0)
 
   /**
@@ -50,8 +52,8 @@ module Instructions {
     predicate IsValid() {
       op.opcode == INVALID ||
       (
-        && (PUSH0 <= op.opcode <= PUSH32 ==> 
-            |arg| == 2 * (op.opcode - PUSH0) as nat && (forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k]))) 
+        && (PUSH0 <= op.opcode <= PUSH32 ==>
+              |arg| == 2 * (op.opcode - PUSH0) as nat && (forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k])))
         && (!(PUSH0 <= op.opcode <= PUSH32) ==> |arg| == 0)
       )
     }
@@ -240,7 +242,7 @@ module Instructions {
       case BitwiseOp(_, _, _, _, pushes, pops)    =>
         if s.Size() >= pops && !cond then
           s.PopN(pops).Push(Random()).Skip(1)
-        else Error("Stack underflow") 
+        else Error("Stack underflow")
 
       case KeccakOp(_, _, _, _, pushes, pops)     =>
         if s.Size() >= 2 && !cond then
@@ -319,7 +321,30 @@ module Instructions {
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error()
     }
+
+    /**
+      *   Weakest pre of a Cond 
+      */
+    function Wpre(c: ValidCond): ValidCond
+      requires this.IsValid()
+    {
+      //    Track each position in c.Pos
+      var x := seq(c.Size(), i requires 0 <= i < c.Size() => StackPosBackWardTracker(c.Pos(i)));
+      //    Each value is of the form: Left(value) or Left(random()) or Right(value)
+      //    If a position in x is Right(), it does not need to be tracked as it resolved by the instruction.
+      //    Example: let x map c.Pos to [Left_0, Left_1, Right_2, Left_3, Right_4]
+      //    The new condition is defined by Pos' = [Left_0, Left_1, Left_3] and values [Pos(0), Pos(1), Pos(3)]
+      var mappedPos: seq<(nat, Either<StackElem, nat>)> := Zip(c.positions, x);
+      var rest: seq<(nat, Either<StackElem, nat>)> := Filter(mappedPos, (x: (nat, Either<StackElem, nat>)) => x.1.Left?);
+      assert forall i:: 0 <= i < |rest| ==> rest[i].1.Left?;   
+      var (r0, r1) := UnZip(rest);
+      assert forall i:: 0 <= i < |r1| ==> r1[i] == rest[i].1; 
+      Cond(r0, seq(|r1|, i requires 0 <= i < |r1| => r1[i].Left()))
+    }
   }
+
+    //  Helpers
+
 
   /**   Convert a seq of chars to a u256. */
   function GetArgValuePush(xc: seq<char>): u256
