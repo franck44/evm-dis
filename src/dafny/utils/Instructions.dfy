@@ -50,9 +50,9 @@ module Instructions {
     predicate IsValid() {
       op.opcode == INVALID ||
       (
-        && |arg| % 2 == 0
-        && |arg| <= 64
-        && (forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k]))
+        && (PUSH0 <= op.opcode <= PUSH32 ==> 
+            |arg| == 2 * (op.opcode - PUSH0) as nat && (forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k]))) 
+        && (!(PUSH0 <= op.opcode <= PUSH32) ==> |arg| == 0)
       )
     }
 
