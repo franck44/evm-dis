@@ -43,13 +43,13 @@ module MiscTypes {
     }
   }
 
-  function Zip<U, V>(u: seq<U>, v: seq<V>): seq<(U, V)>
+  function {:tailrecursion true} Zip<U, V>(u: seq<U>, v: seq<V>): seq<(U, V)>
     requires |u| == |v|
   {
     seq(|u|, i requires 0 <= i < |u| => (u[i], v[i]))
   }
 
-  function UnZip<U, V>(x: seq<(U, V)>): (seq<U>, seq<V>)
+  function {:tailrecursion true} UnZip<U, V>(x: seq<(U, V)>): (seq<U>, seq<V>)
     ensures |UnZip(x).0| == |UnZip(x).1| == |x|
     ensures forall k:: 0 <= k < |x| ==> (UnZip(x).0[k] == x[k].0 && UnZip(x).1[k] == x[k].1)
   {
@@ -58,7 +58,7 @@ module MiscTypes {
     (x0 ,x1)
   }
 
-  function Filter<U>(u: seq<U>, f: U -> bool): (r: seq<U>)
+  function {:tailrecursion true} Filter<U>(u: seq<U>, f: U -> bool): (r: seq<U>)
     ensures |r| <= |u|
     ensures forall x:: x in r ==> x in u
     ensures forall k:: 0 <= k < |r| ==> f(r[k]) 
@@ -67,6 +67,15 @@ module MiscTypes {
     if |u| == 0 then [] 
     else if f(u[0]) then [u[0]] + Filter(u[1..], f)
     else Filter(u[1..], f)
+  }
+
+  predicate {:tailrecursion true} Exists<T>(xs: seq<T>, f: T -> bool)
+    ensures !Exists(xs, f) ==> forall k:: k in xs ==> !f(k)
+    ensures !Exists(xs, f) ==> forall k:: 0 <= k < |xs| ==> !f(xs[k])
+  {
+    if |xs| == 0 then false 
+    else if f(xs[0]) then true
+    else Exists(xs[1..], f)
   }
 
 }
