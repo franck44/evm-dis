@@ -325,11 +325,47 @@ module PosTrackerTests {
 
     if k == 0 {
       assert r == Right(offset + 1);
-    } else if k == offset + 2 {
+    } else if k == offset + 1 {
       assert r == Right(0);
     } else {
       assert r == Right(k);
     }
+  }
+
+  method {:test} SwapTests()
+  {
+    {
+      var i := Instruction(Decode(SWAP1));
+      var r := i.StackPosBackWardTracker(1);
+      expect r.Right? && r.Right() == 0;
+    }
+    {
+      var i := Instruction(Decode(SWAP1));
+      var r := i.StackPosBackWardTracker(0);
+      expect r.Right? && r.Right() == 1;
+    }
+    {
+      var i := Instruction(Decode(SWAP1));
+      var r := i.StackPosBackWardTracker(2);
+      expect r.Right? && r.Right() == 2;
+    }
+
+    {
+      var i := Instruction(Decode(SWAP11));
+      var r := i.StackPosBackWardTracker(2);
+      expect r.Right? && r.Right() == 2;
+    }
+    {
+      var i := Instruction(Decode(SWAP11));
+      var r := i.StackPosBackWardTracker(11);
+      expect r.Right? && r.Right() == 0;
+    }
+    {
+      var i := Instruction(Decode(SWAP11));
+      var r := i.StackPosBackWardTracker(0);
+      expect r.Right? && r.Right() == 11;
+    }
+
   }
 
   /** Log instructions. */

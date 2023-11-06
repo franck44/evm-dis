@@ -197,7 +197,7 @@ module Instructions {
           var k: nat  := (opcode - SWAP1) as nat + 1;
           Right(
             if pos' == 0 then k
-            else if pos' == k + 1 then 0
+            else if pos' == k then 0
             else pos'
           )
         else // Thanks to the Valid constraint on the opcode type, this can only be OP.
