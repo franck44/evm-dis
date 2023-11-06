@@ -68,8 +68,15 @@ module LinSegments {
     /**
       *  The instructions in this segment.
       */
-    function Ins(): seq<Instruction> {
+    function Ins(): seq<Instruction>   
+        ensures |Ins()| >= 1 
+    {
       this.ins + [this.lastIns]
+    }
+
+    /** The start address is the address of the first instruction in the segment. */
+    function StartAddress(): nat {
+        Ins()[0].address
     }
 
     /**
