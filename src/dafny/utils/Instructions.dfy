@@ -156,7 +156,12 @@ module Instructions {
         //  if pos' == 0, the value depends on two stack elements and
         //  we don't track it.
         //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
-        if pos' >= 1 then Right(pos' + pops - pushes)
+        assert pushes == 1;
+        assert pops == 2 ;
+        if pos' >= 1 then
+          assert pos' + pops - pushes == pos' + 1;
+          //  We return Right(pos' + pops - pushes)
+          Right(pos' + 1)
         else Left(Random("More than one predecessor. Arithmetic operator with target 0"))
 
       case CompOp(_, _, _, _, pushes, pops)       =>
@@ -324,6 +329,122 @@ module Instructions {
 
     /**
       * Weakest pre of a stack (post) Cond.
+      */
+    function WPre(c: ValidCond): ValidCond
+      requires this.IsValid()
+      requires c.StCond?
+    {
+      match this.op
+      case ArithOp(_, _, _, _, pushes, pops)      =>
+        assert pushes == 1;
+        assert pops == 2 ;
+        //  if one of the trackedPos is 0, return False, otherwise, pos' + 1 for each trackedPos
+        if 0 in c.TrackedPos() then StFalse()
+        else
+          var shiftByOne := Map(c.TrackedPos(), pos =>  pos + 1);
+          StCond(shiftByOne, c.TrackedVals())
+
+      case CompOp(_, _, _, _, pushes, pops)      =>
+        //  if one of the trackedPos is 0, return False, otherwise, pos' + pops - pushes for each trackedPos
+        if 0 in c.TrackedPos() then StFalse()
+        else
+          var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
+          StCond(shiftBy, c.TrackedVals())
+
+      case JumpOp(_, opcode, _, _, _, _)  =>
+        if opcode == JUMPDEST then c
+        else if JUMP <= opcode <= JUMPI then
+          //    If JUMP +1, if JUMPI + 2
+          var k := opcode - JUMP + 1;
+          var shiftBy := Map(c.TrackedPos(), pos =>  pos + k as nat);
+          StCond(shiftBy, c.TrackedVals())
+        else  // RJUMPs not implemented
+          StFalse()
+
+      case StackOp(_, opcode, _, _, _, _) =>
+        //  Pushes may resolve some tracked positions
+        if PUSH0 <= opcode <= PUSH32 then
+          //  PUSH k
+          match Find(c.TrackedPos(), 0)
+          case None => c
+          //  Shift the other positions
+          case Some(i) =>
+            var argVal := Hex.HexToU256(seq(64 - |arg|, _ => '0') + arg);
+            assert argVal.Some?;
+            //  Check that the value pushed is the same as the trackedValue
+            // assert
+            if c.TrackedValAt(i) == argVal.Extract() then
+              //  We can filter out position 0 as it is resolved
+              var filtered := c.TrackedPos()[..i] + c.TrackedPos()[i + 1..];
+              assert forall k:: 0 <= k < |c.TrackedPos()[..i]| ==> c.TrackedPos()[k] != c.TrackedPosAt(i);
+              assert forall k {:trigger  filtered[k]}:: 0 <= k < |c.TrackedPos()[i + 1..]| ==> c.TrackedPos()[i + 1 + k] != c.TrackedPosAt(i);
+              assert c.TrackedPosAt(i) == 0;
+              assert forall k:: 0 <= k < |filtered| ==> filtered[k] != c.TrackedPosAt(i);
+              assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
+              if |filtered| == 0 then StTrue()
+              else
+                //  Map to old position - 1
+                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1);
+                StCond(shiftByMinusOne, c.TrackedVals()[..i] + c.TrackedVals()[i + 1..])
+            else StFalse()
+
+        else if DUP1 <= opcode <= DUP16 then
+          //    DUP1 to DUP16
+          //   Shift positions as follow: if pos' == 0 then (opcode - DUP1) as nat  else pos' - 1)
+          match Find(c.TrackedPos(), 0)
+          case None =>
+            //  0 is not tracked so the update cannot create a conflict with two same positions
+            assert forall k:: 0 <= k < |c.TrackedPos()| ==> c.TrackedPos()[k] != 0;
+            var shiftByMinusOneButZero :=
+              Map(c.TrackedPos(), (pos:nat) =>  pos - 1);
+            assert forall k, k':: 0 <= k < k'< |shiftByMinusOneButZero| ==> shiftByMinusOneButZero[k] != shiftByMinusOneButZero[k'];
+            StCond(shiftByMinusOneButZero, c.TrackedVals())
+          case Some(index0) =>
+            //  0 is tracked. If there is another position index such that the position tracked
+            //  is (opcode - DUP1) as nat + 1 there is a conflict.
+            match Find(c.TrackedPos(), (opcode - DUP1) as nat + 1)
+            case Some(index) =>
+              //  There is a collision in tracked positions on the Wpre
+              //  example: stack [x0, x1, x2] + DUP2 [x2, x0, x1, x2]
+              //  trackedPos = [2, 2] <- DUP2 + trackedPos = [0, 3]
+              if c.TrackedValAt(index0) == c.TrackedValAt(index) then
+                //  no inconsistency. Collapse the two positions into one
+                var filtered := c.TrackedPos()[..index0] + c.TrackedPos()[index0 + 1..];
+                assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
+                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1);
+                StCond(shiftByMinusOne, c.TrackedVals()[..index0] + c.TrackedVals()[index0 + 1..])
+              else
+                //  Inconsistency.
+                StFalse()
+            case None =>
+              //  No collision
+              assert Find(c.TrackedPos(), (opcode - DUP1) as nat + 1)  == None;
+              assert forall k:: 0 <= k < |c.TrackedPos()| ==> c.TrackedPosAt(k) != (opcode - DUP1) as nat + 1;
+              var shiftByMinusOneButZero :=
+                Map(c.TrackedPos(), pos =>  if pos == 0 then (opcode - DUP1) as nat else  pos - 1);
+              assert forall k, k':: 0 <= k < k'< |shiftByMinusOneButZero| ==> shiftByMinusOneButZero[k] != shiftByMinusOneButZero[k'];
+              StCond(shiftByMinusOneButZero, c.TrackedVals())
+
+        else if SWAP1 <= opcode <= SWAP16 then
+          // SWAP1 to SWAP16
+          // compute index of element to be swapped with top of stack
+          var k: nat  := (opcode - SWAP1) as nat + 1;
+          //    elements at index k and 0 
+          var swapZeroAndk :=
+                Map(c.TrackedPos(), pos =>  if pos == 0 then k as nat else if pos == k then 0 else  pos);
+                StCond(swapZeroAndk, c.TrackedVals())
+        else // Thanks to the Valid constraint on the opcode type, this can only be OP.
+          assert opcode == POP;
+          //    Shift the constraints by one
+          var shiftByOne := Map(c.TrackedPos(), i =>  i + 1);
+          StCond(shiftByOne, c.TrackedVals())
+
+      case _ => c
+
+    }
+
+    /**
+      * Weakest pre of a stack (post) Cond.
       *
       * @note   If the condition is trivila true or false it is back propagated.
       *         Otherwise, if a position p must have value v, several cases may arise:
@@ -337,70 +458,70 @@ module Instructions {
       *         we know p after the instruction. This is a StackElem and maybe Random(), in that case
       *         we cannot track p and this is resolved in StFalse.
       */
-    function Wpre(c: ValidCond): ValidCond
-      requires this.IsValid()
-    {
-      if c.StTrue? || c.StFalse? then
-        c
-      else
-        assert c.StCond?;
-        //    Track each position in c.trackedPos
-        var x := seq(c.Size(), i requires 0 <= i < c.Size() => StackPosBackWardTracker(c.TrackedPosAt(i)));
-        //  Each value in x is of the form: Left(value) or Left(random()) or Right(value).
-        //  Right(p) means tracked by stack position p. Left(random()) means unknown,
-        //  Left(value(v)) resolved by value v.
-        //  
-        //  example 1
-        //  pos= [ 12,             5,        ,       3       ,      0,               6]
-        //  x = [Left_0(0x10), Left_1(random), Right_2(2),    Left_3(random),    Right_4(5)]
-        //       resolved       havoced       replaced by 2     havoced        replaced by 5
-        //  In such a case we cannot track some positions (1, 3) and the weakest pre condition is StFalse.
+    //     function Wpre2(c: ValidCond): ValidCond
+    //       requires this.IsValid()
+    //     {
+    //       if c.StTrue? || c.StFalse? then
+    //         c
+    //       else
+    //         assert c.StCond?;
+    //         //    Track each position in c.trackedPos
+    //         var x := seq(c.Size(), i requires 0 <= i < c.Size() => StackPosBackWardTracker(c.TrackedPosAt(i)));
+    //         //  Each value in x is of the form: Left(value) or Left(random()) or Right(value).
+    //         //  Right(p) means tracked by stack position p. Left(random()) means unknown,
+    //         //  Left(value(v)) resolved by value v.
+    //         //
+    //         //  example 1
+    //         //  pos= [ 12,             5,        ,       3       ,      0,               6]
+    //         //  x = [Left_0(0x10), Left_1(random), Right_2(2),    Left_3(random),    Right_4(5)]
+    //         //       resolved       havoced       replaced by 2     havoced        replaced by 5
+    //         //  In such a case we cannot track some positions (1, 3) and the weakest pre condition is StFalse.
 
-        //  example 2
-        //  pos [ 1,              3,           ,    2   ]
-        //  x = [Left_0(0x10), Right_1(2),     Right_2(5)]
-        //       resolved    replaced by 2  replaced by 5
-        //  In such a case we have resolved pos 0 (peek(1)), and have to track Peek(2) and Peek(5) instead
-        //  of Peek(3) and Peek(2). If 0x10 is the same as StackvaluesAt(0) this is good and this index
-        //  does not need to be tracked, otherwise there is mismatch and the pre condtiion is StFalse.
+    //         //  example 2
+    //         //  pos [ 1,              3,           ,    2   ]
+    //         //  x = [Left_0(0x10), Right_1(2),     Right_2(5)]
+    //         //       resolved    replaced by 2  replaced by 5
+    //         //  In such a case we have resolved pos 0 (peek(1)), and have to track Peek(2) and Peek(5) instead
+    //         //  of Peek(3) and Peek(2). If 0x10 is the same as StackvaluesAt(0) this is good and this index
+    //         //  does not need to be tracked, otherwise there is mismatch and the pre condtiion is StFalse.
 
-        //  example 3
-        //  pos [ 1 ]
-        //  x = [Left_0(0x10)]
-        //       resolved
-        //  In such a case we have resolved pos 0 (peek(1)), and the pre cond is StTrue.
+    //         //  example 3
+    //         //  pos [ 1 ]
+    //         //  x = [Left_0(0x10)]
+    //         //       resolved
+    //         //  In such a case we have resolved pos 0 (peek(1)), and the pre cond is StTrue.
 
-        //  Compute the resolution map for each position. Equivalent to the table pos, x above.
-        // var mappedPos: seq<(nat, Either<StackElem, nat>)> := Zip(c.TrackedPos(), x);
-        var existsRandom := Exists(x, (x: Either<StackElem, nat>) => x.Left? && x.Left().Random?);
-        if existsRandom then
-          StFalse()
-        else
-          assert !existsRandom;
-          //    If we are here then each Left in x is a Left(Value())
-          assert forall k:: k in x ==> (k.Left? ==> k.Left().Value?);
-          var mappedValues: seq<(Either<StackElem, nat>, u256)> := Zip(x, c.TrackedVals());
-          //  now filter the Left(Value())
-          var leftValues : seq<(Either<StackElem, nat>, u256)> :=
-            Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Left?);
-          assert forall k:: k in leftValues ==> k.0.Left? && k.0.Left().Value?;
-          //    Now map the first component to the extracted value
-          var r := seq(|leftValues|,
-                   i requires 0 <= i < |leftValues| => (leftValues[i].0.l.Extract(), leftValues[i].1));
-          //  r should be of the form (x0, x0)(x1, x1) etc
-          if Exists(r, (x: (u256, u256)) => x.0 != x.1) then StFalse()
-          else 
-            //  every element in x is either a Right(k), or a Left(Value(k)) with k matching the 
-            //  required position at the end.
-            //  We just have to propagate the positions that have a Right(k)
-            var rightValues : seq<(Either<StackElem, nat>, u256)> :=
-                Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Right?);
-            //  Now UnZip and mat the right values to StackPositions
-            var (tPos, tVals) := UnZip(rightValues);
-            var rtPos := seq(|tPos|, i requires 0 <= i < |tPos| => tPos[i].Right());
-            StCond(rtPos, tVals)
-          
-    }
+    //         //  Compute the resolution map for each position. Equivalent to the table pos, x above.
+    //         // var mappedPos: seq<(nat, Either<StackElem, nat>)> := Zip(c.TrackedPos(), x);
+    //         var existsRandom := Exists(x, (x: Either<StackElem, nat>) => x.Left? && x.Left().Random?);
+    //         if existsRandom then
+    //           StFalse()
+    //         else
+    //           assert !existsRandom;
+    //           //    If we are here then each Left in x is a Left(Value())
+    //           assert forall k:: k in x ==> (k.Left? ==> k.Left().Value?);
+    //           var mappedValues: seq<(Either<StackElem, nat>, u256)> := Zip(x, c.TrackedVals());
+    //           //  now filter the Left(Value())
+    //           var leftValues : seq<(Either<StackElem, nat>, u256)> :=
+    //             Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Left?);
+    //           assert forall k:: k in leftValues ==> k.0.Left? && k.0.Left().Value?;
+    //           //    Now map the first component to the extracted value
+    //           var r := seq(|leftValues|,
+    //                    i requires 0 <= i < |leftValues| => (leftValues[i].0.l.Extract(), leftValues[i].1));
+    //           //  r should be of the form (x0, x0)(x1, x1) etc
+    //           if Exists(r, (x: (u256, u256)) => x.0 != x.1) then StFalse()
+    //           else
+    //             //  every element in x is either a Right(k), or a Left(Value(k)) with k matching the
+    //             //  required position at the end.
+    //             //  We just have to propagate the positions that have a Right(k)
+    //             var rightValues : seq<(Either<StackElem, nat>, u256)> :=
+    //               Filter(mappedValues, (x: (Either<StackElem, nat>, u256)) => x.0.Right?);
+    //             //  Now UnZip and mat the right values to StackPositions
+    //             var (tPos, tVals) := UnZip(rightValues);
+    //             var rtPos := seq(|tPos|, i requires 0 <= i < |tPos| => tPos[i].Right());
+    //             StCond(rtPos, tVals)
+
+    //     }
   }
 
   //  Helpers

@@ -39,7 +39,11 @@ module WeakPre {
 
     //  Helpers
     predicate IsValid() {
-      this.StCond? ==> |trackedPos| == |trackedVals|
+      this.StCond? ==>
+        (
+          && |trackedPos| == |trackedVals|
+          && (forall k, k':: 0 <= k < k' < |trackedPos| ==> trackedPos[k] != trackedPos[k'])
+        )
     }
 
     function TrackedPos(): seq<nat>
