@@ -329,6 +329,10 @@ module Instructions {
 
     /**
       * Weakest pre of a stack (post) Cond.
+      *
+      * This computation does not need to know the branch taken at a JUMPI.
+      * Indeed, we compute backward so the tgt PC is determined.
+      * The effect on the stack is the same whatever the branching.
       */
     function WPre(c: ValidCond): ValidCond
       requires this.IsValid()
@@ -366,8 +370,10 @@ module Instructions {
         if PUSH0 <= opcode <= PUSH32 then
           //  PUSH k
           match Find(c.TrackedPos(), 0)
-          case None => c
-          //  Shift the other positions
+          case None => 
+             //  Map to old position - 1
+                var shiftByMinusOne := Map(c.TrackedPos(), (pos: nat) =>  pos - 1);
+                StCond(shiftByMinusOne, c.TrackedVals())
           case Some(i) =>
             var argVal := Hex.HexToU256(seq(64 - |arg|, _ => '0') + arg);
             assert argVal.Some?;
