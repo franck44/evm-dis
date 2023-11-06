@@ -269,7 +269,7 @@ module PosTrackerTests {
   //     }
   //   }
 
-    /** Pops  */
+  /** Pops  */
   method Pops(k: nat)
   {
     {
@@ -280,14 +280,14 @@ module PosTrackerTests {
       var r := i.StackPosBackWardTracker(k);
       assert r == Right(k + 1);
     }
-    
+
   }
 
   /** Push instructions. */
   method Pushes(k: nat, offset: nat, arg: seq<char>)
     requires 0 <= offset <= 32
     requires |arg| <= 64 && |arg| % 2 == 0
-    requires |arg| == 2 * k
+    requires |arg| == 2 * offset
     requires forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k])
   {
     {
