@@ -417,7 +417,8 @@ module Instructions {
                 //  no inconsistency. Collapse the two positions into one
                 var filtered := c.TrackedPos()[..index0] + c.TrackedPos()[index0 + 1..];
                 assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
-                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1);
+                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1); 
+                assert forall k, k':: 0 <= k < k' < |shiftByMinusOne| ==> shiftByMinusOne[k] != shiftByMinusOne[k'];
                 StCond(shiftByMinusOne, c.TrackedVals()[..index0] + c.TrackedVals()[index0 + 1..])
               else
                 //  Inconsistency.
