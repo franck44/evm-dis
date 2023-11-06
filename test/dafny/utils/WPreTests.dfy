@@ -181,7 +181,90 @@ module WpreTests {
     }
   }
 
+  method {:test} DupTests1()
+  {
+    {
+      //    no position 0 in the list
+      var c := StCond([1, 4], [0x10, 0x40]);
+      var c' := Instruction(Decode(DUP1)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [0, 3];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+    {
+      //    pos 0 in the list
+      var c := StCond([1, 0, 4], [0x10, 0x20, 0x40]);
+      var c' := Instruction(Decode(DUP1)).WPre(c);
+      //    there is a tracked position that is DUP1 - DUP1 + 1 i.e. 1
+      //    the tracked values at 1 and 0 disagree
+      expect c'.StFalse?;
+    }
+    {
+      //    pos 0 in the list
+      var c := StCond([1, 0, 2], [0x10, 0x20, 0x40]);
+      var c' := Instruction(Decode(DUP2)).WPre(c);
+      //    there is a tracked position that is DUP2 - DUP1 + 1 i.e. 2
+      //    the tracked values at 2 and 0 disagree
+      expect c'.StFalse?;
+    }
+    {
+      //    pos 0 in the list
+      var c := StCond([1, 0, 4], [0x10, 0x20, 0x40]);
+      var c' := Instruction(Decode(DUP2)).WPre(c);
+      //    there is NO tracked position that is DUP2 - DUP1 + 1 i.e. 2
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [0, 1, 3];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+  }
 
+  method {:test} SwapTests1()
+  {
+    {
+      //    no position 0 in the list
+      var c := StCond([1, 4], [0x10, 0x40]);
+      var c' := Instruction(Decode(SWAP3)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [1, 4];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+     {
+      //   position 0 in the list
+      var c := StCond([0, 1, 4], [0x09, 0x10, 0x40]);
+      var c' := Instruction(Decode(SWAP3)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [3, 1, 4];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+    {
+      //   position SWAP3 - SWAP1 + 1 == 3 in the list
+      var c := StCond([7, 1, 4, 3], [0x09, 0x10, 0x40, 0x50]);
+      var c' := Instruction(Decode(SWAP3)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [7, 1, 4, 0];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+    {
+      //   0 in the list and position SWAP3 - SWAP1 + 1 == 3 in the list
+      var c := StCond([0, 1, 4, 3], [0x09, 0x10, 0x40, 0x50]);
+      var c' := Instruction(Decode(SWAP3)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [3, 1, 4, 0];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+  }
+
+  method {:test} PopTests1()
+  {
+    {
+      //    no position 0 in the list
+      var c := StCond([1, 4], [0x10, 0x40]);
+      var c' := Instruction(Decode(POP)).WPre(c);
+      expect c'.StCond?;
+      expect c'.TrackedPos() == [2, 5];
+      expect c'.TrackedVals() == c.TrackedVals();
+    }
+  }
 
   /** Comparison instructions. */
   //   method Comps1(k: nat, op: Int.u8)
