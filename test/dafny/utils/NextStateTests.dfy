@@ -31,7 +31,7 @@ module NextStateTests {
   import opened Instructions
   import Int
   import opened State
-  import opened StackElement 
+  import opened StackElement
 
   /** Arithmetic instruction. Proofs. */
   method Ariths(k: nat, op: Int.u8, s: ValidState)
@@ -42,7 +42,7 @@ module NextStateTests {
       assert i.NextState(s, true).Error?;
     }
     {
-      var i := Instruction(Decode(op)); 
+      var i := Instruction(Decode(op));
       if s.Size() >= 2 {
         assert i.NextState(s, false).EState?;
         assert i.NextState(s, false).PC() == s.PC() + 1;
@@ -57,7 +57,7 @@ module NextStateTests {
   /** Concrete tests. */
   method {:test} ArithsTests()
   {
-    { 
+    {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
       var i := Instruction(Decode(ADD));
       expect i.NextState(s, false).EState?;
@@ -266,23 +266,30 @@ module NextStateTests {
   }
 
   /**   Push k */
-  method {:test} PushTests()
+  method {:test} PushTests1()
   {
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(PUSH1), "09");
+      assert |i.arg| == 2 * (i.op.opcode - PUSH0) as nat;
+      assert forall k:: 0 <= k < |i.arg| ==> Hex.IsHex(i.arg[k]);
+      assert i.IsValid();
       expect i.NextState(s, true).Error?;
       expect i.NextState(s, false).EState?;
       expect i.NextState(s, false).pc == 6;
-      expect i.NextState(s, false).Peek(0) == Value(9);
+      expect i.NextState(s, false).Peek(0) == Value(9); 
     }
+  }
 
+  method {:test} PushTests2()
+  {
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(2)]);
-      var i := Instruction(Decode(PUSH10), "0900000011");
+      var i := Instruction(Decode(PUSH5), "0900000011");
+      assert i.IsValid();
       expect i.NextState(s, true).Error?;
       expect i.NextState(s, false).EState?;
-      expect i.NextState(s, false).pc == 15;
+      expect i.NextState(s, false).pc == 10;
       expect i.NextState(s, false).Peek(0) == Value(0x0900000011);
       expect i.NextState(s, false).Peek(1) == Value(2);
     }
