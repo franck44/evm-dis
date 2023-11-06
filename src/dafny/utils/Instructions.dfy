@@ -205,7 +205,7 @@ module Instructions {
             else if pos' == k then 0
             else pos'
           )
-        else // Thanks to the Valid constraint on the opcode type, this can only be OP.
+        else // Thanks to the Valid constraint on the opcode type, this can only be POP.
           assert opcode == POP;
           Right(pos' + 1)
 
@@ -440,7 +440,7 @@ module Instructions {
           var swapZeroAndk :=
                 Map(c.TrackedPos(), pos =>  if pos == 0 then k as nat else if pos == k then 0 else  pos);
                 StCond(swapZeroAndk, c.TrackedVals())
-        else // Thanks to the Valid constraint on the opcode type, this can only be OP.
+        else // Thanks to the Valid constraint on the opcode type, this can only be POP.
           assert opcode == POP;
           //    Shift the constraints by one
           var shiftByOne := Map(c.TrackedPos(), i =>  i + 1);
