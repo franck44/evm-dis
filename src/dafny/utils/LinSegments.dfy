@@ -15,6 +15,7 @@
 include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/Instructions.dfy"
+include "../utils/State.dfy"
   /**
     *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
     */
@@ -24,6 +25,7 @@ module LinSegments {
   import opened MiscTypes
   import opened Instructions
   import opened EVMConstants
+  import opened State
 
   /**
     *   A valid linear segment.
@@ -134,6 +136,18 @@ module LinSegments {
     {
       WeakestPreCapacityHelper(this.Ins(), n )
     }
+
+    /**
+      *  Execute the segment up to the end.
+      */
+    function Run(s: ValidState, exit: bool): AState
+    {
+      //  Run the instructions except last
+      var s' := RunIns(ins, s);
+      if s'.Error? then s'
+      else 
+        lastIns.NextState(s', exit)
+    }
   }
 
   //    Helpers
@@ -176,6 +190,20 @@ module LinSegments {
       var e := lastI.WeakestPreCapacity(postCond);
       WeakestPreCapacityHelper(xs[..|xs| - 1], e)
   }
+
+  /**
+    *   Run a sequence of (valid) instructions with exit condition false (default).
+    */
+  function RunIns(xs: seq<ValidInstruction>, s: ValidState): AState
+  {
+    if |xs| == 0 then s
+    else
+      var next := xs[0].NextState(s);
+      match next
+      case Error(_) => next
+      case EState(_, _) => RunIns(xs[1..], next)
+  }
+
 
 }
 
