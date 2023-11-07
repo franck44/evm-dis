@@ -16,7 +16,6 @@
 include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
-  // include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/int.dfy"
@@ -27,16 +26,13 @@ include "../../../src/dafny/utils/int.dfy"
   */
 module RuNSegTests {
 
-  //   import opened MiscTypes
   import opened OpcodeDecoder
   import opened EVMConstants
-    //   import opened Instructions
   import Int
   import opened State
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-
 
   //  Simple example
   method {:test} Test1()
@@ -146,39 +142,51 @@ module RuNSegTests {
     expect s1.pc == 0x13;
 
     //  y[2] starts at 0x13, and JUMPI
+    expect s1.pc == y[2].StartAddress();
     var s2 := y[2].Run(s1, true);
     expect s2.EState?;
     expect s2.pc == 0x1f;
     expect s2.stack == [Value(0x3), Value(0xa), Value(0x8)];
 
     //  y[4] starts at 0x1f, and JUMP
+    expect s2.pc == y[4].StartAddress();
     var s3 := y[4].Run(s2, true);
     expect s3.EState?;
     expect s3.pc == 0x1c;
     expect s3.stack == [Value(0x0), Value(0xa), Value(0x3)];
 
     //  y[3] starts at 0x1c, and JUMP
+    expect s3.pc == y[3].StartAddress();
     var s4 := y[3].Run(s3, true);
     expect s4.EState?;
     expect s4.pc == 0xa;
     expect s4.stack == [Value(0x3)];
 
     //  y[1] starts at 0x0a, and RETURN
+    expect s4.pc == y[1].StartAddress();
     var s5 := y[1].Run(s4, false);
     expect s5.EState?;
     //  We end up after RETURN.
     expect s5 == EState(0x12 + 1, [Value(64), Value(32), Random()]);
 
-
     //  Now test JUMPI false (we go directly to successor of JUMPI)
     //  y[2] starts at 0x13, and JUMPI
+    expect s1.pc == y[2].StartAddress();
     var s2' := y[2].Run(s1, false);
     expect s2'.EState?;
     expect s2' == EState(0x1c,  [Value(0x3), Value(0xa), Value(0x8)]);
 
+    //  y[3] starts at 0x1c, and JUMP
+    expect s2'.pc == y[3].StartAddress();
+    var s3' := y[3].Run(s2', true);
+    expect s3'.EState?;
+    expect s3' == EState(0x0a,  [Value(0x8)]);
+
+    //  y[1] starts at 0x0a, and RETURN
+    expect s3'.pc == y[1].StartAddress();
+    var s4' := y[1].Run(s3', false);
+    expect s4' == EState(0x12 + 1,  [Value(64), Value(32), Random()]);
+
   }
-
-
-
 }
 
