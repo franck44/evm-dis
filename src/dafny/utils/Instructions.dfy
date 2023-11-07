@@ -275,19 +275,26 @@ module Instructions {
 
       case JumpOp(_, opcode, _, _, pushes, pops)  =>
         assert pushes == 0;
-        if opcode == JUMPDEST && !cond then
-          s.Skip(1)
-        else if opcode == JUMP && s.Size() >= 1 && cond then
-          match s.Peek(0)
-          case Value(v) => s.Pop().Goto(v as nat)
-          case Random(_) => Error()
-        else if opcode == JUMPI && s.Size() >= 2 then
-          match s.Peek(0)
-          case Value(v) =>
-            if cond then s.PopN(2).Goto(v as nat)
-            else s.PopN(2).Skip(1)
-          case Random(_) => Error()
+        if opcode == JUMPDEST then
+          if !cond then s.Skip(1) else Error("Cannot execute JUMPDEST/exit true")
+        else if opcode == JUMP then
+          if s.Size() >= 1 && cond then
+            match s.Peek(0)
+            case Value(v) => s.Pop().Goto(v as nat)
+            case Random(_) => Error()
+          else
+            Error("Cannot execute JUMP/exit false or stack underflow")
+        else if opcode == JUMPI then
+          if s.Size() >= 2 then
+            match s.Peek(0)
+            case Value(v) =>
+              if cond then s.PopN(2).Goto(v as nat)
+              else s.PopN(2).Skip(1)
+            case Random(_) => Error()
+          else
+            Error("Cannot execute JUMPI/strack underflow")
         else
+          assert RJUMP <= opcode <= RJUMPV;
           //    RJUMP not implemented
           Error("RJUMPs not implemented")
 
@@ -370,10 +377,10 @@ module Instructions {
         if PUSH0 <= opcode <= PUSH32 then
           //  PUSH k
           match Find(c.TrackedPos(), 0)
-          case None => 
-             //  Map to old position - 1
-                var shiftByMinusOne := Map(c.TrackedPos(), (pos: nat) =>  pos - 1);
-                StCond(shiftByMinusOne, c.TrackedVals())
+          case None =>
+            //  Map to old position - 1
+            var shiftByMinusOne := Map(c.TrackedPos(), (pos: nat) =>  pos - 1);
+            StCond(shiftByMinusOne, c.TrackedVals())
           case Some(i) =>
             var argVal := Hex.HexToU256(seq(64 - |arg|, _ => '0') + arg);
             assert argVal.Some?;
@@ -417,7 +424,7 @@ module Instructions {
                 //  no inconsistency. Collapse the two positions into one
                 var filtered := c.TrackedPos()[..index0] + c.TrackedPos()[index0 + 1..];
                 assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
-                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1); 
+                var shiftByMinusOne := Map(filtered, (pos: nat) =>  pos - 1);
                 assert forall k, k':: 0 <= k < k' < |shiftByMinusOne| ==> shiftByMinusOne[k] != shiftByMinusOne[k'];
                 StCond(shiftByMinusOne, c.TrackedVals()[..index0] + c.TrackedVals()[index0 + 1..])
               else
@@ -436,10 +443,10 @@ module Instructions {
           // SWAP1 to SWAP16
           // compute index of element to be swapped with top of stack
           var k: nat  := (opcode - SWAP1) as nat + 1;
-          //    elements at index k and 0 
+          //    elements at index k and 0
           var swapZeroAndk :=
-                Map(c.TrackedPos(), pos =>  if pos == 0 then k as nat else if pos == k then 0 else  pos);
-                StCond(swapZeroAndk, c.TrackedVals())
+            Map(c.TrackedPos(), pos =>  if pos == 0 then k as nat else if pos == k then 0 else  pos);
+          StCond(swapZeroAndk, c.TrackedVals())
         else // Thanks to the Valid constraint on the opcode type, this can only be POP.
           assert opcode == POP;
           //    Shift the constraints by one
