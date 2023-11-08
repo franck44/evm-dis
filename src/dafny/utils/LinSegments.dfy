@@ -16,6 +16,8 @@ include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/Instructions.dfy"
 include "../utils/State.dfy"
+include "../utils/WeakPre.dfy"
+
   /**
     *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
     */
@@ -26,6 +28,7 @@ module LinSegments {
   import opened Instructions
   import opened EVMConstants
   import opened State
+  import opened WeakPre
 
   /**
     *   A valid linear segment.
