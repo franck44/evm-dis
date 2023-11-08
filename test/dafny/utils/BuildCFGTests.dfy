@@ -39,7 +39,7 @@ module BuildCFGTests {
   import opened PrettyPrinters
 
   //  Simple example
-  method {:test1} Test1()
+  method {:test} Test1()
   {
     {
       //  Push and JUMP
@@ -48,13 +48,9 @@ module BuildCFGTests {
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 1;
 
-      var s0 := DEFAULT_VALIDSTATE;
-      var r := BuildCFG(y, 2) ;
-      PrintToDot(y, r);
-
-      //   var r3 := BuildCFGV3(y, 10) ;
-      //   print "version 3\n";
-      //   PrintToDotV3(y, r3.0);
+      var r := BuildCFGV4(y, 2) ;
+      print "CFG test 1\n";
+      print r.DOTPrint(y);
     }
   }
 
@@ -136,42 +132,23 @@ module BuildCFGTests {
     expect y[1].StartAddress() == 0x0a;
     expect y[2].StartAddress() == 0x13;
     expect y[3].StartAddress() == 0x1c;
-    var r := BuildCFG(y, 10) ;
+    var r := BuildCFGV4(y, 10) ;
 
-    print "version 1\n";
-    PrintToDot(y, r);
-
-    var r2 := BuildCFGV2(y, 10) ;
-    print "version 2\n";
-
-    PrintToDot(y, r2.0);
-
-    var r3 := BuildCFGV3(y, 10) ;
-    print "version 3\n";
-
-    PrintToDotV3(y, r3.0, r3.1);
-    // PrintSegments(y);
+    print "CFG test 5\n";
+    print r.DOTPrint(y);
   }
 
   /** max-max. */
-  method {:test} {:verify false} Test6()
+  method {:test1} {:verify false} Test6()
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
-    // expect |x| == 31;
     var y := SplitUpToTerminal(x, [], []);
-    // expect |y| == 5;
-    // expect y[1].StartAddress() == 0x0a;
-    // expect y[2].StartAddress() == 0x13;
-    // expect y[3].StartAddress() == 0x1c;
-    var r := BuildCFGV3(y, 10) ;
-    PrintToDotV3(y, r.0, r.1);
-    // print "version 1\n";
-    // PrintToDot(y, r);
 
-    // var r2 := BuildCFGV2(y, 10) ;
-    // print "version 2\n";
+    print "CFG test 6\n";
 
-    // PrintToDot(y, r2.0);
+    var r := BuildCFGV4(y, 10) ;
+    print r.DOTPrint(y);
+
   }
 }
 
