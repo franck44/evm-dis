@@ -32,7 +32,6 @@ module LinSegments {
     */
   type ValidLinSeg = s: LinSeg | s.IsValid() witness CONTSeg([], Instruction(ArithOp("ADD" ,ADD)), 0)
 
-
   /**
     *   A linear segment of bytecode.
     *   @note   Linear segments are ... linear. They do not contain any
@@ -122,7 +121,6 @@ module LinSegments {
       else
         CollectJumpDest(rest[1..])
     }
-
 
     /**
       *  The weakest precondition that guarantees that the segment can executed
