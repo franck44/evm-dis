@@ -155,6 +155,25 @@ module LinSegments {
       else 
         lastIns.NextState(s', exit)
     }
+
+    /**
+      *  Compute the Wpre for a segment.
+      */
+    function WPre(c: ValidCond): ValidCond
+    {
+      WPreIns(Ins(), c)
+    }
+
+    /** Whether a given segment has exit true or false. */
+    predicate HasExit(b: bool)
+    {
+      match this
+      case JUMPSeg(_, _, _) => b
+      case JUMPISeg(_, _, _) => true
+      case CONTSeg(_, _, _)  => !b
+      case _ => false
+    }
+
   }
 
   //    Helpers
@@ -209,6 +228,19 @@ module LinSegments {
       match next
       case Error(_) => next
       case EState(_, _) => RunIns(xs[1..], next)
+  }
+
+  /**
+    *   WPre for a sequence of instructions.
+    */
+  function WPreIns(xs: seq<ValidInstruction>, c: ValidCond): ValidCond
+  {
+    if |xs| == 0 then c
+    else if !c.StCond? then c // Wpre(_, false) = false and Wpre(_, true) = true
+    else
+      assert c.StCond?;
+      var c1 := xs[|xs| - 1].WPre(c);
+      WPreIns(xs[..|xs| - 1], c1)
   }
 
 
