@@ -29,7 +29,7 @@ module WeakPre {
   import opened MiscTypes
   import opened StackElement
 
-  type ValidCond = c: Cond | c.IsValid() witness StCond([], [])
+  type ValidCond = c: Cond | c.IsValid() witness StCond([1], [0x00])
 
   /** Wpre */
   datatype Cond =
@@ -41,7 +41,7 @@ module WeakPre {
     predicate IsValid() {
       this.StCond? ==>
         (
-          && |trackedPos| == |trackedVals|
+          && |trackedPos| == |trackedVals| > 0
           && (forall k, k':: 0 <= k < k' < |trackedPos| ==> trackedPos[k] != trackedPos[k'])
         )
     }
