@@ -18,9 +18,9 @@ include "../utils/Instructions.dfy"
 include "../utils/State.dfy"
 include "../utils/WeakPre.dfy"
 
-  /**
-    *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
-    */
+/**
+  *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
+  */
 module LinSegments {
 
   import opened EVMOpcodes
@@ -40,7 +40,7 @@ module LinSegments {
     *   @note   Linear segments are ... linear. They do not contain any
     *           jumps, returns, stops, except possibly the last instruction.
     *
-    *   @example    JUMPDEST, POP, JUMP is a lienar segment of type JUMP 
+    *   @example    JUMPDEST, POP, JUMP is a linear segment of type JUMP 
     *               as it ends with a JUMP instruction
     *   @example    JUMPDEST, SWAP2, SWAP1, DUP1, DUP4, LT, PUSH1 0, JUMPI is a linear 
     *               segment of type JUMPI.
@@ -70,15 +70,15 @@ module LinSegments {
     /**
       *  The instructions in this segment.
       */
-    function Ins(): seq<Instruction>   
-        ensures |Ins()| >= 1 
+    function Ins(): seq<Instruction>
+      ensures |Ins()| >= 1
     {
       this.ins + [this.lastIns]
     }
 
     /** The start address is the address of the first instruction in the segment. */
     function StartAddress(): nat {
-        Ins()[0].address
+      Ins()[0].address
     }
 
     /**
@@ -153,7 +153,7 @@ module LinSegments {
       //  Run the instructions except last
       var s' := RunIns(ins, s);
       if s'.Error? then s'
-      else 
+      else
         lastIns.NextState(s', exit)
     }
 
