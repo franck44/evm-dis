@@ -12,6 +12,9 @@ import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
 import Hex
+import StackElement
+import State
+import WeakPre
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -22,6 +25,8 @@ import PrettyIns
 import PrettyPrinters
 import ProofObjectBuilder
 import ArgParser
+import CFGraph
+import BuildCFGraph
 import Driver
 
 # Module: module_

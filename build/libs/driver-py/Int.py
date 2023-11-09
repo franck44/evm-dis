@@ -34,6 +34,43 @@ class default__:
         elif True:
             return i2
 
+    @staticmethod
+    def NatToString(n):
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        while True:
+            with _dafny.label():
+                if (n) < (10):
+                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_0___accumulator_)
+                elif True:
+                    d_0___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_0___accumulator_)
+                    in0_ = _dafny.euclidian_division(n, 10)
+                    n = in0_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def DigitToString(n):
+        if (n) == (0):
+            return _dafny.CodePoint('0')
+        elif (n) == (1):
+            return _dafny.CodePoint('1')
+        elif (n) == (2):
+            return _dafny.CodePoint('2')
+        elif (n) == (3):
+            return _dafny.CodePoint('3')
+        elif (n) == (4):
+            return _dafny.CodePoint('4')
+        elif (n) == (5):
+            return _dafny.CodePoint('5')
+        elif (n) == (6):
+            return _dafny.CodePoint('6')
+        elif (n) == (7):
+            return _dafny.CodePoint('7')
+        elif (n) == (8):
+            return _dafny.CodePoint('8')
+        elif True:
+            return _dafny.CodePoint('9')
+
     @_dafny.classproperty
     def TWO__8(instance):
         return 256

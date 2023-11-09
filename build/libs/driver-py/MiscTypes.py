@@ -10,6 +10,84 @@ import Int
 
 # Module: MiscTypes
 
+class default__:
+    def  __init__(self):
+        pass
+
+    @staticmethod
+    def Zip(u, v):
+        return _dafny.SeqWithoutIsStrInference([((u)[d_1_i_], (v)[d_1_i_]) for d_1_i_ in range(len(u))])
+
+    @staticmethod
+    def UnZip(x):
+        d_2_x0_ = _dafny.SeqWithoutIsStrInference([((x)[d_3_i_])[0] for d_3_i_ in range(len(x))])
+        d_4_x1_ = _dafny.SeqWithoutIsStrInference([((x)[d_5_i_])[1] for d_5_i_ in range(len(x))])
+        return (d_2_x0_, d_4_x1_)
+
+    @staticmethod
+    def Filter(u, f):
+        d_6___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        while True:
+            with _dafny.label():
+                if (len(u)) == (0):
+                    return (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                elif f((u)[0]):
+                    d_6___accumulator_ = (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([(u)[0]]))
+                    in1_ = _dafny.SeqWithoutIsStrInference((u)[1::])
+                    in2_ = f
+                    u = in1_
+                    f = in2_
+                    raise _dafny.TailCall()
+                elif True:
+                    in3_ = _dafny.SeqWithoutIsStrInference((u)[1::])
+                    in4_ = f
+                    u = in3_
+                    f = in4_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def Exists(xs, f):
+        while True:
+            with _dafny.label():
+                if (len(xs)) == (0):
+                    return False
+                elif f((xs)[0]):
+                    return True
+                elif True:
+                    in5_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in6_ = f
+                    xs = in5_
+                    f = in6_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def Map(t, f):
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_7_i_]) for d_7_i_ in range(len(t))])
+
+    @staticmethod
+    def Find(x, t):
+        return default__.FindRec(x, t, 0)
+
+    @staticmethod
+    def FindRec(x, t, i):
+        while True:
+            with _dafny.label():
+                if (len(x)) == (0):
+                    return Option_None()
+                elif ((x)[0]) == (t):
+                    return Option_Some(i)
+                elif True:
+                    in7_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    in8_ = t
+                    in9_ = (i) + (1)
+                    x = in7_
+                    t = in8_
+                    i = in9_
+                    raise _dafny.TailCall()
+                break
+
 
 class Try:
     @classmethod

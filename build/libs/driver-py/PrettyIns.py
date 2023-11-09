@@ -12,6 +12,9 @@ import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
 import Hex
+import StackElement
+import State
+import WeakPre
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -159,15 +162,15 @@ class default__:
 
     @staticmethod
     def DecToString(n):
-        d_207___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_519___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_207___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_519___accumulator_)
                 elif True:
-                    d_207___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_207___accumulator_)
-                    in33_ = _dafny.euclidian_division(n, 10)
-                    n = in33_
+                    d_519___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_519___accumulator_)
+                    in49_ = _dafny.euclidian_division(n, 10)
+                    n = in49_
                     raise _dafny.TailCall()
                 break
 
