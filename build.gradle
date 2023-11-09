@@ -315,7 +315,7 @@ task cleanDafny(type: Delete) {
     delete "build/logs"
 }
 
-// clean.dependsOn cleanDafny, deleteTestBuild
+clean.dependsOn cleanDafny, deleteTestBuild
 
 // ======================================================================
 // Java Build
