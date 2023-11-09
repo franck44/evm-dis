@@ -70,6 +70,7 @@ module ArgParser {
     constructor(s: string := "")
       ensures Inv()
       ensures (forall k:: k in registeredOptions ==> Canonical(k) in knownArgs.Keys)
+      ensures knownArgs.Keys == { "--help" }
     {
       usageSuffix := s ;
       knownArgs := map["--help" := CLIOption("-h", 0, "Display help and exit")];
@@ -92,8 +93,11 @@ module ArgParser {
       */
     method {:verify true} AddOption(opname: string, name: string, numArgs: nat := 0, help: string := "No help provided")
       requires Inv()
+      requires name !in knownArgs.Keys
       ensures Inv()
       ensures old(knownArgs.Keys) <= knownArgs.Keys
+      ensures  knownArgs.Keys == old(knownArgs.Keys) + { name }
+      ensures forall k:: k in old(knownArgs.Keys) ==> k in knownArgs.Keys && knownArgs[k] == old(knownArgs[k])
       ensures name in knownArgs.Keys && knownArgs[name].numArgs == numArgs
       modifies `knownArgs, `knownKeys, `knownNameArgs, `registeredOptions
     {
