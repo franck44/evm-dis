@@ -16,8 +16,10 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
+include "./CFGBuilder/BuildCFG.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
+include "./utils/MiscTypes.dfy"
   /**
     *  Provides input reader and write out to stout.
     */
@@ -28,6 +30,8 @@ module Driver {
   import opened PrettyPrinters
   import opened ProofObjectBuilder
   import opened ArgParser
+  import opened BuildCFGraph
+  import opened MiscTypes
 
   //   const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
 
@@ -50,7 +54,8 @@ module Driver {
     optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
     optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
-
+    optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
+    
     if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
       optionParser.PrintHelp();
@@ -69,7 +74,7 @@ module Driver {
       //  Parse arguments
       match optionParser.GetArgs("--dis", optArgs) {
         case Success(_) => PrintInstructions(x);
-        case Failure(m) =>
+        case Failure(m) => 
       }
 
       match optionParser.GetArgs("--segment", optArgs) {
@@ -77,7 +82,7 @@ module Driver {
           print "Segments:\n";
           var y := SplitUpToTerminal(x, [], []);
           PrintSegments(y);
-        case Failure(m) =>
+        case Failure(m) => 
       }
 
       match optionParser.GetArgs("--proof", optArgs) {
@@ -89,7 +94,7 @@ module Driver {
           var y := SplitUpToTerminal(x, [], []);
           var z := BuildProofObject(y);
           PrintProofObjectToDafny(z, pathToDafnyLib);
-        case Failure(m) =>
+        case Failure(m) => 
       }
 
       match optionParser.GetArgs("--all", optArgs) {
@@ -102,9 +107,76 @@ module Driver {
           var y := SplitUpToTerminal(x, [], []);
           var z := BuildProofObject(y);
           PrintProofObjectToDafny(z, pathToDafnyLib);
-        case Failure(m) =>
+        case Failure(m) => 
+      }
+
+      match optionParser.GetArgs("--cfg", optArgs) {
+        case Success(m) =>
+          print "CFG:\n";
+          var y := SplitUpToTerminal(x, [], []);
+          if |y| == 0 {
+            print "No segment found\n";
+          } else if |m[0]| == 0 || !IsNatNumber(m[0]) {
+            print "Argument to --cfg is not a nat.\n";
+          } else {
+            var maxDepth := StringToNat(m[0]);
+            print "maxDepth is:", maxDepth, "\n";
+            var r := BuildCFGV4(y, maxDepth) ;
+            print "CFG test 1\n";
+            print r.DOTPrint(y);
+          }
+
+        case Failure(m) => 
       }
     }
+  }
+
+  //    Helpers
+
+  /**
+    *  Decode a char into a digit.
+    */
+  function CharToDigit(c: char): (r: Option<nat>)
+    // requires '0' <= c < '9'
+    ensures r.Some? ==> 0 <= r.v <= 9
+  {
+    match c
+    case '0' => Some(0)
+    case '1' => Some(1)
+    case '2' => Some(2)
+    case '3' => Some(3)
+    case '4' => Some(4)
+    case '5' => Some(5)
+    case '6' => Some(6)
+    case '7' => Some(7)
+    case '8' => Some(8)
+    case '9' => Some(9)
+    case _ => None
+  }
+
+  predicate IsNatNumber(s: string)
+    requires |s| >= 1
+    ensures IsNatNumber(s) <==> forall k:: 0 <= k < |s| ==> CharToDigit(s[k]).Some?
+  {
+    if |s| == 1 then CharToDigit(s[0]).Some?
+    else
+      match CharToDigit(s[0])
+      case Some(v) => IsNatNumber(s[1..])
+      case None => false
+  }
+
+  function {:tailrecursion false} StringToNat(s: string, lastVal: nat := 0): nat
+    requires |s| > 0 
+    requires IsNatNumber(s)
+  {
+    if |s| == 1 then CharToDigit(s[0]).v
+    else
+      var v := CharToDigit(s[|s| - 1]).v;
+    //   assert s[..|s| - 1] <= s;
+    //   assert |s| >= 2;
+    //   assert forall k:: 0 <= k < |s[..|s| - 1]| ==> CharToDigit(s[k]).Some?;
+    //   assert IsNatNumber(s[..|s| - 1]);
+      v + 10 * StringToNat(s[..|s| - 1])
   }
 
 }
