@@ -20,7 +20,7 @@ include "../utils/Hex.dfy"
     * resolve it.
     */
 module PCResolver {
-
+ 
   import opened ProofObject
   import opened Int
   import opened Hex
