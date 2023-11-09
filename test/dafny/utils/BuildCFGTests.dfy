@@ -35,7 +35,7 @@ module BuildCFGTests {
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-  import opened BuilCFGraph
+  import opened BuildCFGraph
   import opened PrettyPrinters
 
   //  Simple example
