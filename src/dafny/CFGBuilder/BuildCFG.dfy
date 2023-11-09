@@ -19,7 +19,7 @@ include "../../../src/dafny/utils/CFGraph.dfy"
 /**
   * Computation of the CFG via some DFS.
   */
-module BuilCFGraph {
+module BuildCFGraph {
 
   import opened MiscTypes
   import opened LinSegments
