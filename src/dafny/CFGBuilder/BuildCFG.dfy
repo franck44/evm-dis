@@ -181,12 +181,13 @@ module BuildCFGraph {
       var segs := NodesToSeg(path, xs);
       //  compute the Wpre for last node path to lead to pc (via true)
       assert pc < Int.TWO_256;
-      var l := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc as Int.u256);
-      // assert
-      Some(v.0)
+      var tgtCond := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc as Int.u256);
+      //    Compute the WPre for for segments in path
+      var w1 := WPreSeqSegs(segs, tgtCond, xs);
+      if w1.StTrue? then
+        Some(v.0)
+      else None
     case None => None
-    //  collect index of the node in the sequence
-    // Compute WPre to
   }
 
   //   function WpreSeqSegments(xs: seq<ValidLinSeg>, )
