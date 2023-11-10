@@ -150,7 +150,7 @@ module LinSegments {
       */
     function Run(s: ValidState, exit: bool): AState
     {
-      //  Run the instructions except last
+      //  Run the instructions with exit false, except last
       var s' := RunIns(ins, s);
       if s'.Error? then s'
       else
@@ -173,6 +173,15 @@ module LinSegments {
       case JUMPISeg(_, _, _) => true
       case CONTSeg(_, _, _)  => !b
       case _ => false
+    }
+
+    /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
+    function LeadsTo(k: Int.u256): ValidCond
+        requires this.JUMPSeg? || this.JUMPISeg?
+    {
+        //  StCond([0], [k])
+        var c := StCond([0], [k]);
+         WPreIns(ins, c)
     }
 
   }
