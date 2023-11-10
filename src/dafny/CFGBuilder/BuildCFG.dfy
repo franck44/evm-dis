@@ -25,6 +25,7 @@ module BuildCFGraph {
   import opened LinSegments
   import opened State
   import opened CFGraph
+  import opened WeakPre
 
   /**
     *   1. First add path to state 
@@ -97,7 +98,7 @@ module BuildCFGraph {
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC
-                match SafeLoopFound(xs, rightSucc.PC(), seen)
+                match SafeLoopFound(xs, rightSucc.PC(), seen, path)
                 case Some(prev) =>
                   assert prev.seg.v < |xs|;
                   BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, prev)])
@@ -122,7 +123,7 @@ module BuildCFGraph {
   function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
     requires rank <= |xs|
     ensures r.Some? ==> r.v < |xs|
-    ensures r.Some?  ==> xs[r.v].StartAddress() == pc 
+    ensures r.Some?  ==> xs[r.v].StartAddress() == pc
     decreases |xs| - rank
   {
     if rank == |xs| then None
@@ -136,9 +137,13 @@ module BuildCFGraph {
     requires forall k:: k in s && k.seg.Some? ==> k.seg.v < |xs|
 
     ensures r.Some? ==> index < |s|
-    ensures r.Some? ==> r.v.0.seg.Some? && r.v.0.seg.v < |xs| 
+    ensures r.Some? ==> r.v.0.seg.Some? && r.v.0.seg.v < |xs|
+    /* @todo sort the following ensures and keep only the relevant ones. */
     ensures r.Some? ==> r.v.0.seg.Some? &&  r.v.1 < |s|
     ensures r.Some? ==> xs[r.v.0.seg.v].StartAddress() == pc
+    ensures r.Some? ==> s[r.v.1].seg.Some?
+    ensures r.Some? ==> xs[s[r.v.1].seg.v].StartAddress() == pc
+    ensures  r.Some? ==> r.v.0.seg.v == s[r.v.1].seg.v
 
     decreases |s| - index
   {
@@ -150,20 +155,63 @@ module BuildCFGraph {
   /**
     *   Check if pc has been seen before, and whether we can loop back to an already seen
     *   CFGNode on this path.
+    *
+    *   @note   The seenOnPath has all the nodes seen before the current one.
+    *           The current one has startAddress == pc.
     */
-  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>): Option<CFGNode>
+  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, path: seq<bool>): Option<CFGNode>
     requires |xs| >= 1
-    requires forall k:: k in seenOnPath && k.seg.Some? ==> k.seg.v < |xs|
+    requires |seenOnPath| == |path| + 1
+    requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
   {
     match FindFirstNodeWithPC(xs, pc, seenOnPath)
-    case Some(v) => 
-        //  some properties must hold on the path defined by the index v.1
-        // var init := seenOnPath[];
-        Some(v.0)
+    case Some(v) =>
+      //  some properties must hold on the path defined by the index v.1
+      var init := seenOnPath[v.1];
+      //  the CFGMNode at index v.1 has a segment with start address == pc
+      assert xs[init.seg.v].StartAddress() == pc;
+      //  get the path false|true that led from init to last node
+      var path := seenOnPath[v.1..];
+      //  compute the list of segments defined by the nodes in path
+      var segs := NodesToSeg(path, xs);
+      //  compute the Wpre for path to lead to pc
+      // var
+      // assert
+      Some(v.0)
     case None => None
     //  collect index of the node in the sequence
     // Compute WPre to
   }
+
+  //   function WpreSeqSegments(xs: seq<ValidLinSeg>, )
+
+  function NodesToSeg(xn: seq<CFGNode>, xs: seq<ValidLinSeg>): (s: seq<nat>)
+    requires forall k:: k in xn ==> k.seg.Some? && k.seg.v < |xs|
+    ensures |xn| == |s|
+    ensures forall i:: 0 <= i < |s| ==> s[i] < |xs|
+  {
+    if |xn| == 0 then []
+    else
+      [xn[0].seg.v] + NodesToSeg(xn[1..], xs)
+  }
+
+    /**
+     *  Compute the WPre for a sequence of segments.
+     */
+    function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
+        requires forall k:: k in path ==> k < |xs|
+        requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
+    {
+        if !c.StCond? then 
+            c
+        else if |path| > 0 then 
+            //  compute Wpre on last segments and recurse
+            var w1 := xs[path[|path| - 1]].WPre(c);
+            WPreSeqSegs(path[..|path| - 1], w1, xs) 
+        else 
+            //  If false or true remains false or true
+            c
+    }
 
 }
 
