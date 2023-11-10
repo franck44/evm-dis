@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "../utils/ProofObject.dfy" 
+include "../utils/ProofObject.dfy"
 include "../utils/int.dfy"
 include "../utils/Hex.dfy"
   /**
@@ -20,14 +20,14 @@ include "../utils/Hex.dfy"
     * resolve it.
     */
 module PCResolver {
- 
+
   import opened ProofObject
   import opened Int
   import opened Hex
 
   /**
-   *    Build whole file 
-   */
+    *    Build whole file 
+    */
   function BuildDafnyModuleForResolver(path: seq<nat>, tgtPC: nat): string {
     var incl := "include \"./simpleCall.dfy\"\n";
     var imp := "import opened DafnyEVMProofObject\n";
