@@ -32,6 +32,7 @@ module Driver {
   import opened ArgParser
   import opened BuildCFGraph
   import opened MiscTypes
+  import opened State
 
   //   const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
 
@@ -55,7 +56,7 @@ module Driver {
     optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
-    
+
     if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
       optionParser.PrintHelp();
@@ -74,7 +75,7 @@ module Driver {
       //  Parse arguments
       match optionParser.GetArgs("--dis", optArgs) {
         case Success(_) => PrintInstructions(x);
-        case Failure(m) => 
+        case Failure(m) =>
       }
 
       match optionParser.GetArgs("--segment", optArgs) {
@@ -82,7 +83,7 @@ module Driver {
           print "Segments:\n";
           var y := SplitUpToTerminal(x, [], []);
           PrintSegments(y);
-        case Failure(m) => 
+        case Failure(m) =>
       }
 
       match optionParser.GetArgs("--proof", optArgs) {
@@ -94,7 +95,7 @@ module Driver {
           var y := SplitUpToTerminal(x, [], []);
           var z := BuildProofObject(y);
           PrintProofObjectToDafny(z, pathToDafnyLib);
-        case Failure(m) => 
+        case Failure(m) =>
       }
 
       match optionParser.GetArgs("--all", optArgs) {
@@ -107,7 +108,7 @@ module Driver {
           var y := SplitUpToTerminal(x, [], []);
           var z := BuildProofObject(y);
           PrintProofObjectToDafny(z, pathToDafnyLib);
-        case Failure(m) => 
+        case Failure(m) =>
       }
 
       match optionParser.GetArgs("--cfg", optArgs) {
@@ -121,12 +122,19 @@ module Driver {
           } else {
             var maxDepth := StringToNat(m[0]);
             print "maxDepth is:", maxDepth, "\n";
-            var r := BuildCFGV4(y, maxDepth) ;
-            print "CFG test 1\n";
-            print r.DOTPrint(y);
+            var startAddress := y[0].StartAddress();
+            var startState := DEFAULT_VALIDSTATE.(pc := startAddress);
+            if y[0].StartAddress() != 0 {
+                print "Segment 0 does not start at address 0.\n";
+            } else {
+              var r := BuildCFGV4(y, maxDepth) ;
+              print "CFG test 1\n";
+              print r.DOTPrint(y);
+            }
+
           }
 
-        case Failure(m) => 
+        case Failure(m) =>
       }
     }
   }
@@ -166,16 +174,16 @@ module Driver {
   }
 
   function {:tailrecursion false} StringToNat(s: string, lastVal: nat := 0): nat
-    requires |s| > 0 
+    requires |s| > 0
     requires IsNatNumber(s)
   {
     if |s| == 1 then CharToDigit(s[0]).v
     else
       var v := CharToDigit(s[|s| - 1]).v;
-    //   assert s[..|s| - 1] <= s;
-    //   assert |s| >= 2;
-    //   assert forall k:: 0 <= k < |s[..|s| - 1]| ==> CharToDigit(s[k]).Some?;
-    //   assert IsNatNumber(s[..|s| - 1]);
+      //   assert s[..|s| - 1] <= s;
+      //   assert |s| >= 2;
+      //   assert forall k:: 0 <= k < |s[..|s| - 1]| ==> CharToDigit(s[k]).Some?;
+      //   assert IsNatNumber(s[..|s| - 1]);
       v + 10 * StringToNat(s[..|s| - 1])
   }
 
