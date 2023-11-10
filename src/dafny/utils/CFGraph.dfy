@@ -58,7 +58,7 @@ module CFGraph {
   {
     function AddEdge(e: BoolEdge): BoolCFGraph
     {
-      BoolCFGraph(edges + [e])
+      BoolCFGraph([e] + edges)
     }
 
     /** Print to edges DOT format. */
@@ -96,7 +96,7 @@ module CFGraph {
       requires forall k:: k in this.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-      var prefix := "digraph CFG {\n node [shape=box]\n ";
+      var prefix := "digraph CFG {\n node [shape=box]\nranking=TB\n ";
       prefix + DOTPrintNodes(xs) + DOTPrintEdges() + "}\n"
     }
   }
