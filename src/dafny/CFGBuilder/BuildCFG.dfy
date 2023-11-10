@@ -34,15 +34,30 @@ module BuildCFGraph {
     *   3. add tests for all states that are similar not only most
     *       ancient one.
     */
-  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [], path: seq<bool> := []): (g: BoolCFGraph)
+  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph)
     requires numSeg < |xs|
+    requires forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
+    requires |seen| == |seenPCs| == |path| + 1
+    requires forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
+    requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
+    requires s.PC() == seenPCs[|seenPCs| - 1]
+    requires forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
+
+    ensures forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     ensures forall k:: k in g.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
     ensures forall k:: k in g.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
+
+    ensures |seen| == |seenPCs| == |path| + 1
+    ensures forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
+    ensures forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
+    ensures s.PC() == seenPCs[|seenPCs| - 1]
+    ensures forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
+
     decreases maxDepth
   {
-    // if numSeg in marked || maxDepth == 0 then ([], marked)
     if maxDepth == 0 then
-      BoolCFGraph([])
+      //  Indicate maxdepth reached by a loop
+      BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))])
     else if !xs[numSeg].HasExit(false) && !xs[numSeg].HasExit(true) then
       //  no successors
       BoolCFGraph([])
@@ -54,8 +69,10 @@ module BuildCFGraph {
           if leftSucc.EState? then
             var nextSeg := PCToSeg(xs, leftSucc.PC());
             if nextSeg.Some? then
-              var gleft := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, leftSucc, seen, path + [false]);
-              gleft.AddEdge(BoolEdge(CFGNode(path, Some(numSeg)), false, CFGNode(path + [false], nextSeg)))
+              var src := CFGNode(path, Some(numSeg));
+              var tgt := CFGNode(path + [false], nextSeg);
+              var gleft := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, leftSucc, seen + [tgt], seenPCs + [leftSucc.PC()], path + [false]);
+              gleft.AddEdge(BoolEdge(src, false, tgt))
             else  //  Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), false, CFGNode(path + [false])) ])
           else // left successor of segment resulted in Error state
@@ -69,9 +86,23 @@ module BuildCFGraph {
           var rightSucc := xs[numSeg].Run(s, true);
           if rightSucc.EState?  then
             var nextSeg := PCToSeg(xs, rightSucc.PC());
+            //  Check if this pc has been seen before
             if nextSeg.Some? then
-              var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen, path + [true]);
-              gright.AddEdge(BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true], nextSeg)))
+              //  Check if a previous CFGNode covers this node
+              if rightSucc.PC() !in seenPCs then
+                var src := CFGNode(path, Some(numSeg));
+                var tgt := CFGNode(path + [true], nextSeg);
+                var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()],path + [true]);
+                gright.AddEdge(BoolEdge(src, true, tgt))
+              else
+                //  We have seen this PC before. Link to the first CFGNode in the list
+                //  with this PC
+                match SafeLoopFound(xs, rightSucc.PC(), seen)
+                case Some(prev) =>
+                  assert prev.seg.v < |xs|;
+                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, prev)])
+                case None =>
+                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true,  CFGNode(path + [true]))])
             else // Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true])) ])
           else // right successor of segment resulted in Error state
@@ -83,7 +114,6 @@ module BuildCFGraph {
 
   }
 
-
   //  Helpers
 
   /**
@@ -92,11 +122,47 @@ module BuildCFGraph {
   function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
     requires rank <= |xs|
     ensures r.Some? ==> r.v < |xs|
+    ensures r.Some?  ==> xs[r.v].StartAddress() == pc 
     decreases |xs| - rank
   {
     if rank == |xs| then None
     else if xs[rank].StartAddress() == pc then Some(rank)
     else PCToSeg(xs, pc, rank + 1)
+  }
+
+  function FindFirstNodeWithPC(xs: seq<ValidLinSeg>, pc: nat, s: seq<CFGNode>, index: nat := 0): (r: Option<(CFGNode, nat)>)
+    requires |xs| >= 1
+    requires index <= |s|
+    requires forall k:: k in s && k.seg.Some? ==> k.seg.v < |xs|
+
+    ensures r.Some? ==> index < |s|
+    ensures r.Some? ==> r.v.0.seg.Some? && r.v.0.seg.v < |xs| 
+    ensures r.Some? ==> r.v.0.seg.Some? &&  r.v.1 < |s|
+    ensures r.Some? ==> xs[r.v.0.seg.v].StartAddress() == pc
+
+    decreases |s| - index
+  {
+    if |s| == index then None
+    else if s[index].seg.Some? && xs[s[index].seg.v].StartAddress() == pc then Some((s[index], index))
+    else FindFirstNodeWithPC(xs, pc, s, index + 1)
+  }
+
+  /**
+    *   Check if pc has been seen before, and whether we can loop back to an already seen
+    *   CFGNode on this path.
+    */
+  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>): Option<CFGNode>
+    requires |xs| >= 1
+    requires forall k:: k in seenOnPath && k.seg.Some? ==> k.seg.v < |xs|
+  {
+    match FindFirstNodeWithPC(xs, pc, seenOnPath)
+    case Some(v) => 
+        //  some properties must hold on the path defined by the index v.1
+        // var init := seenOnPath[];
+        Some(v.0)
+    case None => None
+    //  collect index of the node in the sequence
+    // Compute WPre to
   }
 
 }
