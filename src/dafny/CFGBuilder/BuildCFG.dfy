@@ -190,8 +190,6 @@ module BuildCFGraph {
     case None => None
   }
 
-  //   function WpreSeqSegments(xs: seq<ValidLinSeg>, )
-
   function NodesToSeg(xn: seq<CFGNode>, xs: seq<ValidLinSeg>): (s: seq<nat>)
     requires forall k:: k in xn ==> k.seg.Some? && k.seg.v < |xs|
     ensures |xn| == |s|
