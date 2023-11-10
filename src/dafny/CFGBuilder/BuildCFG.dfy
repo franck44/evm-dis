@@ -43,6 +43,7 @@ module BuildCFGraph {
     requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
     requires s.PC() == seenPCs[|seenPCs| - 1]
     requires forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
+    requires seen[|seen| - 1].seg.v == numSeg
 
     ensures forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     ensures forall k:: k in g.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
@@ -67,7 +68,7 @@ module BuildCFGraph {
       var leftBranch :=
         if xs[numSeg].HasExit(false) then
           var leftSucc := xs[numSeg].Run(s, false);
-          if leftSucc.EState? then
+          if leftSucc.EState? && leftSucc.PC() < Int.TWO_256 then
             var nextSeg := PCToSeg(xs, leftSucc.PC());
             if nextSeg.Some? then
               var src := CFGNode(path, Some(numSeg));
@@ -84,8 +85,10 @@ module BuildCFGraph {
       //  DFS true
       var rightBranch :=
         if xs[numSeg].HasExit(true) then
+          //  We must be in a JUMP or JUMPI segment
+          assert xs[numSeg].JUMPSeg? || xs[numSeg].JUMPISeg?;
           var rightSucc := xs[numSeg].Run(s, true);
-          if rightSucc.EState?  then
+          if rightSucc.EState?  && rightSucc.PC() < Int.TWO_256 then
             var nextSeg := PCToSeg(xs, rightSucc.PC());
             //  Check if this pc has been seen before
             if nextSeg.Some? then
@@ -161,8 +164,10 @@ module BuildCFGraph {
     */
   function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, path: seq<bool>): Option<CFGNode>
     requires |xs| >= 1
+    requires pc < Int.TWO_256
     requires |seenOnPath| == |path| + 1
     requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
+    requires xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPSeg? || xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPISeg?
   {
     match FindFirstNodeWithPC(xs, pc, seenOnPath)
     case Some(v) =>
@@ -174,8 +179,9 @@ module BuildCFGraph {
       var path := seenOnPath[v.1..];
       //  compute the list of segments defined by the nodes in path
       var segs := NodesToSeg(path, xs);
-      //  compute the Wpre for path to lead to pc
-      // var
+      //  compute the Wpre for last node path to lead to pc (via true)
+      assert pc < Int.TWO_256;
+      var l := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc as Int.u256);
       // assert
       Some(v.0)
     case None => None
@@ -195,23 +201,23 @@ module BuildCFGraph {
       [xn[0].seg.v] + NodesToSeg(xn[1..], xs)
   }
 
-    /**
-     *  Compute the WPre for a sequence of segments.
-     */
-    function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
-        requires forall k:: k in path ==> k < |xs|
-        requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
-    {
-        if !c.StCond? then 
-            c
-        else if |path| > 0 then 
-            //  compute Wpre on last segments and recurse
-            var w1 := xs[path[|path| - 1]].WPre(c);
-            WPreSeqSegs(path[..|path| - 1], w1, xs) 
-        else 
-            //  If false or true remains false or true
-            c
-    }
+  /**
+    *  Compute the WPre for a sequence of segments.
+    */
+  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
+    requires forall k:: k in path ==> k < |xs|
+    requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
+  {
+    if !c.StCond? then
+      c
+    else if |path| > 0 then
+      //  compute Wpre on last segments and recurse
+      var w1 := xs[path[|path| - 1]].WPre(c);
+      WPreSeqSegs(path[..|path| - 1], w1, xs)
+    else
+      //  If false or true remains false or true
+      c
+  }
 
 }
 

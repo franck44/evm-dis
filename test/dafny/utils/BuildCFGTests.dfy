@@ -47,7 +47,7 @@ module BuildCFGTests {
       expect |x| == 6;
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 1;
-
+      expect y[0].StartAddress() == 0;
       var r := BuildCFGV4(y, 2) ;
       print "CFG test 1\n";
       print r.DOTPrint(y);
@@ -132,6 +132,7 @@ module BuildCFGTests {
     expect y[1].StartAddress() == 0x0a;
     expect y[2].StartAddress() == 0x13;
     expect y[3].StartAddress() == 0x1c;
+    expect y[0].StartAddress() == 0;
     var r := BuildCFGV4(y, 10) ;
 
     print "CFG test 5\n";
