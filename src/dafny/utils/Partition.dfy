@@ -12,27 +12,15 @@
  * under the License.
  */
 
-include "./MiscTypes.dfy"
-include "./int.dfy"
+// include "./MiscTypes.dfy"
+// include "./int.dfy"
 
 /** 
   * Provides finitie automata.
   */
 module PartitionMod {
 
-  import opened MiscTypes
-
-
-  // function Refine(p: Partition): Partition
-  //   requires p.IsValid()
-  // //   requires p.n == |states|
-  // //   ensures Refine(p).n == |states|
-  //   ensures Refine(p).IsValid()
-  //     // ensures Refine(p).IsRefinement(p)
-  // {
-  //   p
-  // }
-
+  //   import opened MiscTypes
 
   /**
     *   A partition is a list of sets but we represent them by seq to 
@@ -54,66 +42,54 @@ module PartitionMod {
     /**
       *  Split a partition according to a predicate
       */
-    function Split(f: nat -> bool): seq<set<nat>> // (p': Partition)
+    function {:tailrecursion true} Split(f: nat -> bool): seq<set<nat>> // (p': Partition)
       requires this.IsValid()
     {
       //  Split elem[0] according to value of f for its elements
       if |elem| == 0 then []
       else
-        var setAsSeq := SetToSequence(elem[0]);
+        // var setAsSeq := SetToSequence(elem[0]);
         // elem
-        var r := SplitSeq(setAsSeq, f);
+        var r := SplitSet(elem[0], f);
         [r.0, r.1] +  elem[1..]
     }
 
   }
 
-  function SplitSeq(xs: seq<nat>, f: nat -> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}): (set<nat>, set<nat>)
+  /**
+    *   Split a set into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
+    */
+  function SplitSet(xs: set<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
+    ensures xs == r.0 + r.1
   {
-    if |xs| == 0 then (cTrue, cFalse)
-    else
-    if f(xs[0]) then
-      SplitSeq(xs[1..], f, cTrue + {xs[0]}, cFalse)
-    else
-      assert !f(xs[0]);
-      SplitSeq(xs[1..] , f, cTrue, cFalse + {xs[0]})
+    var asSeq := SetToSequence(xs);
+    SplitSeq(asSeq, f)
   }
-
-  function SetToSequence(s: set<nat>): seq<nat>
-    ensures var q := SetToSequence(s);
-            forall i :: 0 <= i < |q| ==> q[i] in s
-  {
-    if s == {} then []
-    else
-      ThereIsAMinimum(s);
-      var x :| x in s && forall y :: y in s ==> x <= y;
-      [x] + SetToSequence(s - {x})
-  }
-
-  lemma ThereIsAMinimum(s: set<nat>)
-    requires s != {}
-    ensures exists x :: x in s && forall y :: y in s ==> x <= y
-  {
-    var x :| x in s;
-    if s == {x} {
-      // obviously, x is the minimum
-    } else {
-      // The minimum in s might be x, or it might be the minimum
-      // in s - {x}. If we knew the minimum of the latter, then
-      // we could compare the two.
-      // Let's start by giving a name to the smaller set:
-      var s' := s - {x};
-      // So, s is the union of s' and {x}:
-      assert s == s' + {x};
-      // The following lemma call establishes that there is a
-      // minimum in s'.
-      ThereIsAMinimum(s');
-    }
-  }
-
 
   /**
-    *   Union of sets.
+    *   Split a sequence of nat according to a function value f.
+    */
+  function {:tailrecursion true} SplitSeq(xs: seq<nat>, f: nat -> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
+    requires index <= |xs|
+    requires  forall k:: k in xs[..index] <==> k in cTrue + cFalse
+
+    ensures  forall k:: k in xs <==> k in r.0 + r.1
+
+    decreases |xs| - index
+  {
+    if |xs| == index then (cTrue, cFalse)
+    else if f(xs[index]) then
+      //   assert forall k:: k in xs[..index] <==> k in cTrue + cFalse
+      assert xs[..index + 1] == xs[..index] + [xs[index]];
+      SplitSeq(xs, f, cTrue + {xs[index]}, cFalse, index + 1)
+    else
+      assert !f(xs[index]);
+      assert xs[..index + 1] == xs[..index] + [xs[index]];
+      SplitSeq(xs, f, cTrue, cFalse + {xs[index]}, index + 1)
+  }
+
+  /**
+    *   Union of a seq of sets.
     */
   function {:tailrecursion true} SetUnion<T>(xs: seq<set<T>>, c: set<T> := {}, index: nat := 0): (r: set<T>)
     requires index <= |xs|
@@ -129,6 +105,9 @@ module PartitionMod {
       SetUnion(xs, c + xs[index], index + 1)
   }
 
+  /**
+    *   Intersection of a seq of sets.
+    */
   function {:tailrecursion true} SetIntersection<T(!new)>(xs: seq<set<T>>, c: set<T> := {}, index: nat := 0): (r: set<T>)
     requires index <= |xs|
     requires forall k:: 0 <= k < index ==> c <= xs[k]
@@ -145,6 +124,38 @@ module PartitionMod {
       SetIntersection(xs, c * xs[index], index + 1)
   }
 
+  //  Helpers
+
+  /**
+    *   Iterate over sets. 
+    *   @link{https://leino.science/papers/krml275.html}
+    */
+  function {:tailrecursion true} SetToSequence(s: set<nat>): (r: seq<nat>)
+    ensures forall i :: i in s <==> i in r
+  {
+    if s == {} then []
+    else
+      ThereIsAMinimum(s);
+      var x :| x in s && forall y :: y in s ==> x <= y;
+      [x] + SetToSequence(s - {x})
+  }
+
+  /**
+    *   @link{https://leino.science/papers/krml275.html}
+    */
+  lemma ThereIsAMinimum(s: set<nat>)
+    requires s != {}
+    ensures exists x :: x in s && forall y :: y in s ==> x <= y
+  {
+    var x :| x in s;
+    if s == {x} {
+    } else {
+      var s' := s - {x};
+      assert s == s' + {x};
+      ThereIsAMinimum(s');
+    }
+  }
+
   method {:test} Test1() {
     var p1 := Partition(4, [set q | 0 <= q < 4]);
     PrintPartition(p1);
@@ -152,11 +163,11 @@ module PartitionMod {
     PrintPartition(Partition(4, p2));
   }
 
-  method PrintPartition(p: Partition) 
+  method {:tailrecursion true} PrintPartition(p: Partition)
   {
     for k := 0 to |p.elem| {
-        var setToSeq := SetToSequence(p.elem[k]);
-        print setToSeq, "\n";
+      var setToSeq := SetToSequence(p.elem[k]);
+      print setToSeq, "\n";
     }
   }
 
