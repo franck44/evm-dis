@@ -18,7 +18,7 @@ include "./int.dfy"
 /** 
   * Provides finitie automata.
   */
-module Partition {
+module PartitionMod {
 
   import opened MiscTypes
 
@@ -48,24 +48,69 @@ module Partition {
     ghost predicate IsValid()
     {
       && (forall k, k':: 0 <= k < k' < |elem| ==> elem[k] * elem[k'] == {})
-      && SetUnion(elem) == set q {:notrigger } | 0 <= q < n
+      && SetUnion(elem) == set q | 0 <= q < n
     }
 
     /**
       *  Split a partition according to a predicate
       */
-    function Split(f: nat -> bool): (p': Partition)
+    function Split(f: nat -> bool): seq<set<nat>> // (p': Partition)
       requires this.IsValid()
-    //   requires p'. n == n
-    //   requires p'.IsValid()
-      ensures p'.n == n 
-      ensures p'.IsValid()
     {
-        //  Split elem[0] according to value of f for its elements
-      this
+      //  Split elem[0] according to value of f for its elements
+      if |elem| == 0 then []
+      else
+        var setAsSeq := SetToSequence(elem[0]);
+        // elem
+        var r := SplitSeq(setAsSeq, f);
+        [r.0, r.1] +  elem[1..]
     }
 
   }
+
+  function SplitSeq(xs: seq<nat>, f: nat -> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}): (set<nat>, set<nat>)
+  {
+    if |xs| == 0 then (cTrue, cFalse)
+    else
+    if f(xs[0]) then
+      SplitSeq(xs[1..], f, cTrue + {xs[0]}, cFalse)
+    else
+      assert !f(xs[0]);
+      SplitSeq(xs[1..] , f, cTrue, cFalse + {xs[0]})
+  }
+
+  function SetToSequence(s: set<nat>): seq<nat>
+    ensures var q := SetToSequence(s);
+            forall i :: 0 <= i < |q| ==> q[i] in s
+  {
+    if s == {} then []
+    else
+      ThereIsAMinimum(s);
+      var x :| x in s && forall y :: y in s ==> x <= y;
+      [x] + SetToSequence(s - {x})
+  }
+
+  lemma ThereIsAMinimum(s: set<nat>)
+    requires s != {}
+    ensures exists x :: x in s && forall y :: y in s ==> x <= y
+  {
+    var x :| x in s;
+    if s == {x} {
+      // obviously, x is the minimum
+    } else {
+      // The minimum in s might be x, or it might be the minimum
+      // in s - {x}. If we knew the minimum of the latter, then
+      // we could compare the two.
+      // Let's start by giving a name to the smaller set:
+      var s' := s - {x};
+      // So, s is the union of s' and {x}:
+      assert s == s' + {x};
+      // The following lemma call establishes that there is a
+      // minimum in s'.
+      ThereIsAMinimum(s');
+    }
+  }
+
 
   /**
     *   Union of sets.
@@ -100,5 +145,19 @@ module Partition {
       SetIntersection(xs, c * xs[index], index + 1)
   }
 
+  method {:test} Test1() {
+    var p1 := Partition(4, [set q | 0 <= q < 4]);
+    PrintPartition(p1);
+    var p2 := p1.Split((x => x % 2 == 0));
+    PrintPartition(Partition(4, p2));
+  }
+
+  method PrintPartition(p: Partition) 
+  {
+    for k := 0 to |p.elem| {
+        var setToSeq := SetToSequence(p.elem[k]);
+        print setToSeq, "\n";
+    }
+  }
 
 }
