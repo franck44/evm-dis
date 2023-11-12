@@ -13,7 +13,7 @@
  */
 
 /** 
-  * Provides finitie automata.
+  * Provides seqeuence of sets.
   */
 module SeqOfSets {
 
@@ -45,10 +45,13 @@ module SeqOfSets {
     ensures r.0 * r.1 == {}
   {
     var asSeq := SetToSequence(xs);
-    SplitSeq(asSeq, f)
+    SplitSeqTail(asSeq, f)
   }
 
-  function SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
+  /**
+    *   Split a sequence of sets into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
+    */
+  function {:tailrecursion true} SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
     ensures |xs| == |r|
     ensures forall k:: 0 <= k < |r| ==> r[k].0 * r[k].1 == {}
     ensures forall k:: 0 <= k < |r| ==> r[k].0 + r[k].1 == xs[k]
@@ -92,6 +95,9 @@ module SeqOfSets {
     }
   }
 
+  /**
+    *   Distributivity of U over +.
+    */
   lemma DistribUnion<T>(a : seq<set<T>>, b: seq<set<T>>)
     ensures SetU(a + b) == SetU(a) + SetU(b)
   {
@@ -110,6 +116,9 @@ module SeqOfSets {
     }
   }
 
+  /**
+    *   Split a sequence around an index.
+    */
   lemma SplitUnion1<T>(xs: seq<set<T>>, index: nat)
     requires index < |xs|
     ensures SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]) == SetU(xs)
@@ -126,6 +135,9 @@ module SeqOfSets {
     }
   }
 
+  /**
+    *   Split a sequence arount two consecutive indices.
+    */
   lemma SplitUnion2<T>(xs: seq<set<T>>, index: nat)
     requires index < |xs| - 1
     ensures SetU(xs[..index]) + xs[index] + xs[index + 1] + SetU(xs[index + 2..]) == SetU(xs)
@@ -144,6 +156,9 @@ module SeqOfSets {
     }
   }
 
+  /**
+    *   An empty set in xs does not contribute to SetU(xs).
+    */
   lemma NeutralEmptySet<T>(xs: seq<set<T>>, k: nat)
     requires 0 <= k < |xs|
     requires xs[k] == {}
@@ -151,21 +166,105 @@ module SeqOfSets {
   {
     SplitUnion1(xs, k);
     calc == {
-        SetU(xs);  
-        { SplitUnion1(xs, k); }  
-        SetU(xs[..k]) + xs[k] + SetU(xs[k + 1..]); 
-        calc == {
-            SetU(xs[..k]) + xs[k];
-            SetU(xs[..k]) + {};
-            SetU(xs[..k]);
-        }
-        SetU(xs[..k]) + SetU(xs[k + 1..]);
-        { DistribUnion(xs[..k], xs[k + 1..]);}
-        SetU(xs[..k] + xs[k + 1..]);
+      SetU(xs);
+      { SplitUnion1(xs, k); }
+      SetU(xs[..k]) + xs[k] + SetU(xs[k + 1..]);
+      calc == {
+        SetU(xs[..k]) + xs[k];
+        SetU(xs[..k]) + {};
+        SetU(xs[..k]);
+      }
+      SetU(xs[..k]) + SetU(xs[k + 1..]);
+      { DistribUnion(xs[..k], xs[k + 1..]);}
+      SetU(xs[..k] + xs[k + 1..]);
     }
   }
+
+  /**
+    *   For a seq of disjoint and non empty sets, within a finite set {0, ..., n -1 }
+    *   the last set cannot contain elements from the previous sets.
+    *   Hence its size decreases.
+    */
+  lemma ShrinkingLemma(xs: seq<set<nat>>, n: nat)
+    requires forall k:: 0 <= k < |xs| ==> {} < xs[k] <= set x {:nowarn} | 0 <= x < n
+    requires forall k, k':: 0<= k < k' < |xs| ==> xs[k] * xs[k'] == {}
+    requires |xs| > 0
+    ensures |xs[|xs| - 1]| <= n - |SetU(xs[..|xs| - 1])|
+    ensures |xs| > n ==> |xs[|xs| - 1]| == 0
+  {
+    calc == {
+      n;
+    >= {SizeOfNatsUpToNBound(n, SetU(xs));}
+      |SetU(xs)|;
+       { SplitUnion1(xs, |xs| - 1); }
+      |SetU(xs[..|xs| - 1]) + xs[|xs| - 1]|;
+    }
+    if |xs| > n {
+      calc <= {
+        |xs[|xs| - 1]|;
+        n - |SetU(xs[..|xs| - 1])|;
+        { MinSizeOfNonEmptyDisjoint(xs[..|xs| - 1]); }
+        0;
+      }
+    }
+  }
+
+  /**
+    *   For a seq of non empty and disjoint sets of size k, SetU has more then k elements.
+    */
+  lemma MinSizeOfNonEmptyDisjoint(xs: seq<set<nat>>)
+    requires forall k:: 0 <= k < |xs| ==> {} < xs[k]
+    requires forall k, k':: 0<= k < k' < |xs| ==> xs[k] * xs[k'] == {}
+    ensures |SetU(xs)| >= |xs|
+  {
+    if |xs| == 0 {
+      //  Thanks Dafny
+    } else {
+      SplitUnion1(xs, |xs| - 1);
+      assert SetU(xs[..|xs| - 1]) + xs[|xs| - 1] == SetU(xs);
+      //   foo302(xs, |xs| - 1);
+      assert xs[|xs| - 1] * SetU(xs[..|xs| - 1]) == {};
+      assert |xs[|xs| - 1]| >= 1;
+      SizeOfUnion(xs[|xs| - 1], SetU(xs[..|xs| - 1]));
+      assert |SetU(xs)| == |SetU(xs[..|xs| - 1])| + |xs[|xs| - 1]| ;
+      assert |SetU(xs)| >= |SetU(xs[..|xs| - 1])| + 1 ;
+      MinSizeOfNonEmptyDisjoint(xs[..|xs| - 1]);
+    }
+  }
+
+  /**
+    *   The size of set that has only nat < n is bounded by n.
+    */
+  lemma SizeOfNatsUpToNBound(n: nat, Y: set<nat>)
+    requires Y <= set x {:nowarn} | 0 <= x < n
+    ensures |Y| <= n
+  {
+    if n == 0 || Y == {} {
+      //  Thanks Dafny
+    } else if n - 1 in Y {
+      var X := Y - { n - 1};
+      assert X + {n -1} == Y;
+      assert |Y| == |X + {n -1}| <= |X| + |{n - 1}|;
+      assert |Y| <= |X| + 1;
+      SizeOfNatsUpToNBound(n - 1, X);
+    } else {
+      assert n - 1 !in Y;
+      assert Y <= set x {:nowarn} | 0 <= x < n - 1;
+      SizeOfNatsUpToNBound(n - 1, Y);
+    }
+  }
+
+  /**
+    *   Size of union of disjoint sets is the sum of the sizes of
+    *   the sets.
+    */
+  lemma SizeOfUnion<T>(a: set<T>, b: set<T>)
+    requires a * b == {}
+    ensures |a + b| == |a| + |b|
+
   /**
     *   Split a sequence of nat according to a function value f.
+    *   Tail recursice version.
     */
   function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat -> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
     requires index <= |xs|
@@ -173,7 +272,6 @@ module SeqOfSets {
     requires cTrue * cFalse == {}
     requires forall k:: k in cTrue ==> f(k)
     requires forall k:: k in cFalse ==> !f(k)
-
     ensures  forall k:: k in xs <==> k in r.0 + r.1
     ensures r.0 * r.1 == {}
     ensures forall k:: k in cTrue ==> f(k)
@@ -183,17 +281,18 @@ module SeqOfSets {
   {
     if |xs| == index then (cTrue, cFalse)
     else if f(xs[index]) then
-
       assert xs[..index + 1] == xs[..index] + [xs[index]];
-      //   assert xs[index]  !in cFalse;
       SplitSeqTail(xs, f, cTrue + {xs[index]}, cFalse, index + 1)
     else
-      assert !f(xs[index]);
       assert xs[..index + 1] == xs[..index] + [xs[index]];
       SplitSeqTail(xs, f, cTrue, cFalse + {xs[index]}, index + 1)
   }
 
-  function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
+  /**
+    *   Split a sequence of nat according to a function value f.
+    *   Simple non tail-rec version.
+    */
+  ghost function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
     ensures forall k:: k in r.0 ==> f(k)
     ensures forall k:: k in r.1 ==> !f(k)
     ensures r.0 * r.1 == {}
@@ -208,6 +307,5 @@ module SeqOfSets {
       else
         (r.0, r.1 + {xs[0]})
   }
-
 
 }

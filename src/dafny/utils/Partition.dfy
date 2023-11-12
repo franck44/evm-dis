@@ -14,25 +14,34 @@
 
 include "./SeqOfSets.dfy"
 include "./MiscTypes.dfy"
-  /** 
-    * Provides finitie automata.
-    */
+
+/** 
+  * Provides partitions of sets of the form {0, ..., n}.
+  */
 module PartitionMod {
 
   import opened SeqOfSets
   import opened MiscTypes
 
+  /** A Avlid partition. */
   type ValidPartition = x: Partition | x.IsValid() witness Partition(1, [{0}])
 
   /**
-    *   A partition is a list of sets but we represent them by seq to 
-    *   be able to iterate.
+    *   A partition is a list of sets and we represent it by a seq of sets to 
+    *   be able to iterate over it.
     *   Partitions of {0, ... n - 1}
     */
   datatype Partition = Partition(n: nat, elem: seq<set<nat>>)
   {
     /**
       * A valid partition should map every nat to a partition number.
+      * We consider only partition of non empty sets {0, ..., n} and 
+      *     0. requires n > 0.
+      * For a seq<set<nat>> to be partition of {0, .., n - 1} the following properties
+      * must ne satisfied:
+      *     1. each class (set) in the partition is non empty
+      *     2. the intersection of two distinct classes is empty
+      *     3. the union of the classes is the whole set {0, .., n - 1}
       * The maximum number of classes is n (each element has its own class).
       */
     ghost predicate IsValid()
@@ -43,7 +52,15 @@ module PartitionMod {
       && SetU(elem) == set q {:nowarn} | 0 <= q < n
     }
 
-    function {:tailrecursion true} SplitAllFrom(f: nat -> bool, index: nat := 0): (p': Partition)
+    /**
+      * Split all the classes according to a predicate.
+      * @param  f       A boolean splitter function.
+      * @param  index   The current class to split according to f.
+      * @returns        Splits each class C_1, C_2, C_k into C_1_True, C_1_False
+      *                 C_2_True, C_2_False etc. Remove empty classes and returns 
+      *                 a Valid partition. 
+      */
+    function {:tailrecursion true} SplitAllFrom(f: nat -> bool, index: nat := 0): (p': ValidPartition)
       requires this.IsValid()
       requires index <= |elem|
       decreases |elem| - index
@@ -55,18 +72,25 @@ module PartitionMod {
         //  We may add one or zero sets depending on whether splitting elem[index]
         //  results in one empty set. If we get one set we advance to index + 1 and
         //  if we get two we advance to index + 2
-        p1.SplitAllFrom(f, index + 1 + |p1.elem| - |elem|) 
+        p1.SplitAllFrom(f, index + 1 + |p1.elem| - |elem|)
     }
 
     /**
-      *  Split a partition according to a predicate
+      * Split a partition according to a predicate.
+      * @param  f       A boolean splitter function.
+      * @param  index   The class to split according to f.
+      * @returns        p with the class C at index split into cTrue and CFalse 
+      *                 where CTrue = { c in C | f(c) = true} (and similar for false).
+      * @note           C is not empty but the split can create an empty e.g. if 
+      *                 forall c in C f(c). The result discards any empty sets 
+      *                 and returns a ValidPartition. 
       */
-    function {:tailrecursion true} SplitAt(f: nat -> bool, index: nat): (p': Partition)
+    function {:tailrecursion true} SplitAt(f: nat -> bool, index: nat): (p': ValidPartition)
       requires index < |elem|
       requires this.IsValid()
-        ensures p'.IsValid()
-        ensures |elem| + 1 >= |p'.elem| >= |elem|
-        ensures p'.n == n
+      ensures p'.IsValid()
+      ensures |elem| + 1 >= |p'.elem| >= |elem|
+      ensures p'.n == n
     {
       //  Split elem[index] according to value of f for its elements
       var r := SplitSet(elem[index], f);
@@ -98,24 +122,32 @@ module PartitionMod {
     }
 
     /**
-      * The class of a nat in {0, ..., n - 1}.
+      * The class (index) of an element in {0, ..., n - 1}.
+      *
+      * @param  x       An element in {0, ..., n - 1}.
+      * @param  index   The next index to scan and x !in p.elem[..index].
+      * @returns        The index of the class x is in.
+      * @note           Because each x is necessarily in a class we always return 
+      *                 an index in p.elem.
       */
-    function GetClass(x: nat, index: nat := 0): (c: nat)
+    function {:tailrecursion true} GetClass(x: nat, index: nat := 0): (c: nat)
       requires IsValid()
       requires 0 <= x < n
       requires index < |elem|
       requires forall k:: 0 <= k < index ==> x !in elem[k]
       ensures c < |elem| && x in elem[c]
+      ensures c < n
       decreases |elem| - index
     {
-      //    This lemma ensures we will find a class index!
+      // This lemma ensures we will find an index with x in elem[index]!
       ExistsIn(this, x);
+      ValidMaxClasses(this);
       if x in elem[index] then index
       else GetClass(x, index + 1)
     }
 
     /**
-      * Whether two nats are in the same class.
+      * Whether two nats are equivalemt i.e. in the same class.
       */
     predicate Equiv(x: nat, y: nat)
       requires this.IsValid()
@@ -144,7 +176,7 @@ module PartitionMod {
 
   }
 
-  function RemoveEmpty(p: Partition,  k: nat): (p': Partition)
+  function RemoveEmpty(p: Partition,  k: nat): (p': ValidPartition)
     requires 0 <= k < |p.elem|
     requires p.elem[k] == {}
     requires p.n > 0
@@ -170,7 +202,7 @@ module PartitionMod {
     assert { 0 } <= SetU(p.elem);
   }
 
-  /**
+  /**   
     *   A partition p of {0, ..., n - 1} ensures that 
     *   0 <= k < n ==> k in a class of p.
     */
@@ -185,6 +217,9 @@ module PartitionMod {
     }
   }
 
+  /**
+    *   If a seq has a unique empty set it can be removed. to make a Valid partition.
+    */
   lemma RemoveEmptySet(p: Partition, k: nat)
     requires 0 <= k < |p.elem|
     requires p.elem[k] == {}
@@ -192,10 +227,32 @@ module PartitionMod {
     requires forall k, k':: 0 <= k < k' < |p.elem| ==> p.elem[k] * p.elem[k'] == {}
     requires SetU(p.elem) == set q {:nowarn} | 0 <= q < p.n
     requires forall i:: 0 <= i < |p.elem| && i != k ==> p.elem[i] != {}
+
+    ensures SetU(p.elem[..k] + p.elem[k + 1..]) == SetU(p.elem)
     ensures Partition(p.n, p.elem[..k] + p.elem[k + 1..]).IsValid()
   {
     var p1 := Partition(p.n, p.elem[..k] + p.elem[k + 1..]);
     NeutralEmptySet(p.elem, k);
+  }
+
+  /**
+    *   The maximum number of classes in a partition of [0..n-1] is n.
+    */
+  lemma ValidMaxClasses(p: ValidPartition)
+    ensures |p.elem| <= p.n
+  {
+    if |p.elem| > p.n {
+      //  Just show that each set is included in {0, ..., n -1}
+      forall k | 0 <= k < |p.elem|
+        ensures p.elem[k] <= set x {:nowarn} | 0 <= x < p.n {
+        SplitUnion1(p.elem, k);
+        assert SetU(p.elem[..k]) + p.elem[k] + SetU(p.elem[k + 1..]) == SetU(p.elem);
+        assert p.elem[k] <= SetU(p.elem);
+      }
+      //  Apply the shrinking lemma
+      ShrinkingLemma(p.elem, p.n);
+      assert |p.elem[|p.elem| - 1]| == 0;
+    }
   }
 
   //    Some tests

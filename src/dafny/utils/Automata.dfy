@@ -23,49 +23,16 @@ module Automata {
   import opened MiscTypes
   import opened PartitionMod
 
-  //   datatype Node<T> =
-  //       Num(index: nat, prop: T)
-  //     | Sink()
-
-  //   datatype Edge<U, T> = Edge(src: U, lab: U, tgt: T)
-
-  /** Deterministic transition relation. 
-    *
-    *   0 is the starting state. A sink state is a state that is not
-    *   in the map.   
-    */
-  //   type Transitions = map<(nat, bool), nat>
-
-  //   type Transitions2<T(==)> = map<(T, bool), T>
-
-  //   datatype Auto = Auto(numStates: nat, tr: Transitions, final: nat := 0)
-
-  //   datatype Auto2<T> = Auto2(init: T, tr: Transitions2<T>, refSet: set<T>, bound: nat)
-
-  //   type ValidAuto2 = a: Auto2<nat> | IsBounded(a.refSet, a.bound) witness Auto2(0, map[], {}, 0)
-
-  //   type ValidAuto = a: Auto |
-  //       && forall k:: k in a.tr.Keys ==> k.0 < a.numStates
-  //                                        && forall k:: k in a.tr.Values ==> k < a.numStates
-  //     witness Auto(0, map[], 0)
-
-  //   state -> list of labels (enabled)
-  //  state and for each l in list of labels -> state
-
-  //  states = ["toto", "titi"] numbered from 0 to n
-  //  labels same: ["l0", "l1", ] numbered from 0 to k
-  //  transitions: if "titi" -- l -> "toto" then write it as 1 - i -> 0
-  //  each l in labels[i] give the labels enables in states[i]
-
   type ValidAuto = a: Auto | a.IsValid() witness Auto(0, map[])
-
-  //   type NatAuto = ValidAuto<nat, bool> // witness Auto([], [], map[])
-
-  type ValidPair = p: Pair | p.IsValid() witness Pair(Auto(1, map[]), Partition(1, [{0}]))
 
   datatype Auto = Auto(numStates: nat, transitions: map<(nat, bool), nat>)
   {
 
+    /** 
+      * The transition function should return states within the numStates range.
+      * Note that the map can have keys (k, l) with states k >= numStates, that's
+      * perfectly accpetable.
+      */
     predicate IsValid()
     {
       forall k:: k in transitions ==> transitions[k] < numStates
@@ -85,24 +52,6 @@ module Automata {
       if (s, l) in transitions then Some(transitions[(s, l)])
       else None
     }
-
   }
-
-  datatype Pair = Pair(a: ValidAuto, p: ValidPartition) {
-
-    predicate IsValid()
-    {
-      a.numStates == p.n
-    }
-
-    function Refine(): ValidPartition
-        requires this.IsValid()
-    {
-        p
-    }
-
-  }
-
-
 
 }
