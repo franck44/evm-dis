@@ -40,7 +40,8 @@ module SeqOfSets {
   /**
     *   Split a set into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
-  function SplitSet(xs: set<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
+  function SplitSet(xs: set<nat>, f: nat --> bool): (r: (set<nat>, set<nat>))
+    requires forall x:: x in xs ==> f.requires(x)
     ensures xs == r.0 + r.1
     ensures r.0 * r.1 == {}
   {
@@ -261,13 +262,17 @@ module SeqOfSets {
   lemma SizeOfUnion<T>(a: set<T>, b: set<T>)
     requires a * b == {}
     ensures |a + b| == |a| + |b|
+    {
+        
+    }
 
   /**
     *   Split a sequence of nat according to a function value f.
     *   Tail recursice version.
     */
-  function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat -> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
+  function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
     requires index <= |xs|
+    requires forall  k:: k in xs ==> f.requires(k)
     requires  forall k:: k in xs[..index] <==> k in cTrue + cFalse
     requires cTrue * cFalse == {}
     requires forall k:: k in cTrue ==> f(k)

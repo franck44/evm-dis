@@ -47,32 +47,40 @@ module PartitionMod {
     ghost predicate IsValid()
     {
       && n > 0
-      && (forall k:: 0 <= k < |elem| ==> elem[k] != {})
+      && (forall k:: 0 <= k < |elem| ==> {} != elem[k])
       && (forall k, k':: 0 <= k < k' < |elem| ==> elem[k] * elem[k'] == {})
       && SetU(elem) == set q {:nowarn} | 0 <= q < n
     }
 
     /**
       * Split all the classes according to a predicate.
-      * @param  f       A boolean splitter function.
+      * @param  f       A boolean splitter function f(index) for each index.
       * @param  index   The current class to split according to f.
       * @returns        Splits each class C_1, C_2, C_k into C_1_True, C_1_False
       *                 C_2_True, C_2_False etc. Remove empty classes and returns 
       *                 a Valid partition. 
       */
-    function {:tailrecursion true} SplitAllFrom(f: nat -> bool, index: nat := 0): (p': ValidPartition)
+    function {:tailrecursion true} {:timeLimitMultiplier 4} SplitAllFrom(f: nat --> nat --> bool, index: nat := 0): (p': ValidPartition)
       requires this.IsValid()
       requires index <= |elem|
+      requires forall x:nat :: index <= x < |elem| ==> f.requires(x)
+      requires forall x :: index <= x < |elem| ==> (forall y:nat :: y < n ==> f(x).requires(y))
+      requires forall x:nat :: index <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y))
       decreases |elem| - index
       ensures p'.IsValid()
+      ensures |p'.elem| >= |elem|
+      ensures p'.n == n
     {
       if |elem| == index then this
       else
-        var p1 := SplitAt(f, index);
+        var p1 := SplitAt(f(index), index);
         //  We may add one or zero sets depending on whether splitting elem[index]
         //  results in one empty set. If we get one set we advance to index + 1 and
         //  if we get two we advance to index + 2
-        p1.SplitAllFrom(f, index + 1 + |p1.elem| - |elem|)
+        //  We have so shift f too
+        var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |elem|));
+        // assume  forall x:nat :: index + 1 <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y));
+        p1.SplitAllFrom(f', index + 1 + |p1.elem| - |elem|)
     }
 
     /**
@@ -85,21 +93,26 @@ module PartitionMod {
       *                 forall c in C f(c). The result discards any empty sets 
       *                 and returns a ValidPartition. 
       */
-    function {:tailrecursion true} SplitAt(f: nat -> bool, index: nat): (p': ValidPartition)
+    function {:tailrecursion true} {:timeLimitMultiplier 4} SplitAt(f: nat --> bool, index: nat): (p': ValidPartition)
       requires index < |elem|
       requires this.IsValid()
+      requires forall x:: x in elem[index] ==> f.requires(x)
       ensures p'.IsValid()
       ensures |elem| + 1 >= |p'.elem| >= |elem|
       ensures p'.n == n
     {
       //  Split elem[index] according to value of f for its elements
+      assert forall x:: x in elem[index] ==> f.requires(x);
       var r := SplitSet(elem[index], f);
       assert elem[index] != {};
       assert r.0 != {} || r.1 != {};
       var newP := elem[..index] + [r.0, r.1] + elem[index + 1..];
+      assert (forall k, k':: 0 <= k < k' < |elem| ==> elem[k] * elem[k'] == {});
+      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * elem[index] == {});
+      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * r.0 == {});
+      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * r.1 == {});
       assert (forall k, k':: 0 <= k < k' < |newP| ==> newP[k] * newP[k'] == {});
       assert r.0 + r.1 == elem[index];
-      assert newP[index] == r.0 && newP[index + 1] == r.1;
       calc == {
         SetU(newP);
         { SplitUnion2(newP, index); }
@@ -255,6 +268,19 @@ module PartitionMod {
     }
   }
 
+  lemma {:axiom} AllClassesInSetU(p: ValidPartition)
+    ensures forall k:: k in p.elem ==> k <= SetU(p.elem)
+    ensures forall k:: 0 <= k < |p.elem| ==> p.elem[k] <= SetU(p.elem)
+
+
+  //   lemma PartialFunShift(f: nat --> nat --> bool, f': nat --> nat --> bool, index: nat, p: ValidPartition)
+  //     requires forall x:nat :: index <= x < |p.elem| ==> f.requires(x)
+  //     requires forall x:nat :: index <= x < |p.elem| ==> (forall y:nat:: y in p.elem[x] ==> f(x).requires(y))
+  //     requires f' == ((x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |p.elem|)))
+  //     ensures
+  //       {
+
+  //       }
   //    Some tests
   //   method {:test} Test1() {
   //     var p1 := Partition(4, [set q {:nowarn} | 0 <= q < 4]);
@@ -337,24 +363,24 @@ module PartitionMod {
   //   }
 
 
-  type ValidPair = x : (Partition, map<(nat, nat), nat>) | x.0.IsValid() && (forall k:: k in x.1.Values ==> k < x.0.n)
-    witness (Partition(1, [{0}]), map[])
+  //   type ValidPair = x : (Partition, map<(nat, nat), nat>) | x.0.IsValid() && (forall k:: k in x.1.Values ==> k < x.0.n)
+  //     witness (Partition(1, [{0}]), map[])
 
-  function succ(x: nat, m: map<(nat, nat), nat>, p: ValidPartition): (Option<nat>, Option<nat>)
-    requires forall k:: k in m.Values ==> 0 <= k < p.n
-    requires p.IsValid()
-  {
-    NotEmpty(p);
-    var s1 := if (x, 0) in m then
-                assert m[(x, 0)] in m.Values;
-                Some(p.GetClass(m[(x, 0)]))
-              else None;
-    var s2 := if (x, 1) in m then
-                assert m[(x, 1)] in m.Values;
-                Some(p.GetClass(m[(x, 1)]))
-              else None;
-    (s1, s2)
-  }
+  //   function succ(x: nat, m: map<(nat, nat), nat>, p: ValidPartition): (Option<nat>, Option<nat>)
+  //     requires forall k:: k in m.Values ==> 0 <= k < p.n
+  //     requires p.IsValid()
+  //   {
+  //     NotEmpty(p);
+  //     var s1 := if (x, 0) in m then
+  //                 assert m[(x, 0)] in m.Values;
+  //                 Some(p.GetClass(m[(x, 0)]))
+  //               else None;
+  //     var s2 := if (x, 1) in m then
+  //                 assert m[(x, 1)] in m.Values;
+  //                 Some(p.GetClass(m[(x, 1)]))
+  //               else None;
+  //     (s1, s2)
+  //   }
 
   //   function foo(x: nat, p: Partition, m: map<(nat, nat), nat>): bool
   //   {
