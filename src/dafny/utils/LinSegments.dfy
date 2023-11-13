@@ -177,11 +177,11 @@ module LinSegments {
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
     function LeadsTo(k: Int.u256): ValidCond
-        requires this.JUMPSeg? || this.JUMPISeg?
+      requires this.JUMPSeg? || this.JUMPISeg?
     {
-        //  StCond([0], [k])
-        var c := StCond([0], [k]);
-         WPreIns(ins, c)
+      //  StCond([0], [k])
+      var c := StCond([0], [k]);
+      WPreIns(ins, c)
     }
 
   }
@@ -251,6 +251,28 @@ module LinSegments {
       assert c.StCond?;
       var c1 := xs[|xs| - 1].WPre(c);
       WPreIns(xs[..|xs| - 1], c1)
+  }
+
+  /**
+    *  Compute the WPre for a sequence of segments.
+    *   @param  path    The sequence of segment numbers.
+    *   @param  c       A (post) condition.
+    *   @param  xs      A list of known segments.
+    *   @returns        
+    */
+  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
+    requires forall k:: k in path ==> k < |xs|
+    requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
+  {
+    if !c.StCond? || |path| == 0 then
+      //    path is empty or c is true of false so no need to back propagate further.
+      c
+    else
+      assert |path| > 0;
+      //  compute Wpre on last segment and iterate on prefix
+      var w1 := xs[path[|path| - 1]].WPre(c);
+      WPreSeqSegs(path[..|path| - 1], w1, xs)
+
   }
 
 

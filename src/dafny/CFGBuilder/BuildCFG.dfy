@@ -200,23 +200,5 @@ module BuildCFGraph {
       [xn[0].seg.v] + NodesToSeg(xn[1..], xs)
   }
 
-  /**
-    *  Compute the WPre for a sequence of segments.
-    */
-  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
-    requires forall k:: k in path ==> k < |xs|
-    requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
-  {
-    if !c.StCond? then
-      c
-    else if |path| > 0 then
-      //  compute Wpre on last segments and recurse
-      var w1 := xs[path[|path| - 1]].WPre(c);
-      WPreSeqSegs(path[..|path| - 1], w1, xs)
-    else
-      //  If false or true remains false or true
-      c
-  }
-
 }
 
