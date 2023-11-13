@@ -190,7 +190,13 @@ module BuildCFGraph {
     case None => None
   }
 
-  function NodesToSeg(xn: seq<CFGNode>, xs: seq<ValidLinSeg>): (s: seq<nat>)
+  /**
+    *   Convert a sequence of CFGNodes into the sequence of segments they correspond to.
+    *   @param  xn      The seq of CFGNodes
+    *   @param  xs      A list of known segments.
+    *   @returns        The list of segments defined by xn.
+    */
+  function {:tailrecursion true} NodesToSeg(xn: seq<CFGNode>, xs: seq<ValidLinSeg>): (s: seq<nat>)
     requires forall k:: k in xn ==> k.seg.Some? && k.seg.v < |xs|
     ensures |xn| == |s|
     ensures forall i:: 0 <= i < |s| ==> s[i] < |xs|
