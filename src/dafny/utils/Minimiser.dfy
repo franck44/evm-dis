@@ -66,10 +66,16 @@ module Minimiser {
       (s1, s2)
     }
 
-    function Split(): ValidPair
+    /**
+      * Split classes at index and above according to value of first elem of the class
+      * and it successors.
+      */
+    function SplitFrom(index: nat := 0): ValidPair
       requires this.IsValid()
-      ensures Split().IsValid()
-      ensures |Split().p.elem| >= |p.elem|
+      requires index < |p.elem|
+      ensures SplitFrom(index).IsValid()
+      ensures |SplitFrom(index).p.elem| >= |p.elem|
+      ensures SplitFrom(index).p.elem[..index] == p.elem[..index]
     {
       //  split class[index] with function that is true only
       //  when ClassSucc is the same as ClassSucc[index] first element
@@ -81,10 +87,11 @@ module Minimiser {
       //  provides more guarantee e.g. on the value of ClassSucc.
       assert p.n == a.numStates;
       var splitterF: nat --> (nat --> bool) :=
-        (index: nat) requires index < |p.elem|
-        => ((y: nat) requires y < p.n =>  ClassSucc(p.GetClass(SetToSequence(p.elem[index])[0])) == ClassSucc(y));
-      assert p.SplitAllFrom.requires(splitterF, 0);
-      var r := p.SplitAllFrom(splitterF, 0);
+        (k: nat) requires index <= k < |p.elem|
+        => ((y: nat) requires y < p.n =>  ClassSucc(p.GetClass(SetToSequence(p.elem[k])[0])) == ClassSucc(y));
+      assert SplitAllFrom.requires(p, splitterF, index, index);
+      var r := SplitAllFrom(p, splitterF, index);
+      assert r.elem[..index] == p.elem[..index];
       assert r.IsValid();
       assert r.n == p.n;
       assert r.n == a.numStates;
@@ -93,40 +100,38 @@ module Minimiser {
       x
     }
 
-    function Minimise(): ValidPair
+    /**
+      * 
+      */
+    function Minimise1(): ValidPair
       requires this.IsValid()
-      ensures Minimise().IsValid()
+      ensures Minimise1().IsValid()
       decreases this.p.n - |this.p.elem|
     {
-      var p1 := this.Split();
+      NotEmpty(p);
+      var p1 := this.SplitFrom();
       ValidMaxClasses(p1.p);
-      assert p1.IsValid();
       if |p1.p.elem| == |p.elem| then p1
       else
         assert |p.elem| < |p1.p.elem| <= p.n == a.numStates;
-        p1.Minimise()
+        p1.Minimise1()
     }
-
-    /**
-      *  Split a class into element equiv to class[0] and !class[0]
-      */
-
-    // function Refine(): ValidPartition
-    //   requires this.IsValid()
-    // {
-    //   p
-    // }
-
-
-    /**  */
-    // function SplitSeq(index: nat) : (nat -> bool)
-    // {
-    //     //  Get first element.
-    // }
-
-
+ 
   }
 
+    function Minimise(ap: ValidPair): ValidPair
+      requires ap.IsValid()
+      ensures Minimise(ap).IsValid()
+      decreases ap.p.n - |ap.p.elem|
+    {
+      NotEmpty(ap.p);
+      var p1 := ap.SplitFrom();
+      ValidMaxClasses(p1.p);
+      if |p1.p.elem| == |ap.p.elem| then p1
+      else
+        assert |ap.p.elem| < |p1.p.elem| <= ap.p.n == ap.a.numStates;
+        Minimise(p1)
+    }
 
 
 }
