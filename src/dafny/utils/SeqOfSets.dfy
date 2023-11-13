@@ -263,7 +263,7 @@ module SeqOfSets {
     requires a * b == {}
     ensures |a + b| == |a| + |b|
     {
-        
+
     }
 
   /**
@@ -297,7 +297,7 @@ module SeqOfSets {
     *   Split a sequence of nat according to a function value f.
     *   Simple non tail-rec version.
     */
-  ghost function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
+   ghost function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
     ensures forall k:: k in r.0 ==> f(k)
     ensures forall k:: k in r.1 ==> !f(k)
     ensures r.0 * r.1 == {}
@@ -305,7 +305,7 @@ module SeqOfSets {
     ensures forall k:: k in xs && !f(k) <==> k in r.1
     ensures forall k:: k in xs <==> k in r.0 + r.1
   {
-    if |xs| == 0 then ({}, {})
+    if |xs| == 0 then ({}, {}) 
     else
       var r := SplitSeq(xs[1..], f);
       if f(xs[0]) then (r.0 + {xs[0]}, r.1)
