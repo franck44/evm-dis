@@ -60,18 +60,19 @@ module PartitionMod {
       *                 C_2_True, C_2_False etc. Remove empty classes and returns 
       *                 a Valid partition. 
       */
-    function {:tailrecursion true} {:timeLimitMultiplier 4} SplitAllFrom(f: nat --> nat --> bool, index: nat := 0): (p': ValidPartition)
+    function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom2(f: nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
       requires this.IsValid()
-      requires index <= |elem|
+      requires from <= index <= |elem|
       requires forall x:nat :: index <= x < |elem| ==> f.requires(x)
       requires forall x :: index <= x < |elem| ==> (forall y:nat :: y < n ==> f(x).requires(y))
       requires forall x:nat :: index <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y))
       decreases |elem| - index
       ensures p'.IsValid()
       ensures |p'.elem| >= |elem|
+      ensures p'.elem[..from] == elem[..from]
       ensures p'.n == n
     {
-      if |elem| == index then this
+      if |elem| == index then this 
       else
         var p1 := SplitAt(f(index), index);
         //  We may add one or zero sets depending on whether splitting elem[index]
@@ -79,8 +80,8 @@ module PartitionMod {
         //  if we get two we advance to index + 2
         //  We have so shift f too
         var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |elem|));
-        // assume  forall x:nat :: index + 1 <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y));
-        p1.SplitAllFrom(f', index + 1 + |p1.elem| - |elem|)
+        assert p1.elem[..from] == elem[..from];
+        p1.SplitAllFrom2(f', index + 1 + |p1.elem| - |elem|, from)
     }
 
     /**
@@ -99,6 +100,7 @@ module PartitionMod {
       requires forall x:: x in elem[index] ==> f.requires(x)
       ensures p'.IsValid()
       ensures |elem| + 1 >= |p'.elem| >= |elem|
+      ensures p'.elem[..index] == elem[..index]
       ensures p'.n == n
     {
       //  Split elem[index] according to value of f for its elements
@@ -203,6 +205,30 @@ module PartitionMod {
     p1
 
   }
+
+  function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
+      requires p.IsValid()
+      requires from <= index <= |p.elem|
+      requires forall x:nat :: index <= x < |p.elem| ==> f.requires(x)
+      requires forall x :: index <= x < |p.elem| ==> (forall y:nat :: y < p.n ==> f(x).requires(y))
+      requires forall x:nat :: index <= x < |p.elem| ==> (forall y:nat:: y in p.elem[x] ==> f(x).requires(y))
+      decreases |p.elem| - index
+      ensures p'.IsValid()
+      ensures |p'.elem| >= |p.elem|
+      ensures p'.elem[..from] == p.elem[..from]
+      ensures p'.n == p.n
+    {
+      if |p.elem| == index then p 
+      else
+        var p1 := p.SplitAt(f(index), index);
+        //  We may add one or zero sets depending on whether splitting elem[index]
+        //  results in one empty set. If we get one set we advance to index + 1 and
+        //  if we get two we advance to index + 2
+        //  We have so shift f too
+        var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |p.elem|));
+        assert p1.elem[..from] == p.elem[..from];
+        SplitAllFrom(p1, f', index + 1 + |p1.elem| - |p.elem|, from)
+    }
 
   /**
     *   A valid partition cannot be empty.
