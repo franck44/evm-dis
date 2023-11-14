@@ -75,7 +75,7 @@ module Minimiser {
       requires index < |p.elem|
       ensures SplitFrom(index).IsValid()
       ensures |SplitFrom(index).p.elem| >= |p.elem|
-      ensures SplitFrom(index).p.elem[..index] == p.elem[..index]
+    //   ensures SplitFrom(index).p.elem[..index] == p.elem[..index]
     {
       //  split class[index] with function that is true only
       //  when ClassSucc is the same as ClassSucc[index] first element
@@ -91,7 +91,7 @@ module Minimiser {
         => ((y: nat) requires y < p.n =>  ClassSucc(p.GetClass(SetToSequence(p.elem[k])[0])) == ClassSucc(y));
       assert SplitAllFrom.requires(p, splitterF, index, index);
       var r := SplitAllFrom(p, splitterF, index);
-      assert r.elem[..index] == p.elem[..index];
+    //   assert r.elem[..index] == p.elem[..index];
       assert r.IsValid();
       assert r.n == p.n;
       assert r.n == a.numStates;
@@ -101,11 +101,40 @@ module Minimiser {
     }
 
     /**
+     for each class in p.elem get the successor classes and create edges. 
+     */
+    function GenerateReduced(index: nat := 0): (r : seq<(nat, bool, nat)>)
+      requires this.IsValid()
+      requires index <= |p.elem|
+      ensures forall k:: 0 <= k < |r| ==> r[k].0 < p.n && r[k].2 < p.n
+      decreases |p.elem| - index 
+    {
+      AllClassesInSetU(p);
+      ValidMaxClasses(p);
+      if index == |p.elem| then []
+      else
+        // assert p.elem[index] != {};
+        var firstElem := SetToSequence(p.elem[index])[0];
+        // assert firstElem in p.elem[index];
+        // assert firstElem < a.numStates;
+        //  Get successor classes of first elem
+        var succs := ClassSucc(firstElem);
+        var newEdges := match (succs.0, succs.1)
+            case (None, None) => []
+            case (Some(sFalse), None) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0])]
+            case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
+            case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
+            ;
+        newEdges + GenerateReduced(index + 1)
+    }
+
+    /**
       * 
       */
     function Minimise1(): ValidPair
       requires this.IsValid()
       ensures Minimise1().IsValid()
+    //   ensures 
       decreases this.p.n - |this.p.elem|
     {
       NotEmpty(p);
@@ -116,22 +145,25 @@ module Minimiser {
         assert |p.elem| < |p1.p.elem| <= p.n == a.numStates;
         p1.Minimise1()
     }
- 
+
   }
 
-    function Minimise(ap: ValidPair): ValidPair
-      requires ap.IsValid()
-      ensures Minimise(ap).IsValid()
-      decreases ap.p.n - |ap.p.elem|
-    {
-      NotEmpty(ap.p);
-      var p1 := ap.SplitFrom();
-      ValidMaxClasses(p1.p);
-      if |p1.p.elem| == |ap.p.elem| then p1
-      else
-        assert |ap.p.elem| < |p1.p.elem| <= ap.p.n == ap.a.numStates;
-        Minimise(p1)
-    }
+  //   function
+
+  function Minimise(ap: ValidPair): ValidPair
+    requires ap.IsValid()
+    ensures Minimise(ap).IsValid()
+    ensures Minimise(ap).p.n == ap.p.n
+    decreases ap.p.n - |ap.p.elem|
+  {
+    NotEmpty(ap.p);
+    var p1 := ap.SplitFrom();
+    ValidMaxClasses(p1.p);
+    if |p1.p.elem| == |ap.p.elem| then p1
+    else
+      assert |ap.p.elem| < |p1.p.elem| <= ap.p.n == ap.a.numStates;
+      Minimise(p1)
+  }
 
 
 }

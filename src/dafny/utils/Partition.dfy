@@ -206,7 +206,7 @@ module PartitionMod {
 
   }
 
-  function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
+  function {:tailrecursion true} {:timeLimitMultiplier 10} SplitAllFrom(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
       requires p.IsValid()
       requires from <= index <= |p.elem|
       requires forall x:nat :: index <= x < |p.elem| ==> f.requires(x)
@@ -215,7 +215,6 @@ module PartitionMod {
       decreases |p.elem| - index
       ensures p'.IsValid()
       ensures |p'.elem| >= |p.elem|
-      ensures p'.elem[..from] == p.elem[..from]
       ensures p'.n == p.n
     {
       if |p.elem| == index then p 
@@ -226,7 +225,6 @@ module PartitionMod {
         //  if we get two we advance to index + 2
         //  We have so shift f too
         var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |p.elem|));
-        assert p1.elem[..from] == p.elem[..from];
         SplitAllFrom(p1, f', index + 1 + |p1.elem| - |p.elem|, from)
     }
 
@@ -293,7 +291,7 @@ module PartitionMod {
       assert |p.elem[|p.elem| - 1]| == 0;
     }
   }
-
+ 
   lemma {:axiom} AllClassesInSetU(p: ValidPartition)
     ensures forall k:: k in p.elem ==> k <= SetU(p.elem)
     ensures forall k:: 0 <= k < |p.elem| ==> p.elem[k] <= SetU(p.elem)

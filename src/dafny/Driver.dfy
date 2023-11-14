@@ -125,11 +125,18 @@ module Driver {
             var startAddress := y[0].StartAddress();
             var startState := DEFAULT_VALIDSTATE.(pc := startAddress);
             if y[0].StartAddress() != 0 {
-                print "Segment 0 does not start at address 0.\n";
+              print "Segment 0 does not start at address 0.\n";
             } else {
-              var r := BuildCFGV4(y, maxDepth) ;
-              print "CFG test 1\n";
-              print r.DOTPrint(y);
+              var g := BuildCFGV4(y, maxDepth) ;
+              print "CFG\n";
+              print g.DOTPrint(y);
+
+              print "Computing Minimised CFG\n";
+              var g' := g.Minimise();
+              expect g'.IsValid();
+              assert g'.maxSegNum < |y|;
+              print "Minimised CFG\n";
+              print g'.DOTPrint(y);
             }
 
           }

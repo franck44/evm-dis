@@ -35,12 +35,12 @@ module BuildCFGraph {
     *   3. add tests for all states that are similar not only most
     *       ancient one.
     */
-  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph)
+  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph) 
     requires numSeg < |xs|
     requires forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     requires |seen| == |seenPCs| == |path| + 1
     requires forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
-    requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
+    requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some? 
     requires s.PC() == seenPCs[|seenPCs| - 1]
     requires forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
     requires seen[|seen| - 1].seg.v == numSeg
@@ -48,6 +48,7 @@ module BuildCFGraph {
     ensures forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     ensures forall k:: k in g.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
     ensures forall k:: k in g.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
+    ensures g.IsValid()
 
     ensures |seen| == |seenPCs| == |path| + 1
     ensures forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
@@ -58,11 +59,11 @@ module BuildCFGraph {
     decreases maxDepth
   {
     if maxDepth == 0 then
-      //  Indicate maxdepth reached by a loop
-      BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))])
+      //  Indicate maxdepth reached by a loop 
+      BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))], |xs| - 1)
     else if !xs[numSeg].HasExit(false) && !xs[numSeg].HasExit(true) then
       //  no successors
-      BoolCFGraph([])
+      BoolCFGraph([], 0)
     else
       //  DFS false
       var leftBranch :=
@@ -104,17 +105,17 @@ module BuildCFGraph {
                 match SafeLoopFound(xs, rightSucc.PC(), seen, path)
                 case Some(prev) =>
                   assert prev.seg.v < |xs|;
-                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, prev)])
-                case None =>
+                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, prev)], |xs|)
+                case None => 
                   BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true,  CFGNode(path + [true]))])
             else // Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true])) ])
           else // right successor of segment resulted in Error state
             BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true])) ])
         else //
-          BoolCFGraph([ ]) ;
+          BoolCFGraph([ ], 0) ;
 
-      BoolCFGraph(leftBranch.edges + rightBranch.edges)
+      BoolCFGraph(leftBranch.edges + rightBranch.edges, |xs| - 1)
 
   }
 

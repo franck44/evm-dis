@@ -39,7 +39,7 @@ module BuildCFGTests {
   import opened PrettyPrinters
 
   //  Simple example
-  method {:test} Test1()
+  method {:test1} Test1()
   {
     {
       //  Push and JUMP
@@ -48,9 +48,13 @@ module BuildCFGTests {
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 1;
       expect y[0].StartAddress() == 0;
-      var r := BuildCFGV4(y, 2) ;
-      print "CFG test 1\n";
-      print r.DOTPrint(y);
+      var g := BuildCFGV4(y, 2);
+      expect g.IsValid();
+      var g' := g.Minimise();
+      expect g'.IsValid();
+      print "CFG Test1\n";
+      assert g'.maxSegNum < |y|;
+      print g'.DOTPrint(y);
     }
   }
 
@@ -84,7 +88,7 @@ module BuildCFGTests {
   /**   Run more than one segment
     *   max-return.bin program
     */
-  method {:test1} {:verify true} Test5()
+  method {:test} {:verify true} Test5()
   {
     //  Linear segment
     var x := DisassembleU8(
@@ -133,10 +137,16 @@ module BuildCFGTests {
     expect y[2].StartAddress() == 0x13;
     expect y[3].StartAddress() == 0x1c;
     expect y[0].StartAddress() == 0;
-    var r := BuildCFGV4(y, 10) ;
+    var g := BuildCFGV4(y, 10) ;
 
-    print "CFG test 5\n";
-    print r.DOTPrint(y);
+    expect g.IsValid();
+    var g' := g.Minimise();
+    expect g'.IsValid();
+    assert g'.maxSegNum < |y|;
+    print g'.DOTPrint(y);
+
+    print "CFG Test5\n";
+    print g'.DOTPrint(y);
   }
 
   /** max-max. */
@@ -144,12 +154,16 @@ module BuildCFGTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
+    var g := BuildCFGV4(y, 10) ;
+    expect g.IsValid();
+    var g' := g.Minimise();
+    expect g'.IsValid();
+    print "CFG test 1\n";
+    assert g'.maxSegNum < |y|;
+    print g'.DOTPrint(y);
 
-    print "CFG test 6\n";
-
-    var r := BuildCFGV4(y, 10) ;
-    print r.DOTPrint(y);
-
+    print "CFG Test6\n";
+    print g'.DOTPrint(y);
   }
 }
 

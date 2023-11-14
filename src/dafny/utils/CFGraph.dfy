@@ -15,6 +15,8 @@
 include "./MiscTypes.dfy"
 include "./LinSegments.dfy"
 include "./Automata.dfy"
+include "./Minimiser.dfy"
+include "./Partition.dfy"
 
 /** Provide parsing of commadline options. 
   * 
@@ -27,6 +29,8 @@ module CFGraph {
   import opened Instructions
   import opened Automata
   import opened Int
+  import Minimiser
+  import opened PartitionMod
 
   /**
     *   A node.
@@ -55,20 +59,62 @@ module CFGraph {
   /**
     *   A control flow graph with boolean labels/ 
     */
-  datatype BoolCFGraph = BoolCFGraph(edges: seq<BoolEdge>)
+  datatype BoolCFGraph = BoolCFGraph(edges: seq<BoolEdge>, maxSegNum: nat := 0)
   {
     function AddEdge(e: BoolEdge): BoolCFGraph
     {
       BoolCFGraph([e] + edges)
     }
 
+    predicate IsValid()
+    {
+      && (forall k:: 0 <= k < |edges| ==> edges[k].src.seg.Some? ==> edges[k].src.seg.v <= maxSegNum)
+      && (forall k:: 0 <= k < |edges| ==> edges[k].tgt.seg.Some? ==> edges[k].tgt.seg.v <= maxSegNum)
+    }
+
     /**
       *  Convert the list of edges to a map and count the number of states.
       */
-    // function ToAutomata(): ValidAuto
-    // {
+    function Minimise(): (g': BoolCFGraph)
+      requires this.IsValid()
+      ensures g'.IsValid()
+      ensures g'.maxSegNum == maxSegNum
+    {
+      //   assume forall k:: 0 <= k < |edges| ==> edges[k].src.seg.Some? ==> edges[k].src.seg.v < maxSegNum;
+      //   assume forall k:: 0 <= k < |edges| ==> edges[k].tgt.seg.Some? ==> edges[k].tgt.seg.v < maxSegNum;
+      var r := EdgesToMap(edges, segUpperBound := maxSegNum); 
+      var idToNum := r.2;
+      var numToCFGNode := r.3;
+      var lastStateNum := r.0;
+      var transitions := r.1;
+      assert  forall k:: k in numToCFGNode && numToCFGNode[k].seg.Some? ==> numToCFGNode[k].seg.v <= maxSegNum;
 
-    // }
+      //   assert forall k:: k in transitions ==> k.0.seg.Some? ==> k.0.seg.v < maxSegNum;
+      assert forall i:: 0 <= i <= lastStateNum ==> i in numToCFGNode.Keys;
+      //   assert forall k:: k in numToCFGNode.Keys ==> k <= lastStateNum;
+      assert forall k:: k in numToCFGNode.Keys  ==> numToCFGNode[k] in idToNum.Keys;
+      var a := Auto(lastStateNum + 1, transitions);
+      if lastStateNum > 0 then
+        var s := set q | 0 <= q <= lastStateNum;
+        assert {0} <= s;
+        var p: ValidPartition := Partition(lastStateNum + 1, [s]);
+        var vp: Minimiser.ValidPair := Minimiser.Pair(a, p);
+        var minim := Minimiser.Minimise(vp);
+        assert minim.p.n == vp.p.n == a.numStates;
+        //  now recreate a CFGraph
+        var listOfEdges := minim.GenerateReduced();
+        assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 < minim.p.n && listOfEdges[k].2 < minim.p.n;
+        assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 in numToCFGNode && listOfEdges[k].2 in numToCFGNode;
+
+        var x := NatBoolEdgesToCFGEdges(listOfEdges, numToCFGNode, maxSegNum);
+        assert forall k:: 0 <= k < |x| ==> x[k].src.seg.Some? ==> x[k].src.seg.v <= maxSegNum;
+        assert forall k:: 0 <= k < |x| ==> x[k].tgt.seg.Some? ==> x[k].tgt.seg.v <= maxSegNum;
+        var miniCFG := BoolCFGraph(x, maxSegNum);
+        assert miniCFG.maxSegNum == maxSegNum;
+        miniCFG
+      else
+        BoolCFGraph([], maxSegNum)
+    }
 
     /** Print to edges DOT format. */
     function DOTPrintEdges(xe: seq<BoolEdge> := edges): string
@@ -112,14 +158,25 @@ module CFGraph {
 
   //    Helpers
 
-  function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>))
+  function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], reverseSeenNodes: map<nat, CFGNode> := map[0 := CFGNode([], Some(0))] ,builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0, ghost segUpperBound: nat ): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>, map<nat, CFGNode>))
     requires index <= |edges|
+    // requires forall i, i':: 0 <= i < i' < |edges| ==> edges[i] != edges[i']
+    // requires builtMap.Keys == seq q |
+    requires forall k:: 0 <= k < |edges| && edges[k].src.seg.Some? ==> edges[k].src.seg.v <= segUpperBound
+    requires forall k:: 0 <= k < |edges| && edges[k].tgt.seg.Some? ==> edges[k].tgt.seg.v <= segUpperBound
     requires forall k:: k in builtMap ==> builtMap[k] <= lastNum
     requires forall k: CFGNode {:trigger seenNodes[k]}:: k in seenNodes  ==> seenNodes[k] <= lastNum
     requires forall k:: k in builtMap.Keys ==> k.0 <= lastNum
     requires forall e:: e in edges[..index] ==> e.src in seenNodes
     requires forall e:: e in edges[..index] ==> e.tgt in seenNodes
     requires forall e:: e in edges[..index] ==> (seenNodes[e.src], e.lab) in builtMap.Keys
+    requires forall k:: k in reverseSeenNodes.Keys ==> k <= lastNum
+    requires forall k:: k in reverseSeenNodes.Keys ==> reverseSeenNodes[k] in seenNodes.Keys
+    requires forall n:: 0 <= n <= lastNum ==> n in reverseSeenNodes.Keys
+    requires forall k:: k in reverseSeenNodes.Keys ==> reverseSeenNodes[k].seg.Some? ==> reverseSeenNodes[k].seg.v <= segUpperBound
+
+    // requires forall k:: k in seenNodes <==> k in reverseSeenNodes.Values
+    // requires forall k:: k in reverseSeenNodes ==> k in reverseSeenNodes.Values
     // requires forall k:: k in builtMap ==>
     //                       exists src, tgt, lab: bool::
     //                         && src in seenNodes
@@ -129,11 +186,16 @@ module CFGraph {
     //                         && lab == k.1
     //                         && seenNodes[tgt] == builtMap[k]
 
-    ensures forall k:: k in a.1.Values ==> k <= a.0
+    ensures forall k:: k in a.1 ==> a.1[k] <= a.0
     ensures forall k:: k in a.1.Keys ==> k.0 <= a.0
     ensures forall e:: e in edges ==> e.src in a.2
     ensures forall e:: e in edges ==> e.tgt in a.2
     ensures forall e:: e in edges ==> (a.2[e.src], e.lab) in a.1.Keys
+
+    ensures forall k:: k in a.3.Keys ==> k <= a.0
+    ensures forall k:: k in a.3.Keys ==> a.3[k] in a.2.Keys
+    ensures forall n:: 0 <= n <= a.0 ==> n in a.3.Keys
+    ensures forall k:: k in a.3.Keys ==> a.3[k].seg.Some? ==> a.3[k].seg.v <= segUpperBound
     // ensures forall k:: k in a.1 ==>
     //                      exists src, tgt, lab: bool::
     //                        && src in a.2
@@ -145,27 +207,38 @@ module CFGraph {
 
     decreases |edges| - index
   {
-    if |edges| == index then (lastNum, builtMap, seenNodes)
+    if |edges| == index then (lastNum, builtMap, seenNodes, reverseSeenNodes)
     else
-      var (src, last, m1) :=
+      var (src, last, m1, rm1) :=
         if edges[index].src in seenNodes.Keys then
-          (seenNodes[edges[index].src], lastNum, seenNodes)
-        else (lastNum + 1, lastNum + 1, seenNodes[edges[index].src := lastNum + 1]);
-      var (tgt, last', m2) :=
+          //   assert edges[index].src in reverseSeenNodes.Values;
+          (seenNodes[edges[index].src], lastNum, seenNodes, reverseSeenNodes)
+        else (lastNum + 1, lastNum + 1, seenNodes[edges[index].src := lastNum + 1], reverseSeenNodes[lastNum + 1 := edges[index].src]);
+      //   assert   edges[index].src in reverseSeenNodes.Values || rm1[lastNum + 1] == edges[index].src ;
+      //   assert rm1.Values  >= {edges[index].src};
+      //   assert edges[index].src in rm1.Values;
+      //   assume forall k:: k in m1 <==> k in rm1.Values;
+
+      var (tgt, last', m2, rm2) :=
         if edges[index].tgt in m1.Keys then
-          (m1[edges[index].tgt], last, m1)
-        else (last + 1, last + 1, m1[edges[index].tgt := last + 1]);
+          (m1[edges[index].tgt], last, m1, rm1)
+        else (last + 1, last + 1, m1[edges[index].tgt := last + 1], rm1[last + 1 := edges[index].tgt]);
+      //   assert  edges[index].tgt in rm1.Values || (last + 1 in rm2.Keys && rm2[last + 1] == edges[index].tgt) ;
+
+
       var b := builtMap[(src, edges[index].lab) := tgt];
 
-    //   assume forall k:: k in b ==>
-    //                       exists src, tgt, lab: bool::
-    //                         && src in m2
-    //                         && tgt in m2
-    //                         && BoolEdge(src, lab, tgt) in edges[..index + 1 ]
-    //                         && m2[src] == k.0
-    //                         && lab == k.1
-    //                         && m2[tgt] == b[k];
-      EdgesToMap(edges, m2, b, last', index + 1)
+      //   assume forall k:: k in b ==>
+      //                       exists src, tgt, lab: bool::
+      //                         && src in m2
+      //                         && tgt in m2
+      //                         && BoolEdge(src, lab, tgt) in edges[..index + 1 ]
+      //                         && m2[src] == k.0
+      //                         && lab == k.1
+      //                         && m2[tgt] == b[k];
+      //   assert edges[index].src in rm2.Values;
+      //   assert forall k:: k in m1 ==> k in rm2.Values ;
+      EdgesToMap(edges, m2, rm2, b, last', index + 1, segUpperBound)
       //   EdgesToMap(edges, m2, builtMap + map[(src, edges[index].lab) := tgt], last', index + 1)
   }
 
@@ -192,5 +265,24 @@ module CFGraph {
       var a := xi[0].ToString() + " <BR ALIGN=\"LEFT\"/>\n";
       a + DOTIns(xi[1..])
   }
+
+  function NatBoolEdgesToCFGEdges(xs: seq<(nat, bool, nat)>, m: map<nat, CFGNode>, maxSegNum: nat): (r :seq<BoolEdge>)
+    requires forall k:: 0 <= k < |xs| ==> xs[k].0 in m && xs[k].2 in m
+    requires forall k:: k in m && m[k].seg.Some? ==> m[k].seg.v <= maxSegNum
+    ensures forall k:: 0 <= k < |r| && r[k].src.seg.Some? ==> r[k].src.seg.v <= maxSegNum
+    ensures forall k:: 0 <= k < |r| && r[k].tgt.seg.Some? ==> r[k].tgt.seg.v <= maxSegNum
+  {
+    if |xs| == 0 then []
+    else
+      [BoolEdge(m[xs[0].0], xs[0].1, m[xs[0].2])] + NatBoolEdgesToCFGEdges(xs[1..], m, maxSegNum)
+  }
+
+  //   function
+  //   function ReverseMap<S, T>(m: map<S, T>): map<T, S>
+  //     //   requires forall k, k':: k in m ==> (m[k] == m[k'] ==> k == k')
+  //   {
+  //     if |m| == 0 then map[]
+  //     else map[m[] := ]
+  //   }
 
 }

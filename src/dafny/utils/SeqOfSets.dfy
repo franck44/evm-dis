@@ -62,6 +62,18 @@ module SeqOfSets {
       [SplitSet(xs[0], f)] + SplitSeqOfSet(xs[1..], f)
   }
 
+  /**
+    */
+//   function {:tailrecursion true} SplitSeqOfSet(xs: seq<set<nat>>): (r: seq<nat>)
+//     ensures |xs| == |r|
+//     ensures forall k:: 0 <= k < |r| ==> r[k].0 * r[k].1 == {}
+//     ensures forall k:: 0 <= k < |r| ==> r[k].0 + r[k].1 == xs[k]
+//   {
+//     if |xs| == 0 then []
+//     else
+//       [SplitSet(xs[0], f)] + SplitSeqOfSet(xs[1..], f)
+//   }
+
   //  Helpers
 
   /**
@@ -262,9 +274,9 @@ module SeqOfSets {
   lemma SizeOfUnion<T>(a: set<T>, b: set<T>)
     requires a * b == {}
     ensures |a + b| == |a| + |b|
-    {
+  {
 
-    }
+  }
 
   /**
     *   Split a sequence of nat according to a function value f.
@@ -297,7 +309,7 @@ module SeqOfSets {
     *   Split a sequence of nat according to a function value f.
     *   Simple non tail-rec version.
     */
-   ghost function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
+  ghost function {:tailrecursion false} SplitSeq(xs: seq<nat>, f: nat -> bool): (r: (set<nat>, set<nat>))
     ensures forall k:: k in r.0 ==> f(k)
     ensures forall k:: k in r.1 ==> !f(k)
     ensures r.0 * r.1 == {}
@@ -305,7 +317,7 @@ module SeqOfSets {
     ensures forall k:: k in xs && !f(k) <==> k in r.1
     ensures forall k:: k in xs <==> k in r.0 + r.1
   {
-    if |xs| == 0 then ({}, {}) 
+    if |xs| == 0 then ({}, {})
     else
       var r := SplitSeq(xs[1..], f);
       if f(xs[0]) then (r.0 + {xs[0]}, r.1)
