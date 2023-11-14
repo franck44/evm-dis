@@ -14,7 +14,7 @@
 
 include "./MiscTypes.dfy"
 include "./LinSegments.dfy"
-  // include "./int.dfy"
+include "./Automata.dfy"
 
 /** Provide parsing of commadline options. 
   * 
@@ -25,6 +25,7 @@ module CFGraph {
   import opened MiscTypes
   import opened LinSegments
   import opened Instructions
+  import opened Automata
   import opened Int
 
   /**
@@ -60,6 +61,14 @@ module CFGraph {
     {
       BoolCFGraph([e] + edges)
     }
+
+    /**
+      *  Convert the list of edges to a map and count the number of states.
+      */
+    // function ToAutomata(): ValidAuto
+    // {
+
+    // }
 
     /** Print to edges DOT format. */
     function DOTPrintEdges(xe: seq<BoolEdge> := edges): string
@@ -103,6 +112,63 @@ module CFGraph {
 
   //    Helpers
 
+  function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>))
+    requires index <= |edges|
+    requires forall k:: k in builtMap ==> builtMap[k] <= lastNum
+    requires forall k: CFGNode {:trigger seenNodes[k]}:: k in seenNodes  ==> seenNodes[k] <= lastNum
+    requires forall k:: k in builtMap.Keys ==> k.0 <= lastNum
+    requires forall e:: e in edges[..index] ==> e.src in seenNodes
+    requires forall e:: e in edges[..index] ==> e.tgt in seenNodes
+    requires forall e:: e in edges[..index] ==> (seenNodes[e.src], e.lab) in builtMap.Keys
+    // requires forall k:: k in builtMap ==>
+    //                       exists src, tgt, lab: bool::
+    //                         && src in seenNodes
+    //                         && tgt in seenNodes
+    //                         && BoolEdge(src, lab, tgt) in edges[..index]
+    //                         && seenNodes[src] == k.0
+    //                         && lab == k.1
+    //                         && seenNodes[tgt] == builtMap[k]
+
+    ensures forall k:: k in a.1.Values ==> k <= a.0
+    ensures forall k:: k in a.1.Keys ==> k.0 <= a.0
+    ensures forall e:: e in edges ==> e.src in a.2
+    ensures forall e:: e in edges ==> e.tgt in a.2
+    ensures forall e:: e in edges ==> (a.2[e.src], e.lab) in a.1.Keys
+    // ensures forall k:: k in a.1 ==>
+    //                      exists src, tgt, lab: bool::
+    //                        && src in a.2
+    //                        && tgt in a.2
+    //                        && BoolEdge(src, lab, tgt) in edges
+    //                        && a.2[src] == k.0
+    //                        && lab == k.1
+    //                        && a.2[tgt] == a.1[k]
+
+    decreases |edges| - index
+  {
+    if |edges| == index then (lastNum, builtMap, seenNodes)
+    else
+      var (src, last, m1) :=
+        if edges[index].src in seenNodes.Keys then
+          (seenNodes[edges[index].src], lastNum, seenNodes)
+        else (lastNum + 1, lastNum + 1, seenNodes[edges[index].src := lastNum + 1]);
+      var (tgt, last', m2) :=
+        if edges[index].tgt in m1.Keys then
+          (m1[edges[index].tgt], last, m1)
+        else (last + 1, last + 1, m1[edges[index].tgt := last + 1]);
+      var b := builtMap[(src, edges[index].lab) := tgt];
+
+    //   assume forall k:: k in b ==>
+    //                       exists src, tgt, lab: bool::
+    //                         && src in m2
+    //                         && tgt in m2
+    //                         && BoolEdge(src, lab, tgt) in edges[..index + 1 ]
+    //                         && m2[src] == k.0
+    //                         && lab == k.1
+    //                         && m2[tgt] == b[k];
+      EdgesToMap(edges, m2, b, last', index + 1)
+      //   EdgesToMap(edges, m2, builtMap + map[(src, edges[index].lab) := tgt], last', index + 1)
+  }
+
   function BoolsToString(x: seq<bool>): string
   {
     if |x| == 0 then "E"
@@ -110,13 +176,13 @@ module CFGraph {
       [if x[0] then '1' else '0'] + BoolsToString(x[1..])
   }
 
-  function DOTSeg(xs: seq<ValidLinSeg>, numSeg: nat): string 
+  function DOTSeg(xs: seq<ValidLinSeg>, numSeg: nat): string
     requires numSeg < |xs|
   {
     var s := xs[numSeg];
     var prefix := "Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "<BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
-    prefix + body 
+    prefix + body
   }
 
   function {:tailrecursion true} DOTIns(xi: seq<ValidInstruction>): string
