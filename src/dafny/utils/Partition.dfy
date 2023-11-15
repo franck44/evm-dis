@@ -23,7 +23,7 @@ module PartitionMod {
   import opened SeqOfSets
   import opened MiscTypes
 
-  /** A Avlid partition. */
+  /** A Valid partition. */
   type ValidPartition = x: Partition | x.IsValid() witness Partition(1, [{0}])
 
   /**
@@ -42,14 +42,15 @@ module PartitionMod {
       *     1. each class (set) in the partition is non empty
       *     2. the intersection of two distinct classes is empty
       *     3. the union of the classes is the whole set {0, .., n - 1}
-      * The maximum number of classes is n (each element has its own class).
+      *     4. The maximum number of classes is n (each element has its own class).
       */
     ghost predicate IsValid()
     {
       && n > 0
-      && (forall k:: 0 <= k < |elem| ==> {} != elem[k])
-      && (forall k, k':: 0 <= k < k' < |elem| ==> elem[k] * elem[k'] == {})
-      && SetU(elem) == set q {:nowarn} | 0 <= q < n
+      && AllNonEmpty(elem)
+      && DisjointAnyTwo(elem)
+      && SetN(elem, n)
+      && 0 < |elem| <= n
     }
 
     /**
@@ -60,29 +61,29 @@ module PartitionMod {
       *                 C_2_True, C_2_False etc. Remove empty classes and returns 
       *                 a Valid partition. 
       */
-    function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom2(f: nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
-      requires this.IsValid()
-      requires from <= index <= |elem|
-      requires forall x:nat :: index <= x < |elem| ==> f.requires(x)
-      requires forall x :: index <= x < |elem| ==> (forall y:nat :: y < n ==> f(x).requires(y))
-      requires forall x:nat :: index <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y))
-      decreases |elem| - index
-      ensures p'.IsValid()
-      ensures |p'.elem| >= |elem|
-      ensures p'.elem[..from] == elem[..from]
-      ensures p'.n == n
-    {
-      if |elem| == index then this 
-      else
-        var p1 := SplitAt(f(index), index);
-        //  We may add one or zero sets depending on whether splitting elem[index]
-        //  results in one empty set. If we get one set we advance to index + 1 and
-        //  if we get two we advance to index + 2
-        //  We have so shift f too
-        var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |elem|));
-        assert p1.elem[..from] == elem[..from];
-        p1.SplitAllFrom2(f', index + 1 + |p1.elem| - |elem|, from)
-    }
+    // function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom2(f: nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
+    //   requires this.IsValid()
+    //   requires from <= index <= |elem|
+    //   requires forall x:nat :: index <= x < |elem| ==> f.requires(x)
+    //   requires forall x :: index <= x < |elem| ==> (forall y:nat :: y < n ==> f(x).requires(y))
+    //   requires forall x:nat :: index <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y))
+    //   decreases |elem| - index
+    //   ensures p'.IsValid()
+    //   ensures |p'.elem| >= |elem|
+    //   ensures p'.elem[..from] == elem[..from]
+    //   ensures p'.n == n
+    // {
+    //   if |elem| == index then this
+    //   else
+    //     var p1 := SplitAt(f(index), index);
+    //     //  We may add one or zero sets depending on whether splitting elem[index]
+    //     //  results in one empty set. If we get one set we advance to index + 1 and
+    //     //  if we get two we advance to index + 2
+    //     //  We have so shift f too
+    //     var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |elem|));
+    //     assert p1.elem[..from] == elem[..from];
+    //     p1.SplitAllFrom2(f', index + 1 + |p1.elem| - |elem|, from)
+    // }
 
     /**
       * Split a partition according to a predicate.
@@ -93,47 +94,63 @@ module PartitionMod {
       * @note           C is not empty but the split can create an empty e.g. if 
       *                 forall c in C f(c). The result discards any empty sets 
       *                 and returns a ValidPartition. 
+      * @note           The last 2 classes agree on the value of f for each of their elements.
       */
-    function {:tailrecursion true} {:timeLimitMultiplier 4} SplitAt(f: nat --> bool, index: nat): (p': ValidPartition)
+    function {:tailrecursion true} SplitAt(f: nat --> bool, index: nat): (p': ValidPartition)
       requires index < |elem|
       requires this.IsValid()
-      requires forall x:: x in elem[index] ==> f.requires(x)
+      requires forall x:: 0 <= x < n ==> f.requires(x)
       ensures p'.IsValid()
-      ensures |elem| + 1 >= |p'.elem| >= |elem|
-      ensures p'.elem[..index] == elem[..index]
+      ensures |elem| <= |p'.elem| <= |elem| + 1
       ensures p'.n == n
+      //  needed to establish the last 2
+      ensures forall x:: x in p'.elem[|elem| - 1] ==> f.requires(x)
+      ensures forall x:: x in p'.elem[|p'.elem| - 1] ==> f.requires(x)
+      ensures forall e, e':: e in p'.elem[|elem| - 1] && e' in p'.elem[|elem| - 1] ==> f(e) == f(e')
+      ensures forall e, e':: e in p'.elem[|p'.elem| - 1] && e' in p'.elem[|p'.elem| - 1] ==> f(e) == f(e')
+    //   ensures p'.Refines2(this)
     {
-      //  Split elem[index] according to value of f for its elements
-      assert forall x:: x in elem[index] ==> f.requires(x);
+      // Split elem[index] according to value of f for its elements
+      // each class is non empty including elem[index]
+      assert AllNonEmpty(elem);
+      // elem[index] <= 0 .. n and f is defined on elem[index]
+      AllBoundedBy(elem, n);
       var r := SplitSet(elem[index], f);
-      assert elem[index] != {};
-      assert r.0 != {} || r.1 != {};
-      var newP := elem[..index] + [r.0, r.1] + elem[index + 1..];
-      assert (forall k, k':: 0 <= k < k' < |elem| ==> elem[k] * elem[k'] == {});
-      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * elem[index] == {});
-      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * r.0 == {});
-      assert (forall k :: 0 <= k < |elem| ==> k != index ==> elem[k] * r.1 == {});
-      assert (forall k, k':: 0 <= k < k' < |newP| ==> newP[k] * newP[k'] == {});
-      assert r.0 + r.1 == elem[index];
-      calc == {
-        SetU(newP);
-        { SplitUnion2(newP, index); }
-        SetU(newP[..index] )+ newP[index] + newP[index + 1] +  SetU(newP[index + 2..]);
-        { assert newP[index] == r.0 && newP[index + 1] == r.1; }
-        SetU(newP[..index]) + r.0 + r.1 + SetU(newP[index + 2..]);
-        { assert newP[..index] == elem[..index] ;}
-        SetU(elem[..index]) + r.0 + r.1 + SetU(newP[index + 2..]);
-        { assert newP[index + 2..] == elem[index + 1..] ;}
-        SetU(elem[..index]) + r.0 + r.1 + SetU(elem[index + 1..]);
-        { assert r.0 + r.1 == elem[index]; }
-        SetU(elem[..index]) + elem[index] + SetU(elem[index + 1..]);
-        { SplitUnion1(elem, index); }
-        SetU(elem);
-      }
-      //    if one of r.0 or r.1 is empty remove it
-      if r.0 == {} then RemoveEmpty(Partition(n, newP), index)
-      else if r.1 == {} then RemoveEmpty(Partition(n, newP), index + 1)
-      else Partition(n, newP)
+      assert elem[index] == r.0 + r.1 != {} && r.0 * r.1 == {};
+
+      //  Append new classes at the end and remove elem[index]
+      if r.0 != {} && r.1 != {} then
+        var j := elem[..index] + elem[index + 1..] + [r.0, r.1];
+        calc == {
+          SetU([r.0, r.1]);
+          SetU([r.0]) + SetU([r.1]);
+          r.0 + r.1;
+          elem[index];
+        }
+        PermutePreservesUnionG(elem, index, [r.0, r.1]);
+        MaxNumberOfClasses(j, n);
+        var pp := Partition(n, j);
+        // assert pp.elem[..index] == elem[..index];
+        // assert pp.elem[index..|j| - 2] == elem[index + 1..];
+        // assert pp.elem[|j| - 2] == r.0;
+        // assert pp.elem[|j| - 1] == r.1;
+        // assert (forall k |  k in pp.elem
+        //     ensures forall k:: k in pp.elem ==> exists c:: c in p.elem && k <= c
+        //     {
+
+        // });
+        // assert pp.Refines2(this);
+        pp
+      else if r.0 != {} then
+        var j := elem[..index] + elem[index + 1..] + [r.0];
+        assert |j| == |elem| <= n;
+        PermutePreservesUnionG(elem, index, [r.0]);
+        Partition(n, j)
+      else
+        var j := elem[..index] + elem[index + 1..] + [r.1];
+        assert |j| == |elem| <= n;
+        PermutePreservesUnionG(elem, index, [r.1]);
+        Partition(n, j)
     }
 
     /**
@@ -149,14 +166,14 @@ module PartitionMod {
       requires IsValid()
       requires 0 <= x < n
       requires index < |elem|
+      //    index has not been found yet
       requires forall k:: 0 <= k < index ==> x !in elem[k]
-      ensures c < |elem| && x in elem[c]
-      ensures c < n
+      ensures c < |elem| <= n && x in elem[c]
       decreases |elem| - index
     {
       // This lemma ensures we will find an index with x in elem[index]!
-      ExistsIn(this, x);
-      ValidMaxClasses(this);
+      LessThanNIsInAClass(elem, n, x);
+      assert exists i:: 0 <= i < |elem| && x in elem[i];
       if x in elem[index] then index
       else GetClass(x, index + 1)
     }
@@ -168,13 +185,19 @@ module PartitionMod {
       requires this.IsValid()
       requires 0 <= x < n
       requires 0 <= y < n
-      ensures Equiv(x, y) ==> exists k:: 0 <= k < |elem| && x in elem[k] && y in elem[k]
+      //   ensures Equiv(x, y) ==> exists k:: 0 <= k < |elem| && x in elem[k] && y in elem[k]
       ensures x == y ==> Equiv(x, y)
     {
-      //    Prove that |p.elem|
-      NotEmpty(this);
       assert GetClass(x) == GetClass(y) ==> x in elem[GetClass(x)] && y in elem[GetClass(y)];
       GetClass(x) == GetClass(y)
+    }
+
+    predicate Refines2(p: Partition)
+      requires IsValid()
+      requires p.IsValid()
+      requires p.n == n
+    {
+      forall k:: k in elem ==> exists c:: c in p.elem && k <= c
     }
 
     /**
@@ -186,141 +209,63 @@ module PartitionMod {
       requires p.n == n
       // ensures Refines(p) ==> |elem| >= |p.elem|
     {
-      forall x, x':: 0 <= x < x' < n ==> (Equiv(x, x') ==> p.Equiv(x, x'))
+      && |elem| >= |p.elem|
+      //   && (forall x, x':: 0 <= x < x' < n ==> (Equiv(x, x') ==> p.Equiv(x, x')))
     }
-
   }
 
-  function RemoveEmpty(p: Partition,  k: nat): (p': ValidPartition)
-    requires 0 <= k < |p.elem|
-    requires p.elem[k] == {}
-    requires p.n > 0
-    requires forall k, k':: 0 <= k < k' < |p.elem| ==> p.elem[k] * p.elem[k'] == {}
-    requires SetU(p.elem) == set q {:nowarn} | 0 <= q < p.n
-    requires forall i:: 0 <= i < |p.elem| && i != k ==> p.elem[i] != {}
+  // in the SplitAll, f must be applied to all the values so must be a total function
+  function {:tailrecursion true} SplitAllFrom(p: ValidPartition, f : nat --> nat -> bool, index: nat := 0, max : nat := |p.elem|): (p': ValidPartition)
+    requires p.IsValid()
+    requires index <= max
+    requires forall x:: 0 <= x < max - index ==> f.requires(x)
+    requires forall x:: 0 <= x < max - index ==>  f.requires(x) && (forall y:: 0 <= y < p.n ==> f(x).requires(y))
     ensures p'.IsValid()
+    ensures |p'.elem| >= |p.elem|
+    ensures p'.n == p.n
+    decreases max - index
   {
-    var p1 := Partition(p.n, p.elem[..k] + p.elem[k + 1..]);
-    RemoveEmptySet(p, k);
-    p1
-
+    if max == index then p
+    else
+      assert |p.elem| > 0;
+      AllBoundedBy(p.elem, p.n);
+      var f' : nat --> nat -> bool := (x: nat) requires 0 <= x < max - (index + 1) => f(x + 1);
+      var p1 := p.SplitAt(f(0), 0);
+      SplitAllFrom(p1, f', index + 1, max)
   }
 
-  function {:tailrecursion true} {:timeLimitMultiplier 10} SplitAllFrom(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
-      requires p.IsValid()
-      requires from <= index <= |p.elem|
-      requires forall x:nat :: index <= x < |p.elem| ==> f.requires(x)
-      requires forall x :: index <= x < |p.elem| ==> (forall y:nat :: y < p.n ==> f(x).requires(y))
-      requires forall x:nat :: index <= x < |p.elem| ==> (forall y:nat:: y in p.elem[x] ==> f(x).requires(y))
-      decreases |p.elem| - index
-      ensures p'.IsValid()
-      ensures |p'.elem| >= |p.elem|
-      ensures p'.n == p.n
-    {
-      if |p.elem| == index then p 
-      else
-        var p1 := p.SplitAt(f(index), index);
-        //  We may add one or zero sets depending on whether splitting elem[index]
-        //  results in one empty set. If we get one set we advance to index + 1 and
-        //  if we get two we advance to index + 2
-        //  We have so shift f too
-        var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |p.elem|));
-        SplitAllFrom(p1, f', index + 1 + |p1.elem| - |p.elem|, from)
-    }
+  //  Helper lemma
 
   /**
-    *   A valid partition cannot be empty.
+    *   Replacing xs[i] by a seq that has the same elements 
+    *   preservers the union.
     */
-  lemma NotEmpty(p: Partition)
-    requires p.IsValid()
-    ensures |SetU(p.elem)| > 0
-    ensures |p.elem| > 0
+  lemma PermutePreservesUnionG(xs: seq<set<nat>>, i: nat, xs2: seq<set<nat>>)
+    requires 0 <= i < |xs|
+    requires SetU(xs2) == xs[i]
+    requires 0 <= i < |xs|
+    ensures SetU(xs[..i] + xs[i + 1..] + xs2) == SetU(xs)
   {
-    assert { 0 } <= SetU(p.elem);
-  }
-
-  /**   
-    *   A partition p of {0, ..., n - 1} ensures that 
-    *   0 <= k < n ==> k in a class of p.
-    */
-  lemma ExistsIn(p: Partition, k: nat)
-    requires p.IsValid()
-    requires 0 <= k < p.n
-    ensures exists s:: 0 <= s < |p.elem| && k in p.elem[s]
-  {
-    if !exists s:: 0 <= s < |p.elem| && k in p.elem[s] {
-      assert forall s:: 0 <= s < |p.elem| ==> k !in p.elem[s];
-      assert false;
-    }
-  }
-
-  /**
-    *   If a seq has a unique empty set it can be removed. to make a Valid partition.
-    */
-  lemma RemoveEmptySet(p: Partition, k: nat)
-    requires 0 <= k < |p.elem|
-    requires p.elem[k] == {}
-    requires p.n > 0
-    requires forall k, k':: 0 <= k < k' < |p.elem| ==> p.elem[k] * p.elem[k'] == {}
-    requires SetU(p.elem) == set q {:nowarn} | 0 <= q < p.n
-    requires forall i:: 0 <= i < |p.elem| && i != k ==> p.elem[i] != {}
-
-    ensures SetU(p.elem[..k] + p.elem[k + 1..]) == SetU(p.elem)
-    ensures Partition(p.n, p.elem[..k] + p.elem[k + 1..]).IsValid()
-  {
-    var p1 := Partition(p.n, p.elem[..k] + p.elem[k + 1..]);
-    NeutralEmptySet(p.elem, k);
-  }
-
-  /**
-    *   The maximum number of classes in a partition of [0..n-1] is n.
-    */
-  lemma ValidMaxClasses(p: ValidPartition)
-    ensures |p.elem| <= p.n
-  {
-    if |p.elem| > p.n {
-      //  Just show that each set is included in {0, ..., n -1}
-      forall k | 0 <= k < |p.elem|
-        ensures p.elem[k] <= set x {:nowarn} | 0 <= x < p.n {
-        SplitUnion1(p.elem, k);
-        assert SetU(p.elem[..k]) + p.elem[k] + SetU(p.elem[k + 1..]) == SetU(p.elem);
-        assert p.elem[k] <= SetU(p.elem);
+    calc == {
+       SetU(xs[..i] + xs[i + 1..] + xs2);
+      { DistribUnion3(xs[..i], xs[i + 1..], xs2) ; }
+       SetU(xs[..i]) + SetU(xs[i + 1..]) + SetU(xs2) ;
+    == SetU(xs[..i]) + SetU(xs[i + 1..]) + xs[i];
+      calc == {
+        xs[i];
+        SetU([xs[i]]);
       }
-      //  Apply the shrinking lemma
-      ShrinkingLemma(p.elem, p.n);
-      assert |p.elem[|p.elem| - 1]| == 0;
+       SetU(xs[..i]) + SetU(xs[i + 1..]) + SetU([xs[i]]);
+       SetU(xs[..i])  + SetU([xs[i]]) + SetU(xs[i + 1..]);
+      { DistribUnion3(xs[..i], [xs[i]], xs[i + 1..]) ; }
+       SetU(xs[..i] + [xs[i]] + xs[i + 1..]);
+      calc == {
+        xs[..i] + [xs[i]] + xs[i + 1..];
+        xs;
+      }
+       SetU(xs);
     }
   }
- 
-  lemma {:axiom} AllClassesInSetU(p: ValidPartition)
-    ensures forall k:: k in p.elem ==> k <= SetU(p.elem)
-    ensures forall k:: 0 <= k < |p.elem| ==> p.elem[k] <= SetU(p.elem)
-
-
-  //   lemma PartialFunShift(f: nat --> nat --> bool, f': nat --> nat --> bool, index: nat, p: ValidPartition)
-  //     requires forall x:nat :: index <= x < |p.elem| ==> f.requires(x)
-  //     requires forall x:nat :: index <= x < |p.elem| ==> (forall y:nat:: y in p.elem[x] ==> f(x).requires(y))
-  //     requires f' == ((x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |p.elem|)))
-  //     ensures
-  //       {
-
-  //       }
-  //    Some tests
-  //   method {:test} Test1() {
-  //     var p1 := Partition(4, [set q {:nowarn} | 0 <= q < 4]);
-  //     PrintPartition(p1);
-  //     var p2 := p1.SplitAllFrom((x => x % 2 == 0));
-  //     PrintPartition(p2);
-  //   }
-
-  //   method {:test} Test2() {
-  //     var p1 := Partition(20, [set q {:nowarn} | 0 <= q < 20]);
-  //     PrintPartition(p1);
-  //     var p2 := p1.SplitAllFrom((x => x % 2 == 0));
-  //     var p3 := p2.SplitAllFrom((x => x / 3 == 0));
-  //     var p4 := p3.SplitAllFrom((x => x / 4 == 0));
-  //     PrintPartition(p4);
-  //   }
 
   method {:tailrecursion true} PrintPartition(p: Partition)
   {
@@ -329,144 +274,5 @@ module PartitionMod {
       print setToSeq, "\n";
     }
   }
-
-  //    automaton
-  //    0 - a -> 1 - b -> 2
-  //    0 - b -> 3 - b -> 4
-  //    predicate is:
-  //    same enabled + s - x -> s'
-  //    s ~ s' and     s - a -> s1 and s' - a -> s1' and s1 ~ s1'
-  //    same class OK  GetClass(succ_a(s)) == GetClass(succ_a(s'));
-  /*
-  C0 = {0, 1, 3} C1 = {2, 4}
-  get tgt class of 0 in {0, 1, 3}
-  then sort according to who is equiv to 0 by succ_a(), succ_b 
-  succ_a_b(0) = (GetClass(Some(x)), None)
-
-  refine C0 = {0, 1, 3} with succ_a_b(s) == (GetClass(Some(x)), None)
-  e.g. 
-  succ_a_b(0) = (Some(1), Some(3)) -> class (Some(C0), Some(C0))
-
-  succ_a_b(1) = (None, Some(C1)) != 
-  succ_a_b(3) = (None, Some(C1)) != 
-
-  C0 refined in { 0 }, {1, 3}
-  Apply to {1, 3}
-  succ_a_b(1) = (None, C1)
-  succ_a_b(3) = (None, C1) done
-  {0}, {1, 3}, {2, 4}
-  */
-  //   method {:test} Test3()
-  //   {
-  //     var p1 := Partition(5, [set q {:nowarn} | 0 <= q < 5]);
-  //     // var p1 := Partition(5, [{0, 1, 3}, {2, 4}]);
-  //     var m: map<(nat, nat), nat> :=
-  //       map[
-  //         (0, 0) := 1,
-  //         (0, 1) := 3,
-  //         (1, 1) := 2,
-  //         (3, 1) := 4
-  //       ];
-  //     assert p1.IsValid();
-  //     assert forall k:: k in m.Values  ==> 0 <= k < p1.n;
-  //     PrintPartition(p1);
-  //     var f: ValidPair -> (nat -> (nat -> bool)) :=
-  //       (p: ValidPair) =>
-  //         ((y: nat) => ((x: nat) => succ(x, p.1, p.0) == succ(y, p.1, p.0)));
-
-  //     var pair1 := (p1, m);
-
-  //     var p2 := p1.SplitAt(f(pair1)(0), 0);
-  //     PrintPartition(p2);
-  //     // PrintPartition(pair1.0);
-  //     assert |p2.elem| > 1;
-  //     var pair2 := (p2, m);
-  //     var p3 := p2.SplitAt(f(pair2)(1), 1);
-  //     PrintPartition(p3);
-
-  //   }
-
-
-  //   type ValidPair = x : (Partition, map<(nat, nat), nat>) | x.0.IsValid() && (forall k:: k in x.1.Values ==> k < x.0.n)
-  //     witness (Partition(1, [{0}]), map[])
-
-  //   function succ(x: nat, m: map<(nat, nat), nat>, p: ValidPartition): (Option<nat>, Option<nat>)
-  //     requires forall k:: k in m.Values ==> 0 <= k < p.n
-  //     requires p.IsValid()
-  //   {
-  //     NotEmpty(p);
-  //     var s1 := if (x, 0) in m then
-  //                 assert m[(x, 0)] in m.Values;
-  //                 Some(p.GetClass(m[(x, 0)]))
-  //               else None;
-  //     var s2 := if (x, 1) in m then
-  //                 assert m[(x, 1)] in m.Values;
-  //                 Some(p.GetClass(m[(x, 1)]))
-  //               else None;
-  //     (s1, s2)
-  //   }
-
-  //   function foo(x: nat, p: Partition, m: map<(nat, nat), nat>): bool
-  //   {
-
-  //   }
-
-
-
-  //   lemma foo707(p: Partition, p': Partition, x: nat, y: nat)
-  //     requires p.IsValid()
-  //     requires p'.IsValid()
-  //     requires 0 <= x < p.n
-  //     requires 0 <= y < p.n
-  //     requires p.n == p'.n
-  //     requires p.Equiv(x, y)
-  //     requires p'.Equiv(x, y)
-
-
-  //   lemma foo404(p: Partition, p': Partition)
-  //     requires p.IsValid()
-  //     requires p'.IsValid()
-  //     requires p.n == p'.n
-  //     requires p.Refines(p')
-  //     // ensures forall k:: k in p.elem ==> exists k':: k' in p'.elem && k <= k'
-  //   {
-  //     NotEmpty(p);
-  //     NotEmpty(p');
-  //     assert |p'.elem| >= 1;
-
-  //     forall k | 0 <= k < |p.elem|
-  //       ensures exists k':: 0 <= k' < |p'.elem| && p.elem[k] <= p.elem[k'] {
-  //       if p.elem[k] == {} {
-  //         assert |p'.elem| >= 1;
-  //         //   assume p.elem[k] <= p'.elem[0];
-  //       } else {
-  //         //   var x :| x in p.elem[k];
-  //         //   assume x in p.elem[p.GetClass(x)];
-  //         //   assume x < p.n;
-  //         //   assume p.Equiv(x, x);
-
-  //       }
-  //       assume exists k':: 0 <= k' < |p'.elem| && p.elem[k] <= p.elem[k'];
-  //     }
-
-  //   }
-  //   lemma GetClassUnique(p: Partition, x: nat)
-  //     requires p.IsValid()
-  //     requires 0 <= x < p.n
-  //     ensures forall k:: 0 <= k < |p.elem| && k != p.GetClass(x) ==> x !in p.elem[k]
-  //   {
-  //     assume  forall k:: 0 <= k < |p.elem| && k != p.GetClass(x) ==> x !in p.elem[k];
-  //   }
-
-  //   lemma GetClassLemma(p: Partition, x: nat)
-  //     requires p.IsValid()
-  //     requires 0 <= x < p.n
-  //     requires |p.elem| > 0
-  //     ensures p.GetClass(x) < |p.elem|
-  //     ensures x in p.elem[p.GetClass(x)]
-  //   {
-  //     // NotEmpty(p);
-  //   }
-
 
 }
