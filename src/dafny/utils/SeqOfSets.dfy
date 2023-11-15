@@ -21,7 +21,8 @@ module SeqOfSets {
     *   Union of a seq of sets.
     */
   function {:tailrecursion true} SetU<T>(xs: seq<set<T>>): (r: set<T>)
-    ensures forall x:: x in r ==> exists k:: 0 <= k < |xs| && x in xs[k]
+    // ensures forall x:: x in r ==> exists k:: 0 <= k < |xs| && x in xs[k]
+    ensures forall k:: 0 <= k < |xs| ==> xs[k] <= SetU(xs)
   {
     if |xs| == 0 then {}
     else xs[0] + SetU(xs[1..])
@@ -37,6 +38,115 @@ module SeqOfSets {
     else xs[0] * SetI(xs[1..])
   }
 
+  predicate AllNonEmpty<T>(xs: seq<set<T>>)
+  {
+    forall k:: 0 <= k < |xs| ==> xs[k] != {}
+  }
+
+  predicate DisjointAnyTwo<T>(xs: seq<set<T>>)
+  {
+    forall k, k':: 0 <= k < k' < |xs| ==> xs[k] * xs[k'] == {}
+  }
+
+  predicate SetN(xs: seq<set<nat>>, n: nat)
+  {
+    SetU(xs) == set z {:nowarn} | 0 <= z < n
+  }
+
+  /**
+    *   Every value in a class is less than n.
+    *   Every 0 <= k < n is is in SetU(xs)
+    */
+  lemma AllBoundedBy(xs: seq<set<nat>>, n: nat)
+    requires SetN(xs, n)
+    ensures forall k, e:: k in xs ==> e in k ==> 0 <= e < n
+    ensures forall e:: 0 <= e < n <==> e in SetU(xs)
+  { //  Thanks Dafny
+  }
+
+  /**
+    *   If xs is {0, ..., n - 1} then 
+    *   every 0 <= k < n is in one of the classes of xs.
+    */
+  lemma LessThanNIsInAClass(xs: seq<set<nat>>, n: nat, k: nat)
+    requires SetN(xs, n)
+    requires 0 <= k < n
+    ensures exists i:: 0 <= i < |xs| && k in xs[i]
+  {
+    if !(exists i:: 0 <= i < |xs| && k in xs[i]) {
+      SubLessThan(xs, k);
+    }
+  }
+
+  /**
+    *   For each t in SetU(xs), there is a class
+    *   containing t.
+    */
+  lemma SubLessThan<T>(xt: seq<set<T>>, t: T)
+    requires t in SetU(xt)
+    ensures exists k:: 0 <= k < |xt| && t in xt[k]
+  { //  Thanks Dafny 
+  }
+
+  lemma foo802<T>(xs: seq<set<T>>)
+    requires DisjointAnyTwo(xs)
+    requires |xs| >= 1
+    ensures xs[0] * SetU(xs[1..]) == {}
+  {
+    if  xs[0] * SetU(xs[1..]) != {} {
+      var e :| e in xs[0] && e in SetU(xs[1..]);
+      SubLessThan(xs[1..], e);
+      var k :| 0 <= k < |xs[1..]| && e in (xs[1..])[k];
+      assert e in xs[k + 1];
+      assert e in xs[0] * xs[k + 1];
+      assert !DisjointAnyTwo(xs);
+      assert false;
+    }
+  }
+
+  /**
+    *   The maximum number of classes in a partition of
+    *   {0, ..., n - 1} is n.
+    */
+  lemma MaxNumberOfClasses(xs: seq<set<nat>>, n: nat)
+    requires SetN(xs, n)
+    requires DisjointAnyTwo(xs)
+    requires AllNonEmpty(xs)
+    ensures |xs| <= n
+  {
+    if |xs| > n {
+      SizeOfNatsUpToNBound(n, SetU(xs));
+      MinNumberOfClasses(xs);
+      assert |SetU(xs)| >= |xs|;
+    }
+  }
+
+  /**
+    *   If disjoint two by two and non empty, then 
+    *   the partition has more |xs| element.
+    *   @note   Used to prove that the number of 
+    *           classes for {0, ..., n - 1} is bounded 
+    *           by n.
+    */
+  lemma MinNumberOfClasses<T>(xs: seq<set<T>>)
+    requires DisjointAnyTwo(xs)
+    requires AllNonEmpty(xs)
+    ensures |SetU(xs)| >= |xs|
+  {
+    if |xs| == 0 {
+      //  
+    } else {
+      calc == {
+        |SetU(xs)|;
+        |xs[0] + SetU(xs[1..])|;
+         { foo802(xs); }
+        |xs[0]| + |SetU(xs[1..])|;
+      >= { MinNumberOfClasses(xs[1..]); }
+        |xs[0]| + |xs[1..]|;
+      }
+    }
+  }
+
   /**
     *   Split a set into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
@@ -44,6 +154,8 @@ module SeqOfSets {
     requires forall x:: x in xs ==> f.requires(x)
     ensures xs == r.0 + r.1
     ensures r.0 * r.1 == {}
+    ensures forall x:: x in r.0 ==> f(x)
+    ensures forall x:: x in r.1 ==> !f(x)
   {
     var asSeq := SetToSequence(xs);
     SplitSeqTail(asSeq, f)
@@ -61,18 +173,6 @@ module SeqOfSets {
     else
       [SplitSet(xs[0], f)] + SplitSeqOfSet(xs[1..], f)
   }
-
-  /**
-    */
-//   function {:tailrecursion true} SplitSeqOfSet(xs: seq<set<nat>>): (r: seq<nat>)
-//     ensures |xs| == |r|
-//     ensures forall k:: 0 <= k < |r| ==> r[k].0 * r[k].1 == {}
-//     ensures forall k:: 0 <= k < |r| ==> r[k].0 + r[k].1 == xs[k]
-//   {
-//     if |xs| == 0 then []
-//     else
-//       [SplitSet(xs[0], f)] + SplitSeqOfSet(xs[1..], f)
-//   }
 
   //  Helpers
 
@@ -129,6 +229,13 @@ module SeqOfSets {
     }
   }
 
+  lemma DistribUnion3<T>(a : seq<set<T>>, b: seq<set<T>>, c: seq<set<T>>)
+    ensures SetU(a + b + c) == SetU(a) + SetU(b) + SetU(c)
+  {
+    DistribUnion(a + b, c);
+    DistribUnion(a, b);
+  }
+
   /**
     *   Split a sequence around an index.
     */
@@ -145,103 +252,6 @@ module SeqOfSets {
       { DistribUnion(xs[..index], [xs[index]]) ; }
       SetU(xs[..index]) + SetU([xs[index]]) + SetU(xs[index + 1..]);
       SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]);
-    }
-  }
-
-  /**
-    *   Split a sequence arount two consecutive indices.
-    */
-  lemma SplitUnion2<T>(xs: seq<set<T>>, index: nat)
-    requires index < |xs| - 1
-    ensures SetU(xs[..index]) + xs[index] + xs[index + 1] + SetU(xs[index + 2..]) == SetU(xs)
-  {
-    calc == {
-      SetU(xs);
-      { assert xs == xs[..index] + [xs[index]] + xs[index + 1..]; }
-      SetU(xs[..index] + [xs[index]] + xs[index + 1..]);
-      { SplitUnion1(xs, index); }
-      SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]);
-      SetU(xs[..index]) + xs[index] + SetU([xs[index + 1..][0]] + xs[index + 1..][1..]);
-      { SplitUnion1(xs[index + 1..], 0); }
-      SetU(xs[..index]) + xs[index] + xs[index + 1..][0] + SetU(xs[index + 1..][1..]);
-      { assert xs[index + 1..][1..] == xs[index + 2..]; }
-      SetU(xs[..index]) + xs[index] + xs[index + 1] + SetU(xs[index + 2..]);
-    }
-  }
-
-  /**
-    *   An empty set in xs does not contribute to SetU(xs).
-    */
-  lemma NeutralEmptySet<T>(xs: seq<set<T>>, k: nat)
-    requires 0 <= k < |xs|
-    requires xs[k] == {}
-    ensures SetU(xs) == SetU(xs[..k] + xs[k + 1..])
-  {
-    SplitUnion1(xs, k);
-    calc == {
-      SetU(xs);
-      { SplitUnion1(xs, k); }
-      SetU(xs[..k]) + xs[k] + SetU(xs[k + 1..]);
-      calc == {
-        SetU(xs[..k]) + xs[k];
-        SetU(xs[..k]) + {};
-        SetU(xs[..k]);
-      }
-      SetU(xs[..k]) + SetU(xs[k + 1..]);
-      { DistribUnion(xs[..k], xs[k + 1..]);}
-      SetU(xs[..k] + xs[k + 1..]);
-    }
-  }
-
-  /**
-    *   For a seq of disjoint and non empty sets, within a finite set {0, ..., n -1 }
-    *   the last set cannot contain elements from the previous sets.
-    *   Hence its size decreases.
-    */
-  lemma ShrinkingLemma(xs: seq<set<nat>>, n: nat)
-    requires forall k:: 0 <= k < |xs| ==> {} < xs[k] <= set x {:nowarn} | 0 <= x < n
-    requires forall k, k':: 0<= k < k' < |xs| ==> xs[k] * xs[k'] == {}
-    requires |xs| > 0
-    ensures |xs[|xs| - 1]| <= n - |SetU(xs[..|xs| - 1])|
-    ensures |xs| > n ==> |xs[|xs| - 1]| == 0
-  {
-    calc == {
-      n;
-    >= {SizeOfNatsUpToNBound(n, SetU(xs));}
-      |SetU(xs)|;
-       { SplitUnion1(xs, |xs| - 1); }
-      |SetU(xs[..|xs| - 1]) + xs[|xs| - 1]|;
-    }
-    if |xs| > n {
-      calc <= {
-        |xs[|xs| - 1]|;
-        n - |SetU(xs[..|xs| - 1])|;
-        { MinSizeOfNonEmptyDisjoint(xs[..|xs| - 1]); }
-        0;
-      }
-    }
-  }
-
-  /**
-    *   For a seq of non empty and disjoint sets of size k, SetU has more then k elements.
-    */
-  lemma MinSizeOfNonEmptyDisjoint(xs: seq<set<nat>>)
-    requires forall k:: 0 <= k < |xs| ==> {} < xs[k]
-    requires forall k, k':: 0<= k < k' < |xs| ==> xs[k] * xs[k'] == {}
-    ensures |SetU(xs)| >= |xs|
-  {
-    if |xs| == 0 {
-      //  Thanks Dafny
-    } else {
-      SplitUnion1(xs, |xs| - 1);
-      assert SetU(xs[..|xs| - 1]) + xs[|xs| - 1] == SetU(xs);
-      //   foo302(xs, |xs| - 1);
-      assert xs[|xs| - 1] * SetU(xs[..|xs| - 1]) == {};
-      assert |xs[|xs| - 1]| >= 1;
-      SizeOfUnion(xs[|xs| - 1], SetU(xs[..|xs| - 1]));
-      assert |SetU(xs)| == |SetU(xs[..|xs| - 1])| + |xs[|xs| - 1]| ;
-      assert |SetU(xs)| >= |SetU(xs[..|xs| - 1])| + 1 ;
-      MinSizeOfNonEmptyDisjoint(xs[..|xs| - 1]);
     }
   }
 
@@ -274,8 +284,7 @@ module SeqOfSets {
   lemma SizeOfUnion<T>(a: set<T>, b: set<T>)
     requires a * b == {}
     ensures |a + b| == |a| + |b|
-  {
-
+  { //  Thanks Dafny
   }
 
   /**
@@ -291,8 +300,8 @@ module SeqOfSets {
     requires forall k:: k in cFalse ==> !f(k)
     ensures  forall k:: k in xs <==> k in r.0 + r.1
     ensures r.0 * r.1 == {}
-    ensures forall k:: k in cTrue ==> f(k)
-    ensures forall k:: k in cFalse ==> !f(k)
+    ensures forall k:: k in r.0 ==> f(k)
+    ensures forall k:: k in r.1 ==> !f(k)
 
     decreases |xs| - index
   {
