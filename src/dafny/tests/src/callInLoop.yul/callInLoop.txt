@@ -1,0 +1,116 @@
+
+======= src/dafny/tests/src/callInLoop.yul/callInLoop.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let x := 8
+            let y := 3
+            let z := max(x, y)
+            let k := 0
+            for { } lt(k, 10) { }
+            {
+                let h := mul(k, 2)
+                z := max(z, h)
+            }
+            mstore(0x40, z)
+            return(0x40, 32)
+        }
+        function max(x, y) -> result
+        {
+            result := x
+            if lt(x, y) { result := y }
+        }
+    }
+}
+
+
+Binary representation:
+600a6008600390602f565b5f5b600a8110601d575060405260206040f35b90602a906002830290602f565b90600c565b9190808310603b575b50565b909150905f603856
+
+Text representation:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":186:195   */
+  tag_2
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":158:159   */
+  0x08
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":172:173   */
+  0x03
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":186:195   */
+  swap1
+  tag_1
+  jump	// in
+tag_2:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":214:215   */
+  0x00
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":218:227   */
+tag_3:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":224:226   */
+  0x0a
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":218:227   */
+  dup2
+  lt
+  tag_4
+  jumpi
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":284:299   */
+  pop
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":291:295   */
+  0x40
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":284:299   */
+  mstore
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":315:317   */
+  0x20
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":309:313   */
+  0x40
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":302:318   */
+  return
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":232:280   */
+tag_4:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":247:256   */
+  swap1
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":266:276   */
+  tag_6
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":247:256   */
+  swap1
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":254:255   */
+  0x02
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":247:256   */
+  dup4
+  mul
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":266:276   */
+  swap1
+  tag_1
+  jump	// in
+tag_6:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":232:280   */
+  swap1
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":228:231   */
+  jump(tag_3)
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":32:139   */
+tag_1:
+  swap2
+  swap1
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":72:83   */
+  dup1
+  dup4
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":93:101   */
+  lt
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":90:134   */
+  tag_7
+  jumpi
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":64:139   */
+tag_8:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":32:139   */
+  pop
+  jump	// out
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":102:134   */
+tag_7:
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":114:125   */
+  swap1
+  swap2
+  pop
+    /* "src/dafny/tests/src/callInLoop.yul/callInLoop.yul":102:134   */
+  swap1
+  0x00
+  jump(tag_8)
+
