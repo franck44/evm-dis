@@ -18,7 +18,7 @@ include "./Automata.dfy"
 include "./SeqOfSets.dfy"
 
 /** 
-  * Provides minimisation of finite automata.
+  * Provides minimisation of finite deterministic automata.
   */
 module Minimiser {
 
@@ -39,6 +39,16 @@ module Minimiser {
       a.numStates == p.n
     }
 
+    function Auto(): ValidAuto
+    {
+      a
+    }
+
+    function Parts(): ValidPartition
+    {
+      p
+    }
+
     /**
       * The classes of the true and false successors.
       * @param  x   A state.
@@ -52,7 +62,6 @@ module Minimiser {
       ensures ClassSucc(x).0.Some? ==> ClassSucc(x).0.v < |p.elem|
       ensures ClassSucc(x).1.Some? ==> ClassSucc(x).1.v < |p.elem|
     {
-      NotEmpty(p);
       var s1 := match a.Succ(x, false)
         case None => None
         case Some(n) =>
@@ -67,37 +76,31 @@ module Minimiser {
     }
 
     /**
-      * Split classes at index and above according to value of first elem of the class
-      * and it successors.
+      * Split all classes according to value of first elem of each class.
+      * @returns    A pair where each class[index] has been split according to 
+      *             ??
+      * @todo       Do we need this function?
       */
-    function SplitFrom(index: nat := 0): ValidPair
+    function SplitFrom(): (p' :ValidPair)
       requires this.IsValid()
-      requires index < |p.elem|
-      ensures SplitFrom(index).IsValid()
-      ensures |SplitFrom(index).p.elem| >= |p.elem|
-    //   ensures SplitFrom(index).p.elem[..index] == p.elem[..index]
+      ensures p'.IsValid()
+      ensures |p'.p.elem| >= |p.elem|
     {
       //  split class[index] with function that is true only
       //  when ClassSucc is the same as ClassSucc[index] first element
       //  Note that this ClassSucc[index] is a set so it is first
       //  enumerated as a sequence in the process.
-      AllClassesInSetU(p);
+
       //  Partial function to define each class splitter.
       //  This is a bit more tricky than total function but
       //  provides more guarantee e.g. on the value of ClassSucc.
       assert p.n == a.numStates;
       var splitterF: nat --> (nat --> bool) :=
-        (k: nat) requires index <= k < |p.elem|
-        => ((y: nat) requires y < p.n =>  ClassSucc(p.GetClass(SetToSequence(p.elem[k])[0])) == ClassSucc(y));
-      assert SplitAllFrom.requires(p, splitterF, index, index);
-      var r := SplitAllFrom(p, splitterF, index);
-    //   assert r.elem[..index] == p.elem[..index];
-      assert r.IsValid();
-      assert r.n == p.n;
-      assert r.n == a.numStates;
-      var x := this.(p := r);
-      assert x.IsValid();
-      x
+        (k: nat) requires 0 <= k < |p.elem|
+        => ((y: nat) requires y < p.n =>
+              ClassSucc(SetToSequence(p.elem[k])[0]) == ClassSucc(y));
+      var r := SplitAll(p, splitterF);
+      this.(p := r)
     }
 
     /**
@@ -107,10 +110,10 @@ module Minimiser {
       requires this.IsValid()
       requires index <= |p.elem|
       ensures forall k:: 0 <= k < |r| ==> r[k].0 < p.n && r[k].2 < p.n
-      decreases |p.elem| - index 
+      decreases |p.elem| - index
     {
-      AllClassesInSetU(p);
-      ValidMaxClasses(p);
+      AllBoundedBy(p.elem, p.n);
+      MaxNumberOfClasses(p.elem, p.n);
       if index == |p.elem| then []
       else
         // assert p.elem[index] != {};
@@ -120,26 +123,27 @@ module Minimiser {
         //  Get successor classes of first elem
         var succs := ClassSucc(firstElem);
         var newEdges := match (succs.0, succs.1)
-            case (None, None) => []
-            case (Some(sFalse), None) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0])]
-            case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
-            case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
-            ;
+          case (None, None) => []
+          case (Some(sFalse), None) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0])]
+          case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
+          case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
+          ;
         newEdges + GenerateReduced(index + 1)
     }
 
     /**
-      * 
+      * Not used
       */
     function Minimise1(): ValidPair
       requires this.IsValid()
       ensures Minimise1().IsValid()
-    //   ensures 
+      //   ensures
       decreases this.p.n - |this.p.elem|
     {
-      NotEmpty(p);
+      //   NotEmpty(p);
+      assert AllNonEmpty(p.elem);
       var p1 := this.SplitFrom();
-      ValidMaxClasses(p1.p);
+      MaxNumberOfClasses(p1.p.elem, p1.p.n);
       if |p1.p.elem| == |p.elem| then p1
       else
         assert |p.elem| < |p1.p.elem| <= p.n == a.numStates;
@@ -148,7 +152,7 @@ module Minimiser {
 
   }
 
-  //   function
+  //   Main function  
 
   function Minimise(ap: ValidPair): ValidPair
     requires ap.IsValid()
@@ -156,14 +160,13 @@ module Minimiser {
     ensures Minimise(ap).p.n == ap.p.n
     decreases ap.p.n - |ap.p.elem|
   {
-    NotEmpty(ap.p);
+    assert AllNonEmpty(ap.p.elem);
     var p1 := ap.SplitFrom();
-    ValidMaxClasses(p1.p);
+    MaxNumberOfClasses(p1.p.elem, p1.p.n);
     if |p1.p.elem| == |ap.p.elem| then p1
     else
       assert |ap.p.elem| < |p1.p.elem| <= ap.p.n == ap.a.numStates;
       Minimise(p1)
   }
-
 
 }
