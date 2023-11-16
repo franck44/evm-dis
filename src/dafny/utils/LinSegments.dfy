@@ -62,8 +62,8 @@ module LinSegments {
       match this
       case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
       case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
-      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
-      case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP
+      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN 
+      case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
       case CONTSeg(_, _, _) => true
     }
 
