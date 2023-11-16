@@ -103,12 +103,13 @@ module PartitionMod {
       ensures p'.IsValid()
       ensures |elem| <= |p'.elem| <= |elem| + 1
       ensures p'.n == n
+      ensures |elem| == |p'.elem| ==> p'.elem[|p'.elem| - 1] == elem[index]
       //  needed to establish the last 2
       ensures forall x:: x in p'.elem[|elem| - 1] ==> f.requires(x)
       ensures forall x:: x in p'.elem[|p'.elem| - 1] ==> f.requires(x)
       ensures forall e, e':: e in p'.elem[|elem| - 1] && e' in p'.elem[|elem| - 1] ==> f(e) == f(e')
       ensures forall e, e':: e in p'.elem[|p'.elem| - 1] && e' in p'.elem[|p'.elem| - 1] ==> f(e) == f(e')
-    //   ensures p'.Refines2(this)
+      //   ensures p'.Refines2(this)
     {
       // Split elem[index] according to value of f for its elements
       // each class is non empty including elem[index]
@@ -215,7 +216,7 @@ module PartitionMod {
   }
 
   // in the SplitAll, f must be applied to all the values so must be a total function
-  function {:tailrecursion true} SplitAllFrom(p: ValidPartition, f : nat --> nat -> bool, index: nat := 0, max : nat := |p.elem|): (p': ValidPartition)
+  function {:tailrecursion true} SplitAll(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, max : nat := |p.elem|): (p': ValidPartition)
     requires p.IsValid()
     requires index <= max
     requires forall x:: 0 <= x < max - index ==> f.requires(x)
@@ -229,9 +230,9 @@ module PartitionMod {
     else
       assert |p.elem| > 0;
       AllBoundedBy(p.elem, p.n);
-      var f' : nat --> nat -> bool := (x: nat) requires 0 <= x < max - (index + 1) => f(x + 1);
+      var f' : nat --> nat --> bool := (x: nat) requires 0 <= x < max - (index + 1) => f(x + 1);
       var p1 := p.SplitAt(f(0), 0);
-      SplitAllFrom(p1, f', index + 1, max)
+      SplitAll(p1, f', index + 1, max)
   }
 
   //  Helper lemma
@@ -267,6 +268,9 @@ module PartitionMod {
     }
   }
 
+  /**
+    *   Pretty print a set.
+    */
   method {:tailrecursion true} PrintPartition(p: Partition)
   {
     for k := 0 to |p.elem| {
