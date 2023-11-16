@@ -157,5 +157,42 @@ module MinimiserTests {
     expect a2.p.elem == [{0}, {1, 2, 3}, {4}];
   }
 
+   method {:test} Test5()
+  {
+    /*
+    automaton is:
+    0 -- a -> 1 -- b -> 2
+    |_ b -> 3 -- b -> 4
+    Minimised is:
+    {0} - a, b -> {1, 3} -- b -> {2, 4}
+    */
+    var p1 := Partition(5, [{0, 1, 3}, {2, 4}]);
+    var m: map<(nat, bool), nat> :=
+      map[
+        (0, a) := 1, (0, b) := 3,
+        (1, b) := 2,
+        (2, a) := 1, 
+        (3, b) := 4,
+        (4, a) := 3
+      ];
+    assert p1.IsValid();
+    var a1 := Auto(5, m);
+
+    var vp0 : ValidPair := Pair(a1, p1);
+
+    var a2 := Minimise(vp0);
+    // expect a2.p.elem == [{0}, {1, 2, 3}, {4}];
+    PrintPartition(a2.p);
+
+    // var  vp1 := vp0.SplitFrom();
+    // expect vp1.p.elem == [{0}, {1, 3}, {2, 4}];
+
+    // var vp2 := vp1.SplitFrom();
+    // expect vp2.p.elem == [{0}, {1, 2, 3}, {4}];
+
+    // var a2 := Minimise(vp0);
+    // expect a2.p.elem == [{0}, {1, 2, 3}, {4}];
+  }
+
 }
 
