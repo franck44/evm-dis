@@ -76,7 +76,7 @@ class default__:
         elif (op) == (48):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ADDRESS")), EVMConstants.default__.ADDRESS, 1, 0, 1, 0)
         elif (op) == (49):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "BALANCE")), EVMConstants.default__.BALANCE, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "BALANCE")), EVMConstants.default__.BALANCE, 0, 1, 1, 1)
         elif (op) == (50):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ORIGIN")), EVMConstants.default__.ORIGIN, 1, 0, 1, 0)
         elif (op) == (51):
@@ -84,29 +84,29 @@ class default__:
         elif (op) == (52):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLVALUE")), EVMConstants.default__.CALLVALUE, 1, 0, 1, 0)
         elif (op) == (53):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLDATALOAD")), EVMConstants.default__.CALLDATALOAD, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLDATALOAD")), EVMConstants.default__.CALLDATALOAD, 0, 1, 1, 1)
         elif (op) == (54):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLDATASIZE")), EVMConstants.default__.CALLDATASIZE, 1, 0, 1, 0)
         elif (op) == (55):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLDATACOPY")), EVMConstants.default__.CALLDATACOPY, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLDATACOPY")), EVMConstants.default__.CALLDATACOPY, 0, 3, 0, 3)
         elif (op) == (56):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CODESIZE")), EVMConstants.default__.CODESIZE, 1, 0, 1, 0)
         elif (op) == (57):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CODECOPY")), EVMConstants.default__.CODECOPY, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CODECOPY")), EVMConstants.default__.CODECOPY, 0, 3, 0, 3)
         elif (op) == (58):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "GASPRICE")), EVMConstants.default__.GASPRICE, 1, 0, 1, 0)
         elif (op) == (59):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODESIZE")), EVMConstants.default__.EXTCODESIZE, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODESIZE")), EVMConstants.default__.EXTCODESIZE, 0, 1, 1, 1)
         elif (op) == (60):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODECOPY")), EVMConstants.default__.EXTCODECOPY, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODECOPY")), EVMConstants.default__.EXTCODECOPY, 0, 4, 0, 4)
         elif (op) == (61):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURNDATASIZE")), EVMConstants.default__.RETURNDATASIZE, 1, 0, 1, 0)
         elif (op) == (62):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURNDATACOPY")), EVMConstants.default__.RETURNDATACOPY, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURNDATACOPY")), EVMConstants.default__.RETURNDATACOPY, 0, 3, 0, 3)
         elif (op) == (63):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODEHASH")), EVMConstants.default__.EXTCODEHASH, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "EXTCODEHASH")), EVMConstants.default__.EXTCODEHASH, 0, 1, 1, 1)
         elif (op) == (64):
-            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "BLOCKHASH")), EVMConstants.default__.BLOCKHASH, 1, 0, 1, 0)
+            return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "BLOCKHASH")), EVMConstants.default__.BLOCKHASH, 0, 1, 1, 1)
         elif (op) == (65):
             return EVMOpcodes.Opcode_EnvOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "COINBASE")), EVMConstants.default__.COINBASE, 1, 0, 1, 0)
         elif (op) == (66):
@@ -296,9 +296,9 @@ class default__:
         elif (op) == (240):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CREATE")), EVMConstants.default__.CREATE, 3, 0, 2, 3)
         elif (op) == (241):
-            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALL")), EVMConstants.default__.CALL, 0, 7, 7, 7)
+            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALL")), EVMConstants.default__.CALL, 1, 7, 1, 7)
         elif (op) == (242):
-            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLCODE")), EVMConstants.default__.CALLCODE, 0, 7, 7, 7)
+            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLCODE")), EVMConstants.default__.CALLCODE, 1, 7, 1, 7)
         elif (op) == (243):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURN")), EVMConstants.default__.RETURN, 0, 2, 0, 0)
         elif (op) == (244):

@@ -44,11 +44,11 @@ class Cond:
     def IsValid(self):
         def lambda0_(forall_var_0_):
             def lambda1_(forall_var_1_):
-                d_143_k_k_: int = forall_var_1_
-                return not ((((0) <= (d_142_k_)) and ((d_142_k_) < (d_143_k_k_))) and ((d_143_k_k_) < (len((self).trackedPos)))) or ((((self).trackedPos)[d_142_k_]) != (((self).trackedPos)[d_143_k_k_]))
+                d_153_k_k_: int = forall_var_1_
+                return not ((((0) <= (d_152_k_)) and ((d_152_k_) < (d_153_k_k_))) and ((d_153_k_k_) < (len((self).trackedPos)))) or ((((self).trackedPos)[d_152_k_]) != (((self).trackedPos)[d_153_k_k_]))
 
-            d_142_k_: int = forall_var_0_
-            return _dafny.quantifier(_dafny.IntegerRange((d_142_k_) + (1), len((self).trackedPos)), True, lambda1_)
+            d_152_k_: int = forall_var_0_
+            return _dafny.quantifier(_dafny.IntegerRange((d_152_k_) + (1), len((self).trackedPos)), True, lambda1_)
 
         return not ((self).is_StCond) or ((((len((self).trackedPos)) == (len((self).trackedVals))) and ((len((self).trackedVals)) > (0))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((self).trackedPos)), True, lambda0_)))
 

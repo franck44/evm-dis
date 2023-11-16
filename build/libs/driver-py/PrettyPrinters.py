@@ -34,14 +34,14 @@ class default__:
         while True:
             with _dafny.label():
                 if (len(s)) > (0):
-                    d_520_formattedAddress_: _dafny.Seq
-                    d_520_formattedAddress_ = (Hex.default__.U32ToHex(((s)[0]).address) if (((s)[0]).address) < (Int.default__.TWO__32) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "OutofRange")))
-                    _dafny.print((d_520_formattedAddress_).VerbatimString(False))
+                    d_532_formattedAddress_: _dafny.Seq
+                    d_532_formattedAddress_ = (Hex.default__.U32ToHex(((s)[0]).address) if (((s)[0]).address) < (Int.default__.TWO__32) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "OutofRange")))
+                    _dafny.print((d_532_formattedAddress_).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ": "))).VerbatimString(False))
                     _dafny.print((((s)[0]).ToString()).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    in50_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in50_
+                    in54_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in54_
                     raise _dafny.TailCall()
                 break
 
@@ -53,83 +53,83 @@ class default__:
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Segment "))).VerbatimString(False))
                     _dafny.print(_dafny.string_of(num))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    d_521_k_: int
-                    d_521_k_ = ((xs)[0]).WeakestPreOperands(0)
-                    d_522_l_: int
-                    d_522_l_ = ((xs)[0]).WeakestPreCapacity(0)
+                    d_533_k_: int
+                    d_533_k_ = ((xs)[0]).WeakestPreOperands(0)
+                    d_534_l_: int
+                    d_534_l_ = ((xs)[0]).WeakestPreCapacity(0)
                     if (((xs)[0]).is_JUMPSeg) or (((xs)[0]).is_JUMPISeg):
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMP/JUMPI: tgt address at the end: "))).VerbatimString(False))
-                        d_523_r_: MiscTypes.Either
-                        d_523_r_ = SegBuilder.default__.JUMPResolver((xs)[0])
-                        source41_ = d_523_r_
-                        if source41_.is_Left:
-                            d_524___mcc_h0_ = source41_.l
-                            d_525_v_ = d_524___mcc_h0_
-                            source42_ = d_525_v_
-                            if source42_.is_Value:
-                                d_526___mcc_h2_ = source42_.v
-                                d_527_address_ = d_526___mcc_h2_
-                                _dafny.print(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "0x"))) + (Hex.default__.NatToHex(d_527_address_))).VerbatimString(False))
+                        d_535_r_: MiscTypes.Either
+                        d_535_r_ = SegBuilder.default__.JUMPResolver((xs)[0])
+                        source43_ = d_535_r_
+                        if source43_.is_Left:
+                            d_536___mcc_h0_ = source43_.l
+                            d_537_v_ = d_536___mcc_h0_
+                            source44_ = d_537_v_
+                            if source44_.is_Value:
+                                d_538___mcc_h2_ = source44_.v
+                                d_539_address_ = d_538___mcc_h2_
+                                _dafny.print(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "0x"))) + (Hex.default__.NatToHex(d_539_address_))).VerbatimString(False))
                             elif True:
-                                d_528___mcc_h3_ = source42_.s
-                                d_529_msg_ = d_528___mcc_h3_
+                                d_540___mcc_h3_ = source44_.s
+                                d_541_msg_ = d_540___mcc_h3_
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Could not determine stack value"))).VerbatimString(False))
                         elif True:
-                            d_530___mcc_h1_ = source41_.r
-                            d_531_stackPos_ = d_530___mcc_h1_
+                            d_542___mcc_h1_ = source43_.r
+                            d_543_stackPos_ = d_542___mcc_h1_
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Peek("))).VerbatimString(False))
-                            _dafny.print(_dafny.string_of(d_531_stackPos_))
+                            _dafny.print(_dafny.string_of(d_543_stackPos_))
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")"))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     if ((xs)[0]).is_CONTSeg:
                         if (((((xs)[0]).lastIns).op).opcode) != (EVMConstants.default__.INVALID):
-                            d_532_nextPC_: int
-                            d_532_nextPC_ = ((xs)[0]).StartAddressNextSeg()
-                            _dafny.print(((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: PC of instruction after last is: "))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x")))) + (Hex.default__.NatToHex(d_532_nextPC_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
+                            d_544_nextPC_: int
+                            d_544_nextPC_ = ((xs)[0]).StartAddressNextSeg()
+                            _dafny.print(((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: PC of instruction after last is: "))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x")))) + (Hex.default__.NatToHex(d_544_nextPC_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
                         elif True:
                             _dafny.print(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: has an invaid instructiom"))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "WeakestPre Operands:"))).VerbatimString(False))
-                        _dafny.print(_dafny.string_of(d_521_k_))
+                        _dafny.print(_dafny.string_of(d_533_k_))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "WeakestPre Capacity:"))).VerbatimString(False))
-                        _dafny.print(_dafny.string_of(d_522_l_))
+                        _dafny.print(_dafny.string_of(d_534_l_))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Net Stack Effect:"))).VerbatimString(False))
                         _dafny.print(_dafny.string_of(((xs)[0]).StackEffect()))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     default__.PrintInstructions(((xs)[0]).Ins())
-                    in51_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in52_ = (num) + (1)
-                    xs = in51_
-                    num = in52_
+                    in55_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in56_ = (num) + (1)
+                    xs = in55_
+                    num = in56_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def CollectJumpDest(xs):
-        d_533___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_545___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (d_533___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_545___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_533___accumulator_ = (d_533___accumulator_) + (((xs)[0]).CollectJumpDest())
-                    in53_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in53_
+                    d_545___accumulator_ = (d_545___accumulator_) + (((xs)[0]).CollectJumpDest())
+                    in57_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in57_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def CollectJumpDestAsString(xs):
-        d_534___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_546___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (d_534___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_546___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_534___accumulator_ = (d_534___accumulator_) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ensures s.IsJumpDest(0x"))) + (Hex.default__.NatToHex((xs)[0]))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " as u256)\n"))))
-                    in54_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in54_
+                    d_546___accumulator_ = (d_546___accumulator_) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ensures s.IsJumpDest(0x"))) + (Hex.default__.NatToHex((xs)[0]))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " as u256)\n"))))
+                    in58_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in58_
                     raise _dafny.TailCall()
                 break
 
@@ -153,14 +153,14 @@ class default__:
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "import opened Bytecode"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-        d_535_j_: _dafny.Seq
-        d_535_j_ = default__.CollectJumpDestAsString(default__.CollectJumpDest(xs))
-        if (len(d_535_j_)) > (0):
+        d_547_j_: _dafny.Seq
+        d_547_j_ = default__.CollectJumpDestAsString(default__.CollectJumpDest(xs))
+        if (len(d_547_j_)) > (0):
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "/** Lemma for Jumpdest */"))).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)"))).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-            _dafny.print((d_535_j_).VerbatimString(False))
+            _dafny.print((d_547_j_).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
         default__.PrintProofObjectBody(xs, 0)
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "}"))).VerbatimString(False))
@@ -171,16 +171,16 @@ class default__:
         while True:
             with _dafny.label():
                 if (len(xs)) > (0):
-                    d_536_startAddress_: _dafny.Seq
-                    d_536_startAddress_ = Hex.default__.NatToHex((((((xs)[0]).s).Ins())[0]).address)
+                    d_548_startAddress_: _dafny.Seq
+                    d_548_startAddress_ = Hex.default__.NatToHex((((((xs)[0]).s).Ins())[0]).address)
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n/** Code starting at 0x"))).VerbatimString(False))
-                    _dafny.print((d_536_startAddress_).VerbatimString(False))
+                    _dafny.print((d_548_startAddress_).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " */\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "function {:opaque} ExecuteFromTag_"))).VerbatimString(False))
                     _dafny.print(_dafny.string_of(num))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(s0: EvmState.ExecutingState): (s': EvmState.State)\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  requires s0.PC() == 0x"))).VerbatimString(False))
-                    _dafny.print((d_536_startAddress_).VerbatimString(False))
+                    _dafny.print((d_548_startAddress_).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " as nat\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  // Net Operands effect "))).VerbatimString(False))
                     _dafny.print(_dafny.string_of((((xs)[0]).s).NetOpEffect()))
@@ -196,90 +196,90 @@ class default__:
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     if (((xs)[0]).is_JUMP) and ((((((xs)[0]).s).lastIns).op).IsJump()):
                         if True:
-                            source43_ = ((xs)[0]).tgt
-                            if source43_.is_Left:
-                                d_537___mcc_h0_ = source43_.l
+                            source45_ = ((xs)[0]).tgt
+                            if source45_.is_Left:
+                                d_549___mcc_h0_ = source45_.l
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))).VerbatimString(False))
                             elif True:
-                                d_538___mcc_h2_ = source43_.r
-                                d_539_v_ = d_538___mcc_h2_
+                                d_550___mcc_h2_ = source45_.r
+                                d_551_v_ = d_550___mcc_h2_
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  requires s0.IsJumpDest(s0.Peek("))).VerbatimString(False))
-                                _dafny.print(_dafny.string_of(d_539_v_))
+                                _dafny.print(_dafny.string_of(d_551_v_))
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "))\n"))).VerbatimString(False))
-                    source44_ = (xs)[0]
-                    if source44_.is_JUMP:
-                        d_540___mcc_h4_ = source44_.s
-                        d_541___mcc_h5_ = source44_.wpOp
-                        d_542___mcc_h6_ = source44_.wpCap
-                        d_543___mcc_h7_ = source44_.tgt
-                        d_544___mcc_h8_ = source44_.stacks
-                        d_545_tgt_ = d_543___mcc_h7_
-                        d_546_s_ = d_540___mcc_h4_
+                    source46_ = (xs)[0]
+                    if source46_.is_JUMP:
+                        d_552___mcc_h4_ = source46_.s
+                        d_553___mcc_h5_ = source46_.wpOp
+                        d_554___mcc_h6_ = source46_.wpCap
+                        d_555___mcc_h7_ = source46_.tgt
+                        d_556___mcc_h8_ = source46_.stacks
+                        d_557_tgt_ = d_555___mcc_h7_
+                        d_558_s_ = d_552___mcc_h4_
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.EXECUTING?\n"))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.PC() ==  "))).VerbatimString(False))
                         if True:
-                            source45_ = d_545_tgt_
-                            if source45_.is_Left:
-                                d_547___mcc_h17_ = source45_.l
-                                d_548_xc_ = d_547___mcc_h17_
-                                source46_ = d_548_xc_
-                                if source46_.is_Value:
-                                    d_549___mcc_h19_ = source46_.v
-                                    d_550_v_ = d_549___mcc_h19_
+                            source47_ = d_557_tgt_
+                            if source47_.is_Left:
+                                d_559___mcc_h17_ = source47_.l
+                                d_560_xc_ = d_559___mcc_h17_
+                                source48_ = d_560_xc_
+                                if source48_.is_Value:
+                                    d_561___mcc_h19_ = source48_.v
+                                    d_562_v_ = d_561___mcc_h19_
                                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "0x"))).VerbatimString(False))
-                                    _dafny.print((Hex.default__.NatToHex((d_548_xc_).Extract())).VerbatimString(False))
+                                    _dafny.print((Hex.default__.NatToHex((d_560_xc_).Extract())).VerbatimString(False))
                                 elif True:
-                                    d_551___mcc_h21_ = source46_.s
+                                    d_563___mcc_h21_ = source48_.s
                                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Could not extract value "))).VerbatimString(False))
                             elif True:
-                                d_552___mcc_h18_ = source45_.r
-                                d_553_v_ = d_552___mcc_h18_
+                                d_564___mcc_h18_ = source47_.r
+                                d_565_v_ = d_564___mcc_h18_
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "s0.Peek("))).VerbatimString(False))
-                                _dafny.print(_dafny.string_of(d_553_v_))
+                                _dafny.print(_dafny.string_of(d_565_v_))
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ") as nat"))).VerbatimString(False))
-                        if ((((d_546_s_).lastIns).op).opcode) == (EVMConstants.default__.JUMPI):
+                        if ((((d_558_s_).lastIns).op).opcode) == (EVMConstants.default__.JUMPI):
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " || s'.PC() == 0x"))).VerbatimString(False))
-                            _dafny.print((Hex.default__.NatToHex((((d_546_s_).lastIns).address) + (1))).VerbatimString(False))
+                            _dafny.print((Hex.default__.NatToHex((((d_558_s_).lastIns).address) + (1))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                        d_554_n_: int
-                        d_554_n_ = ((xs)[0]).StackEffect()
+                        d_566_n_: int
+                        d_566_n_ = ((xs)[0]).StackEffect()
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.Operands() == s0.Operands()"))).VerbatimString(False))
-                        if (d_554_n_) >= (0):
+                        if (d_566_n_) >= (0):
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " + "))).VerbatimString(False))
-                            _dafny.print(_dafny.string_of(d_554_n_))
+                            _dafny.print(_dafny.string_of(d_566_n_))
                         elif True:
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " - "))).VerbatimString(False))
-                            _dafny.print(_dafny.string_of((0) - (d_554_n_)))
+                            _dafny.print(_dafny.string_of((0) - (d_566_n_)))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    elif source44_.is_CONT:
-                        d_555___mcc_h9_ = source44_.s
-                        d_556___mcc_h10_ = source44_.wpOp
-                        d_557___mcc_h11_ = source44_.wpCap
-                        d_558___mcc_h12_ = source44_.stacks
-                        d_559_s_ = d_555___mcc_h9_
+                    elif source46_.is_CONT:
+                        d_567___mcc_h9_ = source46_.s
+                        d_568___mcc_h10_ = source46_.wpOp
+                        d_569___mcc_h11_ = source46_.wpCap
+                        d_570___mcc_h12_ = source46_.stacks
+                        d_571_s_ = d_567___mcc_h9_
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.EXECUTING?\n"))).VerbatimString(False))
-                        if ((((d_559_s_).lastIns).op).opcode) != (EVMConstants.default__.INVALID):
-                            d_560_nextPC_: int
-                            d_560_nextPC_ = (d_559_s_).StartAddressNextSeg()
-                            _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.PC() == 0x"))) + (Hex.default__.NatToHex(d_560_nextPC_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
-                            d_561_n_: int
-                            d_561_n_ = ((xs)[0]).StackEffect()
+                        if ((((d_571_s_).lastIns).op).opcode) != (EVMConstants.default__.INVALID):
+                            d_572_nextPC_: int
+                            d_572_nextPC_ = (d_571_s_).StartAddressNextSeg()
+                            _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.PC() == 0x"))) + (Hex.default__.NatToHex(d_572_nextPC_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
+                            d_573_n_: int
+                            d_573_n_ = ((xs)[0]).StackEffect()
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.Operands() == s0.Operands()"))).VerbatimString(False))
-                            if (d_561_n_) >= (0):
+                            if (d_573_n_) >= (0):
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " + "))).VerbatimString(False))
-                                _dafny.print(_dafny.string_of(d_561_n_))
+                                _dafny.print(_dafny.string_of(d_573_n_))
                             elif True:
                                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " - "))).VerbatimString(False))
-                                _dafny.print(_dafny.string_of((0) - (d_561_n_)))
+                                _dafny.print(_dafny.string_of((0) - (d_573_n_)))
                         elif True:
                             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  Last instruction is invalid"))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     elif True:
-                        d_562___mcc_h13_ = source44_.s
-                        d_563___mcc_h14_ = source44_.wpOp
-                        d_564___mcc_h15_ = source44_.wpCap
-                        d_565___mcc_h16_ = source44_.stacks
-                        d_566_s_ = d_562___mcc_h13_
+                        d_574___mcc_h13_ = source46_.s
+                        d_575___mcc_h14_ = source46_.wpOp
+                        d_576___mcc_h15_ = source46_.wpCap
+                        d_577___mcc_h16_ = source46_.stacks
+                        d_578_s_ = d_574___mcc_h13_
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ensures s'.RETURNS?\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "{\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  ValidJumpDest(s0);\n"))).VerbatimString(False))
@@ -288,10 +288,10 @@ class default__:
                     _dafny.print(_dafny.string_of(len((((xs)[0]).s).Ins())))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "}\n"))).VerbatimString(False))
-                    in55_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in56_ = (num) + (1)
-                    xs = in55_
-                    num = in56_
+                    in59_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in60_ = (num) + (1)
+                    xs = in59_
+                    num = in60_
                     raise _dafny.TailCall()
                 break
 
@@ -300,15 +300,15 @@ class default__:
         while True:
             with _dafny.label():
                 if (len(xs)) > (0):
-                    d_567_k_: _dafny.Seq
-                    d_567_k_ = PrettyIns.default__.PrintInstructionToDafny((xs)[0], pos, (pos) + (1))
+                    d_579_k_: _dafny.Seq
+                    d_579_k_ = PrettyIns.default__.PrintInstructionToDafny((xs)[0], pos, (pos) + (1))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  "))).VerbatimString(False))
-                    _dafny.print((d_567_k_).VerbatimString(False))
+                    _dafny.print((d_579_k_).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    in57_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in58_ = (pos) + (1)
-                    xs = in57_
-                    pos = in58_
+                    in61_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in62_ = (pos) + (1)
+                    xs = in61_
+                    pos = in62_
                     raise _dafny.TailCall()
                 break
 

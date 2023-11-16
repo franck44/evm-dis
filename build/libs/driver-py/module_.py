@@ -25,6 +25,10 @@ import PrettyIns
 import PrettyPrinters
 import ProofObjectBuilder
 import ArgParser
+import SeqOfSets
+import PartitionMod
+import Automata
+import Minimiser
 import CFGraph
 import BuildCFGraph
 import Driver

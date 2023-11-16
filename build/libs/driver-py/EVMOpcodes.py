@@ -104,7 +104,7 @@ class Opcode:
             d_35___mcc_h27_ = source0_.minOperands
             d_36___mcc_h28_ = source0_.pushes
             d_37___mcc_h29_ = source0_.pops
-            return ((((EVMConstants.default__.ADDRESS) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.BASEFEE))) and (((self).pops) == (0))) and (((self).pushes) == (1))
+            return ((EVMConstants.default__.ADDRESS) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.BASEFEE))
         elif source0_.is_MemOp:
             d_38___mcc_h30_ = source0_.name
             d_39___mcc_h31_ = source0_.opcode
