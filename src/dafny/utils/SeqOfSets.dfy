@@ -85,10 +85,14 @@ module SeqOfSets {
   lemma SubLessThan<T>(xt: seq<set<T>>, t: T)
     requires t in SetU(xt)
     ensures exists k:: 0 <= k < |xt| && t in xt[k]
-  { //  Thanks Dafny 
+  { //  Thanks Dafny
   }
 
-  lemma foo802<T>(xs: seq<set<T>>)
+  /**   
+    *   If any two disjoint then the head set 
+    *   does not intersection the union of the tail.
+    */
+  lemma DisjointFirst<T>(xs: seq<set<T>>)
     requires DisjointAnyTwo(xs)
     requires |xs| >= 1
     ensures xs[0] * SetU(xs[1..]) == {}
@@ -139,7 +143,7 @@ module SeqOfSets {
       calc == {
         |SetU(xs)|;
         |xs[0] + SetU(xs[1..])|;
-         { foo802(xs); }
+         { DisjointFirst(xs); }
         |xs[0]| + |SetU(xs[1..])|;
       >= { MinNumberOfClasses(xs[1..]); }
         |xs[0]| + |xs[1..]|;
@@ -259,8 +263,8 @@ module SeqOfSets {
     *   The size of set that has only nat < n is bounded by n.
     */
   lemma SizeOfNatsUpToNBound(n: nat, Y: set<nat>)
-    requires Y <= set x {:nowarn} | 0 <= x < n
-    ensures |Y| <= n
+    requires Y == set x {:nowarn} | 0 <= x < n
+    ensures |Y| == n
   {
     if n == 0 || Y == {} {
       //  Thanks Dafny
@@ -272,7 +276,7 @@ module SeqOfSets {
       SizeOfNatsUpToNBound(n - 1, X);
     } else {
       assert n - 1 !in Y;
-      assert Y <= set x {:nowarn} | 0 <= x < n - 1;
+      assert Y == set x {:nowarn} | 0 <= x < n - 1;
       SizeOfNatsUpToNBound(n - 1, Y);
     }
   }
