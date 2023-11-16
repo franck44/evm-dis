@@ -40,8 +40,7 @@ module EVMOpcodes {
                 minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
     | KeccakOp(name: string, opcode: u8, minCapacity: nat := 0,
                minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | EnvOp(name: string, opcode: u8, minCapacity: nat := 1,
-            minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
+    | EnvOp(name: string, opcode: u8, minCapacity: nat,  minOperands: nat, pushes: nat, pops: nat)
     | MemOp(name: string, opcode: u8, minCapacity: nat := 0,
             minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
     | StorageOp(name: string, opcode: u8, minCapacity: nat := 0,
@@ -65,7 +64,7 @@ module EVMOpcodes {
       case CompOp(_, _, _, _, _, _)      => LT <= opcode <= ISZERO && pops >= pushes
       case BitwiseOp(_, _, _, _, _, _)   => AND <= opcode <= SAR
       case KeccakOp(_, _, _, _, _, _)    => opcode == KECCAK256 && pops == 2 && pushes == 1
-      case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE && pops == 0 && pushes == 1
+      case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE 
       case MemOp(_, _, _, _, _, _)       => MLOAD <= opcode <= MSTORE8
       case StorageOp(_, _, _, _, _, _)   => SLOAD <= opcode <= SSTORE
       case JumpOp(_, _, _, _, _, _)      => (JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV) && pushes == 0 
