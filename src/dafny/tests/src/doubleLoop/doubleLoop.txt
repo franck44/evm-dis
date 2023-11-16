@@ -1,0 +1,95 @@
+
+======= src/dafny/tests/src/doubleLoop copy/doubleLoop.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let r := 1
+            let i := 0
+            for { } lt(i, 10) { }
+            {
+                let k := 0
+                for { } lt(k, 10) { }
+                { r := mul(r, 2) }
+                r := add(r, 1)
+            }
+            mstore(0x40, r)
+            return(0x40, 32)
+        }
+    }
+}
+
+
+Binary representation:
+60015f5b600a81106014575060405260206040f35b905f5b600a8110602c57506001600a91019190506003565b9060020290601756
+
+Text representation:
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":119:120   */
+  0x01
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":140:141   */
+  0x00
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":144:153   */
+tag_1:
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":150:152   */
+  0x0a
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":144:153   */
+  dup2
+  lt
+  tag_2
+  jumpi
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":280:295   */
+  pop
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":287:291   */
+  0x40
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":280:295   */
+  mstore
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":313:315   */
+  0x20
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":307:311   */
+  0x40
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":300:316   */
+  return
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":158:274   */
+tag_2:
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":174:184   */
+  swap1
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":183:184   */
+  0x00
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":187:196   */
+tag_4:
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":193:195   */
+  0x0a
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":187:196   */
+  dup2
+  lt
+  tag_5
+  jumpi
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":256:265   */
+  pop
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":263:264   */
+  0x01
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":150:152   */
+  0x0a
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":256:265   */
+  swap2
+  add
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":158:274   */
+  swap2
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":154:157   */
+  swap1
+  pop
+  jump(tag_1)
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":201:242   */
+tag_5:
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":220:229   */
+  swap1
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":227:228   */
+  0x02
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":220:229   */
+  mul
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":201:242   */
+  swap1
+    /* "src/dafny/tests/src/doubleLoop copy/doubleLoop.yul":197:200   */
+  jump(tag_4)
+
