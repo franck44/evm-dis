@@ -24,7 +24,7 @@ module OpcodeDecoder {
   import opened EVMOpcodes
   import opened EVMConstants
 
-  /**
+  /** 
     *   Decode an opcode.
     *   @param op   The hex/u8 value to decode.
     *   @returns    The readable opcode that corresponds to `op`.
@@ -64,32 +64,32 @@ module OpcodeDecoder {
     // 0x20s
     case KECCAK256 => KeccakOp("KECCAK256", KECCAK256)
     // 0x30s: Environment Information
-    case ADDRESS        => EnvOp("ADDRESS", ADDRESS)
-    case BALANCE        => EnvOp("BALANCE", BALANCE)
-    case ORIGIN         => EnvOp("ORIGIN", ORIGIN)
-    case CALLER         => EnvOp("CALLER", CALLER)
-    case CALLVALUE      => EnvOp("CALLVALUE", CALLVALUE)
-    case CALLDATALOAD   => EnvOp("CALLDATALOAD", CALLDATALOAD)
-    case CALLDATASIZE   => EnvOp("CALLDATASIZE", CALLDATASIZE)
-    case CALLDATACOPY   => EnvOp("CALLDATACOPY", CALLDATACOPY)
-    case CODESIZE       => EnvOp("CODESIZE", CODESIZE)
-    case CODECOPY       => EnvOp("CODECOPY", CODECOPY)
-    case GASPRICE       => EnvOp("GASPRICE", GASPRICE)
-    case EXTCODESIZE    => EnvOp("EXTCODESIZE", EXTCODESIZE)
-    case EXTCODECOPY    => EnvOp("EXTCODECOPY", EXTCODECOPY)
-    case RETURNDATASIZE => EnvOp("RETURNDATASIZE", RETURNDATASIZE)
-    case RETURNDATACOPY => EnvOp("RETURNDATACOPY", RETURNDATACOPY)
-    case EXTCODEHASH    => EnvOp("EXTCODEHASH", EXTCODEHASH)
+    case ADDRESS        => EnvOp("ADDRESS", ADDRESS, 1, 0, 1, 0)
+    case BALANCE        => EnvOp("BALANCE", BALANCE, 0, 1, 1, 1)
+    case ORIGIN         => EnvOp("ORIGIN", ORIGIN, 1, 0, 1, 0)
+    case CALLER         => EnvOp("CALLER", CALLER, 1, 0, 1, 0)
+    case CALLVALUE      => EnvOp("CALLVALUE", CALLVALUE, 1, 0, 1, 0)
+    case CALLDATALOAD   => EnvOp("CALLDATALOAD", CALLDATALOAD, 0 , 1, 1, 1)
+    case CALLDATASIZE   => EnvOp("CALLDATASIZE", CALLDATASIZE, 1, 0, 1, 0)
+    case CALLDATACOPY   => EnvOp("CALLDATACOPY", CALLDATACOPY, 0, 3, 0, 3)
+    case CODESIZE       => EnvOp("CODESIZE", CODESIZE, 1, 0, 1, 0)
+    case CODECOPY       => EnvOp("CODECOPY", CODECOPY, 0, 3, 0, 3)
+    case GASPRICE       => EnvOp("GASPRICE", GASPRICE, 1, 0, 1, 0)
+    case EXTCODESIZE    => EnvOp("EXTCODESIZE", EXTCODESIZE, 0, 1, 1, 1)
+    case EXTCODECOPY    => EnvOp("EXTCODECOPY", EXTCODECOPY, 0, 4, 0, 4)
+    case RETURNDATASIZE => EnvOp("RETURNDATASIZE", RETURNDATASIZE, 1, 0, 1, 0)
+    case RETURNDATACOPY => EnvOp("RETURNDATACOPY", RETURNDATACOPY, 0, 3, 0, 3)
+    case EXTCODEHASH    => EnvOp("EXTCODEHASH", EXTCODEHASH, 0, 1, 1, 1)
     // 0x40s: Block Information
-    case BLOCKHASH   => EnvOp("BLOCKHASH", BLOCKHASH)
-    case COINBASE    => EnvOp("COINBASE", COINBASE)
-    case TIMESTAMP   => EnvOp("TIMESTAMP", TIMESTAMP)
-    case NUMBER      => EnvOp("NUMBER", NUMBER)
-    case DIFFICULTY  => EnvOp("DIFFICULTY", DIFFICULTY)
-    case GASLIMIT    => EnvOp("GASLIMIT", GASLIMIT)
-    case CHAINID     => EnvOp("CHAINID", CHAINID)
-    case SELFBALANCE => EnvOp("SELFBALANCE", SELFBALANCE)
-    case BASEFEE     => EnvOp("BASEFEE", BASEFEE)
+    case BLOCKHASH   => EnvOp("BLOCKHASH", BLOCKHASH, 0, 1, 1, 1)
+    case COINBASE    => EnvOp("COINBASE", COINBASE, 1, 0, 1, 0)
+    case TIMESTAMP   => EnvOp("TIMESTAMP", TIMESTAMP, 1, 0, 1, 0)
+    case NUMBER      => EnvOp("NUMBER", NUMBER, 1, 0, 1, 0)
+    case DIFFICULTY  => EnvOp("DIFFICULTY", DIFFICULTY, 1, 0, 1, 0) 
+    case GASLIMIT    => EnvOp("GASLIMIT", GASLIMIT, 1, 0, 1, 0)
+    case CHAINID     => EnvOp("CHAINID", CHAINID, 1, 0, 1, 0)
+    case SELFBALANCE => EnvOp("SELFBALANCE", SELFBALANCE, 1, 0, 1, 0)
+    case BASEFEE     => EnvOp("BASEFEE", BASEFEE, 1, 0, 1, 0)
     // 0x50s: Stack, Memory, Storage and Flow
     case POP      => StackOp("POP", POP, 0, 1, 0, 1)
     case MLOAD    => MemOp("MLOAD", MLOAD, 0, 1, 1, 1)
@@ -183,8 +183,8 @@ module OpcodeDecoder {
     // 0xf0
     case CREATE => SysOp("CREATE", CREATE, 3, 0, 2, 3)
     //  @todo: verify call efeect on stack
-    case CALL => SysOp("CALL", CALL, 0, 7, 7, 7)
-    case CALLCODE => SysOp("CALLCODE", CALLCODE, 0, 7, 7, 7)
+    case CALL => SysOp("CALL", CALL, 1, 7, 1, 7)
+    case CALLCODE => SysOp("CALLCODE", CALLCODE, 1, 7, 1, 7)
     case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 0)
     case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 0, 6, 0, 6)
     case CREATE2 => SysOp("CREATE2", CREATE2)
