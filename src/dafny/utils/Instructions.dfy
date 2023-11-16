@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./int.dfy"
+include "./int.dfy" 
 include "./Hex.dfy"
 include "../utils/EVMOpcodes.dfy"
 include "../utils/StackElement.dfy"
@@ -235,18 +235,18 @@ module Instructions {
         if s.Size() >= pops && !cond then
           assert pops == 2;
           assert pushes == 1;
-          s.PopN(pops).Push(Random()).Skip(1)
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Stack underflow")
 
       case CompOp(_, _, _, _, pushes, pops)       =>
         //  Same as Arithmetic operator, except some have only one operand.
         if s.Size() >= pops && !cond then
-          s.PopN(pops).Push(Random()).Skip(1)
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Stack underflow")
 
       case BitwiseOp(_, _, _, _, pushes, pops)    =>
         if s.Size() >= pops && !cond then
-          s.PopN(pops).Push(Random()).Skip(1)
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Stack underflow")
 
       case KeccakOp(_, _, _, _, pushes, pops)     =>
@@ -257,21 +257,22 @@ module Instructions {
         else Error("Stack underflow")
 
       case EnvOp(_, _, _, _, pushes, pops)        =>
-        if !cond then
-          assert pops == 0;
-          assert pushes == 1;
-          s.Push(Random()).Skip(1)
-        else Error()
+        if s.Size() >= pops && !cond then
+        //   assert pops == 0; 
+        //   assert pushes <= 1;
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
+        else Error("EnvOp error")
 
       case MemOp(_, _, _, _, pushes, pops)        =>
+        // assert pushes == 1;
         if s.Size() >= pops && !cond then
-          s.PopN(pops).Push(Random()).Skip(1)
-        else Error()
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
+        else Error("MemOp error")
 
       case StorageOp(_, _, _, _, pushes, pops)    =>
         if s.Size() >= pops && !cond then
-          s.PopN(pops).Push(Random()).Skip(1)
-        else Error()
+          s.PopN(pops).PushNRandom(pushes).Skip(1)
+        else Error("Storage Op error")
 
       case JumpOp(_, opcode, _, _, pushes, pops)  =>
         assert pushes == 0;
@@ -281,7 +282,7 @@ module Instructions {
           if s.Size() >= 1 && cond then
             match s.Peek(0)
             case Value(v) => s.Pop().Goto(v as nat)
-            case Random(_) => Error()
+            case Random(_) => Error("Jump to Random() error")
           else
             Error("Cannot execute JUMP/exit false or stack underflow")
         else if opcode == JUMPI then
@@ -290,7 +291,7 @@ module Instructions {
             case Value(v) =>
               if cond then s.PopN(2).Goto(v as nat)
               else s.PopN(2).Skip(1)
-            case Random(_) => Error()
+            case Random(_) => Error("JumpI to Random() error")
           else
             Error("Cannot execute JUMPI/strack underflow")
         else
@@ -303,10 +304,10 @@ module Instructions {
           assert pops == 0;
           assert pushes == 1;
           s.Push(Random()).Skip(1)
-        else Error()
+        else Error("RunOp error")
 
       case StackOp(_, opcode, _, _, pushes, pops) =>
-        if opcode == POP && s.Size() >= 1 && ! cond then
+        if opcode == POP && s.Size() >= 1 && !cond then
           assert pushes == 0 && pops == 1;
           s.Pop().Skip(1)
         else if PUSH0 <= opcode <= PUSH32 && !cond then
@@ -320,18 +321,18 @@ module Instructions {
           assert pushes == pops == 0;
           s.Swap((opcode - SWAP1) as nat + 1).Skip(1)
         else
-          Error()
+          Error("Stack Op error")
 
       case LogOp(_, _, _, _, pushes, pops) =>
         assert pushes == 0;
         if s.Size() >= pops && !cond then
           s.PopN(pops).Skip(1)
-        else Error()
+        else Error("LogOp error")
 
       case SysOp(_, _, _, _, pushes, pops) =>
         if s.Size() >= pops && !cond then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
-        else Error()
+        else Error("SysOp error")
     }
 
     /**

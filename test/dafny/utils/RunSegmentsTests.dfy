@@ -167,7 +167,7 @@ module RuNSegTests {
     var s5 := y[1].Run(s4, false);
     expect s5.EState?;
     //  We end up after RETURN.
-    expect s5 == EState(0x12 + 1, [Value(64), Value(32), Random()]);
+    expect s5 == EState(0x12 + 1, [Value(64), Value(32)]);
 
     //  Now test JUMPI false (we go directly to successor of JUMPI)
     //  y[2] starts at 0x13, and JUMPI
@@ -185,7 +185,7 @@ module RuNSegTests {
     //  y[1] starts at 0x0a, and RETURN
     expect s3'.pc == y[1].StartAddress();
     var s4' := y[1].Run(s3', false);
-    expect s4' == EState(0x12 + 1,  [Value(64), Value(32), Random()]);
+    expect s4' == EState(0x12 + 1,  [Value(64), Value(32)]);
 
   }
 
@@ -272,11 +272,9 @@ module RuNSegTests {
 
     expect s3'.EState?;
     var s4' := y[4].ins[1].NextState(s3');
-    print "s4:", s4', "\n";
 
     expect s4'.EState?;
     var s5' := y[4].lastIns.NextState(s4', true);
-    print "s5:", s5', "\n";
 
     expect s3.EState?;
     expect s3.pc == y[1].StartAddress();

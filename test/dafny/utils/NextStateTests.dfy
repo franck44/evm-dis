@@ -55,7 +55,7 @@ module NextStateTests {
   }
 
   /** Concrete tests. */
-  method {:test} ArithsTests()
+  method {:test} ArithsTests() 
   {
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
@@ -186,11 +186,11 @@ module NextStateTests {
   method {:test} MemTests()
   {
     {
-      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random(), Value(0)]);
       var i := Instruction(Decode(MSTORE));
       expect i.NextState(s, false).EState?;
       expect i.NextState(s, false).pc == 5;
-      expect i.NextState(s, false).Peek(0) == Random();
+      expect i.NextState(s, false).Peek(0) == Value(0);
       expect i.NextState(s, true).Error?;
     }
     {
@@ -213,11 +213,11 @@ module NextStateTests {
   method {:test} StorageTests()
   {
     {
-      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random(), Value(10)]);
       var i := Instruction(Decode(SSTORE));
       expect i.NextState(s, false).EState?;
       expect i.NextState(s, false).pc == 5;
-      expect i.NextState(s, false).Peek(0) == Random();
+      expect i.NextState(s, false).Peek(0) == Value(10);
       expect i.NextState(s, true).Error?;
     }
     {
