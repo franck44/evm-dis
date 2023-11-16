@@ -17,6 +17,7 @@ include "./LinSegments.dfy"
 include "./Automata.dfy"
 include "./Minimiser.dfy"
 include "./Partition.dfy"
+include "./SeqOfSets.dfy"
 
 /** Provide parsing of commadline options. 
   * 
@@ -31,6 +32,7 @@ module CFGraph {
   import opened Int
   import Minimiser
   import opened PartitionMod
+  import opened SeqOfSets
 
   /**
     *   A node.
@@ -82,7 +84,7 @@ module CFGraph {
     {
       //   assume forall k:: 0 <= k < |edges| ==> edges[k].src.seg.Some? ==> edges[k].src.seg.v < maxSegNum;
       //   assume forall k:: 0 <= k < |edges| ==> edges[k].tgt.seg.Some? ==> edges[k].tgt.seg.v < maxSegNum;
-      var r := EdgesToMap(edges, segUpperBound := maxSegNum); 
+      var r := EdgesToMap(edges, segUpperBound := maxSegNum);
       var idToNum := r.2;
       var numToCFGNode := r.3;
       var lastStateNum := r.0;
@@ -95,10 +97,15 @@ module CFGraph {
       assert forall k:: k in numToCFGNode.Keys  ==> numToCFGNode[k] in idToNum.Keys;
       var a := Auto(lastStateNum + 1, transitions);
       if lastStateNum > 0 then
-        var s := set q | 0 <= q <= lastStateNum;
+        var s := set q {:nowarn} | 0 <= q < lastStateNum + 1;
         assert {0} <= s;
+        // assume AllNonEmpty([s]);
+        // assume DisjointAnyTwo([s]);
+        SizeOfNatsUpToNBound(lastStateNum + 1, s);
+        assert SetN([s], lastStateNum + 1);
         var p: ValidPartition := Partition(lastStateNum + 1, [s]);
-        var vp: Minimiser.ValidPair := Minimiser.Pair(a, p);
+        var p1 := SegNumPartition(p, numToCFGNode, maxSegNum);
+        var vp: Minimiser.ValidPair := Minimiser.Pair(a, p1);
         var minim := Minimiser.Minimise(vp);
         assert minim.p.n == vp.p.n == a.numStates;
         //  now recreate a CFGraph
@@ -116,6 +123,8 @@ module CFGraph {
         BoolCFGraph([], maxSegNum)
     }
 
+
+
     /** Print to edges DOT format. */
     function DOTPrintEdges(xe: seq<BoolEdge> := edges): string
     {
@@ -128,19 +137,42 @@ module CFGraph {
       requires forall k:: k in g ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in g ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
+      var returnColour := "style=filled,color=olivedrab,fontcolor=white,";
+      var revertColour := "style=filled,color=firebrick,fontcolor=white,";
+      var branchColour := ""; // style=filled,color=white";
+      
       if |g| > 0 then
         //  check and print src component
         var srctxt :=
           if g[0].src !in printed then
             var numSeg := g[0].src.seg;
             var lab := if numSeg.Some? then DOTSeg(xs, numSeg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
-            "s" + g[0].src.ToString() + " [label=<\n" + lab + ">]\n"
+            //  if node is revert or stop colour red, if return  green, otherwise nothing
+            var nodeColour :=
+              if numSeg.Some? then
+                match xs[numSeg.v]
+                case STOPSeg(_, _, _) => revertColour 
+                case RETURNSeg(_, _, _) =>  returnColour 
+                case JUMPISeg(_, _, _) => branchColour 
+                case _ => ""
+              else
+                "";
+            "s" + g[0].src.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
           else "";
         var tgttxt :=
           if g[0].tgt !in printed && g[0].src != g[0].tgt then
             var numSeg := g[0].tgt.seg;
             var lab := if numSeg.Some? then DOTSeg(xs, numSeg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
-            "s" + g[0].tgt.ToString() + " [label=<\n" + lab + ">]\n"
+            var nodeColour :=
+              if numSeg.Some? then
+                match xs[numSeg.v]
+                case STOPSeg(_, _, _) => revertColour 
+                case RETURNSeg(_, _, _) => returnColour 
+                case JUMPISeg(_, _, _) =>  branchColour 
+                case _ => ""
+              else
+                "";
+            "s" + g[0].tgt.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
           else "";
         srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
       else ""
@@ -158,6 +190,38 @@ module CFGraph {
 
   //    Helpers
 
+  /**
+    *   Start with a partition such that every class the same segment number.
+    *   @param  n  the max seg number.
+    *   @param  p  An initial partition, should be [{0, ... n}]
+    */
+  function SegNumPartition(p: ValidPartition, m: map<nat, CFGNode>, maxSegNum: nat, n: nat := 0): (p': ValidPartition)
+    requires n <= maxSegNum + 1
+    requires forall k:: 0 <= k < p.n ==> k in m.Keys
+    // requires forall
+    ensures p'.n == p.n
+    // ensures forall k:: 0 <= k < |p'.elem| ==>
+    //     (forall x, x':: x in p'.elem[k] && x' in p'.elem[k] ==>  m[x].seg == m[x'].seg)
+    decreases maxSegNum - n
+
+  {   //  there is maxSeg + 1 segments
+      // NotEmpty(p);
+      // ValidMaxClasses(p);
+      // AllClassesInSetU(p);
+    if n <= maxSegNum then
+      //  split
+      var f: nat --> bool := (x: nat) requires 0 <= x < p.n => m[x].seg == Some(n);
+      // assert n < |p.elem|;
+      var p1 := p.SplitAt(f, |p.elem| - 1);
+      // assert  (forall x, x':: x in p.elem[|p.elem| - 1] && x' in p.elem[|p.elem| - 1] ==>  m[x].seg == m[x'].seg);
+      // assume forall k:: 0 <= k < p1.n ==> k in m.Keys;
+      SegNumPartition(p1, m, maxSegNum, n + 1)
+    else
+      //  collect states with seg number n
+      p
+
+  }
+
   function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], reverseSeenNodes: map<nat, CFGNode> := map[0 := CFGNode([], Some(0))] ,builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0, ghost segUpperBound: nat ): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>, map<nat, CFGNode>))
     requires index <= |edges|
     // requires forall i, i':: 0 <= i < i' < |edges| ==> edges[i] != edges[i']
@@ -174,6 +238,7 @@ module CFGraph {
     requires forall k:: k in reverseSeenNodes.Keys ==> reverseSeenNodes[k] in seenNodes.Keys
     requires forall n:: 0 <= n <= lastNum ==> n in reverseSeenNodes.Keys
     requires forall k:: k in reverseSeenNodes.Keys ==> reverseSeenNodes[k].seg.Some? ==> reverseSeenNodes[k].seg.v <= segUpperBound
+    requires lastNum + 1 >= |reverseSeenNodes|
 
     // requires forall k:: k in seenNodes <==> k in reverseSeenNodes.Values
     // requires forall k:: k in reverseSeenNodes ==> k in reverseSeenNodes.Values
@@ -196,6 +261,7 @@ module CFGraph {
     ensures forall k:: k in a.3.Keys ==> a.3[k] in a.2.Keys
     ensures forall n:: 0 <= n <= a.0 ==> n in a.3.Keys
     ensures forall k:: k in a.3.Keys ==> a.3[k].seg.Some? ==> a.3[k].seg.v <= segUpperBound
+    ensures a.0 + 1 >= |a.3|
     // ensures forall k:: k in a.1 ==>
     //                      exists src, tgt, lab: bool::
     //                        && src in a.2
