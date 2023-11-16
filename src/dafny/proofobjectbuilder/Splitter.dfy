@@ -40,6 +40,8 @@ module Splitter {
       JUMPISeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
     case RETURN =>
       RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs))
+    case REVERT => 
+      STOPSeg(xs, lastInst, DeltaOperandsHelper(xs)) 
     case STOP   =>
       STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case _ =>
