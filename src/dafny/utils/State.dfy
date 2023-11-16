@@ -13,7 +13,8 @@
  */
 
 include "./int.dfy"
-include "./StackElement.dfy" 
+include "./Hex.dfy"
+include "./StackElement.dfy"
 
 /**
   *  Provides Abstract States.
@@ -21,12 +22,13 @@ include "./StackElement.dfy"
 module State {
 
   import opened Int
+  import opened Hex
   import opened StackElement
 
   /** The stack elements can be either concrete valies of unknown which is
     * captured by Random().
     */
-//   datatype StackElem = Value(v: u256) | Random(s: string := "")
+  //   datatype StackElem = Value(v: u256) | Random(s: string := "")
 
   /**
     *   A ValidState is a state from whihc we can execute an instruction.
@@ -46,8 +48,16 @@ module State {
                   | Error(msg: string := "Error")
   {
 
+    function ToString(): string
+    {
+      match this
+      case EState(pc, stack) =>
+        "(pc=0x" + NatToHex(pc) + " stack:[" + StackToString(stack) + "])"
+      case Error(m) => "ErrorState " + m
+    }
+
     /** Size of the stack. */
-    function Size(): nat 
+    function Size(): nat
       requires this.EState?
     {
       |this.stack|
@@ -135,6 +145,14 @@ module State {
       this.(stack := this.stack[0 := nth][n := top])
     }
 
+  }
+
+  //    Helpers
+  function StackToString(s: seq<StackElem>): string
+  {
+    if |s| == 0 then ""
+    else
+      s[0].ToString() + "," + StackToString(s[1..])
   }
 
 

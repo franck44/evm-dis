@@ -13,6 +13,7 @@
  */
 
 include "./int.dfy"
+include "./Hex.dfy"
 
 /**
   *  Provides Abstract Stack e;ements.
@@ -20,11 +21,19 @@ include "./int.dfy"
 module StackElement {
 
   import opened Int
+  import opened Hex
 
   /** The stack elements can be either concrete valies of unknown which is
     * captured by Random().
     */
   datatype StackElem = Value(v: u256) | Random(s: string := "") {
+
+    function ToString(): string {
+        match this
+            case Value(v) => NatToString(v as nat) + 
+                "(0x" + NatToHex(v as nat) + ")"
+            case Random(_) => "?"
+    }
 
     function Extract(): u256 
         requires this.Value?
