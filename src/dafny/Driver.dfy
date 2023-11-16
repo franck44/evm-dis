@@ -23,7 +23,7 @@ include "./utils/MiscTypes.dfy"
   /**
     *  Provides input reader and write out to stout.
     */
-module Driver {
+module Driver { 
 
   import opened BinaryDecoder
   import opened Splitter
