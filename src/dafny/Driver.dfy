@@ -128,9 +128,6 @@ module Driver {
               print "Segment 0 does not start at address 0.\n";
             } else {
               var g := BuildCFGV4(y, maxDepth) ;
-              print "CFG\n";
-              print g.DOTPrint(y);
-
               print "Computing Minimised CFG\n";
               var g' := g.Minimise();
               expect g'.IsValid();
@@ -140,7 +137,7 @@ module Driver {
             }
 
           }
-
+ 
         case Failure(m) =>
       }
     }
@@ -152,7 +149,6 @@ module Driver {
     *  Decode a char into a digit.
     */
   function CharToDigit(c: char): (r: Option<nat>)
-    // requires '0' <= c < '9'
     ensures r.Some? ==> 0 <= r.v <= 9
   {
     match c
