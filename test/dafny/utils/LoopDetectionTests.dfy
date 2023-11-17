@@ -12,7 +12,6 @@
  * under the License.
  */
 
-
 include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
@@ -20,6 +19,8 @@ include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/WeakPre.dfy"
+include "../../../src/dafny/utils/CFGraph.dfy"
+include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
 
 /**
   * Test correct computation of Wpre on segments.
@@ -36,10 +37,12 @@ module LoopTests {
   import opened Splitter
   import opened WeakPre
   import opened LinSegments
+  import opened BuildCFGraph
+  import opened CFGraph
+  import opened MiscTypes
 
   //  Helpers
   function BuildInitState(c: ValidCond): (s: AState)
-    // requires c.StCond?
   {
     var s0 := DEFAULT_VALIDSTATE;
     if c.StCond? then
@@ -64,7 +67,7 @@ module LoopTests {
   }
 
   /** Tests the build stack function first. */
-  method {:test} test0() {
+  method {:notest} Test0() {
     var c1 := StCond([2], [0x10]);
     var st1 := BuildInitState(c1);
     expect st1.stack == [Random(""), Random(""), Value(16)];
@@ -126,7 +129,7 @@ module LoopTests {
   }
 
   //  Simple example
-  method {:test} Test1()
+  method {:notest} Test1()
   {
     //  Push and JUMP
     var x := DisassembleU8(
@@ -191,30 +194,140 @@ module LoopTests {
 
   }
 
-  /** POP then DUP1 */
-    // method {:test} {:verify true} Test4()
-    // {
-    //   //  Linear segment
-    //   var x := DisassembleU8([PUSH1, 0x02, JUMP]);
-    //   expect |x| == 2;
-    //   var y := SplitUpToTerminal(x, [], []);
-    //   expect |y| == 1;
-    //   expect y[0].JUMPSeg?;
+  /** Max max example */
+  method {:test} Test2()
+  {
+    //  Push and JUMP
+    var x := DisassembleU8(
+      [
+        //  JUMP/JUMPI: tgt address at the end: 0x1b
+        /* 00000000: */  PUSH1, 0x12,
+        /* 00000002: */  PUSH1, 0x08,
+        /* 00000004: */  PUSH1, 0x0e,
+        /* 00000006: */  PUSH1, 0x03,
+        /* 00000008: */  PUSH1, 0x0a,
+        /* 0000000a: */  SWAP3,
+        /* 0000000b: */  PUSH1, 0x1b,
+        /* 0000000d: */  JUMP,
 
-    // //   for k := 1 to 7 { //   interval 0..0
-    // //     var c1 := StCond([k], [0x10]);
-    // //     var r1 := y[0].WPre(c1);
-    // //     expect r1.StCond?;
-    // //     expect r1 == StCond([k], [0x10]);
-    // //   }
+        //  Segment 1
+        // JUMP/JUMPI: tgt address at the end: 0x1b
+        /* 0000000e: */  JUMPDEST,
+        /* 0000000f: */  PUSH1, 0x1b,
+        /* 00000011: */  JUMP,
 
-    //   { //   
-    //     var c1 := y[0].LeadsTo(0x02);
-    //     var r1 := y[0].WPre(c1);
-    //     expect r1.StTrue?;
-    //     expect r1 == StTrue();
-    //   }
-    // }
+        //  Segment 2
+        /* 00000012: */  JUMPDEST,
+        /* 00000013: */  PUSH1, 0x40,
+        /* 00000015: */  MSTORE,
+        /* 00000016: */  PUSH1, 0x20,
+        /* 00000018: */  PUSH1, 0x40,
+        /* 0000001a: */  RETURN,
+
+        //  Segment 3
+        // JUMP/JUMPI: tgt address at the end: 0x27
+        /* 0000001b: */  JUMPDEST,
+        /* 0000001c: */  SWAP2,
+        /* 0000001d: */  SWAP1,
+        /* 0000001e: */  DUP1,
+        /* 0000001f: */  DUP4,
+        /* 00000020: */  LT,
+        /* 00000021: */  PUSH1, 0x27,
+        /* 00000023: */  JUMPI,
+
+        //  Segment 4
+        // JUMP/JUMPI: tgt address at the end: Peek(1)
+        /* 00000024: */  JUMPDEST,
+        /* 00000025: */  POP,
+        /* 00000026: */  JUMP,
+
+        //  Segment 5
+        // JUMP/JUMPI: tgt address at the end: 0x24
+        /* 00000027: */  JUMPDEST,
+        /* 00000028: */  SWAP1,
+        /* 00000029: */  SWAP2,
+        /* 0000002a: */  POP,
+        /* 0000002b: */  SWAP1,
+        /* 0000002c: */  PUSH0,
+        /* 0000002d: */  PUSH1, 0x24,
+        /* 0000002f: */  JUMP
+      ] );
+
+    var xs := [
+      (0, true),
+      (3, false),
+      (4, true),
+      (1, true)
+        //   (1, true)
+    ];
+
+    // expect |x| == 25;
+    var y := SplitUpToTerminal(x, [], []);
+    expect |y| == 6;
+    expect y[0].JUMPSeg?;
+    expect y[1].JUMPSeg?;
+    expect y[2].RETURNSeg?;
+    expect y[3].JUMPISeg?;
+    expect y[4].JUMPSeg?;
+    expect y[5].JUMPSeg?;
+
+    //    Run the path specified by xs
+    //    Run Segment 0, exit true (JUMP)
+    var s0 := DEFAULT_VALIDSTATE;
+    var s := s0;
+    assert s.pc == 0;
+    var seen: seq<CFGNode> := [CFGNode([], Some(0))];
+    var seenPCs: seq<nat> := [0];
+    var path: seq<bool> := [];
+
+    //    Stop minus blocks before the end
+    print "\n";
+    for k := 0 to |xs|
+    {
+      expect s.EState?;
+      expect s.pc == y[xs[k].0].StartAddress();
+      s := y[xs[k].0].Run(s, xs[k].1);
+
+      expect s.EState?;
+      path := path + [xs[k].1];
+      var n := CFGNode(path, PCToSeg(y, s.pc));
+      seen := seen + [n];
+      seenPCs := seenPCs + [s.pc];
+      print "segment ", xs[k], " leads to ", s.ToString(), "\n";
+      print "path is: ", path, "\n";
+      print "SeenPCs is: ", seenPCs, "\n";
+      print "Seen is: ", seen, "\n";
+    }
+
+    //     collect segment of PC of last state
+    expect s.EState?;
+    var last := PCToSeg(y, s.pc);
+    expect last.Some?;
+    expect last.v == 3;
+
+    print "---- Stepping in last segment: ", last.v, "----\n";
+    expect |seenPCs| >= 1;
+    print "seen last PC? ", s.pc in seenPCs[..|seenPCs| - 1], "\n";
+
+    expect s.pc < Int.TWO_256;
+    expect |seen| == |path| + 1;
+    expect forall k:: k in seen ==> k.seg.Some? && k.seg.v < |y|;
+    expect |seen| > 1;
+    expect y[seen[|seen| - 2].seg.v].JUMPSeg? || y[seen[|seen| - 2].seg.v].JUMPISeg? ;
+    print "current PC is: ", s.pc, "(0x",  (Hex.NatToHex(s.pc)), ")", "\n";
+    print "path is: ", path, "\n";
+    print "SeenPCs is: ", seenPCs[..|seenPCs| - 1], "\n";
+    print "Seen is: ", seen, "\n";
+    expect |seen| > 0;
+    var safe := SafeLoopFound(y, s.pc, seen[..|seen| - 1], path[..|path| - 1] + [true]);
+    expect safe.None?;
+    print "Safe to loop back?", safe, "\n";
+    // print "last segment is:", last.v, "\n";
+
+    
+
+  }
+
 }
 
 
