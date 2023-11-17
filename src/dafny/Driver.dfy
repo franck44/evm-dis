@@ -23,7 +23,7 @@ include "./utils/MiscTypes.dfy"
   /**
     *  Provides input reader and write out to stout.
     */
-module Driver { 
+module Driver {
 
   import opened BinaryDecoder
   import opened Splitter
@@ -56,6 +56,7 @@ module Driver {
     optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
+    optionParser.AddOption("-r", "--raw", 1, "Display non-minimised and minimised CFGs");
 
     if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
@@ -128,6 +129,10 @@ module Driver {
               print "Segment 0 does not start at address 0.\n";
             } else {
               var g := BuildCFGV4(y, maxDepth) ;
+              if optionParser.GetArgs("--raw", optArgs).Success? {
+                print "Raw CFG\n";
+                print g.DOTPrint(y);
+              }
               print "Computing Minimised CFG\n";
               var g' := g.Minimise();
               expect g'.IsValid();
@@ -137,7 +142,7 @@ module Driver {
             }
 
           }
- 
+
         case Failure(m) =>
       }
     }
