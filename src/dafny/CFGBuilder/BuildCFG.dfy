@@ -10,7 +10,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations
  * under the License.
- */ 
+ */
 
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
@@ -35,12 +35,12 @@ module BuildCFGraph {
     *   3. add tests for all states that are similar not only most
     *       ancient one.
     */
-  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph) 
+  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph)
     requires numSeg < |xs|
     requires forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     requires |seen| == |seenPCs| == |path| + 1
     requires forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
-    requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some? 
+    requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
     requires s.PC() == seenPCs[|seenPCs| - 1]
     requires forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
     requires seen[|seen| - 1].seg.v == numSeg
@@ -59,7 +59,7 @@ module BuildCFGraph {
     decreases maxDepth
   {
     if maxDepth == 0 then
-      //  Indicate maxdepth reached by a loop 
+      //  Indicate maxdepth reached by a loop
       BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))], |xs| - 1)
     else if !xs[numSeg].HasExit(false) && !xs[numSeg].HasExit(true) then
       //  no successors
@@ -93,8 +93,9 @@ module BuildCFGraph {
             var nextSeg := PCToSeg(xs, rightSucc.PC());
             //  Check if this pc has been seen before
             if nextSeg.Some? then
-              //  Check if a previous CFGNode covers this node
+              //  Check if a previous CFGNode potentially covers this node
               if rightSucc.PC() !in seenPCs then
+                //  We have not seen this segment.pc before, continue to unfold
                 var src := CFGNode(path, Some(numSeg));
                 var tgt := CFGNode(path + [true], nextSeg);
                 var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()],path + [true]);
@@ -102,12 +103,19 @@ module BuildCFGraph {
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC
-                match SafeLoopFound(xs, rightSucc.PC(), seen, path)
+                match SafeLoopFound(xs, rightSucc.PC(), seen, path + [true])
                 case Some(prev) =>
+                  // the computation for this path sopts. We have discovered a
+                  //    lasso with the loop part being invariant under
+                  //    reachable PCs.
                   assert prev.seg.v < |xs|;
-                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, prev)], |xs|)
-                case None => 
-                  BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true,  CFGNode(path + [true]))])
+                  BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, prev)], |xs|)
+                case None =>
+                  //  Progress the DFS with a new node
+                  var src := CFGNode(path, Some(numSeg));
+                  var tgt := CFGNode(path + [true], nextSeg);
+                  var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()], path + [true]);
+                  gright.AddEdge(BoolEdge(src, true, tgt))
             else // Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true])) ])
           else // right successor of segment resulted in Error state
@@ -162,11 +170,13 @@ module BuildCFGraph {
     *
     *   @note   The seenOnPath has all the nodes seen before the current one.
     *           The current one has startAddress == pc.
+    *   @todo   Fix this as it does not compute the correct result.
+    *           Need to include resursion on the path in WPreSeqSegs.
     */
   function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, path: seq<bool>): Option<CFGNode>
     requires |xs| >= 1
     requires pc < Int.TWO_256
-    requires |seenOnPath| == |path| + 1
+    requires 0 < |seenOnPath| == |path|
     requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
     requires xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPSeg? || xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPISeg?
   {
