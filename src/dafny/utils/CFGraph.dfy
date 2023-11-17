@@ -34,6 +34,9 @@ module CFGraph {
   import opened PartitionMod
   import opened SeqOfSets
 
+  const returnColour := "style=filled,color=olivedrab,fontcolor=white,"
+  const revertColour := "style=filled,color=firebrick,fontcolor=white,"
+  const branchColour := "" // style=filled,color=white";
   /**
     *   A node.
     */
@@ -140,42 +143,27 @@ module CFGraph {
       var returnColour := "style=filled,color=olivedrab,fontcolor=white,";
       var revertColour := "style=filled,color=firebrick,fontcolor=white,";
       var branchColour := ""; // style=filled,color=white";
-      
+
       if |g| > 0 then
         //  check and print src component
         var srctxt :=
-          if g[0].src !in printed then
-            var numSeg := g[0].src.seg;
-            var lab := if numSeg.Some? then DOTSeg(xs, numSeg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
-            //  if node is revert or stop colour red, if return  green, otherwise nothing
-            var nodeColour :=
-              if numSeg.Some? then
-                match xs[numSeg.v]
-                case STOPSeg(_, _, _) => revertColour 
-                case RETURNSeg(_, _, _) =>  returnColour 
-                case JUMPISeg(_, _, _) => branchColour 
-                case _ => ""
-              else
-                "";
-            "s" + g[0].src.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
-          else "";
+          if g[0].src in printed then ""
+          else if g[0].src.seg.None? then "ErrorEnd <BR ALIGN=\"CENTER\"/>\n"
+          else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v]);
         var tgttxt :=
-          if g[0].tgt !in printed && g[0].src != g[0].tgt then
-            var numSeg := g[0].tgt.seg;
-            var lab := if numSeg.Some? then DOTSeg(xs, numSeg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
-            var nodeColour :=
-              if numSeg.Some? then
-                match xs[numSeg.v]
-                case STOPSeg(_, _, _) => revertColour 
-                case RETURNSeg(_, _, _) => returnColour 
-                case JUMPISeg(_, _, _) =>  branchColour 
-                case _ => ""
-              else
-                "";
-            "s" + g[0].tgt.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
-          else "";
+             if g[0].tgt in printed then ""
+          else if g[0].tgt.seg.None? then "ErrorEnd <BR ALIGN=\"CENTER\"/>\n"
+          else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v]);
         srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
       else ""
+    }
+
+    function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
+        requires n.seg.Some?
+    {
+      var lab := if n.seg.Some? then DOTSeg2(s, n.seg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
+      var nodeColour := SegColour(s);
+      "s" + n.ToString() + " [" + nodeColour + "label=<\n" + DOTSeg2(s, n.seg.v) + ">]\n"
     }
 
     /** Print the graph as a DOT digraph */
@@ -319,6 +307,24 @@ module CFGraph {
     requires numSeg < |xs|
   {
     var s := xs[numSeg];
+    var prefix := "Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "<BR ALIGN=\"CENTER\"/>\n";
+    var body := DOTIns(s.Ins());
+    prefix + body
+  }
+
+  function SegColour(s: ValidLinSeg): string
+  {
+    match s
+    case STOPSeg(_, _, _) => revertColour
+    case RETURNSeg(_, _, _) => returnColour
+    case JUMPISeg(_, _, _) =>  branchColour
+    case _ => ""
+  }
+
+  function DOTSeg2(s: ValidLinSeg, numSeg: nat): string
+    // requires numSeg < |xs|
+  {
+    // var s := xs[numSeg];
     var prefix := "Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "<BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
