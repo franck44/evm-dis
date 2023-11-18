@@ -53,6 +53,7 @@ module LinSegments {
     |   RETURNSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
     |   STOPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
     |   CONTSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+    |   INVALIDSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
   {
     /**
       * To be valid the type of the segment must agree with the type of
@@ -62,9 +63,10 @@ module LinSegments {
       match this
       case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
       case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
-      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN 
+      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
       case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
-      case CONTSeg(_, _, _) => true
+      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID
+      case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
     }
 
     /**
