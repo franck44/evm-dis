@@ -15,7 +15,7 @@
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
-
+include "./LoopResolver.dfy"
 /**
   * Computation of the CFG via some DFS.
   */
@@ -26,6 +26,7 @@ module BuildCFGraph {
   import opened State
   import opened CFGraph
   import opened WeakPre
+  import opened LoopResolver 
 
   /**
     *   1. First add path to state 
@@ -103,11 +104,12 @@ module BuildCFGraph {
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC
-                match SafeLoopFound(xs, rightSucc.PC(), seen, path + [true])
+                match SafeLoopFound(xs, rightSucc.PC(), seen) // , path + [true])
                 case Some(prev) =>
                   // the computation for this path sopts. We have discovered a
                   //    lasso with the loop part being invariant under
                   //    reachable PCs.
+                //   assert prev.seg.Some?;
                   assert prev.seg.v < |xs|;
                   BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, prev)], |xs|)
                 case None =>
@@ -126,82 +128,6 @@ module BuildCFGraph {
       BoolCFGraph(leftBranch.edges + rightBranch.edges, |xs| - 1)
 
   }
-
-  //  Helpers
-
-  function FindFirstNodeWithPC2(xs: seq<ValidLinSeg>, pc: nat, s: seq<CFGNode>, index: nat := 0): (r: Option<(CFGNode, nat)>)
-    requires |xs| >= 1
-    requires index <= |s|
-    requires forall k:: k in s && k.seg.Some? ==> k.seg.v < |xs|
-
-    ensures r.Some? ==> index < |s|
-    ensures r.Some? ==> r.v.0.seg.Some? && r.v.0.seg.v < |xs|
-    /* @todo sort the following ensures and keep only the relevant ones. */
-    ensures r.Some? ==> r.v.0.seg.Some? &&  r.v.1 < |s|
-    ensures r.Some? ==> xs[r.v.0.seg.v].StartAddress() == pc
-    ensures r.Some? ==> s[r.v.1].seg.Some?
-    ensures r.Some? ==> xs[s[r.v.1].seg.v].StartAddress() == pc
-    ensures  r.Some? ==> r.v.0.seg.v == s[r.v.1].seg.v
-
-    decreases |s| - index
-  {
-    if |s| == index then None
-    else if s[index].seg.Some? && xs[s[index].seg.v].StartAddress() == pc then Some((s[index], index))
-    else FindFirstNodeWithPC(xs, pc, s, index + 1)
-  }
-
-  /**
-    *   Check if pc has been seen before, and whether we can loop back to an already seen
-    *   CFGNode on this path.
-    *
-    *   @note   The seenOnPath has all the nodes seen before the current one.
-    *           The current one has startAddress == pc.
-    *   @todo   Fix this as it does not compute the correct result.
-    *           Need to include resursion on the path in WPreSeqSegs.
-    */
-  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, path: seq<bool>): Option<CFGNode>
-    requires |xs| >= 1
-    requires pc < Int.TWO_256
-    requires 0 < |seenOnPath| == |path|
-    requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
-    requires xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPSeg? || xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPISeg?
-  {
-    match FindFirstNodeWithPC(xs, pc, seenOnPath)
-    case Some(v) =>
-      //  some properties must hold on the path defined by the index v.1
-      var init := seenOnPath[v.1];
-      //  the CFGMNode at index v.1 has a segment with start address == pc
-      assert xs[init.seg.v].StartAddress() == pc;
-      //  get the path false|true that led from init to last node
-      var path := seenOnPath[v.1..];
-      //  compute the list of segments defined by the nodes in path
-      var segs := NodesToSeg(path, xs);
-      //  compute the Wpre for last node path to lead to pc (via true)
-      assert pc < Int.TWO_256;
-      var tgtCond := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc as Int.u256);
-      //    Compute the WPre for for segments in path
-      var w1 := WPreSeqSegs(segs, tgtCond, xs);
-      if w1.StTrue? then
-        Some(v.0)
-      else None
-    case None => None
-  }
-
-  /**
-    *   Convert a sequence of CFGNodes into the sequence of segments they correspond to.
-    *   @param  xn      The seq of CFGNodes
-    *   @param  xs      A list of known segments.
-    *   @returns        The list of segments defined by xn.
-    */
-  function {:tailrecursion true} NodesToSeg(xn: seq<CFGNode>, xs: seq<ValidLinSeg>): (s: seq<nat>)
-    requires forall k:: k in xn ==> k.seg.Some? && k.seg.v < |xs|
-    ensures |xn| == |s|
-    ensures forall i:: 0 <= i < |s| ==> s[i] < |xs|
-  {
-    if |xn| == 0 then []
-    else
-      [xn[0].seg.v] + NodesToSeg(xn[1..], xs)
-  }
-
+  
 }
 
