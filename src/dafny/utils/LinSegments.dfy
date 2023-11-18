@@ -108,7 +108,6 @@ module LinSegments {
       *  The address just after the last instruction in this segment.
       */
     function StartAddressNextSeg(): nat
-      requires this.JUMPSeg? || this.CONTSeg?
       requires |this.lastIns.arg| % 2 == 0
     {
       this.lastIns.address + 1 + |this.lastIns.arg|/2
@@ -160,7 +159,8 @@ module LinSegments {
     }
 
     /**
-      *  Compute the Wpre for a segment.
+      * Compute the Wpre of c for a segment.
+      * Overall the instructions.
       */
     function WPre(c: ValidCond): ValidCond
     {
