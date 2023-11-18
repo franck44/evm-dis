@@ -178,12 +178,25 @@ module LinSegments {
     }
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
-    function LeadsTo(k: Int.u256): ValidCond
-      requires this.JUMPSeg? || this.JUMPISeg?
+    function LeadsTo(k: nat): ValidCond
+      requires this.IsValid()
+      //   requires this.JUMPSeg? || this.JUMPISeg?
     {
-      //  StCond([0], [k])
-      var c := StCond([0], [k]);
-      WPreIns(ins, c)
+      if k >= Int.TWO_256 then StFalse()
+      else
+        match this
+        case JUMPSeg(_, _, _) =>
+          var c := StCond([0], [k as Int.u256]);
+          WPreIns(ins, c)
+        case JUMPISeg(_, _, _)  =>
+          var c := StCond([0], [k as Int.u256]);
+          WPreIns(ins, c)
+        case CONTSeg(_, _, _) =>
+          if k == this.StartAddressNextSeg() then StTrue() else StFalse()
+        case RETURNSeg(_, _, _) => StTrue()
+        case STOPSeg(_, _, _) => StTrue()
+        case INVALIDSeg(_, _, _) => StFalse()
+
     }
 
   }
