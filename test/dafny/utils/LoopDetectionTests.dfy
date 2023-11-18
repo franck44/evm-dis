@@ -20,7 +20,8 @@ include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/WeakPre.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
+include "../../../src/dafny/utils/LinSegments.dfy"
+include "../../../src/dafny/CFGBuilder/LoopResolver.dfy"
 
 /**
   * Test correct computation of Wpre on segments.
@@ -37,7 +38,7 @@ module LoopTests {
   import opened Splitter
   import opened WeakPre
   import opened LinSegments
-  import opened BuildCFGraph
+  import opened LoopResolver
   import opened CFGraph
   import opened MiscTypes
 
@@ -186,7 +187,7 @@ module LoopTests {
     expect s3.PC() == y[1].StartAddress();
 
     //  Compute Wpre for 0, 1, 3 to end up in PC ==  y[1].StartAddress()
-    var c := y[3].LeadsTo(y[1].StartAddress() as Int.u256);
+    var c := y[3].LeadsTo(y[1].StartAddress());
     // print c, "\n";
     var r1 := y[3].WPre(c);
     expect r1 == StTrue();
@@ -258,6 +259,7 @@ module LoopTests {
       (3, false),
       (4, true),
       (1, true)
+        //    arrive at seg 3 again
         //   (1, true)
     ];
 
@@ -273,14 +275,14 @@ module LoopTests {
 
     //    Run the path specified by xs
     //    Run Segment 0, exit true (JUMP)
-    var s0 := DEFAULT_VALIDSTATE;
+    var s0 := DEFAULT_VALIDSTATE; 
     var s := s0;
     assert s.pc == 0;
     var seen: seq<CFGNode> := [CFGNode([], Some(0))];
     var seenPCs: seq<nat> := [0];
     var path: seq<bool> := [];
 
-    //    Stop minus blocks before the end
+    //   Execute all segments in |xs|
     print "\n";
     for k := 0 to |xs|
     {
@@ -299,32 +301,65 @@ module LoopTests {
       print "Seen is: ", seen, "\n";
     }
 
+    // the pc should be the startAddress of 3
     //     collect segment of PC of last state
+    print "--- Checks ---", "\n";
     expect s.EState?;
     var last := PCToSeg(y, s.pc);
     expect last.Some?;
+    assert s.pc == y[last.v].StartAddress();
     expect last.v == 3;
+    //  yes current pd is 3
 
     print "---- Stepping in last segment: ", last.v, "----\n";
     expect |seenPCs| >= 1;
-    print "seen last PC? ", s.pc in seenPCs[..|seenPCs| - 1], "\n";
-
+    print "seen last PC (in seenPCs -1) ? ", s.pc in seenPCs[..|seenPCs| - 1], "\n";
     expect s.pc < Int.TWO_256;
+    print "Seen Nodes is: ", seen, "\n";
     expect |seen| == |path| + 1;
     expect forall k:: k in seen ==> k.seg.Some? && k.seg.v < |y|;
     expect |seen| > 1;
     expect y[seen[|seen| - 2].seg.v].JUMPSeg? || y[seen[|seen| - 2].seg.v].JUMPISeg? ;
     print "current PC is: ", s.pc, "(0x",  (Hex.NatToHex(s.pc)), ")", "\n";
     print "path is: ", path, "\n";
-    print "SeenPCs is: ", seenPCs[..|seenPCs| - 1], "\n";
-    print "Seen is: ", seen, "\n";
+    assert forall k:: k in seen ==> k.seg.Some? && k.seg.v < |y|;
+    // print "SeenPCs is: ", seenPCs[..|seenPCs| - 1], "\n";
     expect |seen| > 0;
-    var safe := SafeLoopFound(y, s.pc, seen[..|seen| - 1], path[..|path| - 1] + [true]);
-    expect safe.None?;
-    print "Safe to loop back?", safe, "\n";
-    // print "last segment is:", last.v, "\n";
+    var ns := NodesToSeg(seen[..|seen| - 1]);
+    assert forall i:: 0 <= i < |ns| ==> ns[i] == seen[i].seg.v < |y|;
+    assert forall i:: 0 <= i < |ns| ==> ns[i] < |y| ;
+    print "Nodes to Seg is:", ns , "\n";
+    var pcond := y[1].LeadsTo(s.pc);
+    print "Post Condition (leadsTo) for segment 1  is:", pcond, "\n";
+    expect pcond.StTrue?;
+    //  compute precondition before 3, 4
+    expect |ns| > 2;
+    var wp1 := WPreSeqSegs(ns[2..|ns| - 1], pcond, y, s.pc);
+    print "Wpre for ", pcond ," before seg ", ns[2..|ns| - 1], " is: ", wp1 , "\n";
+    // print"WpreSeg on path: ", path[..|path| - 1] + [true], " is:", wp, "\n";    // print "last segment is:", last.v, "\n";
+    // var safe := SafeLoopFound(y, s.pc, seen[..|seen| - 1], path[..|path| - 1] + [true]);
+    // expect safe.None?;
+    // print "Safe to loop back?", safe, "\n";
+    expect |y[1].Ins()| == 3;
+    var wp2 := WPreIns(y[1].ins, pcond);
+    print "wp2:", wp2,"\n";
+    var wp3 := WPreIns(y[1].Ins()[1..2], wp2);
+    print y[1].Ins()[1].ToString(), "\n";
+    print "wp3:", wp3,"\n";
 
-    
+    print "--- Computation of Wpres for each section", "\n";
+    for k := 1 to |xs|
+    {
+      print "Prefix is:", ns[|xs| - k..|ns|], "\n";
+      var wp1 := WPreSeqSegs(ns[|xs| - k..|ns|], StTrue(), y, s.pc);
+      print "Wpre(", ns[|xs| - k..|ns|], ") for pc: ", s.pc, "(0x", (Hex.NatToHex(s.pc)), ") is: ", wp1, "\n"; 
+    }
+
+
+    // var x1 := y[1].Ins()[1].Wpre();
+
+
+
 
   }
 
