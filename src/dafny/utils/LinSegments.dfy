@@ -281,6 +281,18 @@ module LinSegments {
 
   }
 
+  /**
+    *   Retrieve num of segments that correspond to a PC if any.
+    */
+  function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
+    requires rank <= |xs|
+    ensures r.Some? ==> r.v < |xs|
+    ensures r.Some?  ==> xs[r.v].StartAddress() == pc
+    decreases |xs| - rank
+  {
+    if rank == |xs| then None
+    else if xs[rank].StartAddress() == pc then Some(rank)
+    else PCToSeg(xs, pc, rank + 1)
   }
 
 
