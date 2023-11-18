@@ -262,18 +262,24 @@ module LinSegments {
     *   @param  xs      A list of known segments.
     *   @returns        
     */
-  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
+  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
   {
-    if !c.StCond? || |path| == 0 then
+    if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
       c
     else
       assert |path| > 0;
-      //  compute Wpre on last segment and iterate on prefix
+      //    Compute Wpre for the condition for the segment
       var w1 := xs[path[|path| - 1]].WPre(c);
-      WPreSeqSegs(path[..|path| - 1], w1, xs)
+      //    Compute Wpre for feasibility of the segment, i.e. to ensure that
+      //    the segment leads to to the next one.
+      var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC);
+      //  compute Wpre on last segment and iterate on prefix
+      WPreSeqSegs(path[..|path| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
+
+  }
 
   }
 
