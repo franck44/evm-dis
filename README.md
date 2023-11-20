@@ -70,6 +70,101 @@ the CFG is depicted on the right-hand side.
 The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
 It can re-construct CFGs with nested loops, function calls.
 
+## Usage
+The disassembler generates readable EVM assembly and the CFG generator DOT files.
+The Dafny proof object feature is experimental.
+
+Dafny code can be used to generate some target code in several languages. To begin with we have generated
+Python and Java code.
+So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
+
+### Using the Python version of the disassembler/CFG generator
+The Python disassembler is in `build/driver-py`.
+
+It can be used with an input string as follows:
+```zsh
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py                 
+Not enough arguments
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
+
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  "6040"
+PUSH1 0x40
+```
+To parse a binary representation from a file `file.evm` use:
+```zsh
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py $(<file.evm)
+PUSH1 0x40
+```
+
+To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
+
+```zsh
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"      
+/** Code starting at 0x0 */
+function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
+  requires s0.PC() == 0x0 as nat
+  requires s0.Operands() >= 0
+  requires s0.Capacity() >= 1
+{
+  ValidJumpDest(s0);
+  var s1 := Push1(s0, 0x40);
+  s1
+}
+```
+
+### Using the Java version of the disassembler
+
+The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
+It can be used with an input string as follows:
+```zsh
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
+Not enough arguments
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
+
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar "6040"
+PUSH1 0x40
+```
+To parse a binary representation from a file `file.evm` use:
+```zsh
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar $(<file.evm)
+PUSH1 0x40
+```
+To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
+```zsh
+evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar -p "6040"    
+
+/** Code starting at 0x0 */
+function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
+  requires s0.PC() == 0x0 as nat
+  requires s0.Operands() >= 0
+  requires s0.Capacity() >= 1
+{
+  ValidJumpDest(s0);
+  var s1 := Push1(s0, 0x40);
+  s1
+}
+
+```
 
 
 ## An EVM bytecode disassembler in Dafny
@@ -269,98 +364,3 @@ module OverFlowCheckerBytecode {
 }
 ```
 
-## Usage
-The disassembler generates readable EVM assembly and the CFG generator DOT files.
-The Dafny proof object feature is experimental.
-
-Dafny code can be used to generate some target code in several languages. To begin with we have generated
-Python and Java code.
-So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
-
-### Using the Python version of the disassembler/CFG generator
-The Python disassembler is in `build/driver-py`.
-
-It can be used with an input string as follows:
-```zsh
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py                 
-Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
-
-options
---help      [-h] Display help and exit
---dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
---segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
---lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
---cfg       [-c] Max depth. Control flow graph in DOT format
---raw       [-r] Display non-minimised and minimised CFGs
-
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  "6040"
-PUSH1 0x40
-```
-To parse a binary representation from a file `file.evm` use:
-```zsh
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py $(<file.evm)
-PUSH1 0x40
-```
-
-To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
-
-```zsh
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  -p "6040"      
-/** Code starting at 0x0 */
-function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
-  requires s0.PC() == 0x0 as nat
-  requires s0.Operands() >= 0
-  requires s0.Capacity() >= 1
-{
-  ValidJumpDest(s0);
-  var s1 := Push1(s0, 0x40);
-  s1
-}
-```
-
-### Using the Java version of the disassembler
-
-The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
-It can be used with an input string as follows:
-```zsh
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
-Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
-
-options
---help      [-h] Display help and exit
---dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
---segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
---lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
---cfg       [-c] Max depth. Control flow graph in DOT format
---raw       [-r] Display non-minimised and minimised CFGs
-
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar "6040"
-PUSH1 0x40
-```
-To parse a binary representation from a file `file.evm` use:
-```zsh
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar $(<file.evm)
-PUSH1 0x40
-```
-To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
-```zsh
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar -p "6040"    
-
-/** Code starting at 0x0 */
-function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
-  requires s0.PC() == 0x0 as nat
-  requires s0.Operands() >= 0
-  requires s0.Capacity() >= 1
-{
-  ValidJumpDest(s0);
-  var s1 := Push1(s0, 0x40);
-  s1
-}
-
-```
