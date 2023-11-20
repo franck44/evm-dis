@@ -89,7 +89,7 @@ module SegWpreTests {
     else if xs[0] > m then MaxSeqVal(xs[1..], xs[0])
     else  MaxSeqVal(xs[1..], m)
   }
-
+ 
   /**
     *   Sanity check.
     *   After computing the WPre of c, test that the post of

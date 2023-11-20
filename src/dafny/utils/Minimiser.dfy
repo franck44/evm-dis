@@ -78,8 +78,6 @@ module Minimiser {
     /**
       * Split all classes according to value of first elem of each class.
       * @returns    A pair where each class[index] has been split according to 
-      *             ??
-      * @todo       Do we need this function?
       */
     function SplitFrom(): (p' :ValidPair)
       requires this.IsValid()
@@ -104,9 +102,11 @@ module Minimiser {
     }
 
     /**
-     for each class in p.elem get the successor classes and create edges. 
-     */
-    function GenerateReduced(index: nat := 0): (r : seq<(nat, bool, nat)>)
+      *  for each class in p.elem get the successor classes and create edges. 
+      * @note   Tailrecurison is diabled as there is a bug in the Dafny Java code generator.
+      * @link{https://github.com/dafny-lang/dafny/issues/2346} 
+      */
+    function {:tailrecursion false} GenerateReduced(index: nat := 0): (r : seq<(nat, bool, nat)>)
       requires this.IsValid()
       requires index <= |p.elem|
       ensures forall k:: 0 <= k < |r| ==> r[k].0 < p.n && r[k].2 < p.n
@@ -116,10 +116,7 @@ module Minimiser {
       MaxNumberOfClasses(p.elem, p.n);
       if index == |p.elem| then []
       else
-        // assert p.elem[index] != {};
         var firstElem := SetToSequence(p.elem[index])[0];
-        // assert firstElem in p.elem[index];
-        // assert firstElem < a.numStates;
         //  Get successor classes of first elem
         var succs := ClassSucc(firstElem);
         var newEdges := match (succs.0, succs.1)
@@ -131,30 +128,17 @@ module Minimiser {
         newEdges + GenerateReduced(index + 1)
     }
 
-    /**
-      * Not used
-      */
-    function Minimise1(): ValidPair
-      requires this.IsValid()
-      ensures Minimise1().IsValid()
-      //   ensures
-      decreases this.p.n - |this.p.elem|
-    {
-      //   NotEmpty(p);
-      assert AllNonEmpty(p.elem);
-      var p1 := this.SplitFrom();
-      MaxNumberOfClasses(p1.p.elem, p1.p.n);
-      if |p1.p.elem| == |p.elem| then p1
-      else
-        assert |p.elem| < |p1.p.elem| <= p.n == a.numStates;
-        p1.Minimise1()
-    }
-
   }
 
-  //   Main function  
+  //   Helper and Main function.
 
-  function Minimise(ap: ValidPair): ValidPair
+  /**
+    *   Minimise an automaton.
+    * @note   Tailrecurison is diabled as there is a bug in the Dafny Java code generator.
+    * @link{https://github.com/dafny-lang/dafny/issues/2346} 
+    *   
+    */
+  function {:tailrecursion false} Minimise(ap: ValidPair): ValidPair
     requires ap.IsValid()
     ensures Minimise(ap).IsValid()
     ensures Minimise(ap).p.n == ap.p.n
