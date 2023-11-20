@@ -4,57 +4,84 @@
 
 # Overview
 
-This project provides an EVM bytecode _disassembler_.
+This project provides an EVM bytecode _disassembler_ and Control Flow Graph (CFG) generator.
 The disassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and `RJump`s, [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
-
 The disassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it. 
 For instance the following binary string,  `prog` : 
 ```
 600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
 ```
-is disassembled into the more readable (but arguably still opaque!) EVM assembly code:
+is disassembled into the more readable (but arguably still opaque!) EVM assembly code, lefthand-side below, and
+the CFG is depicted on the righthand-side. 
+
+<center>
+<table>
+<tr>
+<th style="text-align:center">EVM Assembly</th>
+<th>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+<th style="text-align:center">Control Flow Graph</th>
+</tr>
+<tr>
+<td>
+
 ```
-PUSH1 0x0a
-PUSH1 0x08
-PUSH1 0x03
-SWAP1
-PUSH1 0x0f
-JUMP
-JUMPDEST
-PUSH1 0x40
-MSTORE
-STOP
-JUMPDEST
-SWAP2
-SWAP1
-DUP1
-DUP4
-LT
-PUSH1 0x1b
-JUMPI
-JUMPDEST
-POP
-JUMP
-JUMPDEST
-SWAP1
-SWAP2
-POP
-SWAP1
-PUSH0
-PUSH1 0x18
-JUMP
+00000000: PUSH1 0x0a
+00000002: PUSH1 0x08
+00000004: PUSH1 0x03
+00000006: SWAP1
+00000007: PUSH1 0x0f
+00000009: JUMP
+0000000a: JUMPDEST
+0000000b: PUSH1 0x40
+0000000d: MSTORE
+0000000e: STOP
+0000000f: JUMPDEST
+00000010: SWAP2
+00000011: SWAP1
+00000012: DUP1
+00000013: DUP4
+00000014: LT
+00000015: PUSH1 0x1b
+00000017: JUMPI
+00000018: JUMPDEST
+00000019: POP
+0000001a: JUMP
+0000001b: JUMPDEST
+0000001c: SWAP1
+0000001d: SWAP2
+0000001e: POP
+0000001f: SWAP1
+00000020: PUSH0
+00000021: PUSH1 0x18
+00000023: JUMP
 ```
+</td>
+<td>        </td>
+<td>
+<figure>
+  <img src="./example-CFG.jpg" alt="CFG" height=550px/>
+</figure>
+</td>
+</tr>
+</table>
+</center>
+
+
+The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
+It can re-construct CFGs with nested loops, function calls.
+
+
 
 ## An EVM bytecode disassembler in Dafny
 
-The disassembler is written in [Dafny](https://github.com/dafny-lang/dafny) a verification-friendly programming language.
+The disassembler and CFG generator is written in [Dafny](https://github.com/dafny-lang/dafny) a verification-friendly programming language.
 Some code (e.g. the definition of `EVMOpcodes`, `Int`) is adapted from the [Dafny-EVM](https://github.com/Consensys/evm-dafny) project.
 
 ## Motivations
 
-The disassembler is a useful tool but not the ultimate goal of this project.
+The disassembler/CFG generator is a useful tool but not the ultimate goal of this project.
 The main component, `Disassemble`, builds a representation of the binary as a sequence of `Instructions`.
-This representation can be _printed out_ (this is how the disassembler generates the readable code), but also used to generate _proof objects_ that are Dafny programs that can be verified using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
+This representation can be _printed out_ (this is how the disassembler generates the readable code), but also used to generate _proof objects_ that are Dafny programs that can be _verified_ using the [Dafny-EVM](https://github.com/Consensys/evm-dafny).
 
 As an example, the following  [Yul](https://docs.soliditylang.org/en/latest/yul.html) code (the same can be done with Solidity code):
 ```solidity
@@ -243,24 +270,31 @@ module OverFlowCheckerBytecode {
 ```
 
 ## Usage
-At the moment, only a disassembler into readable EVM assembly is provided.
+The disassembler generates readable EVM assembly and the CFG generator DOT files.
 The Dafny proof object feature is experimental.
 
 Dafny code can be used to generate some target code in several languages. To begin with we have generated
 Python and Java code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
-### Using the Python version of the disassembler
+### Using the Python version of the disassembler/CFG generator
 The Python disassembler is in `build/driver-py`.
 
 It can be used with an input string as follows:
 ```zsh
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py                 
 Not enough arguments
-Usage: 
- -d <string> or <string>: disassemble <string>
- -p <string>: Proof object
- -a: both -d and -p
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
 
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  "6040"
 PUSH1 0x40
@@ -294,10 +328,17 @@ It can be used with an input string as follows:
 ```zsh
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
 Not enough arguments
-Usage: 
- -d <string> or <string>: disassemble <string>
- -p <string>: Proof object
- -a: both -d and -p
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
 
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar "6040"
 PUSH1 0x40
