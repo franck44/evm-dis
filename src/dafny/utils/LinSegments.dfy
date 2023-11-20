@@ -178,7 +178,7 @@ module LinSegments {
     }
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
-    function LeadsTo(k: nat): ValidCond
+    function LeadsTo(k: nat, exit: bool): ValidCond
       requires this.IsValid()
       //   requires this.JUMPSeg? || this.JUMPISeg?
     {
@@ -186,13 +186,18 @@ module LinSegments {
       else
         match this
         case JUMPSeg(_, _, _) =>
-          var c := StCond([0], [k as Int.u256]);
-          WPreIns(ins, c)
+          if exit then
+            var c := StCond([0], [k as Int.u256]);
+            WPreIns(ins, c)
+          else StFalse()
         case JUMPISeg(_, _, _)  =>
-          var c := StCond([0], [k as Int.u256]);
-          WPreIns(ins, c)
+          if exit then 
+            var c := StCond([0], [k as Int.u256]);
+            WPreIns(ins, c)
+          else 
+            if k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case CONTSeg(_, _, _) =>
-          if k == this.StartAddressNextSeg() then StTrue() else StFalse()
+          if !exit && k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case RETURNSeg(_, _, _) => StTrue()
         case STOPSeg(_, _, _) => StTrue()
         case INVALIDSeg(_, _, _) => StFalse()
@@ -275,9 +280,10 @@ module LinSegments {
     *   @param  xs      A list of known segments.
     *   @returns        
     */
-  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
+  function WPreSeqSegs(path: seq<nat>, exits: seq<bool>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
+    requires |path| == |exits|
   {
     if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
@@ -288,9 +294,9 @@ module LinSegments {
       var w1 := xs[path[|path| - 1]].WPre(c);
       //    Compute Wpre for feasibility of the segment, i.e. to ensure that
       //    the segment leads to to the next one.
-      var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC);
+      var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC, exits[|exits| - 1]);
       //  compute Wpre on last segment and iterate on prefix
-      WPreSeqSegs(path[..|path| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
+      WPreSeqSegs(path[..|path| - 1], exits[..|exits| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
 
   }
 
