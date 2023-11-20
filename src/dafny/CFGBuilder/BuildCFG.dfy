@@ -40,7 +40,7 @@ module BuildCFGraph {
     requires numSeg < |xs|
     requires forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     requires |seen| == |seenPCs| == |path| + 1
-    requires forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k]
+    requires forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k] 
     requires forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?
     requires s.PC() == seenPCs[|seenPCs| - 1]
     requires forall k:: 0 <= k < |seen| ==> seenPCs[k] == xs[seen[k].seg.v].StartAddress()
@@ -104,7 +104,7 @@ module BuildCFGraph {
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC
-                match SafeLoopFound(xs, rightSucc.PC(), seen) // , path + [true])
+                match SafeLoopFound(xs, rightSucc.PC(), seen, path + [true]) // , path + [true])
                 case Some(prev) =>
                   // the computation for this path sopts. We have discovered a
                   //    lasso with the loop part being invariant under
