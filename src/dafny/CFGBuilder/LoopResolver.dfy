@@ -61,10 +61,11 @@ module LoopResolver {
     *   @todo   Fix this as it does not compute the correct result.
     *           Need to include resursion on the path in WPreSeqSegs.
     */
-  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>): (r: Option<CFGNode>)
+  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, boolPath: seq<bool>): (r: Option<CFGNode>)
     requires |xs| >= 1
     requires pc < Int.TWO_256
     requires 0 < |seenOnPath| // == |path|
+    requires |boolPath| == |seenOnPath|
     requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
     requires xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPSeg? || xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPISeg?
     ensures r.Some? ==> r.v.seg.Some? && r.v.seg.v < |xs|
@@ -75,22 +76,22 @@ module LoopResolver {
       //  some properties must hold on the path defined by the index v.1
       var init := seenOnPath[v.1];
       //  the CFGMNode at index v.1 has a segment with start address == pc
-      assert xs[init.seg.v].StartAddress() == pc;
+      assert xs[init.seg.v].StartAddress() == pc; 
       //  get the path false|true that led from init to last node
       var path := seenOnPath[v.1..];
       //  compute the list of segments defined by the nodes in path
       var segs := NodesToSeg(path);
       //  compute the Wpre for last node path to lead to pc (via true)
       assert pc < Int.TWO_256;
-      var tgtCond := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc);
+      var tgtCond := xs[seenOnPath[|seenOnPath| - 1].seg.v].LeadsTo(pc, boolPath[|boolPath| - 1]);
       //    Compute the WPre for for segments in path
-      var w1 := WPreSeqSegs(segs, tgtCond, xs, pc);
+      var w1 := WPreSeqSegs(segs, boolPath[v.1..], tgtCond, xs, pc);
       if w1.StTrue? then
         Some(v.0)
       else
       //  Try a potential second occurrence of pc om seenOnPath
       if 0 < |seenOnPath[v.1..|seenOnPath|]| < |seenOnPath| then
-        SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|])
+        SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|], boolPath[v.1..|boolPath|])
       else None
 
     case None => None
