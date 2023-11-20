@@ -19,13 +19,14 @@ include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/utils/int.dfy"
+include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
 /**
   * Test correct computation of next State.
   * 
-  */
+  */ 
 module NextStateTests { 
 
   import opened MiscTypes
@@ -39,6 +40,7 @@ module NextStateTests {
   import opened PrettyPrinters
   import opened Splitter
   import opened BuildCFGraph 
+  import opened LinSegments
 
   /** Arithmetic instruction. Proofs. */
 
