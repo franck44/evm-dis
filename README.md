@@ -72,6 +72,10 @@ It can re-construct CFGs with nested loops, function calls.
 
 ## Usage
 The disassembler generates readable EVM assembly and the CFG generator DOT files.
+The input to the disassembler and CFG generator is the deployed (`bin-runtime`) part of the compiled code if you compile Solidity with `solc`.
+
+For the examples in the repo I have used Yul and `solc --yul` to get a text representation of the Yul code that includes the _binary representation_ hexadecimal  string. 
+
 The Dafny proof object feature is experimental.
 
 Dafny code can be used to generate some target code in several languages. To begin with we have generated
