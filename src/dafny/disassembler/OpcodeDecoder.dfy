@@ -188,7 +188,7 @@ module OpcodeDecoder {
     case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 0)
     case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 0, 6, 0, 6)
     case CREATE2 => SysOp("CREATE2", CREATE2)
-    case STATICCALL => SysOp("STATICCALL", STATICCALL)
+    case STATICCALL => SysOp("STATICCALL", STATICCALL,1, 6, 1, 6)
     case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 0)
     case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT)
     case _ => SysOp("INVALID", INVALID)
