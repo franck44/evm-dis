@@ -103,7 +103,7 @@ module Minimiser {
 
     /**
       *  for each class in p.elem get the successor classes and create edges. 
-      * @note   Tailrecurison is diabled as there is a bug in the Dafny Java code generator.
+      * @note   Tailrecursion is diasbled as there is a bug in the Dafny Java code generator.
       * @link{https://github.com/dafny-lang/dafny/issues/2346} 
       */
     function {:tailrecursion false} GenerateReduced(index: nat := 0): (r : seq<(nat, bool, nat)>)
@@ -134,7 +134,7 @@ module Minimiser {
 
   /**
     *   Minimise an automaton.
-    * @note   Tailrecurison is diabled as there is a bug in the Dafny Java code generator.
+    * @note   Tailrecursion is disabled as there is a bug in the Dafny Java code generator.
     * @link{https://github.com/dafny-lang/dafny/issues/2346} 
     *   
     */
