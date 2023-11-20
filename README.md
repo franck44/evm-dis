@@ -11,8 +11,8 @@ For instance the following binary string,  `prog` :
 ```
 600a6008600390600f565b604052005b9190808310601b575b50565b909150905f601856
 ```
-is disassembled into the more readable (but arguably still opaque!) EVM assembly code, lefthand-side below, and
-the CFG is depicted on the righthand-side. 
+is disassembled into the more readable (but arguably still opaque!) EVM assembly code, left-hand side below, and
+the CFG is depicted on the right-hand side. 
 
 <center>
 <table>
