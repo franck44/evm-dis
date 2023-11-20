@@ -37,16 +37,11 @@ class default__:
 
     @staticmethod
     def Minimise(ap):
-        while True:
-            with _dafny.label():
-                d_630_p1_ = (ap).SplitFrom()
-                if (len(((d_630_p1_).p).elem)) == (len(((ap).p).elem)):
-                    return d_630_p1_
-                elif True:
-                    in90_ = d_630_p1_
-                    ap = in90_
-                    raise _dafny.TailCall()
-                break
+        d_674_p1_ = (ap).SplitFrom()
+        if (len(((d_674_p1_).p).elem)) == (len(((ap).p).elem)):
+            return d_674_p1_
+        elif True:
+            return default__.Minimise(d_674_p1_)
 
 
 class ValidPair:
@@ -76,123 +71,98 @@ class Pair:
         return (self).p
 
     def ClassSucc(self, x):
-        def lambda27_(source51_):
-            if source51_.is_None:
+        def lambda27_(source57_):
+            if source57_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_632___mcc_h0_ = source51_.v
+                d_676___mcc_h0_ = source57_.v
                 def iife4_(_pat_let2_0):
-                    def iife5_(d_633_n_):
-                        return MiscTypes.Option_Some(((self).p).GetClass(d_633_n_, 0))
+                    def iife5_(d_677_n_):
+                        return MiscTypes.Option_Some(((self).p).GetClass(d_677_n_, 0))
                     return iife5_(_pat_let2_0)
-                return iife4_(d_632___mcc_h0_)
+                return iife4_(d_676___mcc_h0_)
 
-        d_631_s1_ = lambda27_(((self).a).Succ(x, False))
-        def lambda28_(source52_):
-            if source52_.is_None:
+        d_675_s1_ = lambda27_(((self).a).Succ(x, False))
+        def lambda28_(source58_):
+            if source58_.is_None:
                 return MiscTypes.Option_None()
             elif True:
-                d_635___mcc_h1_ = source52_.v
+                d_679___mcc_h1_ = source58_.v
                 def iife6_(_pat_let3_0):
-                    def iife7_(d_636_n_):
-                        return MiscTypes.Option_Some(((self).p).GetClass(d_636_n_, 0))
+                    def iife7_(d_680_n_):
+                        return MiscTypes.Option_Some(((self).p).GetClass(d_680_n_, 0))
                     return iife7_(_pat_let3_0)
-                return iife6_(d_635___mcc_h1_)
+                return iife6_(d_679___mcc_h1_)
 
-        d_634_s2_ = lambda28_(((self).a).Succ(x, True))
-        return (d_631_s1_, d_634_s2_)
+        d_678_s2_ = lambda28_(((self).a).Succ(x, True))
+        return (d_675_s1_, d_678_s2_)
 
     def SplitFrom(self):
-        def lambda29_(d_638_k_):
-            def lambda30_(d_639_k_):
-                def lambda31_(d_640_y_):
-                    return ((self).ClassSucc((SeqOfSets.default__.SetToSequence((((self).p).elem)[d_639_k_]))[0])) == ((self).ClassSucc(d_640_y_))
+        def lambda29_(d_682_k_):
+            def lambda30_(d_683_k_):
+                def lambda31_(d_684_y_):
+                    return ((self).ClassSucc((SeqOfSets.default__.SetToSequence((((self).p).elem)[d_683_k_]))[0])) == ((self).ClassSucc(d_684_y_))
 
                 return lambda31_
 
-            return lambda30_(d_638_k_)
+            return lambda30_(d_682_k_)
 
-        d_637_splitterF_ = lambda29_
-        d_641_r_ = PartitionMod.default__.SplitAll((self).p, d_637_splitterF_, 0, len(((self).p).elem))
-        d_642_dt__update__tmp_h0_ = self
-        d_643_dt__update_hp_h0_ = d_641_r_
-        return Pair_Pair((d_642_dt__update__tmp_h0_).a, d_643_dt__update_hp_h0_)
+        d_681_splitterF_ = lambda29_
+        d_685_r_ = PartitionMod.default__.SplitAll((self).p, d_681_splitterF_, 0, len(((self).p).elem))
+        d_686_dt__update__tmp_h0_ = self
+        d_687_dt__update_hp_h0_ = d_685_r_
+        return Pair_Pair((d_686_dt__update__tmp_h0_).a, d_687_dt__update_hp_h0_)
 
     def GenerateReduced(self, index):
-        d_644___accumulator_ = _dafny.SeqWithoutIsStrInference([])
-        _this = self
-        while True:
-            with _dafny.label():
-                if (index) == (len(((_this).p).elem)):
-                    return (d_644___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
-                elif True:
-                    d_645_firstElem_ = (SeqOfSets.default__.SetToSequence((((_this).p).elem)[index]))[0]
-                    d_646_succs_ = (_this).ClassSucc(d_645_firstElem_)
-                    def lambda32_(source53_):
-                        d_648___mcc_h0_ = source53_[0]
-                        d_649___mcc_h1_ = source53_[1]
-                        def lambda33_(source54_):
-                            if source54_.is_None:
-                                def lambda34_(source55_):
-                                    if source55_.is_None:
-                                        return _dafny.SeqWithoutIsStrInference([])
-                                    elif True:
-                                        d_650___mcc_h2_ = source55_.v
-                                        def iife8_(_pat_let4_0):
-                                            def iife9_(d_651_sTrue_):
-                                                return _dafny.SeqWithoutIsStrInference([(d_645_firstElem_, True, (SeqOfSets.default__.SetToSequence((((_this).p).elem)[d_651_sTrue_]))[0])])
-                                            return iife9_(_pat_let4_0)
-                                        return iife8_(d_650___mcc_h2_)
-
-                                return lambda34_(d_649___mcc_h1_)
+        if (index) == (len(((self).p).elem)):
+            return _dafny.SeqWithoutIsStrInference([])
+        elif True:
+            d_688_firstElem_ = (SeqOfSets.default__.SetToSequence((((self).p).elem)[index]))[0]
+            d_689_succs_ = (self).ClassSucc(d_688_firstElem_)
+            def lambda32_(source59_):
+                d_691___mcc_h0_ = source59_[0]
+                d_692___mcc_h1_ = source59_[1]
+                def lambda33_(source60_):
+                    if source60_.is_None:
+                        def lambda34_(source61_):
+                            if source61_.is_None:
+                                return _dafny.SeqWithoutIsStrInference([])
                             elif True:
-                                d_652___mcc_h3_ = source54_.v
-                                def lambda35_(source56_):
-                                    if source56_.is_None:
-                                        def iife10_(_pat_let5_0):
-                                            def iife11_(d_653_sFalse_):
-                                                return _dafny.SeqWithoutIsStrInference([(d_645_firstElem_, False, (SeqOfSets.default__.SetToSequence((((_this).p).elem)[d_653_sFalse_]))[0])])
-                                            return iife11_(_pat_let5_0)
-                                        return iife10_(d_652___mcc_h3_)
-                                    elif True:
-                                        d_654___mcc_h4_ = source56_.v
-                                        def iife12_(_pat_let6_0):
-                                            def iife13_(d_655_sTrue_):
-                                                def iife14_(_pat_let7_0):
-                                                    def iife15_(d_656_sFalse_):
-                                                        return _dafny.SeqWithoutIsStrInference([(d_645_firstElem_, False, (SeqOfSets.default__.SetToSequence((((_this).p).elem)[d_656_sFalse_]))[0]), (d_645_firstElem_, True, (SeqOfSets.default__.SetToSequence((((_this).p).elem)[d_655_sTrue_]))[0])])
-                                                    return iife15_(_pat_let7_0)
-                                                return iife14_(d_652___mcc_h3_)
-                                            return iife13_(_pat_let6_0)
-                                        return iife12_(d_654___mcc_h4_)
+                                d_693___mcc_h2_ = source61_.v
+                                def iife8_(_pat_let4_0):
+                                    def iife9_(d_694_sTrue_):
+                                        return _dafny.SeqWithoutIsStrInference([(d_688_firstElem_, True, (SeqOfSets.default__.SetToSequence((((self).p).elem)[d_694_sTrue_]))[0])])
+                                    return iife9_(_pat_let4_0)
+                                return iife8_(d_693___mcc_h2_)
 
-                                return lambda35_(d_649___mcc_h1_)
+                        return lambda34_(d_692___mcc_h1_)
+                    elif True:
+                        d_695___mcc_h3_ = source60_.v
+                        def lambda35_(source62_):
+                            if source62_.is_None:
+                                def iife10_(_pat_let5_0):
+                                    def iife11_(d_696_sFalse_):
+                                        return _dafny.SeqWithoutIsStrInference([(d_688_firstElem_, False, (SeqOfSets.default__.SetToSequence((((self).p).elem)[d_696_sFalse_]))[0])])
+                                    return iife11_(_pat_let5_0)
+                                return iife10_(d_695___mcc_h3_)
+                            elif True:
+                                d_697___mcc_h4_ = source62_.v
+                                def iife12_(_pat_let6_0):
+                                    def iife13_(d_698_sTrue_):
+                                        def iife14_(_pat_let7_0):
+                                            def iife15_(d_699_sFalse_):
+                                                return _dafny.SeqWithoutIsStrInference([(d_688_firstElem_, False, (SeqOfSets.default__.SetToSequence((((self).p).elem)[d_699_sFalse_]))[0]), (d_688_firstElem_, True, (SeqOfSets.default__.SetToSequence((((self).p).elem)[d_698_sTrue_]))[0])])
+                                            return iife15_(_pat_let7_0)
+                                        return iife14_(d_695___mcc_h3_)
+                                    return iife13_(_pat_let6_0)
+                                return iife12_(d_697___mcc_h4_)
 
-                        return lambda33_(d_648___mcc_h0_)
+                        return lambda35_(d_692___mcc_h1_)
 
-                    d_647_newEdges_ = lambda32_(((d_646_succs_)[0], (d_646_succs_)[1]))
-                    d_644___accumulator_ = (d_644___accumulator_) + (d_647_newEdges_)
-                    in91_ = _this
-                    in92_ = (index) + (1)
-                    _this = in91_
-                    
-                    index = in92_
-                    raise _dafny.TailCall()
-                break
+                return lambda33_(d_691___mcc_h0_)
 
-    def Minimise1(self):
-        _this = self
-        while True:
-            with _dafny.label():
-                d_657_p1_ = (_this).SplitFrom()
-                if (len(((d_657_p1_).p).elem)) == (len(((_this).p).elem)):
-                    return d_657_p1_
-                elif True:
-                    in93_ = d_657_p1_
-                    _this = in93_
-                    
-                    raise _dafny.TailCall()
-                break
+            d_690_newEdges_ = lambda32_(((d_689_succs_)[0], (d_689_succs_)[1]))
+            return (d_690_newEdges_) + ((self).GenerateReduced((index) + (1)))
 
 
 class Pair_Pair(Pair, NamedTuple('Pair', [('a', Any), ('p', Any)])):

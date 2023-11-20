@@ -30,6 +30,7 @@ import PartitionMod
 import Automata
 import Minimiser
 import CFGraph
+import LoopResolver
 import BuildCFGraph
 import Driver
 
