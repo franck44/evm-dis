@@ -1,0 +1,110 @@
+
+======= src/dafny/yul-bytecode-verif/max/max.yul (EVM) =======
+
+Pretty printed source:
+object "Runtime" {
+    code {
+        {
+            let x := 8
+            let y := 3
+            let z := max(x, y)
+            mstore(0x40, z)
+            return(0x40, 32)
+        }
+        function max(x, y) -> result
+        {
+            result := x
+            if lt(x, y) { result := y }
+        }
+    }
+}
+
+
+Binary representation:
+600a60086003906013565b60405260206040f35b9190808310601f575b50565b909150905f601c56
+
+Text representation:
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":186:195   */
+  tag_2
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":158:159   */
+  0x08
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":172:173   */
+  0x03
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":186:195   */
+  swap1
+  tag_1
+  jump	// in
+tag_2:
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":206:210   */
+  0x40
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":199:214   */
+  mstore
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":230:232   */
+  0x20
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":224:228   */
+  0x40
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":217:233   */
+  return
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":32:139   */
+tag_1:
+  swap2
+  swap1
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":72:83   */
+  dup1
+  dup4
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":93:101   */
+  lt
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":90:134   */
+  tag_3
+  jumpi
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":64:139   */
+tag_4:
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":32:139   */
+  pop
+  jump	// out
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":102:134   */
+tag_3:
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":114:125   */
+  swap1
+  swap2
+  pop
+    /* "src/dafny/yul-bytecode-verif/max/max.yul":102:134   */
+  swap1
+  0x00
+  jump(tag_4)
+
+00000000: PUSH1 0xa     //  tag_2 
+00000002: PUSH1 0x8     
+00000004: PUSH1 0x3
+00000006: SWAP1
+00000007: PUSH1 0x13    //  tag_1 
+00000009: JUMP
+
+0000000a: JUMPDEST      //  tag_2(def)
+0000000b: PUSH1 0x40
+0000000d: MSTORE
+0000000e: PUSH1 0x20
+00000010: PUSH1 0x40
+00000012: RETURN
+
+00000013: JUMPDEST      //  tag_1(def)
+00000014: SWAP2
+00000015: SWAP1
+00000016: DUP1
+00000017: DUP4
+00000018: LT
+00000019: PUSH1 0x1f    //  tag_3 
+0000001b: JUMPI
+
+0000001c: JUMPDEST      //  tag_4(def)
+0000001d: POP
+0000001e: JUMP
+
+0000001f: JUMPDEST      //  tag_3(def)
+00000020: SWAP1
+00000021: SWAP2
+00000022: POP
+00000023: SWAP1
+00000024: PUSH0
+00000025: PUSH1 0x1c    //  jump(tag_4)
+00000027: JUMP

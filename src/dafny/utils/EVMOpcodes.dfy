@@ -104,6 +104,7 @@ module EVMOpcodes {
       case RJUMPV => true
       case RETURN => true
       case REVERT => true
+      case INVALID => true
       case _      => false
     }
 

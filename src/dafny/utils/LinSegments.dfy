@@ -53,6 +53,7 @@ module LinSegments {
     |   RETURNSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
     |   STOPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
     |   CONTSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+    |   INVALIDSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
   {
     /**
       * To be valid the type of the segment must agree with the type of
@@ -62,9 +63,10 @@ module LinSegments {
       match this
       case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
       case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
-      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN 
+      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
       case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
-      case CONTSeg(_, _, _) => true
+      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID
+      case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
     }
 
     /**
@@ -106,7 +108,6 @@ module LinSegments {
       *  The address just after the last instruction in this segment.
       */
     function StartAddressNextSeg(): nat
-      requires this.JUMPSeg? || this.CONTSeg?
       requires |this.lastIns.arg| % 2 == 0
     {
       this.lastIns.address + 1 + |this.lastIns.arg|/2
@@ -158,7 +159,8 @@ module LinSegments {
     }
 
     /**
-      *  Compute the Wpre for a segment.
+      * Compute the Wpre of c for a segment.
+      * Overall the instructions.
       */
     function WPre(c: ValidCond): ValidCond
     {
@@ -176,12 +178,30 @@ module LinSegments {
     }
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
-    function LeadsTo(k: Int.u256): ValidCond
-      requires this.JUMPSeg? || this.JUMPISeg?
+    function LeadsTo(k: nat, exit: bool): ValidCond
+      requires this.IsValid()
+      //   requires this.JUMPSeg? || this.JUMPISeg?
     {
-      //  StCond([0], [k])
-      var c := StCond([0], [k]);
-      WPreIns(ins, c)
+      if k >= Int.TWO_256 then StFalse()
+      else
+        match this
+        case JUMPSeg(_, _, _) =>
+          if exit then
+            var c := StCond([0], [k as Int.u256]);
+            WPreIns(ins, c)
+          else StFalse()
+        case JUMPISeg(_, _, _)  =>
+          if exit then 
+            var c := StCond([0], [k as Int.u256]);
+            WPreIns(ins, c)
+          else 
+            if k == this.StartAddressNextSeg() then StTrue() else StFalse()
+        case CONTSeg(_, _, _) =>
+          if !exit && k == this.StartAddressNextSeg() then StTrue() else StFalse()
+        case RETURNSeg(_, _, _) => StTrue()
+        case STOPSeg(_, _, _) => StTrue()
+        case INVALIDSeg(_, _, _) => StFalse()
+
     }
 
   }
@@ -260,19 +280,38 @@ module LinSegments {
     *   @param  xs      A list of known segments.
     *   @returns        
     */
-  function WPreSeqSegs(path: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>): ValidCond
+  function WPreSeqSegs(path: seq<nat>, exits: seq<bool>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
+    requires |path| == |exits|
   {
-    if !c.StCond? || |path| == 0 then
+    if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
       c
     else
       assert |path| > 0;
-      //  compute Wpre on last segment and iterate on prefix
+      //    Compute Wpre for the condition for the segment
       var w1 := xs[path[|path| - 1]].WPre(c);
-      WPreSeqSegs(path[..|path| - 1], w1, xs)
+      //    Compute Wpre for feasibility of the segment, i.e. to ensure that
+      //    the segment leads to to the next one.
+      var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC, exits[|exits| - 1]);
+      //  compute Wpre on last segment and iterate on prefix
+      WPreSeqSegs(path[..|path| - 1], exits[..|exits| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
 
+  }
+
+  /**
+    *   Retrieve num of segments that correspond to a PC if any.
+    */
+  function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
+    requires rank <= |xs|
+    ensures r.Some? ==> r.v < |xs|
+    ensures r.Some?  ==> xs[r.v].StartAddress() == pc
+    decreases |xs| - rank
+  {
+    if rank == |xs| then None
+    else if xs[rank].StartAddress() == pc then Some(rank)
+    else PCToSeg(xs, pc, rank + 1)
   }
 
 

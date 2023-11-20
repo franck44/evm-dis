@@ -185,6 +185,8 @@ class Opcode:
             return True
         elif ((self).opcode) == (253):
             return True
+        elif ((self).opcode) == (254):
+            return True
         elif True:
             return False
 

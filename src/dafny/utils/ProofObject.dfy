@@ -16,7 +16,7 @@ include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
 // include "../utils/LinSegments.dfy"
 include "../utils/StackElement.dfy" 
-
+ 
 /**
   *  Provides proof objects types.
   */
@@ -52,7 +52,7 @@ module ProofObject {
          match this 
             case JUMP(_, _, _, _, _) => s.JUMPSeg? || s.JUMPISeg?
             case CONT(_, _, _, _) => s.CONTSeg? 
-            case TERMINAL(_, _, _, _) => s.RETURNSeg? || s.STOPSeg? 
+            case TERMINAL(_, _, _, _) => s.RETURNSeg? || s.STOPSeg? ||s.INVALIDSeg?
     } 
 
     /**

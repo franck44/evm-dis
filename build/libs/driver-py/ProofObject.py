@@ -59,26 +59,26 @@ class ProofObj:
     def is_TERMINAL(self) -> bool:
         return isinstance(self, ProofObj_TERMINAL)
     def IsValid(self):
-        source42_ = self
-        if source42_.is_JUMP:
-            d_518___mcc_h0_ = source42_.s
-            d_519___mcc_h1_ = source42_.wpOp
-            d_520___mcc_h2_ = source42_.wpCap
-            d_521___mcc_h3_ = source42_.tgt
-            d_522___mcc_h4_ = source42_.stacks
+        source48_ = self
+        if source48_.is_JUMP:
+            d_562___mcc_h0_ = source48_.s
+            d_563___mcc_h1_ = source48_.wpOp
+            d_564___mcc_h2_ = source48_.wpCap
+            d_565___mcc_h3_ = source48_.tgt
+            d_566___mcc_h4_ = source48_.stacks
             return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
-        elif source42_.is_CONT:
-            d_523___mcc_h5_ = source42_.s
-            d_524___mcc_h6_ = source42_.wpOp
-            d_525___mcc_h7_ = source42_.wpCap
-            d_526___mcc_h8_ = source42_.stacks
+        elif source48_.is_CONT:
+            d_567___mcc_h5_ = source48_.s
+            d_568___mcc_h6_ = source48_.wpOp
+            d_569___mcc_h7_ = source48_.wpCap
+            d_570___mcc_h8_ = source48_.stacks
             return ((self).s).is_CONTSeg
         elif True:
-            d_527___mcc_h9_ = source42_.s
-            d_528___mcc_h10_ = source42_.wpOp
-            d_529___mcc_h11_ = source42_.wpCap
-            d_530___mcc_h12_ = source42_.stacks
-            return (((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)
+            d_571___mcc_h9_ = source48_.s
+            d_572___mcc_h10_ = source48_.wpOp
+            d_573___mcc_h11_ = source48_.wpCap
+            d_574___mcc_h12_ = source48_.stacks
+            return ((((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)) or (((self).s).is_INVALIDSeg)
 
     def CollectJumpDest(self):
         return ((self).s).CollectJumpDest(((self).s).Ins())
