@@ -148,11 +148,13 @@ module CFGraph {
         //  check and print src component
         var srctxt :=
           if g[0].src in printed then ""
-          else if g[0].src.seg.None? then "ErrorEnd <BR ALIGN=\"CENTER\"/>\n"
+          else if g[0].src.seg.None? then 
+            "s" + g[0].src.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v]);
         var tgttxt :=
              if g[0].tgt in printed then ""
-          else if g[0].tgt.seg.None? then "ErrorEnd <BR ALIGN=\"CENTER\"/>\n"
+          else if g[0].tgt.seg.None? then 
+            "s" + g[0].tgt.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v]);
         srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
       else ""
@@ -161,9 +163,9 @@ module CFGraph {
     function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
         requires n.seg.Some?
     {
-      var lab := if n.seg.Some? then DOTSeg2(s, n.seg.v) else "ErrorEnd <BR ALIGN=\"CENTER\"/>\n";
+      var lab := DOTSeg2(s, n.seg.v);
       var nodeColour := SegColour(s);
-      "s" + n.ToString() + " [" + nodeColour + "label=<\n" + DOTSeg2(s, n.seg.v) + ">]\n"
+      "s" + n.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
     }
 
     /** Print the graph as a DOT digraph */
