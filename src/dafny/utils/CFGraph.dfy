@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./MiscTypes.dfy" 
+include "./MiscTypes.dfy"
 include "./LinSegments.dfy"
 include "./Automata.dfy"
 include "./Minimiser.dfy"
@@ -34,6 +34,7 @@ module CFGraph {
   import opened PartitionMod
   import opened SeqOfSets
 
+  //    Some colours used to pretty-print CFGraphs
   const returnColour := "style=filled,color=olivedrab,fontcolor=white,"
   const revertColour := "style=filled,color=orange,fontcolor=white,"
   const invalidColour := "style=filled,color=firebrick,fontcolor=white,"
@@ -42,6 +43,7 @@ module CFGraph {
   const jumpColour := "color=" + jcolour + ","
   const skipColour := "color=" + skcolour + ","
   const branchColour := "" // style=filled,color=white";
+
   /**
     *   A node.
     */
@@ -59,7 +61,7 @@ module CFGraph {
   datatype BoolEdge = BoolEdge(src: CFGNode, lab: bool, tgt: CFGNode)
   {
     /** Print to DOT format. */
-    function DOTPrint(): string
+    function DOTPrint2(): string
     {
       var lab1 := if lab then "<FONT color=\"" + jcolour + "\">jump</FONT>" else "<FONT color=\"" + skcolour + "\">skip</FONT>";
       var labColour := if lab then jumpColour else skipColour;
@@ -98,8 +100,6 @@ module CFGraph {
       ensures g'.IsValid()
       ensures g'.maxSegNum == maxSegNum
     {
-      //   assume forall k:: 0 <= k < |edges| ==> edges[k].src.seg.Some? ==> edges[k].src.seg.v < maxSegNum;
-      //   assume forall k:: 0 <= k < |edges| ==> edges[k].tgt.seg.Some? ==> edges[k].tgt.seg.v < maxSegNum;
       var r := EdgesToMap(edges, segUpperBound := maxSegNum);
       var idToNum := r.2;
       var numToCFGNode := r.3;
@@ -107,16 +107,12 @@ module CFGraph {
       var transitions := r.1;
       assert  forall k:: k in numToCFGNode && numToCFGNode[k].seg.Some? ==> numToCFGNode[k].seg.v <= maxSegNum;
 
-      //   assert forall k:: k in transitions ==> k.0.seg.Some? ==> k.0.seg.v < maxSegNum;
       assert forall i:: 0 <= i <= lastStateNum ==> i in numToCFGNode.Keys;
-      //   assert forall k:: k in numToCFGNode.Keys ==> k <= lastStateNum;
       assert forall k:: k in numToCFGNode.Keys  ==> numToCFGNode[k] in idToNum.Keys;
       var a := Auto(lastStateNum + 1, transitions);
       if lastStateNum > 0 then
         var s := set q {:nowarn} | 0 <= q < lastStateNum + 1;
         assert {0} <= s;
-        // assume AllNonEmpty([s]);
-        // assume DisjointAnyTwo([s]);
         SizeOfNatsUpToNBound(lastStateNum + 1, s);
         assert SetN([s], lastStateNum + 1);
         var p: ValidPartition := Partition(lastStateNum + 1, [s]);
@@ -139,9 +135,7 @@ module CFGraph {
         BoolCFGraph([], maxSegNum)
     }
 
-
-
-    /** Print to edges DOT format. */
+    /** Print edges to DOT format. */
     function DOTPrintEdges(xe: seq<BoolEdge> := edges): string
     {
       if |xe| > 0 then xe[0].DOTPrint() + DOTPrintEdges(xe[1..])
@@ -153,30 +147,27 @@ module CFGraph {
       requires forall k:: k in g ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in g ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-    //   var returnColour := "style=filled,color=olivedrab,fontcolor=white,";
-    //   var revertColour := "style=filled,color=firebrick,fontcolor=white,";
-    //   var branchColour := ""; // style=filled,color=white";
-
       if |g| > 0 then
         //  check and print src component
         var srctxt :=
           if g[0].src in printed then ""
-          else if g[0].src.seg.None? then 
+          else if g[0].src.seg.None? then
             "s" + g[0].src.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v]);
         var tgttxt :=
-             if g[0].tgt in printed then ""
-          else if g[0].tgt.seg.None? then 
+          if g[0].tgt in printed then ""
+          else if g[0].tgt.seg.None? then
             "s" + g[0].tgt.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v]);
         srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
       else ""
     }
 
+    /** Print node labels with code of the segment. */
     function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
-        requires n.seg.Some?
+      requires n.seg.Some?
     {
-      var lab := DOTSeg2(s, n.seg.v);
+      var lab := DOTSeg(s, n.seg.v);
       var nodeColour := SegColour(s);
       "s" + n.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
     }
@@ -201,28 +192,17 @@ module CFGraph {
   function SegNumPartition(p: ValidPartition, m: map<nat, CFGNode>, maxSegNum: nat, n: nat := 0): (p': ValidPartition)
     requires n <= maxSegNum + 1
     requires forall k:: 0 <= k < p.n ==> k in m.Keys
-    // requires forall
     ensures p'.n == p.n
-    // ensures forall k:: 0 <= k < |p'.elem| ==>
-    //     (forall x, x':: x in p'.elem[k] && x' in p'.elem[k] ==>  m[x].seg == m[x'].seg)
     decreases maxSegNum - n
-
-  {   //  there is maxSeg + 1 segments
-      // NotEmpty(p);
-      // ValidMaxClasses(p);
-      // AllClassesInSetU(p);
+  {
     if n <= maxSegNum then
       //  split
       var f: nat --> bool := (x: nat) requires 0 <= x < p.n => m[x].seg == Some(n);
-      // assert n < |p.elem|;
       var p1 := p.SplitAt(f, |p.elem| - 1);
-      // assert  (forall x, x':: x in p.elem[|p.elem| - 1] && x' in p.elem[|p.elem| - 1] ==>  m[x].seg == m[x'].seg);
-      // assume forall k:: 0 <= k < p1.n ==> k in m.Keys;
       SegNumPartition(p1, m, maxSegNum, n + 1)
     else
       //  collect states with seg number n
       p
-
   }
 
   function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], reverseSeenNodes: map<nat, CFGNode> := map[0 := CFGNode([], Some(0))] ,builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0, ghost segUpperBound: nat ): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>, map<nat, CFGNode>))
@@ -318,15 +298,7 @@ module CFGraph {
       [if x[0] then '1' else '0'] + BoolsToString(x[1..])
   }
 
-  function DOTSeg(xs: seq<ValidLinSeg>, numSeg: nat): string
-    requires numSeg < |xs|
-  {
-    var s := xs[numSeg];
-    var prefix := "<B>Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "</B><BR ALIGN=\"CENTER\"/>\n";
-    var body := DOTIns(s.Ins());
-    prefix + body
-  }
-
+  /** Assign a coloiur to a segment according to its type. */
   function SegColour(s: ValidLinSeg): string
   {
     match s
@@ -337,15 +309,15 @@ module CFGraph {
     case _ => ""
   }
 
-  function DOTSeg2(s: ValidLinSeg, numSeg: nat): string
-    // requires numSeg < |xs|
+  /**   Print the content of a segment. */
+  function DOTSeg(s: ValidLinSeg, numSeg: nat): string
   {
-    // var s := xs[numSeg];
-    var prefix := "<B>Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "</B><BR ALIGN=\"CENTER\"/>\n";
+    var prefix := "<B>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
   }
 
+  /**   Print a seq of instructions. */
   function {:tailrecursion true} DOTIns(xi: seq<ValidInstruction>): string
   {
     if |xi| == 0 then ""
@@ -354,6 +326,7 @@ module CFGraph {
       a + DOTIns(xi[1..])
   }
 
+  /**   Translate am of edges into seq of edges. */
   function NatBoolEdgesToCFGEdges(xs: seq<(nat, bool, nat)>, m: map<nat, CFGNode>, maxSegNum: nat): (r :seq<BoolEdge>)
     requires forall k:: 0 <= k < |xs| ==> xs[k].0 in m && xs[k].2 in m
     requires forall k:: k in m && m[k].seg.Some? ==> m[k].seg.v <= maxSegNum
@@ -364,13 +337,5 @@ module CFGraph {
     else
       [BoolEdge(m[xs[0].0], xs[0].1, m[xs[0].2])] + NatBoolEdgesToCFGEdges(xs[1..], m, maxSegNum)
   }
-
-  //   function
-  //   function ReverseMap<S, T>(m: map<S, T>): map<T, S>
-  //     //   requires forall k, k':: k in m ==> (m[k] == m[k'] ==> k == k')
-  //   {
-  //     if |m| == 0 then map[]
-  //     else map[m[] := ]
-  //   }
 
 }
