@@ -65,6 +65,13 @@ module CFGraph {
       var labColour := if lab then jumpColour else skipColour;
       "s" + src.ToString() + " -> s" + tgt.ToString() +  " [" + labColour + "label=<" + lab1 + ">]\n"
     }
+
+    function DOTPrint(): string
+    {
+      var lab1 := if lab then "tooltip=\"Jump\",style=dashed" else "tooltip=\"Next\"";
+      var labColour := if lab then jumpColour else skipColour;
+      "s" + src.ToString() + " -> s" + tgt.ToString() +  " [" + lab1 + "]\n"
+    }
   }
 
   /**
