@@ -155,5 +155,23 @@ module State {
       s[0].ToString() + "," + StackToString(s[1..])
   }
 
+   /**
+      * Build an initial state that satisfies a given condition.
+      * @param  c       A valid condition.
+      * @param  initpc  An optional initial value for the pc.
+      * @returns        A valid  state with a (minimal) stack that satisfies c and
+      *                 init value for pc.
+      */
+    function BuildInitState(c: ValidCond, initpc: nat := 0): (s: ValidState)
+      requires !c.StFalse?
+    {
+      var s0 := DEFAULT_VALIDSTATE;
+      if c.StCond? then
+        s0.(stack := c.BuildStack(), pc := initpc)
+      else
+        s0.(pc := initpc)
+    }
+
+
 
 }
