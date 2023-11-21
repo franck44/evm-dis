@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./MiscTypes.dfy"
+include "./MiscTypes.dfy" 
 include "./LinSegments.dfy"
 include "./Automata.dfy"
 include "./Minimiser.dfy"
