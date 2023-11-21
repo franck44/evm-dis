@@ -37,6 +37,10 @@ module CFGraph {
   const returnColour := "style=filled,color=olivedrab,fontcolor=white,"
   const revertColour := "style=filled,color=orange,fontcolor=white,"
   const invalidColour := "style=filled,color=firebrick,fontcolor=white,"
+  const jcolour :="royalblue"
+  const skcolour :="black"
+  const jumpColour := "color=" + jcolour + ","
+  const skipColour := "color=" + skcolour + ","
   const branchColour := "" // style=filled,color=white";
   /**
     *   A node.
@@ -57,8 +61,9 @@ module CFGraph {
     /** Print to DOT format. */
     function DOTPrint(): string
     {
-      var lab := if lab then "true" else "false";
-      "s" + src.ToString() + " -> s" + tgt.ToString() +  " [label=" + lab + "]\n"
+      var lab1 := if lab then "<FONT color=\"" + jcolour + "\">jump</FONT>" else "<FONT color=\"" + skcolour + "\">skip</FONT>";
+      var labColour := if lab then jumpColour else skipColour;
+      "s" + src.ToString() + " -> s" + tgt.ToString() +  " [" + labColour + "label=<" + lab1 + ">]\n"
     }
   }
 
@@ -174,7 +179,7 @@ module CFGraph {
       requires forall k:: k in this.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-      var prefix := "digraph CFG {\n node [shape=box]\nranking=TB\n ";
+      var prefix := "digraph CFG {\n node [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
       prefix + DOTPrintNodes(xs) + DOTPrintEdges() + "}\n"
     }
   }
@@ -310,7 +315,7 @@ module CFGraph {
     requires numSeg < |xs|
   {
     var s := xs[numSeg];
-    var prefix := "Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "<BR ALIGN=\"CENTER\"/>\n";
+    var prefix := "<B>Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
   }
@@ -329,7 +334,7 @@ module CFGraph {
     // requires numSeg < |xs|
   {
     // var s := xs[numSeg];
-    var prefix := "Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "<BR ALIGN=\"CENTER\"/>\n";
+    var prefix := "<B>Segment " + NatToString(numSeg) + " 0x" + Hex.NatToHex(s.StartAddress()) + "</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
   }
