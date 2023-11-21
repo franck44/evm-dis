@@ -15,6 +15,7 @@
 include "./int.dfy"
 include "./Hex.dfy"
 include "./StackElement.dfy"
+include "./WeakPre.dfy"
 
 /**
   *  Provides Abstract States.
@@ -24,6 +25,7 @@ module State {
   import opened Int
   import opened Hex
   import opened StackElement
+  import opened WeakPre
 
   /** The stack elements can be either concrete valies of unknown which is
     * captured by Random().
