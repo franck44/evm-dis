@@ -98,6 +98,13 @@ module WeakPre {
       trackedVals[i]
     }
 
+    function Tail(): ValidCond
+        requires this.IsValid()
+        requires this.Size() > 1
+    {
+        this.(trackedPos := trackedPos[1..], trackedVals := trackedVals[1..])
+    }
+
     function Add(pos: u256, val: u256): (c' :Cond)
       requires IsValid()
       ensures c'.IsValid()
