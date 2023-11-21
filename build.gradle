@@ -93,6 +93,15 @@ final DAFNY4_PY_BUILD_FLAGS = [
     '--quantifier-syntax','4',
 ]
 
+final DAFNY4_CS_DOTNET_BUILD_FLAGS = [
+    'build',
+    '--no-verify',
+    '--target','cs',
+    '--output','build/libs/driver',
+    '--function-syntax','4',
+    '--quantifier-syntax','4',
+]
+
 final DAFNY4_RUST_BUILD_FLAGS = [
     'build',
     '--no-verify',
@@ -243,11 +252,33 @@ task compileToPy {
             executable DAFNY_HOME + '/dafny'
             args DAFNY4_PY_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
-        copy {
-            from "src/main/python"
-            into "build/libs/Driver-py"
-            include "*.py"
+        // copy {
+        //     from "src/main/python"
+        //     into "build/libs/Driver-py"
+        //     include "*.py"
+        // }
+    }
+}
+
+task compileToCs {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.dfy'))
+    // Specify outputs
+    // outputs.files(fileTree('build/').include('libs/evmdis.py'))
+    // Enable caching
+    outputs.cacheIf { true }
+    // Specify actions
+    doLast {
+        // Generate Dafny Source
+        exec {
+            executable DAFNY_HOME + '/dafny'
+            args DAFNY4_CS_DOTNET_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
+        // copy {
+        //     from "src/main/python"
+        //     into "build/libs/Driver-py"
+        //     include "*.py"
+        // }
     }
 }
 
