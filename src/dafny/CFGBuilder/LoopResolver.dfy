@@ -76,7 +76,7 @@ module LoopResolver {
       //  some properties must hold on the path defined by the index v.1
       var init := seenOnPath[v.1];
       //  the CFGMNode at index v.1 has a segment with start address == pc
-      assert xs[init.seg.v].StartAddress() == pc; 
+      assert xs[init.seg.v].StartAddress() == pc;
       //  get the path false|true that led from init to last node
       var path := seenOnPath[v.1..];
       //  compute the list of segments defined by the nodes in path
@@ -88,16 +88,46 @@ module LoopResolver {
       var w1 := WPreSeqSegs(segs, boolPath[v.1..], tgtCond, xs, pc);
       if w1.StTrue? then
         Some(v.0)
-      else
+      else if w1.StFalse? then
+        None
+      else if PreservesCond(w1, segs, boolPath[v.1..], xs) then 
+        Some(v.0)
       //  Try a potential second occurrence of pc om seenOnPath
-      if 0 < |seenOnPath[v.1..|seenOnPath|]| < |seenOnPath| then
+      else if 0 < |seenOnPath[v.1..|seenOnPath|]| < |seenOnPath| then
         SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|], boolPath[v.1..|boolPath|])
       else None
 
     case None => None
   }
 
-  //   lemma {:axiom} foo()
+  predicate PreservesCond(c: ValidCond, seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>)
+    requires c.StCond?
+    requires |seg| == |exits|
+    requires forall k:: k in seg ==> k < |xs|
+  {
+    var initState := BuildInitState(c);
+    var endState := RunAll(seg, exits, xs, initState);
+    if endState.EState? then
+      endState.Sat(c)
+    else false
+  }
+
+  function RunAll(seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>, s: AState): AState
+    requires s.EState?
+    requires |seg| == |exits|
+    requires forall k:: k in seg ==> k < |xs|
+  {
+    if |seg| == 0 then s
+    else
+      assert |seg| > 0;
+      assert seg[0] in seg;
+      match xs[seg[0]].Run(s, exits[0])
+      case EState(p, st) =>
+        assert forall k:: k in seg[1..] ==> k in seg;
+        RunAll(seg[1..], exits[1..], xs, EState(p, st))
+      case Error(m) => Error(m)
+
+  }
 
   /**
     *   Convert a sequence of CFGNodes into the sequence of segments they correspond to.
@@ -106,7 +136,7 @@ module LoopResolver {
     *   @returns        The list of segments defined by xn.
     */
   function {:tailrecursion true} NodesToSeg(xn: seq<CFGNode>): (s: seq<nat>)
-    requires forall k:: k in xn ==> k.seg.Some? 
+    requires forall k:: k in xn ==> k.seg.Some?
     ensures |xn| == |s|
     ensures forall i:: 0 <= i < |s| ==> s[i] == xn[i].seg.v
   {
