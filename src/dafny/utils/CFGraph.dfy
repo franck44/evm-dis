@@ -35,7 +35,8 @@ module CFGraph {
   import opened SeqOfSets
 
   const returnColour := "style=filled,color=olivedrab,fontcolor=white,"
-  const revertColour := "style=filled,color=firebrick,fontcolor=white,"
+  const revertColour := "style=filled,color=orange,fontcolor=white,"
+  const invalidColour := "style=filled,color=firebrick,fontcolor=white,"
   const branchColour := "" // style=filled,color=white";
   /**
     *   A node.
@@ -140,9 +141,9 @@ module CFGraph {
       requires forall k:: k in g ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in g ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-      var returnColour := "style=filled,color=olivedrab,fontcolor=white,";
-      var revertColour := "style=filled,color=firebrick,fontcolor=white,";
-      var branchColour := ""; // style=filled,color=white";
+    //   var returnColour := "style=filled,color=olivedrab,fontcolor=white,";
+    //   var revertColour := "style=filled,color=firebrick,fontcolor=white,";
+    //   var branchColour := ""; // style=filled,color=white";
 
       if |g| > 0 then
         //  check and print src component
@@ -319,6 +320,7 @@ module CFGraph {
     match s
     case STOPSeg(_, _, _) => revertColour
     case RETURNSeg(_, _, _) => returnColour
+    case INVALIDSeg(_, _, _) =>  invalidColour
     case JUMPISeg(_, _, _) =>  branchColour
     case _ => ""
   }
