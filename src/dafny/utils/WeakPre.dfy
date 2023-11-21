@@ -111,6 +111,25 @@ module WeakPre {
     {
       this
     }
+
+    /** Build stack that satifies this cond. */
+    function BuildStack(r: seq<StackElem> := [], index: nat := 0): (s: seq<StackElem>)
+        requires this.StCond?
+        requires this.IsValid()
+        requires index <= |trackedPos|
+        decreases |trackedPos| - index 
+    {
+      if index == |trackedPos|  then r
+      else
+      if trackedPos[index] < |r| then
+        BuildStack(r[trackedPos[index] := Value(trackedVals[index])], index + 1)
+      else
+        //  we have to add a suffix of trackedPos[0] - |r| elements
+        var suf := seq(trackedPos[index] - |r|, _ => Random());
+        assert |r + suf + [Value(trackedVals[index])]| == trackedPos[index] + 1;
+        BuildStack(r + suf + [Value(trackedVals[index])], index + 1)
+    }
+
   }
 
   //   Helper
