@@ -145,6 +145,25 @@ module State {
       this.(stack := this.stack[0 := nth][n := top])
     }
 
+    predicate Sat(c: ValidCond) 
+        requires this.EState?
+        requires c.StCond?
+        decreases c.Size()
+    {
+        if c.Size() == 1 then 
+            checkPos(this, c.trackedPos[0],  c.trackedVals[0])
+        else 
+            assert c.Size() >= 2;
+            checkPos(this, c.trackedPos[0],  c.trackedVals[0]) 
+            && Sat(c.Tail()) 
+    }
+
+  }
+
+  predicate checkPos(s: ValidState, pos: nat, val: u256)
+  {
+     if |s.stack| <= pos then false 
+     else s.stack[pos] == Value(val)
   }
 
   //    Helpers
