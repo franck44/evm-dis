@@ -70,6 +70,8 @@ the CFG is depicted on the right-hand side.
 The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
 It can re-construct CFGs with nested loops, function calls.
 
+Examples of CFGS in DOT format for the an ERC-20, the Deposit Contract and some other programs are available in the [test folder](./src/dafny/tests/src/).
+
 ## Usage
 The disassembler generates readable EVM assembly and the CFG generator DOT files.
 The input to the disassembler and CFG generator is the deployed (`bin-runtime`) part of the compiled code if you compile Solidity with `solc`.
