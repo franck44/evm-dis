@@ -1,0 +1,75 @@
+digraph CFG {
+ node [shape=box]
+node[fontname=arial]
+edge[fontname=arial]
+ranking=TB
+ sE [label=<
+<B>Segment 0 0x0</B><BR ALIGN="CENTER"/>
+PUSH1 0x01 <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+>]
+s0E [label=<
+<B>Segment 1 0x3</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+DUP2 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x14 <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s00E [style=filled,color=olivedrab,fontcolor=white,label=<
+<B>Segment 2 0xb</B><BR ALIGN="CENTER"/>
+POP <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+MSTORE <BR ALIGN="LEFT"/>
+PUSH1 0x20 <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+RETURN <BR ALIGN="LEFT"/>
+>]
+s01E [label=<
+<B>Segment 3 0x14</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+>]
+s010E [label=<
+<B>Segment 4 0x17</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+DUP2 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x2c <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s0100E [label=<
+<B>Segment 5 0x1f</B><BR ALIGN="CENTER"/>
+POP <BR ALIGN="LEFT"/>
+PUSH1 0x01 <BR ALIGN="LEFT"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+ADD <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+PUSH1 0x03 <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s0101E [label=<
+<B>Segment 6 0x2c</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x02 <BR ALIGN="LEFT"/>
+MUL <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x17 <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+sE -> s0E [color=black,label=<<FONT color="black">skip</FONT>>]
+s0E -> s00E [color=black,label=<<FONT color="black">skip</FONT>>]
+s0E -> s01E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
+s01E -> s010E [color=black,label=<<FONT color="black">skip</FONT>>]
+s010E -> s0100E [color=black,label=<<FONT color="black">skip</FONT>>]
+s010E -> s0101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
+s0100E -> s0E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
+s0101E -> s010E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
+}
