@@ -82,7 +82,7 @@ For the examples in the repo I have used Yul and `solc --yul` to get a text repr
 The Dafny proof object feature is experimental.
 
 Dafny code can be used to generate some target code in several languages. To begin with we have generated
-Python and Java code.
+Python, Java and C# (Dotnet) code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
 ### Using the Python version of the disassembler/CFG generator
@@ -129,7 +129,7 @@ function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
 }
 ```
 
-### Using the Java version of the disassembler
+### Using the Java version of the disassembler/CFG generator
 
 The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
 It can be used with an input string as follows:
@@ -173,6 +173,25 @@ function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
 
 ```
 
+### Using the C#/Dotnet version of the disassembler/CFG generator
+
+The C# version (`.dll`) is run using `dotnet` as follows:
+
+```zsh
+evm-dis git:(main) ✗ dotnet build/libs/driver.dll
+Not enough arguments
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
+```
 
 ## An EVM bytecode disassembler in Dafny
 
