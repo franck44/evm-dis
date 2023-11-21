@@ -41,36 +41,36 @@ module LoopTests {
   import opened LoopResolver
   import opened CFGraph
   import opened MiscTypes
- 
-  //  Helpers
-  function BuildInitState(c: ValidCond): (s: AState)
-  {
-    var s0 := DEFAULT_VALIDSTATE;
-    if c.StCond? then
-      s0.(stack := BuildStack(c.TrackedPos(), c.TrackedVals()))
-    else
-      s0
-  }
 
-  /** Build an init stack that satifies a cond. */
-  function BuildStack(pos: seq<nat>, vals: seq<Int.u256>, r: seq<StackElem> := []): (s: seq<StackElem>)
-    requires |pos| == |vals|
-  {
-    if |pos| == 0 then r
-    else
-    if pos[0] < |r| then
-      BuildStack(pos[1..], vals[1..], r[pos[0] := Value(vals[0])])
-    else
-      //  we have to add a suffix of pos[0] - |r| elements
-      var suf := seq(pos[0] - |r|, _ => Random());
-      assert |r + suf + [Value(vals[0])]| == pos[0] + 1;
-      BuildStack(pos[1..], vals[1..], r + suf + [Value(vals[0])])
-  }
+  //  Helpers
+//   function BuildInitState(c: ValidCond): (s: AState)
+//   {
+//     var s0 := DEFAULT_VALIDSTATE;
+//     if c.StCond? then
+//       s0.(stack := BuildStack(c.TrackedPos(), c.TrackedVals()))
+//     else
+//       s0
+//   }
+
+//   /** Build an init stack that satifies a cond. */
+//   function BuildStack(pos: seq<nat>, vals: seq<Int.u256>, r: seq<StackElem> := []): (s: seq<StackElem>)
+//     requires |pos| == |vals|
+//   {
+//     if |pos| == 0 then r
+//     else
+//     if pos[0] < |r| then
+//       BuildStack(pos[1..], vals[1..], r[pos[0] := Value(vals[0])])
+//     else
+//       //  we have to add a suffix of pos[0] - |r| elements
+//       var suf := seq(pos[0] - |r|, _ => Random());
+//       assert |r + suf + [Value(vals[0])]| == pos[0] + 1;
+//       BuildStack(pos[1..], vals[1..], r + suf + [Value(vals[0])])
+//   }
 
   /** Tests the build stack function first. */
   method {:notest} Test0() {
     var c1 := StCond([2], [0x10]);
-    var st1 := BuildInitState(c1);
+    var st1 := BuildInitState(c1); 
     expect st1.stack == [Random(""), Random(""), Value(16)];
 
     var c2 := StCond([2, 0], [0x10, 0x20]);
@@ -103,6 +103,7 @@ module LoopTests {
     requires post.StCond?
   {
     var pre := s.WPre(post);
+    expect !pre.StFalse?;
     var s0 := BuildInitState(pre);
     if s.HasExit(false) {
       var s1 := s.Run(s0, false);
@@ -196,7 +197,107 @@ module LoopTests {
   }
 
   /** Double loop example */
-  method {:test} Test2()
+  method {:test} Test00()
+  {
+    var x := DisassembleU8(
+      [
+        // Segment 0
+        /* 00000000: */ PUSH1, 0x02,
+        //  Segment 1
+        /* 00000002: */ JUMPDEST,
+        // /* 00000003  */ PUSH0, 
+        /* 00000004: */ DUP1,
+        /* 00000005: */ JUMP
+
+      ]);
+    var y := SplitUpToTerminal(x, [], []);
+    expect |y| == 2;
+    expect y[0].CONTSeg?;
+    expect y[1].JUMPSeg?;
+
+    var xs := [false, true, true];
+
+    //    Run the path specified by xs
+    var s0 := DEFAULT_VALIDSTATE;
+    var s := s0;
+    assert s.pc == 0;
+    expect y[0].StartAddress() == 0;
+    //  the nodes seen so far
+    var seen: seq<CFGNode> := [CFGNode([], Some(0))];
+    //  the corresponding PCs seen so far
+    var seenPCs: seq<nat> := [0];
+    //  the path (true|false) taken so far
+    var path: seq<bool> := [];
+
+    //   Execute all segments in |xs|
+    print "Executing ", xs, "\n";
+    for k := 0 to |xs|
+      invariant |seen| == |seenPCs| == |path| + 1
+      invariant s.EState?
+    {
+      var seg := PCToSeg(y, s.pc);
+      expect seg.Some?;
+      print "Executing segment ", seg.v, " pc(", Hex.NatToHex(s.pc), ")", "\n";
+      //   expect s.pc == y[xs[k].0].StartAddress();
+      s := y[seg.v].Run(s, xs[k]);
+      expect s.EState?;
+      path := path + [xs[k]];
+      seen := seen + [CFGNode(path, PCToSeg(y, s.pc))];
+      seenPCs := seenPCs + [s.pc];
+
+      print " leads to state", s.ToString(), "\n";
+      print "path is: ", path, "\n";
+      print "SeenPCs is: ", seenPCs, "\n";
+      print "Seen is: ", seen, "\n";
+    }
+
+     print "--- Checks ---", "\n";
+    expect s.EState?;
+    var last := PCToSeg(y, s.pc);
+    expect last.Some?;
+    assert s.pc == y[last.v].StartAddress();
+    print "last :", last.v;
+    expect last.v == 1;
+
+    //  Has it been seen before?
+    print "Checking if ", s.pc, " is in ", seenPCs[..|seenPCs| - 1], " ", s.pc in seenPCs[..|seenPCs| - 1], "\n";
+    print "path is: ", path, "\n";
+    print "Seen Nodes is: ", seen, "\n";
+
+    expect forall k:: k in seen && k.seg.Some? ==> k.seg.v < |y|;
+    var index := FindFirstNodeWithPC(y, s.pc, seen);
+    expect index == Some((CFGNode([false], Some(1)), 1));
+    print "Finding First occurrence of pc on seen: ", index.v, "\n";
+    // var path := seenOnPath[v.1..];
+    // //  compute the list of segments defined by the nodes in path
+    expect  forall k:: k in seen[index.v.1..] ==> k.seg.Some?;
+    var segs := NodesToSeg(seen[index.v.1..|seen| - 1]);
+    expect |segs| >= 2;
+    print "Path to test is: ", path[index.v.1..], "\n";
+    print "Segs to test are: ", segs, "\n";
+    expect  forall k {:triggers segs[k..]}:: 0 <= k < |segs| ==> k < |y|;
+
+    var wp1 := WPreSeqSegs(segs, path[index.v.1..], StTrue(), y, s.pc);
+    // // expect wp1 == StFalse();
+    print "wp1 :", wp1, "\n";
+
+    expect wp1.StCond?;
+    var st1 := wp1.BuildStack();
+    print "st1: ", st1, "\n";
+    var s1 := BuildInitState(wp1);
+    print "s1 :", s1.ToString(), "\n";
+
+    //  Run segments 1 from s1
+    var s2 := y[1].Run(s1, true);
+    print "s2 :", s2.ToString(), "\n";
+    expect s2.EState?;
+    var b := s2.Sat(StCond([0, 2], [0x02, 0x4]));
+    print "S2.Sat(wp1): ", b, "\n";
+
+  }
+
+  /** Double loop example */
+  method {:test2} Test2()
   {
     var x := DisassembleU8(
       [
@@ -341,7 +442,7 @@ module LoopTests {
     print "t1 is: ", t1, "\n";
     //    Compute Wpre for feasibility of the segment, i.e. to ensure that
     //    the segment leads to to the next one.
-    var t2 := y[4].LeadsTo(0x1f, false); 
+    var t2 := y[4].LeadsTo(0x1f, false);
     print "t2 is: ", t2, "\n";
 
     // print
@@ -397,6 +498,8 @@ module LoopTests {
 
 
   }
+
+
 
 }
 
