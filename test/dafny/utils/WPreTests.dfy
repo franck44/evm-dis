@@ -246,5 +246,27 @@ module WpreTests {
     }
   }
 
+  method {:test} StackBuildTests()
+  {
+    {
+      var c := StCond([1, 4], [0x10, 0x40]);
+      var x := c.BuildStack();
+      expect |x| == 5;
+      expect x == [Random(), Value(0x10), Random(), Random(), Value(0x40)];
+    }
+    {
+      var c := StCond([0], [0x10]);
+      var x := c.BuildStack();
+      expect |x| == 1;
+      expect x == [Value(0x10)];
+    }
+    {
+      var c := StCond([4, 1, 7], [0x44, 0x11, 0x77]);
+      var x := c.BuildStack();
+      expect |x| == 8;
+      expect x == [Random(), Value(0x11), Random(), Random(), Value(0x44), Random(), Random(), Value(0x77)];
+    }
+  }
+
 }
 
