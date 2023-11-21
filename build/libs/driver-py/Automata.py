@@ -13,8 +13,8 @@ import EVMOpcodes
 import OpcodeDecoder
 import Hex
 import StackElement
-import State
 import WeakPre
+import State
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -50,8 +50,8 @@ class Auto:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
         def lambda26_(forall_var_9_):
-            d_673_k_: tuple = forall_var_9_
-            return not ((d_673_k_) in ((self).transitions)) or ((((self).transitions)[d_673_k_]) < ((self).numStates))
+            d_684_k_: tuple = forall_var_9_
+            return not ((d_684_k_) in ((self).transitions)) or ((((self).transitions)[d_684_k_]) < ((self).numStates))
 
         return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda26_)
 

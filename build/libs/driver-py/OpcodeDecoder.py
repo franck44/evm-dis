@@ -306,7 +306,7 @@ class default__:
         elif (op) == (245):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CREATE2")), EVMConstants.default__.CREATE2, 0, 0, 0, 0)
         elif (op) == (250):
-            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "STATICCALL")), EVMConstants.default__.STATICCALL, 0, 0, 0, 0)
+            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "STATICCALL")), EVMConstants.default__.STATICCALL, 1, 6, 1, 6)
         elif (op) == (253):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "REVERT")), EVMConstants.default__.REVERT, 0, 2, 0, 0)
         elif (op) == (255):

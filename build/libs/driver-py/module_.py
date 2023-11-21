@@ -13,8 +13,8 @@ import EVMOpcodes
 import OpcodeDecoder
 import Hex
 import StackElement
-import State
 import WeakPre
+import State
 import Instructions
 import BinaryDecoder
 import LinSegments

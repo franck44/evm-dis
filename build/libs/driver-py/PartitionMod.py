@@ -13,8 +13,8 @@ import EVMOpcodes
 import OpcodeDecoder
 import Hex
 import StackElement
-import State
 import WeakPre
+import State
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -40,32 +40,32 @@ class default__:
                 if (max) == (index):
                     return p
                 elif True:
-                    def lambda22_(d_659_f_, d_660_max_, d_661_index_):
-                        def lambda23_(d_662_x_):
-                            return d_659_f_((d_662_x_) + (1))
+                    def lambda22_(d_670_f_, d_671_max_, d_672_index_):
+                        def lambda23_(d_673_x_):
+                            return d_670_f_((d_673_x_) + (1))
 
                         return lambda23_
 
-                    d_658_f_k_ = lambda22_(f, max, index)
-                    d_663_p1_ = (p).SplitAt(f(0), 0)
-                    in95_ = d_663_p1_
-                    in96_ = d_658_f_k_
-                    in97_ = (index) + (1)
-                    in98_ = max
-                    p = in95_
-                    f = in96_
-                    index = in97_
-                    max = in98_
+                    d_669_f_k_ = lambda22_(f, max, index)
+                    d_674_p1_ = (p).SplitAt(f(0), 0)
+                    in101_ = d_674_p1_
+                    in102_ = d_669_f_k_
+                    in103_ = (index) + (1)
+                    in104_ = max
+                    p = in101_
+                    f = in102_
+                    index = in103_
+                    max = in104_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def PrintPartition(p):
         hi3_ = len((p).elem)
-        for d_664_k_ in range(0, hi3_):
-            d_665_setToSeq_: _dafny.Seq
-            d_665_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_664_k_])
-            _dafny.print(_dafny.string_of(d_665_setToSeq_))
+        for d_675_k_ in range(0, hi3_):
+            d_676_setToSeq_: _dafny.Seq
+            d_676_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_675_k_])
+            _dafny.print(_dafny.string_of(d_676_setToSeq_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
 
@@ -87,17 +87,17 @@ class Partition:
     def is_Partition(self) -> bool:
         return isinstance(self, Partition_Partition)
     def SplitAt(self, f, index):
-        d_666_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
-        if (((d_666_r_)[0]) != (_dafny.Set({}))) and (((d_666_r_)[1]) != (_dafny.Set({}))):
-            d_667_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_666_r_)[0], (d_666_r_)[1]]))
-            d_668_pp_ = Partition_Partition((self).n, d_667_j_)
-            return d_668_pp_
-        elif ((d_666_r_)[0]) != (_dafny.Set({})):
-            d_669_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_666_r_)[0]]))
-            return Partition_Partition((self).n, d_669_j_)
+        d_677_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
+        if (((d_677_r_)[0]) != (_dafny.Set({}))) and (((d_677_r_)[1]) != (_dafny.Set({}))):
+            d_678_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_677_r_)[0], (d_677_r_)[1]]))
+            d_679_pp_ = Partition_Partition((self).n, d_678_j_)
+            return d_679_pp_
+        elif ((d_677_r_)[0]) != (_dafny.Set({})):
+            d_680_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_677_r_)[0]]))
+            return Partition_Partition((self).n, d_680_j_)
         elif True:
-            d_670_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_666_r_)[1]]))
-            return Partition_Partition((self).n, d_670_j_)
+            d_681_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_677_r_)[1]]))
+            return Partition_Partition((self).n, d_681_j_)
 
     def GetClass(self, x, index):
         _this = self
@@ -106,13 +106,13 @@ class Partition:
                 if (x) in (((_this).elem)[index]):
                     return index
                 elif True:
-                    in99_ = _this
-                    in100_ = x
-                    in101_ = (index) + (1)
-                    _this = in99_
+                    in105_ = _this
+                    in106_ = x
+                    in107_ = (index) + (1)
+                    _this = in105_
                     
-                    x = in100_
-                    index = in101_
+                    x = in106_
+                    index = in107_
                     raise _dafny.TailCall()
                 break
 
@@ -122,11 +122,11 @@ class Partition:
     def Refines2(self, p):
         def lambda24_(forall_var_8_):
             def lambda25_(exists_var_0_):
-                d_672_c_: _dafny.Set = exists_var_0_
-                return ((d_672_c_) in ((p).elem)) and ((d_671_k_).issubset(d_672_c_))
+                d_683_c_: _dafny.Set = exists_var_0_
+                return ((d_683_c_) in ((p).elem)) and ((d_682_k_).issubset(d_683_c_))
 
-            d_671_k_: _dafny.Set = forall_var_8_
-            return not ((d_671_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda25_))
+            d_682_k_: _dafny.Set = forall_var_8_
+            return not ((d_682_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda25_))
 
         return _dafny.quantifier(((self).elem).UniqueElements, True, lambda24_)
 

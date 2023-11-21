@@ -13,7 +13,6 @@ import EVMOpcodes
 import OpcodeDecoder
 import Hex
 import StackElement
-import State
 
 # Module: WeakPre
 
@@ -29,8 +28,8 @@ class default__:
                     return c1
                 elif ((c2).Size()) == (1):
                     if (((c2).trackedPos)[0]) in ((c1).trackedPos):
-                        d_152_i_ = default__.FindVal(((c2).trackedPos)[0], (c1).trackedPos, 0)
-                        if (((c1).trackedVals)[d_152_i_]) == (((c2).trackedVals)[0]):
+                        d_126_i_ = default__.FindVal(((c2).trackedPos)[0], (c1).trackedPos, 0)
+                        if (((c1).trackedVals)[d_126_i_]) == (((c2).trackedVals)[0]):
                             return c1
                         elif True:
                             return Cond_StFalse()
@@ -38,18 +37,18 @@ class default__:
                         return Cond_StCond(((c1).trackedPos) + (_dafny.SeqWithoutIsStrInference([((c2).trackedPos)[0]])), ((c1).trackedVals) + (_dafny.SeqWithoutIsStrInference([((c2).trackedVals)[0]])))
                 elif True:
                     if (((c2).trackedPos)[0]) in ((c1).trackedPos):
-                        in12_ = c1
-                        in13_ = Cond_StCond(_dafny.SeqWithoutIsStrInference(((c2).trackedPos)[1::]), _dafny.SeqWithoutIsStrInference(((c2).trackedVals)[1::]))
-                        c1 = in12_
-                        c2 = in13_
+                        in11_ = c1
+                        in12_ = Cond_StCond(_dafny.SeqWithoutIsStrInference(((c2).trackedPos)[1::]), _dafny.SeqWithoutIsStrInference(((c2).trackedVals)[1::]))
+                        c1 = in11_
+                        c2 = in12_
                         raise _dafny.TailCall()
                     elif True:
-                        d_153_p_ = ((c1).trackedPos) + (_dafny.SeqWithoutIsStrInference([((c2).trackedPos)[0]]))
-                        d_154_v_ = ((c1).trackedVals) + (_dafny.SeqWithoutIsStrInference([((c2).trackedVals)[0]]))
-                        in14_ = Cond_StCond(d_153_p_, d_154_v_)
-                        in15_ = Cond_StCond(_dafny.SeqWithoutIsStrInference(((c2).trackedPos)[1::]), _dafny.SeqWithoutIsStrInference(((c2).trackedVals)[1::]))
-                        c1 = in14_
-                        c2 = in15_
+                        d_127_p_ = ((c1).trackedPos) + (_dafny.SeqWithoutIsStrInference([((c2).trackedPos)[0]]))
+                        d_128_v_ = ((c1).trackedVals) + (_dafny.SeqWithoutIsStrInference([((c2).trackedVals)[0]]))
+                        in13_ = Cond_StCond(d_127_p_, d_128_v_)
+                        in14_ = Cond_StCond(_dafny.SeqWithoutIsStrInference(((c2).trackedPos)[1::]), _dafny.SeqWithoutIsStrInference(((c2).trackedVals)[1::]))
+                        c1 = in13_
+                        c2 = in14_
                         raise _dafny.TailCall()
                 break
 
@@ -62,12 +61,12 @@ class default__:
                 elif ((xs)[index]) == (x):
                     return index
                 elif True:
-                    in16_ = x
-                    in17_ = xs
-                    in18_ = (index) + (1)
-                    x = in16_
-                    xs = in17_
-                    index = in18_
+                    in15_ = x
+                    in16_ = xs
+                    in17_ = (index) + (1)
+                    x = in15_
+                    xs = in16_
+                    index = in17_
                     raise _dafny.TailCall()
                 break
 
@@ -98,11 +97,11 @@ class Cond:
     def IsValid(self):
         def lambda0_(forall_var_0_):
             def lambda1_(forall_var_1_):
-                d_156_k_k_: int = forall_var_1_
-                return not ((((0) <= (d_155_k_)) and ((d_155_k_) < (d_156_k_k_))) and ((d_156_k_k_) < (len((self).trackedPos)))) or ((((self).trackedPos)[d_155_k_]) != (((self).trackedPos)[d_156_k_k_]))
+                d_130_k_k_: int = forall_var_1_
+                return not ((((0) <= (d_129_k_)) and ((d_129_k_) < (d_130_k_k_))) and ((d_130_k_k_) < (len((self).trackedPos)))) or ((((self).trackedPos)[d_129_k_]) != (((self).trackedPos)[d_130_k_k_]))
 
-            d_155_k_: int = forall_var_0_
-            return _dafny.quantifier(_dafny.IntegerRange((d_155_k_) + (1), len((self).trackedPos)), True, lambda1_)
+            d_129_k_: int = forall_var_0_
+            return _dafny.quantifier(_dafny.IntegerRange((d_129_k_) + (1), len((self).trackedPos)), True, lambda1_)
 
         return not ((self).is_StCond) or ((((len((self).trackedPos)) == (len((self).trackedVals))) and ((len((self).trackedVals)) > (0))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((self).trackedPos)), True, lambda0_)))
 
@@ -113,47 +112,47 @@ class Cond:
             return 0
 
     def And(self, c):
-        source27_ = (self, c)
-        d_157___mcc_h0_ = source27_[0]
-        d_158___mcc_h1_ = source27_[1]
-        source28_ = d_157___mcc_h0_
-        if source28_.is_StTrue:
-            source29_ = d_158___mcc_h1_
+        source26_ = (self, c)
+        d_131___mcc_h0_ = source26_[0]
+        d_132___mcc_h1_ = source26_[1]
+        source27_ = d_131___mcc_h0_
+        if source27_.is_StTrue:
+            source28_ = d_132___mcc_h1_
+            if source28_.is_StTrue:
+                d_133_cond_ = d_132___mcc_h1_
+                return d_133_cond_
+            elif source28_.is_StFalse:
+                return Cond_StFalse()
+            elif True:
+                d_134___mcc_h2_ = source28_.trackedPos
+                d_135___mcc_h3_ = source28_.trackedVals
+                d_136_cond_ = d_132___mcc_h1_
+                return d_136_cond_
+        elif source27_.is_StFalse:
+            source29_ = d_132___mcc_h1_
             if source29_.is_StTrue:
-                d_159_cond_ = d_158___mcc_h1_
-                return d_159_cond_
+                return Cond_StFalse()
             elif source29_.is_StFalse:
                 return Cond_StFalse()
             elif True:
-                d_160___mcc_h2_ = source29_.trackedPos
-                d_161___mcc_h3_ = source29_.trackedVals
-                d_162_cond_ = d_158___mcc_h1_
-                return d_162_cond_
-        elif source28_.is_StFalse:
-            source30_ = d_158___mcc_h1_
-            if source30_.is_StTrue:
+                d_137___mcc_h8_ = source29_.trackedPos
+                d_138___mcc_h9_ = source29_.trackedVals
                 return Cond_StFalse()
+        elif True:
+            d_139___mcc_h14_ = source27_.trackedPos
+            d_140___mcc_h15_ = source27_.trackedVals
+            source30_ = d_132___mcc_h1_
+            if source30_.is_StTrue:
+                d_141_c1_ = d_131___mcc_h0_
+                return d_141_c1_
             elif source30_.is_StFalse:
                 return Cond_StFalse()
             elif True:
-                d_163___mcc_h8_ = source30_.trackedPos
-                d_164___mcc_h9_ = source30_.trackedVals
-                return Cond_StFalse()
-        elif True:
-            d_165___mcc_h14_ = source28_.trackedPos
-            d_166___mcc_h15_ = source28_.trackedVals
-            source31_ = d_158___mcc_h1_
-            if source31_.is_StTrue:
-                d_167_c1_ = d_157___mcc_h0_
-                return d_167_c1_
-            elif source31_.is_StFalse:
-                return Cond_StFalse()
-            elif True:
-                d_168___mcc_h22_ = source31_.trackedPos
-                d_169___mcc_h23_ = source31_.trackedVals
-                d_170_c2_ = d_158___mcc_h1_
-                d_171_c1_ = d_157___mcc_h0_
-                return default__.Merge(d_171_c1_, d_170_c2_)
+                d_142___mcc_h22_ = source30_.trackedPos
+                d_143___mcc_h23_ = source30_.trackedVals
+                d_144_c2_ = d_132___mcc_h1_
+                d_145_c1_ = d_131___mcc_h0_
+                return default__.Merge(d_145_c1_, d_144_c2_)
 
     def TrackedPos(self):
         return (self).trackedPos
@@ -167,8 +166,41 @@ class Cond:
     def TrackedValAt(self, i):
         return ((self).trackedVals)[i]
 
+    def Tail(self):
+        d_146_dt__update__tmp_h0_ = self
+        d_147_dt__update_htrackedVals_h0_ = _dafny.SeqWithoutIsStrInference(((self).trackedVals)[1::])
+        d_148_dt__update_htrackedPos_h0_ = _dafny.SeqWithoutIsStrInference(((self).trackedPos)[1::])
+        return Cond_StCond(d_148_dt__update_htrackedPos_h0_, d_147_dt__update_htrackedVals_h0_)
+
     def Add(self, pos, val):
         return self
+
+    def BuildStack(self, r, index):
+        _this = self
+        while True:
+            with _dafny.label():
+                if (index) == (len((_this).trackedPos)):
+                    return r
+                elif (((_this).trackedPos)[index]) < (len(r)):
+                    in18_ = _this
+                    in19_ = (r).set(((_this).trackedPos)[index], StackElement.StackElem_Value(((_this).trackedVals)[index]))
+                    in20_ = (index) + (1)
+                    _this = in18_
+                    
+                    r = in19_
+                    index = in20_
+                    raise _dafny.TailCall()
+                elif True:
+                    d_149_suf_ = _dafny.SeqWithoutIsStrInference([StackElement.StackElem_Random(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))) for d_150___v2_ in range((((_this).trackedPos)[index]) - (len(r)))])
+                    in21_ = _this
+                    in22_ = ((r) + (d_149_suf_)) + (_dafny.SeqWithoutIsStrInference([StackElement.StackElem_Value(((_this).trackedVals)[index])]))
+                    in23_ = (index) + (1)
+                    _this = in21_
+                    
+                    r = in22_
+                    index = in23_
+                    raise _dafny.TailCall()
+                break
 
 
 class Cond_StTrue(Cond, NamedTuple('StTrue', [])):
