@@ -4,7 +4,7 @@ node[fontname=arial]
 edge[fontname=arial]
 ranking=TB
  sE [label=<
-<B>Segment 0 0x0</B><BR ALIGN="CENTER"/>
+<B>Segment 0 [0x0]</B><BR ALIGN="CENTER"/>
 PUSH1 0x80 <BR ALIGN="LEFT"/>
 PUSH1 0x40 <BR ALIGN="LEFT"/>
 MSTORE <BR ALIGN="LEFT"/>
@@ -15,13 +15,13 @@ PUSH2 0x0010 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s0E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 1 0xc</B><BR ALIGN="CENTER"/>
+<B>Segment 1 [0xc]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s1E [label=<
-<B>Segment 2 0x10</B><BR ALIGN="CENTER"/>
+<B>Segment 2 [0x10]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 PUSH1 0x04 <BR ALIGN="LEFT"/>
@@ -31,7 +31,7 @@ PUSH2 0x0036 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s10E [label=<
-<B>Segment 3 0x1a</B><BR ALIGN="CENTER"/>
+<B>Segment 3 [0x1a]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 CALLDATALOAD <BR ALIGN="LEFT"/>
 PUSH1 0xe0 <BR ALIGN="LEFT"/>
@@ -43,14 +43,14 @@ PUSH2 0x003b <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1000E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 5 0x36</B><BR ALIGN="CENTER"/>
+<B>Segment 5 [0x36]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s100E [label=<
-<B>Segment 4 0x2b</B><BR ALIGN="CENTER"/>
+<B>Segment 4 [0x2b]</B><BR ALIGN="CENTER"/>
 DUP1 <BR ALIGN="LEFT"/>
 PUSH4 0xc6c2ea17 <BR ALIGN="LEFT"/>
 EQ <BR ALIGN="LEFT"/>
@@ -58,7 +58,7 @@ PUSH2 0x0064 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s101E [label=<
-<B>Segment 6 0x3b</B><BR ALIGN="CENTER"/>
+<B>Segment 6 [0x3b]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x004e <BR ALIGN="LEFT"/>
 PUSH2 0x0049 <BR ALIGN="LEFT"/>
@@ -68,7 +68,7 @@ PUSH2 0x0152 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s1001E [label=<
-<B>Segment 10 0x64</B><BR ALIGN="CENTER"/>
+<B>Segment 10 [0x64]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x0077 <BR ALIGN="LEFT"/>
 PUSH2 0x0072 <BR ALIGN="LEFT"/>
@@ -78,7 +78,7 @@ PUSH2 0x020b <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s1011E [label=<
-<B>Segment 31 0x152</B><BR ALIGN="CENTER"/>
+<B>Segment 31 [0x152]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
@@ -92,13 +92,13 @@ PUSH2 0x0165 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1011111111E [label=<
-<B>Segment 7 0x49</B><BR ALIGN="CENTER"/>
+<B>Segment 7 [0x49]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x0085 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10111111111E [label=<
-<B>Segment 13 0x85</B><BR ALIGN="CENTER"/>
+<B>Segment 13 [0x85]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x60 <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
@@ -110,7 +110,7 @@ PUSH2 0x00a0 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s10111111111100011E [label=<
-<B>Segment 8 0x4e</B><BR ALIGN="CENTER"/>
+<B>Segment 8 [0x4e]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x40 <BR ALIGN="LEFT"/>
 MLOAD <BR ALIGN="LEFT"/>
@@ -121,7 +121,7 @@ PUSH2 0x01c7 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s101111111111000111E [label=<
-<B>Segment 42 0x1c7</B><BR ALIGN="CENTER"/>
+<B>Segment 42 [0x1c7]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
@@ -149,7 +149,7 @@ SWAP1 <BR ALIGN="LEFT"/>
 DUP5 <BR ALIGN="LEFT"/>
 >]
 s10011E [label=<
-<B>Segment 46 0x20b</B><BR ALIGN="CENTER"/>
+<B>Segment 46 [0x20b]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
@@ -162,13 +162,13 @@ PUSH2 0x021d <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1001111E [label=<
-<B>Segment 11 0x72</B><BR ALIGN="CENTER"/>
+<B>Segment 11 [0x72]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x0124 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10011111E [label=<
-<B>Segment 26 0x124</B><BR ALIGN="CENTER"/>
+<B>Segment 26 [0x124]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 PUSH1 0x02 <BR ALIGN="LEFT"/>
@@ -179,7 +179,7 @@ PUSH2 0x0133 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1001111101E [label=<
-<B>Segment 12 0x77</B><BR ALIGN="CENTER"/>
+<B>Segment 12 [0x77]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x40 <BR ALIGN="LEFT"/>
 MLOAD <BR ALIGN="LEFT"/>
@@ -192,7 +192,7 @@ PUSH2 0x005b <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10011111011E [style=filled,color=olivedrab,fontcolor=white,label=<
-<B>Segment 9 0x5b</B><BR ALIGN="CENTER"/>
+<B>Segment 9 [0x5b]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x40 <BR ALIGN="LEFT"/>
 MLOAD <BR ALIGN="LEFT"/>
@@ -203,13 +203,13 @@ SWAP1 <BR ALIGN="LEFT"/>
 RETURN <BR ALIGN="LEFT"/>
 >]
 s101111111110E [label=<
-<B>Segment 14 0x99</B><BR ALIGN="CENTER"/>
+<B>Segment 14 [0x99]</B><BR ALIGN="CENTER"/>
 PUSH2 0x00a0 <BR ALIGN="LEFT"/>
 PUSH2 0x0224 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s101111111111E [label=<
-<B>Segment 15 0xa0</B><BR ALIGN="CENTER"/>
+<B>Segment 15 [0xa0]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x40 <BR ALIGN="LEFT"/>
 MLOAD <BR ALIGN="LEFT"/>
@@ -232,7 +232,7 @@ PUSH2 0x00c9 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1011111111101E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 49 0x224</B><BR ALIGN="CENTER"/>
+<B>Segment 49 [0x224]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH4 0x4e487b71 <BR ALIGN="LEFT"/>
 PUSH1 0xe0 <BR ALIGN="LEFT"/>
@@ -247,7 +247,7 @@ PUSH1 0x00 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s1011111111110E [label=<
-<B>Segment 16 0xba</B><BR ALIGN="CENTER"/>
+<B>Segment 16 [0xba]</B><BR ALIGN="CENTER"/>
 DUP2 <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
 ADD <BR ALIGN="LEFT"/>
@@ -263,7 +263,7 @@ SWAP1 <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 >]
 s10111111111100E [label=<
-<B>Segment 17 0xc9</B><BR ALIGN="CENTER"/>
+<B>Segment 17 [0xc9]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
@@ -271,7 +271,7 @@ POP <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 >]
 s101111111111000E [label=<
-<B>Segment 18 0xcf</B><BR ALIGN="CENTER"/>
+<B>Segment 18 [0xcf]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP3 <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
@@ -281,7 +281,7 @@ PUSH2 0x011d <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1011111111110000E [label=<
-<B>Segment 19 0xd8</B><BR ALIGN="CENTER"/>
+<B>Segment 19 [0xd8]</B><BR ALIGN="CENTER"/>
 PUSH2 0x00f8 <BR ALIGN="LEFT"/>
 DUP5 <BR ALIGN="LEFT"/>
 DUP5 <BR ALIGN="LEFT"/>
@@ -293,7 +293,7 @@ PUSH2 0x00ec <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1011111111110001E [label=<
-<B>Segment 25 0x11d</B><BR ALIGN="CENTER"/>
+<B>Segment 25 [0x11d]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 SWAP3 <BR ALIGN="LEFT"/>
@@ -303,13 +303,13 @@ POP <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10111111111100000E [label=<
-<B>Segment 20 0xe5</B><BR ALIGN="CENTER"/>
+<B>Segment 20 [0xe5]</B><BR ALIGN="CENTER"/>
 PUSH2 0x00ec <BR ALIGN="LEFT"/>
 PUSH2 0x023a <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10111111111100001E [label=<
-<B>Segment 21 0xec</B><BR ALIGN="CENTER"/>
+<B>Segment 21 [0xec]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
@@ -321,7 +321,7 @@ PUSH2 0x0124 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s101111111111000001E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 50 0x23a</B><BR ALIGN="CENTER"/>
+<B>Segment 50 [0x23a]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH4 0x4e487b71 <BR ALIGN="LEFT"/>
 PUSH1 0xe0 <BR ALIGN="LEFT"/>
@@ -336,7 +336,7 @@ PUSH1 0x00 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s101111111111000011E [label=<
-<B>Segment 26 0x124</B><BR ALIGN="CENTER"/>
+<B>Segment 26 [0x124]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 PUSH1 0x02 <BR ALIGN="LEFT"/>
@@ -347,7 +347,7 @@ PUSH2 0x0133 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s10111111111100001101E [label=<
-<B>Segment 22 0xf8</B><BR ALIGN="CENTER"/>
+<B>Segment 22 [0xf8]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP3 <BR ALIGN="LEFT"/>
 DUP3 <BR ALIGN="LEFT"/>
@@ -359,13 +359,13 @@ PUSH2 0x010a <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s101111111111000011010E [label=<
-<B>Segment 23 0x103</B><BR ALIGN="CENTER"/>
+<B>Segment 23 [0x103]</B><BR ALIGN="CENTER"/>
 PUSH2 0x010a <BR ALIGN="LEFT"/>
 PUSH2 0x023a <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s101111111111000011011E [label=<
-<B>Segment 24 0x10a</B><BR ALIGN="CENTER"/>
+<B>Segment 24 [0x10a]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
@@ -383,13 +383,13 @@ PUSH2 0x00cf <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s100111110E [label=<
-<B>Segment 27 0x130</B><BR ALIGN="CENTER"/>
+<B>Segment 27 [0x130]</B><BR ALIGN="CENTER"/>
 POP <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s100111111E [label=<
-<B>Segment 28 0x133</B><BR ALIGN="CENTER"/>
+<B>Segment 28 [0x133]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x013f <BR ALIGN="LEFT"/>
 PUSH1 0x02 <BR ALIGN="LEFT"/>
@@ -399,13 +399,13 @@ PUSH2 0x0124 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s1011111111110000110E [label=<
-<B>Segment 27 0x130</B><BR ALIGN="CENTER"/>
+<B>Segment 27 [0x130]</B><BR ALIGN="CENTER"/>
 POP <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s1011111111110000111E [label=<
-<B>Segment 28 0x133</B><BR ALIGN="CENTER"/>
+<B>Segment 28 [0x133]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH2 0x013f <BR ALIGN="LEFT"/>
 PUSH1 0x02 <BR ALIGN="LEFT"/>
@@ -415,13 +415,13 @@ PUSH2 0x0124 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 32 0x161</B><BR ALIGN="CENTER"/>
+<B>Segment 32 [0x161]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s10111E [label=<
-<B>Segment 33 0x165</B><BR ALIGN="CENTER"/>
+<B>Segment 33 [0x165]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP3 <BR ALIGN="LEFT"/>
 CALLDATALOAD <BR ALIGN="LEFT"/>
@@ -434,13 +434,13 @@ PUSH2 0x017d <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s101110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 34 0x179</B><BR ALIGN="CENTER"/>
+<B>Segment 34 [0x179]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s101111E [label=<
-<B>Segment 35 0x17d</B><BR ALIGN="CENTER"/>
+<B>Segment 35 [0x17d]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
 DUP6 <BR ALIGN="LEFT"/>
@@ -456,13 +456,13 @@ PUSH2 0x0191 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s1011110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 36 0x18d</B><BR ALIGN="CENTER"/>
+<B>Segment 36 [0x18d]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s1011111E [label=<
-<B>Segment 37 0x191</B><BR ALIGN="CENTER"/>
+<B>Segment 37 [0x191]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
 CALLDATALOAD <BR ALIGN="LEFT"/>
@@ -474,13 +474,13 @@ PUSH2 0x01a0 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s10111110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 38 0x19c</B><BR ALIGN="CENTER"/>
+<B>Segment 38 [0x19c]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s10111111E [label=<
-<B>Segment 39 0x1a0</B><BR ALIGN="CENTER"/>
+<B>Segment 39 [0x1a0]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP7 <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
@@ -496,13 +496,13 @@ PUSH2 0x01b5 <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s101111110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 40 0x1b1</B><BR ALIGN="CENTER"/>
+<B>Segment 40 [0x1b1]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s101111111E [label=<
-<B>Segment 41 0x1b5</B><BR ALIGN="CENTER"/>
+<B>Segment 41 [0x1b5]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 PUSH1 0x20 <BR ALIGN="LEFT"/>
 SWAP3 <BR ALIGN="LEFT"/>
@@ -522,7 +522,7 @@ POP <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s1011111111110001110E [label=<
-<B>Segment 43 0x1e3</B><BR ALIGN="CENTER"/>
+<B>Segment 43 [0x1e3]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
 DUP2 <BR ALIGN="LEFT"/>
@@ -532,7 +532,7 @@ PUSH2 0x01ff <BR ALIGN="LEFT"/>
 JUMPI <BR ALIGN="LEFT"/>
 >]
 s10111111111100011100E [label=<
-<B>Segment 44 0x1ec</B><BR ALIGN="CENTER"/>
+<B>Segment 44 [0x1ec]</B><BR ALIGN="CENTER"/>
 DUP4 <BR ALIGN="LEFT"/>
 MLOAD <BR ALIGN="LEFT"/>
 DUP4 <BR ALIGN="LEFT"/>
@@ -551,7 +551,7 @@ PUSH2 0x01e3 <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s10111111111100011101E [label=<
-<B>Segment 45 0x1ff</B><BR ALIGN="CENTER"/>
+<B>Segment 45 [0x1ff]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 SWAP1 <BR ALIGN="LEFT"/>
@@ -566,13 +566,13 @@ POP <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
 s100110E [style=filled,color=orange,fontcolor=white,label=<
-<B>Segment 47 0x219</B><BR ALIGN="CENTER"/>
+<B>Segment 47 [0x219]</B><BR ALIGN="CENTER"/>
 PUSH1 0x00 <BR ALIGN="LEFT"/>
 DUP1 <BR ALIGN="LEFT"/>
 REVERT <BR ALIGN="LEFT"/>
 >]
 s100111E [label=<
-<B>Segment 48 0x21d</B><BR ALIGN="CENTER"/>
+<B>Segment 48 [0x21d]</B><BR ALIGN="CENTER"/>
 JUMPDEST <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 CALLDATALOAD <BR ALIGN="LEFT"/>
@@ -581,63 +581,63 @@ SWAP1 <BR ALIGN="LEFT"/>
 POP <BR ALIGN="LEFT"/>
 JUMP <BR ALIGN="LEFT"/>
 >]
-sE -> s0E [color=black,label=<<FONT color="black">skip</FONT>>]
-sE -> s1E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1E -> s10E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1E -> s1000E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10E -> s100E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10E -> s101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s100E -> s1000E [color=black,label=<<FONT color="black">skip</FONT>>]
-s100E -> s1001E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101E -> s1011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111E -> s10111111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100011E -> s101111111111000111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1001E -> s10011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1001111E -> s10011111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1001111101E -> s10011111011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111E -> s101111111110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10111111111E -> s101111111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111110E -> s1011111111101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111111E -> s1011111111110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s101111111111E -> s10111111111100E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111110E -> s10111111111100E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10111111111100E -> s101111111111000E [color=black,label=<<FONT color="black">skip</FONT>>]
-s101111111111000E -> s1011111111110000E [color=black,label=<<FONT color="black">skip</FONT>>]
-s101111111111000E -> s1011111111110001E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111110000E -> s10111111111100000E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1011111111110000E -> s10111111111100001E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100000E -> s101111111111000001E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100001E -> s101111111111000011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100001101E -> s101111111111000011010E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10111111111100001101E -> s101111111111000011011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111111000011010E -> s101111111111000001E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111111000011011E -> s101111111111000E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111110001E -> s10111111111100011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10011111E -> s100111110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10011111E -> s100111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111111000011E -> s1011111111110000110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s101111111111000011E -> s1011111111110000111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s100111110E -> s1001111101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111110000110E -> s10111111111100001101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s100111111E -> s10011111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111111110000111E -> s101111111111000011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011E -> s10110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1011E -> s10111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111E -> s101110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10111E -> s101111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111E -> s1011110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s101111E -> s1011111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s1011111E -> s10111110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1011111E -> s10111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111E -> s101111110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10111111E -> s101111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111E -> s1011111111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s101111111111000111E -> s1011111111110001110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1011111111110001110E -> s10111111111100011100E [color=black,label=<<FONT color="black">skip</FONT>>]
-s1011111111110001110E -> s10111111111100011101E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100011100E -> s1011111111110001110E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10111111111100011101E -> s10011111011E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s10011E -> s100110E [color=black,label=<<FONT color="black">skip</FONT>>]
-s10011E -> s100111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
-s100111E -> s1001111E [color=royalblue,label=<<FONT color="royalblue">jump</FONT>>]
+sE -> s0E [tooltip="Next"]
+sE -> s1E [tooltip="Jump",style=dashed]
+s1E -> s10E [tooltip="Next"]
+s1E -> s1000E [tooltip="Jump",style=dashed]
+s10E -> s100E [tooltip="Next"]
+s10E -> s101E [tooltip="Jump",style=dashed]
+s100E -> s1000E [tooltip="Next"]
+s100E -> s1001E [tooltip="Jump",style=dashed]
+s101E -> s1011E [tooltip="Jump",style=dashed]
+s1011111111E -> s10111111111E [tooltip="Jump",style=dashed]
+s10111111111100011E -> s101111111111000111E [tooltip="Jump",style=dashed]
+s1001E -> s10011E [tooltip="Jump",style=dashed]
+s1001111E -> s10011111E [tooltip="Jump",style=dashed]
+s1001111101E -> s10011111011E [tooltip="Jump",style=dashed]
+s10111111111E -> s101111111110E [tooltip="Next"]
+s10111111111E -> s101111111111E [tooltip="Jump",style=dashed]
+s101111111110E -> s1011111111101E [tooltip="Jump",style=dashed]
+s101111111111E -> s1011111111110E [tooltip="Next"]
+s101111111111E -> s10111111111100E [tooltip="Jump",style=dashed]
+s1011111111110E -> s10111111111100E [tooltip="Next"]
+s10111111111100E -> s101111111111000E [tooltip="Next"]
+s101111111111000E -> s1011111111110000E [tooltip="Next"]
+s101111111111000E -> s1011111111110001E [tooltip="Jump",style=dashed]
+s1011111111110000E -> s10111111111100000E [tooltip="Next"]
+s1011111111110000E -> s10111111111100001E [tooltip="Jump",style=dashed]
+s10111111111100000E -> s101111111111000001E [tooltip="Jump",style=dashed]
+s10111111111100001E -> s101111111111000011E [tooltip="Jump",style=dashed]
+s10111111111100001101E -> s101111111111000011010E [tooltip="Next"]
+s10111111111100001101E -> s101111111111000011011E [tooltip="Jump",style=dashed]
+s101111111111000011010E -> s101111111111000001E [tooltip="Jump",style=dashed]
+s101111111111000011011E -> s101111111111000E [tooltip="Jump",style=dashed]
+s1011111111110001E -> s10111111111100011E [tooltip="Jump",style=dashed]
+s10011111E -> s100111110E [tooltip="Next"]
+s10011111E -> s100111111E [tooltip="Jump",style=dashed]
+s101111111111000011E -> s1011111111110000110E [tooltip="Next"]
+s101111111111000011E -> s1011111111110000111E [tooltip="Jump",style=dashed]
+s100111110E -> s1001111101E [tooltip="Jump",style=dashed]
+s1011111111110000110E -> s10111111111100001101E [tooltip="Jump",style=dashed]
+s100111111E -> s10011111E [tooltip="Jump",style=dashed]
+s1011111111110000111E -> s101111111111000011E [tooltip="Jump",style=dashed]
+s1011E -> s10110E [tooltip="Next"]
+s1011E -> s10111E [tooltip="Jump",style=dashed]
+s10111E -> s101110E [tooltip="Next"]
+s10111E -> s101111E [tooltip="Jump",style=dashed]
+s101111E -> s1011110E [tooltip="Next"]
+s101111E -> s1011111E [tooltip="Jump",style=dashed]
+s1011111E -> s10111110E [tooltip="Next"]
+s1011111E -> s10111111E [tooltip="Jump",style=dashed]
+s10111111E -> s101111110E [tooltip="Next"]
+s10111111E -> s101111111E [tooltip="Jump",style=dashed]
+s101111111E -> s1011111111E [tooltip="Jump",style=dashed]
+s101111111111000111E -> s1011111111110001110E [tooltip="Next"]
+s1011111111110001110E -> s10111111111100011100E [tooltip="Next"]
+s1011111111110001110E -> s10111111111100011101E [tooltip="Jump",style=dashed]
+s10111111111100011100E -> s1011111111110001110E [tooltip="Jump",style=dashed]
+s10111111111100011101E -> s10011111011E [tooltip="Jump",style=dashed]
+s10011E -> s100110E [tooltip="Next"]
+s10011E -> s100111E [tooltip="Jump",style=dashed]
+s100111E -> s1001111E [tooltip="Jump",style=dashed]
 }
