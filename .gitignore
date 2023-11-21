@@ -26,7 +26,7 @@
 *.lo
 
 # Shared objects (inc. Windows DLLs)
-*.dll
+# *.dll
 *.so
 *.so.*
 *.dylib
@@ -56,6 +56,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 src/dafny/*.mdb
+src/dafny/*.dll
 model.bvd
 *.cfg
 **/tmp/**
