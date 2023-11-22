@@ -1,0 +1,128 @@
+digraph CFG {
+ node [shape=box]
+node[fontname=arial]
+edge[fontname=arial]
+ranking=TB
+ sE [label=<
+<B>Segment 0 [0x0]</B><BR ALIGN="CENTER"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+PUSH1 0x08 <BR ALIGN="LEFT"/>
+PUSH1 0x03 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x2f <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s1E [label=<
+<B>Segment 6 [0x2f]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+DUP1 <BR ALIGN="LEFT"/>
+DUP4 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x3b <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s101E [label=<
+<B>Segment 1 [0xa]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+>]
+s1010E [label=<
+<B>Segment 2 [0xc]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+DUP2 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x1d <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s10100E [style=filled,color=olivedrab,fontcolor=white,label=<
+<B>Segment 3 [0x14]</B><BR ALIGN="CENTER"/>
+POP <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+MSTORE <BR ALIGN="LEFT"/>
+PUSH1 0x20 <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+RETURN <BR ALIGN="LEFT"/>
+>]
+s10101E [label=<
+<B>Segment 4 [0x1d]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x2a <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x02 <BR ALIGN="LEFT"/>
+DUP4 <BR ALIGN="LEFT"/>
+MUL <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x2f <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s101011E [label=<
+<B>Segment 6 [0x2f]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+DUP1 <BR ALIGN="LEFT"/>
+DUP4 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x3b <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s10101101E [label=<
+<B>Segment 5 [0x2a]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x0c <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s10E [label=<
+<B>Segment 7 [0x38]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s11E [label=<
+<B>Segment 8 [0x3b]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+PUSH1 0x38 <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s1010110E [label=<
+<B>Segment 7 [0x38]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s1010111E [label=<
+<B>Segment 8 [0x3b]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+PUSH1 0x38 <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+sE -> s1E [tooltip="Jump",style=dashed]
+s101E -> s1010E [tooltip="Next"]
+s1010E -> s10100E [tooltip="Next"]
+s1010E -> s10101E [tooltip="Jump",style=dashed]
+s10101E -> s101011E [tooltip="Jump",style=dashed]
+s10101101E -> s1010E [tooltip="Jump",style=dashed]
+s1E -> s10E [tooltip="Next"]
+s1E -> s11E [tooltip="Jump",style=dashed]
+s101011E -> s1010110E [tooltip="Next"]
+s101011E -> s1010111E [tooltip="Jump",style=dashed]
+s10E -> s101E [tooltip="Jump",style=dashed]
+s1010110E -> s10101101E [tooltip="Jump",style=dashed]
+s1010111E -> s1010110E [tooltip="Jump",style=dashed]
+s11E -> s10E [tooltip="Jump",style=dashed]
+}

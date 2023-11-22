@@ -1,0 +1,57 @@
+digraph CFG {
+ node [shape=box]
+node[fontname=arial]
+edge[fontname=arial]
+ranking=TB
+ sE [label=<
+<B>Segment 0 [0x0]</B><BR ALIGN="CENTER"/>
+PUSH1 0x0a <BR ALIGN="LEFT"/>
+PUSH1 0x08 <BR ALIGN="LEFT"/>
+PUSH1 0x03 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH1 0x13 <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s1E [label=<
+<B>Segment 2 [0x13]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+DUP1 <BR ALIGN="LEFT"/>
+DUP4 <BR ALIGN="LEFT"/>
+LT <BR ALIGN="LEFT"/>
+PUSH1 0x1f <BR ALIGN="LEFT"/>
+JUMPI <BR ALIGN="LEFT"/>
+>]
+s10E [label=<
+<B>Segment 3 [0x1c]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s11E [label=<
+<B>Segment 4 [0x1f]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+SWAP2 <BR ALIGN="LEFT"/>
+POP <BR ALIGN="LEFT"/>
+SWAP1 <BR ALIGN="LEFT"/>
+PUSH0 <BR ALIGN="LEFT"/>
+PUSH1 0x1c <BR ALIGN="LEFT"/>
+JUMP <BR ALIGN="LEFT"/>
+>]
+s101E [style=filled,color=olivedrab,fontcolor=white,label=<
+<B>Segment 1 [0xa]</B><BR ALIGN="CENTER"/>
+JUMPDEST <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+MSTORE <BR ALIGN="LEFT"/>
+PUSH1 0x20 <BR ALIGN="LEFT"/>
+PUSH1 0x40 <BR ALIGN="LEFT"/>
+RETURN <BR ALIGN="LEFT"/>
+>]
+sE -> s1E [tooltip="Jump",style=dashed]
+s1E -> s10E [tooltip="Next"]
+s1E -> s11E [tooltip="Jump",style=dashed]
+s10E -> s101E [tooltip="Jump",style=dashed]
+s11E -> s10E [tooltip="Jump",style=dashed]
+}
