@@ -53,14 +53,15 @@ module OpcodeDecoder {
     case SGT    => CompOp("SGT", SGT)
     case EQ     => CompOp("EQ", EQ)
     case ISZERO => CompOp("ISZERO", ISZERO, 0, 1, 1, 1)
-    case AND    => BitwiseOp("AND", AND)
-    case OR     => BitwiseOp("OR", OR)
-    case XOR    => BitwiseOp("XOR", XOR)
+
+    case AND    => BitwiseOp("AND", AND, 0, 2, 1, 2)
+    case OR     => BitwiseOp("OR", OR, 0, 2, 1, 2)
+    case XOR    => BitwiseOp("XOR", XOR, 0, 2, 1, 2)
     case NOT    => BitwiseOp("NOT", NOT, 0, 1, 1, 1)
-    case BYTE   => BitwiseOp("BYTE", BYTE)
-    case SHL    => BitwiseOp("SHL", SHL)
-    case SHR    => BitwiseOp("SHR", SHR)
-    case SAR    => BitwiseOp("SAR", SAR)
+    case BYTE   => BitwiseOp("BYTE", BYTE, 0, 2, 1, 2)
+    case SHL    => BitwiseOp("SHL", SHL, 0, 2, 1, 2)
+    case SHR    => BitwiseOp("SHR", SHR, 0, 2, 1, 2)
+    case SAR    => BitwiseOp("SAR", SAR, 0, 2, 1, 2)
     // 0x20s
     case KECCAK256 => KeccakOp("KECCAK256", KECCAK256)
     // 0x30s: Environment Information
