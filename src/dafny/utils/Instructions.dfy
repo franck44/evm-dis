@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./int.dfy" 
+include "./int.dfy"
 include "./Hex.dfy"
 include "../utils/EVMOpcodes.dfy"
 include "../utils/StackElement.dfy"
@@ -47,8 +47,11 @@ module Instructions {
     */
   datatype Instruction = Instruction(op: ValidOpcode, arg: seq<char> := [], address: nat := 0)
   {
-
-    /** Whether an instruction has been built correctly. */
+    /** Whether an instruction has been built correctly. 
+      * If the Opcode is not INVALID then:
+      * 1.  if it is a PUSH_k, the number of args is 2 * k and each arg is a valid Hex number
+      * 2.  if it is bit a PUSH there are no arguments.
+      */
     predicate IsValid() {
       op.opcode == INVALID ||
       (
@@ -209,7 +212,6 @@ module Instructions {
           assert opcode == POP;
           Right(pos' + 1)
 
-
       case LogOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
       case SysOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
     }
@@ -258,13 +260,12 @@ module Instructions {
 
       case EnvOp(_, _, _, _, pushes, pops)        =>
         if s.Size() >= pops && !cond then
-        //   assert pops == 0; 
-        //   assert pushes <= 1;
+          //   assert pops == 0;
+          //   assert pushes <= 1;
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("EnvOp error")
 
       case MemOp(_, _, _, _, pushes, pops)        =>
-        // assert pushes == 1;
         if s.Size() >= pops && !cond then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("MemOp error")
@@ -363,6 +364,14 @@ module Instructions {
           var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
           StCond(shiftBy, c.TrackedVals())
 
+      case BitwiseOp(_, _, _, _, pushes, pops)      =>
+        //  if one of the trackedPos is 0, return False, otherwise, pos' + pops - pushes for each trackedPos
+        if 0 in c.TrackedPos() then StFalse()
+        else
+          assert pops - pushes >= 0; 
+          var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
+          StCond(shiftBy, c.TrackedVals())
+
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then c
         else if JUMP <= opcode <= JUMPI then
@@ -386,7 +395,6 @@ module Instructions {
             var argVal := Hex.HexToU256(seq(64 - |arg|, _ => '0') + arg);
             assert argVal.Some?;
             //  Check that the value pushed is the same as the trackedValue
-            // assert
             if c.TrackedValAt(i) == argVal.Extract() then
               //  We can filter out position 0 as it is resolved
               var filtered := c.TrackedPos()[..i] + c.TrackedPos()[i + 1..];
@@ -394,7 +402,7 @@ module Instructions {
               assert forall k {:trigger  filtered[k]}:: 0 <= k < |c.TrackedPos()[i + 1..]| ==> c.TrackedPos()[i + 1 + k] != c.TrackedPosAt(i);
               assert c.TrackedPosAt(i) == 0;
               assert forall k:: 0 <= k < |filtered| ==> filtered[k] != c.TrackedPosAt(i);
-              assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0; 
+              assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
               if |filtered| == 0 then StTrue()
               else
                 //  Map to old position - 1
@@ -454,7 +462,9 @@ module Instructions {
           var shiftByOne := Map(c.TrackedPos(), i =>  i + 1);
           StCond(shiftByOne, c.TrackedVals())
 
-      case _ => c
+      case _ =>
+        // assert this.op.opcode == INVALID;
+        c
 
     }
   }

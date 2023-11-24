@@ -36,8 +36,7 @@ module EVMOpcodes {
               minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
     | CompOp(name: string, opcode: u8, minCapacity: nat := 0,
              minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
-    | BitwiseOp(name: string, opcode: u8, minCapacity: nat := 0,
-                minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | BitwiseOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | KeccakOp(name: string, opcode: u8, minCapacity: nat := 0,
                minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
     | EnvOp(name: string, opcode: u8, minCapacity: nat,  minOperands: nat, pushes: nat, pops: nat)
@@ -62,7 +61,7 @@ module EVMOpcodes {
       match this
       case ArithOp(_, _, _, _, _, _)     => ADD <= opcode <= SIGNEXTEND && pops == 2 && pushes == 1
       case CompOp(_, _, _, _, _, _)      => LT <= opcode <= ISZERO && pops >= pushes
-      case BitwiseOp(_, _, _, _, _, _)   => AND <= opcode <= SAR
+      case BitwiseOp(_, _, _, _, _, _)   => AND <= opcode <= SAR && pops >= pushes
       case KeccakOp(_, _, _, _, _, _)    => opcode == KECCAK256 && pops == 2 && pushes == 1
       case EnvOp(_, _, _, _, _, _)       => ADDRESS <= opcode <= BASEFEE 
       case MemOp(_, _, _, _, _, _)       => MLOAD <= opcode <= MSTORE8
