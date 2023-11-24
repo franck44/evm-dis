@@ -368,9 +368,32 @@ module Instructions {
         //  if one of the trackedPos is 0, return False, otherwise, pos' + pops - pushes for each trackedPos
         if 0 in c.TrackedPos() then StFalse()
         else
-          assert pops - pushes >= 0; 
+          assert pops - pushes >= 0;
           var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
           StCond(shiftBy, c.TrackedVals())
+
+      case KeccakOp(_, _, _, _, pushes, pops)      =>
+        //  if one of the trackedPos is 0, return False, otherwise, pos' + pops - pushes for each trackedPos
+        assert pops == 2 && pushes == 1;
+        if 0 in c.TrackedPos() then StFalse()
+        else
+          var shiftByOne := Map(c.TrackedPos(), pos =>  pos + 1);
+          StCond(shiftByOne, c.TrackedVals())
+
+      case EnvOp(_, _, _, _, pushes, pops)      =>
+        //  EnvOp instructions may push and pop various number of elements
+        if pushes == 1 && pops == 0 then
+          if 0 in c.TrackedPos() then StFalse()
+          else
+            var shiftByOne := Map(c.TrackedPos(), (pos: nat) =>  pos - 1);
+            StCond(shiftByOne, c.TrackedVals())
+        else if pushes == 1 && pops == 1 then
+          if 0 in c.TrackedPos() then StFalse()
+          else c
+        else
+          assert pushes == 0 && 3 <= pops <= 4;
+          var shiftByOne := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
+          StCond(shiftByOne, c.TrackedVals())
 
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then c
