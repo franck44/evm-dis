@@ -395,6 +395,16 @@ module Instructions {
           var shiftByOne := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
           StCond(shiftByOne, c.TrackedVals())
 
+      case MemOp(_, _, _, _, pushes, pops)      =>
+        if pushes == 0 then
+          assert pops == 2;
+          var shiftByTwo := Map(c.TrackedPos(), pos =>  pos + 2);
+          StCond(shiftByTwo, c.TrackedVals())
+        else
+          assert pushes == pops == 1;
+          if 0 in c.TrackedPos() then StFalse()
+          else c
+
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then c
         else if JUMP <= opcode <= JUMPI then

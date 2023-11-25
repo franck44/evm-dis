@@ -40,8 +40,7 @@ module EVMOpcodes {
     | KeccakOp(name: string, opcode: u8, minCapacity: nat := 0,
                minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
     | EnvOp(name: string, opcode: u8, minCapacity: nat,  minOperands: nat, pushes: nat, pops: nat)
-    | MemOp(name: string, opcode: u8, minCapacity: nat := 0,
-            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | MemOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | StorageOp(name: string, opcode: u8, minCapacity: nat := 0,
                 minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
     | JumpOp(name: string, opcode: u8, minCapacity: nat := 0,
@@ -69,7 +68,9 @@ module EVMOpcodes {
                                               || (pushes == 0 && pops == 3)
                                               || (pushes == 0 && pops == 4)
                                             )
-      case MemOp(_, _, _, _, _, _)       => MLOAD <= opcode <= MSTORE8
+      case MemOp(_, _, _, _, _, _)       => (opcode == MLOAD && pushes == pops == 1)
+                                            || (MSTORE <= opcode <= MSTORE8 && pushes ==0 && pops == 2)
+                                            
       case StorageOp(_, _, _, _, _, _)   => SLOAD <= opcode <= SSTORE
       case JumpOp(_, _, _, _, _, _)      => (JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV) && pushes == 0
       case RunOp(_, _, _, _, _, _)       => PC <= opcode <= GAS && pops == 0 && pushes == 1
