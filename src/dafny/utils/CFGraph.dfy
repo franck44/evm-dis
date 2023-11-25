@@ -53,6 +53,26 @@ module CFGraph {
     {
       BoolsToString(id)
     }
+
+    /** Convert the seq of bool into a nat.
+      *   As [false, false] is considered [0, 0] it would lead to 
+      *   0 as [0] would. To preserve uniqueness (1-to-1) we 
+      *   add the length of the seq to the value.
+      *   So 0 would yield 0_1 (value 0, length 1) and [0,0] 0_2.
+      */
+    function ToDot(): string
+    {
+      var x := BoolSeqToNat(id);
+      NatToString(x) + "_" + NatToString(|id|)
+    }
+  }
+
+  /** Big-endian */
+  function {:tailrecursion false} BoolSeqToNat(xb: seq<bool>): nat
+  {
+    if |xb| == 0 then 0
+    else
+      (if xb[0] then 1 else 0) + 2 * BoolSeqToNat(xb[1..])
   }
 
   /**
@@ -65,14 +85,14 @@ module CFGraph {
     {
       var lab1 := if lab then "<FONT color=\"" + jcolour + "\">jump</FONT>" else "<FONT color=\"" + skcolour + "\">skip</FONT>";
       var labColour := if lab then jumpColour else skipColour;
-      "s" + src.ToString() + " -> s" + tgt.ToString() +  " [" + labColour + "label=<" + lab1 + ">]\n"
+      "s" + src.ToDot() + " -> s" + tgt.ToDot() +  " [" + labColour + "label=<" + lab1 + ">]\n"
     }
 
     function DOTPrint(): string
     {
       var lab1 := if lab then "tooltip=\"Jump\",style=dashed" else "tooltip=\"Next\"";
       var labColour := if lab then jumpColour else skipColour;
-      "s" + src.ToString() + " -> s" + tgt.ToString() +  " [" + lab1 + "]\n"
+      "s" + src.ToDot() + " -> s" + tgt.ToDot() +  " [" + lab1 + "]\n"
     }
   }
 
@@ -152,12 +172,12 @@ module CFGraph {
         var srctxt :=
           if g[0].src in printed then ""
           else if g[0].src.seg.None? then
-            "s" + g[0].src.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
+            "s" + g[0].src.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v]);
         var tgttxt :=
           if g[0].tgt in printed then ""
           else if g[0].tgt.seg.None? then
-            "s" + g[0].tgt.ToString() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
+            "s" + g[0].tgt.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v]);
         srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
       else ""
@@ -169,7 +189,7 @@ module CFGraph {
     {
       var lab := DOTSeg(s, n.seg.v);
       var nodeColour := SegColour(s);
-      "s" + n.ToString() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
+      "s" + n.ToDot() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
     }
 
     /** Print the graph as a DOT digraph */
