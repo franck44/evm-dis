@@ -392,8 +392,8 @@ module Instructions {
           else c
         else
           assert pushes == 0 && 3 <= pops <= 4;
-          var shiftByOne := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
-          StCond(shiftByOne, c.TrackedVals())
+          var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops - pushes);
+          StCond(shiftBy, c.TrackedVals())
 
       case MemOp(_, _, _, _, pushes, pops)      =>
         if pushes == 0 then
@@ -425,6 +425,12 @@ module Instructions {
         else  // RJUMPs not implemented
           StFalse()
 
+      case RunOp(_, opcode, _, _, _, _)  =>
+        if 0 in c.TrackedPos() then StFalse()
+        else
+          var shiftByOne := Map(c.TrackedPos(), (pos: nat) =>  pos - 1);
+          StCond(shiftByOne, c.TrackedVals())
+
       case StackOp(_, opcode, _, _, _, _) =>
         //  Pushes may resolve some tracked positions
         if PUSH0 <= opcode <= PUSH32 then
@@ -442,7 +448,7 @@ module Instructions {
               //  We can filter out position 0 as it is resolved
               var filtered := c.TrackedPos()[..i] + c.TrackedPos()[i + 1..];
               assert forall k:: 0 <= k < |c.TrackedPos()[..i]| ==> c.TrackedPos()[k] != c.TrackedPosAt(i);
-              assert forall k {:trigger  filtered[k]}:: 0 <= k < |c.TrackedPos()[i + 1..]| ==> c.TrackedPos()[i + 1 + k] != c.TrackedPosAt(i);
+              assert forall k {:triggers  filtered[k]}:: 0 <= k < |c.TrackedPos()[i + 1..]| ==> c.TrackedPos()[i + 1 + k] != c.TrackedPosAt(i);
               assert c.TrackedPosAt(i) == 0;
               assert forall k:: 0 <= k < |filtered| ==> filtered[k] != c.TrackedPosAt(i);
               assert forall k:: 0 <= k < |filtered| ==> filtered[k] != 0;
@@ -505,10 +511,21 @@ module Instructions {
           var shiftByOne := Map(c.TrackedPos(), i =>  i + 1);
           StCond(shiftByOne, c.TrackedVals())
 
-      case _ =>
-        // assert this.op.opcode == INVALID;
-        c
+      case LogOp(_, opcode, _, _, pushes, pops)  =>
+        assert pushes == 0 && 2 <= pops <= 6;
+        var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops);
+        StCond(shiftBy, c.TrackedVals())
 
+      case SysOp(_, opcode, _, _, pushes, pops)  =>
+        if pushes == 0 then
+          var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops);
+          StCond(shiftBy, c.TrackedVals())
+        else
+          assert pushes == 1;
+          if 0 in c.TrackedPos() then StFalse()
+          else
+            var shiftBy := Map(c.TrackedPos(), pos =>  pos + pops);
+            StCond(shiftBy, c.TrackedVals())
     }
   }
 

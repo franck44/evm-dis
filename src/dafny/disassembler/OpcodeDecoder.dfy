@@ -34,7 +34,7 @@ module OpcodeDecoder {
     ensures Decode(op).IsValid() 
   {
     match op
-    case STOP       => SysOp("STOP", STOP)
+    case STOP       => SysOp("STOP", STOP, 0, 0, 0, 0)
     case ADD        => ArithOp("ADD", ADD)
     case MUL        => ArithOp("MUL", MUL)
     case SUB        => ArithOp("SUB", SUB)
@@ -63,7 +63,7 @@ module OpcodeDecoder {
     case SHR    => BitwiseOp("SHR", SHR, 0, 2, 1, 2)
     case SAR    => BitwiseOp("SAR", SAR, 0, 2, 1, 2)
     // 0x20s
-    case KECCAK256 => KeccakOp("KECCAK256", KECCAK256)
+    case KECCAK256 => KeccakOp("KECCAK256", KECCAK256, 0, 2, 1, 2)
     // 0x30s: Environment Information
     case ADDRESS        => EnvOp("ADDRESS", ADDRESS, 1, 0, 1, 0)
     case BALANCE        => EnvOp("BALANCE", BALANCE, 0, 1, 1, 1)
@@ -103,9 +103,9 @@ module OpcodeDecoder {
     case RJUMP     => JumpOp("RJUMP", RJUMP, 0, 1, 0, 1)
     case RJUMPI    => JumpOp("RJUMPI", RJUMPI, 0, 2, 0, 2)
     case RJUMPV    => JumpOp("RJUMPV", RJUMPV, 0, 2, 0, 2)
-    case PC       => RunOp("PC", PC)
-    case MSIZE    => RunOp("MSIZE", MSIZE)
-    case GAS      => RunOp("GAS", GAS)
+    case PC       => RunOp("PC", PC, 1, 0, 1, 0)
+    case MSIZE    => RunOp("MSIZE", MSIZE, 1, 0, 1, 0)
+    case GAS      => RunOp("GAS", GAS, 1, 0, 1, 0)
     case JUMPDEST => JumpOp("JUMPDEST", JUMPDEST, 0, 0, 0, 0)
     case PUSH0    => StackOp("PUSH0", PUSH0, 1, 0, 1, 0)
     // 0x60s & 0x70s: Push operations
@@ -182,17 +182,17 @@ module OpcodeDecoder {
     case LOG3 => LogOp("LOG3", LOG3, 0, 3 + 2, 0, 3 + 2)
     case LOG4 => LogOp("LOG4", LOG4, 0, 4 + 2, 0, 4 + 2)
     // 0xf0
-    case CREATE => SysOp("CREATE", CREATE, 3, 0, 2, 3)
-    //  @todo: verify call efeect on stack
+    case CREATE => SysOp("CREATE", CREATE, 1, 3, 1, 3)
+    //  @todo: verify call effect on stack
     case CALL => SysOp("CALL", CALL, 1, 7, 1, 7)
     case CALLCODE => SysOp("CALLCODE", CALLCODE, 1, 7, 1, 7)
     case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 0)
-    case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 0, 6, 0, 6)
-    case CREATE2 => SysOp("CREATE2", CREATE2)
+    case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 1, 6, 1, 6)
+    case CREATE2 => SysOp("CREATE2", CREATE2, 1, 4, 1, 4)
     case STATICCALL => SysOp("STATICCALL", STATICCALL,1, 6, 1, 6)
     case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 0)
-    case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT)
-    case _ => SysOp("INVALID", INVALID)
+    case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT, 0, 1, 0, 1)
+    case _ => SysOp("INVALID", INVALID, 0, 0, 0, 0)
   }
 
 }

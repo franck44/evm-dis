@@ -37,20 +37,16 @@ module EVMOpcodes {
     | CompOp(name: string, opcode: u8, minCapacity: nat := 0,
              minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
     | BitwiseOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
-    | KeccakOp(name: string, opcode: u8, minCapacity: nat := 0,
-               minOperands: nat := 2, pushes: nat := 1, pops: nat := 2)
+    | KeccakOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | EnvOp(name: string, opcode: u8, minCapacity: nat,  minOperands: nat, pushes: nat, pops: nat)
     | MemOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
-    | StorageOp(name: string, opcode: u8, minCapacity: nat := 0,
-                minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | StorageOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | JumpOp(name: string, opcode: u8, minCapacity: nat := 0,
              minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | RunOp(name: string, opcode: u8, minCapacity: nat := 1,
-            minOperands: nat := 0, pushes: nat := 1, pops: nat := 0)
+    | RunOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | StackOp(name: string, opcode: u8, minCapacity: nat := 0,
               minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
-    | LogOp(name: string, opcode: u8, minCapacity: nat := 0,
-            minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
+    | LogOp(name: string, opcode: u8, minCapacity: nat, minOperands: nat, pushes: nat, pops: nat)
     | SysOp(name: string, opcode: u8, minCapacity: nat := 0,
             minOperands: nat := 0, pushes: nat := 0, pops: nat := 0)
   {
@@ -78,8 +74,10 @@ module EVMOpcodes {
       case StackOp(_, _, _, _, _, _)     => (opcode == POP && pushes == 0 && pops == 1)
                                             || (PUSH0 <= opcode <= DUP16 && pushes == 1 && pops == 0)
                                             || (SWAP1 <= opcode <= SWAP16 && pushes == pops == 0)
-      case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4 && pushes == 0
-      case SysOp(_, _, _, _, _, _)       => opcode == STOP || opcode == EOF || CREATE <= opcode <= SELFDESTRUCT
+      case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4 && pushes == 0 && pops == (opcode - LOG0) as nat  + 2
+      case SysOp(_, _, _, _, _, _)       => (opcode == STOP 
+                                            || opcode == EOF 
+                                            || CREATE <= opcode <= SELFDESTRUCT) && pushes <= 1
     }
 
     // Helpers
