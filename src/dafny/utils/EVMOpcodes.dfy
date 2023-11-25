@@ -70,8 +70,9 @@ module EVMOpcodes {
                                             )
       case MemOp(_, _, _, _, _, _)       => (opcode == MLOAD && pushes == pops == 1)
                                             || (MSTORE <= opcode <= MSTORE8 && pushes ==0 && pops == 2)
-                                            
-      case StorageOp(_, _, _, _, _, _)   => SLOAD <= opcode <= SSTORE
+
+      case StorageOp(_, _, _, _, _, _)   => (SLOAD == opcode && pushes == pops == 1)
+                                            || (opcode == SSTORE && pushes == 0 && pops == 2)
       case JumpOp(_, _, _, _, _, _)      => (JUMP <= opcode <= JUMPI || JUMPDEST <= opcode <= RJUMPV) && pushes == 0
       case RunOp(_, _, _, _, _, _)       => PC <= opcode <= GAS && pops == 0 && pushes == 1
       case StackOp(_, _, _, _, _, _)     => (opcode == POP && pushes == 0 && pops == 1)
