@@ -49,11 +49,11 @@ class Auto:
     def is_Auto(self) -> bool:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
-        def lambda26_(forall_var_9_):
-            d_684_k_: tuple = forall_var_9_
-            return not ((d_684_k_) in ((self).transitions)) or ((((self).transitions)[d_684_k_]) < ((self).numStates))
+        def lambda41_(forall_var_9_):
+            d_728_k_: tuple = forall_var_9_
+            return not ((d_728_k_) in ((self).transitions)) or ((((self).transitions)[d_728_k_]) < ((self).numStates))
 
-        return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda26_)
+        return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda41_)
 
     def Succ(self, s, l):
         if ((s, l)) in ((self).transitions):

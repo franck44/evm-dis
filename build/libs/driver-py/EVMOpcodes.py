@@ -88,7 +88,7 @@ class Opcode:
             d_23___mcc_h15_ = source0_.minOperands
             d_24___mcc_h16_ = source0_.pushes
             d_25___mcc_h17_ = source0_.pops
-            return ((EVMConstants.default__.AND) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SAR))
+            return (((EVMConstants.default__.AND) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SAR))) and (((self).pops) >= ((self).pushes))
         elif source0_.is_KeccakOp:
             d_26___mcc_h18_ = source0_.name
             d_27___mcc_h19_ = source0_.opcode
@@ -104,7 +104,7 @@ class Opcode:
             d_35___mcc_h27_ = source0_.minOperands
             d_36___mcc_h28_ = source0_.pushes
             d_37___mcc_h29_ = source0_.pops
-            return ((EVMConstants.default__.ADDRESS) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.BASEFEE))
+            return (((EVMConstants.default__.ADDRESS) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.BASEFEE))) and (((((((self).pushes) == (1)) and (((self).pops) == (0))) or ((((self).pushes) == (1)) and (((self).pops) == (1)))) or ((((self).pushes) == (0)) and (((self).pops) == (3)))) or ((((self).pushes) == (0)) and (((self).pops) == (4))))
         elif source0_.is_MemOp:
             d_38___mcc_h30_ = source0_.name
             d_39___mcc_h31_ = source0_.opcode
@@ -112,7 +112,7 @@ class Opcode:
             d_41___mcc_h33_ = source0_.minOperands
             d_42___mcc_h34_ = source0_.pushes
             d_43___mcc_h35_ = source0_.pops
-            return ((EVMConstants.default__.MLOAD) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.MSTORE8))
+            return ((((self).opcode) == (EVMConstants.default__.MLOAD)) and ((((self).pushes) == ((self).pops)) and (((self).pops) == (1)))) or (((((EVMConstants.default__.MSTORE) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.MSTORE8))) and (((self).pushes) == (0))) and (((self).pops) == (2)))
         elif source0_.is_StorageOp:
             d_44___mcc_h36_ = source0_.name
             d_45___mcc_h37_ = source0_.opcode
@@ -120,7 +120,7 @@ class Opcode:
             d_47___mcc_h39_ = source0_.minOperands
             d_48___mcc_h40_ = source0_.pushes
             d_49___mcc_h41_ = source0_.pops
-            return ((EVMConstants.default__.SLOAD) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SSTORE))
+            return (((EVMConstants.default__.SLOAD) == ((self).opcode)) and ((((self).pushes) == ((self).pops)) and (((self).pops) == (1)))) or (((((self).opcode) == (EVMConstants.default__.SSTORE)) and (((self).pushes) == (0))) and (((self).pops) == (2)))
         elif source0_.is_JumpOp:
             d_50___mcc_h42_ = source0_.name
             d_51___mcc_h43_ = source0_.opcode
@@ -152,7 +152,7 @@ class Opcode:
             d_71___mcc_h63_ = source0_.minOperands
             d_72___mcc_h64_ = source0_.pushes
             d_73___mcc_h65_ = source0_.pops
-            return (((EVMConstants.default__.LOG0) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.LOG4))) and (((self).pushes) == (0))
+            return ((((EVMConstants.default__.LOG0) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.LOG4))) and (((self).pushes) == (0))) and (((self).pops) == ((((self).opcode) - (EVMConstants.default__.LOG0)) + (2)))
         elif True:
             d_74___mcc_h66_ = source0_.name
             d_75___mcc_h67_ = source0_.opcode
@@ -160,7 +160,7 @@ class Opcode:
             d_77___mcc_h69_ = source0_.minOperands
             d_78___mcc_h70_ = source0_.pushes
             d_79___mcc_h71_ = source0_.pops
-            return ((((self).opcode) == (EVMConstants.default__.STOP)) or (((self).opcode) == (EVMConstants.default__.EOF))) or (((EVMConstants.default__.CREATE) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SELFDESTRUCT)))
+            return (((((self).opcode) == (EVMConstants.default__.STOP)) or (((self).opcode) == (EVMConstants.default__.EOF))) or (((EVMConstants.default__.CREATE) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.SELFDESTRUCT)))) and (((self).pushes) <= (1))
 
     def Args(self):
         if ((EVMConstants.default__.PUSH1) <= ((self).opcode)) and (((self).opcode) <= (EVMConstants.default__.PUSH32)):

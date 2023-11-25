@@ -24,7 +24,7 @@ class default__:
 
     @staticmethod
     def GetArgValuePush(xc):
-        d_183_pad_ = _dafny.SeqWithoutIsStrInference([_dafny.CodePoint('0') for d_184___v134_ in range((64) - (len(xc)))])
+        d_183_pad_ = _dafny.SeqWithoutIsStrInference([_dafny.CodePoint('0') for d_184___v164_ in range((64) - (len(xc)))])
         return (Hex.default__.HexToU256((d_183_pad_) + (xc))).Extract()
 
 
@@ -419,14 +419,14 @@ class Instruction:
                 d_379_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda3_)
                 return WeakPre.Cond_StCond(d_379_shiftByOne_, (c).TrackedVals())
         elif source36_.is_CompOp:
-            d_381___mcc_h12_ = source36_.name
-            d_382___mcc_h13_ = source36_.opcode
-            d_383___mcc_h14_ = source36_.minCapacity
-            d_384___mcc_h15_ = source36_.minOperands
-            d_385___mcc_h16_ = source36_.pushes
-            d_386___mcc_h17_ = source36_.pops
-            d_387_pops_ = d_386___mcc_h17_
-            d_388_pushes_ = d_385___mcc_h16_
+            d_381___mcc_h6_ = source36_.name
+            d_382___mcc_h7_ = source36_.opcode
+            d_383___mcc_h8_ = source36_.minCapacity
+            d_384___mcc_h9_ = source36_.minOperands
+            d_385___mcc_h10_ = source36_.pushes
+            d_386___mcc_h11_ = source36_.pops
+            d_387_pops_ = d_386___mcc_h11_
+            d_388_pushes_ = d_385___mcc_h10_
             if (0) in ((c).TrackedPos()):
                 return WeakPre.Cond_StFalse()
             elif True:
@@ -439,172 +439,282 @@ class Instruction:
                 d_389_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda4_(d_387_pops_, d_388_pushes_))
                 return WeakPre.Cond_StCond(d_389_shiftBy_, (c).TrackedVals())
         elif source36_.is_BitwiseOp:
-            d_393___mcc_h24_ = source36_.name
-            d_394___mcc_h25_ = source36_.opcode
-            d_395___mcc_h26_ = source36_.minCapacity
-            d_396___mcc_h27_ = source36_.minOperands
-            d_397___mcc_h28_ = source36_.pushes
-            d_398___mcc_h29_ = source36_.pops
-            return c
-        elif source36_.is_KeccakOp:
-            d_399___mcc_h36_ = source36_.name
-            d_400___mcc_h37_ = source36_.opcode
-            d_401___mcc_h38_ = source36_.minCapacity
-            d_402___mcc_h39_ = source36_.minOperands
-            d_403___mcc_h40_ = source36_.pushes
-            d_404___mcc_h41_ = source36_.pops
-            return c
-        elif source36_.is_EnvOp:
-            d_405___mcc_h48_ = source36_.name
-            d_406___mcc_h49_ = source36_.opcode
-            d_407___mcc_h50_ = source36_.minCapacity
-            d_408___mcc_h51_ = source36_.minOperands
-            d_409___mcc_h52_ = source36_.pushes
-            d_410___mcc_h53_ = source36_.pops
-            return c
-        elif source36_.is_MemOp:
-            d_411___mcc_h60_ = source36_.name
-            d_412___mcc_h61_ = source36_.opcode
-            d_413___mcc_h62_ = source36_.minCapacity
-            d_414___mcc_h63_ = source36_.minOperands
-            d_415___mcc_h64_ = source36_.pushes
-            d_416___mcc_h65_ = source36_.pops
-            return c
-        elif source36_.is_StorageOp:
-            d_417___mcc_h72_ = source36_.name
-            d_418___mcc_h73_ = source36_.opcode
-            d_419___mcc_h74_ = source36_.minCapacity
-            d_420___mcc_h75_ = source36_.minOperands
-            d_421___mcc_h76_ = source36_.pushes
-            d_422___mcc_h77_ = source36_.pops
-            return c
-        elif source36_.is_JumpOp:
-            d_423___mcc_h84_ = source36_.name
-            d_424___mcc_h85_ = source36_.opcode
-            d_425___mcc_h86_ = source36_.minCapacity
-            d_426___mcc_h87_ = source36_.minOperands
-            d_427___mcc_h88_ = source36_.pushes
-            d_428___mcc_h89_ = source36_.pops
-            d_429_opcode_ = d_424___mcc_h85_
-            if (d_429_opcode_) == (EVMConstants.default__.JUMPDEST):
-                return c
-            elif ((EVMConstants.default__.JUMP) <= (d_429_opcode_)) and ((d_429_opcode_) <= (EVMConstants.default__.JUMPI)):
-                d_430_k_ = ((d_429_opcode_) - (EVMConstants.default__.JUMP)) + (1)
-                def lambda6_(d_432_k_):
-                    def lambda7_(d_433_pos_):
-                        return (d_433_pos_) + (d_432_k_)
+            d_393___mcc_h12_ = source36_.name
+            d_394___mcc_h13_ = source36_.opcode
+            d_395___mcc_h14_ = source36_.minCapacity
+            d_396___mcc_h15_ = source36_.minOperands
+            d_397___mcc_h16_ = source36_.pushes
+            d_398___mcc_h17_ = source36_.pops
+            d_399_pops_ = d_398___mcc_h17_
+            d_400_pushes_ = d_397___mcc_h16_
+            if (0) in ((c).TrackedPos()):
+                return WeakPre.Cond_StFalse()
+            elif True:
+                def lambda6_(d_402_pops_, d_403_pushes_):
+                    def lambda7_(d_404_pos_):
+                        return ((d_404_pos_) + (d_402_pops_)) - (d_403_pushes_)
 
                     return lambda7_
 
-                d_431_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda6_(d_430_k_))
-                return WeakPre.Cond_StCond(d_431_shiftBy_, (c).TrackedVals())
-            elif True:
+                d_401_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda6_(d_399_pops_, d_400_pushes_))
+                return WeakPre.Cond_StCond(d_401_shiftBy_, (c).TrackedVals())
+        elif source36_.is_KeccakOp:
+            d_405___mcc_h18_ = source36_.name
+            d_406___mcc_h19_ = source36_.opcode
+            d_407___mcc_h20_ = source36_.minCapacity
+            d_408___mcc_h21_ = source36_.minOperands
+            d_409___mcc_h22_ = source36_.pushes
+            d_410___mcc_h23_ = source36_.pops
+            d_411_pops_ = d_410___mcc_h23_
+            d_412_pushes_ = d_409___mcc_h22_
+            if (0) in ((c).TrackedPos()):
                 return WeakPre.Cond_StFalse()
-        elif source36_.is_RunOp:
-            d_434___mcc_h96_ = source36_.name
-            d_435___mcc_h97_ = source36_.opcode
-            d_436___mcc_h98_ = source36_.minCapacity
-            d_437___mcc_h99_ = source36_.minOperands
-            d_438___mcc_h100_ = source36_.pushes
-            d_439___mcc_h101_ = source36_.pops
-            return c
-        elif source36_.is_StackOp:
-            d_440___mcc_h108_ = source36_.name
-            d_441___mcc_h109_ = source36_.opcode
-            d_442___mcc_h110_ = source36_.minCapacity
-            d_443___mcc_h111_ = source36_.minOperands
-            d_444___mcc_h112_ = source36_.pushes
-            d_445___mcc_h113_ = source36_.pops
-            d_446_opcode_ = d_441___mcc_h109_
-            if ((EVMConstants.default__.PUSH0) <= (d_446_opcode_)) and ((d_446_opcode_) <= (EVMConstants.default__.PUSH32)):
-                source37_ = MiscTypes.default__.Find((c).TrackedPos(), 0)
-                if source37_.is_None:
-                    def lambda8_(d_448_pos_):
-                        return (d_448_pos_) - (1)
+            elif True:
+                def lambda8_(d_414_pos_):
+                    return (d_414_pos_) + (1)
 
-                    d_447_shiftByMinusOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda8_)
-                    return WeakPre.Cond_StCond(d_447_shiftByMinusOne_, (c).TrackedVals())
+                d_413_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda8_)
+                return WeakPre.Cond_StCond(d_413_shiftByOne_, (c).TrackedVals())
+        elif source36_.is_EnvOp:
+            d_415___mcc_h24_ = source36_.name
+            d_416___mcc_h25_ = source36_.opcode
+            d_417___mcc_h26_ = source36_.minCapacity
+            d_418___mcc_h27_ = source36_.minOperands
+            d_419___mcc_h28_ = source36_.pushes
+            d_420___mcc_h29_ = source36_.pops
+            d_421_pops_ = d_420___mcc_h29_
+            d_422_pushes_ = d_419___mcc_h28_
+            if ((d_422_pushes_) == (1)) and ((d_421_pops_) == (0)):
+                if (0) in ((c).TrackedPos()):
+                    return WeakPre.Cond_StFalse()
                 elif True:
-                    d_449___mcc_h144_ = source37_.v
-                    d_450_i_ = d_449___mcc_h144_
-                    d_451_argVal_ = Hex.default__.HexToU256((_dafny.SeqWithoutIsStrInference([_dafny.CodePoint('0') for d_452___v132_ in range((64) - (len((self).arg)))])) + ((self).arg))
-                    if ((c).TrackedValAt(d_450_i_)) == ((d_451_argVal_).Extract()):
-                        d_453_filtered_ = (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[:d_450_i_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[(d_450_i_) + (1)::]))
-                        if (len(d_453_filtered_)) == (0):
-                            return WeakPre.Cond_StTrue()
-                        elif True:
-                            def lambda9_(d_455_pos_):
-                                return (d_455_pos_) - (1)
+                    def lambda9_(d_424_pos_):
+                        return (d_424_pos_) - (1)
 
-                            d_454_shiftByMinusOne_ = MiscTypes.default__.Map(d_453_filtered_, lambda9_)
-                            return WeakPre.Cond_StCond(d_454_shiftByMinusOne_, (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[:d_450_i_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[(d_450_i_) + (1)::])))
-                    elif True:
-                        return WeakPre.Cond_StFalse()
-            elif ((EVMConstants.default__.DUP1) <= (d_446_opcode_)) and ((d_446_opcode_) <= (EVMConstants.default__.DUP16)):
-                source38_ = MiscTypes.default__.Find((c).TrackedPos(), 0)
-                if source38_.is_None:
-                    def lambda10_(d_457_pos_):
-                        return (d_457_pos_) - (1)
-
-                    d_456_shiftByMinusOneButZero_ = MiscTypes.default__.Map((c).TrackedPos(), lambda10_)
-                    return WeakPre.Cond_StCond(d_456_shiftByMinusOneButZero_, (c).TrackedVals())
+                    d_423_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda9_)
+                    return WeakPre.Cond_StCond(d_423_shiftByOne_, (c).TrackedVals())
+            elif ((d_422_pushes_) == (1)) and ((d_421_pops_) == (1)):
+                if (0) in ((c).TrackedPos()):
+                    return WeakPre.Cond_StFalse()
                 elif True:
-                    d_458___mcc_h145_ = source38_.v
-                    d_459_index0_ = d_458___mcc_h145_
-                    source39_ = MiscTypes.default__.Find((c).TrackedPos(), ((d_446_opcode_) - (EVMConstants.default__.DUP1)) + (1))
-                    if source39_.is_None:
-                        def lambda11_(d_461_opcode_):
-                            def lambda12_(d_462_pos_):
-                                return ((d_461_opcode_) - (EVMConstants.default__.DUP1) if (d_462_pos_) == (0) else (d_462_pos_) - (1))
+                    return c
+            elif True:
+                def lambda10_(d_426_pops_, d_427_pushes_):
+                    def lambda11_(d_428_pos_):
+                        return ((d_428_pos_) + (d_426_pops_)) - (d_427_pushes_)
 
-                            return lambda12_
+                    return lambda11_
 
-                        d_460_shiftByMinusOneButZero_ = MiscTypes.default__.Map((c).TrackedPos(), lambda11_(d_446_opcode_))
-                        return WeakPre.Cond_StCond(d_460_shiftByMinusOneButZero_, (c).TrackedVals())
-                    elif True:
-                        d_463___mcc_h146_ = source39_.v
-                        d_464_index_ = d_463___mcc_h146_
-                        if ((c).TrackedValAt(d_459_index0_)) == ((c).TrackedValAt(d_464_index_)):
-                            d_465_filtered_ = (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[:d_459_index0_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[(d_459_index0_) + (1)::]))
-                            def lambda13_(d_467_pos_):
-                                return (d_467_pos_) - (1)
+                d_425_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda10_(d_421_pops_, d_422_pushes_))
+                return WeakPre.Cond_StCond(d_425_shiftBy_, (c).TrackedVals())
+        elif source36_.is_MemOp:
+            d_429___mcc_h30_ = source36_.name
+            d_430___mcc_h31_ = source36_.opcode
+            d_431___mcc_h32_ = source36_.minCapacity
+            d_432___mcc_h33_ = source36_.minOperands
+            d_433___mcc_h34_ = source36_.pushes
+            d_434___mcc_h35_ = source36_.pops
+            d_435_pops_ = d_434___mcc_h35_
+            d_436_pushes_ = d_433___mcc_h34_
+            if (d_436_pushes_) == (0):
+                def lambda12_(d_438_pos_):
+                    return (d_438_pos_) + (2)
 
-                            d_466_shiftByMinusOne_ = MiscTypes.default__.Map(d_465_filtered_, lambda13_)
-                            return WeakPre.Cond_StCond(d_466_shiftByMinusOne_, (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[:d_459_index0_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[(d_459_index0_) + (1)::])))
-                        elif True:
-                            return WeakPre.Cond_StFalse()
-            elif ((EVMConstants.default__.SWAP1) <= (d_446_opcode_)) and ((d_446_opcode_) <= (EVMConstants.default__.SWAP16)):
-                d_468_k_ = ((d_446_opcode_) - (EVMConstants.default__.SWAP1)) + (1)
-                def lambda14_(d_470_k_):
-                    def lambda15_(d_471_pos_):
-                        return (d_470_k_ if (d_471_pos_) == (0) else (0 if (d_471_pos_) == (d_470_k_) else d_471_pos_))
+                d_437_shiftByTwo_ = MiscTypes.default__.Map((c).TrackedPos(), lambda12_)
+                return WeakPre.Cond_StCond(d_437_shiftByTwo_, (c).TrackedVals())
+            elif True:
+                if (0) in ((c).TrackedPos()):
+                    return WeakPre.Cond_StFalse()
+                elif True:
+                    return c
+        elif source36_.is_StorageOp:
+            d_439___mcc_h36_ = source36_.name
+            d_440___mcc_h37_ = source36_.opcode
+            d_441___mcc_h38_ = source36_.minCapacity
+            d_442___mcc_h39_ = source36_.minOperands
+            d_443___mcc_h40_ = source36_.pushes
+            d_444___mcc_h41_ = source36_.pops
+            d_445_pops_ = d_444___mcc_h41_
+            d_446_pushes_ = d_443___mcc_h40_
+            if (d_446_pushes_) == (0):
+                def lambda13_(d_448_pos_):
+                    return (d_448_pos_) + (2)
+
+                d_447_shiftByTwo_ = MiscTypes.default__.Map((c).TrackedPos(), lambda13_)
+                return WeakPre.Cond_StCond(d_447_shiftByTwo_, (c).TrackedVals())
+            elif True:
+                if (0) in ((c).TrackedPos()):
+                    return WeakPre.Cond_StFalse()
+                elif True:
+                    return c
+        elif source36_.is_JumpOp:
+            d_449___mcc_h42_ = source36_.name
+            d_450___mcc_h43_ = source36_.opcode
+            d_451___mcc_h44_ = source36_.minCapacity
+            d_452___mcc_h45_ = source36_.minOperands
+            d_453___mcc_h46_ = source36_.pushes
+            d_454___mcc_h47_ = source36_.pops
+            d_455_opcode_ = d_450___mcc_h43_
+            if (d_455_opcode_) == (EVMConstants.default__.JUMPDEST):
+                return c
+            elif ((EVMConstants.default__.JUMP) <= (d_455_opcode_)) and ((d_455_opcode_) <= (EVMConstants.default__.JUMPI)):
+                d_456_k_ = ((d_455_opcode_) - (EVMConstants.default__.JUMP)) + (1)
+                def lambda14_(d_458_k_):
+                    def lambda15_(d_459_pos_):
+                        return (d_459_pos_) + (d_458_k_)
 
                     return lambda15_
 
-                d_469_swapZeroAndk_ = MiscTypes.default__.Map((c).TrackedPos(), lambda14_(d_468_k_))
-                return WeakPre.Cond_StCond(d_469_swapZeroAndk_, (c).TrackedVals())
+                d_457_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda14_(d_456_k_))
+                return WeakPre.Cond_StCond(d_457_shiftBy_, (c).TrackedVals())
             elif True:
-                def lambda16_(d_473_i_):
-                    return (d_473_i_) + (1)
+                return WeakPre.Cond_StFalse()
+        elif source36_.is_RunOp:
+            d_460___mcc_h48_ = source36_.name
+            d_461___mcc_h49_ = source36_.opcode
+            d_462___mcc_h50_ = source36_.minCapacity
+            d_463___mcc_h51_ = source36_.minOperands
+            d_464___mcc_h52_ = source36_.pushes
+            d_465___mcc_h53_ = source36_.pops
+            d_466_opcode_ = d_461___mcc_h49_
+            if (0) in ((c).TrackedPos()):
+                return WeakPre.Cond_StFalse()
+            elif True:
+                def lambda16_(d_468_pos_):
+                    return (d_468_pos_) - (1)
 
-                d_472_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda16_)
-                return WeakPre.Cond_StCond(d_472_shiftByOne_, (c).TrackedVals())
+                d_467_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda16_)
+                return WeakPre.Cond_StCond(d_467_shiftByOne_, (c).TrackedVals())
+        elif source36_.is_StackOp:
+            d_469___mcc_h54_ = source36_.name
+            d_470___mcc_h55_ = source36_.opcode
+            d_471___mcc_h56_ = source36_.minCapacity
+            d_472___mcc_h57_ = source36_.minOperands
+            d_473___mcc_h58_ = source36_.pushes
+            d_474___mcc_h59_ = source36_.pops
+            d_475_opcode_ = d_470___mcc_h55_
+            if ((EVMConstants.default__.PUSH0) <= (d_475_opcode_)) and ((d_475_opcode_) <= (EVMConstants.default__.PUSH32)):
+                source37_ = MiscTypes.default__.Find((c).TrackedPos(), 0)
+                if source37_.is_None:
+                    def lambda17_(d_477_pos_):
+                        return (d_477_pos_) - (1)
+
+                    d_476_shiftByMinusOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda17_)
+                    return WeakPre.Cond_StCond(d_476_shiftByMinusOne_, (c).TrackedVals())
+                elif True:
+                    d_478___mcc_h72_ = source37_.v
+                    d_479_i_ = d_478___mcc_h72_
+                    d_480_argVal_ = Hex.default__.HexToU256((_dafny.SeqWithoutIsStrInference([_dafny.CodePoint('0') for d_481___v157_ in range((64) - (len((self).arg)))])) + ((self).arg))
+                    if ((c).TrackedValAt(d_479_i_)) == ((d_480_argVal_).Extract()):
+                        d_482_filtered_ = (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[:d_479_i_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[(d_479_i_) + (1)::]))
+                        if (len(d_482_filtered_)) == (0):
+                            return WeakPre.Cond_StTrue()
+                        elif True:
+                            def lambda18_(d_484_pos_):
+                                return (d_484_pos_) - (1)
+
+                            d_483_shiftByMinusOne_ = MiscTypes.default__.Map(d_482_filtered_, lambda18_)
+                            return WeakPre.Cond_StCond(d_483_shiftByMinusOne_, (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[:d_479_i_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[(d_479_i_) + (1)::])))
+                    elif True:
+                        return WeakPre.Cond_StFalse()
+            elif ((EVMConstants.default__.DUP1) <= (d_475_opcode_)) and ((d_475_opcode_) <= (EVMConstants.default__.DUP16)):
+                source38_ = MiscTypes.default__.Find((c).TrackedPos(), 0)
+                if source38_.is_None:
+                    def lambda19_(d_486_pos_):
+                        return (d_486_pos_) - (1)
+
+                    d_485_shiftByMinusOneButZero_ = MiscTypes.default__.Map((c).TrackedPos(), lambda19_)
+                    return WeakPre.Cond_StCond(d_485_shiftByMinusOneButZero_, (c).TrackedVals())
+                elif True:
+                    d_487___mcc_h73_ = source38_.v
+                    d_488_index0_ = d_487___mcc_h73_
+                    source39_ = MiscTypes.default__.Find((c).TrackedPos(), ((d_475_opcode_) - (EVMConstants.default__.DUP1)) + (1))
+                    if source39_.is_None:
+                        def lambda20_(d_490_opcode_):
+                            def lambda21_(d_491_pos_):
+                                return ((d_490_opcode_) - (EVMConstants.default__.DUP1) if (d_491_pos_) == (0) else (d_491_pos_) - (1))
+
+                            return lambda21_
+
+                        d_489_shiftByMinusOneButZero_ = MiscTypes.default__.Map((c).TrackedPos(), lambda20_(d_475_opcode_))
+                        return WeakPre.Cond_StCond(d_489_shiftByMinusOneButZero_, (c).TrackedVals())
+                    elif True:
+                        d_492___mcc_h74_ = source39_.v
+                        d_493_index_ = d_492___mcc_h74_
+                        if ((c).TrackedValAt(d_488_index0_)) == ((c).TrackedValAt(d_493_index_)):
+                            d_494_filtered_ = (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[:d_488_index0_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedPos())[(d_488_index0_) + (1)::]))
+                            def lambda22_(d_496_pos_):
+                                return (d_496_pos_) - (1)
+
+                            d_495_shiftByMinusOne_ = MiscTypes.default__.Map(d_494_filtered_, lambda22_)
+                            return WeakPre.Cond_StCond(d_495_shiftByMinusOne_, (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[:d_488_index0_:])) + (_dafny.SeqWithoutIsStrInference(((c).TrackedVals())[(d_488_index0_) + (1)::])))
+                        elif True:
+                            return WeakPre.Cond_StFalse()
+            elif ((EVMConstants.default__.SWAP1) <= (d_475_opcode_)) and ((d_475_opcode_) <= (EVMConstants.default__.SWAP16)):
+                d_497_k_ = ((d_475_opcode_) - (EVMConstants.default__.SWAP1)) + (1)
+                def lambda23_(d_499_k_):
+                    def lambda24_(d_500_pos_):
+                        return (d_499_k_ if (d_500_pos_) == (0) else (0 if (d_500_pos_) == (d_499_k_) else d_500_pos_))
+
+                    return lambda24_
+
+                d_498_swapZeroAndk_ = MiscTypes.default__.Map((c).TrackedPos(), lambda23_(d_497_k_))
+                return WeakPre.Cond_StCond(d_498_swapZeroAndk_, (c).TrackedVals())
+            elif True:
+                def lambda25_(d_502_i_):
+                    return (d_502_i_) + (1)
+
+                d_501_shiftByOne_ = MiscTypes.default__.Map((c).TrackedPos(), lambda25_)
+                return WeakPre.Cond_StCond(d_501_shiftByOne_, (c).TrackedVals())
         elif source36_.is_LogOp:
-            d_474___mcc_h120_ = source36_.name
-            d_475___mcc_h121_ = source36_.opcode
-            d_476___mcc_h122_ = source36_.minCapacity
-            d_477___mcc_h123_ = source36_.minOperands
-            d_478___mcc_h124_ = source36_.pushes
-            d_479___mcc_h125_ = source36_.pops
-            return c
+            d_503___mcc_h60_ = source36_.name
+            d_504___mcc_h61_ = source36_.opcode
+            d_505___mcc_h62_ = source36_.minCapacity
+            d_506___mcc_h63_ = source36_.minOperands
+            d_507___mcc_h64_ = source36_.pushes
+            d_508___mcc_h65_ = source36_.pops
+            d_509_pops_ = d_508___mcc_h65_
+            d_510_pushes_ = d_507___mcc_h64_
+            d_511_opcode_ = d_504___mcc_h61_
+            def lambda26_(d_513_pops_):
+                def lambda27_(d_514_pos_):
+                    return (d_514_pos_) + (d_513_pops_)
+
+                return lambda27_
+
+            d_512_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda26_(d_509_pops_))
+            return WeakPre.Cond_StCond(d_512_shiftBy_, (c).TrackedVals())
         elif True:
-            d_480___mcc_h132_ = source36_.name
-            d_481___mcc_h133_ = source36_.opcode
-            d_482___mcc_h134_ = source36_.minCapacity
-            d_483___mcc_h135_ = source36_.minOperands
-            d_484___mcc_h136_ = source36_.pushes
-            d_485___mcc_h137_ = source36_.pops
-            return c
+            d_515___mcc_h66_ = source36_.name
+            d_516___mcc_h67_ = source36_.opcode
+            d_517___mcc_h68_ = source36_.minCapacity
+            d_518___mcc_h69_ = source36_.minOperands
+            d_519___mcc_h70_ = source36_.pushes
+            d_520___mcc_h71_ = source36_.pops
+            d_521_pops_ = d_520___mcc_h71_
+            d_522_pushes_ = d_519___mcc_h70_
+            d_523_opcode_ = d_516___mcc_h67_
+            if (d_522_pushes_) == (0):
+                def lambda28_(d_525_pops_):
+                    def lambda29_(d_526_pos_):
+                        return (d_526_pos_) + (d_525_pops_)
+
+                    return lambda29_
+
+                d_524_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda28_(d_521_pops_))
+                return WeakPre.Cond_StCond(d_524_shiftBy_, (c).TrackedVals())
+            elif True:
+                if (0) in ((c).TrackedPos()):
+                    return WeakPre.Cond_StFalse()
+                elif True:
+                    def lambda30_(d_528_pops_):
+                        def lambda31_(d_529_pos_):
+                            return (d_529_pos_) + (d_528_pops_)
+
+                        return lambda31_
+
+                    d_527_shiftBy_ = MiscTypes.default__.Map((c).TrackedPos(), lambda30_(d_521_pops_))
+                    return WeakPre.Cond_StCond(d_527_shiftBy_, (c).TrackedVals())
 
 
 class Instruction_Instruction(Instruction, NamedTuple('Instruction', [('op', Any), ('arg', Any), ('address', Any)])):
