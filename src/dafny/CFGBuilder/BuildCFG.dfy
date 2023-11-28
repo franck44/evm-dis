@@ -17,9 +17,9 @@ include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
 include "./LoopResolver.dfy"
 /**
-  * Computation of the CFG via some DFS.
+  * Computation of the CFG via some DFS.  
   */
-module BuildCFGraph {
+module BuildCFGraph { 
 
   import opened MiscTypes
   import opened LinSegments
@@ -109,7 +109,7 @@ module BuildCFGraph {
                   // the computation for this path sopts. We have discovered a
                   //    lasso with the loop part being invariant under
                   //    reachable PCs.
-                //   assert prev.seg.Some?;
+                  assert prev.seg.Some?;
                   assert prev.seg.v < |xs|;
                   BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, prev)], |xs|)
                 case None =>
