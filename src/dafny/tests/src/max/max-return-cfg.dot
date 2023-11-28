@@ -1,16 +1,40 @@
 digraph CFG {
  node [shape=box]
-node[fontname=arial]
+node[fontname="Helvetica"]
 edge[fontname=arial]
 ranking=TB
- sE [label=<
-<B>Segment 0 [0x0]</B><BR ALIGN="CENTER"/>
-PUSH1 0x0a <BR ALIGN="LEFT"/>
-PUSH1 0x08 <BR ALIGN="LEFT"/>
-PUSH1 0x03 <BR ALIGN="LEFT"/>
-SWAP1 <BR ALIGN="LEFT"/>
-PUSH1 0x13 <BR ALIGN="LEFT"/>
-JUMP <BR ALIGN="LEFT"/>
+ sE [shape=plain, label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" style="Rounded"  cellpadding="0" cellsborder="0" CELLSPACING="0">
+<tr>
+<td>
+<TABLE BORDER="0" width="1" fixedsize="true" align="left" cellpadding="0" cellsborder="0" CELLSPACING="0">
+    <TR>
+    <TD width="1" fixedsize="true" align="left">
+    <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1">
+        <TR>
+        <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightskyblue" align="left" cellpadding="3"><FONT color="dodgerblue">PUSH1</FONT></TD>
+        <TD width="1" fixedsize="true" align="left">0x0a</TD>
+        <TD width="1" fixedsize="true" align="left">comment</TD>
+        </TR>
+    </TABLE>
+    </TD>
+    </TR>
+    <TR>
+    <TD align="left">
+        <TABLE  border="0" cellsborder="0" CELLSPACING="1" >
+            <TR>
+            <TD width="1" fixedsize="true" style="Rounded" BGCOLOR="palegreen" align="left"  cellpadding="2"><FONT color="darkgreen">JUMPDEST</FONT></TD>
+            <TD width="1" fixedsize="true" align="left">nothing</TD>
+            <TD width="1" fixedsize="true" align="left">bit and other</TD>
+            </TR>
+        </TABLE>
+    </TD>
+    </TR>
+</TABLE>
+</td>
+</tr>
+</TABLE>
+
 >]
 s1E [label=<
 <B>Segment 2 [0x13]</B><BR ALIGN="CENTER"/>
