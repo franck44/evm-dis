@@ -187,9 +187,11 @@ module CFGraph {
     function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
       requires n.seg.Some?
     {
-      var lab := DOTSeg(s, n.seg.v);
-      var nodeColour := SegColour(s);
-      "s" + n.ToDot() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
+      var lab := DOTSegTable(s, n.seg.v);
+      var nodeColour := ""; // SegColour(s);
+      "s" + n.ToDot() + " [" + nodeColour  
+        + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+        + "label=<\n" + lab + ">]\n"
     }
 
     /** Print the graph as a DOT digraph */
@@ -318,7 +320,7 @@ module CFGraph {
       [if x[0] then '1' else '0'] + BoolsToString(x[1..])
   }
 
-  /** Assign a coloiur to a segment according to its type. */
+  /** Assign a colour to a segment according to its type. */
   function SegColour(s: ValidLinSeg): string
   {
     match s
@@ -337,6 +339,16 @@ module CFGraph {
     prefix + body
   }
 
+  function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
+  {
+    var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
+    // var prefix := "<TR><TD BGCOLOR=\"" + SegColour2(s)  + "\">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
+    var prefix := "<TR><TD>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
+    var tableEnd := "</TABLE>\n";
+    var body := DOTInsTable(s.Ins());
+    tableStart + prefix + body + tableEnd
+  }
+
   /**   Print a seq of instructions. */
   function {:tailrecursion true} DOTIns(xi: seq<ValidInstruction>): string
   {
@@ -344,6 +356,18 @@ module CFGraph {
     else
       var a := xi[0].ToString() + " <BR ALIGN=\"LEFT\"/>\n";
       a + DOTIns(xi[1..])
+  }
+
+  /**   Print a seq of instructions. */
+  function {:tailrecursion true} DOTInsTable(xi: seq<ValidInstruction>): string
+  {
+    if |xi| == 0 then ""
+    else
+      var prefix := "<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n";
+      var suffix := "</TD></TR>\n";
+      var a := xi[0].ToHTMLTable();
+
+      (prefix + a + suffix) +  DOTInsTable(xi[1..])
   }
 
   /**   Translate am of edges into seq of edges. */
