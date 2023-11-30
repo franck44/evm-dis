@@ -56,10 +56,10 @@ the CFG is depicted on the right-hand side.
 0x23: JUMP
 ```
 </td>
-<td></td>
+<td>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>
 <td>
 <figure>
-  <img src="./example-CFG.jpg" alt="CFG" width=270px/>
+  <img src="./example-CFG.jpg" alt="CFG" width=300px/>
 </figure>
 </td>
 </tr>
