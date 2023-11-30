@@ -71,6 +71,33 @@ module Instructions {
         op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
 
+    /** Print as an HTMNL Table */
+    function ToHTMLTable(): string
+      requires this.IsValid()
+    {
+      // cols.0 is pencolor and cols.1 is background
+      var cols := Colours(this);
+      var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
+      var oplineTD :=
+      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\">" + 
+      "0x" + formattedAddress + " </TD>\n"
+      +
+        "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\">"
+        + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
+        + "</TD>";
+      var arglineTD := if |arg| > 0 then
+                         "<TD width=\"1\" fixedsize=\"true\" align=\"left\">"
+                         + "  0x" + arg
+                         + "</TD>"
+                       else "";
+      var lineTR := "<TR>" + oplineTD + arglineTD + "</TR>";
+      var itemTable :=
+        "<TABLE  border=\"0\" cellpadding=\"0\" cellsborder=\"0\" CELLSPACING=\"1\">"
+        + lineTR
+        + "</TABLE>";
+      itemTable
+    }
+
     /**
       * Whether an instruction Opcode is terminal (branching).
       */
@@ -540,5 +567,38 @@ module Instructions {
     //  HexToU256 is a u256 (not None), so we can extract the value.
     assert Hex.HexToU256(pad + xc).Some?;
     Hex.HexToU256(pad + xc).Extract()
+  }
+
+    /** pencolour and background colour. */
+  function Colours(i: ValidInstruction): (string, string)
+  {
+    match i.op
+    case ArithOp(_, _, _, _, _, _) =>  ( "#316152", "#c6eb76")
+    case CompOp(_, _, _, _, _, _) =>  ("darkgoldenrod", "bisque")
+    case BitwiseOp(_, _, _, _, _, _) =>  ("burlywood", "lemonchiffon")
+    case KeccakOp(_, _, _, _, _, _) =>  ("yellow", "lightyellow")
+    case EnvOp(_, _, _, _, _, _) =>  ("darkslategrey", "lightgrey")
+    case MemOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+
+    case StorageOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    case JumpOp(_, _, _, _, _, _) =>  ("purple", "thistle")
+    case RunOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    
+    case StackOp(_, _, _, _, _, _) =>  ("royalblue", "powderblue")
+
+    case LogOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    case SysOp(_, opcode, _, _, _, _) =>  
+        if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
+        else if opcode == RETURN then ("teal", "greenyellow")
+        else if opcode == CALL || opcode == CALLCODE || opcode == DELEGATECALL || opcode == STATICCALL then 
+            ("sienna", "tan")
+        else 
+            ("brown", "salmon")
+        // match opcode 
+        //     case STOP => ("brown", "salmon")
+        //     case REVERT => ("brown", "salmon")
+        //     case RETURN => ("darkgreen", "lightgreen")
+        //     case _ => ("sienna", "tan")
+
   }
 }
