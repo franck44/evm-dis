@@ -88,11 +88,14 @@ module CFGraph {
       "s" + src.ToDot() + " -> s" + tgt.ToDot() +  " [" + labColour + "label=<" + lab1 + ">]\n"
     }
 
-    function DOTPrint(): string
+    function DOTPrint(fancyExit: bool := false): string
     {
       var lab1 := if lab then "tooltip=\"Jump\",style=dashed" else "tooltip=\"Next\"";
       var labColour := if lab then jumpColour else skipColour;
-      "s" + src.ToDot() + " -> s" + tgt.ToDot() +  " [" + lab1 + "]\n"
+      var exitPort := if fancyExit && lab then ":exit:se " else "";
+      var entryPort := if fancyExit && lab then ":entry:w " else "";
+      
+      "s" + src.ToDot() + exitPort  + " -> s" + tgt.ToDot() + entryPort +  " [" + lab1 + "]\n"
     }
   }
 
@@ -115,7 +118,7 @@ module CFGraph {
     /**
       *  Convert the list of edges to a map and count the number of states.
       */
-    function Minimise(): (g': BoolCFGraph)
+    function {:timeLimitMultiplier 10} Minimise(): (g': BoolCFGraph)
       requires this.IsValid()
       ensures g'.IsValid()
       ensures g'.maxSegNum == maxSegNum
@@ -156,9 +159,9 @@ module CFGraph {
     }
 
     /** Print edges to DOT format. */
-    function DOTPrintEdges(xe: seq<BoolEdge> := edges): string
+    function DOTPrintEdges(xe: seq<BoolEdge>, fancyExits: bool := false): string
     {
-      if |xe| > 0 then xe[0].DOTPrint() + DOTPrintEdges(xe[1..])
+      if |xe| > 0 then xe[0].DOTPrint() + DOTPrintEdges(xe[1..], fancyExits)
       else ""
     }
 
@@ -187,18 +190,20 @@ module CFGraph {
     function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
       requires n.seg.Some?
     {
-      var lab := DOTSeg(s, n.seg.v);
-      var nodeColour := SegColour(s);
-      "s" + n.ToDot() + " [" + nodeColour + "label=<\n" + lab + ">]\n"
+      var lab := DOTSegTable(s, n.seg.v);
+      var nodeColour := ""; // SegColour(s);
+      "s" + n.ToDot() + " [" + nodeColour
+      + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+      + "label=<\n" + lab + ">]\n"
     }
 
     /** Print the graph as a DOT digraph */
-    function DOTPrint(xs: seq<ValidLinSeg>): string
+    function DOTPrint(xs: seq<ValidLinSeg>, fancyExits: bool := false): string
       requires forall k:: k in this.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-      var prefix := "digraph CFG {\n node [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
-      prefix + DOTPrintNodes(xs) + DOTPrintEdges() + "}\n"
+      var prefix := "digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
+      prefix + DOTPrintNodes(xs) + DOTPrintEdges(edges, fancyExits) + "}\n"
     }
   }
 
@@ -318,7 +323,7 @@ module CFGraph {
       [if x[0] then '1' else '0'] + BoolsToString(x[1..])
   }
 
-  /** Assign a coloiur to a segment according to its type. */
+  /** Assign a colour to a segment according to its type. */
   function SegColour(s: ValidLinSeg): string
   {
     match s
@@ -337,6 +342,16 @@ module CFGraph {
     prefix + body
   }
 
+  function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
+  {
+    var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
+    // var prefix := "<TR><TD BGCOLOR=\"" + SegColour2(s)  + "\">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
+    var prefix := "<TR><TD>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
+    var tableEnd := "</TABLE>\n";
+    var body := DOTInsTable(s.Ins());
+    tableStart + prefix + body + tableEnd
+  }
+
   /**   Print a seq of instructions. */
   function {:tailrecursion true} DOTIns(xi: seq<ValidInstruction>): string
   {
@@ -344,6 +359,19 @@ module CFGraph {
     else
       var a := xi[0].ToString() + " <BR ALIGN=\"LEFT\"/>\n";
       a + DOTIns(xi[1..])
+  }
+
+  /**   Print a seq of instructions. */
+  function {:tailrecursion true} DOTInsTable(xi: seq<ValidInstruction>, isFirst: bool := true): string
+  {
+    if |xi| == 0 then ""
+    else
+      var prefix := "<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n";
+      var suffix := "</TD></TR>\n";
+      var exitPortTag := if xi[0].IsJump() then "PORT=\"exit\"" else "";
+      var entryPortTag := if isFirst then "PORT=\"entry\"" else "";
+      var a := xi[0].ToHTMLTable(entryPortTag, exitPortTag);
+      (prefix + a + suffix) +  DOTInsTable(xi[1..], false)
   }
 
   /**   Translate am of edges into seq of edges. */

@@ -112,6 +112,12 @@ module Int {
     else NatToString(n / 10) + [DigitToString(n % 10)]
   }
 
+   function IntToString(n: int): string
+  {
+    if n >= 0 then NatToString(n)
+    else "-" + NatToString(-n)
+  }
+
   /**
     *  Encode a decimal number into a Hex.
     */
