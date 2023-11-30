@@ -83,10 +83,10 @@ module Int {
   const MAX_U128: nat := TWO_128 - 1
   const MAX_U256: nat := TWO_256 - 1
 
-  newtype{:nativeType "byte"} u8 = i:nat    | 0 <= i <= MAX_U8
-  newtype{:nativeType "ushort"} u16 = i:nat | 0 <= i <= MAX_U16
-  newtype{:nativeType "uint"} u32 = i:nat   | 0 <= i <= MAX_U32
-  newtype{:nativeType "ulong"} u64 = i:nat  | 0 <= i <= MAX_U64
+  newtype u8 = i:nat | 0 <= i <= MAX_U8
+  newtype u16 = i:nat | 0 <= i <= MAX_U16
+  newtype u32 = i:nat | 0 <= i <= MAX_U32
+  newtype u64 = i:nat | 0 <= i <= MAX_U64
   newtype u128 = i:nat | 0 <= i <= MAX_U128
   newtype u256 = i:nat | 0 <= i <= MAX_U256
 
