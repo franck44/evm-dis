@@ -81,7 +81,7 @@ For the examples in the repo I have used Yul and `solc --yul` to get a text repr
 The Dafny proof object feature is experimental.
 
 Dafny code can be used to generate some target code in several languages. To begin with we have generated
-Python, Java and C# (Dotnet) code.
+Python, Java, JS (new!) and C# (Dotnet) code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
 ### Using the Python version of the disassembler/CFG generator
@@ -191,6 +191,26 @@ options
 --cfg       [-c] Max depth. Control flow graph in DOT format
 --raw       [-r] Display non-minimised and minimised CFGs
 ```
+
+### Using the JS version of the disassembler/CFG generator
+The JS disassembler is in `build/driver.js`.
+
+```zsh
+evm-dis git:(main) ✗ node build/driver.js
+Not enough arguments
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+
+options
+--help      [-h] Display help and exit
+--dis       [-d] Disassemble <string>
+--proof     [-p] Generate proof object for <string>
+--segment   [-s] Print segment of <string>
+--all       [-a] Same as -d -p
+--lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
+--cfg       [-c] Max depth. Control flow graph in DOT format
+--raw       [-r] Display non-minimised and minimised CFGs
+```
+
 
 ## An EVM bytecode disassembler in Dafny
 
