@@ -17,55 +17,54 @@ the CFG is depicted on the right-hand side.
 <center>
 <table>
 <tr>
-<th style="text-align:center">EVM Assembly</th>
-<th>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+<th style="text-align:center">EVM Assembly &nbsp &nbsp &nbsp</th>
+<th></th>
 <th style="text-align:center">Control Flow Graph</th>
 </tr>
 <tr>
 <td>
 
 ```
-00000000: PUSH1 0x0a
-00000002: PUSH1 0x08
-00000004: PUSH1 0x03
-00000006: SWAP1
-00000007: PUSH1 0x0f
-00000009: JUMP
-0000000a: JUMPDEST
-0000000b: PUSH1 0x40
-0000000d: MSTORE
-0000000e: STOP
-0000000f: JUMPDEST
-00000010: SWAP2
-00000011: SWAP1
-00000012: DUP1
-00000013: DUP4
-00000014: LT
-00000015: PUSH1 0x1b
-00000017: JUMPI
-00000018: JUMPDEST
-00000019: POP
-0000001a: JUMP
-0000001b: JUMPDEST
-0000001c: SWAP1
-0000001d: SWAP2
-0000001e: POP
-0000001f: SWAP1
-00000020: PUSH0
-00000021: PUSH1 0x18
-00000023: JUMP
+0x00: PUSH1 0x0a
+0x02: PUSH1 0x08
+0x04: PUSH1 0x03
+0x06: SWAP1
+0x07: PUSH1 0x0f
+0x09: JUMP
+0x0a: JUMPDEST
+0x0b: PUSH1 0x40
+0x0d: MSTORE
+0x0e: STOP
+0x0f: JUMPDEST
+0x10: SWAP2
+0x11: SWAP1
+0x12: DUP1
+0x13: DUP4
+0x14: LT
+0x15: PUSH1 0x1b
+0x17: JUMPI
+0x18: JUMPDEST
+0x19: POP
+0x1a: JUMP
+0x1b: JUMPDEST
+0x1c: SWAP1
+0x1d: SWAP2
+0x1e: POP
+0x1f: SWAP1
+0x20: PUSH0
+0x21: PUSH1 0x18
+0x23: JUMP
 ```
 </td>
-<td>        </td>
+<td></td>
 <td>
 <figure>
-  <img src="./example-CFG.jpg" alt="CFG" height=550px/>
+  <img src="./example-CFG.jpg" alt="CFG" width=270px/>
 </figure>
 </td>
 </tr>
 </table>
 </center>
-
 
 The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
 It can re-construct CFGs with nested loops, function calls.
