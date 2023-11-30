@@ -49,6 +49,13 @@ class default__:
                 break
 
     @staticmethod
+    def IntToString(n):
+        if (n) >= (0):
+            return default__.NatToString(n)
+        elif True:
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-"))) + (default__.NatToString((0) - (n)))
+
+    @staticmethod
     def DigitToString(n):
         if (n) == (0):
             return _dafny.CodePoint('0')
