@@ -71,18 +71,20 @@ module Instructions {
         op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
 
-    /** Print as an HTMNL Table */
-    function ToHTMLTable(): string
+    /** Print as an HTMNL Table 
+    *   The port tag should be of the PORT="something" 
+    */
+    function ToHTMLTable(entryPortTag: string := "", exitPortTag: string := ""): string
       requires this.IsValid()
     {
       // cols.0 is pencolor and cols.1 is background
       var cols := Colours(this);
       var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
       var oplineTD :=
-      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\">" + 
+      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" " + entryPortTag + ">" + 
       "0x" + formattedAddress + " </TD>\n"
       +
-        "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\">"
+        "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag + ">"
         + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
         + "</TD>";
       var arglineTD := if |arg| > 0 then
@@ -112,6 +114,14 @@ module Instructions {
     predicate IsJumpDest()
     {
       this.op.IsJumpDest()
+    }
+
+     /**
+      * Whether an instruction Opcode is terminal (branching).
+      */
+    predicate IsJump()
+    {
+      this.op.IsJump()
     }
 
     /**
