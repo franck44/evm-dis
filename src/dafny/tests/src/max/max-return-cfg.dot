@@ -1,81 +1,98 @@
 digraph CFG {
- node [shape=box]
-node[fontname="Helvetica"]
+node [shape=box]
+node[fontname=arial]
 edge[fontname=arial]
 ranking=TB
- sE [shape=plain, label=<
-<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" style="Rounded"  cellpadding="0" cellsborder="0" CELLSPACING="0">
-<tr>
-<td>
-<TABLE BORDER="0" width="1" fixedsize="true" align="left" cellpadding="0" cellsborder="0" CELLSPACING="0">
-    <TR>
-    <TD width="1" fixedsize="true" align="left">
-    <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1">
-        <TR>
-        <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightskyblue" align="left" cellpadding="3"><FONT color="dodgerblue">PUSH1</FONT></TD>
-        <TD width="1" fixedsize="true" align="left">0x0a</TD>
-        <TD width="1" fixedsize="true" align="left">comment</TD>
-        </TR>
-    </TABLE>
-    </TD>
-    </TR>
-    <TR>
-    <TD align="left">
-        <TABLE  border="0" cellsborder="0" CELLSPACING="1" >
-            <TR>
-            <TD width="1" fixedsize="true" style="Rounded" BGCOLOR="palegreen" align="left"  cellpadding="2"><FONT color="darkgreen">JUMPDEST</FONT></TD>
-            <TD width="1" fixedsize="true" align="left">nothing</TD>
-            <TD width="1" fixedsize="true" align="left">bit and other</TD>
-            </TR>
-        </TABLE>
-    </TD>
-    </TR>
+ s0_0 [label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 0 [0x0]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0a</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x08</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x03</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x13</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
 </TABLE>
-</td>
-</tr>
+>]
+s1_1 [label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 2 [0x13]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">DUP4</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3"><FONT color="darkgoldenrod">LT</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x1f</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
 </TABLE>
-
 >]
-s1E [label=<
-<B>Segment 2 [0x13]</B><BR ALIGN="CENTER"/>
-JUMPDEST <BR ALIGN="LEFT"/>
-SWAP2 <BR ALIGN="LEFT"/>
-SWAP1 <BR ALIGN="LEFT"/>
-DUP1 <BR ALIGN="LEFT"/>
-DUP4 <BR ALIGN="LEFT"/>
-LT <BR ALIGN="LEFT"/>
-PUSH1 0x1f <BR ALIGN="LEFT"/>
-JUMPI <BR ALIGN="LEFT"/>
+s1_2 [label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 3 [0x1c]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
 >]
-s10E [label=<
-<B>Segment 3 [0x1c]</B><BR ALIGN="CENTER"/>
-JUMPDEST <BR ALIGN="LEFT"/>
-POP <BR ALIGN="LEFT"/>
-JUMP <BR ALIGN="LEFT"/>
+s3_2 [label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 4 [0x1f]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH0</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x1c</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
 >]
-s11E [label=<
-<B>Segment 4 [0x1f]</B><BR ALIGN="CENTER"/>
-JUMPDEST <BR ALIGN="LEFT"/>
-SWAP1 <BR ALIGN="LEFT"/>
-SWAP2 <BR ALIGN="LEFT"/>
-POP <BR ALIGN="LEFT"/>
-SWAP1 <BR ALIGN="LEFT"/>
-PUSH0 <BR ALIGN="LEFT"/>
-PUSH1 0x1c <BR ALIGN="LEFT"/>
-JUMP <BR ALIGN="LEFT"/>
+s5_3 [label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 1 [0xa]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="tan" align="left" cellpadding="3"><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgreen" align="left" cellpadding="3"><FONT color="darkgreen">RETURN</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
 >]
-s101E [style=filled,color=olivedrab,fontcolor=white,label=<
-<B>Segment 1 [0xa]</B><BR ALIGN="CENTER"/>
-JUMPDEST <BR ALIGN="LEFT"/>
-PUSH1 0x40 <BR ALIGN="LEFT"/>
-MSTORE <BR ALIGN="LEFT"/>
-PUSH1 0x20 <BR ALIGN="LEFT"/>
-PUSH1 0x40 <BR ALIGN="LEFT"/>
-RETURN <BR ALIGN="LEFT"/>
->]
-sE -> s1E [tooltip="Jump",style=dashed]
-s1E -> s10E [tooltip="Next"]
-s1E -> s11E [tooltip="Jump",style=dashed]
-s10E -> s101E [tooltip="Jump",style=dashed]
-s11E -> s10E [tooltip="Jump",style=dashed]
+s0_0 -> s1_1 [tooltip="Jump",style=dashed]
+s1_1 -> s1_2 [tooltip="Next"]
+s1_1 -> s3_2 [tooltip="Jump",style=dashed]
+s1_2 -> s5_3 [tooltip="Jump",style=dashed]
+s3_2 -> s1_2 [tooltip="Jump",style=dashed]
 }
