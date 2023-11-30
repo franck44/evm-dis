@@ -197,7 +197,7 @@ module CFGraph {
       requires forall k:: k in this.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
-      var prefix := "digraph CFG {\n node [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
+      var prefix := "digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
       prefix + DOTPrintNodes(xs) + DOTPrintEdges() + "}\n"
     }
   }
