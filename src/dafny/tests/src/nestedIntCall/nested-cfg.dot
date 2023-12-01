@@ -1,0 +1,406 @@
+digraph CFG {
+node [shape=box]
+node[fontname=arial]
+edge[fontname=arial]
+ranking=TB
+ s0_0 [tooltip="Stack Size Delta: 1"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 0 [0x0]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x00 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x80</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x02 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x04 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x05 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3" ><FONT color="darkslategrey">CALLVALUE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x06 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x07 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">ISZERO</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x08 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0f</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s0_1 [tooltip="Stack Size Delta: 2"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 1 [0xb]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightsalmon" align="left" cellpadding="3" ><FONT color="brown">REVERT</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s1_1 [tooltip="Stack Size Delta: -1"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 2 [0xf]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x10 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x11 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x04</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x13 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3" ><FONT color="darkslategrey">CALLDATASIZE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x14 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">LT</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x15 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x28</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x17 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s1_2 [tooltip="Stack Size Delta: 1"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 3 [0x18]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x18 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x1a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3" ><FONT color="darkslategrey">CALLDATALOAD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x1b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0xe0</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x1d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#f3f383" align="left" cellpadding="3" ><FONT color="orange">SHR</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x1e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x1f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH4</FONT></TD><TD width="1" fixedsize="true" align="left">  0xf0fdf834</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x24 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">EQ</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x25 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x2d</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x27 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s1_3 [tooltip="Stack Size Delta: 2"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 4 [0x28]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x28 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x29 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x2b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x2c </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightsalmon" align="left" cellpadding="3" ><FONT color="brown">REVERT</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s5_3 [tooltip="Stack Size Delta: 4"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 5 [0x2d]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x2d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x2e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x3c</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x30 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x38</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x32 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3" ><FONT color="darkslategrey">CALLDATASIZE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x33 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x04</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x35 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x6e</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x37 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s13_4 [tooltip="Stack Size Delta: 1"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 12 [0x6e]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x6e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x6f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x71 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x73 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP3</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x74 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP5</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x75 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">SUB</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x76 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">SLT</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x77 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">ISZERO</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x78 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x7f</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x7a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s61_6 [tooltip="Stack Size Delta: 0"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 6 [0x38]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x38 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x39 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x4e</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x3b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s125_7 [tooltip="Stack Size Delta: 2"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 8 [0x4e]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x4e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x4f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x51 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s125_8 [tooltip="Stack Size Delta: 0"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 9 [0x52]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x52 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x53 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP3</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x54 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x55 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">LT</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x56 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="bisque" align="left" cellpadding="3" ><FONT color="darkgoldenrod">ISZERO</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x57 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x68</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x59 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMPI</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s125_9 [tooltip="Stack Size Delta: 0"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 10 [0x5a]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x5a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x5c </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x5d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">ADD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x5e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x5f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x60 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">ADD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x61 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x62 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x64 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">ADD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x65 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x52</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x67 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s381_9 [tooltip="Stack Size Delta: -3"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 11 [0x68]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x68 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x69 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x6a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x6b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x6c </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x6d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s893_10 [tooltip="Stack Size Delta: 1"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 7 [0x3c]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x3c </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x3d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x3f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MLOAD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x40 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x41 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x42 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x43 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x45 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">ADD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x46 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x48 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MLOAD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x49 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x4a </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x4b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3" ><FONT color="#316152">SUB</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x4c </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x4d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="greenyellow" align="left" cellpadding="3" ><FONT color="teal">RETURN</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s13_5 [tooltip="Stack Size Delta: 2"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 13 [0x7b]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x7b </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x7d </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">DUP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x7e </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightsalmon" align="left" cellpadding="3" ><FONT color="brown">REVERT</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s29_5 [tooltip="Stack Size Delta: -3"label=<
+<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
+<TR><TD>Segment 14 [0x7f]</TD></TR><HR/>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x7f </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x80 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x81 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3" ><FONT color="darkslategrey">CALLDATALOAD</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x82 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP2</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x83 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">SWAP1</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x84 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
+<TR><TD width="1" fixedsize="true" align="left">
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x85 </TD>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
+</TABLE>
+>]
+s0_0 -> s0_1 [tooltip="Next"]
+s0_0 -> s1_1 [tooltip="Jump",style=dashed]
+s1_1 -> s1_2 [tooltip="Next"]
+s1_1 -> s1_3 [tooltip="Jump",style=dashed]
+s1_2 -> s1_3 [tooltip="Next"]
+s1_2 -> s5_3 [tooltip="Jump",style=dashed]
+s5_3 -> s13_4 [tooltip="Jump",style=dashed]
+s61_6 -> s125_7 [tooltip="Jump",style=dashed]
+s125_7 -> s125_8 [tooltip="Next"]
+s125_8 -> s125_9 [tooltip="Next"]
+s125_8 -> s381_9 [tooltip="Jump",style=dashed]
+s125_9 -> s125_8 [tooltip="Jump",style=dashed]
+s381_9 -> s893_10 [tooltip="Jump",style=dashed]
+s13_4 -> s13_5 [tooltip="Next"]
+s13_4 -> s29_5 [tooltip="Jump",style=dashed]
+s29_5 -> s61_6 [tooltip="Jump",style=dashed]
+}

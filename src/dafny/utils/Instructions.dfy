@@ -585,18 +585,18 @@ module Instructions {
     match i.op
     case ArithOp(_, _, _, _, _, _) =>  ( "#316152", "#c6eb76")
     case CompOp(_, _, _, _, _, _) =>  ("darkgoldenrod", "bisque")
-    case BitwiseOp(_, _, _, _, _, _) =>  ("burlywood", "lemonchiffon")
-    case KeccakOp(_, _, _, _, _, _) =>  ("yellow", "lightyellow")
+    case BitwiseOp(_, _, _, _, _, _) =>  ("orange", "#f3f383" ) 
+    case KeccakOp(_, _, _, _, _, _) =>  ("grey", "linen")
     case EnvOp(_, _, _, _, _, _) =>  ("darkslategrey", "lightgrey")
-    case MemOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    case MemOp(_, _, _, _, _, _) =>  ("sienna", "wheat")
 
-    case StorageOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    case StorageOp(_, _, _, _, _, _) =>  ("fuchsia", "mistyrose")
     case JumpOp(_, _, _, _, _, _) =>  ("purple", "thistle")
     case RunOp(_, _, _, _, _, _) =>  ("sienna", "tan")
     
     case StackOp(_, _, _, _, _, _) =>  ("royalblue", "powderblue")
 
-    case LogOp(_, _, _, _, _, _) =>  ("sienna", "tan")
+    case LogOp(_, _, _, _, _, _) =>  ("cornflowerblue", "lavender")
     case SysOp(_, opcode, _, _, _, _) =>  
         if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
         else if opcode == RETURN then ("teal", "greenyellow")

@@ -1,10 +1,8 @@
 digraph CFG {
-    nodesep=1.5;
 node [shape=box]
 node[fontname=arial]
 edge[fontname=arial]
 ranking=TB
-{rank=same; s3_2; s1_2;}
  s0_0 [tooltip="Stack Size Delta: 3"label=<
 <TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
 <TR><TD>Segment 0 [0x0]</TD></TR><HR/>
@@ -12,10 +10,10 @@ ranking=TB
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x00 </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0a</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
-<TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x02 </TD>
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x02 </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x08</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
-<TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x04 </TD>
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x04 </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x03</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x06 </TD>
@@ -73,7 +71,7 @@ s1_2 [tooltip="Stack Size Delta: -2"label=<
 >]
 s3_2 [tooltip="Stack Size Delta: 0"label=<
 <TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD>Segment 4 [0x1f] </TD></TR><HR/>
+<TR><TD>Segment 4 [0x1f]</TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x1f </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -111,7 +109,7 @@ s5_3 [tooltip="Stack Size Delta: 1"label=<
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0d </TD>
-<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="tan" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0e </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
@@ -123,9 +121,9 @@ s5_3 [tooltip="Stack Size Delta: 1"label=<
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="greenyellow" align="left" cellpadding="3" ><FONT color="teal">RETURN</FONT></TD></TR></TABLE></TD></TR>
 </TABLE>
 >]
-s0_0:exit:sw -> s1_1:entry:w [tooltip="Jump",style=dashed]
-s1_1:s -> s1_2:n [tooltip="Next"]
-s1_1:exit:sw -> s3_2:entry:w [tooltip="Jump",style=dashed]
-s1_2:exit:s -> s5_3:entry:w [tooltip="Jump",style=dashed]
-s3_2:exit:e -> s1_2:entry:w [tooltip="Jump",style=dashed]
+s0_0 -> s1_1 [tooltip="Jump",style=dashed]
+s1_1 -> s1_2 [tooltip="Next"]
+s1_1 -> s3_2 [tooltip="Jump",style=dashed]
+s1_2 -> s5_3 [tooltip="Jump",style=dashed]
+s3_2 -> s1_2 [tooltip="Jump",style=dashed]
 }

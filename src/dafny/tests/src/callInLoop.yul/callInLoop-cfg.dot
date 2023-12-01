@@ -100,7 +100,7 @@ s5_5 [tooltip="Stack Size Delta: 0"label=<
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x17 </TD>
-<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="tan" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x18 </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
@@ -279,18 +279,18 @@ s117_7 [tooltip="Stack Size Delta: 0"label=<
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3" PORT="exit"><FONT color="purple">JUMP</FONT></TD></TR></TABLE></TD></TR>
 </TABLE>
 >]
-s0_0:exit:se  -> s1_1:entry:w  [tooltip="Jump",style=dashed]
+s0_0 -> s1_1 [tooltip="Jump",style=dashed]
 s5_3 -> s5_4 [tooltip="Next"]
 s5_4 -> s5_5 [tooltip="Next"]
-s5_4:exit:se  -> s21_5:entry:w  [tooltip="Jump",style=dashed]
-s21_5:exit:se  -> s53_6:entry:w  [tooltip="Jump",style=dashed]
-s181_8:exit:se  -> s5_4:entry:w  [tooltip="Jump",style=dashed]
+s5_4 -> s21_5 [tooltip="Jump",style=dashed]
+s21_5 -> s53_6 [tooltip="Jump",style=dashed]
+s181_8 -> s5_4 [tooltip="Jump",style=dashed]
 s1_1 -> s1_2 [tooltip="Next"]
-s1_1:exit:se  -> s3_2:entry:w  [tooltip="Jump",style=dashed]
+s1_1 -> s3_2 [tooltip="Jump",style=dashed]
 s53_6 -> s53_7 [tooltip="Next"]
-s53_6:exit:se  -> s117_7:entry:w  [tooltip="Jump",style=dashed]
-s1_2:exit:se  -> s5_3:entry:w  [tooltip="Jump",style=dashed]
-s53_7:exit:se  -> s181_8:entry:w  [tooltip="Jump",style=dashed]
-s117_7:exit:se  -> s53_7:entry:w  [tooltip="Jump",style=dashed]
-s3_2:exit:se  -> s1_2:entry:w  [tooltip="Jump",style=dashed]
+s53_6 -> s117_7 [tooltip="Jump",style=dashed]
+s1_2 -> s5_3 [tooltip="Jump",style=dashed]
+s53_7 -> s181_8 [tooltip="Jump",style=dashed]
+s117_7 -> s53_7 [tooltip="Jump",style=dashed]
+s3_2 -> s1_2 [tooltip="Jump",style=dashed]
 }
