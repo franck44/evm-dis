@@ -15,6 +15,7 @@ import Hex
 import StackElement
 import WeakPre
 import State
+import EVMToolTips
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -50,8 +51,8 @@ class Auto:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
         def lambda41_(forall_var_9_):
-            d_808_k_: tuple = forall_var_9_
-            return not ((d_808_k_) in ((self).transitions)) or ((((self).transitions)[d_808_k_]) < ((self).numStates))
+            d_809_k_: tuple = forall_var_9_
+            return not ((d_809_k_) in ((self).transitions)) or ((((self).transitions)[d_809_k_]) < ((self).numStates))
 
         return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda41_)
 

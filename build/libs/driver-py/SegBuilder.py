@@ -15,6 +15,7 @@ import Hex
 import StackElement
 import WeakPre
 import State
+import EVMToolTips
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -37,17 +38,17 @@ class default__:
                 if (len(xs)) == (0):
                     return MiscTypes.Either_Right(pos)
                 elif True:
-                    d_692_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
-                    source48_ = d_692_x_
+                    d_693_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
+                    source48_ = d_693_x_
                     if source48_.is_Left:
-                        d_693___mcc_h0_ = source48_.l
-                        d_694_v_ = d_693___mcc_h0_
-                        return MiscTypes.Either_Left(d_694_v_)
+                        d_694___mcc_h0_ = source48_.l
+                        d_695_v_ = d_694___mcc_h0_
+                        return MiscTypes.Either_Left(d_695_v_)
                     elif True:
-                        d_695___mcc_h1_ = source48_.r
-                        d_696_v_ = d_695___mcc_h1_
+                        d_696___mcc_h1_ = source48_.r
+                        d_697_v_ = d_696___mcc_h1_
                         in69_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                        in70_ = d_696_v_
+                        in70_ = d_697_v_
                         xs = in69_
                         pos = in70_
                         raise _dafny.TailCall()

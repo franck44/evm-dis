@@ -15,6 +15,7 @@ import Hex
 import StackElement
 import WeakPre
 import State
+import EVMToolTips
 import Instructions
 import BinaryDecoder
 import LinSegments

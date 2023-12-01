@@ -15,6 +15,7 @@ import Hex
 import StackElement
 import WeakPre
 import State
+import EVMToolTips
 import Instructions
 import BinaryDecoder
 import LinSegments
@@ -34,13 +35,13 @@ class default__:
 
     @staticmethod
     def SetU(xs):
-        d_783___accumulator_ = _dafny.Set({})
+        d_784___accumulator_ = _dafny.Set({})
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (_dafny.Set({})) | (d_783___accumulator_)
+                    return (_dafny.Set({})) | (d_784___accumulator_)
                 elif True:
-                    d_783___accumulator_ = (d_783___accumulator_) | ((xs)[0])
+                    d_784___accumulator_ = (d_784___accumulator_) | ((xs)[0])
                     in88_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
                     xs = in88_
                     raise _dafny.TailCall()
@@ -58,8 +59,8 @@ class default__:
     @staticmethod
     def AllNonEmpty(xs):
         def lambda33_(forall_var_4_):
-            d_784_k_: int = forall_var_4_
-            return not (((0) <= (d_784_k_)) and ((d_784_k_) < (len(xs)))) or (((xs)[d_784_k_]) != (_dafny.Set({})))
+            d_785_k_: int = forall_var_4_
+            return not (((0) <= (d_785_k_)) and ((d_785_k_) < (len(xs)))) or (((xs)[d_785_k_]) != (_dafny.Set({})))
 
         return _dafny.quantifier(_dafny.IntegerRange(0, len(xs)), True, lambda33_)
 
@@ -67,11 +68,11 @@ class default__:
     def DisjointAnyTwo(xs):
         def lambda34_(forall_var_5_):
             def lambda35_(forall_var_6_):
-                d_786_k_k_: int = forall_var_6_
-                return not ((((0) <= (d_785_k_)) and ((d_785_k_) < (d_786_k_k_))) and ((d_786_k_k_) < (len(xs)))) or ((((xs)[d_785_k_]).intersection((xs)[d_786_k_k_])) == (_dafny.Set({})))
+                d_787_k_k_: int = forall_var_6_
+                return not ((((0) <= (d_786_k_)) and ((d_786_k_) < (d_787_k_k_))) and ((d_787_k_k_) < (len(xs)))) or ((((xs)[d_786_k_]).intersection((xs)[d_787_k_k_])) == (_dafny.Set({})))
 
-            d_785_k_: int = forall_var_5_
-            return _dafny.quantifier(_dafny.IntegerRange((d_785_k_) + (1), len(xs)), True, lambda35_)
+            d_786_k_: int = forall_var_5_
+            return _dafny.quantifier(_dafny.IntegerRange((d_786_k_) + (1), len(xs)), True, lambda35_)
 
         return _dafny.quantifier(_dafny.IntegerRange(0, len(xs)), True, lambda34_)
 
@@ -81,27 +82,27 @@ class default__:
             coll0_ = _dafny.Set()
             compr_0_: int
             for compr_0_ in _dafny.IntegerRange(0, n):
-                d_787_z_: int = compr_0_
-                if ((0) <= (d_787_z_)) and ((d_787_z_) < (n)):
-                    coll0_ = coll0_.union(_dafny.Set([d_787_z_]))
+                d_788_z_: int = compr_0_
+                if ((0) <= (d_788_z_)) and ((d_788_z_) < (n)):
+                    coll0_ = coll0_.union(_dafny.Set([d_788_z_]))
             return _dafny.Set(coll0_)
         return (default__.SetU(xs)) == (iife2_()
         )
 
     @staticmethod
     def SplitSet(xs, f):
-        d_788_asSeq_ = default__.SetToSequence(xs)
-        return default__.SplitSeqTail(d_788_asSeq_, f, _dafny.Set({}), _dafny.Set({}), 0)
+        d_789_asSeq_ = default__.SetToSequence(xs)
+        return default__.SplitSeqTail(d_789_asSeq_, f, _dafny.Set({}), _dafny.Set({}), 0)
 
     @staticmethod
     def SplitSeqOfSet(xs, f):
-        d_789___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_790___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (d_789___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_790___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_789___accumulator_ = (d_789___accumulator_) + (_dafny.SeqWithoutIsStrInference([default__.SplitSet((xs)[0], f)]))
+                    d_790___accumulator_ = (d_790___accumulator_) + (_dafny.SeqWithoutIsStrInference([default__.SplitSet((xs)[0], f)]))
                     in89_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
                     in90_ = f
                     xs = in89_
@@ -111,28 +112,28 @@ class default__:
 
     @staticmethod
     def SetToSequence(s):
-        d_790___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_791___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 pat_let_tv1_ = s
                 if (s) == (_dafny.Set({})):
-                    return (d_790___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_791___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
                     def iife3_(_let_dummy_1):
-                        d_791_x_: int = None
+                        d_792_x_: int = None
                         with _dafny.label("_ASSIGN_SUCH_THAT_d_0"):
                             assign_such_that_0_: int
                             for assign_such_that_0_ in (s).Elements:
-                                d_791_x_ = assign_such_that_0_
+                                d_792_x_ = assign_such_that_0_
                                 def lambda36_(forall_var_7_):
-                                    d_792_y_: int = forall_var_7_
-                                    return not ((d_792_y_) in (s)) or ((d_791_x_) <= (d_792_y_))
+                                    d_793_y_: int = forall_var_7_
+                                    return not ((d_793_y_) in (s)) or ((d_792_x_) <= (d_793_y_))
 
-                                if ((d_791_x_) in (s)) and (_dafny.quantifier((s).Elements, True, lambda36_)):
+                                if ((d_792_x_) in (s)) and (_dafny.quantifier((s).Elements, True, lambda36_)):
                                     raise _dafny.Break("_ASSIGN_SUCH_THAT_d_0")
                             raise Exception("assign-such-that search produced no value (line 193)")
                             pass
-                        return (_dafny.SeqWithoutIsStrInference([d_791_x_])) + (default__.SetToSequence((pat_let_tv1_) - (_dafny.Set({d_791_x_}))))
+                        return (_dafny.SeqWithoutIsStrInference([d_792_x_])) + (default__.SetToSequence((pat_let_tv1_) - (_dafny.Set({d_792_x_}))))
                     return iife3_(0)
                     
                 break
