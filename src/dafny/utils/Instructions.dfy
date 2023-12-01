@@ -18,7 +18,7 @@ include "../utils/EVMOpcodes.dfy"
 include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
 include "../utils/WeakPre.dfy"
-
+include "./EVMToolTips.dfy"
 /** 
   *  Provides EVM Instruction types.
   */
@@ -32,6 +32,7 @@ module Instructions {
   import opened StackElement
   import opened State
   import opened WeakPre
+  import opened EVMToolTips
 
   type ValidInstruction = i:Instruction | i.IsValid()
     witness Instruction(SysOp("STOP", STOP), [], 0)
@@ -80,17 +81,28 @@ module Instructions {
       // cols.0 is pencolor and cols.1 is background
       var cols := Colours(this);
       var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
+      var gasLine := "&#9981;";
       var oplineTD :=
-      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" " + entryPortTag + ">" + 
-      "0x" + formattedAddress + " </TD>\n"
+      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" " 
+      + entryPortTag + ">" 
+      + "0x" 
+      + formattedAddress 
+      + " </TD>\n"
+      + "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: " + Gas(op.opcode) + " \" " 
+      + "target=\"_blank\" href=\"" 
+      + gasRefLine 
+      + "\"" + ">" + gasLine + "</TD>"
+      + "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag 
+      + " href=\"" + bytecodeRefLine + NatToString(ToolTip(op.opcode).1) + "\" target=\"_blank\" " 
+      + " tooltip=\"" + ToolTip(op.opcode).0 + "\" " 
       +
-        "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag + ">"
-        + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
-        + "</TD>";
+      ">"
+       + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
+       + "</TD>";
       var arglineTD := if |arg| > 0 then
                          "<TD width=\"1\" fixedsize=\"true\" align=\"left\">"
                          + "  0x" + arg
-                         + "</TD>"
+                         + "</TD>" 
                        else "";
       var lineTR := "<TR>" + oplineTD + arglineTD + "</TR>";
       var itemTable :=
