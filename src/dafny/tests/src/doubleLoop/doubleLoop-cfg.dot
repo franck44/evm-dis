@@ -41,7 +41,7 @@ s0_2 [tooltip="Stack Size Delta: 0"label=<
 <TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
 <TR><TD>Segment 2 [0xb]</TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
-<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="true" align="left" cellpadding="1" PORT="entry">0x0b </TD>
+<TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0b </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0c </TD>
@@ -51,7 +51,7 @@ s0_2 [tooltip="Stack Size Delta: 0"label=<
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="wheat" align="left" cellpadding="3" ><FONT color="sienna">MSTORE</FONT></TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x0f </TD>
-<TD width="1" fixedsize="false" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
+<TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" >0x11 </TD>
 <TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x40</TD></TR></TABLE></TD></TR>
