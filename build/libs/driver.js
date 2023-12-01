@@ -3841,7 +3841,7 @@ let EVMToolTips = (function() {
       } else if ((op) === (145)) {
         return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("Swap top and 3rd element of the stack"), new BigNumber(1577));
       } else if ((op) === (146)) {
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("Swap top and 4-th, element of the stack"), new BigNumber(1577));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("Swap top and 4-th element of the stack"), new BigNumber(1577));
       } else if ((op) === (147)) {
         return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("Swap top and 5-th element of the stack"), new BigNumber(1577));
       } else if ((op) === (148)) {
@@ -4187,6 +4187,8 @@ let EVMToolTips = (function() {
         return _dafny.Seq.UnicodeFromString("Depends on memory expansion");
       } else if ((op) === (255)) {
         return _dafny.Seq.UnicodeFromString("Depends on memory expansion");
+      } else if ((op) === (254)) {
+        return Int.__default.NatToString(EVMToolTips.__default.G__VERYLOW);
       } else {
         return _dafny.Seq.UnicodeFromString("Unknown opcode");
       }

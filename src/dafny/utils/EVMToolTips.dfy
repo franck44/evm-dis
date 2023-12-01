@@ -164,7 +164,7 @@ module EVMToolTips {
     // // 0x90s: Exchange operations
     case SWAP1 => ("Swap top and 2nd element of the stack", 1577)
     case SWAP2 => ("Swap top and 3rd element of the stack", 1577)
-    case SWAP3 => ("Swap top and 4-th, element of the stack", 1577)
+    case SWAP3 => ("Swap top and 4-th element of the stack", 1577)
     case SWAP4 => ("Swap top and 5-th element of the stack", 1577)
     case SWAP5 => ("Swap top and 6-th element of the stack", 1577)
     case SWAP6 => ("Swap top and 7-th element of the stack", 1577)
@@ -395,6 +395,7 @@ module EVMToolTips {
     case STATICCALL => "Depends on memory expansion"
     case REVERT => "Depends on memory expansion"
     case SELFDESTRUCT => "Depends on memory expansion"
+    case INVALID => NatToString(G_VERYLOW)
     case _ => "Unknown opcode"
 
   }

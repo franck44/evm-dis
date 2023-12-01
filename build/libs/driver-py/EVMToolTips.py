@@ -261,7 +261,7 @@ class default__:
         elif (op) == (145):
             return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Swap top and 3rd element of the stack")), 1577)
         elif (op) == (146):
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Swap top and 4-th, element of the stack")), 1577)
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Swap top and 4-th element of the stack")), 1577)
         elif (op) == (147):
             return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Swap top and 5-th element of the stack")), 1577)
         elif (op) == (148):
@@ -607,6 +607,8 @@ class default__:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Depends on memory expansion"))
         elif (op) == (255):
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Depends on memory expansion"))
+        elif (op) == (254):
+            return Int.default__.NatToString(default__.G__VERYLOW)
         elif True:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Unknown opcode"))
 
