@@ -361,7 +361,8 @@ task cleanDafny(type: Delete) {
     delete "build/logs"
 }
 
-
+task buildArtefacts 
+buildArtefacts.dependsOn compileToJava, compileToPy, compileToCs, compileToJs
 
 clean.dependsOn cleanDafny, deleteTestBuild
 
