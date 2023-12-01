@@ -409,3 +409,6 @@ module OverFlowCheckerBytecode {
 }
 ```
 
+### Useful Resources
+
+- [Compile Dafny to other languages](https://github.com/dafny-lang/dafny/wiki/INSTALL/e488d7fec693266b206a6775feaff328c9c08f13#compiling-dafny)
