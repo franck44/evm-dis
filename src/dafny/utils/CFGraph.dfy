@@ -193,7 +193,7 @@ module CFGraph {
       var lab := DOTSegTable(s, n.seg.v);
       var nodeColour := ""; // SegColour(s);
       "s" + n.ToDot() + " [" + nodeColour
-      + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+    //   + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
       + "label=<\n" + lab + ">]\n"
     }
 
@@ -340,13 +340,16 @@ module CFGraph {
     var prefix := "<B>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
-  }
+  } 
 
   function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
   {
     var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
     // var prefix := "<TR><TD BGCOLOR=\"" + SegColour2(s)  + "\">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
-    var prefix := "<TR><TD>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
+    var prefix := "<TR><TD "
+    + " href=\"\" tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+    + ">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) 
+     + "]</TD></TR><HR/>\n";
     var tableEnd := "</TABLE>\n";
     var body := DOTInsTable(s.Ins());
     tableStart + prefix + body + tableEnd
