@@ -3634,7 +3634,7 @@ let Instructions = (function() {
         let _206___mcc_h15 = (_source32).minOperands;
         let _207___mcc_h16 = (_source32).pushes;
         let _208___mcc_h17 = (_source32).pops;
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("burlywood"), _dafny.Seq.UnicodeFromString("lemonchiffon"));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("orange"), _dafny.Seq.UnicodeFromString("#f3f383"));
       } else if (_source32.is_KeccakOp) {
         let _209___mcc_h18 = (_source32).name;
         let _210___mcc_h19 = (_source32).opcode;
@@ -3642,7 +3642,7 @@ let Instructions = (function() {
         let _212___mcc_h21 = (_source32).minOperands;
         let _213___mcc_h22 = (_source32).pushes;
         let _214___mcc_h23 = (_source32).pops;
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("yellow"), _dafny.Seq.UnicodeFromString("lightyellow"));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("grey"), _dafny.Seq.UnicodeFromString("linen"));
       } else if (_source32.is_EnvOp) {
         let _215___mcc_h24 = (_source32).name;
         let _216___mcc_h25 = (_source32).opcode;
@@ -3658,7 +3658,7 @@ let Instructions = (function() {
         let _224___mcc_h33 = (_source32).minOperands;
         let _225___mcc_h34 = (_source32).pushes;
         let _226___mcc_h35 = (_source32).pops;
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("sienna"), _dafny.Seq.UnicodeFromString("tan"));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("sienna"), _dafny.Seq.UnicodeFromString("wheat"));
       } else if (_source32.is_StorageOp) {
         let _227___mcc_h36 = (_source32).name;
         let _228___mcc_h37 = (_source32).opcode;
@@ -3666,7 +3666,7 @@ let Instructions = (function() {
         let _230___mcc_h39 = (_source32).minOperands;
         let _231___mcc_h40 = (_source32).pushes;
         let _232___mcc_h41 = (_source32).pops;
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("sienna"), _dafny.Seq.UnicodeFromString("tan"));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("fuchsia"), _dafny.Seq.UnicodeFromString("mistyrose"));
       } else if (_source32.is_JumpOp) {
         let _233___mcc_h42 = (_source32).name;
         let _234___mcc_h43 = (_source32).opcode;
@@ -3698,7 +3698,7 @@ let Instructions = (function() {
         let _254___mcc_h63 = (_source32).minOperands;
         let _255___mcc_h64 = (_source32).pushes;
         let _256___mcc_h65 = (_source32).pops;
-        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("sienna"), _dafny.Seq.UnicodeFromString("tan"));
+        return _dafny.Tuple.of(_dafny.Seq.UnicodeFromString("cornflowerblue"), _dafny.Seq.UnicodeFromString("lavender"));
       } else {
         let _257___mcc_h66 = (_source32).name;
         let _258___mcc_h67 = (_source32).opcode;

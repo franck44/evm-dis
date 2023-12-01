@@ -53,7 +53,7 @@ class default__:
             d_200___mcc_h15_ = source32_.minOperands
             d_201___mcc_h16_ = source32_.pushes
             d_202___mcc_h17_ = source32_.pops
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "burlywood")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "lemonchiffon")))
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "orange")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "#f3f383")))
         elif source32_.is_KeccakOp:
             d_203___mcc_h18_ = source32_.name
             d_204___mcc_h19_ = source32_.opcode
@@ -61,7 +61,7 @@ class default__:
             d_206___mcc_h21_ = source32_.minOperands
             d_207___mcc_h22_ = source32_.pushes
             d_208___mcc_h23_ = source32_.pops
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "yellow")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "lightyellow")))
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "grey")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "linen")))
         elif source32_.is_EnvOp:
             d_209___mcc_h24_ = source32_.name
             d_210___mcc_h25_ = source32_.opcode
@@ -77,7 +77,7 @@ class default__:
             d_218___mcc_h33_ = source32_.minOperands
             d_219___mcc_h34_ = source32_.pushes
             d_220___mcc_h35_ = source32_.pops
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "sienna")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "tan")))
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "sienna")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "wheat")))
         elif source32_.is_StorageOp:
             d_221___mcc_h36_ = source32_.name
             d_222___mcc_h37_ = source32_.opcode
@@ -85,7 +85,7 @@ class default__:
             d_224___mcc_h39_ = source32_.minOperands
             d_225___mcc_h40_ = source32_.pushes
             d_226___mcc_h41_ = source32_.pops
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "sienna")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "tan")))
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "fuchsia")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "mistyrose")))
         elif source32_.is_JumpOp:
             d_227___mcc_h42_ = source32_.name
             d_228___mcc_h43_ = source32_.opcode
@@ -117,7 +117,7 @@ class default__:
             d_248___mcc_h63_ = source32_.minOperands
             d_249___mcc_h64_ = source32_.pushes
             d_250___mcc_h65_ = source32_.pops
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "sienna")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "tan")))
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "cornflowerblue")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "lavender")))
         elif True:
             d_251___mcc_h66_ = source32_.name
             d_252___mcc_h67_ = source32_.opcode
