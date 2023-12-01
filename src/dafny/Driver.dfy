@@ -142,9 +142,7 @@ module Driver {
               print "Minimised CFG\n";
               print g'.DOTPrint(y, fancy);
             }
-
           }
-
         case Failure(m) =>
       }
     }
