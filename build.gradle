@@ -333,6 +333,21 @@ task compileToJs {
     }
 }
 
+task generateTestCFGs {
+doLast {
+    fileTree("src/dafny/tests/src/").include('**/*.bin').each {
+            File file -> {
+                exec {
+                    executable = './makeCFG.sh' 
+                    args = [file]
+                }
+            }
+        }
+    }
+}
+
+generateTestCFGs.dependsOn compileToJava
+
 task deleteTestBuild(type: Delete) {
     delete fileTree('test/dafny') {
         include '**/*.dll',  '**/*.json'
@@ -346,7 +361,11 @@ task cleanDafny(type: Delete) {
     delete "build/logs"
 }
 
+
+
 clean.dependsOn cleanDafny, deleteTestBuild
+
+
 
 // ======================================================================
 // Java Build
