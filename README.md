@@ -69,8 +69,9 @@ the CFG is depicted on the right-hand side.
 The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
 It can re-construct CFGs with nested loops, function calls.
 
-Examples of CFGS in DOT format for the an ERC-20, the Deposit Contract and some other programs are available in the [test folder](./src/dafny/tests/src/).
-You can use the [Graphviz-Online](https://dreampuf.github.io/GraphvizOnline/) tool to visualise them.
+Examples of CFGs in DOT format and SVG format are available in the [test folder](./src/dafny/tests/src/).
+You can use the [Graphviz-Online](https://dreampuf.github.io/GraphvizOnline/) tool to visualise the `dot` files.
+The `svg files` can be downloaded and opened in your favourite browser.
 
 ## Usage
 The disassembler generates readable EVM assembly and the CFG generator DOT files.
