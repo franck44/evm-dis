@@ -169,7 +169,7 @@ task verify {
         mkdir "build/logs"
         //
         fileTree("src/dafny").include('**/*.dfy').each {
-            File file -> {
+            File file -> L1:{
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))
                 // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
@@ -200,7 +200,7 @@ task testDafny {
         // Verify and execute all Dafny tests found in the test
         // directory.
         fileTree("test/dafny").include('**/*.dfy').each {
-            File file -> {
+            File file -> L2:{
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))
                 // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
@@ -334,8 +334,8 @@ task compileToJs {
 }
 
 task generateTestCFGs {
-doLast {
-    fileTree("src/dafny/tests/src/").include('**/*.bin').each {
+    doLast {
+        fileTree("src/dafny/tests/src/").include('**/*.bin').each {
             File file -> {
                 exec {
                     executable = './makeCFG.sh' 
