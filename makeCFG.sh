@@ -8,3 +8,5 @@ extension="${filename##*.}"
 filename="${filename%.*}"
 
 java -jar build/libs/Driver-java/evmdis.jar --cfg 100 $(<$1) | tail -n +5 >$filename-cfg.dot
+dot -Tsvg $filename-cfg.dot -o $filename-cfg.svg
+
