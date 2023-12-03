@@ -19,9 +19,9 @@ include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
 include "../utils/WeakPre.dfy"
 include "./EVMToolTips.dfy"
-/** 
-  *  Provides EVM Instruction types.
-  */
+  /** 
+    *  Provides EVM Instruction types.
+    */
 module Instructions {
 
   import opened Int
@@ -73,8 +73,8 @@ module Instructions {
     }
 
     /** Print as an HTMNL Table 
-    *   The port tag should be of the PORT="something" 
-    */
+      *   The port tag should be of the PORT="something" 
+      */
     function ToHTMLTable(entryPortTag: string := "", exitPortTag: string := ""): string
       requires this.IsValid()
     {
@@ -83,26 +83,26 @@ module Instructions {
       var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
       var gasLine := "&#9981;";
       var oplineTD :=
-      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" " 
-      + entryPortTag + ">" 
-      + "0x" 
-      + formattedAddress 
-      + " </TD>\n"
-      + "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: " + Gas(op.opcode) + " \" " 
-      + "target=\"_blank\" href=\"" 
-      + gasRefLine 
-      + "\"" + ">" + gasLine + "</TD>"
-      + "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag 
-      + " href=\"" + bytecodeRefLine + NatToString(ToolTip(op.opcode).1) + "\" target=\"_blank\" " 
-      + " tooltip=\"" + ToolTip(op.opcode).0 + "\" " 
-      +
-      ">"
-       + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
-       + "</TD>";
+        "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" "
+        + entryPortTag + ">"
+        + "0x"
+        + formattedAddress
+        + " </TD>\n"
+        + "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: " + Gas(op.opcode) + " \" "
+        + "target=\"_blank\" href=\""
+        + gasRefLine
+        + "\"" + ">" + gasLine + "</TD>"
+        + "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag
+        + " href=\"" + bytecodeRefLine + NatToString(ToolTip(op.opcode).1) + "\" target=\"_blank\" "
+        + " tooltip=\"" + ToolTip(op.opcode).0 + "\" "
+        +
+        ">"
+        + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
+        + "</TD>";
       var arglineTD := if |arg| > 0 then
                          "<TD width=\"1\" fixedsize=\"true\" align=\"left\">"
                          + "  0x" + arg
-                         + "</TD>" 
+                         + "</TD>"
                        else "";
       var lineTR := "<TR>" + oplineTD + arglineTD + "</TR>";
       var itemTable :=
@@ -128,7 +128,7 @@ module Instructions {
       this.op.IsJumpDest()
     }
 
-     /**
+    /**
       * Whether an instruction Opcode is terminal (branching).
       */
     predicate IsJump()
@@ -223,11 +223,50 @@ module Instructions {
           Right(pos' + pops - pushes)
         else Left(Random("More than one predecessor. Comparison operator with target 0"))
 
-      case BitwiseOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
-      case KeccakOp(_, _, _, _, _, _)     => Left(Random("Not implemented"))
-      case EnvOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
-      case MemOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
-      case StorageOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
+      case BitwiseOp(_, _, _, _, pushes, pops)    =>
+        //  Same as Arithmetic operator, except some have only one operand.
+        if pos' >= 1 then
+          //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
+          Right(pos' + pops - pushes)
+        else Left(Random("More than one predecessor. Bitwise operator with target 0"))
+
+      case KeccakOp(_, _, _, _, pushes, pops)     =>
+        assert pops == 2 && pushes == 1;
+        //  Same as Arithmetic operator, except some have only one operand.
+        if pos' >= 1 then
+          //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
+          Right(pos' + 1)
+        else Left(Random("More than one predecessor. Keccak operator with target 0"))
+
+      case EnvOp(_, _, _, _, pushes, pops)        =>
+        if pushes == 1 && pops == 0 then
+          if pos' == 0 then Left(Random("More than one predecessor. Env operator with target 0"))
+          else
+            Right(pos' - 1)
+        else if pushes == 1 && pops == 1 then
+          if pos' == 0 then Left(Random("More than one predecessor. Env operator with target 0"))
+          else Right(pos')
+        else
+          assert pushes == 0 && 3 <= pops <= 4;
+          Right(pos' + pops - pushes)
+
+      case MemOp(_, _, _, _, pushes, pops)        =>
+        if pushes == 0 then
+          assert pops == 2;
+          Right(pos' + 2)
+        else
+          assert pushes == pops == 1;
+          if pos' == 0  then Left(Random("More than one predecessor. Mem operator with target 0"))
+          else Right(pos')
+
+      case StorageOp(_, _, _, _, pushes, pops)    =>
+        if pushes == 0 then
+          assert pops == 2;
+          Right(pos' + 2)
+        else
+          assert pushes == pops == 1;
+          if pos' == 0 then Left(Random("More than one predecessor. Storage operator with target 0"))
+          else Right(pos')
 
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then
@@ -237,9 +276,14 @@ module Instructions {
           var k := opcode - JUMP + 1;
           Right(pos' + k as nat)
         else
+          assert JUMPDEST < opcode <= RJUMPV;
           Left(Random("Not implemented"))
 
-      case RunOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
+      case RunOp(_, _, _, _, pushes, pops)        =>
+        if pos' == 0 then Left(Random("More than one predecessor. Run operator with target 0"))
+        else
+          assert pushes == 1 && pops == 0;
+          Right(pos' - 1)
 
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
@@ -261,8 +305,18 @@ module Instructions {
           assert opcode == POP;
           Right(pos' + 1)
 
-      case LogOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
-      case SysOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
+      case LogOp(_, _, _, _, pushes, pops) =>
+        assert pushes == 0 && 2 <= pops <= 6;
+        Right(pos' + 2)
+
+      case SysOp(_, _, _, _, pushes, pops) => 
+        if pushes == 0 then
+          Right(pos' + pops)
+        else
+          assert pushes == 1;
+          if pos' == 0 then Left(Random("More than one predecessor. Sys operator with target 0"))
+          else
+            Right(pos' + pops)
     }
 
     /**
@@ -309,8 +363,6 @@ module Instructions {
 
       case EnvOp(_, _, _, _, pushes, pops)        =>
         if s.Size() >= pops && !cond then
-          //   assert pops == 0;
-          //   assert pushes <= 1;
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("EnvOp error")
 
@@ -591,13 +643,13 @@ module Instructions {
     Hex.HexToU256(pad + xc).Extract()
   }
 
-    /** pencolour and background colour. */
+  /** pencolour and background colour. */
   function Colours(i: ValidInstruction): (string, string)
   {
     match i.op
     case ArithOp(_, _, _, _, _, _) =>  ( "#316152", "#c6eb76")
     case CompOp(_, _, _, _, _, _) =>  ("darkgoldenrod", "bisque")
-    case BitwiseOp(_, _, _, _, _, _) =>  ("orange", "#f3f383" ) 
+    case BitwiseOp(_, _, _, _, _, _) =>  ("orange", "#f3f383" )
     case KeccakOp(_, _, _, _, _, _) =>  ("grey", "linen")
     case EnvOp(_, _, _, _, _, _) =>  ("darkslategrey", "lightgrey")
     case MemOp(_, _, _, _, _, _) =>  ("sienna", "wheat")
@@ -605,22 +657,16 @@ module Instructions {
     case StorageOp(_, _, _, _, _, _) =>  ("fuchsia", "mistyrose")
     case JumpOp(_, _, _, _, _, _) =>  ("purple", "thistle")
     case RunOp(_, _, _, _, _, _) =>  ("sienna", "tan")
-    
+
     case StackOp(_, _, _, _, _, _) =>  ("royalblue", "powderblue")
 
     case LogOp(_, _, _, _, _, _) =>  ("cornflowerblue", "lavender")
-    case SysOp(_, opcode, _, _, _, _) =>  
-        if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
-        else if opcode == RETURN then ("teal", "greenyellow")
-        else if opcode == CALL || opcode == CALLCODE || opcode == DELEGATECALL || opcode == STATICCALL then 
-            ("sienna", "tan")
-        else 
-            ("brown", "salmon")
-        // match opcode 
-        //     case STOP => ("brown", "salmon")
-        //     case REVERT => ("brown", "salmon")
-        //     case RETURN => ("darkgreen", "lightgreen")
-        //     case _ => ("sienna", "tan")
-
+    case SysOp(_, opcode, _, _, _, _) =>
+      if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
+      else if opcode == RETURN then ("teal", "greenyellow")
+      else if opcode == CALL || opcode == CALLCODE || opcode == DELEGATECALL || opcode == STATICCALL then
+        ("sienna", "tan")
+      else
+        ("brown", "salmon")
   }
 }

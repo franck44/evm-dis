@@ -38,17 +38,17 @@ class default__:
                 if (len(xs)) == (0):
                     return MiscTypes.Either_Right(pos)
                 elif True:
-                    d_693_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
-                    source48_ = d_693_x_
+                    d_709_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
+                    source48_ = d_709_x_
                     if source48_.is_Left:
-                        d_694___mcc_h0_ = source48_.l
-                        d_695_v_ = d_694___mcc_h0_
-                        return MiscTypes.Either_Left(d_695_v_)
+                        d_710___mcc_h0_ = source48_.l
+                        d_711_v_ = d_710___mcc_h0_
+                        return MiscTypes.Either_Left(d_711_v_)
                     elif True:
-                        d_696___mcc_h1_ = source48_.r
-                        d_697_v_ = d_696___mcc_h1_
+                        d_712___mcc_h1_ = source48_.r
+                        d_713_v_ = d_712___mcc_h1_
                         in69_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                        in70_ = d_697_v_
+                        in70_ = d_713_v_
                         xs = in69_
                         pos = in70_
                         raise _dafny.TailCall()

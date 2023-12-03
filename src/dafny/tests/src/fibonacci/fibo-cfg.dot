@@ -1505,7 +1505,7 @@ s25_6 [label=<
 >]
 s57_6 [label=<
 <TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 48 [0x21d]</TD><TD href="" tooltip="Stack Size &#916;: -3&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Unknown">&#128218;</TD></TR><HR/>
+<TR><TD >Segment 48 [0x21d]</TD><TD href="" tooltip="Stack Size &#916;: -3&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Stack on Entry.Peek(3)">&#128218;</TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellsborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x021d </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
