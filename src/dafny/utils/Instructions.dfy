@@ -223,11 +223,50 @@ module Instructions {
           Right(pos' + pops - pushes)
         else Left(Random("More than one predecessor. Comparison operator with target 0"))
 
-      case BitwiseOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
-      case KeccakOp(_, _, _, _, _, _)     => Left(Random("Not implemented"))
-      case EnvOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
-      case MemOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
-      case StorageOp(_, _, _, _, _, _)    => Left(Random("Not implemented"))
+      case BitwiseOp(_, _, _, _, pushes, pops)    =>
+        //  Same as Arithmetic operator, except some have only one operand.
+        if pos' >= 1 then
+          //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
+          Right(pos' + pops - pushes)
+        else Left(Random("More than one predecessor. Bitwise operator with target 0"))
+
+      case KeccakOp(_, _, _, _, pushes, pops)     =>
+        assert pops == 2 && pushes == 1;
+        //  Same as Arithmetic operator, except some have only one operand.
+        if pos' >= 1 then
+          //  Note that because this.op must be valid, pos' + pops - pushes is >= 0!
+          Right(pos' + 1)
+        else Left(Random("More than one predecessor. Keccak operator with target 0"))
+
+      case EnvOp(_, _, _, _, pushes, pops)        =>
+        if pushes == 1 && pops == 0 then
+          if pos' == 0 then Left(Random("More than one predecessor. Env operator with target 0"))
+          else
+            Right(pos' - 1)
+        else if pushes == 1 && pops == 1 then
+          if pos' == 0 then Left(Random("More than one predecessor. Env operator with target 0"))
+          else Right(pos')
+        else
+          assert pushes == 0 && 3 <= pops <= 4;
+          Right(pos' + pops - pushes)
+
+      case MemOp(_, _, _, _, pushes, pops)        =>
+        if pushes == 0 then
+          assert pops == 2;
+          Right(pos' + 2)
+        else
+          assert pushes == pops == 1;
+          if pos' == 0  then Left(Random("More than one predecessor. Mem operator with target 0"))
+          else Right(pos')
+
+      case StorageOp(_, _, _, _, pushes, pops)    =>
+        if pushes == 0 then
+          assert pops == 2;
+          Right(pos' + 2)
+        else
+          assert pushes == pops == 1;
+          if pos' == 0 then Left(Random("More than one predecessor. Storage operator with target 0"))
+          else Right(pos')
 
       case JumpOp(_, opcode, _, _, _, _)  =>
         if opcode == JUMPDEST then
