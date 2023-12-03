@@ -18,6 +18,7 @@ include "./Automata.dfy"
 include "./Minimiser.dfy"
 include "./Partition.dfy"
 include "./SeqOfSets.dfy"
+include "../proofobjectbuilder/SegmentBuilder.dfy"
 
 /** Provide parsing of commadline options. 
   * 
@@ -30,9 +31,12 @@ module CFGraph {
   import opened Instructions
   import opened Automata
   import opened Int
+  import opened Hex
   import Minimiser
   import opened PartitionMod
   import opened SeqOfSets
+  import SegBuilder
+
 
   //    Some colours used to pretty-print CFGraphs
   const returnColour := "style=filled,color=olivedrab,fontcolor=white,"
@@ -94,7 +98,7 @@ module CFGraph {
       var labColour := if lab then jumpColour else skipColour;
       var exitPort := if fancyExit && lab then ":exit:se " else "";
       var entryPort := if fancyExit && lab then ":entry:w " else "";
-      
+
       "s" + src.ToDot() + exitPort  + " -> s" + tgt.ToDot() + entryPort +  " [" + lab1 + "]\n"
     }
   }
@@ -193,7 +197,7 @@ module CFGraph {
       var lab := DOTSegTable(s, n.seg.v);
       var nodeColour := ""; // SegColour(s);
       "s" + n.ToDot() + " [" + nodeColour
-    //   + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+      //   + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
       + "label=<\n" + lab + ">]\n"
     }
 
@@ -340,22 +344,37 @@ module CFGraph {
     var prefix := "<B>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
     prefix + body
-  } 
+  }
 
   function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
   {
+    //  Jump target
+    var jumpTip :=
+      if s.JUMPSeg? || s.JUMPISeg? then
+        var r := SegBuilder.JUMPResolver(s);
+        match r {
+          case Left(v) =>
+            match v {
+              case Value(address) =>   "&#10;Exit Jump target: Constant 0x" + NatToHex(address as nat)
+              case Random(msg) => "&#10;Exit Jump target: Unknown"
+            }
+          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + NatToString(stackPos) +  ")"
+
+        } else "";
+
     var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
     // var prefix := "<TR><TD BGCOLOR=\"" + SegColour2(s)  + "\">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
     var prefix := "<TR><TD "
-    // + " href=\"\" tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
-    + ">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) 
-     + "]</TD>"
-     + "<TD" 
-     + " href=\"\" tooltip=\"Stack Size &#916;: " + IntToString(s.StackEffect()) 
-     + "  -- Operands &#8805; " + NatToString(s.WeakestPreOperands()) 
-     + "\""
-      + ">&#128218;</TD>"
-     + "</TR><HR/>\n";
+                  // + " href=\"\" tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+                  + ">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress())
+                  + "]</TD>"
+                  + "<TD"
+                  + " href=\"\" tooltip=\"Stack Size &#916;: " + IntToString(s.StackEffect())
+                  + "&#10;Stack Size on Entry &#8805; " + NatToString(s.WeakestPreOperands())
+                  + jumpTip
+                  + "\""
+                  + ">&#128218;</TD>"
+                  + "</TR><HR/>\n";
     var tableEnd := "</TABLE>\n";
     var body := DOTInsTable(s.Ins());
     tableStart + prefix + body + tableEnd
