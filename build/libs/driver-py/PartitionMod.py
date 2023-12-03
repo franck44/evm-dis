@@ -41,16 +41,16 @@ class default__:
                 if (max) == (index):
                     return p
                 elif True:
-                    def lambda37_(d_795_f_, d_796_max_, d_797_index_):
-                        def lambda38_(d_798_x_):
-                            return d_795_f_((d_798_x_) + (1))
+                    def lambda37_(d_811_f_, d_812_max_, d_813_index_):
+                        def lambda38_(d_814_x_):
+                            return d_811_f_((d_814_x_) + (1))
 
                         return lambda38_
 
-                    d_794_f_k_ = lambda37_(f, max, index)
-                    d_799_p1_ = (p).SplitAt(f(0), 0)
-                    in101_ = d_799_p1_
-                    in102_ = d_794_f_k_
+                    d_810_f_k_ = lambda37_(f, max, index)
+                    d_815_p1_ = (p).SplitAt(f(0), 0)
+                    in101_ = d_815_p1_
+                    in102_ = d_810_f_k_
                     in103_ = (index) + (1)
                     in104_ = max
                     p = in101_
@@ -63,10 +63,10 @@ class default__:
     @staticmethod
     def PrintPartition(p):
         hi3_ = len((p).elem)
-        for d_800_k_ in range(0, hi3_):
-            d_801_setToSeq_: _dafny.Seq
-            d_801_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_800_k_])
-            _dafny.print(_dafny.string_of(d_801_setToSeq_))
+        for d_816_k_ in range(0, hi3_):
+            d_817_setToSeq_: _dafny.Seq
+            d_817_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_816_k_])
+            _dafny.print(_dafny.string_of(d_817_setToSeq_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
 
@@ -88,17 +88,17 @@ class Partition:
     def is_Partition(self) -> bool:
         return isinstance(self, Partition_Partition)
     def SplitAt(self, f, index):
-        d_802_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
-        if (((d_802_r_)[0]) != (_dafny.Set({}))) and (((d_802_r_)[1]) != (_dafny.Set({}))):
-            d_803_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_802_r_)[0], (d_802_r_)[1]]))
-            d_804_pp_ = Partition_Partition((self).n, d_803_j_)
-            return d_804_pp_
-        elif ((d_802_r_)[0]) != (_dafny.Set({})):
-            d_805_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_802_r_)[0]]))
-            return Partition_Partition((self).n, d_805_j_)
+        d_818_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
+        if (((d_818_r_)[0]) != (_dafny.Set({}))) and (((d_818_r_)[1]) != (_dafny.Set({}))):
+            d_819_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_818_r_)[0], (d_818_r_)[1]]))
+            d_820_pp_ = Partition_Partition((self).n, d_819_j_)
+            return d_820_pp_
+        elif ((d_818_r_)[0]) != (_dafny.Set({})):
+            d_821_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_818_r_)[0]]))
+            return Partition_Partition((self).n, d_821_j_)
         elif True:
-            d_806_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_802_r_)[1]]))
-            return Partition_Partition((self).n, d_806_j_)
+            d_822_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_818_r_)[1]]))
+            return Partition_Partition((self).n, d_822_j_)
 
     def GetClass(self, x, index):
         _this = self
@@ -123,11 +123,11 @@ class Partition:
     def Refines2(self, p):
         def lambda39_(forall_var_8_):
             def lambda40_(exists_var_0_):
-                d_808_c_: _dafny.Set = exists_var_0_
-                return ((d_808_c_) in ((p).elem)) and ((d_807_k_).issubset(d_808_c_))
+                d_824_c_: _dafny.Set = exists_var_0_
+                return ((d_824_c_) in ((p).elem)) and ((d_823_k_).issubset(d_824_c_))
 
-            d_807_k_: _dafny.Set = forall_var_8_
-            return not ((d_807_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda40_))
+            d_823_k_: _dafny.Set = forall_var_8_
+            return not ((d_823_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda40_))
 
         return _dafny.quantifier(((self).elem).UniqueElements, True, lambda39_)
 

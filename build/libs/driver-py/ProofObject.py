@@ -62,23 +62,23 @@ class ProofObj:
     def IsValid(self):
         source49_ = self
         if source49_.is_JUMP:
-            d_698___mcc_h0_ = source49_.s
-            d_699___mcc_h1_ = source49_.wpOp
-            d_700___mcc_h2_ = source49_.wpCap
-            d_701___mcc_h3_ = source49_.tgt
-            d_702___mcc_h4_ = source49_.stacks
+            d_714___mcc_h0_ = source49_.s
+            d_715___mcc_h1_ = source49_.wpOp
+            d_716___mcc_h2_ = source49_.wpCap
+            d_717___mcc_h3_ = source49_.tgt
+            d_718___mcc_h4_ = source49_.stacks
             return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
         elif source49_.is_CONT:
-            d_703___mcc_h5_ = source49_.s
-            d_704___mcc_h6_ = source49_.wpOp
-            d_705___mcc_h7_ = source49_.wpCap
-            d_706___mcc_h8_ = source49_.stacks
+            d_719___mcc_h5_ = source49_.s
+            d_720___mcc_h6_ = source49_.wpOp
+            d_721___mcc_h7_ = source49_.wpCap
+            d_722___mcc_h8_ = source49_.stacks
             return ((self).s).is_CONTSeg
         elif True:
-            d_707___mcc_h9_ = source49_.s
-            d_708___mcc_h10_ = source49_.wpOp
-            d_709___mcc_h11_ = source49_.wpCap
-            d_710___mcc_h12_ = source49_.stacks
+            d_723___mcc_h9_ = source49_.s
+            d_724___mcc_h10_ = source49_.wpOp
+            d_725___mcc_h11_ = source49_.wpCap
+            d_726___mcc_h12_ = source49_.stacks
             return ((((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)) or (((self).s).is_INVALIDSeg)
 
     def CollectJumpDest(self):
