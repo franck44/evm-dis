@@ -19,9 +19,9 @@ include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
 include "../utils/WeakPre.dfy"
 include "./EVMToolTips.dfy"
-/** 
-  *  Provides EVM Instruction types.
-  */
+  /** 
+    *  Provides EVM Instruction types.
+    */
 module Instructions {
 
   import opened Int
@@ -73,8 +73,8 @@ module Instructions {
     }
 
     /** Print as an HTMNL Table 
-    *   The port tag should be of the PORT="something" 
-    */
+      *   The port tag should be of the PORT="something" 
+      */
     function ToHTMLTable(entryPortTag: string := "", exitPortTag: string := ""): string
       requires this.IsValid()
     {
@@ -83,26 +83,26 @@ module Instructions {
       var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
       var gasLine := "&#9981;";
       var oplineTD :=
-      "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" " 
-      + entryPortTag + ">" 
-      + "0x" 
-      + formattedAddress 
-      + " </TD>\n"
-      + "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: " + Gas(op.opcode) + " \" " 
-      + "target=\"_blank\" href=\"" 
-      + gasRefLine 
-      + "\"" + ">" + gasLine + "</TD>"
-      + "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag 
-      + " href=\"" + bytecodeRefLine + NatToString(ToolTip(op.opcode).1) + "\" target=\"_blank\" " 
-      + " tooltip=\"" + ToolTip(op.opcode).0 + "\" " 
-      +
-      ">"
-       + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
-       + "</TD>";
+        "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" "
+        + entryPortTag + ">"
+        + "0x"
+        + formattedAddress
+        + " </TD>\n"
+        + "<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: " + Gas(op.opcode) + " \" "
+        + "target=\"_blank\" href=\""
+        + gasRefLine
+        + "\"" + ">" + gasLine + "</TD>"
+        + "<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"" + cols.1 + "\" align=\"left\" cellpadding=\"3\" " + exitPortTag
+        + " href=\"" + bytecodeRefLine + NatToString(ToolTip(op.opcode).1) + "\" target=\"_blank\" "
+        + " tooltip=\"" + ToolTip(op.opcode).0 + "\" "
+        +
+        ">"
+        + "<FONT color=\"" + cols.0 + "\">"+ op.Name() + "</FONT>"
+        + "</TD>";
       var arglineTD := if |arg| > 0 then
                          "<TD width=\"1\" fixedsize=\"true\" align=\"left\">"
                          + "  0x" + arg
-                         + "</TD>" 
+                         + "</TD>"
                        else "";
       var lineTR := "<TR>" + oplineTD + arglineTD + "</TR>";
       var itemTable :=
@@ -128,7 +128,7 @@ module Instructions {
       this.op.IsJumpDest()
     }
 
-     /**
+    /**
       * Whether an instruction Opcode is terminal (branching).
       */
     predicate IsJump()
@@ -645,13 +645,13 @@ module Instructions {
     Hex.HexToU256(pad + xc).Extract()
   }
 
-    /** pencolour and background colour. */
+  /** pencolour and background colour. */
   function Colours(i: ValidInstruction): (string, string)
   {
     match i.op
     case ArithOp(_, _, _, _, _, _) =>  ( "#316152", "#c6eb76")
     case CompOp(_, _, _, _, _, _) =>  ("darkgoldenrod", "bisque")
-    case BitwiseOp(_, _, _, _, _, _) =>  ("orange", "#f3f383" ) 
+    case BitwiseOp(_, _, _, _, _, _) =>  ("orange", "#f3f383" )
     case KeccakOp(_, _, _, _, _, _) =>  ("grey", "linen")
     case EnvOp(_, _, _, _, _, _) =>  ("darkslategrey", "lightgrey")
     case MemOp(_, _, _, _, _, _) =>  ("sienna", "wheat")
@@ -659,22 +659,22 @@ module Instructions {
     case StorageOp(_, _, _, _, _, _) =>  ("fuchsia", "mistyrose")
     case JumpOp(_, _, _, _, _, _) =>  ("purple", "thistle")
     case RunOp(_, _, _, _, _, _) =>  ("sienna", "tan")
-    
+
     case StackOp(_, _, _, _, _, _) =>  ("royalblue", "powderblue")
 
     case LogOp(_, _, _, _, _, _) =>  ("cornflowerblue", "lavender")
-    case SysOp(_, opcode, _, _, _, _) =>  
-        if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
-        else if opcode == RETURN then ("teal", "greenyellow")
-        else if opcode == CALL || opcode == CALLCODE || opcode == DELEGATECALL || opcode == STATICCALL then 
-            ("sienna", "tan")
-        else 
-            ("brown", "salmon")
-        // match opcode 
-        //     case STOP => ("brown", "salmon")
-        //     case REVERT => ("brown", "salmon")
-        //     case RETURN => ("darkgreen", "lightgreen")
-        //     case _ => ("sienna", "tan")
+    case SysOp(_, opcode, _, _, _, _) =>
+      if opcode == STOP || opcode == REVERT then ("brown", "lightsalmon")
+      else if opcode == RETURN then ("teal", "greenyellow")
+      else if opcode == CALL || opcode == CALLCODE || opcode == DELEGATECALL || opcode == STATICCALL then
+        ("sienna", "tan")
+      else
+        ("brown", "salmon")
+          // match opcode
+          //     case STOP => ("brown", "salmon")
+          //     case REVERT => ("brown", "salmon")
+          //     case RETURN => ("darkgreen", "lightgreen")
+          //     case _ => ("sienna", "tan")
 
   }
 }
