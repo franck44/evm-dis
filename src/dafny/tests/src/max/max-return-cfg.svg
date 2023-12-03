@@ -14,7 +14,7 @@
 <title>s0_0</title>
 <polygon fill="none" stroke="black" points="177,-1028 0,-1028 0,-856 177,-856 177,-1028"/>
 <text text-anchor="start" x="31.5" y="-1008.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
-<g id="a_node1_0"><a xlink:title="Stack Size Δ: 3 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node1_0"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x13">
 <text text-anchor="start" x="153.88" y="-1009.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -90,7 +90,7 @@
 <title>s1_1</title>
 <polygon fill="none" stroke="black" points="175,-820 2,-820 2,-600 175,-600 175,-820"/>
 <text text-anchor="start" x="27.75" y="-800.58" font-family="arial" font-size="14.00">Segment 2 [0x13]</text>
-<g id="a_node2_13"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node2_13"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x1f">
 <text text-anchor="start" x="151.88" y="-801.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -192,7 +192,7 @@
 <title>s1_2</title>
 <polygon fill="none" stroke="black" points="172,-308 5,-308 5,-208 172,-208 172,-308"/>
 <text text-anchor="start" x="28.12" y="-288.57" font-family="arial" font-size="14.00">Segment 3 [0x1c]</text>
-<g id="a_node3_30"><a xlink:title="Stack Size Δ: &#45;2 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node3_30"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Stack on Entry.Peek(1)">
 <text text-anchor="start" x="148.88" y="-289.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -243,7 +243,7 @@
 <title>s3_2</title>
 <polygon fill="none" stroke="black" points="234.5,-564 58.5,-564 58.5,-344 234.5,-344 234.5,-564"/>
 <text text-anchor="start" x="87.62" y="-544.58" font-family="arial" font-size="14.00">Segment 4 [0x1f]</text>
-<g id="a_node4_37"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node4_37"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x1c">
 <text text-anchor="start" x="211.38" y="-545.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -345,7 +345,7 @@
 <title>s5_3</title>
 <polygon fill="none" stroke="black" points="177,-172 0,-172 0,0 177,0 177,-172"/>
 <text text-anchor="start" x="31.5" y="-152.57" font-family="arial" font-size="14.00">Segment 1 [0xa]</text>
-<g id="a_node5_54"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node5_54"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="153.88" y="-153.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>

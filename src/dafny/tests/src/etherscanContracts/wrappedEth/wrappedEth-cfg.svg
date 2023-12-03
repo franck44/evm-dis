@@ -14,7 +14,7 @@
 <title>s0_0</title>
 <polygon fill="none" stroke="black" points="2359,-20956 2167,-20956 2167,-20736 2359,-20736 2359,-20956"/>
 <text text-anchor="start" x="2206" y="-20936.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
-<g id="a_node1_0"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node1_0"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xaf">
 <text text-anchor="start" x="2335.88" y="-20937.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -110,7 +110,7 @@
 <title>s0_1</title>
 <polygon fill="none" stroke="black" points="2165,-20700 1561,-20700 1561,-20384 2165,-20384 2165,-20700"/>
 <text text-anchor="start" x="1806" y="-20680.58" font-family="arial" font-size="14.00">Segment 1 [0xd]</text>
-<g id="a_node2_17"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node2_17"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xb9">
 <text text-anchor="start" x="2141.88" y="-20681.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -256,7 +256,7 @@
 <title>s0_12</title>
 <polygon fill="none" stroke="black" points="2728,-10132 2536,-10132 2536,-10008 2728,-10008 2728,-10132"/>
 <text text-anchor="start" x="2569.38" y="-10112.58" font-family="arial" font-size="14.00">Segment 12 [0xaf]</text>
-<g id="a_node3_42"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node3_42"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x440">
 <text text-anchor="start" x="2704.88" y="-10113.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -319,7 +319,7 @@
 <title>s0_2</title>
 <polygon fill="none" stroke="black" points="1974,-20348 1752,-20348 1752,-20200 1974,-20200 1974,-20348"/>
 <text text-anchor="start" x="1802.25" y="-20328.58" font-family="arial" font-size="14.00">Segment 2 [0x41]</text>
-<g id="a_node4_51"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node4_51"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x147">
 <text text-anchor="start" x="1950.88" y="-20329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -392,7 +392,7 @@
 <title>s2_2</title>
 <polygon fill="none" stroke="black" points="1625,-20348 1435,-20348 1435,-20200 1625,-20200 1625,-20348"/>
 <text text-anchor="start" x="1465.5" y="-20328.58" font-family="arial" font-size="14.00">Segment 14 [0xb9]</text>
-<g id="a_node5_62"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node5_62"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xc4">
 <text text-anchor="start" x="1601.88" y="-20329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -464,7 +464,7 @@
 <title>s4096_13</title>
 <polygon fill="none" stroke="black" points="2950.5,-9348 2313.5,-9348 2313.5,-7976 2950.5,-7976 2950.5,-9348"/>
 <text text-anchor="start" x="2563.75" y="-9328.58" font-family="arial" font-size="14.00">Segment 66 [0x440]</text>
-<g id="a_node25_73"><a xlink:title="Stack Size Δ: &#45;1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node25_73"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2927.38" y="-9329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1058,7 +1058,7 @@
 <title>s0_3</title>
 <polygon fill="none" stroke="black" points="2158,-20164 1936,-20164 1936,-20016 2158,-20016 2158,-20164"/>
 <text text-anchor="start" x="1986.62" y="-20144.58" font-family="arial" font-size="14.00">Segment 3 [0x4c]</text>
-<g id="a_node6_186"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node6_186"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x1a1">
 <text text-anchor="start" x="2134.88" y="-20145.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1131,7 +1131,7 @@
 <title>s4_3</title>
 <polygon fill="none" stroke="black" points="1904.5,-20164 1697.5,-20164 1697.5,-20016 1904.5,-20016 1904.5,-20164"/>
 <text text-anchor="start" x="1732.75" y="-20144.58" font-family="arial" font-size="14.00">Segment 23 [0x147]</text>
-<g id="a_node7_197"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node7_197"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x152">
 <text text-anchor="start" x="1881.38" y="-20145.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1203,7 +1203,7 @@
 <title>s2_3</title>
 <polygon fill="none" stroke="black" points="1618,-20140 1442,-20140 1442,-20040 1618,-20040 1618,-20140"/>
 <text text-anchor="start" x="1465.88" y="-20120.58" font-family="arial" font-size="14.00">Segment 15 [0xc0]</text>
-<g id="a_node26_208"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node26_208"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1594.88" y="-20121.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1255,7 +1255,7 @@
 <title>s6_3</title>
 <polygon fill="none" stroke="black" points="987.5,-20152 796.5,-20152 796.5,-20028 987.5,-20028 987.5,-20152"/>
 <text text-anchor="start" x="827.88" y="-20132.58" font-family="arial" font-size="14.00">Segment 16 [0xc4]</text>
-<g id="a_node27_215"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node27_215"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x4dd">
 <text text-anchor="start" x="964.38" y="-20133.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1318,7 +1318,7 @@
 <title>s0_4</title>
 <polygon fill="none" stroke="black" points="2158,-19308 1936,-19308 1936,-19160 2158,-19160 2158,-19308"/>
 <text text-anchor="start" x="1986.25" y="-19288.58" font-family="arial" font-size="14.00">Segment 4 [0x57]</text>
-<g id="a_node8_224"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node8_224"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x1ca">
 <text text-anchor="start" x="2134.88" y="-19289.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1391,7 +1391,7 @@
 <title>s8_4</title>
 <polygon fill="none" stroke="black" points="2385,-19308 2179,-19308 2179,-19160 2385,-19160 2385,-19308"/>
 <text text-anchor="start" x="2213.75" y="-19288.58" font-family="arial" font-size="14.00">Segment 27 [0x1a1]</text>
-<g id="a_node9_235"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node9_235"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x1ac">
 <text text-anchor="start" x="2361.88" y="-19289.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1463,7 +1463,7 @@
 <title>s4_4</title>
 <polygon fill="none" stroke="black" points="1897,-19284 1705,-19284 1705,-19184 1897,-19184 1897,-19284"/>
 <text text-anchor="start" x="1732.75" y="-19264.58" font-family="arial" font-size="14.00">Segment 24 [0x14e]</text>
-<g id="a_node35_246"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node35_246"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1873.88" y="-19265.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1515,7 +1515,7 @@
 <title>s12_4</title>
 <polygon fill="none" stroke="black" points="1681,-19560 1347,-19560 1347,-18908 1681,-18908 1681,-19560"/>
 <text text-anchor="start" x="1445.75" y="-19540.58" font-family="arial" font-size="14.00">Segment 25 [0x152]</text>
-<g id="a_node36_253"><a xlink:title="Stack Size Δ: 3 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node36_253"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x57b">
 <text text-anchor="start" x="1657.88" y="-19541.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1802,7 +1802,7 @@
 <title>s0_5</title>
 <polygon fill="none" stroke="black" points="2063,-17600 1841,-17600 1841,-17452 2063,-17452 2063,-17600"/>
 <text text-anchor="start" x="1891.25" y="-17580.58" font-family="arial" font-size="14.00">Segment 5 [0x62]</text>
-<g id="a_node10_306"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node10_306"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x243">
 <text text-anchor="start" x="2039.88" y="-17581.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1875,7 +1875,7 @@
 <title>s16_5</title>
 <polygon fill="none" stroke="black" points="3127,-11612 2921,-11612 2921,-11464 3127,-11464 3127,-11612"/>
 <text text-anchor="start" x="2956.12" y="-11592.58" font-family="arial" font-size="14.00">Segment 31 [0x1ca]</text>
-<g id="a_node11_317"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node11_317"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x1d5">
 <text text-anchor="start" x="3103.88" y="-11593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1947,7 +1947,7 @@
 <title>s8_5</title>
 <polygon fill="none" stroke="black" points="2378,-17576 2186,-17576 2186,-17476 2378,-17476 2378,-17576"/>
 <text text-anchor="start" x="2213.75" y="-17556.58" font-family="arial" font-size="14.00">Segment 28 [0x1a8]</text>
-<g id="a_node38_328"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node38_328"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2354.88" y="-17557.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -1999,7 +1999,7 @@
 <title>s24_5</title>
 <polygon fill="none" stroke="black" points="2603.5,-17588 2396.5,-17588 2396.5,-17464 2603.5,-17464 2603.5,-17588"/>
 <text text-anchor="start" x="2432.12" y="-17568.58" font-family="arial" font-size="14.00">Segment 29 [0x1ac]</text>
-<g id="a_node39_335"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node39_335"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x66d">
 <text text-anchor="start" x="2580.38" y="-17569.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2062,7 +2062,7 @@
 <title>s0_6</title>
 <polygon fill="none" stroke="black" points="1806.5,-16348 1585.5,-16348 1585.5,-16200 1806.5,-16200 1806.5,-16348"/>
 <text text-anchor="start" x="1635.25" y="-16328.58" font-family="arial" font-size="14.00">Segment 6 [0x6d]</text>
-<g id="a_node12_344"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node12_344"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x266">
 <text text-anchor="start" x="1783.38" y="-16329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2135,7 +2135,7 @@
 <title>s32_6</title>
 <polygon fill="none" stroke="black" points="2055.5,-16348 1848.5,-16348 1848.5,-16200 2055.5,-16200 2055.5,-16348"/>
 <text text-anchor="start" x="1883.75" y="-16328.58" font-family="arial" font-size="14.00">Segment 35 [0x243]</text>
-<g id="a_node13_355"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node13_355"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x24e">
 <text text-anchor="start" x="2032.38" y="-16329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2207,7 +2207,7 @@
 <title>s16_6</title>
 <polygon fill="none" stroke="black" points="3401,-10120 3209,-10120 3209,-10020 3401,-10020 3401,-10120"/>
 <text text-anchor="start" x="3236.75" y="-10100.58" font-family="arial" font-size="14.00">Segment 32 [0x1d1]</text>
-<g id="a_node41_366"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node41_366"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="3377.88" y="-10101.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2259,7 +2259,7 @@
 <title>s48_6</title>
 <polygon fill="none" stroke="black" points="3191,-10516 2857,-10516 2857,-9624 3191,-9624 3191,-10516"/>
 <text text-anchor="start" x="2955.75" y="-10496.58" font-family="arial" font-size="14.00">Segment 33 [0x1d5]</text>
-<g id="a_node42_373"><a xlink:title="Stack Size Δ: 4 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node42_373"><a xlink:title="Stack Size Δ: +4&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x68c">
 <text text-anchor="start" x="3167.88" y="-10497.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2648,7 +2648,7 @@
 <title>s0_7</title>
 <polygon fill="none" stroke="black" points="1537,-15780 1315,-15780 1315,-15632 1537,-15632 1537,-15780"/>
 <text text-anchor="start" x="1365.25" y="-15760.58" font-family="arial" font-size="14.00">Segment 7 [0x78]</text>
-<g id="a_node14_446"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node14_446"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x295">
 <text text-anchor="start" x="1513.88" y="-15761.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2721,7 +2721,7 @@
 <title>s64_7</title>
 <polygon fill="none" stroke="black" points="961.5,-15780 754.5,-15780 754.5,-15632 961.5,-15632 961.5,-15780"/>
 <text text-anchor="start" x="789.75" y="-15760.58" font-family="arial" font-size="14.00">Segment 39 [0x266]</text>
-<g id="a_node15_457"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node15_457"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x271">
 <text text-anchor="start" x="938.38" y="-15761.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2793,7 +2793,7 @@
 <title>s32_7</title>
 <polygon fill="none" stroke="black" points="2240,-15756 2048,-15756 2048,-15656 2240,-15656 2240,-15756"/>
 <text text-anchor="start" x="2075.75" y="-15736.58" font-family="arial" font-size="14.00">Segment 36 [0x24a]</text>
-<g id="a_node44_468"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node44_468"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2216.88" y="-15737.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -2845,7 +2845,7 @@
 <title>s96_7</title>
 <polygon fill="none" stroke="black" points="2029.5,-15912 1814.5,-15912 1814.5,-15500 2029.5,-15500 2029.5,-15912"/>
 <text text-anchor="start" x="1853.75" y="-15892.58" font-family="arial" font-size="14.00">Segment 37 [0x24e]</text>
-<g id="a_node45_475"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node45_475"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9d9">
 <text text-anchor="start" x="2006.38" y="-15893.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3030,7 +3030,7 @@
 <title>s0_8</title>
 <polygon fill="none" stroke="black" points="1537,-15164 1315,-15164 1315,-15016 1537,-15016 1537,-15164"/>
 <text text-anchor="start" x="1365.25" y="-15144.58" font-family="arial" font-size="14.00">Segment 8 [0x83]</text>
-<g id="a_node16_508"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node16_508"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x2e2">
 <text text-anchor="start" x="1513.88" y="-15145.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3103,7 +3103,7 @@
 <title>s128_8</title>
 <polygon fill="none" stroke="black" points="1189.5,-15164 982.5,-15164 982.5,-15016 1189.5,-15016 1189.5,-15164"/>
 <text text-anchor="start" x="1017.75" y="-15144.58" font-family="arial" font-size="14.00">Segment 43 [0x295]</text>
-<g id="a_node17_519"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node17_519"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x2a0">
 <text text-anchor="start" x="1166.38" y="-15145.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3175,7 +3175,7 @@
 <title>s64_8</title>
 <polygon fill="none" stroke="black" points="954,-15140 762,-15140 762,-15040 954,-15040 954,-15140"/>
 <text text-anchor="start" x="789.75" y="-15120.58" font-family="arial" font-size="14.00">Segment 40 [0x26d]</text>
-<g id="a_node47_530"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node47_530"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="930.88" y="-15121.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3227,7 +3227,7 @@
 <title>s192_8</title>
 <polygon fill="none" stroke="black" points="722.5,-15152 515.5,-15152 515.5,-15028 722.5,-15028 722.5,-15152"/>
 <text text-anchor="start" x="550.75" y="-15132.58" font-family="arial" font-size="14.00">Segment 41 [0x271]</text>
-<g id="a_node48_537"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node48_537"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xb05">
 <text text-anchor="start" x="699.38" y="-15133.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3290,7 +3290,7 @@
 <title>s0_9</title>
 <polygon fill="none" stroke="black" points="1641.5,-14008 1424.5,-14008 1424.5,-13860 1641.5,-13860 1641.5,-14008"/>
 <text text-anchor="start" x="1472.25" y="-13988.58" font-family="arial" font-size="14.00">Segment 9 [0x8e]</text>
-<g id="a_node18_546"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node18_546"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x370">
 <text text-anchor="start" x="1618.38" y="-13989.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3363,7 +3363,7 @@
 <title>s256_9</title>
 <polygon fill="none" stroke="black" points="1406.5,-14008 1199.5,-14008 1199.5,-13860 1406.5,-13860 1406.5,-14008"/>
 <text text-anchor="start" x="1234.75" y="-13988.58" font-family="arial" font-size="14.00">Segment 47 [0x2e2]</text>
-<g id="a_node19_557"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node19_557"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x2ed">
 <text text-anchor="start" x="1383.38" y="-13989.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3435,7 +3435,7 @@
 <title>s128_9</title>
 <polygon fill="none" stroke="black" points="1181.5,-13984 990.5,-13984 990.5,-13884 1181.5,-13884 1181.5,-13984"/>
 <text text-anchor="start" x="1018.12" y="-13964.58" font-family="arial" font-size="14.00">Segment 44 [0x29c]</text>
-<g id="a_node50_568"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node50_568"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1158.38" y="-13965.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3487,7 +3487,7 @@
 <title>s384_9</title>
 <polygon fill="none" stroke="black" points="972,-14164 638,-14164 638,-13704 972,-13704 972,-14164"/>
 <text text-anchor="start" x="736.75" y="-14144.58" font-family="arial" font-size="14.00">Segment 45 [0x2a0]</text>
-<g id="a_node51_575"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node51_575"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xb18">
 <text text-anchor="start" x="948.88" y="-14145.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3693,7 +3693,7 @@
 <title>s0_10</title>
 <polygon fill="none" stroke="black" points="1734,-12792 1512,-12792 1512,-12644 1734,-12644 1734,-12792"/>
 <text text-anchor="start" x="1558.5" y="-12772.58" font-family="arial" font-size="14.00">Segment 10 [0x99]</text>
-<g id="a_node20_612"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node20_612"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x3ca">
 <text text-anchor="start" x="1710.88" y="-12773.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3766,7 +3766,7 @@
 <title>s512_10</title>
 <polygon fill="none" stroke="black" points="1493.5,-12792 1286.5,-12792 1286.5,-12644 1493.5,-12644 1493.5,-12792"/>
 <text text-anchor="start" x="1321.75" y="-12772.58" font-family="arial" font-size="14.00">Segment 56 [0x370]</text>
-<g id="a_node21_623"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node21_623"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x37b">
 <text text-anchor="start" x="1470.38" y="-12773.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3838,7 +3838,7 @@
 <title>s256_10</title>
 <polygon fill="none" stroke="black" points="1268,-12768 1076,-12768 1076,-12668 1268,-12668 1268,-12768"/>
 <text text-anchor="start" x="1103.75" y="-12748.58" font-family="arial" font-size="14.00">Segment 48 [0x2e9]</text>
-<g id="a_node53_634"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node53_634"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1244.88" y="-12749.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3890,7 +3890,7 @@
 <title>s768_10</title>
 <polygon fill="none" stroke="black" points="1055.5,-12780 852.5,-12780 852.5,-12656 1055.5,-12656 1055.5,-12780"/>
 <text text-anchor="start" x="885.75" y="-12760.58" font-family="arial" font-size="14.00">Segment 49 [0x2ed]</text>
-<g id="a_node54_641"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node54_641"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xb30">
 <text text-anchor="start" x="1032.38" y="-12761.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -3953,7 +3953,7 @@
 <title>s0_11</title>
 <polygon fill="none" stroke="black" points="2021,-11612 1799,-11612 1799,-11464 2021,-11464 2021,-11612"/>
 <text text-anchor="start" x="1845.88" y="-11592.58" font-family="arial" font-size="14.00">Segment 11 [0xa4]</text>
-<g id="a_node22_650"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node22_650"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x3d4">
 <text text-anchor="start" x="1997.88" y="-11593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -4026,7 +4026,7 @@
 <title>s1024_11</title>
 <polygon fill="none" stroke="black" points="1781,-11600 1575,-11600 1575,-11476 1781,-11476 1781,-11600"/>
 <text text-anchor="start" x="1610.12" y="-11580.58" font-family="arial" font-size="14.00">Segment 60 [0x3ca]</text>
-<g id="a_node23_661"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node23_661"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x440">
 <text text-anchor="start" x="1757.88" y="-11581.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -4089,7 +4089,7 @@
 <title>s512_11</title>
 <polygon fill="none" stroke="black" points="1205,-11588 1013,-11588 1013,-11488 1205,-11488 1205,-11588"/>
 <text text-anchor="start" x="1040.75" y="-11568.58" font-family="arial" font-size="14.00">Segment 57 [0x377]</text>
-<g id="a_node62_670"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node62_670"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1181.88" y="-11569.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -4141,7 +4141,7 @@
 <title>s1536_11</title>
 <polygon fill="none" stroke="black" points="1557,-11864 1223,-11864 1223,-11212 1557,-11212 1557,-11864"/>
 <text text-anchor="start" x="1321.75" y="-11844.58" font-family="arial" font-size="14.00">Segment 58 [0x37b]</text>
-<g id="a_node63_677"><a xlink:title="Stack Size Δ: 3 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node63_677"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xbce">
 <text text-anchor="start" x="1533.88" y="-11845.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -4437,7 +4437,7 @@
 <title>s2048_12</title>
 <polygon fill="none" stroke="black" points="1862.5,-10144 1659.5,-10144 1659.5,-9996 1862.5,-9996 1862.5,-10144"/>
 <text text-anchor="start" x="1692.75" y="-10124.58" font-family="arial" font-size="14.00">Segment 62 [0x3d4]</text>
-<g id="a_node24_730"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node24_730"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x3df">
 <text text-anchor="start" x="1839.38" y="-10125.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -4509,7 +4509,7 @@
 <title>s3072_12</title>
 <polygon fill="none" stroke="black" points="2517.5,-10756 1880.5,-10756 1880.5,-9384 2517.5,-9384 2517.5,-10756"/>
 <text text-anchor="start" x="2130.75" y="-10736.58" font-family="arial" font-size="14.00">Segment 66 [0x440]</text>
-<g id="a_node65_741"><a xlink:title="Stack Size Δ: &#45;1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node65_741"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2494.38" y="-10737.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -5103,7 +5103,7 @@
 <title>s2048_13</title>
 <polygon fill="none" stroke="black" points="2095,-8712 1903,-8712 1903,-8612 2095,-8612 2095,-8712"/>
 <text text-anchor="start" x="1930.75" y="-8692.58" font-family="arial" font-size="14.00">Segment 63 [0x3db]</text>
-<g id="a_node66_854"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node66_854"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2071.88" y="-8693.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -5155,7 +5155,7 @@
 <title>s6144_13</title>
 <polygon fill="none" stroke="black" points="1885,-9012 1551,-9012 1551,-8312 1885,-8312 1885,-9012"/>
 <text text-anchor="start" x="1651.62" y="-8992.58" font-family="arial" font-size="14.00">Segment 64 [0x3df]</text>
-<g id="a_node67_861"><a xlink:title="Stack Size Δ: 3 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node67_861"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xbe3">
 <text text-anchor="start" x="1861.88" y="-8993.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -5463,7 +5463,7 @@
 <title>s12288_14</title>
 <polygon fill="none" stroke="black" points="2715.5,-7640 2548.5,-7640 2548.5,-7564 2715.5,-7564 2715.5,-7640"/>
 <text text-anchor="start" x="2567.5" y="-7620.57" font-family="arial" font-size="14.00">Segment 13 [0xb7]</text>
-<g id="a_node69_918"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node69_918"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2692.38" y="-7621.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -5504,7 +5504,7 @@
 <title>s14_4</title>
 <polygon fill="none" stroke="black" points="549.5,-19980 342.5,-19980 342.5,-18488 549.5,-18488 549.5,-19980"/>
 <text text-anchor="start" x="377.75" y="-19960.58" font-family="arial" font-size="14.00">Segment 67 [0x4dd]</text>
-<g id="a_node28_923"><a xlink:title="Stack Size Δ: 6 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node28_923"><a xlink:title="Stack Size Δ: +6&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x573">
 <text text-anchor="start" x="526.38" y="-19961.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6151,7 +6151,7 @@
 <title>s14_5</title>
 <polygon fill="none" stroke="black" points="417.5,-17600 210.5,-17600 210.5,-17452 417.5,-17452 417.5,-17600"/>
 <text text-anchor="start" x="245.75" y="-17580.58" font-family="arial" font-size="14.00">Segment 68 [0x52d]</text>
-<g id="a_node71_1046"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node71_1046"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x548">
 <text text-anchor="start" x="394.38" y="-17581.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6224,7 +6224,7 @@
 <title>s78_7</title>
 <polygon fill="none" stroke="black" points="394,-14044 212,-14044 212,-13824 394,-13824 394,-14044"/>
 <text text-anchor="start" x="234.75" y="-14024.58" font-family="arial" font-size="14.00">Segment 73 [0x573]</text>
-<g id="a_node72_1057"><a xlink:title="Stack Size Δ: &#45;5 &#160;&#45;&#45; Operands ≥ 7">
+<g id="a_node72_1057"><a xlink:title="Stack Size Δ: &#45;5&#10;Stack Size on Entry ≥ 7&#10;Exit Jump target: Stack on Entry.Peek(6)">
 <text text-anchor="start" x="370.88" y="-14025.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6325,7 +6325,7 @@
 <title>s206_8</title>
 <polygon fill="none" stroke="black" points="391.5,-13116 214.5,-13116 214.5,-12320 391.5,-12320 391.5,-13116"/>
 <text text-anchor="start" x="239.25" y="-13096.58" font-family="arial" font-size="14.00">Segment 17 [0xcc]</text>
-<g id="a_node29_1074"><a xlink:title="Stack Size Δ: 9 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node29_1074"><a xlink:title="Stack Size Δ: +9&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="368.38" y="-13097.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6662,7 +6662,7 @@
 <title>s206_9</title>
 <polygon fill="none" stroke="black" points="396.5,-11636 209.5,-11636 209.5,-11440 396.5,-11440 396.5,-11636"/>
 <text text-anchor="start" x="240.38" y="-11616.58" font-family="arial" font-size="14.00">Segment 18 [0xf1]</text>
-<g id="a_node30_1139"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node30_1139"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x10c">
 <text text-anchor="start" x="373.38" y="-11617.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6754,7 +6754,7 @@
 <title>s206_10</title>
 <polygon fill="none" stroke="black" points="404.5,-10264 201.5,-10264 201.5,-9876 404.5,-9876 404.5,-10264"/>
 <text text-anchor="start" x="240.38" y="-10244.58" font-family="arial" font-size="14.00">Segment 19 [0xfa]</text>
-<g id="a_node31_1154"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node31_1154"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0xf1">
 <text text-anchor="start" x="381.38" y="-10245.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -6927,7 +6927,7 @@
 <title>s718_10</title>
 <polygon fill="none" stroke="black" points="627.5,-10288 422.5,-10288 422.5,-9852 627.5,-9852 627.5,-10288"/>
 <text text-anchor="start" x="457.12" y="-10268.58" font-family="arial" font-size="14.00">Segment 20 [0x10c]</text>
-<g id="a_node32_1185"><a xlink:title="Stack Size Δ: &#45;5 &#160;&#45;&#45; Operands ≥ 7">
+<g id="a_node32_1185"><a xlink:title="Stack Size Δ: &#45;5&#10;Stack Size on Entry ≥ 7&#10;Exit Jump target: Constant 0x139">
 <text text-anchor="start" x="604.38" y="-10269.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -7129,7 +7129,7 @@
 <title>s718_11</title>
 <polygon fill="none" stroke="black" points="611.5,-8916 404.5,-8916 404.5,-8408 611.5,-8408 611.5,-8916"/>
 <text text-anchor="start" x="439.75" y="-8896.58" font-family="arial" font-size="14.00">Segment 21 [0x120]</text>
-<g id="a_node33_1220"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node33_1220"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2">
 <text text-anchor="start" x="588.38" y="-8897.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -7354,7 +7354,7 @@
 <title>s718_12</title>
 <polygon fill="none" stroke="black" points="653,-7772 465,-7772 465,-7432 653,-7432 653,-7772"/>
 <text text-anchor="start" x="490.75" y="-7752.57" font-family="arial" font-size="14.00">Segment 22 [0x139]</text>
-<g id="a_node34_1261"><a xlink:title="Stack Size Δ: &#45;3 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node34_1261"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 5">
 <text text-anchor="start" x="629.88" y="-7753.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -7515,7 +7515,7 @@
 <title>s28_5</title>
 <polygon fill="none" stroke="black" points="1809,-18452 1161,-18452 1161,-16600 1809,-16600 1809,-18452"/>
 <text text-anchor="start" x="1416.75" y="-18432.58" font-family="arial" font-size="14.00">Segment 74 [0x57b]</text>
-<g id="a_node37_1288"><a xlink:title="Stack Size Δ: &#45;2 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node37_1288"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="1785.88" y="-18433.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -8317,7 +8317,7 @@
 <title>s60_6</title>
 <polygon fill="none" stroke="black" points="1567,-16564 1375,-16564 1375,-15984 1567,-15984 1567,-16564"/>
 <text text-anchor="start" x="1402.75" y="-16544.58" font-family="arial" font-size="14.00">Segment 26 [0x187]</text>
-<g id="a_node77_1441"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node77_1441"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="1543.88" y="-16545.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -8571,7 +8571,7 @@
 <title>s56_6</title>
 <polygon fill="none" stroke="black" points="2604,-16408 2270,-16408 2270,-16140 2604,-16140 2604,-16408"/>
 <text text-anchor="start" x="2368.75" y="-16388.58" font-family="arial" font-size="14.00">Segment 75 [0x66d]</text>
-<g id="a_node40_1488"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node40_1488"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2580.88" y="-16389.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -8694,7 +8694,7 @@
 <title>s120_7</title>
 <polygon fill="none" stroke="black" points="2533,-15948 2341,-15948 2341,-15464 2533,-15464 2533,-15948"/>
 <text text-anchor="start" x="2368.75" y="-15928.58" font-family="arial" font-size="14.00">Segment 30 [0x1b4]</text>
-<g id="a_node78_1509"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node78_1509"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="2509.88" y="-15929.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -8908,7 +8908,7 @@
 <title>s112_7</title>
 <polygon fill="none" stroke="black" points="3303,-9012 2969,-9012 2969,-8312 3303,-8312 3303,-9012"/>
 <text text-anchor="start" x="3068.12" y="-8992.58" font-family="arial" font-size="14.00">Segment 76 [0x68c]</text>
-<g id="a_node43_1548"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node43_1548"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x6dc">
 <text text-anchor="start" x="3279.88" y="-8993.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9218,7 +9218,7 @@
 <title>s7680_14</title>
 <polygon fill="none" stroke="black" points="2290,-7652 2098,-7652 2098,-7552 2290,-7552 2290,-7652"/>
 <text text-anchor="start" x="2125.75" y="-7632.57" font-family="arial" font-size="14.00">Segment 77 [0x6d8]</text>
-<g id="a_node80_1605"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node80_1605"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2266.88" y="-7633.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9270,7 +9270,7 @@
 <title>s240_8</title>
 <polygon fill="none" stroke="black" points="3082,-7772 2748,-7772 2748,-7432 3082,-7432 3082,-7772"/>
 <text text-anchor="start" x="2847.12" y="-7752.57" font-family="arial" font-size="14.00">Segment 78 [0x6dc]</text>
-<g id="a_node82_1612"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node82_1612"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x7b4">
 <text text-anchor="start" x="3058.88" y="-7753.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9424,7 +9424,7 @@
 <title>s224_8</title>
 <polygon fill="none" stroke="black" points="2089,-15428 1755,-15428 1755,-14752 2089,-14752 2089,-15428"/>
 <text text-anchor="start" x="1853.75" y="-15408.58" font-family="arial" font-size="14.00">Segment 85 [0x9d9]</text>
-<g id="a_node46_1639"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node46_1639"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0xa27">
 <text text-anchor="start" x="2065.88" y="-15409.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9723,7 +9723,7 @@
 <title>s224_9</title>
 <polygon fill="none" stroke="black" points="2240,-13984 2048,-13984 2048,-13884 2240,-13884 2240,-13984"/>
 <text text-anchor="start" x="2075.75" y="-13964.58" font-family="arial" font-size="14.00">Segment 86 [0xa23]</text>
-<g id="a_node96_1694"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node96_1694"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2216.88" y="-13965.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9775,7 +9775,7 @@
 <title>s480_9</title>
 <polygon fill="none" stroke="black" points="2030,-14716 1696,-14716 1696,-13152 2030,-13152 2030,-14716"/>
 <text text-anchor="start" x="1794.75" y="-14696.58" font-family="arial" font-size="14.00">Segment 87 [0xa27]</text>
-<g id="a_node97_1701"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node97_1701"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0xab4">
 <text text-anchor="start" x="2006.88" y="-14697.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -10450,7 +10450,7 @@
 <title>s448_9</title>
 <polygon fill="none" stroke="black" points="619.5,-14116 412.5,-14116 412.5,-13752 619.5,-13752 619.5,-14116"/>
 <text text-anchor="start" x="447.75" y="-14096.58" font-family="arial" font-size="14.00">Segment 90 [0xb05]</text>
-<g id="a_node49_1830"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node49_1830"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="596.38" y="-14097.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -10615,7 +10615,7 @@
 <title>s960_10</title>
 <polygon fill="none" stroke="black" points="612,-13008 420,-13008 420,-12428 612,-12428 612,-13008"/>
 <text text-anchor="start" x="447.75" y="-12988.58" font-family="arial" font-size="14.00">Segment 42 [0x279]</text>
-<g id="a_node101_1859"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node101_1859"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="588.88" y="-12989.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -10871,7 +10871,7 @@
 <title>s896_10</title>
 <polygon fill="none" stroke="black" points="830,-12948 638,-12948 638,-12488 830,-12488 830,-12948"/>
 <text text-anchor="start" x="665.75" y="-12928.58" font-family="arial" font-size="14.00">Segment 91 [0xb18]</text>
-<g id="a_node52_1906"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node52_1906"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="806.88" y="-12929.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -11078,7 +11078,7 @@
 <title>s1920_11</title>
 <polygon fill="none" stroke="black" points="769,-11780 577,-11780 577,-11296 769,-11296 769,-11780"/>
 <text text-anchor="start" x="605.5" y="-11760.58" font-family="arial" font-size="14.00">Segment 46 [0x2cc]</text>
-<g id="a_node102_1943"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node102_1943"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="745.88" y="-11761.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -11292,7 +11292,7 @@
 <title>s1792_11</title>
 <polygon fill="none" stroke="black" points="994.5,-12284 787.5,-12284 787.5,-10792 994.5,-10792 994.5,-12284"/>
 <text text-anchor="start" x="822.75" y="-12264.58" font-family="arial" font-size="14.00">Segment 92 [0xb30]</text>
-<g id="a_node55_1982"><a xlink:title="Stack Size Δ: 6 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node55_1982"><a xlink:title="Stack Size Δ: +6&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xbc6">
 <text text-anchor="start" x="971.38" y="-12265.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -11939,7 +11939,7 @@
 <title>s1792_12</title>
 <polygon fill="none" stroke="black" points="994.5,-10144 787.5,-10144 787.5,-9996 994.5,-9996 994.5,-10144"/>
 <text text-anchor="start" x="822.75" y="-10124.58" font-family="arial" font-size="14.00">Segment 93 [0xb80]</text>
-<g id="a_node103_2105"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node103_2105"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0xb9b">
 <text text-anchor="start" x="971.38" y="-10125.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12012,7 +12012,7 @@
 <title>s9984_14</title>
 <polygon fill="none" stroke="black" points="955,-6204 773,-6204 773,-5984 955,-5984 955,-6204"/>
 <text text-anchor="start" x="796.12" y="-6184.57" font-family="arial" font-size="14.00">Segment 98 [0xbc6]</text>
-<g id="a_node104_2116"><a xlink:title="Stack Size Δ: &#45;5 &#160;&#45;&#45; Operands ≥ 7">
+<g id="a_node104_2116"><a xlink:title="Stack Size Δ: &#45;5&#10;Stack Size on Entry ≥ 7&#10;Exit Jump target: Stack on Entry.Peek(6)">
 <text text-anchor="start" x="931.88" y="-6185.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12113,7 +12113,7 @@
 <title>s26368_15</title>
 <polygon fill="none" stroke="black" points="960,-5816 768,-5816 768,-5020 960,-5020 960,-5816"/>
 <text text-anchor="start" x="797.62" y="-5796.57" font-family="arial" font-size="14.00">Segment 50 [0x2f5]</text>
-<g id="a_node56_2133"><a xlink:title="Stack Size Δ: 9 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node56_2133"><a xlink:title="Stack Size Δ: +9&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="936.88" y="-5797.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12450,7 +12450,7 @@
 <title>s26368_16</title>
 <polygon fill="none" stroke="black" points="965.5,-4348 762.5,-4348 762.5,-4152 965.5,-4152 965.5,-4348"/>
 <text text-anchor="start" x="795.75" y="-4328.57" font-family="arial" font-size="14.00">Segment 51 [0x31a]</text>
-<g id="a_node57_2198"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node57_2198"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x335">
 <text text-anchor="start" x="942.38" y="-4329.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12542,7 +12542,7 @@
 <title>s26368_17</title>
 <polygon fill="none" stroke="black" points="967.5,-2616 760.5,-2616 760.5,-2228 967.5,-2228 967.5,-2616"/>
 <text text-anchor="start" x="795.75" y="-2596.57" font-family="arial" font-size="14.00">Segment 52 [0x323]</text>
-<g id="a_node58_2213"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node58_2213"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x31a">
 <text text-anchor="start" x="944.38" y="-2597.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12715,7 +12715,7 @@
 <title>s91904_17</title>
 <polygon fill="none" stroke="black" points="1192.5,-2640 985.5,-2640 985.5,-2204 1192.5,-2204 1192.5,-2640"/>
 <text text-anchor="start" x="1020.75" y="-2620.57" font-family="arial" font-size="14.00">Segment 53 [0x335]</text>
-<g id="a_node59_2244"><a xlink:title="Stack Size Δ: &#45;5 &#160;&#45;&#45; Operands ≥ 7">
+<g id="a_node59_2244"><a xlink:title="Stack Size Δ: &#45;5&#10;Stack Size on Entry ≥ 7&#10;Exit Jump target: Constant 0x362">
 <text text-anchor="start" x="1169.38" y="-2621.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12917,7 +12917,7 @@
 <title>s91904_18</title>
 <polygon fill="none" stroke="black" points="1258.5,-1160 1051.5,-1160 1051.5,-652 1258.5,-652 1258.5,-1160"/>
 <text text-anchor="start" x="1086.75" y="-1140.58" font-family="arial" font-size="14.00">Segment 54 [0x349]</text>
-<g id="a_node60_2279"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node60_2279"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2">
 <text text-anchor="start" x="1235.38" y="-1141.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -13142,7 +13142,7 @@
 <title>s91904_19</title>
 <polygon fill="none" stroke="black" points="1185,-460 993,-460 993,-120 1185,-120 1185,-460"/>
 <text text-anchor="start" x="1020.75" y="-440.57" font-family="arial" font-size="14.00">Segment 55 [0x362]</text>
-<g id="a_node61_2320"><a xlink:title="Stack Size Δ: &#45;3 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node61_2320"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 5">
 <text text-anchor="start" x="1161.88" y="-441.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -13303,7 +13303,7 @@
 <title>s3584_12</title>
 <polygon fill="none" stroke="black" points="1481.5,-10180 1274.5,-10180 1274.5,-9960 1481.5,-9960 1481.5,-10180"/>
 <text text-anchor="start" x="1310.12" y="-10160.58" font-family="arial" font-size="14.00">Segment 99 [0xbce]</text>
-<g id="a_node64_2347"><a xlink:title="Stack Size Δ: 5 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node64_2347"><a xlink:title="Stack Size Δ: +5&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x68c">
 <text text-anchor="start" x="1458.38" y="-10161.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -13407,7 +13407,7 @@
 <title>s7680_13</title>
 <polygon fill="none" stroke="black" points="1533,-9012 1199,-9012 1199,-8312 1533,-8312 1533,-9012"/>
 <text text-anchor="start" x="1298.12" y="-8992.58" font-family="arial" font-size="14.00">Segment 76 [0x68c]</text>
-<g id="a_node79_2364"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node79_2364"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x6dc">
 <text text-anchor="start" x="1509.88" y="-8993.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -13717,7 +13717,7 @@
 <title>s7168_13</title>
 <polygon fill="none" stroke="black" points="2295,-8700 2113,-8700 2113,-8624 2295,-8624 2295,-8700"/>
 <text text-anchor="start" x="2135.75" y="-8680.58" font-family="arial" font-size="14.00">Segment 61 [0x3d2]</text>
-<g id="a_node70_2421"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node70_2421"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2271.88" y="-8681.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -13758,7 +13758,7 @@
 <title>s14336_14</title>
 <polygon fill="none" stroke="black" points="1839,-7940 1647,-7940 1647,-7264 1839,-7264 1839,-7940"/>
 <text text-anchor="start" x="1671" y="-7920.57" font-family="arial" font-size="14.00">Segment 101 [0xbe3]</text>
-<g id="a_node68_2426"><a xlink:title="Stack Size Δ: &#45;1 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node68_2426"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="1815.88" y="-7921.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14059,7 +14059,7 @@
 <title>s30720_15</title>
 <polygon fill="none" stroke="black" points="1863,-6976 1671,-6976 1671,-6492 1863,-6492 1863,-6976"/>
 <text text-anchor="start" x="1698.75" y="-6956.57" font-family="arial" font-size="14.00">Segment 65 [0x42a]</text>
-<g id="a_node110_2481"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node110_2481"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="1839.88" y="-6957.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14273,7 +14273,7 @@
 <title>s14_6</title>
 <polygon fill="none" stroke="black" points="417.5,-16456 210.5,-16456 210.5,-16092 417.5,-16092 417.5,-16456"/>
 <text text-anchor="start" x="245.75" y="-16436.58" font-family="arial" font-size="14.00">Segment 69 [0x535]</text>
-<g id="a_node73_2520"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node73_2520"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x573">
 <text text-anchor="start" x="394.38" y="-16437.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14437,7 +14437,7 @@
 <title>s46_6</title>
 <polygon fill="none" stroke="black" points="192,-16420 0,-16420 0,-16128 192,-16128 192,-16420"/>
 <text text-anchor="start" x="27.75" y="-16400.58" font-family="arial" font-size="14.00">Segment 70 [0x548]</text>
-<g id="a_node74_2549"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node74_2549"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3">
 <text text-anchor="start" x="168.88" y="-16401.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14589,7 +14589,7 @@
 <title>s46_7</title>
 <polygon fill="none" stroke="black" points="228.5,-15912 21.5,-15912 21.5,-15500 228.5,-15500 228.5,-15912"/>
 <text text-anchor="start" x="56.75" y="-15892.58" font-family="arial" font-size="14.00">Segment 71 [0x556]</text>
-<g id="a_node75_2572"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node75_2572"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x556">
 <text text-anchor="start" x="205.38" y="-15893.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14782,7 +14782,7 @@
 <title>s46_8</title>
 <polygon fill="none" stroke="black" points="250,-15200 62,-15200 62,-14980 250,-14980 250,-15200"/>
 <text text-anchor="start" x="87.75" y="-15180.58" font-family="arial" font-size="14.00">Segment 72 [0x56a]</text>
-<g id="a_node76_2605"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node76_2605"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3">
 <text text-anchor="start" x="226.88" y="-15181.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14902,7 +14902,7 @@
 <title>s15872_14</title>
 <polygon fill="none" stroke="black" points="1570,-7772 1236,-7772 1236,-7432 1570,-7432 1570,-7772"/>
 <text text-anchor="start" x="1335.12" y="-7752.57" font-family="arial" font-size="14.00">Segment 78 [0x6dc]</text>
-<g id="a_node81_2622"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node81_2622"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x7b4">
 <text text-anchor="start" x="1546.88" y="-7753.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -15056,7 +15056,7 @@
 <title>s15872_15</title>
 <polygon fill="none" stroke="black" points="1615,-7228 1191,-7228 1191,-6240 1615,-6240 1615,-7228"/>
 <text text-anchor="start" x="1334.75" y="-7208.57" font-family="arial" font-size="14.00">Segment 79 [0x713]</text>
-<g id="a_node83_2649"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node83_2649"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 5">
 <text text-anchor="start" x="1591.88" y="-7209.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -15491,7 +15491,7 @@
 <title>s15872_16</title>
 <polygon fill="none" stroke="black" points="1744,-6156 1542,-6156 1542,-6032 1744,-6032 1744,-6156"/>
 <text text-anchor="start" x="1574.75" y="-6136.57" font-family="arial" font-size="14.00">Segment 80 [0x7b4]</text>
-<g id="a_node84_2730"><a xlink:title="Stack Size Δ: &#45;1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node84_2730"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x8cf">
 <text text-anchor="start" x="1720.88" y="-6137.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -15553,7 +15553,7 @@
 <title>s240_9</title>
 <polygon fill="none" stroke="black" points="3127,-7228 2703,-7228 2703,-6240 3127,-6240 3127,-7228"/>
 <text text-anchor="start" x="2846.75" y="-7208.57" font-family="arial" font-size="14.00">Segment 79 [0x713]</text>
-<g id="a_node85_2739"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node85_2739"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 5">
 <text text-anchor="start" x="3103.88" y="-7209.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -15988,7 +15988,7 @@
 <title>s240_10</title>
 <polygon fill="none" stroke="black" points="2776,-6156 2574,-6156 2574,-6032 2776,-6032 2776,-6156"/>
 <text text-anchor="start" x="2606.75" y="-6136.57" font-family="arial" font-size="14.00">Segment 80 [0x7b4]</text>
-<g id="a_node86_2820"><a xlink:title="Stack Size Δ: &#45;1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node86_2820"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x8cf">
 <text text-anchor="start" x="2752.88" y="-6137.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -16059,7 +16059,7 @@
 <title>s15872_17</title>
 <polygon fill="none" stroke="black" points="2005,-5948 1671,-5948 1671,-4888 2005,-4888 2005,-5948"/>
 <text text-anchor="start" x="1769.75" y="-5928.57" font-family="arial" font-size="14.00">Segment 81 [0x7ba]</text>
-<g id="a_node87_2829"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node87_2829"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x844">
 <text text-anchor="start" x="1981.88" y="-5929.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -16524,7 +16524,7 @@
 <title>s146944_19</title>
 <polygon fill="none" stroke="black" points="2105,-3612 1467,-3612 1467,-1232 2105,-1232 2105,-3612"/>
 <text text-anchor="start" x="1720" y="-3592.57" font-family="arial" font-size="14.00">Segment 84 [0x8cf]</text>
-<g id="a_node88_2916"><a xlink:title="Stack Size Δ: &#45;4 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node88_2916"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 5&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2081.88" y="-3593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -17557,7 +17557,7 @@
 <title>s240_11</title>
 <polygon fill="none" stroke="black" points="2647,-5948 2313,-5948 2313,-4888 2647,-4888 2647,-5948"/>
 <text text-anchor="start" x="2411.75" y="-5928.57" font-family="arial" font-size="14.00">Segment 81 [0x7ba]</text>
-<g id="a_node89_3113"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node89_3113"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x844">
 <text text-anchor="start" x="2623.88" y="-5929.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -18022,7 +18022,7 @@
 <title>s2288_13</title>
 <polygon fill="none" stroke="black" points="2851,-3612 2213,-3612 2213,-1232 2851,-1232 2851,-3612"/>
 <text text-anchor="start" x="2466" y="-3592.57" font-family="arial" font-size="14.00">Segment 84 [0x8cf]</text>
-<g id="a_node90_3200"><a xlink:title="Stack Size Δ: &#45;4 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node90_3200"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 5&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2827.88" y="-3593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -19046,7 +19046,7 @@
 <title>s15872_18</title>
 <polygon fill="none" stroke="black" points="2255,-4300 2063,-4300 2063,-4200 2255,-4200 2255,-4300"/>
 <text text-anchor="start" x="2090.75" y="-4280.57" font-family="arial" font-size="14.00">Segment 82 [0x840]</text>
-<g id="a_node91_3397"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node91_3397"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2231.88" y="-4281.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -19098,7 +19098,7 @@
 <title>s146944_18</title>
 <polygon fill="none" stroke="black" points="2005,-4852 1671,-4852 1671,-3648 2005,-3648 2005,-4852"/>
 <text text-anchor="start" x="1769.75" y="-4832.57" font-family="arial" font-size="14.00">Segment 83 [0x844]</text>
-<g id="a_node92_3404"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node92_3404"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4">
 <text text-anchor="start" x="1981.88" y="-4833.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -19623,7 +19623,7 @@
 <title>s671232_20</title>
 <polygon fill="none" stroke="black" points="1877,-1016 1695,-1016 1695,-796 1877,-796 1877,-1016"/>
 <text text-anchor="start" x="1714" y="-996.58" font-family="arial" font-size="14.00">Segment 100 [0xbdb]</text>
-<g id="a_node94_3503"><a xlink:title="Stack Size Δ: &#45;4 &#160;&#45;&#45; Operands ≥ 5">
+<g id="a_node94_3503"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 5&#10;Exit Jump target: Stack on Entry.Peek(4)">
 <text text-anchor="start" x="1853.88" y="-997.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -19733,7 +19733,7 @@
 <title>s2288_12</title>
 <polygon fill="none" stroke="black" points="2647,-4852 2313,-4852 2313,-3648 2647,-3648 2647,-4852"/>
 <text text-anchor="start" x="2411.75" y="-4832.57" font-family="arial" font-size="14.00">Segment 83 [0x844]</text>
-<g id="a_node93_3520"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 4">
+<g id="a_node93_3520"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 4">
 <text text-anchor="start" x="2623.88" y="-4833.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -20258,7 +20258,7 @@
 <title>s10480_14</title>
 <polygon fill="none" stroke="black" points="2628,-1196 2436,-1196 2436,-616 2628,-616 2628,-1196"/>
 <text text-anchor="start" x="2463.75" y="-1176.58" font-family="arial" font-size="14.00">Segment 34 [0x229]</text>
-<g id="a_node95_3619"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node95_3619"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="2604.88" y="-1177.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -20530,7 +20530,7 @@
 <title>s1719808_21</title>
 <polygon fill="none" stroke="black" points="1882,-580 1690,-580 1690,0 1882,0 1882,-580"/>
 <text text-anchor="start" x="1717.75" y="-560.58" font-family="arial" font-size="14.00">Segment 59 [0x3b0]</text>
-<g id="a_node109_3666"><a xlink:title="Stack Size Δ: 1 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node109_3666"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
 <text text-anchor="start" x="1858.88" y="-561.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -20784,7 +20784,7 @@
 <title>s480_10</title>
 <polygon fill="none" stroke="black" points="1944,-12768 1752,-12768 1752,-12668 1944,-12668 1944,-12768"/>
 <text text-anchor="start" x="1779.75" y="-12748.58" font-family="arial" font-size="14.00">Segment 88 [0xab0]</text>
-<g id="a_node98_3713"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node98_3713"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="1920.88" y="-12749.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -20836,7 +20836,7 @@
 <title>s992_10</title>
 <polygon fill="none" stroke="black" points="2603.5,-13044 1962.5,-13044 1962.5,-12392 2603.5,-12392 2603.5,-13044"/>
 <text text-anchor="start" x="2214.75" y="-13024.58" font-family="arial" font-size="14.00">Segment 89 [0xab4]</text>
-<g id="a_node99_3720"><a xlink:title="Stack Size Δ: &#45;2 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node99_3720"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="2580.38" y="-13025.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -21122,7 +21122,7 @@
 <title>s2016_11</title>
 <polygon fill="none" stroke="black" points="2374,-11576 2192,-11576 2192,-11500 2374,-11500 2374,-11576"/>
 <text text-anchor="start" x="2214.75" y="-11556.58" font-family="arial" font-size="14.00">Segment 38 [0x264]</text>
-<g id="a_node100_3773"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node100_3773"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="2350.88" y="-11557.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -21163,7 +21163,7 @@
 <title>s1792_13</title>
 <polygon fill="none" stroke="black" points="967.5,-6916 760.5,-6916 760.5,-6552 967.5,-6552 967.5,-6916"/>
 <text text-anchor="start" x="795.75" y="-6896.57" font-family="arial" font-size="14.00">Segment 94 [0xb88]</text>
-<g id="a_node105_3778"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node105_3778"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0xbc6">
 <text text-anchor="start" x="944.38" y="-6897.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -21327,7 +21327,7 @@
 <title>s5888_13</title>
 <polygon fill="none" stroke="black" points="1118,-8808 926,-8808 926,-8516 1118,-8516 1118,-8808"/>
 <text text-anchor="start" x="953.75" y="-8788.58" font-family="arial" font-size="14.00">Segment 95 [0xb9b]</text>
-<g id="a_node106_3807"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node106_3807"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3">
 <text text-anchor="start" x="1094.88" y="-8789.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -21479,7 +21479,7 @@
 <title>s5888_14</title>
 <polygon fill="none" stroke="black" points="1147.5,-7808 940.5,-7808 940.5,-7396 1147.5,-7396 1147.5,-7808"/>
 <text text-anchor="start" x="975.75" y="-7788.57" font-family="arial" font-size="14.00">Segment 96 [0xba9]</text>
-<g id="a_node107_3830"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node107_3830"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0xba9">
 <text text-anchor="start" x="1124.38" y="-7789.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -21672,7 +21672,7 @@
 <title>s5888_15</title>
 <polygon fill="none" stroke="black" points="1172.5,-6844 985.5,-6844 985.5,-6624 1172.5,-6624 1172.5,-6844"/>
 <text text-anchor="start" x="1010.75" y="-6824.57" font-family="arial" font-size="14.00">Segment 97 [0xbbd]</text>
-<g id="a_node108_3863"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 3">
+<g id="a_node108_3863"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3">
 <text text-anchor="start" x="1149.38" y="-6825.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>

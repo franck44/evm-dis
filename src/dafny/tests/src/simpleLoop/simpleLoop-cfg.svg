@@ -14,7 +14,7 @@
 <title>s0_0</title>
 <polygon fill="none" stroke="black" points="353,-612 214,-612 214,-536 353,-536 353,-612"/>
 <text text-anchor="start" x="226.5" y="-592.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
-<g id="a_node1_0"><a xlink:title="Stack Size Δ: 2 &#160;&#45;&#45; Operands ≥ 0">
+<g id="a_node1_0"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
 <text text-anchor="start" x="329.88" y="-593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -46,7 +46,7 @@
 <title>s0_1</title>
 <polygon fill="none" stroke="black" points="372,-500 195,-500 195,-328 372,-328 372,-500"/>
 <text text-anchor="start" x="226.5" y="-480.57" font-family="arial" font-size="14.00">Segment 1 [0x2]</text>
-<g id="a_node2_5"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 1">
+<g id="a_node2_5"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x13">
 <text text-anchor="start" x="348.88" y="-481.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -129,7 +129,7 @@
 <title>s0_2</title>
 <polygon fill="none" stroke="black" points="177,-232 0,-232 0,-60 177,-60 177,-232"/>
 <text text-anchor="start" x="31.5" y="-212.57" font-family="arial" font-size="14.00">Segment 2 [0xa]</text>
-<g id="a_node3_18"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node3_18"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2">
 <text text-anchor="start" x="153.88" y="-213.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -213,7 +213,7 @@
 <title>s2_2</title>
 <polygon fill="none" stroke="black" points="372,-292 195,-292 195,0 372,0 372,-292"/>
 <text text-anchor="start" x="222.75" y="-272.57" font-family="arial" font-size="14.00">Segment 3 [0x13]</text>
-<g id="a_node4_31"><a xlink:title="Stack Size Δ: 0 &#160;&#45;&#45; Operands ≥ 2">
+<g id="a_node4_31"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x2">
 <text text-anchor="start" x="348.88" y="-273.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
