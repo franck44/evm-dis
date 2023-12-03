@@ -114,7 +114,8 @@ module Int {
 
    function IntToString(n: int): string
   {
-    if n >= 0 then NatToString(n)
+    if n == 0 then "0"
+    else if n > 0 then "+" + NatToString(n)
     else "-" + NatToString(-n)
   }
 
