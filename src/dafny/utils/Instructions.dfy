@@ -276,6 +276,7 @@ module Instructions {
           var k := opcode - JUMP + 1;
           Right(pos' + k as nat)
         else
+          assert JUMPDEST < opcode <= RJUMPV;
           Left(Random("Not implemented"))
 
       case RunOp(_, _, _, _, pushes, pops)        =>
