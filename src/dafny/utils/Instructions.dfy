@@ -670,11 +670,5 @@ module Instructions {
         ("sienna", "tan")
       else
         ("brown", "salmon")
-          // match opcode
-          //     case STOP => ("brown", "salmon")
-          //     case REVERT => ("brown", "salmon")
-          //     case RETURN => ("darkgreen", "lightgreen")
-          //     case _ => ("sienna", "tan")
-
   }
 }
