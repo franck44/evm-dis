@@ -363,8 +363,6 @@ module Instructions {
 
       case EnvOp(_, _, _, _, pushes, pops)        =>
         if s.Size() >= pops && !cond then
-          //   assert pops == 0;
-          //   assert pushes <= 1;
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("EnvOp error")
 
