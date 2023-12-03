@@ -6758,7 +6758,7 @@
 <title>s28_5</title>
 <polygon fill="none" stroke="black" points="3281.46,-1460 3089.46,-1460 3089.46,-472 3281.46,-472 3281.46,-1460"/>
 <text text-anchor="start" x="3117.21" y="-1440.58" font-family="arial" font-size="14.00">Segment 67 [0x3aa]</text>
-<g id="a_node38_1127"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
+<g id="a_node38_1127"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(2)">
 <text text-anchor="start" x="3258.33" y="-1441.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -7381,7 +7381,7 @@
 <title>s56_6</title>
 <polygon fill="none" stroke="black" points="1679.46,-17732 1487.46,-17732 1487.46,-17584 1679.46,-17584 1679.46,-17732"/>
 <text text-anchor="start" x="1515.21" y="-17712.58" font-family="arial" font-size="14.00">Segment 68 [0x3da]</text>
-<g id="a_node41_1243"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
+<g id="a_node41_1243"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Stack on Entry.Peek(0)">
 <text text-anchor="start" x="1656.33" y="-17713.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -8588,7 +8588,7 @@
 <title>s224_8</title>
 <polygon fill="none" stroke="black" points="2485.46,-17364 2293.46,-17364 2293.46,-17168 2485.46,-17168 2485.46,-17364"/>
 <text text-anchor="start" x="2321.21" y="-17344.58" font-family="arial" font-size="14.00">Segment 73 [0x457]</text>
-<g id="a_node47_1464"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Unknown">
+<g id="a_node47_1464"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Stack on Entry.Peek(0)">
 <text text-anchor="start" x="2462.33" y="-17345.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9217,7 +9217,7 @@
 <title>s960_10</title>
 <polygon fill="none" stroke="black" points="2818.96,-5444 2179.96,-5444 2179.96,-4024 2818.96,-4024 2818.96,-5444"/>
 <text text-anchor="start" x="2431.21" y="-5424.57" font-family="arial" font-size="14.00">Segment 76 [0x486]</text>
-<g id="a_node85_1574"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
+<g id="a_node85_1574"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(0)">
 <text text-anchor="start" x="2795.83" y="-5425.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -9830,7 +9830,7 @@
 <title>s896_10</title>
 <polygon fill="none" stroke="black" points="1828.46,-11252 1636.46,-11252 1636.46,-10888 1828.46,-10888 1828.46,-11252"/>
 <text text-anchor="start" x="1664.21" y="-11232.58" font-family="arial" font-size="14.00">Segment 77 [0x4eb]</text>
-<g id="a_node53_1691"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Unknown">
+<g id="a_node53_1691"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Stack on Entry.Peek(1)">
 <text text-anchor="start" x="1805.33" y="-11233.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -11826,7 +11826,7 @@
 <title>s30720_15</title>
 <polygon fill="none" stroke="black" points="2131.46,-11564 1939.46,-11564 1939.46,-10576 2131.46,-10576 2131.46,-11564"/>
 <text text-anchor="start" x="1967.21" y="-11544.58" font-family="arial" font-size="14.00">Segment 67 [0x3aa]</text>
-<g id="a_node75_2048"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
+<g id="a_node75_2048"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(2)">
 <text text-anchor="start" x="2108.33" y="-11545.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -12255,7 +12255,7 @@
 <title>s28672_15</title>
 <polygon fill="none" stroke="black" points="1550.46,-11384 1358.46,-11384 1358.46,-10756 1550.46,-10756 1550.46,-11384"/>
 <text text-anchor="start" x="1382.46" y="-11364.58" font-family="arial" font-size="14.00">Segment 101 [0x785]</text>
-<g id="a_node68_2129"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Unknown">
+<g id="a_node68_2129"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(2)">
 <text text-anchor="start" x="1527.33" y="-11365.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
@@ -14940,7 +14940,7 @@
 <title>s7936_13</title>
 <polygon fill="none" stroke="black" points="1293.96,-3612 654.96,-3612 654.96,-1496 1293.96,-1496 1293.96,-3612"/>
 <text text-anchor="start" x="906.21" y="-3592.57" font-family="arial" font-size="14.00">Segment 82 [0x556]</text>
-<g id="a_node89_2602"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Unknown">
+<g id="a_node89_2602"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Stack on Entry.Peek(1)">
 <text text-anchor="start" x="1270.83" y="-3593.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>

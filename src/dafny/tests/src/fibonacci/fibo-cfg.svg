@@ -2085,7 +2085,7 @@
 <title>s57_6</title>
 <polygon fill="none" stroke="black" points="1281.5,-5852 1070.5,-5852 1070.5,-5656 1281.5,-5656 1281.5,-5852"/>
 <text text-anchor="start" x="1107.75" y="-5832.57" font-family="arial" font-size="14.00">Segment 48 [0x21d]</text>
-<g id="a_node52_344"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Unknown">
+<g id="a_node52_344"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Stack on Entry.Peek(3)">
 <text text-anchor="start" x="1258.38" y="-5833.7" font-family="arial" font-size="14.00">📚</text>
 </a>
 </g>
