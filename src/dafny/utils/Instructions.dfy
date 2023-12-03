@@ -278,7 +278,11 @@ module Instructions {
         else
           Left(Random("Not implemented"))
 
-      case RunOp(_, _, _, _, _, _)        => Left(Random("Not implemented"))
+      case RunOp(_, _, _, _, pushes, pops)        =>
+        if pos' == 0 then Left(Random("More than one predecessor. Run operator with target 0"))
+        else
+          assert pushes == 1 && pops == 0;
+          Right(pos' - 1)
 
       case StackOp(_, opcode, _, _, _, _) =>
         if PUSH0 <= opcode <= PUSH32 then
