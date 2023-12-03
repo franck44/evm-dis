@@ -304,8 +304,18 @@ module Instructions {
           assert opcode == POP;
           Right(pos' + 1)
 
-      case LogOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
-      case SysOp(_, _, _, _, _, _) => Left(Random("Not implemented"))
+      case LogOp(_, _, _, _, pushes, pops) =>
+        assert pushes == 0 && 2 <= pops <= 6;
+        Right(pos' + 2)
+
+      case SysOp(_, _, _, _, pushes, pops) => 
+        if pushes == 0 then
+          Right(pos' + pops)
+        else
+          assert pushes == 1;
+          if pos' == 0 then Left(Random("More than one predecessor. Sys operator with target 0"))
+          else
+            Right(pos' + pops)
     }
 
     /**
