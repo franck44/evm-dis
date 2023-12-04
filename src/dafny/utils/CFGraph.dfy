@@ -373,7 +373,7 @@ module CFGraph {
                   + "&#10;Stack Size on Entry &#8805; " + NatToString(s.WeakestPreOperands())
                   + jumpTip
                   + "\""
-                  + ">&#128218;</TD>"
+                  + "><FONT color=\"green\">&#9636;</FONT></TD>"    // old symbol fpr stack of books is &#128218;
                   + "</TR><HR/>\n";
     var tableEnd := "</TABLE>\n";
     var body := DOTInsTable(s.Ins());
