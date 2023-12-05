@@ -363,9 +363,7 @@ module CFGraph {
         } else "";
 
     var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
-    // var prefix := "<TR><TD BGCOLOR=\"" + SegColour2(s)  + "\">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</TD></TR><HR/>\n";
     var prefix := "<TR><TD "
-                  // + " href=\"\" tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
                   + ">Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress())
                   + "]</TD>"
                   + "<TD"
