@@ -56,7 +56,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 src/dafny/*.mdb
-src/dafny/*.dll
+src/dafny/**/*.dll
+test/dafny/**/*.dll
 model.bvd
 *.cfg
 **/tmp/**
