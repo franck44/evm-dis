@@ -148,7 +148,7 @@ module CFGraph {
         var minim := Minimiser.Minimise(vp);
         assert minim.p.n == vp.p.n == a.numStates;
         //  now recreate a CFGraph
-        var listOfEdges := minim.GenerateReducedTailRec(); 
+        var listOfEdges := minim.GenerateReducedTailRec();
         assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 < minim.p.n && listOfEdges[k].2 < minim.p.n;
         assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 in numToCFGNode && listOfEdges[k].2 in numToCFGNode;
 
@@ -163,14 +163,14 @@ module CFGraph {
     }
 
     /** Print edges to DOT format. */
-    function DOTPrintEdges(xe: seq<BoolEdge>, fancyExits: bool := false): string
+    function DOTPrintEdges(xe: seq<BoolEdge>, simpleOutput: bool, fancyExits: bool := false): string
     {
       if |xe| > 0 then xe[0].DOTPrint() + DOTPrintEdges(xe[1..], fancyExits)
       else ""
     }
 
     /** Print to edges DOT format. */
-    function DOTPrintNodes(xs: seq<ValidLinSeg>, g: seq<BoolEdge> := edges, printed: set<CFGNode> := {}): string
+    function DOTPrintNodes(xs: seq<ValidLinSeg>, simpleOutput: bool, g: seq<BoolEdge> := edges, printed: set<CFGNode> := {}): string
       requires forall k:: k in g ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in g ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
@@ -180,34 +180,45 @@ module CFGraph {
           if g[0].src in printed then ""
           else if g[0].src.seg.None? then
             "s" + g[0].src.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
-          else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v]);
+          else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v], simpleOutput);
         var tgttxt :=
           if g[0].tgt in printed then ""
           else if g[0].tgt.seg.None? then
             "s" + g[0].tgt.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
-          else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v]);
-        srctxt + tgttxt + DOTPrintNodes(xs, g[1..], printed + {g[0].src, g[0].tgt})
+          else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v], simpleOutput);
+        srctxt + tgttxt + DOTPrintNodes(xs, simpleOutput, g[1..],  printed + {g[0].src, g[0].tgt})
       else ""
     }
 
     /** Print node labels with code of the segment. */
-    function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg): string
+    function DOTPrintNodeLabel(n: CFGNode, s: ValidLinSeg, simpleOutput: bool): string
       requires n.seg.Some?
     {
-      var lab := DOTSegTable(s, n.seg.v);
-      var nodeColour := ""; // SegColour(s);
-      "s" + n.ToDot() + " [" + nodeColour
-      //   + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
-      + "label=<\n" + lab + ">]\n"
+      if simpleOutput then
+        var lab := DOTSeg(s, n.seg.v);
+        var nodeColour := SegColour(s);
+        "s" + n.ToDot()
+        + " [" + nodeColour
+        + "label=<\n" + lab.0
+        + "> "
+        + "tooltip=<" + lab.1
+        + ">]\n"
+      else
+        var lab := DOTSegTable(s, n.seg.v);
+        var nodeColour := ""; // SegColour(s);
+        "s" + n.ToDot() + " [" + nodeColour
+        //   + "tooltip=\"Stack Size Delta: " + IntToString(s.StackEffect()) + "\""
+        + "label=<\n" + lab + ">]\n"
+
     }
 
     /** Print the graph as a DOT digraph */
-    function DOTPrint(xs: seq<ValidLinSeg>, fancyExits: bool := false): string
+    function DOTPrint(xs: seq<ValidLinSeg>, simpleOutput: bool := true, fancyExits: bool := false): string
       requires forall k:: k in this.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
       var prefix := "digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
-      prefix + DOTPrintNodes(xs) + DOTPrintEdges(edges, fancyExits) + "}\n"
+      prefix + DOTPrintNodes(xs, simpleOutput) + DOTPrintEdges(edges,  simpleOutput, fancyExits) + "}\n"
     }
   }
 
@@ -339,11 +350,30 @@ module CFGraph {
   }
 
   /**   Print the content of a segment. */
-  function DOTSeg(s: ValidLinSeg, numSeg: nat): string
+  function DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
   {
-    var prefix := "<B>Segment " + NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]</B><BR ALIGN=\"CENTER\"/>\n";
+    //  Jump target
+    var jumpTip :=
+      if s.JUMPSeg? || s.JUMPISeg? then
+        var r := SegBuilder.JUMPResolver(s);
+        match r {
+          case Left(v) =>
+            match v {
+              case Value(address) => "&#10;Exit Jump target: Constant 0x" + NatToHex(address as nat)
+              case Random(msg) => "&#10;Exit Jump target: Unknown"
+            }
+          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + NatToString(stackPos) +  ")"
+
+        } else "";
+    var stackSizeEffect := "Stack Size &#916;: " + IntToString(s.StackEffect());
+    var mninNumOpe := "&#10;Stack Size on Entry &#8805; " + NatToString(s.WeakestPreOperands());
+    var prefix := "<B>Segment "
+                  + NatToString(numSeg)
+                  + " [0x"
+                  + Hex.NatToHex(s.StartAddress())
+                  + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := DOTIns(s.Ins());
-    prefix + body
+    (prefix + body, stackSizeEffect +  jumpTip + mninNumOpe)
   }
 
   function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
@@ -383,8 +413,7 @@ module CFGraph {
   {
     if |xi| == 0 then ""
     else
-      var a := xi[0].ToString() + " <BR ALIGN=\"LEFT\"/>\n";
-      a + DOTIns(xi[1..])
+      xi[0].ToHTML() + DOTIns(xi[1..])
   }
 
   /**   Print a seq of instructions. */
