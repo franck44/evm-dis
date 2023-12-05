@@ -148,7 +148,7 @@ module CFGraph {
         var minim := Minimiser.Minimise(vp);
         assert minim.p.n == vp.p.n == a.numStates;
         //  now recreate a CFGraph
-        var listOfEdges := minim.GenerateReduced();
+        var listOfEdges := minim.GenerateReducedTailRec(); 
         assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 < minim.p.n && listOfEdges[k].2 < minim.p.n;
         assert forall k:: 0 <= k < |listOfEdges| ==> listOfEdges[k].0 in numToCFGNode && listOfEdges[k].2 in numToCFGNode;
 

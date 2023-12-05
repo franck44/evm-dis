@@ -106,15 +106,16 @@ module Minimiser {
       * @note   Tailrecursion is diasbled as there is a bug in the Dafny Java code generator.
       * @link{https://github.com/dafny-lang/dafny/issues/2346} 
       */
-    function {:tailrecursion false} GenerateReduced(index: nat := 0): (r : seq<(nat, bool, nat)>)
+     function {:tailrecursion false} GenerateReducedTailRec(index: nat := 0, acc: seq<(nat, bool, nat)> := []): (r : seq<(nat, bool, nat)>)
       requires this.IsValid()
       requires index <= |p.elem|
+      requires forall k:: 0 <= k < |acc| ==> acc[k].0 < p.n && acc[k].2 < p.n
       ensures forall k:: 0 <= k < |r| ==> r[k].0 < p.n && r[k].2 < p.n
       decreases |p.elem| - index
     {
       AllBoundedBy(p.elem, p.n);
       MaxNumberOfClasses(p.elem, p.n);
-      if index == |p.elem| then []
+      if index == |p.elem| then acc
       else
         var firstElem := SetToSequence(p.elem[index])[0];
         //  Get successor classes of first elem
@@ -125,9 +126,8 @@ module Minimiser {
           case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
           case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
           ;
-        newEdges + GenerateReduced(index + 1)
+        GenerateReducedTailRec(index + 1, newEdges)
     }
-
   }
 
   //   Helper and Main function.
