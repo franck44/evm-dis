@@ -335,7 +335,7 @@ task compileToJs {
 
 task generateTestCFGs {
     doLast {
-        fileTree("src/dafny/tests/src/").include('**/*.bin').each {
+        fileTree("src/dafny/tests/src/").include('**/*.bin').exclude('rattle/**/*.bin', 'strings/**').each {
             File file -> {
                 exec {
                     executable = './makeCFG.sh' 
