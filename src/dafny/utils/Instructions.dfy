@@ -349,7 +349,7 @@ module Instructions {
       *                 JUMPI true means branch to top of stack, 
       *                 and false, go to next instruction.
       */
-    function NextState(s: ValidState, cond: bool := false, jumpDests: seq<nat> := []): AState
+    function NextState(s: ValidState, jumpDests: seq<nat>, cond: bool := false): AState
       requires this.IsValid()
       requires this.op.IsValid()
     {
