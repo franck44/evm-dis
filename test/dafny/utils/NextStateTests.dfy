@@ -275,9 +275,9 @@ module NextStateTests {
       assert forall k:: 0 <= k < |i.arg| ==> Hex.IsHex(i.arg[k]);
       assert i.IsValid();
       expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).EState?;
-      expect i.NextState(s, false).pc == 6;
-      expect i.NextState(s, false).Peek(0) == Value(9); 
+      expect i.NextState(s, false, [0x09]).EState?;
+      expect i.NextState(s, false, [0x09]).pc == 6;
+      expect i.NextState(s, false, [0x09]).Peek(0) == Value(9); 
     }
   }
 
@@ -288,10 +288,21 @@ module NextStateTests {
       var i := Instruction(Decode(PUSH5), "0900000011");
       assert i.IsValid();
       expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).EState?;
-      expect i.NextState(s, false).pc == 10;
-      expect i.NextState(s, false).Peek(0) == Value(0x0900000011);
-      expect i.NextState(s, false).Peek(1) == Value(2);
+      expect i.NextState(s, false, [0x01, 0x0900000011 ]).EState?;
+      expect i.NextState(s, false, [0x01, 0x0900000011 ]).pc == 10;
+      expect i.NextState(s, false, [0x01, 0x0900000011 ]).Peek(0) == Value(0x0900000011);
+      expect i.NextState(s, false, [0x01, 0x0900000011 ]).Peek(1) == Value(2);
+    }
+  }
+
+  method {:test} PushTests3()
+  {
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(2)]);
+      var i := Instruction(Decode(PUSH2), "1122");
+      assert i.IsValid();
+      expect i.NextState(s, false, [0x0022]).EState?;
+      expect i.NextState(s, false, [0x0022]).stack == [Random(), Value(2)];
     }
   }
 

@@ -149,13 +149,13 @@ module LinSegments {
     /**
       *  Execute the segment up to the end.
       */
-    function Run(s: ValidState, exit: bool): AState
+    function Run(s: ValidState, exit: bool, jumpDests: seq<nat>): AState
     {
       //  Run the instructions with exit false, except last
-      var s' := RunIns(ins, s);
+      var s' := RunIns(ins, s, jumpDests);
       if s'.Error? then s'
       else
-        lastIns.NextState(s', exit)
+        lastIns.NextState(s', jumpDests, exit)
     }
 
     /**
@@ -250,14 +250,14 @@ module LinSegments {
   /**
     *   Run a sequence of (valid) instructions with exit condition false (default).
     */
-  function RunIns(xs: seq<ValidInstruction>, s: ValidState): AState
+  function RunIns(xs: seq<ValidInstruction>, s: ValidState, jumpDests: seq<nat>): AState
   {
     if |xs| == 0 then s
     else
-      var next := xs[0].NextState(s);
+      var next := xs[0].NextState(s, jumpDests);
       match next
       case Error(_) => next
-      case EState(_, _) => RunIns(xs[1..], next)
+      case EState(_, _) => RunIns(xs[1..], next, jumpDests)
   }
 
   /**

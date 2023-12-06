@@ -61,7 +61,7 @@ module LoopResolver {
     *   @todo   Fix this as it does not compute the correct result.
     *           Need to include resursion on the path in WPreSeqSegs.
     */
-  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, boolPath: seq<bool>): (r: Option<CFGNode>)
+  function SafeLoopFound(xs: seq<ValidLinSeg>, pc: nat, seenOnPath: seq<CFGNode>, boolPath: seq<bool>, jumpDests: seq<nat>): (r: Option<CFGNode>)
     requires |xs| >= 1
     requires pc < Int.TWO_256
     requires 0 < |seenOnPath| // == |path|
@@ -90,29 +90,29 @@ module LoopResolver {
         Some(v.0)
       else if w1.StFalse? then
         None
-      else if PreservesCond(w1, segs, boolPath[v.1..], xs) then 
+      else if PreservesCond(w1, segs, boolPath[v.1..], xs, jumpDests) then 
         Some(v.0)
       //  Try a potential second occurrence of pc om seenOnPath
       else if 0 < |seenOnPath[v.1..|seenOnPath|]| < |seenOnPath| then
-        SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|], boolPath[v.1..|boolPath|])
+        SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|], boolPath[v.1..|boolPath|], jumpDests)
       else None
 
     case None => None
   }
 
-  predicate PreservesCond(c: ValidCond, seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>)
+  predicate PreservesCond(c: ValidCond, seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>, jumpDests: seq<nat>)
     requires c.StCond?
     requires |seg| == |exits|
     requires forall k:: k in seg ==> k < |xs|
   {
     var initState := BuildInitState(c);
-    var endState := RunAll(seg, exits, xs, initState);
+    var endState := RunAll(seg, exits, xs, initState, jumpDests);
     if endState.EState? then
       endState.Sat(c)
     else false
   }
 
-  function RunAll(seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>, s: AState): AState
+  function RunAll(seg: seq<nat>, exits: seq<bool>, xs: seq<ValidLinSeg>, s: AState, jumpDests: seq<nat>): AState
     requires s.EState?
     requires |seg| == |exits|
     requires forall k:: k in seg ==> k < |xs|
@@ -121,10 +121,10 @@ module LoopResolver {
     else
       assert |seg| > 0;
       assert seg[0] in seg;
-      match xs[seg[0]].Run(s, exits[0])
+      match xs[seg[0]].Run(s, exits[0], jumpDests)
       case EState(p, st) =>
         assert forall k:: k in seg[1..] ==> k in seg;
-        RunAll(seg[1..], exits[1..], xs, EState(p, st))
+        RunAll(seg[1..], exits[1..], xs, EState(p, st), jumpDests)
       case Error(m) => Error(m)
 
   }

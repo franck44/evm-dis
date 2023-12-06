@@ -338,8 +338,8 @@ module Instructions {
     }
 
     /**
-      * Compute the next abstract state. The condition resolves non-determinism when needed,
-      * e.g. for JUMPs. Otherwise it shoudk be false as there is only one branch.
+      * Compute the next abstract state. The value of the condition resolves non-determinism when needed,
+      * e.g. for JUMPs. Otherwise it should be false as there is only one branch.
       * 
       * @param  s       The source state.
       * @param  cond    The branch to take for conditional instructions, false for others.
@@ -349,7 +349,7 @@ module Instructions {
       *                 JUMPI true means branch to top of stack, 
       *                 and false, go to next instruction.
       */
-    function NextState(s: ValidState, cond: bool := false): AState
+    function NextState(s: ValidState, jumpDests: seq<nat>, cond: bool := false): AState
       requires this.IsValid()
       requires this.op.IsValid()
     {
@@ -433,7 +433,11 @@ module Instructions {
         else if PUSH0 <= opcode <= PUSH32 && !cond then
           assert pushes == 1;
           assert pops == 0;
-          s.Push(Value(GetArgValuePush(arg))).Skip(1 + (opcode - PUSH0) as nat)
+          var valToPush := 
+            if GetArgValuePush(arg) as nat in jumpDests then 
+                Value(GetArgValuePush(arg))
+            else Random();
+          s.Push(valToPush).Skip(1 + (opcode - PUSH0) as nat)
         else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
           assert pushes == 1 && pops == 0;
           s.Dup((opcode - DUP1) as nat + 1).Skip(1)
