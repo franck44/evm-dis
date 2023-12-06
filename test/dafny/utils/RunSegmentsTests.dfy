@@ -69,7 +69,7 @@ module RuNSegTests {
     var s' := y[0].Run(s0, true);
     expect s'.Error?;
 
-    //  Not enough stakc element
+    //  Not enough stack element
     var s1 := y[0].Run(s0, false);
     expect s'.Error?;
 
@@ -165,9 +165,10 @@ module RuNSegTests {
     //  y[1] starts at 0x0a, and RETURN
     expect s4.pc == y[1].StartAddress();
     var s5 := y[1].Run(s4, false);
-    expect s5.EState?;
-    //  We end up after RETURN.
-    expect s5 == EState(0x12 + 1, [Value(64), Value(32)]);
+    expect s5.Error?;
+    //  We end up after RETURN. Now terminal segments end
+    //  in an Error state.
+    // expect s5 == EState(0x12 + 1, [Value(64), Value(32)]);
 
     //  Now test JUMPI false (we go directly to successor of JUMPI)
     //  y[2] starts at 0x13, and JUMPI
@@ -183,9 +184,11 @@ module RuNSegTests {
     expect s3' == EState(0x0a,  [Value(0x8)]);
 
     //  y[1] starts at 0x0a, and RETURN
+    //  note: terminal segment like RETURN ends in an Error state since a recent
+    //  update.
     expect s3'.pc == y[1].StartAddress();
     var s4' := y[1].Run(s3', false);
-    expect s4' == EState(0x12 + 1,  [Value(64), Value(32)]);
+    expect s4'.Error?;
 
   }
 
