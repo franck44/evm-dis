@@ -59,12 +59,13 @@ module BuildCFGraph {
 
     decreases maxDepth
   {
-    if maxDepth == 0 then
-      //  Indicate maxdepth reached by a loop
-      BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))], |xs| - 1)
-    else if !xs[numSeg].HasExit(false) && !xs[numSeg].HasExit(true) then
+    
+    if !xs[numSeg].HasExit(false) && !xs[numSeg].HasExit(true) then
       //  no successors
       BoolCFGraph([], 0)
+    else if maxDepth == 0 then
+      //  Indicate maxdepth reached by a loop
+      BoolCFGraph([BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path, Some(numSeg)))], |xs| - 1)
     else
       //  DFS false
       var leftBranch :=
