@@ -55,7 +55,7 @@ module BinaryDecoder {
         if op.Args() > 0 then
           //  try to skip 2 * Args()
           if |s[2..]| < 2 * op.Args() || !IsHexString(s[2..][..2 * op.Args()]) then
-            p + [Instruction(Decode(INVALID), "not enough arguments for " + s[2..], next)]
+            p + [Instruction(Decode(INVALID), "not enough arguments for opcode " + op.name, next)]
           else
             assert |s[2..][2 * op.Args()..]| < |s|;
             // assert 
