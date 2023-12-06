@@ -14,7 +14,7 @@
 
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
-include "../../../src/dafny/utils/CFGraph.dfy"
+include "../../../src/dafny/utils/CFGraph.dfy" 
 include "./LoopResolver.dfy"
 /**
   * Computation of the CFG via some DFS.  
@@ -36,7 +36,7 @@ module BuildCFGraph {
     *   3. add tests for all states that are similar not only most
     *       ancient one.
     */
-  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph)
+  function BuildCFGV4(xs: seq<ValidLinSeg>, maxDepth: nat, jumpDests: seq<nat>, numSeg: nat := 0, s: ValidState := DEFAULT_VALIDSTATE, seen: seq<CFGNode> := [CFGNode([], Some(0))], seenPCs: seq<nat> := [0], path: seq<bool> := []): (g: BoolCFGraph)
     requires numSeg < |xs|
     requires forall k:: k in seen && k.seg.Some? ==> k.seg.v < |xs|
     requires |seen| == |seenPCs| == |path| + 1
@@ -70,13 +70,13 @@ module BuildCFGraph {
       //  DFS false
       var leftBranch :=
         if xs[numSeg].HasExit(false) then
-          var leftSucc := xs[numSeg].Run(s, false);
+          var leftSucc := xs[numSeg].Run(s, false, jumpDests);
           if leftSucc.EState? && leftSucc.PC() < Int.TWO_256 then
             var nextSeg := PCToSeg(xs, leftSucc.PC());
             if nextSeg.Some? then
               var src := CFGNode(path, Some(numSeg));
               var tgt := CFGNode(path + [false], nextSeg);
-              var gleft := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, leftSucc, seen + [tgt], seenPCs + [leftSucc.PC()], path + [false]);
+              var gleft := BuildCFGV4(xs, maxDepth - 1, jumpDests, nextSeg.v, leftSucc, seen + [tgt], seenPCs + [leftSucc.PC()], path + [false]);
               gleft.AddEdge(BoolEdge(src, false, tgt))
             else  //  Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), false, CFGNode(path + [false])) ])
@@ -90,7 +90,7 @@ module BuildCFGraph {
         if xs[numSeg].HasExit(true) then
           //  We must be in a JUMP or JUMPI segment
           assert xs[numSeg].JUMPSeg? || xs[numSeg].JUMPISeg?;
-          var rightSucc := xs[numSeg].Run(s, true);
+          var rightSucc := xs[numSeg].Run(s, true, jumpDests);
           if rightSucc.EState?  && rightSucc.PC() < Int.TWO_256 then
             var nextSeg := PCToSeg(xs, rightSucc.PC());
             //  Check if this pc has been seen before
@@ -100,12 +100,12 @@ module BuildCFGraph {
                 //  We have not seen this segment.pc before, continue to unfold
                 var src := CFGNode(path, Some(numSeg));
                 var tgt := CFGNode(path + [true], nextSeg);
-                var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()],path + [true]);
+                var gright := BuildCFGV4(xs, maxDepth - 1, jumpDests, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()],path + [true]);
                 gright.AddEdge(BoolEdge(src, true, tgt))
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC
-                match SafeLoopFound(xs, rightSucc.PC(), seen, path + [true]) // , path + [true])
+                match SafeLoopFound(xs, rightSucc.PC(), seen, path + [true], jumpDests) // , path + [true])
                 case Some(prev) =>
                   // the computation for this path sopts. We have discovered a
                   //    lasso with the loop part being invariant under
@@ -117,7 +117,7 @@ module BuildCFGraph {
                   //  Progress the DFS with a new node
                   var src := CFGNode(path, Some(numSeg));
                   var tgt := CFGNode(path + [true], nextSeg);
-                  var gright := BuildCFGV4(xs, maxDepth - 1, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()], path + [true]);
+                  var gright := BuildCFGV4(xs, maxDepth - 1, jumpDests, nextSeg.v, rightSucc, seen + [tgt], seenPCs + [rightSucc.PC()], path + [true]);
                   gright.AddEdge(BoolEdge(src, true, tgt))
             else // Next segment could not be found
               BoolCFGraph([ BoolEdge(CFGNode(path, Some(numSeg)), true, CFGNode(path + [true])) ])
