@@ -126,7 +126,7 @@ module Minimiser {
           case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
           case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
           ;
-        GenerateReducedTailRec(index + 1, newEdges)
+        GenerateReducedTailRec(index + 1, acc + newEdges)
     }
   }
 

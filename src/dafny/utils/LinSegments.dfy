@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "../utils/EVMOpcodes.dfy"
+include "../utils/EVMOpcodes.dfy" 
 include "../utils/MiscTypes.dfy"
 include "../utils/Instructions.dfy"
 include "../utils/State.dfy"

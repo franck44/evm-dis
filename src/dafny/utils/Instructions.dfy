@@ -72,7 +72,25 @@ module Instructions {
         op.Name() + (if |x| > 0 then " 0x" + x else "")
     }
 
-    /** Print as an HTMNL Table 
+    /**
+      * Print node information to simple HTML form.
+      */
+    function ToHTML(): string
+      requires this.IsValid()
+    {
+      var x: string := arg;
+      var cols := Colours(this);
+      var formattedAddress := seq(|Hex.NatToHex(address)| % 2, _ => '0') + Hex.NatToHex(address);
+
+      var insText := if op.opcode == INVALID then
+                       "<FONT color=\"" + cols.0 + "\">" + op.Name() + "</FONT>" + " " + x
+                     else
+                       "<FONT color=\"" + cols.0 + "\">" + op.Name() + "</FONT>"+ (if |x| > 0 then " 0x" + x else "");
+
+      "0x" + formattedAddress + ":" + insText + " <BR ALIGN=\"LEFT\"/>\n"
+    }
+
+    /**   Print as an HTMNL Table 
       *   The port tag should be of the PORT="something" 
       */
     function ToHTMLTable(entryPortTag: string := "", exitPortTag: string := ""): string
@@ -309,7 +327,7 @@ module Instructions {
         assert pushes == 0 && 2 <= pops <= 6;
         Right(pos' + 2)
 
-      case SysOp(_, _, _, _, pushes, pops) => 
+      case SysOp(_, _, _, _, pushes, pops) =>
         if pushes == 0 then
           Right(pos' + pops)
         else
@@ -431,8 +449,10 @@ module Instructions {
           s.PopN(pops).Skip(1)
         else Error("LogOp error")
 
-      case SysOp(_, _, _, _, pushes, pops) =>
-        if s.Size() >= pops && !cond then
+      case SysOp(_, op, _, _, pushes, pops) =>
+        if op == INVALID || op == STOP || op == REVERT then 
+            Error("SysOp error")
+        else if s.Size() >= pops && !cond then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("SysOp error")
     }

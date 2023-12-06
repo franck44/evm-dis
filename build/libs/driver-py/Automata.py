@@ -51,8 +51,8 @@ class Auto:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
         def lambda41_(forall_var_9_):
-            d_825_k_: tuple = forall_var_9_
-            return not ((d_825_k_) in ((self).transitions)) or ((((self).transitions)[d_825_k_]) < ((self).numStates))
+            d_831_k_: tuple = forall_var_9_
+            return not ((d_831_k_) in ((self).transitions)) or ((((self).transitions)[d_831_k_]) < ((self).numStates))
 
         return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda41_)
 
