@@ -163,7 +163,7 @@ module CFGraph {
     }
 
     /** Print edges to DOT format. */
-    function DOTPrintEdges(xe: seq<BoolEdge>, simpleOutput: bool, fancyExits: bool := false): string
+    function DOTPrintEdges(xe: seq<BoolEdge>, fancyExits: bool := false): string
     {
       if |xe| > 0 then xe[0].DOTPrint() + DOTPrintEdges(xe[1..], fancyExits)
       else ""
@@ -218,7 +218,7 @@ module CFGraph {
       requires forall k:: k in this.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
     {
       var prefix := "digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ";
-      prefix + DOTPrintNodes(xs, simpleOutput) + DOTPrintEdges(edges,  simpleOutput, fancyExits) + "}\n"
+      prefix + DOTPrintNodes(xs, simpleOutput) + DOTPrintEdges(edges, fancyExits) + "}\n"
     }
   }
 
