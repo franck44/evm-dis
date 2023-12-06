@@ -17,6 +17,7 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
+include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/WeakPre.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
@@ -41,6 +42,7 @@ module LoopTests {
   import opened LoopResolver
   import opened CFGraph
   import opened MiscTypes
+  import ProofObjectBuilder
 
   //  Helpers
 //   function BuildInitState(c: ValidCond): (s: AState)
@@ -99,14 +101,14 @@ module LoopTests {
     *   After computing the WPre of c, test that the post of
     *   the Wpre of c satisfies c.
     */
-  method TestPost(post: ValidCond, s: ValidLinSeg)
+  method TestPost(post: ValidCond, s: ValidLinSeg, jumps: seq<nat>)
     requires post.StCond?
   {
     var pre := s.WPre(post);
     expect !pre.StFalse?;
     var s0 := BuildInitState(pre);
     if s.HasExit(false) {
-      var s1 := s.Run(s0, false);
+      var s1 := s.Run(s0, false, jumps);
       expect s1.EState?;
       expect s1.Size() >= MaxSeqVal(post.TrackedPos());
       for k := 0 to post.Size() {
@@ -116,7 +118,7 @@ module LoopTests {
                Value(post.TrackedValAt(k));
       }
       if s.HasExit(true) {
-        var s1 := s.Run(s0, true);
+        var s1 := s.Run(s0, true, jumps);
         expect s1.EState?;
         expect s1.Size() >= MaxSeqVal(post.TrackedPos());
         for k := 0 to post.Size() {
@@ -173,17 +175,20 @@ module LoopTests {
     expect y[2].RETURNSeg?;
     expect y[3].JUMPSeg?;
 
+    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    expect jd == [0x02, 0x13];
+
     //  execute 0, 1, 3
     var s0 := DEFAULT_VALIDSTATE;
-    var s1 := y[0].Run(s0, false);
+    var s1 := y[0].Run(s0, false, jd);
     expect s1.EState?;
 
     expect s1.PC() == y[1].StartAddress();
-    var s2 := y[1].Run(s1, true);
+    var s2 := y[1].Run(s1, true, jd);
     expect s2.EState?;
 
     expect s2.PC() == y[3].StartAddress();
-    var s3 := y[3].Run(s2, true);
+    var s3 := y[3].Run(s2, true, jd);
     expect s3.EState?;
     expect s3.PC() == y[1].StartAddress();
 
@@ -215,6 +220,10 @@ module LoopTests {
     expect y[0].CONTSeg?;
     expect y[1].JUMPSeg?;
 
+
+    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    expect jd == [0x02];
+
     var xs := [false, true, true];
 
     //    Run the path specified by xs
@@ -239,7 +248,7 @@ module LoopTests {
       expect seg.Some?;
       print "Executing segment ", seg.v, " pc(", Hex.NatToHex(s.pc), ")", "\n";
       //   expect s.pc == y[xs[k].0].StartAddress();
-      s := y[seg.v].Run(s, xs[k]);
+      s := y[seg.v].Run(s, xs[k], jd);
       expect s.EState?;
       path := path + [xs[k]];
       seen := seen + [CFGNode(path, PCToSeg(y, s.pc))];
@@ -288,7 +297,7 @@ module LoopTests {
     print "s1 :", s1.ToString(), "\n";
 
     //  Run segments 1 from s1
-    var s2 := y[1].Run(s1, true);
+    var s2 := y[1].Run(s1, true, jd);
     print "s2 :", s2.ToString(), "\n";
     expect s2.EState?;
     var b := s2.Sat(StCond([0, 2], [0x02, 0x4]));
@@ -374,6 +383,10 @@ module LoopTests {
     var s := s0;
     assert s.pc == 0;
     expect y[0].StartAddress() == 0;
+
+    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    expect jd == [0x03, 0x14, 0x17, 0x2c]; 
+
     //  the nodes seen so far
     var seen: seq<CFGNode> := [CFGNode([], Some(0))];
     //  the corresponding PCs seen so far
@@ -391,7 +404,7 @@ module LoopTests {
       expect seg.Some?;
       print "Executing segment ", seg.v, " pc(", Hex.NatToHex(s.pc), ")", "\n";
       //   expect s.pc == y[xs[k].0].StartAddress();
-      s := y[seg.v].Run(s, xs[k]);
+      s := y[seg.v].Run(s, xs[k], jd);
       expect s.EState?;
       path := path + [xs[k]];
       seen := seen + [CFGNode(path, PCToSeg(y, s.pc))];
