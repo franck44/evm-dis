@@ -112,7 +112,7 @@ module Driver {
           var z := BuildProofObject(y); 
           PrintProofObjectToDafny(z, pathToDafnyLib);
         case Failure(m) =>
-      }
+      } 
 
       match optionParser.GetArgs("--cfg", optArgs) {
         case Success(m) =>
@@ -130,7 +130,8 @@ module Driver {
             if y[0].StartAddress() != 0 {
               print "Segment 0 does not start at address 0.\n";
             } else {
-              var g := BuildCFGV4(y, maxDepth) ;
+              var jumpDests := CollectJumpDests(y);
+              var g := BuildCFGV4(y, maxDepth, jumpDests) ;
               if optionParser.GetArgs("--raw", optArgs).Success? {
                 print "Raw CFG\n";
                 print g.DOTPrint(y);
