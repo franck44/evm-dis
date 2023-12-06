@@ -109,7 +109,7 @@ module Driver {
              case Success(p) => p[0]
              case Failure(_) => "") ;
           var y := SplitUpToTerminal(x, [], []);
-          var z := BuildProofObject(y);
+          var z := BuildProofObject(y); 
           PrintProofObjectToDafny(z, pathToDafnyLib);
         case Failure(m) =>
       }
@@ -136,7 +136,7 @@ module Driver {
                 print g.DOTPrint(y);
               } else {
                 var fancy := optionParser.GetArgs("--fancy", optArgs).Success?;
-                var simple := optionParser.GetArgs("--notable", optArgs).Success?;
+                var simple :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
                 print "Computing Minimised CFG\n";
                 var g' := g.Minimise();
                 expect g'.IsValid();
