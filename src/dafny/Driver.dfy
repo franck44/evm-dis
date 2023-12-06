@@ -58,6 +58,7 @@ module Driver {
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
     optionParser.AddOption("-r", "--raw", 1, "Display non-minimised and minimised CFGs");
     optionParser.AddOption("-f", "--fancy", 0, "Use exit and entry ports in segments do draw arrows (apply minimised only).");
+    optionParser.AddOption("-n", "--notable", 0, "Don't use tables to pretty-print DOT file. Reduces size of the DOT file.");
 
     if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
@@ -133,14 +134,16 @@ module Driver {
               if optionParser.GetArgs("--raw", optArgs).Success? {
                 print "Raw CFG\n";
                 print g.DOTPrint(y);
+              } else {
+                var fancy := optionParser.GetArgs("--fancy", optArgs).Success?;
+                var simple := optionParser.GetArgs("--notable", optArgs).Success?;
+                print "Computing Minimised CFG\n";
+                var g' := g.Minimise();
+                expect g'.IsValid();
+                assert g'.maxSegNum < |y|;
+                print "Minimised CFG\n";
+                print g'.DOTPrint(y, simple, fancy);
               }
-              var fancy := optionParser.GetArgs("--fancy", optArgs).Success?;
-              print "Computing Minimised CFG\n";
-              var g' := g.Minimise();
-              expect g'.IsValid();
-              assert g'.maxSegNum < |y|;
-              print "Minimised CFG\n";
-              print g'.DOTPrint(y, fancy);
             }
           }
         case Failure(m) =>
