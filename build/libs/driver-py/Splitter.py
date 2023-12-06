@@ -61,7 +61,7 @@ class default__:
                 elif (len(xs)) == (1):
                     return (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
                 elif default__.EndOfSegment(xs):
-                    d_707_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    d_713_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
                     in61_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
                     in62_ = _dafny.SeqWithoutIsStrInference([])
                     in63_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
@@ -86,9 +86,9 @@ class default__:
                 if (len(xs)) == (0):
                     return current
                 elif True:
-                    d_708_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
+                    d_714_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
                     in67_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in68_ = d_708_e_
+                    in68_ = d_714_e_
                     xs = in67_
                     current = in68_
                     raise _dafny.TailCall()
