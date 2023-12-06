@@ -450,7 +450,7 @@ module Instructions {
         else Error("LogOp error")
 
       case SysOp(_, op, _, _, pushes, pops) =>
-        if op == INVALID || op == STOP || op == RETURN || op == REVERT then 
+        if op == INVALID || op == STOP || op == REVERT then 
             Error("SysOp error")
         else if s.Size() >= pops && !cond then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
