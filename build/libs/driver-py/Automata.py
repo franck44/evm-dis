@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -51,8 +51,8 @@ class Auto:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
         def lambda41_(forall_var_9_):
-            d_833_k_: tuple = forall_var_9_
-            return not ((d_833_k_) in ((self).transitions)) or ((((self).transitions)[d_833_k_]) < ((self).numStates))
+            d_832_k_: tuple = forall_var_9_
+            return not ((d_832_k_) in ((self).transitions)) or ((((self).transitions)[d_832_k_]) < ((self).numStates))
 
         return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda41_)
 

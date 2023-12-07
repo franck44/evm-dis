@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -41,32 +41,32 @@ class default__:
                 if (max) == (index):
                     return p
                 elif True:
-                    def lambda37_(d_819_f_, d_820_max_, d_821_index_):
-                        def lambda38_(d_822_x_):
-                            return d_819_f_((d_822_x_) + (1))
+                    def lambda37_(d_818_f_, d_819_max_, d_820_index_):
+                        def lambda38_(d_821_x_):
+                            return d_818_f_((d_821_x_) + (1))
 
                         return lambda38_
 
-                    d_818_f_k_ = lambda37_(f, max, index)
-                    d_823_p1_ = (p).SplitAt(f(0), 0)
-                    in103_ = d_823_p1_
-                    in104_ = d_818_f_k_
-                    in105_ = (index) + (1)
-                    in106_ = max
-                    p = in103_
-                    f = in104_
-                    index = in105_
-                    max = in106_
+                    d_817_f_k_ = lambda37_(f, max, index)
+                    d_822_p1_ = (p).SplitAt(f(0), 0)
+                    in102_ = d_822_p1_
+                    in103_ = d_817_f_k_
+                    in104_ = (index) + (1)
+                    in105_ = max
+                    p = in102_
+                    f = in103_
+                    index = in104_
+                    max = in105_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def PrintPartition(p):
         hi3_ = len((p).elem)
-        for d_824_k_ in range(0, hi3_):
-            d_825_setToSeq_: _dafny.Seq
-            d_825_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_824_k_])
-            _dafny.print(_dafny.string_of(d_825_setToSeq_))
+        for d_823_k_ in range(0, hi3_):
+            d_824_setToSeq_: _dafny.Seq
+            d_824_setToSeq_ = SeqOfSets.default__.SetToSequence(((p).elem)[d_823_k_])
+            _dafny.print(_dafny.string_of(d_824_setToSeq_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
 
@@ -88,17 +88,17 @@ class Partition:
     def is_Partition(self) -> bool:
         return isinstance(self, Partition_Partition)
     def SplitAt(self, f, index):
-        d_826_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
-        if (((d_826_r_)[0]) != (_dafny.Set({}))) and (((d_826_r_)[1]) != (_dafny.Set({}))):
-            d_827_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_826_r_)[0], (d_826_r_)[1]]))
-            d_828_pp_ = Partition_Partition((self).n, d_827_j_)
-            return d_828_pp_
-        elif ((d_826_r_)[0]) != (_dafny.Set({})):
-            d_829_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_826_r_)[0]]))
-            return Partition_Partition((self).n, d_829_j_)
+        d_825_r_ = SeqOfSets.default__.SplitSet(((self).elem)[index], f)
+        if (((d_825_r_)[0]) != (_dafny.Set({}))) and (((d_825_r_)[1]) != (_dafny.Set({}))):
+            d_826_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_825_r_)[0], (d_825_r_)[1]]))
+            d_827_pp_ = Partition_Partition((self).n, d_826_j_)
+            return d_827_pp_
+        elif ((d_825_r_)[0]) != (_dafny.Set({})):
+            d_828_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_825_r_)[0]]))
+            return Partition_Partition((self).n, d_828_j_)
         elif True:
-            d_830_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_826_r_)[1]]))
-            return Partition_Partition((self).n, d_830_j_)
+            d_829_j_ = ((_dafny.SeqWithoutIsStrInference(((self).elem)[:index:])) + (_dafny.SeqWithoutIsStrInference(((self).elem)[(index) + (1)::]))) + (_dafny.SeqWithoutIsStrInference([(d_825_r_)[1]]))
+            return Partition_Partition((self).n, d_829_j_)
 
     def GetClass(self, x, index):
         _this = self
@@ -107,13 +107,13 @@ class Partition:
                 if (x) in (((_this).elem)[index]):
                     return index
                 elif True:
-                    in107_ = _this
-                    in108_ = x
-                    in109_ = (index) + (1)
-                    _this = in107_
+                    in106_ = _this
+                    in107_ = x
+                    in108_ = (index) + (1)
+                    _this = in106_
                     
-                    x = in108_
-                    index = in109_
+                    x = in107_
+                    index = in108_
                     raise _dafny.TailCall()
                 break
 
@@ -123,11 +123,11 @@ class Partition:
     def Refines2(self, p):
         def lambda39_(forall_var_8_):
             def lambda40_(exists_var_0_):
-                d_832_c_: _dafny.Set = exists_var_0_
-                return ((d_832_c_) in ((p).elem)) and ((d_831_k_).issubset(d_832_c_))
+                d_831_c_: _dafny.Set = exists_var_0_
+                return ((d_831_c_) in ((p).elem)) and ((d_830_k_).issubset(d_831_c_))
 
-            d_831_k_: _dafny.Set = forall_var_8_
-            return not ((d_831_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda40_))
+            d_830_k_: _dafny.Set = forall_var_8_
+            return not ((d_830_k_) in ((self).elem)) or (_dafny.quantifier(((p).elem).UniqueElements, False, lambda40_))
 
         return _dafny.quantifier(((self).elem).UniqueElements, True, lambda39_)
 

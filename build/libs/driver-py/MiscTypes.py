@@ -6,7 +6,6 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 
 # Module: MiscTypes
 
@@ -16,33 +15,33 @@ class default__:
 
     @staticmethod
     def Zip(u, v):
-        return _dafny.SeqWithoutIsStrInference([((u)[d_1_i_], (v)[d_1_i_]) for d_1_i_ in range(len(u))])
+        return _dafny.SeqWithoutIsStrInference([((u)[d_0_i_], (v)[d_0_i_]) for d_0_i_ in range(len(u))])
 
     @staticmethod
     def UnZip(x):
-        d_2_x0_ = _dafny.SeqWithoutIsStrInference([((x)[d_3_i_])[0] for d_3_i_ in range(len(x))])
-        d_4_x1_ = _dafny.SeqWithoutIsStrInference([((x)[d_5_i_])[1] for d_5_i_ in range(len(x))])
-        return (d_2_x0_, d_4_x1_)
+        d_1_x0_ = _dafny.SeqWithoutIsStrInference([((x)[d_2_i_])[0] for d_2_i_ in range(len(x))])
+        d_3_x1_ = _dafny.SeqWithoutIsStrInference([((x)[d_4_i_])[1] for d_4_i_ in range(len(x))])
+        return (d_1_x0_, d_3_x1_)
 
     @staticmethod
     def Filter(u, f):
-        d_6___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_5___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(u)) == (0):
-                    return (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_5___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif f((u)[0]):
-                    d_6___accumulator_ = (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([(u)[0]]))
-                    in1_ = _dafny.SeqWithoutIsStrInference((u)[1::])
-                    in2_ = f
-                    u = in1_
-                    f = in2_
+                    d_5___accumulator_ = (d_5___accumulator_) + (_dafny.SeqWithoutIsStrInference([(u)[0]]))
+                    in0_ = _dafny.SeqWithoutIsStrInference((u)[1::])
+                    in1_ = f
+                    u = in0_
+                    f = in1_
                     raise _dafny.TailCall()
                 elif True:
-                    in3_ = _dafny.SeqWithoutIsStrInference((u)[1::])
-                    in4_ = f
-                    u = in3_
-                    f = in4_
+                    in2_ = _dafny.SeqWithoutIsStrInference((u)[1::])
+                    in3_ = f
+                    u = in2_
+                    f = in3_
                     raise _dafny.TailCall()
                 break
 
@@ -55,16 +54,16 @@ class default__:
                 elif f((xs)[0]):
                     return True
                 elif True:
-                    in5_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in6_ = f
-                    xs = in5_
-                    f = in6_
+                    in4_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in5_ = f
+                    xs = in4_
+                    f = in5_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def Map(t, f):
-        return _dafny.SeqWithoutIsStrInference([f((t)[d_7_i_]) for d_7_i_ in range(len(t))])
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_6_i_]) for d_6_i_ in range(len(t))])
 
     @staticmethod
     def Find(x, t):
@@ -79,12 +78,12 @@ class default__:
                 elif ((x)[0]) == (t):
                     return Option_Some(i)
                 elif True:
-                    in7_ = _dafny.SeqWithoutIsStrInference((x)[1::])
-                    in8_ = t
-                    in9_ = (i) + (1)
-                    x = in7_
-                    t = in8_
-                    i = in9_
+                    in6_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    in7_ = t
+                    in8_ = (i) + (1)
+                    x = in6_
+                    t = in7_
+                    i = in8_
                     raise _dafny.TailCall()
                 break
 

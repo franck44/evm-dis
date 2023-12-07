@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -61,21 +61,21 @@ class default__:
                 elif (len(xs)) == (1):
                     return (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
                 elif default__.EndOfSegment(xs):
-                    d_714_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in62_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in63_ = _dafny.SeqWithoutIsStrInference([])
-                    in64_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
-                    xs = in62_
-                    curseq = in63_
-                    collected = in64_
+                    d_713_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in61_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in62_ = _dafny.SeqWithoutIsStrInference([])
+                    in63_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
+                    xs = in61_
+                    curseq = in62_
+                    collected = in63_
                     raise _dafny.TailCall()
                 elif True:
-                    in65_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in66_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in67_ = collected
-                    xs = in65_
-                    curseq = in66_
-                    collected = in67_
+                    in64_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in65_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in66_ = collected
+                    xs = in64_
+                    curseq = in65_
+                    collected = in66_
                     raise _dafny.TailCall()
                 break
 
@@ -86,11 +86,11 @@ class default__:
                 if (len(xs)) == (0):
                     return current
                 elif True:
-                    d_715_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
-                    in68_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in69_ = d_715_e_
-                    xs = in68_
-                    current = in69_
+                    d_714_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
+                    in67_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in68_ = d_714_e_
+                    xs = in67_
+                    current = in68_
                     raise _dafny.TailCall()
                 break
 

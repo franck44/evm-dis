@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -60,25 +60,25 @@ class ProofObj:
     def is_TERMINAL(self) -> bool:
         return isinstance(self, ProofObj_TERMINAL)
     def IsValid(self):
-        source49_ = self
-        if source49_.is_JUMP:
-            d_721___mcc_h0_ = source49_.s
-            d_722___mcc_h1_ = source49_.wpOp
-            d_723___mcc_h2_ = source49_.wpCap
-            d_724___mcc_h3_ = source49_.tgt
-            d_725___mcc_h4_ = source49_.stacks
+        source48_ = self
+        if source48_.is_JUMP:
+            d_720___mcc_h0_ = source48_.s
+            d_721___mcc_h1_ = source48_.wpOp
+            d_722___mcc_h2_ = source48_.wpCap
+            d_723___mcc_h3_ = source48_.tgt
+            d_724___mcc_h4_ = source48_.stacks
             return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
-        elif source49_.is_CONT:
-            d_726___mcc_h5_ = source49_.s
-            d_727___mcc_h6_ = source49_.wpOp
-            d_728___mcc_h7_ = source49_.wpCap
-            d_729___mcc_h8_ = source49_.stacks
+        elif source48_.is_CONT:
+            d_725___mcc_h5_ = source48_.s
+            d_726___mcc_h6_ = source48_.wpOp
+            d_727___mcc_h7_ = source48_.wpCap
+            d_728___mcc_h8_ = source48_.stacks
             return ((self).s).is_CONTSeg
         elif True:
-            d_730___mcc_h9_ = source49_.s
-            d_731___mcc_h10_ = source49_.wpOp
-            d_732___mcc_h11_ = source49_.wpCap
-            d_733___mcc_h12_ = source49_.stacks
+            d_729___mcc_h9_ = source48_.s
+            d_730___mcc_h10_ = source48_.wpOp
+            d_731___mcc_h11_ = source48_.wpCap
+            d_732___mcc_h12_ = source48_.stacks
             return ((((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)) or (((self).s).is_INVALIDSeg)
 
     def CollectJumpDest(self):

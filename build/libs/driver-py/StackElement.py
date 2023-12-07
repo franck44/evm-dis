@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -29,13 +29,13 @@ class StackElem:
     def is_Random(self) -> bool:
         return isinstance(self, StackElem_Random)
     def ToString(self):
-        source25_ = self
-        if source25_.is_Value:
-            d_123___mcc_h0_ = source25_.v
-            d_124_v_ = d_123___mcc_h0_
-            return (((Int.default__.NatToString(d_124_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_124_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+        source26_ = self
+        if source26_.is_Value:
+            d_128___mcc_h0_ = source26_.v
+            d_129_v_ = d_128___mcc_h0_
+            return (((Int.default__.NatToString(d_129_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_129_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
         elif True:
-            d_125___mcc_h1_ = source25_.s
+            d_130___mcc_h1_ = source26_.s
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
 
     def Extract(self):

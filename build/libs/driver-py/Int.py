@@ -6,6 +6,7 @@ from itertools import count
 import module_
 import _dafny
 import System_
+import MiscTypes
 
 # Module: Int
 
@@ -36,15 +37,15 @@ class default__:
 
     @staticmethod
     def NatToString(n):
-        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_7___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_0___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_7___accumulator_)
                 elif True:
-                    d_0___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_0___accumulator_)
-                    in0_ = _dafny.euclidian_division(n, 10)
-                    n = in0_
+                    d_7___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_7___accumulator_)
+                    in9_ = _dafny.euclidian_division(n, 10)
+                    n = in9_
                     raise _dafny.TailCall()
                 break
 
@@ -79,6 +80,57 @@ class default__:
             return _dafny.CodePoint('8')
         elif True:
             return _dafny.CodePoint('9')
+
+    @staticmethod
+    def CharToDigit(c):
+        if (c) == (_dafny.CodePoint('0')):
+            return MiscTypes.Option_Some(0)
+        elif (c) == (_dafny.CodePoint('1')):
+            return MiscTypes.Option_Some(1)
+        elif (c) == (_dafny.CodePoint('2')):
+            return MiscTypes.Option_Some(2)
+        elif (c) == (_dafny.CodePoint('3')):
+            return MiscTypes.Option_Some(3)
+        elif (c) == (_dafny.CodePoint('4')):
+            return MiscTypes.Option_Some(4)
+        elif (c) == (_dafny.CodePoint('5')):
+            return MiscTypes.Option_Some(5)
+        elif (c) == (_dafny.CodePoint('6')):
+            return MiscTypes.Option_Some(6)
+        elif (c) == (_dafny.CodePoint('7')):
+            return MiscTypes.Option_Some(7)
+        elif (c) == (_dafny.CodePoint('8')):
+            return MiscTypes.Option_Some(8)
+        elif (c) == (_dafny.CodePoint('9')):
+            return MiscTypes.Option_Some(9)
+        elif True:
+            return MiscTypes.Option_None()
+
+    @staticmethod
+    def IsNatNumber(s):
+        while True:
+            with _dafny.label():
+                if (len(s)) == (1):
+                    return (default__.CharToDigit((s)[0])).is_Some
+                elif True:
+                    source0_ = default__.CharToDigit((s)[0])
+                    if source0_.is_None:
+                        return False
+                    elif True:
+                        d_8___mcc_h0_ = source0_.v
+                        d_9_v_ = d_8___mcc_h0_
+                        in10_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                        s = in10_
+                        raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def StringToNat(s, lastVal):
+        if (len(s)) == (1):
+            return (default__.CharToDigit((s)[0])).v
+        elif True:
+            d_10_v_ = (default__.CharToDigit((s)[(len(s)) - (1)])).v
+            return (d_10_v_) + ((10) * (default__.StringToNat(_dafny.SeqWithoutIsStrInference((s)[:(len(s)) - (1):]), 0)))
 
     @_dafny.classproperty
     def TWO__8(instance):

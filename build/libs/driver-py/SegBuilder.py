@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -38,19 +38,19 @@ class default__:
                 if (len(xs)) == (0):
                     return MiscTypes.Either_Right(pos)
                 elif True:
-                    d_716_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
-                    source48_ = d_716_x_
-                    if source48_.is_Left:
-                        d_717___mcc_h0_ = source48_.l
-                        d_718_v_ = d_717___mcc_h0_
-                        return MiscTypes.Either_Left(d_718_v_)
+                    d_715_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
+                    source47_ = d_715_x_
+                    if source47_.is_Left:
+                        d_716___mcc_h0_ = source47_.l
+                        d_717_v_ = d_716___mcc_h0_
+                        return MiscTypes.Either_Left(d_717_v_)
                     elif True:
-                        d_719___mcc_h1_ = source48_.r
-                        d_720_v_ = d_719___mcc_h1_
-                        in70_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                        in71_ = d_720_v_
-                        xs = in70_
-                        pos = in71_
+                        d_718___mcc_h1_ = source47_.r
+                        d_719_v_ = d_718___mcc_h1_
+                        in69_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                        in70_ = d_719_v_
+                        xs = in69_
+                        pos = in70_
                         raise _dafny.TailCall()
                 break
 

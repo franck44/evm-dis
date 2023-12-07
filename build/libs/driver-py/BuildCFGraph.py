@@ -6,8 +6,8 @@ from itertools import count
 import module_
 import _dafny
 import System_
-import Int
 import MiscTypes
+import Int
 import EVMConstants
 import EVMOpcodes
 import OpcodeDecoder
@@ -106,82 +106,82 @@ class default__:
             return (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(path, MiscTypes.Option_Some(numSeg)), True, CFGraph.CFGNode_CFGNode(path, MiscTypes.Option_Some(numSeg)))]), (len(xs)) - (1)), seenStates)
         elif True:
             def iife37_(_pat_let18_0):
-                def iife38_(d_980_leftSucc_):
+                def iife38_(d_979_leftSucc_):
                     def iife39_(_pat_let19_0):
-                        def iife40_(d_981_nextSeg_):
+                        def iife40_(d_980_nextSeg_):
                             def iife41_(_pat_let20_0):
-                                def iife42_(d_982_src_):
+                                def iife42_(d_981_src_):
                                     def iife43_(_pat_let21_0):
-                                        def iife44_(d_983_tgt_):
+                                        def iife44_(d_982_tgt_):
                                             def iife45_(_pat_let22_0):
-                                                def iife46_(d_984_newSeenSegs_):
+                                                def iife46_(d_983_newSeenSegs_):
                                                     def iife47_(_pat_let23_0):
-                                                        def iife48_(d_985_gleft_):
-                                                            return (((d_985_gleft_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_982_src_, False, d_983_tgt_)), (d_985_gleft_)[1])
+                                                        def iife48_(d_984_gleft_):
+                                                            return (((d_984_gleft_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_981_src_, False, d_982_tgt_)), (d_984_gleft_)[1])
                                                         return iife48_(_pat_let23_0)
-                                                    return iife47_(default__.BuildCFGV5(pat_let_tv12_, (pat_let_tv13_) - (1), pat_let_tv14_, (d_981_nextSeg_).v, d_980_leftSucc_, (pat_let_tv15_) + (_dafny.SeqWithoutIsStrInference([d_983_tgt_])), (pat_let_tv16_) + (_dafny.SeqWithoutIsStrInference([(d_980_leftSucc_).PC()])), (pat_let_tv17_) + (_dafny.SeqWithoutIsStrInference([False])), d_984_newSeenSegs_))
+                                                    return iife47_(default__.BuildCFGV5(pat_let_tv12_, (pat_let_tv13_) - (1), pat_let_tv14_, (d_980_nextSeg_).v, d_979_leftSucc_, (pat_let_tv15_) + (_dafny.SeqWithoutIsStrInference([d_982_tgt_])), (pat_let_tv16_) + (_dafny.SeqWithoutIsStrInference([(d_979_leftSucc_).PC()])), (pat_let_tv17_) + (_dafny.SeqWithoutIsStrInference([False])), d_983_newSeenSegs_))
                                                 return iife46_(_pat_let22_0)
-                                            return iife45_((pat_let_tv11_).set(d_980_leftSucc_, d_983_tgt_))
+                                            return iife45_((pat_let_tv11_).set(d_979_leftSucc_, d_982_tgt_))
                                         return iife44_(_pat_let21_0)
-                                    return iife43_(CFGraph.CFGNode_CFGNode((pat_let_tv10_) + (_dafny.SeqWithoutIsStrInference([False])), d_981_nextSeg_))
+                                    return iife43_(CFGraph.CFGNode_CFGNode((pat_let_tv10_) + (_dafny.SeqWithoutIsStrInference([False])), d_980_nextSeg_))
                                 return iife42_(_pat_let20_0)
-                            return (iife41_(CFGraph.CFGNode_CFGNode(pat_let_tv8_, MiscTypes.Option_Some(pat_let_tv9_))) if (d_981_nextSeg_).is_Some else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv18_, MiscTypes.Option_Some(pat_let_tv19_)), False, CFGraph.CFGNode_CFGNode((pat_let_tv20_) + (_dafny.SeqWithoutIsStrInference([False])), MiscTypes.Option_None()))]), 0), pat_let_tv21_))
+                            return (iife41_(CFGraph.CFGNode_CFGNode(pat_let_tv8_, MiscTypes.Option_Some(pat_let_tv9_))) if (d_980_nextSeg_).is_Some else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv18_, MiscTypes.Option_Some(pat_let_tv19_)), False, CFGraph.CFGNode_CFGNode((pat_let_tv20_) + (_dafny.SeqWithoutIsStrInference([False])), MiscTypes.Option_None()))]), 0), pat_let_tv21_))
                         return iife40_(_pat_let19_0)
-                    return ((CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv2_, MiscTypes.Option_Some(pat_let_tv3_)), False, (pat_let_tv4_)[d_980_leftSucc_])]), 0), pat_let_tv5_) if (d_980_leftSucc_) in (pat_let_tv6_) else (iife39_(LinSegments.default__.PCToSeg(pat_let_tv7_, (d_980_leftSucc_).PC(), 0)) if ((d_980_leftSucc_).is_EState) and (((d_980_leftSucc_).PC()) < (Int.default__.TWO__256)) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv22_, MiscTypes.Option_Some(pat_let_tv23_)), False, CFGraph.CFGNode_CFGNode((pat_let_tv24_) + (_dafny.SeqWithoutIsStrInference([False])), MiscTypes.Option_None()))]), 0), pat_let_tv25_)))
+                    return ((CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv2_, MiscTypes.Option_Some(pat_let_tv3_)), False, (pat_let_tv4_)[d_979_leftSucc_])]), 0), pat_let_tv5_) if (d_979_leftSucc_) in (pat_let_tv6_) else (iife39_(LinSegments.default__.PCToSeg(pat_let_tv7_, (d_979_leftSucc_).PC(), 0)) if ((d_979_leftSucc_).is_EState) and (((d_979_leftSucc_).PC()) < (Int.default__.TWO__256)) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv22_, MiscTypes.Option_Some(pat_let_tv23_)), False, CFGraph.CFGNode_CFGNode((pat_let_tv24_) + (_dafny.SeqWithoutIsStrInference([False])), MiscTypes.Option_None()))]), 0), pat_let_tv25_)))
                 return iife38_(_pat_let18_0)
-            d_979_leftBranch_ = (iife37_(((xs)[numSeg]).Run(s, False, jumpDests)) if ((xs)[numSeg]).HasExit(False) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([]), 0), seenStates))
-            d_986_newSeenStates_ = (d_979_leftBranch_)[1]
+            d_978_leftBranch_ = (iife37_(((xs)[numSeg]).Run(s, False, jumpDests)) if ((xs)[numSeg]).HasExit(False) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([]), 0), seenStates))
+            d_985_newSeenStates_ = (d_978_leftBranch_)[1]
             def iife49_(_pat_let24_0):
-                def iife50_(d_988_rightSucc_):
+                def iife50_(d_987_rightSucc_):
                     def iife51_(_pat_let25_0):
-                        def iife52_(d_989_nextSeg_):
+                        def iife52_(d_988_nextSeg_):
                             def iife53_(_pat_let26_0):
-                                def iife54_(d_990_src_):
+                                def iife54_(d_989_src_):
                                     def iife55_(_pat_let27_0):
-                                        def iife56_(d_991_tgt_):
+                                        def iife56_(d_990_tgt_):
                                             def iife57_(_pat_let28_0):
-                                                def iife58_(d_992_newSeenSegs_):
+                                                def iife58_(d_991_newSeenSegs_):
                                                     def iife59_(_pat_let29_0):
-                                                        def iife60_(d_993_gright_):
-                                                            return (((d_993_gright_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_990_src_, True, d_991_tgt_)), (d_993_gright_)[1])
+                                                        def iife60_(d_992_gright_):
+                                                            return (((d_992_gright_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_989_src_, True, d_990_tgt_)), (d_992_gright_)[1])
                                                         return iife60_(_pat_let29_0)
-                                                    return iife59_(default__.BuildCFGV5(pat_let_tv32_, (pat_let_tv33_) - (1), pat_let_tv34_, (d_989_nextSeg_).v, d_988_rightSucc_, (pat_let_tv35_) + (_dafny.SeqWithoutIsStrInference([d_991_tgt_])), (pat_let_tv36_) + (_dafny.SeqWithoutIsStrInference([(d_988_rightSucc_).PC()])), (pat_let_tv37_) + (_dafny.SeqWithoutIsStrInference([True])), d_992_newSeenSegs_))
+                                                    return iife59_(default__.BuildCFGV5(pat_let_tv32_, (pat_let_tv33_) - (1), pat_let_tv34_, (d_988_nextSeg_).v, d_987_rightSucc_, (pat_let_tv35_) + (_dafny.SeqWithoutIsStrInference([d_990_tgt_])), (pat_let_tv36_) + (_dafny.SeqWithoutIsStrInference([(d_987_rightSucc_).PC()])), (pat_let_tv37_) + (_dafny.SeqWithoutIsStrInference([True])), d_991_newSeenSegs_))
                                                 return iife58_(_pat_let28_0)
-                                            return iife57_((d_986_newSeenStates_).set(d_988_rightSucc_, d_991_tgt_))
+                                            return iife57_((d_985_newSeenStates_).set(d_987_rightSucc_, d_990_tgt_))
                                         return iife56_(_pat_let27_0)
-                                    return iife55_(CFGraph.CFGNode_CFGNode((pat_let_tv31_) + (_dafny.SeqWithoutIsStrInference([True])), d_989_nextSeg_))
+                                    return iife55_(CFGraph.CFGNode_CFGNode((pat_let_tv31_) + (_dafny.SeqWithoutIsStrInference([True])), d_988_nextSeg_))
                                 return iife54_(_pat_let26_0)
-                            def lambda59_(source71_):
-                                if source71_.is_None:
+                            def lambda59_(source70_):
+                                if source70_.is_None:
                                     def iife61_(_pat_let30_0):
-                                        def iife62_(d_994_src_):
+                                        def iife62_(d_993_src_):
                                             def iife63_(_pat_let31_0):
-                                                def iife64_(d_995_tgt_):
+                                                def iife64_(d_994_tgt_):
                                                     def iife65_(_pat_let32_0):
-                                                        def iife66_(d_996_newSeenSegs_):
+                                                        def iife66_(d_995_newSeenSegs_):
                                                             def iife67_(_pat_let33_0):
-                                                                def iife68_(d_997_gright_):
-                                                                    return (((d_997_gright_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_994_src_, True, d_995_tgt_)), (d_997_gright_)[1])
+                                                                def iife68_(d_996_gright_):
+                                                                    return (((d_996_gright_)[0]).AddEdge(CFGraph.BoolEdge_BoolEdge(d_993_src_, True, d_994_tgt_)), (d_996_gright_)[1])
                                                                 return iife68_(_pat_let33_0)
-                                                            return iife67_(default__.BuildCFGV5(pat_let_tv42_, (pat_let_tv43_) - (1), pat_let_tv44_, (d_989_nextSeg_).v, d_988_rightSucc_, (pat_let_tv45_) + (_dafny.SeqWithoutIsStrInference([d_995_tgt_])), (pat_let_tv46_) + (_dafny.SeqWithoutIsStrInference([(d_988_rightSucc_).PC()])), (pat_let_tv47_) + (_dafny.SeqWithoutIsStrInference([True])), d_996_newSeenSegs_))
+                                                            return iife67_(default__.BuildCFGV5(pat_let_tv42_, (pat_let_tv43_) - (1), pat_let_tv44_, (d_988_nextSeg_).v, d_987_rightSucc_, (pat_let_tv45_) + (_dafny.SeqWithoutIsStrInference([d_994_tgt_])), (pat_let_tv46_) + (_dafny.SeqWithoutIsStrInference([(d_987_rightSucc_).PC()])), (pat_let_tv47_) + (_dafny.SeqWithoutIsStrInference([True])), d_995_newSeenSegs_))
                                                         return iife66_(_pat_let32_0)
-                                                    return iife65_((d_986_newSeenStates_).set(d_988_rightSucc_, d_995_tgt_))
+                                                    return iife65_((d_985_newSeenStates_).set(d_987_rightSucc_, d_994_tgt_))
                                                 return iife64_(_pat_let31_0)
-                                            return iife63_(CFGraph.CFGNode_CFGNode((pat_let_tv41_) + (_dafny.SeqWithoutIsStrInference([True])), d_989_nextSeg_))
+                                            return iife63_(CFGraph.CFGNode_CFGNode((pat_let_tv41_) + (_dafny.SeqWithoutIsStrInference([True])), d_988_nextSeg_))
                                         return iife62_(_pat_let30_0)
                                     return iife61_(CFGraph.CFGNode_CFGNode(pat_let_tv39_, MiscTypes.Option_Some(pat_let_tv40_)))
                                 elif True:
-                                    d_998___mcc_h0_ = source71_.v
+                                    d_997___mcc_h0_ = source70_.v
                                     def iife69_(_pat_let34_0):
-                                        def iife70_(d_999_prev_):
-                                            return (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv48_, MiscTypes.Option_Some(pat_let_tv49_)), True, d_999_prev_)]), len(pat_let_tv50_)), d_986_newSeenStates_)
+                                        def iife70_(d_998_prev_):
+                                            return (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv48_, MiscTypes.Option_Some(pat_let_tv49_)), True, d_998_prev_)]), len(pat_let_tv50_)), d_985_newSeenStates_)
                                         return iife70_(_pat_let34_0)
-                                    return iife69_(d_998___mcc_h0_)
+                                    return iife69_(d_997___mcc_h0_)
 
-                            return (((CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv27_, MiscTypes.Option_Some(pat_let_tv28_)), True, (d_986_newSeenStates_)[d_988_rightSucc_])]), 0), d_986_newSeenStates_) if (d_988_rightSucc_) in (d_986_newSeenStates_) else (iife53_(CFGraph.CFGNode_CFGNode(pat_let_tv29_, MiscTypes.Option_Some(pat_let_tv30_))) if ((d_988_rightSucc_).PC()) not in (pat_let_tv38_) else lambda59_(LoopResolver.default__.SafeLoopFound(pat_let_tv51_, (d_988_rightSucc_).PC(), pat_let_tv52_, (pat_let_tv53_) + (_dafny.SeqWithoutIsStrInference([True])), pat_let_tv54_)))) if (d_989_nextSeg_).is_Some else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv55_, MiscTypes.Option_Some(pat_let_tv56_)), True, CFGraph.CFGNode_CFGNode((pat_let_tv57_) + (_dafny.SeqWithoutIsStrInference([True])), MiscTypes.Option_None()))]), 0), d_986_newSeenStates_))
+                            return (((CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv27_, MiscTypes.Option_Some(pat_let_tv28_)), True, (d_985_newSeenStates_)[d_987_rightSucc_])]), 0), d_985_newSeenStates_) if (d_987_rightSucc_) in (d_985_newSeenStates_) else (iife53_(CFGraph.CFGNode_CFGNode(pat_let_tv29_, MiscTypes.Option_Some(pat_let_tv30_))) if ((d_987_rightSucc_).PC()) not in (pat_let_tv38_) else lambda59_(LoopResolver.default__.SafeLoopFound(pat_let_tv51_, (d_987_rightSucc_).PC(), pat_let_tv52_, (pat_let_tv53_) + (_dafny.SeqWithoutIsStrInference([True])), pat_let_tv54_)))) if (d_988_nextSeg_).is_Some else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv55_, MiscTypes.Option_Some(pat_let_tv56_)), True, CFGraph.CFGNode_CFGNode((pat_let_tv57_) + (_dafny.SeqWithoutIsStrInference([True])), MiscTypes.Option_None()))]), 0), d_985_newSeenStates_))
                         return iife52_(_pat_let25_0)
-                    return (iife51_(LinSegments.default__.PCToSeg(pat_let_tv26_, (d_988_rightSucc_).PC(), 0)) if ((d_988_rightSucc_).is_EState) and (((d_988_rightSucc_).PC()) < (Int.default__.TWO__256)) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv58_, MiscTypes.Option_Some(pat_let_tv59_)), True, CFGraph.CFGNode_CFGNode((pat_let_tv60_) + (_dafny.SeqWithoutIsStrInference([True])), MiscTypes.Option_None()))]), 0), d_986_newSeenStates_))
+                    return (iife51_(LinSegments.default__.PCToSeg(pat_let_tv26_, (d_987_rightSucc_).PC(), 0)) if ((d_987_rightSucc_).is_EState) and (((d_987_rightSucc_).PC()) < (Int.default__.TWO__256)) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([CFGraph.BoolEdge_BoolEdge(CFGraph.CFGNode_CFGNode(pat_let_tv58_, MiscTypes.Option_Some(pat_let_tv59_)), True, CFGraph.CFGNode_CFGNode((pat_let_tv60_) + (_dafny.SeqWithoutIsStrInference([True])), MiscTypes.Option_None()))]), 0), d_985_newSeenStates_))
                 return iife50_(_pat_let24_0)
-            d_987_rightBranch_ = (iife49_(((xs)[numSeg]).Run(s, True, jumpDests)) if ((xs)[numSeg]).HasExit(True) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([]), 0), d_986_newSeenStates_))
-            return (CFGraph.BoolCFGraph_BoolCFGraph((((d_979_leftBranch_)[0]).edges) + (((d_987_rightBranch_)[0]).edges), (len(xs)) - (1)), (d_987_rightBranch_)[1])
+            d_986_rightBranch_ = (iife49_(((xs)[numSeg]).Run(s, True, jumpDests)) if ((xs)[numSeg]).HasExit(True) else (CFGraph.BoolCFGraph_BoolCFGraph(_dafny.SeqWithoutIsStrInference([]), 0), d_985_newSeenStates_))
+            return (CFGraph.BoolCFGraph_BoolCFGraph((((d_978_leftBranch_)[0]).edges) + (((d_986_rightBranch_)[0]).edges), (len(xs)) - (1)), (d_986_rightBranch_)[1])
 
