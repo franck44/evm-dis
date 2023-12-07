@@ -12,7 +12,11 @@
  * under the License.
  */
 
+include "./MiscTypes.dfy"
+
 module Int {
+
+  import opened MiscTypes
 
   const TWO_4   : nat := 0x10
   // const TWO_7   : nat := 0x0_80
@@ -112,7 +116,7 @@ module Int {
     else NatToString(n / 10) + [DigitToString(n % 10)]
   }
 
-   function IntToString(n: int): string
+  function IntToString(n: int): string
   {
     if n == 0 then "0"
     else if n > 0 then "+" + NatToString(n)
@@ -138,4 +142,48 @@ module Int {
     case 8 => '8'
     case 9 => '9'
   }
+
+  /**
+    *  Decode a char into a digit.
+    */
+  function CharToDigit(c: char): (r: Option<nat>)
+    ensures r.Some? ==> 0 <= r.v <= 9
+  {
+    match c
+    case '0' => Some(0)
+    case '1' => Some(1)
+    case '2' => Some(2)
+    case '3' => Some(3)
+    case '4' => Some(4)
+    case '5' => Some(5)
+    case '6' => Some(6)
+    case '7' => Some(7)
+    case '8' => Some(8)
+    case '9' => Some(9)
+    case _ => None
+  }
+
+  predicate IsNatNumber(s: string)
+    requires |s| >= 1
+    ensures IsNatNumber(s) <==> forall k:: 0 <= k < |s| ==> CharToDigit(s[k]).Some?
+  {
+    if |s| == 1 then CharToDigit(s[0]).Some?
+    else
+      match CharToDigit(s[0])
+      case Some(v) => IsNatNumber(s[1..])
+      case None => false
+  }
+
+
+  /**   Convert a string to a Nat. */
+  function {:tailrecursion false} StringToNat(s: string, lastVal: nat := 0): nat
+    requires |s| > 0
+    requires IsNatNumber(s)
+  {
+    if |s| == 1 then CharToDigit(s[0]).v
+    else
+      var v := CharToDigit(s[|s| - 1]).v;
+      v + 10 * StringToNat(s[..|s| - 1])
+  }
+
 }

@@ -64,12 +64,6 @@ module BinaryDecoder {
           Disassemble(s[2..], p + [Instruction(op, [], next)], next + 1)
   }
 
-  predicate IsHexString(s: string) 
-    // ensures forall 
-  {
-    forall k :: 0 <= k < |s| ==> IsHex(s[k])
-  }
-
   function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
     decreases |s| 
   {
@@ -87,42 +81,7 @@ module BinaryDecoder {
           DisassembleU8(s[1..][op.Args()..], p + [Instruction(op, HexHelper(s[1..][..op.Args()]), next)], next + 1 + op.Args())
       else
         DisassembleU8(s[1..], p + [Instruction(op, [], next)], next + 1)
-  }
+  } 
 
-  function {:tailrecursion true} HexHelper(s: seq<u8>): string
-    requires |s| <= 32
-    ensures |HexHelper(s)| % 2 == 0
-    ensures |HexHelper(s)| == 2 * |s| <= 64
-    ensures IsHexString(HexHelper(s))
-  {
-    if |s| == 0 then ""
-    else U8ToHex(s[0]) + HexHelper(s[1..])
-  }
-
-  function {:tailrecursion true} StringToU8Helper(s: string, decoded: seq<Int.u8> := []): (r : Option<seq<Int.u8>>)
-    // requires
-  {
-    if |s| == 0 then Some(decoded)
-    else if |s| == 1 then
-      match HexToU8("0" + [s[0]])
-      case Some(v) => Some(decoded + [v as Int.u8])
-      case None => None
-    else
-      match HexToU8(s[0..2])
-      case Some(v) => StringToU8Helper(s[2..], decoded + [v as Int.u8])
-      case None => None
-  }
-
-  lemma foo(s: string, d: seq<Int.u8>)
-    ensures StringToU8Helper(s, d).Some? ==> |StringToU8Helper(s, d).v| <= |s|/2 + 1 + |d|
-  {
-
-  }
-
-  lemma foo101(s: string)
-    ensures  StringToU8Helper(s).Some? ==> |StringToU8Helper(s).v| <= |s|/2 + 1
-  {
-    foo(s, []);
-  }
 }
 

@@ -17,12 +17,21 @@ include "./MiscTypes.dfy"
 include "./int.dfy"
 
 /**
-  * Provides Hex string to u8 decoder. 
+  * Provides Hex string to nat. 
   */
 module Hex {
 
   import opened MiscTypes
   import opened Int
+
+  /** 
+    *   @param  s   A string (seq of chars).
+    *   @returns    true iff every char is within 0..f.
+    */
+  predicate IsHexString(s: string)
+  {
+    forall k :: 0 <= k < |s| ==> IsHex(s[k])
+  }
 
   /**
     *   Decode a 2-digit hex number into a u8.
@@ -45,8 +54,8 @@ module Hex {
     match (HexToU8(s[..2]), HexToU8(s[2..]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => 
-        Some(((TWO_8 * v1 as nat + v2 as nat) as u16)) 
+    case (Some(v1), Some(v2)) =>
+      Some(((TWO_8 * v1 as nat + v2 as nat) as u16))
   }
 
   function HexToU32(s: string): Option<u32>
@@ -55,8 +64,8 @@ module Hex {
     match (HexToU16(s[..4]), HexToU16(s[4..]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => 
-        Some(((TWO_16 * v1 as nat + v2 as nat) as u32)) 
+    case (Some(v1), Some(v2)) =>
+      Some(((TWO_16 * v1 as nat + v2 as nat) as u32))
   }
 
   function HexToU64(s: string): Option<u64>
@@ -66,8 +75,8 @@ module Hex {
     match (HexToU32(s[..8]), HexToU32(s[8..]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => 
-        Some(((TWO_32 * v1 as nat + v2 as nat) as u64)) 
+    case (Some(v1), Some(v2)) =>
+      Some(((TWO_32 * v1 as nat + v2 as nat) as u64))
   }
 
   function HexToU128(s: string): Option<u128>
@@ -77,8 +86,8 @@ module Hex {
     match (HexToU64(s[..16]), HexToU64(s[16..]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => 
-        Some(((TWO_64 * v1 as nat + v2 as nat) as u128)) 
+    case (Some(v1), Some(v2)) =>
+      Some(((TWO_64 * v1 as nat + v2 as nat) as u128))
   }
 
   function HexToU256(s: string): Option<u256>
@@ -88,8 +97,8 @@ module Hex {
     match (HexToU128(s[..32]), HexToU128(s[32..]))
     case (None, _) => None
     case (_, None) => None
-    case (Some(v1), Some(v2)) => 
-        Some(((TWO_128 * v1 as nat + v2 as nat) as u256)) 
+    case (Some(v1), Some(v2)) =>
+      Some(((TWO_128 * v1 as nat + v2 as nat) as u256))
   }
 
   // Helpers to convert uint into hexadecimal strings.
@@ -99,6 +108,18 @@ module Hex {
   {
     [DecToHex(n as nat / TWO_4)] + [DecToHex(n as nat % TWO_4)]
   }
+
+  /**   Convert a seq of bytes into a string. */
+  function {:tailrecursion true} HexHelper(s: seq<u8>): string
+    requires |s| <= 32
+    ensures |HexHelper(s)| % 2 == 0
+    ensures |HexHelper(s)| == 2 * |s| <= 64
+    ensures IsHexString(HexHelper(s))
+  {
+    if |s| == 0 then ""
+    else U8ToHex(s[0]) + HexHelper(s[1..])
+  }
+
 
   function U16ToHex(n: u16): string
     ensures |U16ToHex(n)| == 4
@@ -197,10 +218,10 @@ module Hex {
     case 15 => 'f'
   }
 
-  predicate IsHex(c: char) 
+  /**   Whether a character is a Hex symbol. */
+  predicate IsHex(c: char)
   {
     '0' <= c <= '9' || 'a' <= c <= 'f' || 'A' <= c <= 'F'
   }
-
 
 }

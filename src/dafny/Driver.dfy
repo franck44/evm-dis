@@ -20,6 +20,7 @@ include "./CFGBuilder/BuildCFG.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
+include "./utils/int.dfy"
   /**
     *  Provides input reader and write out to stout.
     */
@@ -33,6 +34,7 @@ module Driver {
   import opened BuildCFGraph
   import opened MiscTypes
   import opened State
+  import opened Int
 
   //   const usageMsg := "Usage: \n -d <string> or <string>: disassemble <string>\n -p <string>: Proof object\n -a: both -d and -p"
 
@@ -154,54 +156,7 @@ module Driver {
         case Failure(m) =>
       }
     }
-  }
-
-  //    Helpers
-
-  /**
-    *  Decode a char into a digit.
-    */
-  function CharToDigit(c: char): (r: Option<nat>)
-    ensures r.Some? ==> 0 <= r.v <= 9
-  {
-    match c
-    case '0' => Some(0)
-    case '1' => Some(1)
-    case '2' => Some(2)
-    case '3' => Some(3)
-    case '4' => Some(4)
-    case '5' => Some(5)
-    case '6' => Some(6)
-    case '7' => Some(7)
-    case '8' => Some(8)
-    case '9' => Some(9)
-    case _ => None
-  }
-
-  predicate IsNatNumber(s: string)
-    requires |s| >= 1
-    ensures IsNatNumber(s) <==> forall k:: 0 <= k < |s| ==> CharToDigit(s[k]).Some?
-  {
-    if |s| == 1 then CharToDigit(s[0]).Some?
-    else
-      match CharToDigit(s[0])
-      case Some(v) => IsNatNumber(s[1..])
-      case None => false
-  }
-
-  function {:tailrecursion false} StringToNat(s: string, lastVal: nat := 0): nat
-    requires |s| > 0
-    requires IsNatNumber(s)
-  {
-    if |s| == 1 then CharToDigit(s[0]).v
-    else
-      var v := CharToDigit(s[|s| - 1]).v;
-      //   assert s[..|s| - 1] <= s;
-      //   assert |s| >= 2;
-      //   assert forall k:: 0 <= k < |s[..|s| - 1]| ==> CharToDigit(s[k]).Some?;
-      //   assert IsNatNumber(s[..|s| - 1]);
-      v + 10 * StringToNat(s[..|s| - 1])
-  }
+  } 
 
 }
 
