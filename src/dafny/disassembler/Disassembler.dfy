@@ -36,36 +36,52 @@ module BinaryDecoder {
     *   @param  s       The string that remains to be disassembled.
     *   @param  p       The part thathas already been disassembled.
     *   @param  next    The next available address to store the instructions.
+    *   @returns        A seq of valid instructions that correspond to `s`.
+    *
+    *   @note           Some of the instructions may be instances of INVALID.
     */
-  function {:tailrec} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
+  function {:tailrecursion true} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
     decreases |s|
   {
     if |s| == 0 then
       p
     else if |s| == 1 then
-      p + [Instruction(Decode(INVALID), s, next)]
+      // One character is not enough to make an instruction
+      p + [Instruction(Decode(INVALID), "Odd number of characters ending in " + s, next)]
     else
       assert |s| >= 2;
       // Try to decode next instruction
       match HexToU8(s[..2])
-      case None => p + [Instruction(Decode(INVALID), "'" + s[..2] + "' is not a known opcode", next)]
+      case None => 
+        //  first two chars of s are not Hex
+        p + [Instruction(Decode(INVALID), "'" + s[..2] + "' is not an Hex number", next)]
       case Some(v) =>
-        //  Try to read parameters of opcode
+        //  Good! Got an Hex number. Decode it. Results in INVALID if not a known opcode.
         var op := Decode(v);
+        //  Try to read the parameters of opcode
         if op.Args() > 0 then
-          //  try to skip 2 * Args()
+          //  try to skip 2 * Args() as each arg needs 2 Hex chars
           if |s[2..]| < 2 * op.Args() || !IsHexString(s[2..][..2 * op.Args()]) then
+            //  Not enough arguments
             p + [Instruction(Decode(INVALID), "not enough arguments for opcode " + op.name, next)]
           else
+            //  Good. There is enough arguments.
             assert |s[2..][2 * op.Args()..]| < |s|;
-            // assert 
             Disassemble(s[2..][2 * op.Args()..], p + [Instruction(op, s[2..][..2 * op.Args()], next)], next + 1 + op.Args() )
         else
+          //  No argument for this opcode, proceed to next one
           Disassemble(s[2..], p + [Instruction(op, [], next)], next + 1)
   }
 
-  function {:tailrec} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
-    decreases |s| 
+  /**
+    *   Disassemble seq of bytes. 
+    *   @note   This is a simploified version of Disassemble where we have u8 instead
+    *           of strings.
+    *   @note   Used in tests, rather than disassembling hex, we can write tests
+    *           code as seq of bytes directly.
+    */
+  function {:tailrecurseion true} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
+    decreases |s|
   {
     if |s| == 0 then
       p
@@ -81,7 +97,7 @@ module BinaryDecoder {
           DisassembleU8(s[1..][op.Args()..], p + [Instruction(op, HexHelper(s[1..][..op.Args()]), next)], next + 1 + op.Args())
       else
         DisassembleU8(s[1..], p + [Instruction(op, [], next)], next + 1)
-  } 
+  }
 
 }
 
