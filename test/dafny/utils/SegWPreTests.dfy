@@ -101,7 +101,7 @@ module SegWpreTests {
     var pre := s.WPre(post);
     var s0 := BuildInitState(pre);
     if s.HasExit(false) {
-      var s1 := s.Run(s0, false);
+      var s1 := s.Run(s0, false, []);
       expect s1.EState?;
       expect s1.Size() >= MaxSeqVal(post.TrackedPos());
       for k := 0 to post.Size() {
@@ -111,7 +111,7 @@ module SegWpreTests {
                Value(post.TrackedValAt(k));
       }
       if s.HasExit(true) {
-        var s1 := s.Run(s0, true);
+        var s1 := s.Run(s0, true, []);
         expect s1.EState?;
         expect s1.Size() >= MaxSeqVal(post.TrackedPos());
         for k := 0 to post.Size() {
