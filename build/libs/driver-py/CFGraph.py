@@ -388,6 +388,12 @@ class BoolCFGraph:
     def AddEdge(self, e):
         return BoolCFGraph_BoolCFGraph((_dafny.SeqWithoutIsStrInference([e])) + ((self).edges), 0)
 
+    def numNodes(self):
+        return 0
+
+    def numEdges(self):
+        return len((self).edges)
+
     def IsValid(self):
         def lambda57_(forall_var_10_):
             d_937_k_: int = forall_var_10_
