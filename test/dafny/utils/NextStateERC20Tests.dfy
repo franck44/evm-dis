@@ -51,84 +51,16 @@ module NextStateTests {
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(RJUMPI));
-      expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).Error?;
+      expect i.NextState(s, [], true).Error?;
+      expect i.NextState(s, [], false).Error?;
     }
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(RJUMPV));
-      expect i.NextState(s, true).Error?;
-      expect i.NextState(s, false).Error?;
+      expect i.NextState(s, [], true).Error?;
+      expect i.NextState(s, [], false).Error?;
     }
   }
 
   
-  method {:verify false} {:notmain} Main3(args: seq<string>)
-  {
-    if |args| < 2 {
-      print "Not enough arguments\n";
-    } else {
-      var x := Disassemble(args[1], []);
-      var y := SplitUpToTerminal(x, [], []);
-      expect |y| >= 110;
-      var xs := [
-        (0, false),
-        (1, false),
-        (2, false),
-        (3, false),
-        (4, false),
-        (5, false),
-        (6, false),
-        (7, false),
-        (8, false),
-        (9, false),
-        (10, false),
-        (11, true),
-        (54, true),
-        (56, true),
-        (88, true),
-        (67, true),
-        (89, false),
-        (90, false),
-        (91, true),
-        (93, true),
-        (95, true),
-        (97, true),  //
-        (99, false)  //
-      ];
-
-      //    Run the path specified by xs
-      //    Run Segment 0, exit true (JUMP)
-      var s0 := DEFAULT_VALIDSTATE;
-      var s := s0;
-      //    Stop minus blocks before the end
-      for k := 0 to |xs| 
-      {
-        expect s.EState?;
-        expect s.pc == y[xs[k].0].StartAddress();
-        s := y[xs[k].0].Run(s, xs[k].1);
-        print "segment ", xs[k], " leads to ", s.ToString(), "\n";
-      }
-
-      //     collect segment of PC of last state
-      expect s.EState?;
-      var last := PCToSeg(y, s.pc);
-      expect last.Some?;
-      expect s.pc == y[last.v].StartAddress();
-      print "---- Stepping in last segment: ", last.v, "----\n"; 
-      for k := 0 to |y[last.v].Ins()| - 1
-      {
-        expect s.EState?;
-        s := y[last.v].Ins()[k].NextState(s);
-        print y[last.v].Ins()[k].op.name, " ", s.ToString(), "\n";
-      }
-      expect s.EState?;
-      s := y[last.v].lastIns.NextState(s, true);
-    //   expect s.EState?;
-    //   print "\n", xs[upto], "\n";
-      print y[last.v].lastIns.op.name, " ", s.ToString(), "\n";
-
-    }
-  }
-
 }

@@ -21,6 +21,7 @@ include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
+include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 
 /**
   * Test correct computation of next State.
@@ -37,6 +38,7 @@ module BuildCFGBlogTests {
   import opened Splitter
   import opened BuildCFGraph
   import opened PrettyPrinters
+  import ProofObjectBuilder
 
   //  Simple example. Two successive calls to same functions.
   method {:main} TestCFG1()
@@ -65,9 +67,9 @@ module BuildCFGBlogTests {
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
-      var g := BuildCFGV4(y, 10);
-      expect g.IsValid();
-      var g' := g.Minimise();
+      var g := BuildCFGV5(y, 10, [0x05, 0x0b, 0x0d]);
+      expect g.0.IsValid();
+      var g' := g.0.Minimise();
       expect g'.IsValid();
       print "CFG1\n";
       assert g'.maxSegNum < |y|;
@@ -100,10 +102,10 @@ module BuildCFGBlogTests {
     expect |y| == 2;
     expect y[1].StartAddress() == 0x02;
     expect y[0].StartAddress() == 0;
-    var g := BuildCFGV4(y, 10) ;
+    var g := BuildCFGV5(y, 10, [0x02]) ;
 
-    expect g.IsValid();
-    var g' := g.Minimise();
+    expect g.0.IsValid();
+    var g' := g.0.Minimise();
     expect g'.IsValid();
     assert g'.maxSegNum < |y|;
     print g'.DOTPrint(y);
@@ -117,9 +119,11 @@ module BuildCFGBlogTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-    var g := BuildCFGV4(y, 10) ;
-    expect g.IsValid();
-    var g' := g.Minimise();
+    var jumpDests := ProofObjectBuilder.CollectJumpDests(y);
+
+    var g := BuildCFGV5(y, 10, jumpDests) ;
+    expect g.0.IsValid();
+    var g' := g.0.Minimise();
     expect g'.IsValid();
     print "CFG test 1\n";
     assert g'.maxSegNum < |y|;

@@ -21,6 +21,7 @@ include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
+include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 
 /**
   * Test correct computation of next State.
@@ -37,6 +38,8 @@ module BuildCFGTests {
   import opened Splitter
   import opened BuildCFGraph
   import opened PrettyPrinters
+  import ProofObjectBuilder
+
 
   //  Simple example
   method {:test1} Test1()
@@ -48,9 +51,9 @@ module BuildCFGTests {
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 1;
       expect y[0].StartAddress() == 0;
-      var g := BuildCFGV4(y, 2);
-      expect g.IsValid();
-      var g' := g.Minimise();
+      var g := BuildCFGV5(y, 2, []);
+      expect g.0.IsValid();
+      var g' := g.0.Minimise();
       expect g'.IsValid();
       print "CFG Test1\n";
       assert g'.maxSegNum < |y|;
@@ -137,10 +140,10 @@ module BuildCFGTests {
     expect y[2].StartAddress() == 0x13;
     expect y[3].StartAddress() == 0x1c;
     expect y[0].StartAddress() == 0;
-    var g := BuildCFGV4(y, 10) ;
+    var g := BuildCFGV5(y, 10, [0x0a, 0x13, 0x1c, 0x1f]) ;
 
-    expect g.IsValid();
-    var g' := g.Minimise();
+    expect g.0.IsValid();
+    var g' := g.0.Minimise();
     expect g'.IsValid();
     assert g'.maxSegNum < |y|;
     print g'.DOTPrint(y);
@@ -154,9 +157,10 @@ module BuildCFGTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-    var g := BuildCFGV4(y, 10) ;
-    expect g.IsValid();
-    var g' := g.Minimise();
+    var jumpDests := ProofObjectBuilder.CollectJumpDests(y);
+    var g := BuildCFGV5(y, 10, []) ;
+    expect g.0.IsValid();
+    var g' := g.0.Minimise();
     expect g'.IsValid();
     print "CFG test 1\n";
     assert g'.maxSegNum < |y|;

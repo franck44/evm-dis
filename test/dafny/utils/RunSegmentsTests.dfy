@@ -18,6 +18,7 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
+include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 include "../../../src/dafny/utils/int.dfy"
 
 /**
@@ -33,6 +34,7 @@ module RuNSegTests {
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
+  import ProofObjectBuilder
 
   //  Simple example
   method {:test} Test1()
@@ -43,15 +45,16 @@ module RuNSegTests {
       expect |x| == 6;
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 1;
+      
       expect y[0].JUMPSeg?;
       //    Run Segment exit false. Should be Error
       var s0 := DEFAULT_VALIDSTATE;
-      var s' := y[0].Run(s0, false);
-      expect s'.Error?;
+      var s' := y[0].Run(s0, false, []);
+      expect s'.Error?; 
 
-      var s1 := y[0].Run(s0, true);
+      var s1 := y[0].Run(s0, true, [0x13]);
       expect s1.EState?;
-      expect s1 == EState(0x13,  [Value(0x08), Value(0x03), Value(0x0a)]);
+      expect s1 == EState(0x13,  [Random(), Random(), Random()]);
     }
   }
 
@@ -66,19 +69,19 @@ module RuNSegTests {
     expect y[0].CONTSeg?;
     //    Run Segment exit false. Should be Error
     var s0 := DEFAULT_VALIDSTATE;
-    var s' := y[0].Run(s0, true);
+    var s' := y[0].Run(s0, true, []);
     expect s'.Error?;
 
     //  Not enough stack element
-    var s1 := y[0].Run(s0, false);
+    var s1 := y[0].Run(s0, false, []);
     expect s'.Error?;
 
     //  Good
-    var s2 := y[0].Run(s0.(stack := [Random(), Random()]), false);
+    var s2 := y[0].Run(s0.(stack := [Random(), Random()]), false, []);
     expect s2.EState?;
     expect s2 == EState(0x02, [Random(), Random()]);
 
-    var s3 := y[0].Run(s0.(stack := [Random(), Random()]), true);
+    var s3 := y[0].Run(s0.(stack := [Random(), Random()]), true, []);
     expect s3.Error?;
   }
 
@@ -135,55 +138,59 @@ module RuNSegTests {
     expect y[2].JUMPISeg?;
     expect y[3].JUMPSeg?;
     expect y[4].JUMPSeg?;
+
+    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    expect jd == [0x0a, 0x13, 0x1c, 0x1f];
+
     //    Run Segment 0, exit true (JUMP)
     var s0 := DEFAULT_VALIDSTATE;
-    var s1 := y[0].Run(s0, true);
+    var s1 := y[0].Run(s0, true, jd);
     expect s1.EState?;
     expect s1.pc == 0x13;
 
     //  y[2] starts at 0x13, and JUMPI
     expect s1.pc == y[2].StartAddress();
-    var s2 := y[2].Run(s1, true);
+    var s2 := y[2].Run(s1, true, jd);
     expect s2.EState?;
     expect s2.pc == 0x1f;
-    expect s2.stack == [Value(0x3), Value(0xa), Value(0x8)];
+    expect s2.stack == [Random(), Value(0x0a), Random()];
 
     //  y[4] starts at 0x1f, and JUMP
     expect s2.pc == y[4].StartAddress();
-    var s3 := y[4].Run(s2, true);
+    var s3 := y[4].Run(s2, true, jd);
     expect s3.EState?;
     expect s3.pc == 0x1c;
-    expect s3.stack == [Value(0x0), Value(0xa), Value(0x3)];
+    expect s3.stack == [Random(), Value(0xa), Random()];
 
     //  y[3] starts at 0x1c, and JUMP
     expect s3.pc == y[3].StartAddress();
-    var s4 := y[3].Run(s3, true);
+    var s4 := y[3].Run(s3, true, jd);
     expect s4.EState?;
     expect s4.pc == 0xa;
-    expect s4.stack == [Value(0x3)];
+    expect s4.stack == [Random()];
 
     //  y[1] starts at 0x0a, and RETURN
     expect s4.pc == y[1].StartAddress();
-    var s5 := y[1].Run(s4, false);
+    var s5 := y[1].Run(s4, false, jd);
     expect s5.EState?;
-    expect s5 == EState(0x12 + 1, [Value(64), Value(32)]);
+    expect s5 == EState(0x12 + 1, [Random(), Random()]);
 
     //  Now test JUMPI false (we go directly to successor of JUMPI)
     //  y[2] starts at 0x13, and JUMPI
     expect s1.pc == y[2].StartAddress();
-    var s2' := y[2].Run(s1, false);
+    var s2' := y[2].Run(s1, false, jd);
     expect s2'.EState?;
-    expect s2' == EState(0x1c,  [Value(0x3), Value(0xa), Value(0x8)]);
+    expect s2' == EState(0x1c,  [Random(), Value(0xa), Random()]);
 
     //  y[3] starts at 0x1c, and JUMP
     expect s2'.pc == y[3].StartAddress();
-    var s3' := y[3].Run(s2', true);
+    var s3' := y[3].Run(s2', true, jd);
     expect s3'.EState?;
-    expect s3' == EState(0x0a,  [Value(0x8)]);
+    expect s3' == EState(0x0a,  [Random()]);
 
     //  y[1] starts at 0x0a, and RETURN
     expect s3'.pc == y[1].StartAddress();
-    var s4' := y[1].Run(s3', false);
+    var s4' := y[1].Run(s3', false, jd);
     expect s4'.EState?;
 
   }
@@ -247,49 +254,51 @@ module RuNSegTests {
     expect y[4].JUMPSeg?;
     expect y[5].JUMPSeg?;
 
+    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    expect jd == [ 0x0e, 0x12, 0x1b, 0x24, 0x27];
+
     //    Run Segment 0, exit true (JUMP)
     var s0 := DEFAULT_VALIDSTATE;
-    var s1 := y[0].Run(s0, true);
+    var s1 := y[0].Run(s0, true, jd);
     expect s1.EState?;
     expect s1.pc == 0x1b;
 
     // y[3] starts at 0x1b, and is a JUMPI
     expect s1.pc == y[3].StartAddress();
-    var s2 := y[3].Run(s1, false);
+    var s2 := y[3].Run(s1, false, jd);
     expect s2.EState?;
     expect s2.pc == 0x24;
 
-    // print s2.stack;
-    expect s2.stack == [Value(3), Value(14), Value(8), Value(10), Value(18)];
+    expect s2.stack == [Random(), Value(14), Random(), Random(), Value(18)];
 
     // y[4] starts at 0x24, and is a JUMP
     expect s2.pc == y[4].StartAddress();
-    var s3 := y[4].Run(s2, true);
+    var s3 := y[4].Run(s2, true, jd);
 
     expect |y[4].ins| == 2;
-    var s3' := y[4].ins[0].NextState(s2);
+    var s3' := y[4].ins[0].NextState(s2, jd);
 
     expect s3'.EState?;
-    var s4' := y[4].ins[1].NextState(s3');
+    var s4' := y[4].ins[1].NextState(s3', jd);
 
     expect s4'.EState?;
-    var s5' := y[4].lastIns.NextState(s4', true);
+    var s5' := y[4].lastIns.NextState(s4', jd, true);
 
     expect s3.EState?;
     expect s3.pc == y[1].StartAddress();
 
-    var s4 := y[1].Run(s3, true);
+    var s4 := y[1].Run(s3, true, jd);
     expect s4.EState?;
     expect s4.pc == y[3].StartAddress();
 
     // y[3] starts at 0x1b, and is a JUMPI
     expect s4.pc == y[3].StartAddress();
-    var s5 := y[3].Run(s4, false);
+    var s5 := y[3].Run(s4, false, jd);
     expect s5.EState?;
     expect s5.pc == 0x24;
 
     expect s5.pc == y[4].StartAddress();
-    var s6 := y[4].Run(s5, true);
+    var s6 := y[4].Run(s5, true, jd);
 
     expect s6.EState?;
     expect s6.pc == 0x12;
