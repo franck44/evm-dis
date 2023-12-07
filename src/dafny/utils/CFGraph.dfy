@@ -113,6 +113,14 @@ module CFGraph {
       BoolCFGraph([e] + edges)
     }
 
+    function numNodes(): nat {
+        0
+    }
+
+    function numEdges(): nat {
+        |edges|
+    }
+
     predicate IsValid()
     {
       && (forall k:: 0 <= k < |edges| ==> edges[k].src.seg.Some? ==> edges[k].src.seg.v <= maxSegNum)
