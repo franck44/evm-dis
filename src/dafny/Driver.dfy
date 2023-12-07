@@ -91,7 +91,7 @@ module Driver {
 
       match optionParser.GetArgs("--proof", optArgs) {
         case Success(_) =>
-          var pathToDafnyLib :=
+          var pathToDafnyLib := 
             (match optionParser.GetArgs("--lib", optArgs)
              case Success(p) => p[0]
              case Failure(_) => "") ;
@@ -131,8 +131,11 @@ module Driver {
               print "Segment 0 does not start at address 0.\n";
             } else {
               var jumpDests := CollectJumpDests(y);
-              var g := BuildCFGV4(y, maxDepth, jumpDests) ;
+              //  Use interndiary g1 as otherwise Java compile does not work.
+              var g1 := BuildCFGV5(y, maxDepth, jumpDests);
+              var g := g1.0;
               if optionParser.GetArgs("--raw", optArgs).Success? {
+                print "Size of CFG: ", |g1.1|, " nodes, ", |g.edges|, "edges\n";
                 print "Raw CFG\n";
                 print g.DOTPrint(y);
               } else {
@@ -142,6 +145,7 @@ module Driver {
                 var g' := g.Minimise();
                 expect g'.IsValid();
                 assert g'.maxSegNum < |y|;
+                print "Size of minimised CFG: ", g'.numNodes(), " nodes, ", g'.numEdges(), " edges\n";
                 print "Minimised CFG\n";
                 print g'.DOTPrint(y, simple, fancy);
               }
