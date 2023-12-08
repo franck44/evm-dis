@@ -1,3 +1,6 @@
+// maxDepth is:100
+// Size of minimised CFG: 0 nodes, 16 edges
+// Minimised CFG
 digraph CFG {
 node [shape=box]
 node[fontname=arial]
@@ -404,3 +407,4 @@ s13_4 -> s13_5 [tooltip="Next"]
 s13_4 -> s29_5 [tooltip="Jump",style=dashed]
 s29_5 -> s61_6 [tooltip="Jump",style=dashed]
 }
+//----------------- Minimised CFG -------------------
