@@ -124,7 +124,7 @@ module Instructions {
                        else "";
       var lineTR := "<TR>" + oplineTD + arglineTD + "</TR>";
       var itemTable :=
-        "<TABLE  border=\"0\" cellpadding=\"0\" cellsborder=\"0\" CELLSPACING=\"1\">"
+        "<TABLE  border=\"0\" cellpadding=\"0\" cellborder=\"0\" CELLSPACING=\"1\">"
         + lineTR
         + "</TABLE>";
       itemTable
