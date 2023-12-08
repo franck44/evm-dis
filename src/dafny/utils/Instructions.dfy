@@ -90,7 +90,7 @@ module Instructions {
       "0x" + formattedAddress + ":" + insText + " <BR ALIGN=\"LEFT\"/>\n"
     }
 
-    /**   Print as an HTMNL Table 
+    /**   Print as an HTML Table 
       *   The port tag should be of the PORT="something" 
       */
     function ToHTMLTable(entryPortTag: string := "", exitPortTag: string := ""): string
