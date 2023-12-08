@@ -5354,11 +5354,11 @@ let BinaryDecoder = (function() {
         if ((new BigNumber((s).length)).isEqualTo(_dafny.ZERO)) {
           return p;
         } else if ((new BigNumber((s).length)).isEqualTo(_dafny.ONE)) {
-          return _dafny.Seq.Concat(p, _dafny.Seq.of(Instructions.Instruction.create_Instruction(OpcodeDecoder.__default.Decode(EVMConstants.__default.INVALID), s, next)));
+          return _dafny.Seq.Concat(p, _dafny.Seq.of(Instructions.Instruction.create_Instruction(OpcodeDecoder.__default.Decode(EVMConstants.__default.INVALID), _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("Odd number of characters ending in "), s), next)));
         } else {
           let _source42 = Hex.__default.HexToU8((s).slice(0, new BigNumber(2)));
           if (_source42.is_None) {
-            return _dafny.Seq.Concat(p, _dafny.Seq.of(Instructions.Instruction.create_Instruction(OpcodeDecoder.__default.Decode(EVMConstants.__default.INVALID), _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("'"), (s).slice(0, new BigNumber(2))), _dafny.Seq.UnicodeFromString("' is not a known opcode")), next)));
+            return _dafny.Seq.Concat(p, _dafny.Seq.of(Instructions.Instruction.create_Instruction(OpcodeDecoder.__default.Decode(EVMConstants.__default.INVALID), _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("'"), (s).slice(0, new BigNumber(2))), _dafny.Seq.UnicodeFromString("' is not an Hex number")), next)));
           } else {
             let _645___mcc_h0 = (_source42).v;
             let _646_v = _645___mcc_h0;
@@ -8242,11 +8242,10 @@ let Driver = (function() {
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-d"), _dafny.Seq.UnicodeFromString("--dis"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Disassemble <string>"));
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-p"), _dafny.Seq.UnicodeFromString("--proof"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Generate proof object for <string>"));
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-s"), _dafny.Seq.UnicodeFromString("--segment"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Print segment of <string>"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-a"), _dafny.Seq.UnicodeFromString("--all"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Same as -d -p"));
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-l"), _dafny.Seq.UnicodeFromString("--lib"), _dafny.ONE, _dafny.Seq.UnicodeFromString("The path to the Dafny-EVM source code. Used to add includes files in the proof object. "));
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-c"), _dafny.Seq.UnicodeFromString("--cfg"), _dafny.ONE, _dafny.Seq.UnicodeFromString("Max depth. Control flow graph in DOT format"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-r"), _dafny.Seq.UnicodeFromString("--raw"), _dafny.ONE, _dafny.Seq.UnicodeFromString("Display non-minimised and minimised CFGs"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-f"), _dafny.Seq.UnicodeFromString("--fancy"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Use exit and entry ports in segments do draw arrows (apply minimised only)."));
+      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-r"), _dafny.Seq.UnicodeFromString("--raw"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Display non-minimised and minimised CFGs"));
+      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-f"), _dafny.Seq.UnicodeFromString("--fancy"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Use exit and entry ports in segments do draw arrows."));
       (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-n"), _dafny.Seq.UnicodeFromString("--notable"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Don't use tables to pretty-print DOT file. Reduces size of the DOT file."));
       if (((new BigNumber((args).length)).isLessThan(new BigNumber(2))) || (_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("--help")))) {
         process.stdout.write((_dafny.Seq.UnicodeFromString("Not enough arguments\n")).toVerbatimString(false));
@@ -8254,154 +8253,115 @@ let Driver = (function() {
       } else if ((new BigNumber((args).length)).isEqualTo(new BigNumber(2))) {
         let _1006_x;
         _1006_x = BinaryDecoder.__default.Disassemble((args)[_dafny.ONE], _dafny.Seq.of(), _dafny.ZERO);
+        process.stdout.write((_dafny.Seq.UnicodeFromString("Diassembled code:\n")).toVerbatimString(false));
         PrettyPrinters.__default.PrintInstructions(_1006_x);
+        process.stdout.write((_dafny.Seq.UnicodeFromString("--------------- Disassembled ---------------------\n")).toVerbatimString(false));
       } else if ((_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("--help"))) || (_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("-h")))) {
         (_1005_optionParser).PrintHelp();
       } else {
         let _1007_stringToProcess;
         _1007_stringToProcess = (args)[(new BigNumber((args).length)).minus(_dafny.ONE)];
-        let _1008_optArgs;
-        _1008_optArgs = (args).slice(_dafny.ONE, (new BigNumber((args).length)).minus(_dafny.ONE));
-        let _1009_x;
-        _1009_x = BinaryDecoder.__default.Disassemble(_1007_stringToProcess, _dafny.Seq.of(), _dafny.ZERO);
-        let _source71 = (_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--dis"), _1008_optArgs);
-        if (_source71.is_Success) {
-          let _1010___mcc_h0 = (_source71).v;
-          PrettyPrinters.__default.PrintInstructions(_1009_x);
-        } else {
-          let _1011___mcc_h1 = (_source71).msg;
-        }
-        let _source72 = (_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--segment"), _1008_optArgs);
-        if (_source72.is_Success) {
-          let _1012___mcc_h2 = (_source72).v;
-          process.stdout.write((_dafny.Seq.UnicodeFromString("Segments:\n")).toVerbatimString(false));
-          let _1013_y;
-          _1013_y = Splitter.__default.SplitUpToTerminal(_1009_x, _dafny.Seq.of(), _dafny.Seq.of());
-          PrettyPrinters.__default.PrintSegments(_1013_y, _dafny.ZERO);
-        } else {
-          let _1014___mcc_h3 = (_source72).msg;
-        }
-        let _source73 = (_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--proof"), _1008_optArgs);
-        if (_source73.is_Success) {
-          let _1015___mcc_h4 = (_source73).v;
-          let _1016_pathToDafnyLib;
-          _1016_pathToDafnyLib = function (_source74) {
-            if (_source74.is_Success) {
-              let _1017___mcc_h6 = (_source74).v;
-              return function (_pat_let35_0) {
-                return function (_1018_p) {
-                  return (_1018_p)[_dafny.ZERO];
-                }(_pat_let35_0);
-              }(_1017___mcc_h6);
-            } else {
-              let _1019___mcc_h7 = (_source74).msg;
-              return _dafny.Seq.UnicodeFromString("");
-            }
-          }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--lib"), _1008_optArgs));
-          let _1020_y;
-          _1020_y = Splitter.__default.SplitUpToTerminal(_1009_x, _dafny.Seq.of(), _dafny.Seq.of());
-          let _1021_z;
-          _1021_z = ProofObjectBuilder.__default.BuildProofObject(_1020_y);
-          PrettyPrinters.__default.PrintProofObjectToDafny(_1021_z, _1016_pathToDafnyLib);
-        } else {
-          let _1022___mcc_h5 = (_source73).msg;
-        }
-        let _source75 = (_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--all"), _1008_optArgs);
-        if (_source75.is_Success) {
-          let _1023___mcc_h8 = (_source75).v;
-          PrettyPrinters.__default.PrintInstructions(_1009_x);
-          let _1024_pathToDafnyLib;
-          _1024_pathToDafnyLib = function (_source76) {
-            if (_source76.is_Success) {
-              let _1025___mcc_h10 = (_source76).v;
-              return function (_pat_let36_0) {
-                return function (_1026_p) {
-                  return (_1026_p)[_dafny.ZERO];
-                }(_pat_let36_0);
-              }(_1025___mcc_h10);
-            } else {
-              let _1027___mcc_h11 = (_source76).msg;
-              return _dafny.Seq.UnicodeFromString("");
-            }
-          }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--lib"), _1008_optArgs));
-          let _1028_y;
-          _1028_y = Splitter.__default.SplitUpToTerminal(_1009_x, _dafny.Seq.of(), _dafny.Seq.of());
-          let _1029_z;
-          _1029_z = ProofObjectBuilder.__default.BuildProofObject(_1028_y);
-          PrettyPrinters.__default.PrintProofObjectToDafny(_1029_z, _1024_pathToDafnyLib);
-        } else {
-          let _1030___mcc_h9 = (_source75).msg;
-        }
-        let _source77 = (_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1008_optArgs);
-        if (_source77.is_Success) {
-          let _1031___mcc_h12 = (_source77).v;
-          let _1032_m = _1031___mcc_h12;
-          process.stdout.write((_dafny.Seq.UnicodeFromString("CFG:\n")).toVerbatimString(false));
-          let _1033_y;
-          _1033_y = Splitter.__default.SplitUpToTerminal(_1009_x, _dafny.Seq.of(), _dafny.Seq.of());
-          if ((new BigNumber((_1033_y).length)).isEqualTo(_dafny.ZERO)) {
-            process.stdout.write((_dafny.Seq.UnicodeFromString("No segment found\n")).toVerbatimString(false));
-          } else if (((new BigNumber(((_1032_m)[_dafny.ZERO]).length)).isEqualTo(_dafny.ZERO)) || (!(Int.__default.IsNatNumber((_1032_m)[_dafny.ZERO])))) {
-            process.stdout.write((_dafny.Seq.UnicodeFromString("Argument to --cfg is not a nat.\n")).toVerbatimString(false));
+        let _1008_x;
+        _1008_x = BinaryDecoder.__default.Disassemble(_1007_stringToProcess, _dafny.Seq.of(), _dafny.ZERO);
+        let _1009_optArgs;
+        _1009_optArgs = (args).slice(_dafny.ONE, (new BigNumber((args).length)).minus(_dafny.ONE));
+        let _1010_disOpt;
+        _1010_disOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--dis"), _1009_optArgs)).is_Success) ? (true) : (false));
+        let _1011_segmentOpt;
+        _1011_segmentOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--segment"), _1009_optArgs)).is_Success) ? (true) : (false));
+        let _1012_proofOpt;
+        _1012_proofOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--proof"), _1009_optArgs)).is_Success) ? (true) : (false));
+        let _1013_libOpt;
+        _1013_libOpt = function (_source71) {
+          if (_source71.is_Success) {
+            let _1014___mcc_h0 = (_source71).v;
+            return function (_pat_let35_0) {
+              return function (_1015_p) {
+                return (_1015_p)[_dafny.ZERO];
+              }(_pat_let35_0);
+            }(_1014___mcc_h0);
           } else {
-            let _1034_maxDepth;
-            _1034_maxDepth = Int.__default.StringToNat((_1032_m)[_dafny.ZERO], _dafny.ZERO);
-            process.stdout.write((_dafny.Seq.UnicodeFromString("maxDepth is:")).toVerbatimString(false));
-            process.stdout.write(_dafny.toString(_1034_maxDepth));
-            process.stdout.write((_dafny.Seq.UnicodeFromString("\n")).toVerbatimString(false));
-            let _1035_startAddress;
-            _1035_startAddress = ((_1033_y)[_dafny.ZERO]).StartAddress();
-            let _pat_let_tv61 = _1035_startAddress;
-            let _1036_startState;
-            _1036_startState = function (_pat_let37_0) {
-              return function (_1037_dt__update__tmp_h0) {
-                return function (_pat_let38_0) {
-                  return function (_1038_dt__update_hpc_h0) {
-                    return State.AState.create_EState(_1038_dt__update_hpc_h0, (_1037_dt__update__tmp_h0).dtor_stack);
-                  }(_pat_let38_0);
-                }(_pat_let_tv61);
-              }(_pat_let37_0);
-            }(State.__default.DEFAULT__VALIDSTATE);
-            if (!(((_1033_y)[_dafny.ZERO]).StartAddress()).isEqualTo(_dafny.ZERO)) {
-              process.stdout.write((_dafny.Seq.UnicodeFromString("Segment 0 does not start at address 0.\n")).toVerbatimString(false));
-            } else {
-              let _1039_jumpDests;
-              _1039_jumpDests = ProofObjectBuilder.__default.CollectJumpDests(_1033_y);
-              let _1040_g1;
-              _1040_g1 = BuildCFGraph.__default.BuildCFGV5(_1033_y, _1034_maxDepth, _1039_jumpDests, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, _dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))));
-              let _1041_g;
-              _1041_g = (_1040_g1)[0];
-              if (((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--raw"), _1008_optArgs)).is_Success) {
-                process.stdout.write((_dafny.Seq.UnicodeFromString("Size of CFG: ")).toVerbatimString(false));
-                process.stdout.write(_dafny.toString(new BigNumber(((_1040_g1)[1]).length)));
-                process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
-                process.stdout.write(_dafny.toString(new BigNumber(((_1041_g).dtor_edges).length)));
-                process.stdout.write((_dafny.Seq.UnicodeFromString("edges\n")).toVerbatimString(false));
-                process.stdout.write((_dafny.Seq.UnicodeFromString("Raw CFG\n")).toVerbatimString(false));
-                process.stdout.write(((_1041_g).DOTPrint(_1033_y, true, false)).toVerbatimString(false));
-              } else {
-                let _1042_fancy;
-                _1042_fancy = ((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--fancy"), _1008_optArgs)).is_Success;
-                let _1043_simple;
-                _1043_simple = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--notable"), _1008_optArgs)).is_Success) ? (true) : (false));
-                process.stdout.write((_dafny.Seq.UnicodeFromString("Computing Minimised CFG\n")).toVerbatimString(false));
-                let _1044_g_k;
-                _1044_g_k = (_1041_g).Minimise();
-                if (!((_1044_g_k).IsValid())) {
-                  throw new _dafny.HaltException("src/dafny/Driver.dfy(148,16): " + (_dafny.Seq.UnicodeFromString("expectation violation")).toVerbatimString(false));
-                }
-                process.stdout.write((_dafny.Seq.UnicodeFromString("Size of minimised CFG: ")).toVerbatimString(false));
-                process.stdout.write(_dafny.toString((_1044_g_k).numNodes()));
-                process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
-                process.stdout.write(_dafny.toString((_1044_g_k).numEdges()));
-                process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
-                process.stdout.write((_dafny.Seq.UnicodeFromString("Minimised CFG\n")).toVerbatimString(false));
-                process.stdout.write(((_1044_g_k).DOTPrint(_1033_y, _1043_simple, _1042_fancy)).toVerbatimString(false));
-              }
+            let _1016___mcc_h1 = (_source71).msg;
+            return _dafny.Seq.UnicodeFromString("");
+          }
+        }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--lib"), _1009_optArgs));
+        let _1017_cfgDepthOpt;
+        _1017_cfgDepthOpt = function (_source72) {
+          if (_source72.is_Success) {
+            let _1018___mcc_h2 = (_source72).v;
+            return function (_pat_let36_0) {
+              return function (_1019_args) {
+                return ((((_dafny.ONE).isLessThanOrEqualTo(new BigNumber(((_1019_args)[_dafny.ZERO]).length))) && (Int.__default.IsNatNumber((_1019_args)[_dafny.ZERO]))) ? (Int.__default.StringToNat((_1019_args)[_dafny.ZERO], _dafny.ZERO)) : (_dafny.ZERO));
+              }(_pat_let36_0);
+            }(_1018___mcc_h2);
+          } else {
+            let _1020___mcc_h3 = (_source72).msg;
+            return _dafny.ZERO;
+          }
+        }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1009_optArgs));
+        let _1021_rawOpt;
+        _1021_rawOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--raw"), _1009_optArgs)).is_Success) ? (true) : (false));
+        let _1022_noTable;
+        _1022_noTable = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--notable"), _1009_optArgs)).is_Success) ? (true) : (false));
+        let _1023_fancy;
+        _1023_fancy = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--fancy"), _1009_optArgs)).is_Success) ? (true) : (false));
+        if (_1010_disOpt) {
+          process.stdout.write((_dafny.Seq.UnicodeFromString("Diassembled code:\n")).toVerbatimString(false));
+          PrettyPrinters.__default.PrintInstructions(_1008_x);
+          process.stdout.write((_dafny.Seq.UnicodeFromString("--------------- Disassembled ---------------------\n")).toVerbatimString(false));
+        }
+        let _1024_y;
+        _1024_y = Splitter.__default.SplitUpToTerminal(_1008_x, _dafny.Seq.of(), _dafny.Seq.of());
+        if (_1011_segmentOpt) {
+          process.stdout.write((_dafny.Seq.UnicodeFromString("Segments:\n")).toVerbatimString(false));
+          PrettyPrinters.__default.PrintSegments(_1024_y, _dafny.ZERO);
+          process.stdout.write((_dafny.Seq.UnicodeFromString("----------------- Segments -------------------\n")).toVerbatimString(false));
+        }
+        if (_1012_proofOpt) {
+          let _1025_z;
+          _1025_z = ProofObjectBuilder.__default.BuildProofObject(_1024_y);
+          process.stdout.write((_dafny.Seq.UnicodeFromString("Dafny Proof Object:\n")).toVerbatimString(false));
+          PrettyPrinters.__default.PrintProofObjectToDafny(_1025_z, _1013_libOpt);
+          process.stdout.write((_dafny.Seq.UnicodeFromString("----------------- Proof -------------------\n")).toVerbatimString(false));
+        }
+        if ((((_dafny.ZERO).isLessThan(_1017_cfgDepthOpt)) && ((_dafny.ZERO).isLessThan(new BigNumber((_1024_y).length)))) && ((((_1024_y)[_dafny.ZERO]).StartAddress()).isEqualTo(_dafny.ZERO))) {
+          process.stdout.write((_dafny.Seq.UnicodeFromString("// maxDepth is:")).toVerbatimString(false));
+          process.stdout.write(_dafny.toString(_1017_cfgDepthOpt));
+          process.stdout.write((_dafny.Seq.UnicodeFromString("\n")).toVerbatimString(false));
+          let _1026_jumpDests;
+          _1026_jumpDests = ProofObjectBuilder.__default.CollectJumpDests(_1024_y);
+          let _1027_g1;
+          _1027_g1 = BuildCFGraph.__default.BuildCFGV5(_1024_y, _1017_cfgDepthOpt, _1026_jumpDests, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, _dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))));
+          let _1028_g;
+          _1028_g = (_1027_g1)[0];
+          if (_1021_rawOpt) {
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of CFG: ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString(new BigNumber(((_1027_g1)[1]).length)));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString(new BigNumber(((_1028_g).dtor_edges).length)));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("edges\n")).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Raw CFG\n")).toVerbatimString(false));
+            process.stdout.write(((_1028_g).DOTPrint(_1024_y, _1022_noTable, _1023_fancy)).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("//----------------- Raw CFG -------------------\n")).toVerbatimString(false));
+          } else {
+            let _1029_g_k;
+            _1029_g_k = (_1028_g).Minimise();
+            if (!((_1029_g_k).IsValid())) {
+              throw new _dafny.HaltException("src/dafny/Driver.dfy(134,10): " + (_dafny.Seq.UnicodeFromString("expectation violation")).toVerbatimString(false));
             }
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of minimised CFG: ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1029_g_k).numNodes()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1029_g_k).numEdges()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Minimised CFG\n")).toVerbatimString(false));
+            process.stdout.write(((_1029_g_k).DOTPrint(_1024_y, _1022_noTable, _1023_fancy)).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("//----------------- Minimised CFG -------------------\n")).toVerbatimString(false));
           }
         } else {
-          let _1045___mcc_h13 = (_source77).msg;
+          if (((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1009_optArgs)).is_Success) {
+            process.stdout.write((_dafny.Seq.UnicodeFromString("No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n")).toVerbatimString(false));
+          }
         }
       }
       return;
