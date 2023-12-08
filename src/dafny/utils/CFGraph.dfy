@@ -14,6 +14,7 @@
 
 include "./MiscTypes.dfy"
 include "./LinSegments.dfy"
+include "./OpcodesConstants.dfy"
 include "./Automata.dfy"
 include "./Minimiser.dfy"
 include "./Partition.dfy"
@@ -27,6 +28,7 @@ include "../proofobjectbuilder/SegmentBuilder.dfy"
 module CFGraph {
 
   import opened MiscTypes
+  import EVMConstants
   import opened LinSegments
   import opened Instructions
   import opened Automata
@@ -158,7 +160,13 @@ module CFGraph {
         SizeOfNatsUpToNBound(lastStateNum + 1, s);
         assert SetN([s], lastStateNum + 1);
         var p: ValidPartition := Partition(lastStateNum + 1, [s]);
-        var p1 := SegNumPartition(p, numToCFGNode, maxSegNum);
+        var p1 :=
+          if equiv then
+            // assume forall k:: 0 <= k < maxSegNum ==> k in numToCFGNode.Keys;
+            // assume forall k:: 0 <= k < p.n && numToCFGNode[k].seg.Some? ==> numToCFGNode[k].seg.v < |xs|;
+            SegNumPartition2(p, numToCFGNode, maxSegNum, 0, xs)
+          else
+            SegNumPartition(p, numToCFGNode, maxSegNum);
         var vp: Minimiser.ValidPair := Minimiser.Pair(a, p1);
         var minim := Minimiser.Minimise(vp);
         assert minim.p.n == vp.p.n == a.numStates;
@@ -240,7 +248,7 @@ module CFGraph {
   //    Helpers
 
   /**
-    *   Start with a partition such that every class the same segment number.
+    *   Compute a partition such that every node in class has the same segment number.
     *   @param  n  the max seg number.
     *   @param  p  An initial partition, should be [{0, ... n}]
     */
@@ -251,13 +259,47 @@ module CFGraph {
     decreases maxSegNum - n
   {
     if n <= maxSegNum then
-      //  split
+      //  split according to NumSegment == n
       var f: nat --> bool := (x: nat) requires 0 <= x < p.n => m[x].seg == Some(n);
       var p1 := p.SplitAt(f, |p.elem| - 1);
       SegNumPartition(p1, m, maxSegNum, n + 1)
     else
       //  collect states with seg number n
       p
+  }
+
+  /**
+    *   Partition according to semantics of segment. 
+    */
+  function SegNumPartition2(p: ValidPartition, m: map<nat, CFGNode>, maxSegNum: nat, n: nat, xs: seq<ValidLinSeg>): (p': ValidPartition)
+    requires n <= maxSegNum + 1
+    requires forall k:: 0 <= k < p.n ==> k in m.Keys
+    // requires forall k:: 0 <= k < p.n && m[k].seg.Some? ==> m[k].seg.v < |xs|
+    ensures p'.n == p.n
+    decreases maxSegNum - n
+  {
+    if n <= maxSegNum then
+      //  split according to instructions in segment are the same
+      var f: nat --> bool := (x: nat) requires 0 <= x < p.n => 
+        m[x].seg.Some? && m[x].seg.v < |xs| && (m[x].seg == Some(n) && EquivSeg(xs[n], xs[m[x].seg.v]));
+      var p1 := p.SplitAt(f, |p.elem| - 1);
+      SegNumPartition2(p1, m, maxSegNum, n + 1, xs)
+    else
+      //  collect states with seg number n
+      p
+  }
+
+  predicate EquivSeg(s1: ValidLinSeg, s2: ValidLinSeg) {
+    match s1
+    case JUMPSeg(_, _, _) =>
+      |s1.Ins()| == |s2.Ins()| >= 2
+      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
+      && s1.ins[..|s1.ins| - 1] == s2.ins[..|s2.ins| - 1]
+    case JUMPISeg(_,_, _) =>
+      |s1.Ins()| == |s2.Ins()| >= 2
+      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
+      && s1.ins[..|s1.ins| - 1] == s2.ins[..|s2.ins| - 1]
+    case _ => s1.Ins() == s2.Ins()
   }
 
   function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], reverseSeenNodes: map<nat, CFGNode> := map[0 := CFGNode([], Some(0))] ,builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0, ghost segUpperBound: nat ): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>, map<nat, CFGNode>))
