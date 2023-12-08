@@ -43,7 +43,7 @@ module Driver {
     *  @note   If two args, first one must be "-d" or "-p" or "-a" to select
     *           the type of outputs.
     */
-  method {:verify true} {:main} Main(args: seq<string>)
+  method {:verify true} {:timeLimitMultiplier 4} {:main} Main(args: seq<string>)
   {
     var optionParser := new ArgumentParser("<string>");
 
@@ -63,7 +63,7 @@ module Driver {
       optionParser.PrintHelp();
     } else if |args| == 2 {
       //  No argument, try to disassemble
-      var x := Disassemble(args[1]);
+      var x := Disassemble(args[1]); 
       print "Diassembled code:\n";
       PrintInstructions(x);
       print "--------------- Disassembled ---------------------\n";
@@ -118,22 +118,26 @@ module Driver {
       if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
         print "// maxDepth is:", cfgDepthOpt, "\n";
         //  Collect jumpDests
-        var jumpDests := CollectJumpDests(y);
+        var jumpDests := CollectJumpDests(y); 
         //  Build CFG upto depth
-        var g1 := BuildCFGV6(Context(y, jumpDests), cfgDepthOpt);  
+        var (g1, stats) := BuildCFGV6(Context(y, jumpDests), cfgDepthOpt);   
         var g := g1.Graph();
         if rawOpt {
-          print "// Size of CFG: ", g1.NumStates(), " nodes, ", |g.edges|, "edges\n";
+          print stats.PrettyPrint(); 
+          print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
           print "// Raw CFG\n";
           print g.DOTPrint(y, noTable, fancy);
           print "//----------------- Raw CFG -------------------\n";
-
         } else {
           //  Minimise
           var g' := g.Minimise();
           expect g'.IsValid();
           assert g'.maxSegNum < |y|;
-          print "// Size of minimised CFG: ", g'.numNodes(), " nodes, ", g'.numEdges(), " edges\n";
+          var g2 := g.Minimise(true, y);
+          print stats.PrettyPrint(); 
+          print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
+          print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
+          print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
           print "// Minimised CFG\n";
           print g'.DOTPrint(y, noTable, fancy);
           print "//----------------- Minimised CFG -------------------\n";
