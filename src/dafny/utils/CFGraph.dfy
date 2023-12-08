@@ -103,6 +103,13 @@ module CFGraph {
     }
   }
 
+  function CountNodes(xe: seq<BoolEdge>, seen: set<CFGNode> := {}): nat
+  {
+    if |xe| == 0 then |seen|
+    else CountNodes(xe[1..], seen + {xe[0].src, xe[0].tgt})
+  }
+
+
   /**
     *   A control flow graph with boolean labels/ 
     */
@@ -113,12 +120,12 @@ module CFGraph {
       BoolCFGraph([e] + edges)
     }
 
-    function numNodes(): nat {
-        0
+    function NumNodes(): nat {
+      CountNodes(edges)
     }
 
-    function numEdges(): nat {
-        |edges|
+    function NumEdges(): nat {
+      |edges|
     }
 
     predicate IsValid()
