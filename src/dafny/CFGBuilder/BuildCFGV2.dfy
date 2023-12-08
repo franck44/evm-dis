@@ -13,6 +13,7 @@
  */
 
 include "../../../src/dafny/utils/State.dfy"
+include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
 include "./LoopResolver.dfy"
@@ -22,6 +23,7 @@ include "./LoopResolver.dfy"
 module BuildCFGraphV2 {
 
   import opened MiscTypes
+  import Int
   import opened LinSegments
   import opened State
   import opened CFGraph
@@ -45,19 +47,45 @@ module BuildCFGraphV2 {
 
   datatype Context = Context(xs: seq<ValidLinSeg>, jumpDests: seq<nat>)
 
-  datatype CFGComputation = CFGComputation(grph: BoolCFGraph, states:  map<AState, CFGNode>) {
+  datatype Stats = Stats(maxDepthReached: bool := false, statesAlreadyFound: nat := 0, wPreInvSuccess: nat := 0) {
+
+    function SetMaxDepth(): Stats {
+        this.(maxDepthReached := true)
+    }
+
+    function IncFound(): Stats {
+        this.(statesAlreadyFound := this.statesAlreadyFound + 1)
+    }
+
+     function IncWpre(): Stats {
+        this.(wPreInvSuccess := this.wPreInvSuccess + 1)
+    }
+
+    function PrettyPrint(): string {
+         "// MaxDepth reached:" + (if maxDepthReached then "true" else "false") +"\n"
+         + "// States seen:" + Int.NatToString(statesAlreadyFound) + "\n"
+         + "// WPre success:" + Int.NatToString(wPreInvSuccess) + "\n"
+    }
+  }
+
+
+const DEFAULT_STATS := Stats()
+
+  datatype CFGComputation = CFGComputation(
+    grph: BoolCFGraph,
+    states:  map<AState, CFGNode>) { 
 
     function Graph(): BoolCFGraph {
-        grph
+      grph
     }
 
     function States(): map<AState, CFGNode> {
-        states
+      states
     }
 
-    function NumStates(): nat {
-        |states|
-    }
+    // function NumStates(): nat {
+    //   |states|
+    // }
 
   }
 
@@ -74,25 +102,25 @@ module BuildCFGraphV2 {
     maxDepth: nat,
     numSeg: nat := 0,
     s: ValidState := DEFAULT_VALIDSTATE,
-    h: History := History([CFGNode([], Some(0))],  [0], [], map[DEFAULT_VALIDSTATE := CFGNode([], Some(0))])): (r :CFGComputation)
+    h: History := History([CFGNode([], Some(0))],  [0], [], map[DEFAULT_VALIDSTATE := CFGNode([], Some(0))]), stat: Stats := DEFAULT_STATS): (r:(CFGComputation, Stats))
     requires numSeg < |c.xs|
     requires h.IsConsistent(c, s)
     requires h.seen[|h.seen| - 1].seg.v == numSeg
 
-    ensures forall k:: k in r.grph.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |c.xs|
-    ensures forall k:: k in r.grph.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |c.xs|
-    ensures r.grph.IsValid()
-    ensures forall s:: s in r.states && r.states[s].seg.Some? ==> r.states[s].seg.v < |c.xs|
+    ensures forall k:: k in r.0.grph.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |c.xs|
+    ensures forall k:: k in r.0.grph.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |c.xs|
+    ensures r.0.grph.IsValid()
+    ensures forall s:: s in r.0.states && r.0.states[s].seg.Some? ==> r.0.states[s].seg.v < |c.xs|
 
     decreases maxDepth
   {
 
     if !c.xs[numSeg].HasExit(false) && !c.xs[numSeg].HasExit(true) then
       //  no successors
-      CFGComputation(BoolCFGraph([], 0), h.seenStates)
+      (CFGComputation(BoolCFGraph([], 0), h.seenStates), stat)
     else if maxDepth == 0 then
       //  Indicate maxdepth reached by a loop
-      CFGComputation(BoolCFGraph([BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path, Some(numSeg)))], |c.xs| - 1), h.seenStates)
+      (CFGComputation(BoolCFGraph([BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path, Some(numSeg)))], |c.xs| - 1), h.seenStates), stat.SetMaxDepth())
     else
       //  DFS false
       var leftBranch :=
@@ -103,7 +131,7 @@ module BuildCFGraphV2 {
             //  We have already seen this state, retrieve node that corresponds to this state and
             //  create an edge to it
             assert h.seenStates[leftSucc].seg.Some? ==> h.seenStates[leftSucc].seg.v < |c.xs|;
-            CFGComputation(BoolCFGraph( [BoolEdge(CFGNode(h.path, Some(numSeg)), false, h.seenStates[leftSucc])]), h.seenStates)
+            (CFGComputation(BoolCFGraph( [BoolEdge(CFGNode(h.path, Some(numSeg)), false, h.seenStates[leftSucc])]), h.seenStates), stat.IncFound())
           else if leftSucc.EState? && leftSucc.PC() < Int.TWO_256 then
             var nextSeg := PCToSeg(c.xs, leftSucc.PC());
             if nextSeg.Some? then
@@ -111,17 +139,18 @@ module BuildCFGraphV2 {
               var tgt := CFGNode(h.path + [false], nextSeg);
               var newSeenSegs := h.seenStates[leftSucc := tgt];
               var h1 := History( h.seen + [tgt], h.seenPCs + [leftSucc.PC()], h.path + [false], newSeenSegs);
-              var gleft := BuildCFGV6(c, maxDepth - 1, nextSeg.v, leftSucc, h1);
-              CFGComputation(gleft.grph.AddEdge(BoolEdge(src, false, tgt)), gleft.states)
+              var gleft := BuildCFGV6(c, maxDepth - 1, nextSeg.v, leftSucc, h1, stat);
+              (CFGComputation(gleft.0.grph.AddEdge(BoolEdge(src, false, tgt)), gleft.0.states), gleft.1)
             else  //  Next segment could not be found
-              CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), false, CFGNode(h.path + [false])) ]), h.seenStates)
+              (CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), false, CFGNode(h.path + [false])) ]), h.seenStates), stat)
           else // left successor of segment resulted in Error state
-            CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), false, CFGNode(h.path + [false])) ]), h.seenStates)
+            (CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), false, CFGNode(h.path + [false])) ]), h.seenStates), stat)
         else // no false exit branch expected for this segment
-          CFGComputation(BoolCFGraph([ ]), h.seenStates) ;
+          (CFGComputation(BoolCFGraph([ ]), h.seenStates), stat) ;
 
       //  The right branch takes into account the states seen in the left branch
-      var newSeenStates := leftBranch.states;
+      var newSeenStates := leftBranch.0.states;
+      var leftStats := leftBranch.1;
 
       //  DFS true
       var rightBranch :=
@@ -137,15 +166,15 @@ module BuildCFGraphV2 {
               if rightSucc in newSeenStates then
                 //  We have already seen this state
                 assert newSeenStates[rightSucc].seg.Some? ==> newSeenStates[rightSucc].seg.v < |c.xs|;
-                CFGComputation(BoolCFGraph( [BoolEdge(CFGNode(h.path, Some(numSeg)), true, newSeenStates[rightSucc])]), newSeenStates)
+                (CFGComputation(BoolCFGraph( [BoolEdge(CFGNode(h.path, Some(numSeg)), true, newSeenStates[rightSucc])]), newSeenStates), leftStats.IncFound())
               else if rightSucc.PC() !in h.seenPCs then
                 //  We have not seen this segment.pc before, continue to unfold
                 var src := CFGNode(h.path, Some(numSeg));
                 var tgt := CFGNode(h.path + [true], nextSeg);
                 var newSeenSegs := newSeenStates[rightSucc := tgt];
                 var h1 := History( h.seen + [tgt], h.seenPCs + [rightSucc.PC()],h.path + [true], newSeenSegs);
-                var gright := BuildCFGV6(c, maxDepth - 1, nextSeg.v, rightSucc, h1);
-                CFGComputation(gright.grph.AddEdge(BoolEdge(src, true, tgt)), gright.states)
+                var gright := BuildCFGV6(c, maxDepth - 1, nextSeg.v, rightSucc, h1, leftStats);
+                (CFGComputation(gright.0.grph.AddEdge(BoolEdge(src, true, tgt)), gright.0.states), gright.1)
               else
                 //  We have seen this PC before. Link to the first CFGNode in the list
                 //  with this PC if there is one.
@@ -156,22 +185,22 @@ module BuildCFGraphV2 {
                   //    reachable PCs.
                   assert prev.seg.Some?;
                   assert prev.seg.v < |c.xs|;
-                  CFGComputation(BoolCFGraph([BoolEdge(CFGNode(h.path, Some(numSeg)), true, prev)], |c.xs|), newSeenStates)
+                  (CFGComputation(BoolCFGraph([BoolEdge(CFGNode(h.path, Some(numSeg)), true, prev)], |c.xs|), newSeenStates), leftStats.IncWpre())
                 case None =>
                   //  Progress the DFS with a new node
                   var src := CFGNode(h.path, Some(numSeg));
                   var tgt := CFGNode(h.path + [true], nextSeg);
                   var newSeenSegs := newSeenStates[rightSucc := tgt];
                   var h1 := History(h.seen + [tgt], h.seenPCs + [rightSucc.PC()], h.path + [true], newSeenSegs);
-                  var gright := BuildCFGV6(c, maxDepth - 1, nextSeg.v, rightSucc, h1);
-                  CFGComputation(gright.grph.AddEdge(BoolEdge(src, true, tgt)), gright.states)
+                  var gright := BuildCFGV6(c, maxDepth - 1, nextSeg.v, rightSucc, h1, leftStats);
+                  (CFGComputation(gright.0.grph.AddEdge(BoolEdge(src, true, tgt)), gright.0.states), gright.1)
             else // Next segment could not be found
-              CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path + [true])) ]), newSeenStates)
+              (CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path + [true])) ]), newSeenStates), leftStats)
           else // right successor of segment resulted in Error state
-            CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path + [true])) ]), newSeenStates)
-        else //
-          CFGComputation(BoolCFGraph([ ], 0), newSeenStates) ;
-      CFGComputation(BoolCFGraph(leftBranch.grph.edges + rightBranch.grph.edges, |c.xs| - 1), rightBranch.states)
+            (CFGComputation(BoolCFGraph([ BoolEdge(CFGNode(h.path, Some(numSeg)), true, CFGNode(h.path + [true])) ]), newSeenStates), leftStats)
+        else // no true exit
+          (CFGComputation(BoolCFGraph([ ], 0), newSeenStates), leftStats) ;
+      (CFGComputation(BoolCFGraph(leftBranch.0.grph.edges + rightBranch.0.grph.edges, |c.xs| - 1), rightBranch.0.states), rightBranch.1)
   }
 
 }
