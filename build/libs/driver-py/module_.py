@@ -32,7 +32,7 @@ import Automata
 import Minimiser
 import CFGraph
 import LoopResolver
-import BuildCFGraph
+import BuildCFGraphV2
 import Driver
 
 # Module: module_

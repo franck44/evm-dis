@@ -4591,7 +4591,7 @@ let Instructions = (function() {
       let _280_oplineTD = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" "), entryPortTag), _dafny.Seq.UnicodeFromString(">")), _dafny.Seq.UnicodeFromString("0x")), _277_formattedAddress), _dafny.Seq.UnicodeFromString(" </TD>\n")), _dafny.Seq.UnicodeFromString("<TD width=\"1\" fixedsize=\"false\" align=\"left\" cellpadding=\"1\" tooltip=\"Gas: ")), EVMToolTips.__default.Gas(((_this).dtor_op).dtor_opcode)), _dafny.Seq.UnicodeFromString(" \" ")), _dafny.Seq.UnicodeFromString("target=\"_blank\" href=\"")), EVMToolTips.__default.gasRefLine), _dafny.Seq.UnicodeFromString("\"")), _dafny.Seq.UnicodeFromString(">")), _279_gasLine), _dafny.Seq.UnicodeFromString("</TD>")), _dafny.Seq.UnicodeFromString("<TD width=\"1\" fixedsize=\"true\" style=\"Rounded\" BORDER=\"0\" BGCOLOR=\"")), (_276_cols)[1]), _dafny.Seq.UnicodeFromString("\" align=\"left\" cellpadding=\"3\" ")), exitPortTag), _dafny.Seq.UnicodeFromString(" href=\"")), EVMToolTips.__default.bytecodeRefLine), Int.__default.NatToString((EVMToolTips.__default.ToolTip(((_this).dtor_op).dtor_opcode))[1])), _dafny.Seq.UnicodeFromString("\" target=\"_blank\" ")), _dafny.Seq.UnicodeFromString(" tooltip=\"")), (EVMToolTips.__default.ToolTip(((_this).dtor_op).dtor_opcode))[0]), _dafny.Seq.UnicodeFromString("\" ")), _dafny.Seq.UnicodeFromString(">")), _dafny.Seq.UnicodeFromString("<FONT color=\"")), (_276_cols)[0]), _dafny.Seq.UnicodeFromString("\">")), ((_this).dtor_op).Name()), _dafny.Seq.UnicodeFromString("</FONT>")), _dafny.Seq.UnicodeFromString("</TD>"));
       let _281_arglineTD = (((_dafny.ZERO).isLessThan(new BigNumber(((_this).dtor_arg).length))) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TD width=\"1\" fixedsize=\"true\" align=\"left\">"), _dafny.Seq.UnicodeFromString("  0x")), (_this).dtor_arg), _dafny.Seq.UnicodeFromString("</TD>"))) : (_dafny.Seq.UnicodeFromString("")));
       let _282_lineTR = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TR>"), _280_oplineTD), _281_arglineTD), _dafny.Seq.UnicodeFromString("</TR>"));
-      let _283_itemTable = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TABLE  border=\"0\" cellpadding=\"0\" cellsborder=\"0\" CELLSPACING=\"1\">"), _282_lineTR), _dafny.Seq.UnicodeFromString("</TABLE>"));
+      let _283_itemTable = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TABLE  border=\"0\" cellpadding=\"0\" cellborder=\"0\" CELLSPACING=\"1\">"), _282_lineTR), _dafny.Seq.UnicodeFromString("</TABLE>"));
       return _283_itemTable;
     };
     IsTerminal() {
@@ -7417,6 +7417,19 @@ let CFGraph = (function() {
         return ((((xb)[_dafny.ZERO]) ? (_dafny.ONE) : (_dafny.ZERO))).plus((new BigNumber(2)).multipliedBy(CFGraph.__default.BoolSeqToNat((xb).slice(_dafny.ONE))));
       }
     };
+    static CountNodes(xe, seen) {
+      TAIL_CALL_START: while (true) {
+        if ((new BigNumber((xe).length)).isEqualTo(_dafny.ZERO)) {
+          return new BigNumber((seen).length);
+        } else {
+          let _in109 = (xe).slice(_dafny.ONE);
+          let _in110 = (seen).Union(_dafny.Set.fromElements(((xe)[_dafny.ZERO]).dtor_src, ((xe)[_dafny.ZERO]).dtor_tgt));
+          xe = _in109;
+          seen = _in110;
+          continue TAIL_CALL_START;
+        }
+      }
+    };
     static SegNumPartition(p, m, maxSegNum, n) {
       TAIL_CALL_START: while (true) {
         if ((n).isLessThanOrEqualTo(maxSegNum)) {
@@ -7424,18 +7437,75 @@ let CFGraph = (function() {
             return _dafny.areEqual(((_866_m).get(_869_x)).dtor_seg, MiscTypes.Option.create_Some(_867_n));
           })(m, n, p);
           let _870_p1 = (p).SplitAt(_865_f, (new BigNumber(((p).dtor_elem).length)).minus(_dafny.ONE));
-          let _in109 = _870_p1;
-          let _in110 = m;
-          let _in111 = maxSegNum;
-          let _in112 = (n).plus(_dafny.ONE);
-          p = _in109;
-          m = _in110;
-          maxSegNum = _in111;
-          n = _in112;
+          let _in111 = _870_p1;
+          let _in112 = m;
+          let _in113 = maxSegNum;
+          let _in114 = (n).plus(_dafny.ONE);
+          p = _in111;
+          m = _in112;
+          maxSegNum = _in113;
+          n = _in114;
           continue TAIL_CALL_START;
         } else {
           return p;
         }
+      }
+    };
+    static SegNumPartition2(p, m, maxSegNum, n, xs) {
+      TAIL_CALL_START: while (true) {
+        if ((n).isLessThanOrEqualTo(maxSegNum)) {
+          let _871_f = ((_872_m, _873_xs, _874_n, _875_p) => function (_876_x) {
+            return (((((_872_m).get(_876_x)).dtor_seg).is_Some) && (((((_872_m).get(_876_x)).dtor_seg).dtor_v).isLessThan(new BigNumber((_873_xs).length)))) && ((_dafny.areEqual(((_872_m).get(_876_x)).dtor_seg, MiscTypes.Option.create_Some(_874_n))) && (CFGraph.__default.EquivSeg((_873_xs)[_874_n], (_873_xs)[(((_872_m).get(_876_x)).dtor_seg).dtor_v])));
+          })(m, xs, n, p);
+          let _877_p1 = (p).SplitAt(_871_f, (new BigNumber(((p).dtor_elem).length)).minus(_dafny.ONE));
+          let _in115 = _877_p1;
+          let _in116 = m;
+          let _in117 = maxSegNum;
+          let _in118 = (n).plus(_dafny.ONE);
+          let _in119 = xs;
+          p = _in115;
+          m = _in116;
+          maxSegNum = _in117;
+          n = _in118;
+          xs = _in119;
+          continue TAIL_CALL_START;
+        } else {
+          return p;
+        }
+      }
+    };
+    static EquivSeg(s1, s2) {
+      let _source63 = s1;
+      if (_source63.is_JUMPSeg) {
+        let _878___mcc_h0 = (_source63).ins;
+        let _879___mcc_h1 = (_source63).lastIns;
+        let _880___mcc_h2 = (_source63).netOpEffect;
+        return ((((new BigNumber(((s1).Ins()).length)).isEqualTo(new BigNumber(((s2).Ins()).length))) && ((new BigNumber(2)).isLessThanOrEqualTo(new BigNumber(((s2).Ins()).length)))) && ((((EVMConstants.__default.PUSH1) <= (((((s1).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode)) && ((((((s1).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode) === (((((s2).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode))) && ((((((s2).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode) <= (EVMConstants.__default.PUSH32)))) && (_dafny.areEqual(((s1).dtor_ins).slice(0, (new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)), ((s2).dtor_ins).slice(0, (new BigNumber(((s2).dtor_ins).length)).minus(_dafny.ONE))));
+      } else if (_source63.is_JUMPISeg) {
+        let _881___mcc_h6 = (_source63).ins;
+        let _882___mcc_h7 = (_source63).lastIns;
+        let _883___mcc_h8 = (_source63).netOpEffect;
+        return ((((new BigNumber(((s1).Ins()).length)).isEqualTo(new BigNumber(((s2).Ins()).length))) && ((new BigNumber(2)).isLessThanOrEqualTo(new BigNumber(((s2).Ins()).length)))) && ((((EVMConstants.__default.PUSH1) <= (((((s1).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode)) && ((((((s1).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode) === (((((s2).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode))) && ((((((s2).dtor_ins)[(new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)]).dtor_op).dtor_opcode) <= (EVMConstants.__default.PUSH32)))) && (_dafny.areEqual(((s1).dtor_ins).slice(0, (new BigNumber(((s1).dtor_ins).length)).minus(_dafny.ONE)), ((s2).dtor_ins).slice(0, (new BigNumber(((s2).dtor_ins).length)).minus(_dafny.ONE))));
+      } else if (_source63.is_RETURNSeg) {
+        let _884___mcc_h12 = (_source63).ins;
+        let _885___mcc_h13 = (_source63).lastIns;
+        let _886___mcc_h14 = (_source63).netOpEffect;
+        return _dafny.areEqual((s1).Ins(), (s2).Ins());
+      } else if (_source63.is_STOPSeg) {
+        let _887___mcc_h18 = (_source63).ins;
+        let _888___mcc_h19 = (_source63).lastIns;
+        let _889___mcc_h20 = (_source63).netOpEffect;
+        return _dafny.areEqual((s1).Ins(), (s2).Ins());
+      } else if (_source63.is_CONTSeg) {
+        let _890___mcc_h24 = (_source63).ins;
+        let _891___mcc_h25 = (_source63).lastIns;
+        let _892___mcc_h26 = (_source63).netOpEffect;
+        return _dafny.areEqual((s1).Ins(), (s2).Ins());
+      } else {
+        let _893___mcc_h30 = (_source63).ins;
+        let _894___mcc_h31 = (_source63).lastIns;
+        let _895___mcc_h32 = (_source63).netOpEffect;
+        return _dafny.areEqual((s1).Ins(), (s2).Ins());
       }
     };
     static EdgesToMap(edges, seenNodes, reverseSeenNodes, builtMap, lastNum, index) {
@@ -7444,213 +7514,213 @@ let CFGraph = (function() {
           return _dafny.Tuple.of(lastNum, builtMap, seenNodes, reverseSeenNodes);
         } else {
           let _let_tmp_rhs0 = ((((seenNodes).Keys).contains(((edges)[index]).dtor_src)) ? (_dafny.Tuple.of((seenNodes).get(((edges)[index]).dtor_src), lastNum, seenNodes, reverseSeenNodes)) : (_dafny.Tuple.of((lastNum).plus(_dafny.ONE), (lastNum).plus(_dafny.ONE), (seenNodes).update(((edges)[index]).dtor_src, (lastNum).plus(_dafny.ONE)), (reverseSeenNodes).update((lastNum).plus(_dafny.ONE), ((edges)[index]).dtor_src))));
-          let _871_src = (_let_tmp_rhs0)[0];
-          let _872_last = (_let_tmp_rhs0)[1];
-          let _873_m1 = (_let_tmp_rhs0)[2];
-          let _874_rm1 = (_let_tmp_rhs0)[3];
-          let _let_tmp_rhs1 = ((((_873_m1).Keys).contains(((edges)[index]).dtor_tgt)) ? (_dafny.Tuple.of((_873_m1).get(((edges)[index]).dtor_tgt), _872_last, _873_m1, _874_rm1)) : (_dafny.Tuple.of((_872_last).plus(_dafny.ONE), (_872_last).plus(_dafny.ONE), (_873_m1).update(((edges)[index]).dtor_tgt, (_872_last).plus(_dafny.ONE)), (_874_rm1).update((_872_last).plus(_dafny.ONE), ((edges)[index]).dtor_tgt))));
-          let _875_tgt = (_let_tmp_rhs1)[0];
-          let _876_last_k = (_let_tmp_rhs1)[1];
-          let _877_m2 = (_let_tmp_rhs1)[2];
-          let _878_rm2 = (_let_tmp_rhs1)[3];
-          let _879_b = (builtMap).update(_dafny.Tuple.of(_871_src, ((edges)[index]).dtor_lab), _875_tgt);
-          let _in113 = edges;
-          let _in114 = _877_m2;
-          let _in115 = _878_rm2;
-          let _in116 = _879_b;
-          let _in117 = _876_last_k;
-          let _in118 = (index).plus(_dafny.ONE);
-          edges = _in113;
-          seenNodes = _in114;
-          reverseSeenNodes = _in115;
-          builtMap = _in116;
-          lastNum = _in117;
-          index = _in118;
+          let _896_src = (_let_tmp_rhs0)[0];
+          let _897_last = (_let_tmp_rhs0)[1];
+          let _898_m1 = (_let_tmp_rhs0)[2];
+          let _899_rm1 = (_let_tmp_rhs0)[3];
+          let _let_tmp_rhs1 = ((((_898_m1).Keys).contains(((edges)[index]).dtor_tgt)) ? (_dafny.Tuple.of((_898_m1).get(((edges)[index]).dtor_tgt), _897_last, _898_m1, _899_rm1)) : (_dafny.Tuple.of((_897_last).plus(_dafny.ONE), (_897_last).plus(_dafny.ONE), (_898_m1).update(((edges)[index]).dtor_tgt, (_897_last).plus(_dafny.ONE)), (_899_rm1).update((_897_last).plus(_dafny.ONE), ((edges)[index]).dtor_tgt))));
+          let _900_tgt = (_let_tmp_rhs1)[0];
+          let _901_last_k = (_let_tmp_rhs1)[1];
+          let _902_m2 = (_let_tmp_rhs1)[2];
+          let _903_rm2 = (_let_tmp_rhs1)[3];
+          let _904_b = (builtMap).update(_dafny.Tuple.of(_896_src, ((edges)[index]).dtor_lab), _900_tgt);
+          let _in120 = edges;
+          let _in121 = _902_m2;
+          let _in122 = _903_rm2;
+          let _in123 = _904_b;
+          let _in124 = _901_last_k;
+          let _in125 = (index).plus(_dafny.ONE);
+          edges = _in120;
+          seenNodes = _in121;
+          reverseSeenNodes = _in122;
+          builtMap = _in123;
+          lastNum = _in124;
+          index = _in125;
           continue TAIL_CALL_START;
         }
       }
     };
     static BoolsToString(x) {
-      let _880___accumulator = _dafny.Seq.of();
+      let _905___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((new BigNumber((x).length)).isEqualTo(_dafny.ZERO)) {
-          return _dafny.Seq.Concat(_880___accumulator, _dafny.Seq.UnicodeFromString("E"));
+          return _dafny.Seq.Concat(_905___accumulator, _dafny.Seq.UnicodeFromString("E"));
         } else {
-          _880___accumulator = _dafny.Seq.Concat(_880___accumulator, _dafny.Seq.of((((x)[_dafny.ZERO]) ? (new _dafny.CodePoint('1'.codePointAt(0))) : (new _dafny.CodePoint('0'.codePointAt(0))))));
-          let _in119 = (x).slice(_dafny.ONE);
-          x = _in119;
+          _905___accumulator = _dafny.Seq.Concat(_905___accumulator, _dafny.Seq.of((((x)[_dafny.ZERO]) ? (new _dafny.CodePoint('1'.codePointAt(0))) : (new _dafny.CodePoint('0'.codePointAt(0))))));
+          let _in126 = (x).slice(_dafny.ONE);
+          x = _in126;
           continue TAIL_CALL_START;
         }
       }
     };
     static SegColour(s) {
-      let _source63 = s;
-      if (_source63.is_JUMPSeg) {
-        let _881___mcc_h0 = (_source63).ins;
-        let _882___mcc_h1 = (_source63).lastIns;
-        let _883___mcc_h2 = (_source63).netOpEffect;
+      let _source64 = s;
+      if (_source64.is_JUMPSeg) {
+        let _906___mcc_h0 = (_source64).ins;
+        let _907___mcc_h1 = (_source64).lastIns;
+        let _908___mcc_h2 = (_source64).netOpEffect;
         return _dafny.Seq.UnicodeFromString("");
-      } else if (_source63.is_JUMPISeg) {
-        let _884___mcc_h6 = (_source63).ins;
-        let _885___mcc_h7 = (_source63).lastIns;
-        let _886___mcc_h8 = (_source63).netOpEffect;
+      } else if (_source64.is_JUMPISeg) {
+        let _909___mcc_h6 = (_source64).ins;
+        let _910___mcc_h7 = (_source64).lastIns;
+        let _911___mcc_h8 = (_source64).netOpEffect;
         return CFGraph.__default.branchColour;
-      } else if (_source63.is_RETURNSeg) {
-        let _887___mcc_h12 = (_source63).ins;
-        let _888___mcc_h13 = (_source63).lastIns;
-        let _889___mcc_h14 = (_source63).netOpEffect;
+      } else if (_source64.is_RETURNSeg) {
+        let _912___mcc_h12 = (_source64).ins;
+        let _913___mcc_h13 = (_source64).lastIns;
+        let _914___mcc_h14 = (_source64).netOpEffect;
         return CFGraph.__default.returnColour;
-      } else if (_source63.is_STOPSeg) {
-        let _890___mcc_h18 = (_source63).ins;
-        let _891___mcc_h19 = (_source63).lastIns;
-        let _892___mcc_h20 = (_source63).netOpEffect;
+      } else if (_source64.is_STOPSeg) {
+        let _915___mcc_h18 = (_source64).ins;
+        let _916___mcc_h19 = (_source64).lastIns;
+        let _917___mcc_h20 = (_source64).netOpEffect;
         return CFGraph.__default.revertColour;
-      } else if (_source63.is_CONTSeg) {
-        let _893___mcc_h24 = (_source63).ins;
-        let _894___mcc_h25 = (_source63).lastIns;
-        let _895___mcc_h26 = (_source63).netOpEffect;
+      } else if (_source64.is_CONTSeg) {
+        let _918___mcc_h24 = (_source64).ins;
+        let _919___mcc_h25 = (_source64).lastIns;
+        let _920___mcc_h26 = (_source64).netOpEffect;
         return _dafny.Seq.UnicodeFromString("");
       } else {
-        let _896___mcc_h30 = (_source63).ins;
-        let _897___mcc_h31 = (_source63).lastIns;
-        let _898___mcc_h32 = (_source63).netOpEffect;
+        let _921___mcc_h30 = (_source64).ins;
+        let _922___mcc_h31 = (_source64).lastIns;
+        let _923___mcc_h32 = (_source64).netOpEffect;
         return CFGraph.__default.invalidColour;
       }
     };
     static DOTSeg(s, numSeg) {
-      let _899_jumpTip = ((((s).is_JUMPSeg) || ((s).is_JUMPISeg)) ? (function (_pat_let8_0) {
-        return function (_900_r) {
-          return function (_source64) {
-            if (_source64.is_Left) {
-              let _901___mcc_h0 = (_source64).l;
+      let _924_jumpTip = ((((s).is_JUMPSeg) || ((s).is_JUMPISeg)) ? (function (_pat_let8_0) {
+        return function (_925_r) {
+          return function (_source65) {
+            if (_source65.is_Left) {
+              let _926___mcc_h0 = (_source65).l;
               return function (_pat_let9_0) {
-                return function (_902_v) {
-                  return function (_source65) {
-                    if (_source65.is_Value) {
-                      let _903___mcc_h2 = (_source65).v;
+                return function (_927_v) {
+                  return function (_source66) {
+                    if (_source66.is_Value) {
+                      let _928___mcc_h2 = (_source66).v;
                       return function (_pat_let10_0) {
-                        return function (_904_address) {
-                          return _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Constant 0x"), Hex.__default.NatToHex(_904_address));
+                        return function (_929_address) {
+                          return _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Constant 0x"), Hex.__default.NatToHex(_929_address));
                         }(_pat_let10_0);
-                      }(_903___mcc_h2);
+                      }(_928___mcc_h2);
                     } else {
-                      let _905___mcc_h3 = (_source65).s;
+                      let _930___mcc_h3 = (_source66).s;
                       return function (_pat_let11_0) {
-                        return function (_906_msg) {
+                        return function (_931_msg) {
                           return _dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Unknown");
                         }(_pat_let11_0);
-                      }(_905___mcc_h3);
+                      }(_930___mcc_h3);
                     }
-                  }(_902_v);
+                  }(_927_v);
                 }(_pat_let9_0);
-              }(_901___mcc_h0);
+              }(_926___mcc_h0);
             } else {
-              let _907___mcc_h1 = (_source64).r;
+              let _932___mcc_h1 = (_source65).r;
               return function (_pat_let12_0) {
-                return function (_908_stackPos) {
-                  return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Stack on Entry.Peek("), Int.__default.NatToString(_908_stackPos)), _dafny.Seq.UnicodeFromString(")"));
+                return function (_933_stackPos) {
+                  return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Stack on Entry.Peek("), Int.__default.NatToString(_933_stackPos)), _dafny.Seq.UnicodeFromString(")"));
                 }(_pat_let12_0);
-              }(_907___mcc_h1);
+              }(_932___mcc_h1);
             }
-          }(_900_r);
+          }(_925_r);
         }(_pat_let8_0);
       }(SegBuilder.__default.JUMPResolver(s))) : (_dafny.Seq.UnicodeFromString("")));
-      let _909_stackSizeEffect = _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("Stack Size &#916;: "), Int.__default.IntToString((s).StackEffect()));
-      let _910_mninNumOpe = _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Stack Size on Entry &#8805; "), Int.__default.NatToString((s).WeakestPreOperands(_dafny.ZERO)));
-      let _911_prefix = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<B>Segment "), Int.__default.NatToString(numSeg)), _dafny.Seq.UnicodeFromString(" [0x")), Hex.__default.NatToHex((s).StartAddress())), _dafny.Seq.UnicodeFromString("]</B><BR ALIGN=\"CENTER\"/>\n"));
-      let _912_body = CFGraph.__default.DOTIns((s).Ins());
-      return _dafny.Tuple.of(_dafny.Seq.Concat(_911_prefix, _912_body), _dafny.Seq.Concat(_dafny.Seq.Concat(_909_stackSizeEffect, _899_jumpTip), _910_mninNumOpe));
+      let _934_stackSizeEffect = _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("Stack Size &#916;: "), Int.__default.IntToString((s).StackEffect()));
+      let _935_mninNumOpe = _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Stack Size on Entry &#8805; "), Int.__default.NatToString((s).WeakestPreOperands(_dafny.ZERO)));
+      let _936_prefix = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<B>Segment "), Int.__default.NatToString(numSeg)), _dafny.Seq.UnicodeFromString(" [0x")), Hex.__default.NatToHex((s).StartAddress())), _dafny.Seq.UnicodeFromString("]</B><BR ALIGN=\"CENTER\"/>\n"));
+      let _937_body = CFGraph.__default.DOTIns((s).Ins());
+      return _dafny.Tuple.of(_dafny.Seq.Concat(_936_prefix, _937_body), _dafny.Seq.Concat(_dafny.Seq.Concat(_934_stackSizeEffect, _924_jumpTip), _935_mninNumOpe));
     };
     static DOTSegTable(s, numSeg) {
-      let _913_jumpTip = ((((s).is_JUMPSeg) || ((s).is_JUMPISeg)) ? (function (_pat_let13_0) {
-        return function (_914_r) {
-          return function (_source66) {
-            if (_source66.is_Left) {
-              let _915___mcc_h0 = (_source66).l;
+      let _938_jumpTip = ((((s).is_JUMPSeg) || ((s).is_JUMPISeg)) ? (function (_pat_let13_0) {
+        return function (_939_r) {
+          return function (_source67) {
+            if (_source67.is_Left) {
+              let _940___mcc_h0 = (_source67).l;
               return function (_pat_let14_0) {
-                return function (_916_v) {
-                  return function (_source67) {
-                    if (_source67.is_Value) {
-                      let _917___mcc_h2 = (_source67).v;
+                return function (_941_v) {
+                  return function (_source68) {
+                    if (_source68.is_Value) {
+                      let _942___mcc_h2 = (_source68).v;
                       return function (_pat_let15_0) {
-                        return function (_918_address) {
-                          return _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Constant 0x"), Hex.__default.NatToHex(_918_address));
+                        return function (_943_address) {
+                          return _dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Constant 0x"), Hex.__default.NatToHex(_943_address));
                         }(_pat_let15_0);
-                      }(_917___mcc_h2);
+                      }(_942___mcc_h2);
                     } else {
-                      let _919___mcc_h3 = (_source67).s;
+                      let _944___mcc_h3 = (_source68).s;
                       return function (_pat_let16_0) {
-                        return function (_920_msg) {
+                        return function (_945_msg) {
                           return _dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Unknown");
                         }(_pat_let16_0);
-                      }(_919___mcc_h3);
+                      }(_944___mcc_h3);
                     }
-                  }(_916_v);
+                  }(_941_v);
                 }(_pat_let14_0);
-              }(_915___mcc_h0);
+              }(_940___mcc_h0);
             } else {
-              let _921___mcc_h1 = (_source66).r;
+              let _946___mcc_h1 = (_source67).r;
               return function (_pat_let17_0) {
-                return function (_922_stackPos) {
-                  return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Stack on Entry.Peek("), Int.__default.NatToString(_922_stackPos)), _dafny.Seq.UnicodeFromString(")"));
+                return function (_947_stackPos) {
+                  return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("&#10;Exit Jump target: Stack on Entry.Peek("), Int.__default.NatToString(_947_stackPos)), _dafny.Seq.UnicodeFromString(")"));
                 }(_pat_let17_0);
-              }(_921___mcc_h1);
+              }(_946___mcc_h1);
             }
-          }(_914_r);
+          }(_939_r);
         }(_pat_let13_0);
       }(SegBuilder.__default.JUMPResolver(s))) : (_dafny.Seq.UnicodeFromString("")));
-      let _923_tableStart = _dafny.Seq.UnicodeFromString("<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n");
-      let _924_prefix = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TR><TD "), _dafny.Seq.UnicodeFromString(">Segment ")), Int.__default.NatToString(numSeg)), _dafny.Seq.UnicodeFromString(" [0x")), Hex.__default.NatToHex((s).StartAddress())), _dafny.Seq.UnicodeFromString("]</TD>")), _dafny.Seq.UnicodeFromString("<TD")), _dafny.Seq.UnicodeFromString(" href=\"\" tooltip=\"Stack Size &#916;: ")), Int.__default.IntToString((s).StackEffect())), _dafny.Seq.UnicodeFromString("&#10;Stack Size on Entry &#8805; ")), Int.__default.NatToString((s).WeakestPreOperands(_dafny.ZERO))), _913_jumpTip), _dafny.Seq.UnicodeFromString("\"")), _dafny.Seq.UnicodeFromString("><FONT color=\"green\">&#9636;</FONT></TD>")), _dafny.Seq.UnicodeFromString("</TR><HR/>\n"));
-      let _925_tableEnd = _dafny.Seq.UnicodeFromString("</TABLE>\n");
-      let _926_body = CFGraph.__default.DOTInsTable((s).Ins(), true);
-      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_923_tableStart, _924_prefix), _926_body), _925_tableEnd);
+      let _948_tableStart = _dafny.Seq.UnicodeFromString("<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n");
+      let _949_prefix = _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<TR><TD "), _dafny.Seq.UnicodeFromString(">Segment ")), Int.__default.NatToString(numSeg)), _dafny.Seq.UnicodeFromString(" [0x")), Hex.__default.NatToHex((s).StartAddress())), _dafny.Seq.UnicodeFromString("]</TD>")), _dafny.Seq.UnicodeFromString("<TD")), _dafny.Seq.UnicodeFromString(" href=\"\" tooltip=\"Stack Size &#916;: ")), Int.__default.IntToString((s).StackEffect())), _dafny.Seq.UnicodeFromString("&#10;Stack Size on Entry &#8805; ")), Int.__default.NatToString((s).WeakestPreOperands(_dafny.ZERO))), _938_jumpTip), _dafny.Seq.UnicodeFromString("\"")), _dafny.Seq.UnicodeFromString("><FONT color=\"green\">&#9636;</FONT></TD>")), _dafny.Seq.UnicodeFromString("</TR><HR/>\n"));
+      let _950_tableEnd = _dafny.Seq.UnicodeFromString("</TABLE>\n");
+      let _951_body = CFGraph.__default.DOTInsTable((s).Ins(), true);
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_948_tableStart, _949_prefix), _951_body), _950_tableEnd);
     };
     static DOTIns(xi) {
-      let _927___accumulator = _dafny.Seq.of();
+      let _952___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((new BigNumber((xi).length)).isEqualTo(_dafny.ZERO)) {
-          return _dafny.Seq.Concat(_927___accumulator, _dafny.Seq.UnicodeFromString(""));
+          return _dafny.Seq.Concat(_952___accumulator, _dafny.Seq.UnicodeFromString(""));
         } else {
-          _927___accumulator = _dafny.Seq.Concat(_927___accumulator, ((xi)[_dafny.ZERO]).ToHTML());
-          let _in120 = (xi).slice(_dafny.ONE);
-          xi = _in120;
+          _952___accumulator = _dafny.Seq.Concat(_952___accumulator, ((xi)[_dafny.ZERO]).ToHTML());
+          let _in127 = (xi).slice(_dafny.ONE);
+          xi = _in127;
           continue TAIL_CALL_START;
         }
       }
     };
     static DOTInsTable(xi, isFirst) {
-      let _928___accumulator = _dafny.Seq.of();
+      let _953___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((new BigNumber((xi).length)).isEqualTo(_dafny.ZERO)) {
-          return _dafny.Seq.Concat(_928___accumulator, _dafny.Seq.UnicodeFromString(""));
+          return _dafny.Seq.Concat(_953___accumulator, _dafny.Seq.UnicodeFromString(""));
         } else {
-          let _929_prefix = _dafny.Seq.UnicodeFromString("<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n");
-          let _930_suffix = _dafny.Seq.UnicodeFromString("</TD></TR>\n");
-          let _931_exitPortTag = ((((xi)[_dafny.ZERO]).IsJump()) ? (_dafny.Seq.UnicodeFromString("PORT=\"exit\"")) : (_dafny.Seq.UnicodeFromString("")));
-          let _932_entryPortTag = ((isFirst) ? (_dafny.Seq.UnicodeFromString("PORT=\"entry\"")) : (_dafny.Seq.UnicodeFromString("")));
-          let _933_a = ((xi)[_dafny.ZERO]).ToHTMLTable(_932_entryPortTag, _931_exitPortTag);
-          _928___accumulator = _dafny.Seq.Concat(_928___accumulator, _dafny.Seq.Concat(_dafny.Seq.Concat(_929_prefix, _933_a), _930_suffix));
-          let _in121 = (xi).slice(_dafny.ONE);
-          let _in122 = false;
-          xi = _in121;
-          isFirst = _in122;
+          let _954_prefix = _dafny.Seq.UnicodeFromString("<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n");
+          let _955_suffix = _dafny.Seq.UnicodeFromString("</TD></TR>\n");
+          let _956_exitPortTag = ((((xi)[_dafny.ZERO]).IsJump()) ? (_dafny.Seq.UnicodeFromString("PORT=\"exit\"")) : (_dafny.Seq.UnicodeFromString("")));
+          let _957_entryPortTag = ((isFirst) ? (_dafny.Seq.UnicodeFromString("PORT=\"entry\"")) : (_dafny.Seq.UnicodeFromString("")));
+          let _958_a = ((xi)[_dafny.ZERO]).ToHTMLTable(_957_entryPortTag, _956_exitPortTag);
+          _953___accumulator = _dafny.Seq.Concat(_953___accumulator, _dafny.Seq.Concat(_dafny.Seq.Concat(_954_prefix, _958_a), _955_suffix));
+          let _in128 = (xi).slice(_dafny.ONE);
+          let _in129 = false;
+          xi = _in128;
+          isFirst = _in129;
           continue TAIL_CALL_START;
         }
       }
     };
     static NatBoolEdgesToCFGEdges(xs, m, maxSegNum) {
-      let _934___accumulator = _dafny.Seq.of();
+      let _959___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((new BigNumber((xs).length)).isEqualTo(_dafny.ZERO)) {
-          return _dafny.Seq.Concat(_934___accumulator, _dafny.Seq.of());
+          return _dafny.Seq.Concat(_959___accumulator, _dafny.Seq.of());
         } else {
-          _934___accumulator = _dafny.Seq.Concat(_934___accumulator, _dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge((m).get(((xs)[_dafny.ZERO])[0]), ((xs)[_dafny.ZERO])[1], (m).get(((xs)[_dafny.ZERO])[2]))));
-          let _in123 = (xs).slice(_dafny.ONE);
-          let _in124 = m;
-          let _in125 = maxSegNum;
-          xs = _in123;
-          m = _in124;
-          maxSegNum = _in125;
+          _959___accumulator = _dafny.Seq.Concat(_959___accumulator, _dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge((m).get(((xs)[_dafny.ZERO])[0]), ((xs)[_dafny.ZERO])[1], (m).get(((xs)[_dafny.ZERO])[2]))));
+          let _in130 = (xs).slice(_dafny.ONE);
+          let _in131 = m;
+          let _in132 = maxSegNum;
+          xs = _in130;
+          m = _in131;
+          maxSegNum = _in132;
           continue TAIL_CALL_START;
         }
       }
@@ -7726,8 +7796,8 @@ let CFGraph = (function() {
     };
     ToDot() {
       let _this = this;
-      let _935_x = CFGraph.__default.BoolSeqToNat((_this).dtor_id);
-      return _dafny.Seq.Concat(_dafny.Seq.Concat(Int.__default.NatToString(_935_x), _dafny.Seq.UnicodeFromString("_")), Int.__default.NatToString(new BigNumber(((_this).dtor_id).length)));
+      let _960_x = CFGraph.__default.BoolSeqToNat((_this).dtor_id);
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(Int.__default.NatToString(_960_x), _dafny.Seq.UnicodeFromString("_")), Int.__default.NatToString(new BigNumber(((_this).dtor_id).length)));
     };
   }
 
@@ -7774,17 +7844,17 @@ let CFGraph = (function() {
     }
     DOTPrint2() {
       let _this = this;
-      let _936_lab1 = (((_this).dtor_lab) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<FONT color=\""), CFGraph.__default.jcolour), _dafny.Seq.UnicodeFromString("\">jump</FONT>"))) : (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<FONT color=\""), CFGraph.__default.skcolour), _dafny.Seq.UnicodeFromString("\">skip</FONT>"))));
-      let _937_labColour = (((_this).dtor_lab) ? (CFGraph.__default.jumpColour) : (CFGraph.__default.skipColour));
-      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), ((_this).dtor_src).ToDot()), _dafny.Seq.UnicodeFromString(" -> s")), ((_this).dtor_tgt).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _937_labColour), _dafny.Seq.UnicodeFromString("label=<")), _936_lab1), _dafny.Seq.UnicodeFromString(">]\n"));
+      let _961_lab1 = (((_this).dtor_lab) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<FONT color=\""), CFGraph.__default.jcolour), _dafny.Seq.UnicodeFromString("\">jump</FONT>"))) : (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("<FONT color=\""), CFGraph.__default.skcolour), _dafny.Seq.UnicodeFromString("\">skip</FONT>"))));
+      let _962_labColour = (((_this).dtor_lab) ? (CFGraph.__default.jumpColour) : (CFGraph.__default.skipColour));
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), ((_this).dtor_src).ToDot()), _dafny.Seq.UnicodeFromString(" -> s")), ((_this).dtor_tgt).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _962_labColour), _dafny.Seq.UnicodeFromString("label=<")), _961_lab1), _dafny.Seq.UnicodeFromString(">]\n"));
     };
     DOTPrint(fancyExit) {
       let _this = this;
-      let _938_lab1 = (((_this).dtor_lab) ? (_dafny.Seq.UnicodeFromString("tooltip=\"Jump\",style=dashed")) : (_dafny.Seq.UnicodeFromString("tooltip=\"Next\"")));
-      let _939_labColour = (((_this).dtor_lab) ? (CFGraph.__default.jumpColour) : (CFGraph.__default.skipColour));
-      let _940_exitPort = (((fancyExit) && ((_this).dtor_lab)) ? (_dafny.Seq.UnicodeFromString(":exit:se ")) : (_dafny.Seq.UnicodeFromString("")));
-      let _941_entryPort = (((fancyExit) && ((_this).dtor_lab)) ? (_dafny.Seq.UnicodeFromString(":entry:w ")) : (_dafny.Seq.UnicodeFromString("")));
-      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), ((_this).dtor_src).ToDot()), _940_exitPort), _dafny.Seq.UnicodeFromString(" -> s")), ((_this).dtor_tgt).ToDot()), _941_entryPort), _dafny.Seq.UnicodeFromString(" [")), _938_lab1), _dafny.Seq.UnicodeFromString("]\n"));
+      let _963_lab1 = (((_this).dtor_lab) ? (_dafny.Seq.UnicodeFromString("tooltip=\"Jump\",style=dashed")) : (_dafny.Seq.UnicodeFromString("tooltip=\"Next\"")));
+      let _964_labColour = (((_this).dtor_lab) ? (CFGraph.__default.jumpColour) : (CFGraph.__default.skipColour));
+      let _965_exitPort = (((fancyExit) && ((_this).dtor_lab)) ? (_dafny.Seq.UnicodeFromString(":exit:se ")) : (_dafny.Seq.UnicodeFromString("")));
+      let _966_entryPort = (((fancyExit) && ((_this).dtor_lab)) ? (_dafny.Seq.UnicodeFromString(":entry:w ")) : (_dafny.Seq.UnicodeFromString("")));
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), ((_this).dtor_src).ToDot()), _965_exitPort), _dafny.Seq.UnicodeFromString(" -> s")), ((_this).dtor_tgt).ToDot()), _966_entryPort), _dafny.Seq.UnicodeFromString(" [")), _963_lab1), _dafny.Seq.UnicodeFromString("]\n"));
     };
   }
 
@@ -7831,115 +7901,115 @@ let CFGraph = (function() {
       let _this = this;
       return CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.Concat(_dafny.Seq.of(e), (_this).dtor_edges), _dafny.ZERO);
     };
-    numNodes() {
+    NumNodes() {
       let _this = this;
-      return _dafny.ZERO;
+      return CFGraph.__default.CountNodes((_this).dtor_edges, _dafny.Set.fromElements());
     };
-    numEdges() {
+    NumEdges() {
       let _this = this;
       return new BigNumber(((_this).dtor_edges).length);
     };
     IsValid() {
       let _this = this;
       return (_dafny.Quantifier(_dafny.IntegerRange(_dafny.ZERO, new BigNumber(((_this).dtor_edges).length)), true, function (_forall_var_10) {
-        let _942_k = _forall_var_10;
-        return !(((_dafny.ZERO).isLessThanOrEqualTo(_942_k)) && ((_942_k).isLessThan(new BigNumber(((_this).dtor_edges).length)))) || (!((((((_this).dtor_edges)[_942_k]).dtor_src).dtor_seg).is_Some) || (((((((_this).dtor_edges)[_942_k]).dtor_src).dtor_seg).dtor_v).isLessThanOrEqualTo((_this).dtor_maxSegNum)));
+        let _967_k = _forall_var_10;
+        return !(((_dafny.ZERO).isLessThanOrEqualTo(_967_k)) && ((_967_k).isLessThan(new BigNumber(((_this).dtor_edges).length)))) || (!((((((_this).dtor_edges)[_967_k]).dtor_src).dtor_seg).is_Some) || (((((((_this).dtor_edges)[_967_k]).dtor_src).dtor_seg).dtor_v).isLessThanOrEqualTo((_this).dtor_maxSegNum)));
       })) && (_dafny.Quantifier(_dafny.IntegerRange(_dafny.ZERO, new BigNumber(((_this).dtor_edges).length)), true, function (_forall_var_11) {
-        let _943_k = _forall_var_11;
-        return !(((_dafny.ZERO).isLessThanOrEqualTo(_943_k)) && ((_943_k).isLessThan(new BigNumber(((_this).dtor_edges).length)))) || (!((((((_this).dtor_edges)[_943_k]).dtor_tgt).dtor_seg).is_Some) || (((((((_this).dtor_edges)[_943_k]).dtor_tgt).dtor_seg).dtor_v).isLessThanOrEqualTo((_this).dtor_maxSegNum)));
+        let _968_k = _forall_var_11;
+        return !(((_dafny.ZERO).isLessThanOrEqualTo(_968_k)) && ((_968_k).isLessThan(new BigNumber(((_this).dtor_edges).length)))) || (!((((((_this).dtor_edges)[_968_k]).dtor_tgt).dtor_seg).is_Some) || (((((((_this).dtor_edges)[_968_k]).dtor_tgt).dtor_seg).dtor_v).isLessThanOrEqualTo((_this).dtor_maxSegNum)));
       }));
     };
-    Minimise() {
+    Minimise(equiv, xs) {
       let _this = this;
-      let _944_r = CFGraph.__default.EdgesToMap((_this).dtor_edges, _dafny.Map.Empty.slice().updateUnsafe(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO)),_dafny.ZERO), _dafny.Map.Empty.slice().updateUnsafe(_dafny.ZERO,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Map.Empty.slice(), _dafny.ZERO, _dafny.ZERO);
-      let _945_idToNum = (_944_r)[2];
-      let _946_numToCFGNode = (_944_r)[3];
-      let _947_lastStateNum = (_944_r)[0];
-      let _948_transitions = (_944_r)[1];
-      let _949_a = Automata.Auto.create_Auto((_947_lastStateNum).plus(_dafny.ONE), _948_transitions);
-      if ((_dafny.ZERO).isLessThan(_947_lastStateNum)) {
-        let _950_s = function () {
+      let _969_r = CFGraph.__default.EdgesToMap((_this).dtor_edges, _dafny.Map.Empty.slice().updateUnsafe(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO)),_dafny.ZERO), _dafny.Map.Empty.slice().updateUnsafe(_dafny.ZERO,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Map.Empty.slice(), _dafny.ZERO, _dafny.ZERO);
+      let _970_idToNum = (_969_r)[2];
+      let _971_numToCFGNode = (_969_r)[3];
+      let _972_lastStateNum = (_969_r)[0];
+      let _973_transitions = (_969_r)[1];
+      let _974_a = Automata.Auto.create_Auto((_972_lastStateNum).plus(_dafny.ONE), _973_transitions);
+      if ((_dafny.ZERO).isLessThan(_972_lastStateNum)) {
+        let _975_s = function () {
           let _coll1 = new _dafny.Set();
-          for (const _compr_1 of _dafny.IntegerRange(_dafny.ZERO, (_947_lastStateNum).plus(_dafny.ONE))) {
-            let _951_q = _compr_1;
-            if (((_dafny.ZERO).isLessThanOrEqualTo(_951_q)) && ((_951_q).isLessThan((_947_lastStateNum).plus(_dafny.ONE)))) {
-              _coll1.add(_951_q);
+          for (const _compr_1 of _dafny.IntegerRange(_dafny.ZERO, (_972_lastStateNum).plus(_dafny.ONE))) {
+            let _976_q = _compr_1;
+            if (((_dafny.ZERO).isLessThanOrEqualTo(_976_q)) && ((_976_q).isLessThan((_972_lastStateNum).plus(_dafny.ONE)))) {
+              _coll1.add(_976_q);
             }
           }
           return _coll1;
         }();
-        let _952_p = PartitionMod.Partition.create_Partition((_947_lastStateNum).plus(_dafny.ONE), _dafny.Seq.of(_950_s));
-        let _953_p1 = CFGraph.__default.SegNumPartition(_952_p, _946_numToCFGNode, (_this).dtor_maxSegNum, _dafny.ZERO);
-        let _954_vp = Minimiser.Pair.create_Pair(_949_a, _953_p1);
-        let _955_minim = Minimiser.__default.Minimise(_954_vp);
-        let _956_listOfEdges = (_955_minim).GenerateReducedTailRec(_dafny.ZERO, _dafny.Seq.of());
-        let _957_x = CFGraph.__default.NatBoolEdgesToCFGEdges(_956_listOfEdges, _946_numToCFGNode, (_this).dtor_maxSegNum);
-        let _958_miniCFG = CFGraph.BoolCFGraph.create_BoolCFGraph(_957_x, (_this).dtor_maxSegNum);
-        return _958_miniCFG;
+        let _977_p = PartitionMod.Partition.create_Partition((_972_lastStateNum).plus(_dafny.ONE), _dafny.Seq.of(_975_s));
+        let _978_p1 = ((equiv) ? (CFGraph.__default.SegNumPartition2(_977_p, _971_numToCFGNode, (_this).dtor_maxSegNum, _dafny.ZERO, xs)) : (CFGraph.__default.SegNumPartition(_977_p, _971_numToCFGNode, (_this).dtor_maxSegNum, _dafny.ZERO)));
+        let _979_vp = Minimiser.Pair.create_Pair(_974_a, _978_p1);
+        let _980_minim = Minimiser.__default.Minimise(_979_vp);
+        let _981_listOfEdges = (_980_minim).GenerateReducedTailRec(_dafny.ZERO, _dafny.Seq.of());
+        let _982_x = CFGraph.__default.NatBoolEdgesToCFGEdges(_981_listOfEdges, _971_numToCFGNode, (_this).dtor_maxSegNum);
+        let _983_miniCFG = CFGraph.BoolCFGraph.create_BoolCFGraph(_982_x, (_this).dtor_maxSegNum);
+        return _983_miniCFG;
       } else {
         return CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), (_this).dtor_maxSegNum);
       }
     };
     DOTPrintEdges(xe, fancyExits) {
       let _this = this;
-      let _959___accumulator = _dafny.Seq.of();
+      let _984___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((_dafny.ZERO).isLessThan(new BigNumber((xe).length))) {
-          _959___accumulator = _dafny.Seq.Concat(_959___accumulator, ((xe)[_dafny.ZERO]).DOTPrint(false));
-          let _in126 = _this;
-          let _in127 = (xe).slice(_dafny.ONE);
-          let _in128 = fancyExits;
-          _this = _in126;
+          _984___accumulator = _dafny.Seq.Concat(_984___accumulator, ((xe)[_dafny.ZERO]).DOTPrint(false));
+          let _in133 = _this;
+          let _in134 = (xe).slice(_dafny.ONE);
+          let _in135 = fancyExits;
+          _this = _in133;
           ;
-          xe = _in127;
-          fancyExits = _in128;
+          xe = _in134;
+          fancyExits = _in135;
           continue TAIL_CALL_START;
         } else {
-          return _dafny.Seq.Concat(_959___accumulator, _dafny.Seq.UnicodeFromString(""));
+          return _dafny.Seq.Concat(_984___accumulator, _dafny.Seq.UnicodeFromString(""));
         }
       }
     };
     DOTPrintNodes(xs, simpleOutput, g, printed) {
       let _this = this;
-      let _960___accumulator = _dafny.Seq.of();
+      let _985___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((_dafny.ZERO).isLessThan(new BigNumber((g).length))) {
-          let _961_srctxt = (((printed).contains(((g)[_dafny.ZERO]).dtor_src)) ? (_dafny.Seq.UnicodeFromString("")) : (((((((g)[_dafny.ZERO]).dtor_src).dtor_seg).is_None) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (((g)[_dafny.ZERO]).dtor_src).ToDot()), _dafny.Seq.UnicodeFromString("[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"))) : ((_this).DOTPrintNodeLabel(((g)[_dafny.ZERO]).dtor_src, (xs)[((((g)[_dafny.ZERO]).dtor_src).dtor_seg).dtor_v], simpleOutput)))));
-          let _962_tgttxt = (((printed).contains(((g)[_dafny.ZERO]).dtor_tgt)) ? (_dafny.Seq.UnicodeFromString("")) : (((((((g)[_dafny.ZERO]).dtor_tgt).dtor_seg).is_None) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (((g)[_dafny.ZERO]).dtor_tgt).ToDot()), _dafny.Seq.UnicodeFromString("[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"))) : ((_this).DOTPrintNodeLabel(((g)[_dafny.ZERO]).dtor_tgt, (xs)[((((g)[_dafny.ZERO]).dtor_tgt).dtor_seg).dtor_v], simpleOutput)))));
-          _960___accumulator = _dafny.Seq.Concat(_960___accumulator, _dafny.Seq.Concat(_961_srctxt, _962_tgttxt));
-          let _in129 = _this;
-          let _in130 = xs;
-          let _in131 = simpleOutput;
-          let _in132 = (g).slice(_dafny.ONE);
-          let _in133 = (printed).Union(_dafny.Set.fromElements(((g)[_dafny.ZERO]).dtor_src, ((g)[_dafny.ZERO]).dtor_tgt));
-          _this = _in129;
+          let _986_srctxt = (((printed).contains(((g)[_dafny.ZERO]).dtor_src)) ? (_dafny.Seq.UnicodeFromString("")) : (((((((g)[_dafny.ZERO]).dtor_src).dtor_seg).is_None) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (((g)[_dafny.ZERO]).dtor_src).ToDot()), _dafny.Seq.UnicodeFromString("[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"))) : ((_this).DOTPrintNodeLabel(((g)[_dafny.ZERO]).dtor_src, (xs)[((((g)[_dafny.ZERO]).dtor_src).dtor_seg).dtor_v], simpleOutput)))));
+          let _987_tgttxt = (((printed).contains(((g)[_dafny.ZERO]).dtor_tgt)) ? (_dafny.Seq.UnicodeFromString("")) : (((((((g)[_dafny.ZERO]).dtor_tgt).dtor_seg).is_None) ? (_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (((g)[_dafny.ZERO]).dtor_tgt).ToDot()), _dafny.Seq.UnicodeFromString("[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"))) : ((_this).DOTPrintNodeLabel(((g)[_dafny.ZERO]).dtor_tgt, (xs)[((((g)[_dafny.ZERO]).dtor_tgt).dtor_seg).dtor_v], simpleOutput)))));
+          _985___accumulator = _dafny.Seq.Concat(_985___accumulator, _dafny.Seq.Concat(_986_srctxt, _987_tgttxt));
+          let _in136 = _this;
+          let _in137 = xs;
+          let _in138 = simpleOutput;
+          let _in139 = (g).slice(_dafny.ONE);
+          let _in140 = (printed).Union(_dafny.Set.fromElements(((g)[_dafny.ZERO]).dtor_src, ((g)[_dafny.ZERO]).dtor_tgt));
+          _this = _in136;
           ;
-          xs = _in130;
-          simpleOutput = _in131;
-          g = _in132;
-          printed = _in133;
+          xs = _in137;
+          simpleOutput = _in138;
+          g = _in139;
+          printed = _in140;
           continue TAIL_CALL_START;
         } else {
-          return _dafny.Seq.Concat(_960___accumulator, _dafny.Seq.UnicodeFromString(""));
+          return _dafny.Seq.Concat(_985___accumulator, _dafny.Seq.UnicodeFromString(""));
         }
       }
     };
     DOTPrintNodeLabel(n, s, simpleOutput) {
       let _this = this;
       if (simpleOutput) {
-        let _963_lab = CFGraph.__default.DOTSeg(s, ((n).dtor_seg).dtor_v);
-        let _964_nodeColour = CFGraph.__default.SegColour(s);
-        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (n).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _964_nodeColour), _dafny.Seq.UnicodeFromString("label=<\n")), (_963_lab)[0]), _dafny.Seq.UnicodeFromString("> ")), _dafny.Seq.UnicodeFromString("tooltip=<")), (_963_lab)[1]), _dafny.Seq.UnicodeFromString(">]\n"));
+        let _988_lab = CFGraph.__default.DOTSeg(s, ((n).dtor_seg).dtor_v);
+        let _989_nodeColour = CFGraph.__default.SegColour(s);
+        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (n).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _989_nodeColour), _dafny.Seq.UnicodeFromString("label=<\n")), (_988_lab)[0]), _dafny.Seq.UnicodeFromString("> ")), _dafny.Seq.UnicodeFromString("tooltip=<")), (_988_lab)[1]), _dafny.Seq.UnicodeFromString(">]\n"));
       } else {
-        let _965_lab = CFGraph.__default.DOTSegTable(s, ((n).dtor_seg).dtor_v);
-        let _966_nodeColour = _dafny.Seq.UnicodeFromString("");
-        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (n).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _966_nodeColour), _dafny.Seq.UnicodeFromString("label=<\n")), _965_lab), _dafny.Seq.UnicodeFromString(">]\n"));
+        let _990_lab = CFGraph.__default.DOTSegTable(s, ((n).dtor_seg).dtor_v);
+        let _991_nodeColour = _dafny.Seq.UnicodeFromString("");
+        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("s"), (n).ToDot()), _dafny.Seq.UnicodeFromString(" [")), _991_nodeColour), _dafny.Seq.UnicodeFromString("label=<\n")), _990_lab), _dafny.Seq.UnicodeFromString(">]\n"));
       }
     };
     DOTPrint(xs, simpleOutput, fancyExits) {
       let _this = this;
-      let _967_prefix = _dafny.Seq.UnicodeFromString("digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ");
-      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_967_prefix, (_this).DOTPrintNodes(xs, simpleOutput, (_this).dtor_edges, _dafny.Set.fromElements())), (_this).DOTPrintEdges((_this).dtor_edges, fancyExits)), _dafny.Seq.UnicodeFromString("}\n"));
+      let _992_prefix = _dafny.Seq.UnicodeFromString("digraph CFG {\nnode [shape=box]\nnode[fontname=arial]\nedge[fontname=arial]\nranking=TB\n ");
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_992_prefix, (_this).DOTPrintNodes(xs, simpleOutput, (_this).dtor_edges, _dafny.Set.fromElements())), (_this).DOTPrintEdges((_this).dtor_edges, fancyExits)), _dafny.Seq.UnicodeFromString("}\n"));
     };
   }
   return $module;
@@ -7961,48 +8031,48 @@ let LoopResolver = (function() {
         } else if (((((s)[index]).dtor_seg).is_Some) && ((((xs)[(((s)[index]).dtor_seg).dtor_v]).StartAddress()).isEqualTo(pc))) {
           return MiscTypes.Option.create_Some(_dafny.Tuple.of((s)[index], index));
         } else {
-          let _in134 = xs;
-          let _in135 = pc;
-          let _in136 = s;
-          let _in137 = (index).plus(_dafny.ONE);
-          xs = _in134;
-          pc = _in135;
-          s = _in136;
-          index = _in137;
+          let _in141 = xs;
+          let _in142 = pc;
+          let _in143 = s;
+          let _in144 = (index).plus(_dafny.ONE);
+          xs = _in141;
+          pc = _in142;
+          s = _in143;
+          index = _in144;
           continue TAIL_CALL_START;
         }
       }
     };
     static SafeLoopFound(xs, pc, seenOnPath, boolPath, jumpDests) {
       TAIL_CALL_START: while (true) {
-        let _source68 = LoopResolver.__default.FindFirstNodeWithPC(xs, pc, seenOnPath, _dafny.ZERO);
-        if (_source68.is_None) {
+        let _source69 = LoopResolver.__default.FindFirstNodeWithPC(xs, pc, seenOnPath, _dafny.ZERO);
+        if (_source69.is_None) {
           return MiscTypes.Option.create_None();
         } else {
-          let _968___mcc_h0 = (_source68).v;
-          let _969_v = _968___mcc_h0;
-          let _970_init = (seenOnPath)[(_969_v)[1]];
-          let _971_path = (seenOnPath).slice((_969_v)[1]);
-          let _972_segs = LoopResolver.__default.NodesToSeg(_971_path);
-          let _973_tgtCond = ((xs)[(((seenOnPath)[(new BigNumber((seenOnPath).length)).minus(_dafny.ONE)]).dtor_seg).dtor_v]).LeadsTo(pc, (boolPath)[(new BigNumber((boolPath).length)).minus(_dafny.ONE)]);
-          let _974_w1 = LinSegments.__default.WPreSeqSegs(_972_segs, (boolPath).slice((_969_v)[1]), _973_tgtCond, xs, pc);
-          if ((_974_w1).is_StTrue) {
-            return MiscTypes.Option.create_Some((_969_v)[0]);
-          } else if ((_974_w1).is_StFalse) {
+          let _993___mcc_h0 = (_source69).v;
+          let _994_v = _993___mcc_h0;
+          let _995_init = (seenOnPath)[(_994_v)[1]];
+          let _996_path = (seenOnPath).slice((_994_v)[1]);
+          let _997_segs = LoopResolver.__default.NodesToSeg(_996_path);
+          let _998_tgtCond = ((xs)[(((seenOnPath)[(new BigNumber((seenOnPath).length)).minus(_dafny.ONE)]).dtor_seg).dtor_v]).LeadsTo(pc, (boolPath)[(new BigNumber((boolPath).length)).minus(_dafny.ONE)]);
+          let _999_w1 = LinSegments.__default.WPreSeqSegs(_997_segs, (boolPath).slice((_994_v)[1]), _998_tgtCond, xs, pc);
+          if ((_999_w1).is_StTrue) {
+            return MiscTypes.Option.create_Some((_994_v)[0]);
+          } else if ((_999_w1).is_StFalse) {
             return MiscTypes.Option.create_None();
-          } else if (LoopResolver.__default.PreservesCond(_974_w1, _972_segs, (boolPath).slice((_969_v)[1]), xs, jumpDests)) {
-            return MiscTypes.Option.create_Some((_969_v)[0]);
-          } else if (((_dafny.ZERO).isLessThan(new BigNumber(((seenOnPath).slice((_969_v)[1], new BigNumber((seenOnPath).length))).length))) && ((new BigNumber(((seenOnPath).slice((_969_v)[1], new BigNumber((seenOnPath).length))).length)).isLessThan(new BigNumber((seenOnPath).length)))) {
-            let _in138 = xs;
-            let _in139 = pc;
-            let _in140 = (seenOnPath).slice((_969_v)[1], new BigNumber((seenOnPath).length));
-            let _in141 = (boolPath).slice((_969_v)[1], new BigNumber((boolPath).length));
-            let _in142 = jumpDests;
-            xs = _in138;
-            pc = _in139;
-            seenOnPath = _in140;
-            boolPath = _in141;
-            jumpDests = _in142;
+          } else if (LoopResolver.__default.PreservesCond(_999_w1, _997_segs, (boolPath).slice((_994_v)[1]), xs, jumpDests)) {
+            return MiscTypes.Option.create_Some((_994_v)[0]);
+          } else if (((_dafny.ZERO).isLessThan(new BigNumber(((seenOnPath).slice((_994_v)[1], new BigNumber((seenOnPath).length))).length))) && ((new BigNumber(((seenOnPath).slice((_994_v)[1], new BigNumber((seenOnPath).length))).length)).isLessThan(new BigNumber((seenOnPath).length)))) {
+            let _in145 = xs;
+            let _in146 = pc;
+            let _in147 = (seenOnPath).slice((_994_v)[1], new BigNumber((seenOnPath).length));
+            let _in148 = (boolPath).slice((_994_v)[1], new BigNumber((boolPath).length));
+            let _in149 = jumpDests;
+            xs = _in145;
+            pc = _in146;
+            seenOnPath = _in147;
+            boolPath = _in148;
+            jumpDests = _in149;
             continue TAIL_CALL_START;
           } else {
             return MiscTypes.Option.create_None();
@@ -8011,10 +8081,10 @@ let LoopResolver = (function() {
       }
     };
     static PreservesCond(c, seg, exits, xs, jumpDests) {
-      let _975_initState = State.__default.BuildInitState(c, _dafny.ZERO);
-      let _976_endState = LoopResolver.__default.RunAll(seg, exits, xs, _975_initState, jumpDests);
-      if ((_976_endState).is_EState) {
-        return (_976_endState).Sat(c);
+      let _1000_initState = State.__default.BuildInitState(c, _dafny.ZERO);
+      let _1001_endState = LoopResolver.__default.RunAll(seg, exits, xs, _1000_initState, jumpDests);
+      if ((_1001_endState).is_EState) {
+        return (_1001_endState).Sat(c);
       } else {
         return false;
       }
@@ -8024,40 +8094,40 @@ let LoopResolver = (function() {
         if ((new BigNumber((seg).length)).isEqualTo(_dafny.ZERO)) {
           return s;
         } else {
-          let _source69 = ((xs)[(seg)[_dafny.ZERO]]).Run(s, (exits)[_dafny.ZERO], jumpDests);
-          if (_source69.is_EState) {
-            let _977___mcc_h0 = (_source69).pc;
-            let _978___mcc_h1 = (_source69).stack;
-            let _979_st = _978___mcc_h1;
-            let _980_p = _977___mcc_h0;
-            let _in143 = (seg).slice(_dafny.ONE);
-            let _in144 = (exits).slice(_dafny.ONE);
-            let _in145 = xs;
-            let _in146 = State.AState.create_EState(_980_p, _979_st);
-            let _in147 = jumpDests;
-            seg = _in143;
-            exits = _in144;
-            xs = _in145;
-            s = _in146;
-            jumpDests = _in147;
+          let _source70 = ((xs)[(seg)[_dafny.ZERO]]).Run(s, (exits)[_dafny.ZERO], jumpDests);
+          if (_source70.is_EState) {
+            let _1002___mcc_h0 = (_source70).pc;
+            let _1003___mcc_h1 = (_source70).stack;
+            let _1004_st = _1003___mcc_h1;
+            let _1005_p = _1002___mcc_h0;
+            let _in150 = (seg).slice(_dafny.ONE);
+            let _in151 = (exits).slice(_dafny.ONE);
+            let _in152 = xs;
+            let _in153 = State.AState.create_EState(_1005_p, _1004_st);
+            let _in154 = jumpDests;
+            seg = _in150;
+            exits = _in151;
+            xs = _in152;
+            s = _in153;
+            jumpDests = _in154;
             continue TAIL_CALL_START;
           } else {
-            let _981___mcc_h2 = (_source69).msg;
-            let _982_m = _981___mcc_h2;
-            return State.AState.create_Error(_982_m);
+            let _1006___mcc_h2 = (_source70).msg;
+            let _1007_m = _1006___mcc_h2;
+            return State.AState.create_Error(_1007_m);
           }
         }
       }
     };
     static NodesToSeg(xn) {
-      let _983___accumulator = _dafny.Seq.of();
+      let _1008___accumulator = _dafny.Seq.of();
       TAIL_CALL_START: while (true) {
         if ((new BigNumber((xn).length)).isEqualTo(_dafny.ZERO)) {
-          return _dafny.Seq.Concat(_983___accumulator, _dafny.Seq.of());
+          return _dafny.Seq.Concat(_1008___accumulator, _dafny.Seq.of());
         } else {
-          _983___accumulator = _dafny.Seq.Concat(_983___accumulator, _dafny.Seq.of((((xn)[_dafny.ZERO]).dtor_seg).dtor_v));
-          let _in148 = (xn).slice(_dafny.ONE);
-          xn = _in148;
+          _1008___accumulator = _dafny.Seq.Concat(_1008___accumulator, _dafny.Seq.of((((xn)[_dafny.ZERO]).dtor_seg).dtor_v));
+          let _in155 = (xn).slice(_dafny.ONE);
+          xn = _in155;
           continue TAIL_CALL_START;
         }
       }
@@ -8065,165 +8135,401 @@ let LoopResolver = (function() {
   };
   return $module;
 })(); // end of module LoopResolver
-let BuildCFGraph = (function() {
+let BuildCFGraphV2 = (function() {
   let $module = {};
 
   $module.__default = class __default {
     constructor () {
-      this._tname = "BuildCFGraph._default";
+      this._tname = "BuildCFGraphV2._default";
     }
     _parentTraits() {
       return [];
     }
-    static BuildCFGV5(xs, maxDepth, jumpDests, numSeg, s, seen, seenPCs, path, seenStates) {
-      let _pat_let_tv2 = path;
+    static BuildCFGV6(c, maxDepth, numSeg, s, h, stat) {
+      let _pat_let_tv2 = h;
       let _pat_let_tv3 = numSeg;
-      let _pat_let_tv4 = seenStates;
-      let _pat_let_tv5 = seenStates;
-      let _pat_let_tv6 = xs;
-      let _pat_let_tv7 = path;
-      let _pat_let_tv8 = numSeg;
-      let _pat_let_tv9 = path;
-      let _pat_let_tv10 = seenStates;
-      let _pat_let_tv11 = xs;
-      let _pat_let_tv12 = maxDepth;
-      let _pat_let_tv13 = jumpDests;
-      let _pat_let_tv14 = seen;
-      let _pat_let_tv15 = seenPCs;
-      let _pat_let_tv16 = path;
-      let _pat_let_tv17 = path;
-      let _pat_let_tv18 = numSeg;
-      let _pat_let_tv19 = path;
-      let _pat_let_tv20 = seenStates;
-      let _pat_let_tv21 = path;
-      let _pat_let_tv22 = numSeg;
-      let _pat_let_tv23 = path;
-      let _pat_let_tv24 = seenStates;
-      let _pat_let_tv25 = seenStates;
-      let _pat_let_tv26 = xs;
-      let _pat_let_tv27 = path;
-      let _pat_let_tv28 = numSeg;
-      let _pat_let_tv29 = path;
-      let _pat_let_tv30 = numSeg;
-      let _pat_let_tv31 = path;
-      let _pat_let_tv32 = xs;
-      let _pat_let_tv33 = maxDepth;
-      let _pat_let_tv34 = jumpDests;
-      let _pat_let_tv35 = seen;
-      let _pat_let_tv36 = seenPCs;
-      let _pat_let_tv37 = path;
-      let _pat_let_tv38 = path;
-      let _pat_let_tv39 = numSeg;
-      let _pat_let_tv40 = path;
-      let _pat_let_tv41 = xs;
-      let _pat_let_tv42 = maxDepth;
-      let _pat_let_tv43 = jumpDests;
-      let _pat_let_tv44 = seen;
-      let _pat_let_tv45 = seenPCs;
-      let _pat_let_tv46 = path;
-      let _pat_let_tv47 = path;
-      let _pat_let_tv48 = numSeg;
-      let _pat_let_tv49 = xs;
-      let _pat_let_tv50 = xs;
-      let _pat_let_tv51 = seen;
-      let _pat_let_tv52 = path;
-      let _pat_let_tv53 = jumpDests;
-      let _pat_let_tv54 = seenPCs;
-      let _pat_let_tv55 = path;
-      let _pat_let_tv56 = numSeg;
-      let _pat_let_tv57 = path;
-      let _pat_let_tv58 = path;
-      let _pat_let_tv59 = numSeg;
-      let _pat_let_tv60 = path;
-      if ((!(((xs)[numSeg]).HasExit(false))) && (!(((xs)[numSeg]).HasExit(true)))) {
-        return _dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), seenStates);
+      let _pat_let_tv4 = h;
+      let _pat_let_tv5 = h;
+      let _pat_let_tv6 = stat;
+      let _pat_let_tv7 = c;
+      let _pat_let_tv8 = h;
+      let _pat_let_tv9 = numSeg;
+      let _pat_let_tv10 = h;
+      let _pat_let_tv11 = h;
+      let _pat_let_tv12 = h;
+      let _pat_let_tv13 = h;
+      let _pat_let_tv14 = h;
+      let _pat_let_tv15 = c;
+      let _pat_let_tv16 = maxDepth;
+      let _pat_let_tv17 = stat;
+      let _pat_let_tv18 = h;
+      let _pat_let_tv19 = numSeg;
+      let _pat_let_tv20 = h;
+      let _pat_let_tv21 = h;
+      let _pat_let_tv22 = stat;
+      let _pat_let_tv23 = h;
+      let _pat_let_tv24 = numSeg;
+      let _pat_let_tv25 = h;
+      let _pat_let_tv26 = h;
+      let _pat_let_tv27 = stat;
+      let _pat_let_tv28 = h;
+      let _pat_let_tv29 = c;
+      let _pat_let_tv30 = h;
+      let _pat_let_tv31 = numSeg;
+      let _pat_let_tv32 = h;
+      let _pat_let_tv33 = numSeg;
+      let _pat_let_tv34 = h;
+      let _pat_let_tv35 = h;
+      let _pat_let_tv36 = h;
+      let _pat_let_tv37 = h;
+      let _pat_let_tv38 = c;
+      let _pat_let_tv39 = maxDepth;
+      let _pat_let_tv40 = h;
+      let _pat_let_tv41 = numSeg;
+      let _pat_let_tv42 = h;
+      let _pat_let_tv43 = h;
+      let _pat_let_tv44 = h;
+      let _pat_let_tv45 = h;
+      let _pat_let_tv46 = c;
+      let _pat_let_tv47 = maxDepth;
+      let _pat_let_tv48 = h;
+      let _pat_let_tv49 = numSeg;
+      let _pat_let_tv50 = c;
+      let _pat_let_tv51 = c;
+      let _pat_let_tv52 = h;
+      let _pat_let_tv53 = h;
+      let _pat_let_tv54 = c;
+      let _pat_let_tv55 = h;
+      let _pat_let_tv56 = h;
+      let _pat_let_tv57 = numSeg;
+      let _pat_let_tv58 = h;
+      let _pat_let_tv59 = h;
+      let _pat_let_tv60 = numSeg;
+      let _pat_let_tv61 = h;
+      if ((!((((c).dtor_xs)[numSeg]).HasExit(false))) && (!((((c).dtor_xs)[numSeg]).HasExit(true)))) {
+        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat);
       } else if ((maxDepth).isEqualTo(_dafny.ZERO)) {
-        return _dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(path, MiscTypes.Option.create_Some(numSeg)), true, CFGraph.CFGNode.create_CFGNode(path, MiscTypes.Option.create_Some(numSeg)))), (new BigNumber((xs).length)).minus(_dafny.ONE)), seenStates);
+        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)), true, CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)))), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), (h).dtor_seenStates), (stat).SetMaxDepth());
       } else {
-        let _984_leftBranch = ((((xs)[numSeg]).HasExit(false)) ? (function (_pat_let18_0) {
-          return function (_985_leftSucc) {
-            return (((_pat_let_tv25).contains(_985_leftSucc)) ? (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv2, MiscTypes.Option.create_Some(_pat_let_tv3)), false, (_pat_let_tv4).get(_985_leftSucc))), _dafny.ZERO), _pat_let_tv5)) : (((((_985_leftSucc).is_EState) && (((_985_leftSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let19_0) {
-              return function (_986_nextSeg) {
-                return (((_986_nextSeg).is_Some) ? (function (_pat_let20_0) {
-                  return function (_987_src) {
+        let _1009_leftBranch = (((((c).dtor_xs)[numSeg]).HasExit(false)) ? (function (_pat_let18_0) {
+          return function (_1010_leftSucc) {
+            return ((((_pat_let_tv28).dtor_seenStates).contains(_1010_leftSucc)) ? (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv2).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv3)), false, ((_pat_let_tv4).dtor_seenStates).get(_1010_leftSucc))), _dafny.ZERO), (_pat_let_tv5).dtor_seenStates), (_pat_let_tv6).IncFound())) : (((((_1010_leftSucc).is_EState) && (((_1010_leftSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let19_0) {
+              return function (_1011_nextSeg) {
+                return (((_1011_nextSeg).is_Some) ? (function (_pat_let20_0) {
+                  return function (_1012_src) {
                     return function (_pat_let21_0) {
-                      return function (_988_tgt) {
+                      return function (_1013_tgt) {
                         return function (_pat_let22_0) {
-                          return function (_989_newSeenSegs) {
+                          return function (_1014_newSeenSegs) {
                             return function (_pat_let23_0) {
-                              return function (_990_gleft) {
-                                return _dafny.Tuple.of(((_990_gleft)[0]).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_987_src, false, _988_tgt)), (_990_gleft)[1]);
+                              return function (_1015_h1) {
+                                return function (_pat_let24_0) {
+                                  return function (_1016_gleft) {
+                                    return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1016_gleft)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1012_src, false, _1013_tgt)), ((_1016_gleft)[0]).dtor_states), (_1016_gleft)[1]);
+                                  }(_pat_let24_0);
+                                }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv15, (_pat_let_tv16).minus(_dafny.ONE), (_1011_nextSeg).dtor_v, _1010_leftSucc, _1015_h1, _pat_let_tv17));
                               }(_pat_let23_0);
-                            }(BuildCFGraph.__default.BuildCFGV5(_pat_let_tv11, (_pat_let_tv12).minus(_dafny.ONE), _pat_let_tv13, (_986_nextSeg).dtor_v, _985_leftSucc, _dafny.Seq.Concat(_pat_let_tv14, _dafny.Seq.of(_988_tgt)), _dafny.Seq.Concat(_pat_let_tv15, _dafny.Seq.of((_985_leftSucc).PC())), _dafny.Seq.Concat(_pat_let_tv16, _dafny.Seq.of(false)), _989_newSeenSegs));
+                            }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv12).dtor_seen, _dafny.Seq.of(_1013_tgt)), _dafny.Seq.Concat((_pat_let_tv13).dtor_seenPCs, _dafny.Seq.of((_1010_leftSucc).PC())), _dafny.Seq.Concat((_pat_let_tv14).dtor_path, _dafny.Seq.of(false)), _1014_newSeenSegs));
                           }(_pat_let22_0);
-                        }((_pat_let_tv10).update(_985_leftSucc, _988_tgt));
+                        }(((_pat_let_tv11).dtor_seenStates).update(_1010_leftSucc, _1013_tgt));
                       }(_pat_let21_0);
-                    }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv9, _dafny.Seq.of(false)), _986_nextSeg));
+                    }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv10).dtor_path, _dafny.Seq.of(false)), _1011_nextSeg));
                   }(_pat_let20_0);
-                }(CFGraph.CFGNode.create_CFGNode(_pat_let_tv7, MiscTypes.Option.create_Some(_pat_let_tv8)))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv17, MiscTypes.Option.create_Some(_pat_let_tv18)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv19, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), _pat_let_tv20)));
+                }(CFGraph.CFGNode.create_CFGNode((_pat_let_tv8).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv9)))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv18).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv19)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv20).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv21).dtor_seenStates), _pat_let_tv22)));
               }(_pat_let19_0);
-            }(LinSegments.__default.PCToSeg(_pat_let_tv6, (_985_leftSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv21, MiscTypes.Option.create_Some(_pat_let_tv22)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv23, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), _pat_let_tv24)))));
+            }(LinSegments.__default.PCToSeg((_pat_let_tv7).dtor_xs, (_1010_leftSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv23).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv24)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv25).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv26).dtor_seenStates), _pat_let_tv27)))));
           }(_pat_let18_0);
-        }(((xs)[numSeg]).Run(s, false, jumpDests))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), seenStates)));
-        let _991_newSeenStates = (_984_leftBranch)[1];
-        let _992_rightBranch = ((((xs)[numSeg]).HasExit(true)) ? (function (_pat_let24_0) {
-          return function (_993_rightSucc) {
-            return ((((_993_rightSucc).is_EState) && (((_993_rightSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let25_0) {
-              return function (_994_nextSeg) {
-                return (((_994_nextSeg).is_Some) ? ((((_991_newSeenStates).contains(_993_rightSucc)) ? (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv27, MiscTypes.Option.create_Some(_pat_let_tv28)), true, (_991_newSeenStates).get(_993_rightSucc))), _dafny.ZERO), _991_newSeenStates)) : (((!_dafny.Seq.contains(_pat_let_tv54, (_993_rightSucc).PC())) ? (function (_pat_let26_0) {
-                  return function (_995_src) {
-                    return function (_pat_let27_0) {
-                      return function (_996_tgt) {
-                        return function (_pat_let28_0) {
-                          return function (_997_newSeenSegs) {
-                            return function (_pat_let29_0) {
-                              return function (_998_gright) {
-                                return _dafny.Tuple.of(((_998_gright)[0]).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_995_src, true, _996_tgt)), (_998_gright)[1]);
-                              }(_pat_let29_0);
-                            }(BuildCFGraph.__default.BuildCFGV5(_pat_let_tv32, (_pat_let_tv33).minus(_dafny.ONE), _pat_let_tv34, (_994_nextSeg).dtor_v, _993_rightSucc, _dafny.Seq.Concat(_pat_let_tv35, _dafny.Seq.of(_996_tgt)), _dafny.Seq.Concat(_pat_let_tv36, _dafny.Seq.of((_993_rightSucc).PC())), _dafny.Seq.Concat(_pat_let_tv37, _dafny.Seq.of(true)), _997_newSeenSegs));
-                          }(_pat_let28_0);
-                        }((_991_newSeenStates).update(_993_rightSucc, _996_tgt));
-                      }(_pat_let27_0);
-                    }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv31, _dafny.Seq.of(true)), _994_nextSeg));
-                  }(_pat_let26_0);
-                }(CFGraph.CFGNode.create_CFGNode(_pat_let_tv29, MiscTypes.Option.create_Some(_pat_let_tv30)))) : (function (_source70) {
-                  if (_source70.is_None) {
-                    return function (_pat_let30_0) {
-                      return function (_999_src) {
-                        return function (_pat_let31_0) {
-                          return function (_1000_tgt) {
-                            return function (_pat_let32_0) {
-                              return function (_1001_newSeenSegs) {
-                                return function (_pat_let33_0) {
-                                  return function (_1002_gright) {
-                                    return _dafny.Tuple.of(((_1002_gright)[0]).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_999_src, true, _1000_tgt)), (_1002_gright)[1]);
-                                  }(_pat_let33_0);
-                                }(BuildCFGraph.__default.BuildCFGV5(_pat_let_tv41, (_pat_let_tv42).minus(_dafny.ONE), _pat_let_tv43, (_994_nextSeg).dtor_v, _993_rightSucc, _dafny.Seq.Concat(_pat_let_tv44, _dafny.Seq.of(_1000_tgt)), _dafny.Seq.Concat(_pat_let_tv45, _dafny.Seq.of((_993_rightSucc).PC())), _dafny.Seq.Concat(_pat_let_tv46, _dafny.Seq.of(true)), _1001_newSeenSegs));
-                              }(_pat_let32_0);
-                            }((_991_newSeenStates).update(_993_rightSucc, _1000_tgt));
-                          }(_pat_let31_0);
-                        }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv40, _dafny.Seq.of(true)), _994_nextSeg));
-                      }(_pat_let30_0);
-                    }(CFGraph.CFGNode.create_CFGNode(_pat_let_tv38, MiscTypes.Option.create_Some(_pat_let_tv39)));
+        }((((c).dtor_xs)[numSeg]).Run(s, false, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat)));
+        let _1017_newSeenStates = ((_1009_leftBranch)[0]).dtor_states;
+        let _1018_leftStats = (_1009_leftBranch)[1];
+        let _1019_rightBranch = (((((c).dtor_xs)[numSeg]).HasExit(true)) ? (function (_pat_let25_0) {
+          return function (_1020_rightSucc) {
+            return ((((_1020_rightSucc).is_EState) && (((_1020_rightSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let26_0) {
+              return function (_1021_nextSeg) {
+                return (((_1021_nextSeg).is_Some) ? ((((_1017_newSeenStates).contains(_1020_rightSucc)) ? (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv30).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv31)), true, (_1017_newSeenStates).get(_1020_rightSucc))), _dafny.ZERO), _1017_newSeenStates), (_1018_leftStats).IncFound())) : (((!_dafny.Seq.contains((_pat_let_tv55).dtor_seenPCs, (_1020_rightSucc).PC())) ? (function (_pat_let27_0) {
+                  return function (_1022_src) {
+                    return function (_pat_let28_0) {
+                      return function (_1023_tgt) {
+                        return function (_pat_let29_0) {
+                          return function (_1024_newSeenSegs) {
+                            return function (_pat_let30_0) {
+                              return function (_1025_h1) {
+                                return function (_pat_let31_0) {
+                                  return function (_1026_gright) {
+                                    return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1026_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1022_src, true, _1023_tgt)), ((_1026_gright)[0]).dtor_states), (_1026_gright)[1]);
+                                  }(_pat_let31_0);
+                                }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv38, (_pat_let_tv39).minus(_dafny.ONE), (_1021_nextSeg).dtor_v, _1020_rightSucc, _1025_h1, _1018_leftStats));
+                              }(_pat_let30_0);
+                            }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv35).dtor_seen, _dafny.Seq.of(_1023_tgt)), _dafny.Seq.Concat((_pat_let_tv36).dtor_seenPCs, _dafny.Seq.of((_1020_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv37).dtor_path, _dafny.Seq.of(true)), _1024_newSeenSegs));
+                          }(_pat_let29_0);
+                        }((_1017_newSeenStates).update(_1020_rightSucc, _1023_tgt));
+                      }(_pat_let28_0);
+                    }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv34).dtor_path, _dafny.Seq.of(true)), _1021_nextSeg));
+                  }(_pat_let27_0);
+                }(CFGraph.CFGNode.create_CFGNode((_pat_let_tv32).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv33)))) : (function (_source71) {
+                  if (_source71.is_None) {
+                    return function (_pat_let32_0) {
+                      return function (_1027_src) {
+                        return function (_pat_let33_0) {
+                          return function (_1028_tgt) {
+                            return function (_pat_let34_0) {
+                              return function (_1029_newSeenSegs) {
+                                return function (_pat_let35_0) {
+                                  return function (_1030_h1) {
+                                    return function (_pat_let36_0) {
+                                      return function (_1031_gright) {
+                                        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1031_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1027_src, true, _1028_tgt)), ((_1031_gright)[0]).dtor_states), (_1031_gright)[1]);
+                                      }(_pat_let36_0);
+                                    }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv46, (_pat_let_tv47).minus(_dafny.ONE), (_1021_nextSeg).dtor_v, _1020_rightSucc, _1030_h1, _1018_leftStats));
+                                  }(_pat_let35_0);
+                                }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv43).dtor_seen, _dafny.Seq.of(_1028_tgt)), _dafny.Seq.Concat((_pat_let_tv44).dtor_seenPCs, _dafny.Seq.of((_1020_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv45).dtor_path, _dafny.Seq.of(true)), _1029_newSeenSegs));
+                              }(_pat_let34_0);
+                            }((_1017_newSeenStates).update(_1020_rightSucc, _1028_tgt));
+                          }(_pat_let33_0);
+                        }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv42).dtor_path, _dafny.Seq.of(true)), _1021_nextSeg));
+                      }(_pat_let32_0);
+                    }(CFGraph.CFGNode.create_CFGNode((_pat_let_tv40).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv41)));
                   } else {
-                    let _1003___mcc_h0 = (_source70).v;
-                    return function (_pat_let34_0) {
-                      return function (_1004_prev) {
-                        return _dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv47, MiscTypes.Option.create_Some(_pat_let_tv48)), true, _1004_prev)), new BigNumber((_pat_let_tv49).length)), _991_newSeenStates);
-                      }(_pat_let34_0);
-                    }(_1003___mcc_h0);
+                    let _1032___mcc_h0 = (_source71).v;
+                    return function (_pat_let37_0) {
+                      return function (_1033_prev) {
+                        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv48).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv49)), true, _1033_prev)), new BigNumber(((_pat_let_tv50).dtor_xs).length)), _1017_newSeenStates), (_1018_leftStats).IncWpre());
+                      }(_pat_let37_0);
+                    }(_1032___mcc_h0);
                   }
-                }(LoopResolver.__default.SafeLoopFound(_pat_let_tv50, (_993_rightSucc).PC(), _pat_let_tv51, _dafny.Seq.Concat(_pat_let_tv52, _dafny.Seq.of(true)), _pat_let_tv53))))))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv55, MiscTypes.Option.create_Some(_pat_let_tv56)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv57, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _991_newSeenStates)));
-              }(_pat_let25_0);
-            }(LinSegments.__default.PCToSeg(_pat_let_tv26, (_993_rightSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode(_pat_let_tv58, MiscTypes.Option.create_Some(_pat_let_tv59)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat(_pat_let_tv60, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _991_newSeenStates)));
-          }(_pat_let24_0);
-        }(((xs)[numSeg]).Run(s, true, jumpDests))) : (_dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), _991_newSeenStates)));
-        return _dafny.Tuple.of(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.Concat(((_984_leftBranch)[0]).dtor_edges, ((_992_rightBranch)[0]).dtor_edges), (new BigNumber((xs).length)).minus(_dafny.ONE)), (_992_rightBranch)[1]);
+                }(LoopResolver.__default.SafeLoopFound((_pat_let_tv51).dtor_xs, (_1020_rightSucc).PC(), (_pat_let_tv52).dtor_seen, _dafny.Seq.Concat((_pat_let_tv53).dtor_path, _dafny.Seq.of(true)), (_pat_let_tv54).dtor_jumpDests))))))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv56).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv57)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv58).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1017_newSeenStates), _1018_leftStats)));
+              }(_pat_let26_0);
+            }(LinSegments.__default.PCToSeg((_pat_let_tv29).dtor_xs, (_1020_rightSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv59).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv60)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv61).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1017_newSeenStates), _1018_leftStats)));
+          }(_pat_let25_0);
+        }((((c).dtor_xs)[numSeg]).Run(s, true, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), _1017_newSeenStates), _1018_leftStats)));
+        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.Concat((((_1009_leftBranch)[0]).dtor_grph).dtor_edges, (((_1019_rightBranch)[0]).dtor_grph).dtor_edges), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), ((_1019_rightBranch)[0]).dtor_states), (_1019_rightBranch)[1]);
       }
     };
+    static get DEFAULT__STATS() {
+      return BuildCFGraphV2.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO);
+    };
   };
+
+  $module.History = class History {
+    constructor(tag) {
+      this.$tag = tag;
+    }
+    static create_History(seen, seenPCs, path, seenStates) {
+      let $dt = new History(0);
+      $dt.seen = seen;
+      $dt.seenPCs = seenPCs;
+      $dt.path = path;
+      $dt.seenStates = seenStates;
+      return $dt;
+    }
+    get is_History() { return this.$tag === 0; }
+    get dtor_seen() { return this.seen; }
+    get dtor_seenPCs() { return this.seenPCs; }
+    get dtor_path() { return this.path; }
+    get dtor_seenStates() { return this.seenStates; }
+    toString() {
+      if (this.$tag === 0) {
+        return "BuildCFGraphV2.History.History" + "(" + _dafny.toString(this.seen) + ", " + _dafny.toString(this.seenPCs) + ", " + _dafny.toString(this.path) + ", " + _dafny.toString(this.seenStates) + ")";
+      } else  {
+        return "<unexpected>";
+      }
+    }
+    equals(other) {
+      if (this === other) {
+        return true;
+      } else if (this.$tag === 0) {
+        return other.$tag === 0 && _dafny.areEqual(this.seen, other.seen) && _dafny.areEqual(this.seenPCs, other.seenPCs) && _dafny.areEqual(this.path, other.path) && _dafny.areEqual(this.seenStates, other.seenStates);
+      } else  {
+        return false; // unexpected
+      }
+    }
+    static Default() {
+      return BuildCFGraphV2.History.create_History(_dafny.Seq.of(), _dafny.Seq.of(), _dafny.Seq.of(), _dafny.Map.Empty);
+    }
+    static Rtd() {
+      return class {
+        static get Default() {
+          return History.Default();
+        }
+      };
+    }
+    IsConsistent(c, s) {
+      let _this = this;
+      return (((((((((new BigNumber(((_this).dtor_seen).length)).isEqualTo(new BigNumber(((_this).dtor_seenPCs).length))) && ((new BigNumber(((_this).dtor_seenPCs).length)).isEqualTo((new BigNumber(((_this).dtor_path).length)).plus(_dafny.ONE)))) && (((_this).dtor_seenStates).contains(s))) && (_dafny.Quantifier(_dafny.IntegerRange(_dafny.ZERO, new BigNumber(((_this).dtor_seen).length)), true, function (_forall_var_12) {
+        let _1034_k = _forall_var_12;
+        return !(((_dafny.ZERO).isLessThanOrEqualTo(_1034_k)) && ((_1034_k).isLessThan(new BigNumber(((_this).dtor_seen).length)))) || (_dafny.areEqual((((_this).dtor_seen)[_1034_k]).dtor_id, ((_this).dtor_path).slice(0, _1034_k)));
+      }))) && (_dafny.Quantifier(_dafny.IntegerRange(_dafny.ZERO, new BigNumber(((_this).dtor_seen).length)), true, function (_forall_var_13) {
+        let _1035_k = _forall_var_13;
+        return !(((_dafny.ZERO).isLessThanOrEqualTo(_1035_k)) && ((_1035_k).isLessThan(new BigNumber(((_this).dtor_seen).length)))) || (((((_this).dtor_seen)[_1035_k]).dtor_seg).is_Some);
+      }))) && (_dafny.Quantifier(((_this).dtor_seen).UniqueElements, true, function (_forall_var_14) {
+        let _1036_k = _forall_var_14;
+        return !((_dafny.Seq.contains((_this).dtor_seen, _1036_k)) && (((_1036_k).dtor_seg).is_Some)) || ((((_1036_k).dtor_seg).dtor_v).isLessThan(new BigNumber(((c).dtor_xs).length)));
+      }))) && (((s).PC()).isEqualTo(((_this).dtor_seenPCs)[(new BigNumber(((_this).dtor_seenPCs).length)).minus(_dafny.ONE)]))) && (_dafny.Quantifier(_dafny.IntegerRange(_dafny.ZERO, new BigNumber(((_this).dtor_seen).length)), true, function (_forall_var_15) {
+        let _1037_k = _forall_var_15;
+        return !(((_dafny.ZERO).isLessThanOrEqualTo(_1037_k)) && ((_1037_k).isLessThan(new BigNumber(((_this).dtor_seen).length)))) || ((((_this).dtor_seenPCs)[_1037_k]).isEqualTo((((c).dtor_xs)[((((_this).dtor_seen)[_1037_k]).dtor_seg).dtor_v]).StartAddress()));
+      }))) && (_dafny.Quantifier(((_this).dtor_seenStates).Keys.Elements, true, function (_forall_var_16) {
+        let _1038_s = _forall_var_16;
+        return !((((_this).dtor_seenStates).contains(_1038_s)) && (((((_this).dtor_seenStates).get(_1038_s)).dtor_seg).is_Some)) || ((((((_this).dtor_seenStates).get(_1038_s)).dtor_seg).dtor_v).isLessThan(new BigNumber(((c).dtor_xs).length)));
+      }));
+    };
+  }
+
+  $module.Context = class Context {
+    constructor(tag) {
+      this.$tag = tag;
+    }
+    static create_Context(xs, jumpDests) {
+      let $dt = new Context(0);
+      $dt.xs = xs;
+      $dt.jumpDests = jumpDests;
+      return $dt;
+    }
+    get is_Context() { return this.$tag === 0; }
+    get dtor_xs() { return this.xs; }
+    get dtor_jumpDests() { return this.jumpDests; }
+    toString() {
+      if (this.$tag === 0) {
+        return "BuildCFGraphV2.Context.Context" + "(" + _dafny.toString(this.xs) + ", " + _dafny.toString(this.jumpDests) + ")";
+      } else  {
+        return "<unexpected>";
+      }
+    }
+    equals(other) {
+      if (this === other) {
+        return true;
+      } else if (this.$tag === 0) {
+        return other.$tag === 0 && _dafny.areEqual(this.xs, other.xs) && _dafny.areEqual(this.jumpDests, other.jumpDests);
+      } else  {
+        return false; // unexpected
+      }
+    }
+    static Default() {
+      return BuildCFGraphV2.Context.create_Context(_dafny.Seq.of(), _dafny.Seq.of());
+    }
+    static Rtd() {
+      return class {
+        static get Default() {
+          return Context.Default();
+        }
+      };
+    }
+  }
+
+  $module.Stats = class Stats {
+    constructor(tag) {
+      this.$tag = tag;
+    }
+    static create_Stats(maxDepthReached, statesAlreadyFound, wPreInvSuccess) {
+      let $dt = new Stats(0);
+      $dt.maxDepthReached = maxDepthReached;
+      $dt.statesAlreadyFound = statesAlreadyFound;
+      $dt.wPreInvSuccess = wPreInvSuccess;
+      return $dt;
+    }
+    get is_Stats() { return this.$tag === 0; }
+    get dtor_maxDepthReached() { return this.maxDepthReached; }
+    get dtor_statesAlreadyFound() { return this.statesAlreadyFound; }
+    get dtor_wPreInvSuccess() { return this.wPreInvSuccess; }
+    toString() {
+      if (this.$tag === 0) {
+        return "BuildCFGraphV2.Stats.Stats" + "(" + _dafny.toString(this.maxDepthReached) + ", " + _dafny.toString(this.statesAlreadyFound) + ", " + _dafny.toString(this.wPreInvSuccess) + ")";
+      } else  {
+        return "<unexpected>";
+      }
+    }
+    equals(other) {
+      if (this === other) {
+        return true;
+      } else if (this.$tag === 0) {
+        return other.$tag === 0 && this.maxDepthReached === other.maxDepthReached && _dafny.areEqual(this.statesAlreadyFound, other.statesAlreadyFound) && _dafny.areEqual(this.wPreInvSuccess, other.wPreInvSuccess);
+      } else  {
+        return false; // unexpected
+      }
+    }
+    static Default() {
+      return BuildCFGraphV2.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO);
+    }
+    static Rtd() {
+      return class {
+        static get Default() {
+          return Stats.Default();
+        }
+      };
+    }
+    SetMaxDepth() {
+      let _this = this;
+      let _1039_dt__update__tmp_h0 = _this;
+      let _1040_dt__update_hmaxDepthReached_h0 = true;
+      return BuildCFGraphV2.Stats.create_Stats(_1040_dt__update_hmaxDepthReached_h0, (_1039_dt__update__tmp_h0).dtor_statesAlreadyFound, (_1039_dt__update__tmp_h0).dtor_wPreInvSuccess);
+    };
+    IncFound() {
+      let _this = this;
+      let _1041_dt__update__tmp_h0 = _this;
+      let _1042_dt__update_hstatesAlreadyFound_h0 = ((_this).dtor_statesAlreadyFound).plus(_dafny.ONE);
+      return BuildCFGraphV2.Stats.create_Stats((_1041_dt__update__tmp_h0).dtor_maxDepthReached, _1042_dt__update_hstatesAlreadyFound_h0, (_1041_dt__update__tmp_h0).dtor_wPreInvSuccess);
+    };
+    IncWpre() {
+      let _this = this;
+      let _1043_dt__update__tmp_h0 = _this;
+      let _1044_dt__update_hwPreInvSuccess_h0 = ((_this).dtor_wPreInvSuccess).plus(_dafny.ONE);
+      return BuildCFGraphV2.Stats.create_Stats((_1043_dt__update__tmp_h0).dtor_maxDepthReached, (_1043_dt__update__tmp_h0).dtor_statesAlreadyFound, _1044_dt__update_hwPreInvSuccess_h0);
+    };
+    PrettyPrint() {
+      let _this = this;
+      return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("// MaxDepth reached:"), (((_this).dtor_maxDepthReached) ? (_dafny.Seq.UnicodeFromString("true")) : (_dafny.Seq.UnicodeFromString("false")))), _dafny.Seq.UnicodeFromString("\n")), _dafny.Seq.UnicodeFromString("// States seen:")), Int.__default.NatToString((_this).dtor_statesAlreadyFound)), _dafny.Seq.UnicodeFromString("\n")), _dafny.Seq.UnicodeFromString("// WPre success:")), Int.__default.NatToString((_this).dtor_wPreInvSuccess)), _dafny.Seq.UnicodeFromString("\n"));
+    };
+  }
+
+  $module.CFGComputation = class CFGComputation {
+    constructor(tag) {
+      this.$tag = tag;
+    }
+    static create_CFGComputation(grph, states) {
+      let $dt = new CFGComputation(0);
+      $dt.grph = grph;
+      $dt.states = states;
+      return $dt;
+    }
+    get is_CFGComputation() { return this.$tag === 0; }
+    get dtor_grph() { return this.grph; }
+    get dtor_states() { return this.states; }
+    toString() {
+      if (this.$tag === 0) {
+        return "BuildCFGraphV2.CFGComputation.CFGComputation" + "(" + _dafny.toString(this.grph) + ", " + _dafny.toString(this.states) + ")";
+      } else  {
+        return "<unexpected>";
+      }
+    }
+    equals(other) {
+      if (this === other) {
+        return true;
+      } else if (this.$tag === 0) {
+        return other.$tag === 0 && _dafny.areEqual(this.grph, other.grph) && _dafny.areEqual(this.states, other.states);
+      } else  {
+        return false; // unexpected
+      }
+    }
+    static Default() {
+      return BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.Default(), _dafny.Map.Empty);
+    }
+    static Rtd() {
+      return class {
+        static get Default() {
+          return CFGComputation.Default();
+        }
+      };
+    }
+    Graph() {
+      let _this = this;
+      return (_this).dtor_grph;
+    };
+    States() {
+      let _this = this;
+      return (_this).dtor_states;
+    };
+  }
   return $module;
-})(); // end of module BuildCFGraph
+})(); // end of module BuildCFGraphV2
 let Driver = (function() {
   let $module = {};
 
@@ -8235,131 +8541,146 @@ let Driver = (function() {
       return [];
     }
     static Main(args) {
-      let _1005_optionParser;
+      let _1045_optionParser;
       let _nw1 = new ArgParser.ArgumentParser();
       _nw1.__ctor(_dafny.Seq.UnicodeFromString("<string>"));
-      _1005_optionParser = _nw1;
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-d"), _dafny.Seq.UnicodeFromString("--dis"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Disassemble <string>"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-p"), _dafny.Seq.UnicodeFromString("--proof"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Generate proof object for <string>"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-s"), _dafny.Seq.UnicodeFromString("--segment"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Print segment of <string>"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-l"), _dafny.Seq.UnicodeFromString("--lib"), _dafny.ONE, _dafny.Seq.UnicodeFromString("The path to the Dafny-EVM source code. Used to add includes files in the proof object. "));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-c"), _dafny.Seq.UnicodeFromString("--cfg"), _dafny.ONE, _dafny.Seq.UnicodeFromString("Max depth. Control flow graph in DOT format"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-r"), _dafny.Seq.UnicodeFromString("--raw"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Display non-minimised and minimised CFGs"));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-f"), _dafny.Seq.UnicodeFromString("--fancy"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Use exit and entry ports in segments do draw arrows."));
-      (_1005_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-n"), _dafny.Seq.UnicodeFromString("--notable"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Don't use tables to pretty-print DOT file. Reduces size of the DOT file."));
+      _1045_optionParser = _nw1;
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-d"), _dafny.Seq.UnicodeFromString("--dis"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Disassemble <string>"));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-p"), _dafny.Seq.UnicodeFromString("--proof"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Generate proof object for <string>"));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-s"), _dafny.Seq.UnicodeFromString("--segment"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Print segment of <string>"));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-l"), _dafny.Seq.UnicodeFromString("--lib"), _dafny.ONE, _dafny.Seq.UnicodeFromString("The path to the Dafny-EVM source code. Used to add includes files in the proof object. "));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-c"), _dafny.Seq.UnicodeFromString("--cfg"), _dafny.ONE, _dafny.Seq.UnicodeFromString("Max depth. Control flow graph in DOT format"));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-r"), _dafny.Seq.UnicodeFromString("--raw"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Display non-minimised and minimised CFGs"));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-f"), _dafny.Seq.UnicodeFromString("--fancy"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Use exit and entry ports in segments do draw arrows."));
+      (_1045_optionParser).AddOption(_dafny.Seq.UnicodeFromString("-n"), _dafny.Seq.UnicodeFromString("--notable"), _dafny.ZERO, _dafny.Seq.UnicodeFromString("Don't use tables to pretty-print DOT file. Reduces size of the DOT file."));
       if (((new BigNumber((args).length)).isLessThan(new BigNumber(2))) || (_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("--help")))) {
         process.stdout.write((_dafny.Seq.UnicodeFromString("Not enough arguments\n")).toVerbatimString(false));
-        (_1005_optionParser).PrintHelp();
+        (_1045_optionParser).PrintHelp();
       } else if ((new BigNumber((args).length)).isEqualTo(new BigNumber(2))) {
-        let _1006_x;
-        _1006_x = BinaryDecoder.__default.Disassemble((args)[_dafny.ONE], _dafny.Seq.of(), _dafny.ZERO);
+        let _1046_x;
+        _1046_x = BinaryDecoder.__default.Disassemble((args)[_dafny.ONE], _dafny.Seq.of(), _dafny.ZERO);
         process.stdout.write((_dafny.Seq.UnicodeFromString("Diassembled code:\n")).toVerbatimString(false));
-        PrettyPrinters.__default.PrintInstructions(_1006_x);
+        PrettyPrinters.__default.PrintInstructions(_1046_x);
         process.stdout.write((_dafny.Seq.UnicodeFromString("--------------- Disassembled ---------------------\n")).toVerbatimString(false));
       } else if ((_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("--help"))) || (_dafny.areEqual((args)[_dafny.ONE], _dafny.Seq.UnicodeFromString("-h")))) {
-        (_1005_optionParser).PrintHelp();
+        (_1045_optionParser).PrintHelp();
       } else {
-        let _1007_stringToProcess;
-        _1007_stringToProcess = (args)[(new BigNumber((args).length)).minus(_dafny.ONE)];
-        let _1008_x;
-        _1008_x = BinaryDecoder.__default.Disassemble(_1007_stringToProcess, _dafny.Seq.of(), _dafny.ZERO);
-        let _1009_optArgs;
-        _1009_optArgs = (args).slice(_dafny.ONE, (new BigNumber((args).length)).minus(_dafny.ONE));
-        let _1010_disOpt;
-        _1010_disOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--dis"), _1009_optArgs)).is_Success) ? (true) : (false));
-        let _1011_segmentOpt;
-        _1011_segmentOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--segment"), _1009_optArgs)).is_Success) ? (true) : (false));
-        let _1012_proofOpt;
-        _1012_proofOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--proof"), _1009_optArgs)).is_Success) ? (true) : (false));
-        let _1013_libOpt;
-        _1013_libOpt = function (_source71) {
-          if (_source71.is_Success) {
-            let _1014___mcc_h0 = (_source71).v;
-            return function (_pat_let35_0) {
-              return function (_1015_p) {
-                return (_1015_p)[_dafny.ZERO];
-              }(_pat_let35_0);
-            }(_1014___mcc_h0);
+        let _1047_stringToProcess;
+        _1047_stringToProcess = (args)[(new BigNumber((args).length)).minus(_dafny.ONE)];
+        let _1048_x;
+        _1048_x = BinaryDecoder.__default.Disassemble(_1047_stringToProcess, _dafny.Seq.of(), _dafny.ZERO);
+        let _1049_optArgs;
+        _1049_optArgs = (args).slice(_dafny.ONE, (new BigNumber((args).length)).minus(_dafny.ONE));
+        let _1050_disOpt;
+        _1050_disOpt = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--dis"), _1049_optArgs)).is_Success) ? (true) : (false));
+        let _1051_segmentOpt;
+        _1051_segmentOpt = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--segment"), _1049_optArgs)).is_Success) ? (true) : (false));
+        let _1052_proofOpt;
+        _1052_proofOpt = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--proof"), _1049_optArgs)).is_Success) ? (true) : (false));
+        let _1053_libOpt;
+        _1053_libOpt = function (_source72) {
+          if (_source72.is_Success) {
+            let _1054___mcc_h0 = (_source72).v;
+            return function (_pat_let38_0) {
+              return function (_1055_p) {
+                return (_1055_p)[_dafny.ZERO];
+              }(_pat_let38_0);
+            }(_1054___mcc_h0);
           } else {
-            let _1016___mcc_h1 = (_source71).msg;
+            let _1056___mcc_h1 = (_source72).msg;
             return _dafny.Seq.UnicodeFromString("");
           }
-        }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--lib"), _1009_optArgs));
-        let _1017_cfgDepthOpt;
-        _1017_cfgDepthOpt = function (_source72) {
-          if (_source72.is_Success) {
-            let _1018___mcc_h2 = (_source72).v;
-            return function (_pat_let36_0) {
-              return function (_1019_args) {
-                return ((((_dafny.ONE).isLessThanOrEqualTo(new BigNumber(((_1019_args)[_dafny.ZERO]).length))) && (Int.__default.IsNatNumber((_1019_args)[_dafny.ZERO]))) ? (Int.__default.StringToNat((_1019_args)[_dafny.ZERO], _dafny.ZERO)) : (_dafny.ZERO));
-              }(_pat_let36_0);
-            }(_1018___mcc_h2);
+        }((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--lib"), _1049_optArgs));
+        let _1057_cfgDepthOpt;
+        _1057_cfgDepthOpt = function (_source73) {
+          if (_source73.is_Success) {
+            let _1058___mcc_h2 = (_source73).v;
+            return function (_pat_let39_0) {
+              return function (_1059_args) {
+                return ((((_dafny.ONE).isLessThanOrEqualTo(new BigNumber(((_1059_args)[_dafny.ZERO]).length))) && (Int.__default.IsNatNumber((_1059_args)[_dafny.ZERO]))) ? (Int.__default.StringToNat((_1059_args)[_dafny.ZERO], _dafny.ZERO)) : (_dafny.ZERO));
+              }(_pat_let39_0);
+            }(_1058___mcc_h2);
           } else {
-            let _1020___mcc_h3 = (_source72).msg;
+            let _1060___mcc_h3 = (_source73).msg;
             return _dafny.ZERO;
           }
-        }((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1009_optArgs));
-        let _1021_rawOpt;
-        _1021_rawOpt = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--raw"), _1009_optArgs)).is_Success) ? (true) : (false));
-        let _1022_noTable;
-        _1022_noTable = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--notable"), _1009_optArgs)).is_Success) ? (true) : (false));
-        let _1023_fancy;
-        _1023_fancy = ((((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--fancy"), _1009_optArgs)).is_Success) ? (true) : (false));
-        if (_1010_disOpt) {
+        }((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1049_optArgs));
+        let _1061_rawOpt;
+        _1061_rawOpt = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--raw"), _1049_optArgs)).is_Success) ? (true) : (false));
+        let _1062_noTable;
+        _1062_noTable = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--notable"), _1049_optArgs)).is_Success) ? (true) : (false));
+        let _1063_fancy;
+        _1063_fancy = ((((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--fancy"), _1049_optArgs)).is_Success) ? (true) : (false));
+        if (_1050_disOpt) {
           process.stdout.write((_dafny.Seq.UnicodeFromString("Diassembled code:\n")).toVerbatimString(false));
-          PrettyPrinters.__default.PrintInstructions(_1008_x);
+          PrettyPrinters.__default.PrintInstructions(_1048_x);
           process.stdout.write((_dafny.Seq.UnicodeFromString("--------------- Disassembled ---------------------\n")).toVerbatimString(false));
         }
-        let _1024_y;
-        _1024_y = Splitter.__default.SplitUpToTerminal(_1008_x, _dafny.Seq.of(), _dafny.Seq.of());
-        if (_1011_segmentOpt) {
+        let _1064_y;
+        _1064_y = Splitter.__default.SplitUpToTerminal(_1048_x, _dafny.Seq.of(), _dafny.Seq.of());
+        if (_1051_segmentOpt) {
           process.stdout.write((_dafny.Seq.UnicodeFromString("Segments:\n")).toVerbatimString(false));
-          PrettyPrinters.__default.PrintSegments(_1024_y, _dafny.ZERO);
+          PrettyPrinters.__default.PrintSegments(_1064_y, _dafny.ZERO);
           process.stdout.write((_dafny.Seq.UnicodeFromString("----------------- Segments -------------------\n")).toVerbatimString(false));
         }
-        if (_1012_proofOpt) {
-          let _1025_z;
-          _1025_z = ProofObjectBuilder.__default.BuildProofObject(_1024_y);
+        if (_1052_proofOpt) {
+          let _1065_z;
+          _1065_z = ProofObjectBuilder.__default.BuildProofObject(_1064_y);
           process.stdout.write((_dafny.Seq.UnicodeFromString("Dafny Proof Object:\n")).toVerbatimString(false));
-          PrettyPrinters.__default.PrintProofObjectToDafny(_1025_z, _1013_libOpt);
+          PrettyPrinters.__default.PrintProofObjectToDafny(_1065_z, _1053_libOpt);
           process.stdout.write((_dafny.Seq.UnicodeFromString("----------------- Proof -------------------\n")).toVerbatimString(false));
         }
-        if ((((_dafny.ZERO).isLessThan(_1017_cfgDepthOpt)) && ((_dafny.ZERO).isLessThan(new BigNumber((_1024_y).length)))) && ((((_1024_y)[_dafny.ZERO]).StartAddress()).isEqualTo(_dafny.ZERO))) {
+        if ((((_dafny.ZERO).isLessThan(_1057_cfgDepthOpt)) && ((_dafny.ZERO).isLessThan(new BigNumber((_1064_y).length)))) && ((((_1064_y)[_dafny.ZERO]).StartAddress()).isEqualTo(_dafny.ZERO))) {
           process.stdout.write((_dafny.Seq.UnicodeFromString("// maxDepth is:")).toVerbatimString(false));
-          process.stdout.write(_dafny.toString(_1017_cfgDepthOpt));
+          process.stdout.write(_dafny.toString(_1057_cfgDepthOpt));
           process.stdout.write((_dafny.Seq.UnicodeFromString("\n")).toVerbatimString(false));
-          let _1026_jumpDests;
-          _1026_jumpDests = ProofObjectBuilder.__default.CollectJumpDests(_1024_y);
-          let _1027_g1;
-          _1027_g1 = BuildCFGraph.__default.BuildCFGV5(_1024_y, _1017_cfgDepthOpt, _1026_jumpDests, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, _dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))));
-          let _1028_g;
-          _1028_g = (_1027_g1)[0];
-          if (_1021_rawOpt) {
+          let _1066_jumpDests;
+          _1066_jumpDests = ProofObjectBuilder.__default.CollectJumpDests(_1064_y);
+          let _let_tmp_rhs2 = BuildCFGraphV2.__default.BuildCFGV6(BuildCFGraphV2.Context.create_Context(_1064_y, _1066_jumpDests), _1057_cfgDepthOpt, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, BuildCFGraphV2.History.create_History(_dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO)))), BuildCFGraphV2.__default.DEFAULT__STATS);
+          let _1067_g1 = (_let_tmp_rhs2)[0];
+          let _1068_stats = (_let_tmp_rhs2)[1];
+          let _1069_g;
+          _1069_g = (_1067_g1).Graph();
+          if (_1061_rawOpt) {
+            process.stdout.write(((_1068_stats).PrettyPrint()).toVerbatimString(false));
             process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of CFG: ")).toVerbatimString(false));
-            process.stdout.write(_dafny.toString(new BigNumber(((_1027_g1)[1]).length)));
+            process.stdout.write(_dafny.toString((_1069_g).NumNodes()));
             process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
-            process.stdout.write(_dafny.toString(new BigNumber(((_1028_g).dtor_edges).length)));
-            process.stdout.write((_dafny.Seq.UnicodeFromString("edges\n")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1069_g).NumEdges()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
             process.stdout.write((_dafny.Seq.UnicodeFromString("// Raw CFG\n")).toVerbatimString(false));
-            process.stdout.write(((_1028_g).DOTPrint(_1024_y, _1022_noTable, _1023_fancy)).toVerbatimString(false));
+            process.stdout.write(((_1069_g).DOTPrint(_1064_y, _1062_noTable, _1063_fancy)).toVerbatimString(false));
             process.stdout.write((_dafny.Seq.UnicodeFromString("//----------------- Raw CFG -------------------\n")).toVerbatimString(false));
           } else {
-            let _1029_g_k;
-            _1029_g_k = (_1028_g).Minimise();
-            if (!((_1029_g_k).IsValid())) {
+            let _1070_g_k;
+            _1070_g_k = (_1069_g).Minimise(false, _dafny.Seq.of());
+            if (!((_1070_g_k).IsValid())) {
               throw new _dafny.HaltException("src/dafny/Driver.dfy(134,10): " + (_dafny.Seq.UnicodeFromString("expectation violation")).toVerbatimString(false));
             }
-            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of minimised CFG: ")).toVerbatimString(false));
-            process.stdout.write(_dafny.toString((_1029_g_k).numNodes()));
+            let _1071_g2;
+            _1071_g2 = (_1069_g).Minimise(true, _1064_y);
+            process.stdout.write(((_1068_stats).PrettyPrint()).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of non-minimised CFG: ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1069_g).NumNodes()));
             process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
-            process.stdout.write(_dafny.toString((_1029_g_k).numEdges()));
+            process.stdout.write(_dafny.toString((_1069_g).NumEdges()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of minimised CFG: ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1070_g_k).NumNodes()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1070_g_k).NumEdges()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
+            process.stdout.write((_dafny.Seq.UnicodeFromString("// Size of equiv-minimised CFG: ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1071_g2).NumNodes()));
+            process.stdout.write((_dafny.Seq.UnicodeFromString(" nodes, ")).toVerbatimString(false));
+            process.stdout.write(_dafny.toString((_1071_g2).NumEdges()));
             process.stdout.write((_dafny.Seq.UnicodeFromString(" edges\n")).toVerbatimString(false));
             process.stdout.write((_dafny.Seq.UnicodeFromString("// Minimised CFG\n")).toVerbatimString(false));
-            process.stdout.write(((_1029_g_k).DOTPrint(_1024_y, _1022_noTable, _1023_fancy)).toVerbatimString(false));
+            process.stdout.write(((_1070_g_k).DOTPrint(_1064_y, _1062_noTable, _1063_fancy)).toVerbatimString(false));
             process.stdout.write((_dafny.Seq.UnicodeFromString("//----------------- Minimised CFG -------------------\n")).toVerbatimString(false));
           }
         } else {
-          if (((_1005_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1009_optArgs)).is_Success) {
+          if (((_1045_optionParser).GetArgs(_dafny.Seq.UnicodeFromString("--cfg"), _1049_optArgs)).is_Success) {
             process.stdout.write((_dafny.Seq.UnicodeFromString("No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n")).toVerbatimString(false));
           }
         }
