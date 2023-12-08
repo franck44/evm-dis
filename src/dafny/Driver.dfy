@@ -16,7 +16,7 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
-include "./CFGBuilder/BuildCFG.dfy"
+include "./CFGBuilder/BuildCFGV2.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
@@ -31,7 +31,7 @@ module Driver {
   import opened PrettyPrinters
   import opened ProofObjectBuilder
   import opened ArgParser
-  import opened BuildCFGraph
+  import opened BuildCFGraphV2
   import opened MiscTypes
   import opened State
   import opened Int
@@ -103,7 +103,7 @@ module Driver {
       var y := SplitUpToTerminal(x, [], []);
 
       if segmentOpt {
-        print "Segments:\n";
+        print "Segments:\n"; 
         PrintSegments(y);
         print "----------------- Segments -------------------\n";
       }
@@ -120,10 +120,10 @@ module Driver {
         //  Collect jumpDests
         var jumpDests := CollectJumpDests(y);
         //  Build CFG upto depth
-        var g1 := BuildCFGV5(y, cfgDepthOpt, jumpDests);
-        var g := g1.0;
+        var g1 := BuildCFGV6(Context(y, jumpDests), cfgDepthOpt);  
+        var g := g1.Graph();
         if rawOpt {
-          print "// Size of CFG: ", |g1.1|, " nodes, ", |g.edges|, "edges\n";
+          print "// Size of CFG: ", g1.NumStates(), " nodes, ", |g.edges|, "edges\n";
           print "// Raw CFG\n";
           print g.DOTPrint(y, noTable, fancy);
           print "//----------------- Raw CFG -------------------\n";
