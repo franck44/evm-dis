@@ -137,7 +137,7 @@ module CFGraph {
     /**
       *  Convert the list of edges to a map and count the number of states.
       */
-    function {:timeLimitMultiplier 10} Minimise(): (g': BoolCFGraph)
+    function {:timeLimitMultiplier 10} Minimise(equiv: bool := false, xs:seq<ValidLinSeg> := []): (g': BoolCFGraph)
       requires this.IsValid()
       ensures g'.IsValid()
       ensures g'.maxSegNum == maxSegNum
