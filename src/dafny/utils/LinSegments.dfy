@@ -197,11 +197,11 @@ module LinSegments {
             WPreIns(ins, c)
           else StFalse()
         case JUMPISeg(_, _, _)  =>
-          if exit then 
+          if exit then
             var c := StCond([0], [k as Int.u256]);
             WPreIns(ins, c)
-          else 
-            if k == this.StartAddressNextSeg() then StTrue() else StFalse()
+          else
+          if k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case CONTSeg(_, _, _) =>
           if !exit && k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case RETURNSeg(_, _, _) => StTrue()
