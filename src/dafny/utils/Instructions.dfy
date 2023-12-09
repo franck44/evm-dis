@@ -62,6 +62,13 @@ module Instructions {
       )
     }
 
+    /** The size of an instruction, in bytes. */
+    function Size(): nat 
+        requires this.IsValid()
+    {
+        1 + |arg| / 2
+    }
+
     /** Print as a string. */
     function ToString(): string
     {
