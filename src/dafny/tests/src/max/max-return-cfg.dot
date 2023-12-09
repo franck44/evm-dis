@@ -1,5 +1,6 @@
 // maxDepth is:100
 // MaxDepth reached:false
+// ErrorState reached:false
 // States seen:1
 // WPre success:0
 // Size of non-minimised CFG: 5 nodes, 5 edges
