@@ -78,6 +78,12 @@ module LinSegments {
       this.ins + [this.lastIns]
     }
 
+    /** The size of this segment, in bytes. */
+    function Size(xi: seq<ValidInstruction> := Ins()): nat {
+        if |xi| == 0 then 0 
+        else xi[0].Size() + Size(xi[1..])
+    }
+
     /** The start address is the address of the first instruction in the segment. */
     function StartAddress(): nat {
       Ins()[0].address
