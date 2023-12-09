@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "../utils/EVMOpcodes.dfy" 
+include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/Instructions.dfy"
 include "../utils/State.dfy"
@@ -80,8 +80,8 @@ module LinSegments {
 
     /** The size of this segment, in bytes. */
     function Size(xi: seq<ValidInstruction> := Ins()): nat {
-        if |xi| == 0 then 0 
-        else xi[0].Size() + Size(xi[1..])
+      if |xi| == 0 then 0
+      else xi[0].Size() + Size(xi[1..])
     }
 
     /** The start address is the address of the first instruction in the segment. */
@@ -320,6 +320,49 @@ module LinSegments {
     else PCToSeg(xs, pc, rank + 1)
   }
 
+  /**   Whether two segments are equivalent.
+    *
+    *   The equivalence is defined as same sequence of instructions
+    *   for segments that are not JUMP/JUMPI.
+    *   Equivalence of instructions meansa same instruction but at a different
+    *   Address.
+    *   For JUMP/JUMPI, equivalence is defined as same upto the JUMO/JUMPI.
+    *   It also requires that the second last instruction is a PUSH 
+    *   (pushing the address to jump to).
+    *   @note   This  feature is experimental and aims at detecting segments
+    *           of code that are duplicated.
+    *   @note   We should make sure tha PC() is not used otherwise the semamtics
+    *           is different.
+    */
+  predicate EquivSeg(s1: ValidLinSeg, s2: ValidLinSeg) {
+    match s1
+    case JUMPSeg(_, _, _) =>
+      s2.JUMPSeg?
+      && |s1.Ins()| == |s2.Ins()| >= 2
+      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
+      && (forall i:: 0 <= i < |s1.ins| - 1 ==> s1.ins[i].Equiv(s2.ins[i]))
+    case JUMPISeg(_,_, _) =>
+      s2.JUMPISeg?
+      && |s1.Ins()| == |s2.Ins()| >= 2
+      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
+      && (forall i:: 0 <= i < |s1.ins| - 1 ==> s1.ins[i].Equiv(s2.ins[i]))
+    case RETURNSeg(_, _, _) =>
+      s2.RETURNSeg?
+      && |s1.Ins()| == |s2.Ins()|
+      && (forall i:: 0 <= i < |s1.Ins()|  ==> s1.Ins()[i].Equiv(s2.Ins()[i]))
+    case STOPSeg(_, _, _) =>
+      s2.STOPSeg?
+      && |s1.Ins()| == |s2.Ins()|
+      && (forall i:: 0 <= i < |s1.Ins()|  ==> s1.Ins()[i].Equiv(s2.Ins()[i]))
+    case CONTSeg(_, _, _) =>
+      s2.CONTSeg?
+      && |s1.Ins()| == |s2.Ins()|
+      && (forall i:: 0 <= i < |s1.Ins()|  ==> s1.Ins()[i].Equiv(s2.Ins()[i]))
+    case INVALIDSeg(_, _, _) =>
+      s2.INVALIDSeg?
+      && |s1.Ins()| == |s2.Ins()|
+      && (forall i:: 0 <= i < |s1.Ins()|  ==> s1.Ins()[i].Equiv(s2.Ins()[i]))
+  }
 
 }
 
