@@ -24,7 +24,7 @@ import SegBuilder
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import ProofObjectBuilder
+import EVMObject
 import ArgParser
 import SeqOfSets
 import PartitionMod
@@ -50,11 +50,11 @@ class Auto:
     def is_Auto(self) -> bool:
         return isinstance(self, Auto_Auto)
     def IsValid(self):
-        def lambda41_(forall_var_9_):
-            d_832_k_: tuple = forall_var_9_
-            return not ((d_832_k_) in ((self).transitions)) or ((((self).transitions)[d_832_k_]) < ((self).numStates))
+        def lambda47_(forall_var_15_):
+            d_853_k_: tuple = forall_var_15_
+            return not ((d_853_k_) in ((self).transitions)) or ((((self).transitions)[d_853_k_]) < ((self).numStates))
 
-        return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda41_)
+        return _dafny.quantifier(((self).transitions).keys.Elements, True, lambda47_)
 
     def Succ(self, s, l):
         if ((s, l)) in ((self).transitions):

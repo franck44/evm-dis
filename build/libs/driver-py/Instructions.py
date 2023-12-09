@@ -161,12 +161,18 @@ class Instruction:
 
         return ((((self).op).opcode) == (EVMConstants.default__.INVALID)) or ((not (((EVMConstants.default__.PUSH0) <= (((self).op).opcode)) and ((((self).op).opcode) <= (EVMConstants.default__.PUSH32))) or (((len((self).arg)) == ((2) * ((((self).op).opcode) - (EVMConstants.default__.PUSH0)))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((self).arg)), True, lambda3_)))) and (not (not(((EVMConstants.default__.PUSH0) <= (((self).op).opcode)) and ((((self).op).opcode) <= (EVMConstants.default__.PUSH32)))) or ((len((self).arg)) == (0))))
 
+    def Size(self):
+        return (1) + (_dafny.euclidian_division(len((self).arg), 2))
+
     def ToString(self):
         d_264_x_ = (self).arg
         if (((self).op).opcode) == (EVMConstants.default__.INVALID):
             return ((((self).op).Name()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ")))) + (d_264_x_)
         elif True:
             return (((self).op).Name()) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x"))) + (d_264_x_) if (len(d_264_x_)) > (0) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))))
+
+    def Equiv(self, i):
+        return (((self).op) == ((i).op)) and (((self).arg) == ((i).arg))
 
     def ToHTML(self):
         d_265_x_ = (self).arg

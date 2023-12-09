@@ -24,7 +24,7 @@ import SegBuilder
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import ProofObjectBuilder
+import EVMObject
 import ArgParser
 import SeqOfSets
 import PartitionMod
@@ -33,6 +33,7 @@ import Minimiser
 import CFGraph
 import LoopResolver
 import BuildCFGraphV2
+import ProofObjectBuilder
 import Driver
 
 # Module: module_

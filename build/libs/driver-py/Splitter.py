@@ -61,21 +61,21 @@ class default__:
                 elif (len(xs)) == (1):
                     return (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
                 elif default__.EndOfSegment(xs):
-                    d_713_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in61_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in62_ = _dafny.SeqWithoutIsStrInference([])
-                    in63_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
-                    xs = in61_
-                    curseq = in62_
-                    collected = in63_
+                    d_738_newSeg_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in63_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in64_ = _dafny.SeqWithoutIsStrInference([])
+                    in65_ = (collected) + (_dafny.SeqWithoutIsStrInference([default__.BuildSeg(curseq, (xs)[0])]))
+                    xs = in63_
+                    curseq = in64_
+                    collected = in65_
                     raise _dafny.TailCall()
                 elif True:
-                    in64_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in65_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in66_ = collected
-                    xs = in64_
-                    curseq = in65_
-                    collected = in66_
+                    in66_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in67_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in68_ = collected
+                    xs = in66_
+                    curseq = in67_
+                    collected = in68_
                     raise _dafny.TailCall()
                 break
 
@@ -86,11 +86,11 @@ class default__:
                 if (len(xs)) == (0):
                     return current
                 elif True:
-                    d_714_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
-                    in67_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in68_ = d_714_e_
-                    xs = in67_
-                    current = in68_
+                    d_739_e_ = (current) + (((((xs)[0]).op).pushes) - ((((xs)[0]).op).pops))
+                    in69_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in70_ = d_739_e_
+                    xs = in69_
+                    current = in70_
                     raise _dafny.TailCall()
                 break
 
