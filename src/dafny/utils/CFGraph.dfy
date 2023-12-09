@@ -21,9 +21,8 @@ include "./Partition.dfy"
 include "./SeqOfSets.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
 
-/** Provide parsing of commadline options. 
+/** Provide Control Flow Graph. 
   * 
-  * Usage: see at the end of the module for an example method.
   */
 module CFGraph {
 
@@ -192,7 +191,10 @@ module CFGraph {
       else ""
     }
 
-    /** Print to edges DOT format. */
+    /** Print to edges DOT format. 
+      * @todo simplify this function as both src and tgt use similar 
+      *         patterns. Create a printNode and use it twice.
+      */
     function DOTPrintNodes(xs: seq<ValidLinSeg>, simpleOutput: bool, g: seq<BoolEdge> := edges, printed: set<CFGNode> := {}): string
       requires forall k:: k in g ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |xs|
       requires forall k:: k in g ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |xs|
