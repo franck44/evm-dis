@@ -50,13 +50,5 @@ module ProofObjectBuilder {
         );
       [obj] + BuildProofObject(xs[1..])
   }
-
-  /**`Collect jumpdests in a list of segment.  */
-  function CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {
-    if |xs| == 0 then []
-    else
-      xs[0].CollectJumpDest() + CollectJumpDests(xs[1..])
-  }
-
 }
 
