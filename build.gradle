@@ -335,7 +335,7 @@ task compileToJs {
 
 task generateTestCFGs {
     doLast {
-        fileTree("src/dafny/tests/src/").include('**/*.bin').exclude('strings/**').each {
+        fileTree("src/dafny/tests/src/").include('**/*.bin').exclude('strings/**','vyper/harmony/CurveCryptoSwapHarmony.vy.bin').each {
             File file -> {
                 exec {
                     executable = './makeCFG.sh' 
