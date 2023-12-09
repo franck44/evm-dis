@@ -17,11 +17,12 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
+// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/WeakPre.dfy"
 include "../../../src/dafny/utils/CFGraph.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
+include "../../../src/dafny/utils/EVMObject.dfy"
 include "../../../src/dafny/CFGBuilder/LoopResolver.dfy"
 
 /**
@@ -42,7 +43,7 @@ module LoopTests {
   import opened LoopResolver
   import opened CFGraph
   import opened MiscTypes
-  import ProofObjectBuilder
+  import opened EVMObject
 
   //  Helpers
 //   function BuildInitState(c: ValidCond): (s: AState)
@@ -175,7 +176,7 @@ module LoopTests {
     expect y[2].RETURNSeg?;
     expect y[3].JUMPSeg?;
 
-    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    var jd := EVMObj(y).jumpDests;
     expect jd == [0x02, 0x13];
 
     //  execute 0, 1, 3
@@ -220,8 +221,7 @@ module LoopTests {
     expect y[0].CONTSeg?;
     expect y[1].JUMPSeg?;
 
-
-    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    var jd := EVMObj(y).jumpDests;
     expect jd == [0x02];
 
     var xs := [false, true, true];
@@ -384,7 +384,7 @@ module LoopTests {
     assert s.pc == 0;
     expect y[0].StartAddress() == 0;
 
-    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    var jd := EVMObj(y).jumpDests;
     expect jd == [0x03, 0x14, 0x17, 0x2c]; 
 
     //  the nodes seen so far

@@ -18,8 +18,9 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
+// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 include "../../../src/dafny/utils/int.dfy"
+include "../../../src/dafny/utils/EVMObject.dfy"
 
 /**
   * Test correct computation of next State for segments.
@@ -34,7 +35,7 @@ module RuNSegTests {
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-  import ProofObjectBuilder
+  import opened EVMObject
 
   //  Simple example
   method {:test} Test1()
@@ -139,7 +140,7 @@ module RuNSegTests {
     expect y[3].JUMPSeg?;
     expect y[4].JUMPSeg?;
 
-    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    var jd := EVMObj(y).jumpDests;
     expect jd == [0x0a, 0x13, 0x1c, 0x1f];
 
     //    Run Segment 0, exit true (JUMP)
@@ -254,7 +255,7 @@ module RuNSegTests {
     expect y[4].JUMPSeg?;
     expect y[5].JUMPSeg?;
 
-    var jd := ProofObjectBuilder.CollectJumpDests(y);
+    var jd := EVMObj(y).jumpDests;
     expect jd == [ 0x0e, 0x12, 0x1b, 0x24, 0x27];
 
     //    Run Segment 0, exit true (JUMP)

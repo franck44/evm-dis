@@ -20,8 +20,9 @@ include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
 include "../../../src/dafny/utils/int.dfy"
+include "../../../src/dafny/utils/EVMObject.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
-include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
+// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 
 /**
   * Test correct computation of next State.
@@ -38,7 +39,7 @@ module BuildCFGBlogTests {
   import opened Splitter
   import opened BuildCFGraph
   import opened PrettyPrinters
-  import ProofObjectBuilder
+  import opened EVMObject
 
   //  Simple example. Two successive calls to same functions.
   method {:main} TestCFG1()
@@ -119,7 +120,7 @@ module BuildCFGBlogTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-    var jumpDests := ProofObjectBuilder.CollectJumpDests(y);
+    var jumpDests := EVMObj(y).jumpDests;
 
     var g := BuildCFGV5(y, 10, jumpDests) ;
     expect g.0.IsValid();
