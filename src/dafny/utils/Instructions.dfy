@@ -449,9 +449,9 @@ module Instructions {
         else if PUSH0 <= opcode <= PUSH32 && !cond then
           assert pushes == 1;
           assert pops == 0;
-          var valToPush := 
-            if GetArgValuePush(arg) as nat in jumpDests then 
-                Value(GetArgValuePush(arg))
+          var valToPush :=
+            if GetArgValuePush(arg) as nat in jumpDests then
+              Value(GetArgValuePush(arg))
             else Random();
           s.Push(valToPush).Skip(1 + (opcode - PUSH0) as nat)
         else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
@@ -470,8 +470,8 @@ module Instructions {
         else Error("LogOp error")
 
       case SysOp(_, op, _, _, pushes, pops) =>
-        if op == INVALID || op == STOP || op == REVERT then 
-            Error("SysOp error")
+        if op == INVALID || op == STOP || op == REVERT then
+          Error("SysOp error")
         else if s.Size() >= pops && !cond then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("SysOp error")
