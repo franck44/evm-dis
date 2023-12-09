@@ -18,14 +18,14 @@ include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
 include "./CFGBuilder/BuildCFG.dfy"
 include "./prettyprinters/Pretty.dfy"
-include "./utils/ArgParser.dfy" 
+include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
 include "./utils/EVMObject.dfy"
 
-  /**
-    *  Provides input reader and write out to stout.
-    */
+/**
+  *  Provides input reader and write out to stout.
+  */
 module Driver {
 
   import opened BinaryDecoder
@@ -65,7 +65,7 @@ module Driver {
       optionParser.PrintHelp();
     } else if |args| == 2 {
       //  No argument, try to disassemble
-      var x := Disassemble(args[1]); 
+      var x := Disassemble(args[1]);
       print "Diassembled code:\n";
       PrintInstructions(x);
       print "--------------- Disassembled ---------------------\n";
@@ -106,7 +106,7 @@ module Driver {
       var prog := EVMObj(y);
 
       if segmentOpt {
-        print "Segments:\n"; 
+        print "Segments:\n";
         PrintSegments(y);
         print "----------------- Segments -------------------\n";
       }
@@ -116,15 +116,15 @@ module Driver {
         print "Dafny Proof Object:\n";
         PrintProofObjectToDafny(z, libOpt);
         print "----------------- Proof -------------------\n";
-      } 
+      }
 
       if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
         print "// maxDepth is:", cfgDepthOpt, "\n";
         //  Build CFG upto depth
-        var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);   
+        var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);
         var g := g1.Graph();
         if rawOpt {
-          print stats.PrettyPrint(); 
+          print stats.PrettyPrint();
           print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
           print "// Raw CFG\n";
           print g.DOTPrint(y, noTable, fancy);
@@ -135,7 +135,7 @@ module Driver {
           expect g'.IsValid();
           assert g'.maxSegNum < |y|;
           var g2 := g.Minimise(true, y);
-          print stats.PrettyPrint(); 
+          print stats.PrettyPrint();
           print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
           print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
           print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
@@ -146,7 +146,7 @@ module Driver {
       } else {
         if optionParser.GetArgs("--cfg", optArgs).Success? {
           print "No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n";
-        } 
+        }
       }
     }
   }
