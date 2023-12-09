@@ -16,9 +16,9 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
-include "./CFGBuilder/BuildCFGV2.dfy"
+include "./CFGBuilder/BuildCFG.dfy"
 include "./prettyprinters/Pretty.dfy"
-include "./utils/ArgParser.dfy"
+include "./utils/ArgParser.dfy" 
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
 include "./utils/EVMObject.dfy"
@@ -33,7 +33,7 @@ module Driver {
   import opened PrettyPrinters
   import opened EVMObject
   import opened ArgParser
-  import opened BuildCFGraphV2
+  import opened BuildCFGraph
   import opened MiscTypes
   import opened State
   import opened Int

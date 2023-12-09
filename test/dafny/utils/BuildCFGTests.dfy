@@ -18,7 +18,7 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFGV2.dfy"
+include "../../../src/dafny/CFGBuilder/BuildCFG.dfy" 
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
@@ -37,7 +37,7 @@ module BuildCFGTests {
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-  import opened BuildCFGraphV2
+  import opened BuildCFGraph
   import opened PrettyPrinters
   import opened EVMObject
 
