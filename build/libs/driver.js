@@ -8230,12 +8230,12 @@ let LoopResolver = (function() {
   };
   return $module;
 })(); // end of module LoopResolver
-let BuildCFGraphV2 = (function() {
+let BuildCFGraph = (function() {
   let $module = {};
 
   $module.__default = class __default {
     constructor () {
-      this._tname = "BuildCFGraphV2._default";
+      this._tname = "BuildCFGraph._default";
     }
     _parentTraits() {
       return [];
@@ -8302,13 +8302,13 @@ let BuildCFGraphV2 = (function() {
       let _pat_let_tv59 = numSeg;
       let _pat_let_tv60 = h;
       if ((!((((c).dtor_xs)[numSeg]).HasExit(false))) && (!((((c).dtor_xs)[numSeg]).HasExit(true)))) {
-        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat);
+        return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat);
       } else if ((maxDepth).isEqualTo(_dafny.ZERO)) {
-        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)), true, CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)))), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), (h).dtor_seenStates), (stat).SetMaxDepth());
+        return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)), true, CFGraph.CFGNode.create_CFGNode((h).dtor_path, MiscTypes.Option.create_Some(numSeg)))), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), (h).dtor_seenStates), (stat).SetMaxDepth());
       } else {
         let _1012_leftBranch = (((((c).dtor_xs)[numSeg]).HasExit(false)) ? (function (_pat_let17_0) {
           return function (_1013_leftSucc) {
-            return ((((_pat_let_tv27).dtor_seenStates).contains(_1013_leftSucc)) ? (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv1).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv2)), false, ((_pat_let_tv3).dtor_seenStates).get(_1013_leftSucc))), _dafny.ZERO), (_pat_let_tv4).dtor_seenStates), (_pat_let_tv5).IncFound())) : (((((_1013_leftSucc).is_EState) && (((_1013_leftSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let18_0) {
+            return ((((_pat_let_tv27).dtor_seenStates).contains(_1013_leftSucc)) ? (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv1).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv2)), false, ((_pat_let_tv3).dtor_seenStates).get(_1013_leftSucc))), _dafny.ZERO), (_pat_let_tv4).dtor_seenStates), (_pat_let_tv5).IncFound())) : (((((_1013_leftSucc).is_EState) && (((_1013_leftSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let18_0) {
               return function (_1014_nextSeg) {
                 return (((_1014_nextSeg).is_Some) ? (function (_pat_let19_0) {
                   return function (_1015_src) {
@@ -8320,36 +8320,36 @@ let BuildCFGraphV2 = (function() {
                               return function (_1018_h1) {
                                 return function (_pat_let23_0) {
                                   return function (_1019_gleft) {
-                                    return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1019_gleft)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1015_src, false, _1016_tgt)), ((_1019_gleft)[0]).dtor_states), (_1019_gleft)[1]);
+                                    return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation((((_1019_gleft)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1015_src, false, _1016_tgt)), ((_1019_gleft)[0]).dtor_states), (_1019_gleft)[1]);
                                   }(_pat_let23_0);
-                                }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv14, (_pat_let_tv15).minus(_dafny.ONE), (_1014_nextSeg).dtor_v, _1013_leftSucc, _1018_h1, _pat_let_tv16));
+                                }(BuildCFGraph.__default.BuildCFGV6(_pat_let_tv14, (_pat_let_tv15).minus(_dafny.ONE), (_1014_nextSeg).dtor_v, _1013_leftSucc, _1018_h1, _pat_let_tv16));
                               }(_pat_let22_0);
-                            }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv11).dtor_seen, _dafny.Seq.of(_1016_tgt)), _dafny.Seq.Concat((_pat_let_tv12).dtor_seenPCs, _dafny.Seq.of((_1013_leftSucc).PC())), _dafny.Seq.Concat((_pat_let_tv13).dtor_path, _dafny.Seq.of(false)), _1017_newSeenSegs));
+                            }(BuildCFGraph.History.create_History(_dafny.Seq.Concat((_pat_let_tv11).dtor_seen, _dafny.Seq.of(_1016_tgt)), _dafny.Seq.Concat((_pat_let_tv12).dtor_seenPCs, _dafny.Seq.of((_1013_leftSucc).PC())), _dafny.Seq.Concat((_pat_let_tv13).dtor_path, _dafny.Seq.of(false)), _1017_newSeenSegs));
                           }(_pat_let21_0);
                         }(((_pat_let_tv10).dtor_seenStates).update(_1013_leftSucc, _1016_tgt));
                       }(_pat_let20_0);
                     }(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv9).dtor_path, _dafny.Seq.of(false)), _1014_nextSeg));
                   }(_pat_let19_0);
-                }(CFGraph.CFGNode.create_CFGNode((_pat_let_tv7).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv8)))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv17).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv18)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv19).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv20).dtor_seenStates), _pat_let_tv21)));
+                }(CFGraph.CFGNode.create_CFGNode((_pat_let_tv7).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv8)))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv17).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv18)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv19).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv20).dtor_seenStates), _pat_let_tv21)));
               }(_pat_let18_0);
-            }(LinSegments.__default.PCToSeg((_pat_let_tv6).dtor_xs, (_1013_leftSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv22).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv23)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv24).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv25).dtor_seenStates), function (_pat_let24_0) {
+            }(LinSegments.__default.PCToSeg((_pat_let_tv6).dtor_xs, (_1013_leftSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv22).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv23)), false, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv24).dtor_path, _dafny.Seq.of(false)), MiscTypes.Option.create_None()))), _dafny.ZERO), (_pat_let_tv25).dtor_seenStates), function (_pat_let24_0) {
   return function (_1020_dt__update__tmp_h0) {
     return function (_pat_let25_0) {
       return function (_1021_dt__update_herrorState_h0) {
-        return BuildCFGraphV2.Stats.create_Stats((_1020_dt__update__tmp_h0).dtor_maxDepthReached, (_1020_dt__update__tmp_h0).dtor_statesAlreadyFound, (_1020_dt__update__tmp_h0).dtor_wPreInvSuccess, _1021_dt__update_herrorState_h0);
+        return BuildCFGraph.Stats.create_Stats((_1020_dt__update__tmp_h0).dtor_maxDepthReached, (_1020_dt__update__tmp_h0).dtor_statesAlreadyFound, (_1020_dt__update__tmp_h0).dtor_wPreInvSuccess, _1021_dt__update_herrorState_h0);
       }(_pat_let25_0);
     }(true);
   }(_pat_let24_0);
 }(_pat_let_tv26))))));
           }(_pat_let17_0);
-        }((((c).dtor_xs)[numSeg]).Run(s, false, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat)));
+        }((((c).dtor_xs)[numSeg]).Run(s, false, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), (h).dtor_seenStates), stat)));
         let _1022_newSeenStates = ((_1012_leftBranch)[0]).dtor_states;
         let _1023_leftStats = (_1012_leftBranch)[1];
         let _1024_rightBranch = (((((c).dtor_xs)[numSeg]).HasExit(true)) ? (function (_pat_let26_0) {
           return function (_1025_rightSucc) {
             return ((((_1025_rightSucc).is_EState) && (((_1025_rightSucc).PC()).isLessThan(Int.__default.TWO__256))) ? (function (_pat_let27_0) {
               return function (_1026_nextSeg) {
-                return (((_1026_nextSeg).is_Some) ? ((((_1022_newSeenStates).contains(_1025_rightSucc)) ? (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv29).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv30)), true, (_1022_newSeenStates).get(_1025_rightSucc))), _dafny.ZERO), _1022_newSeenStates), (_1023_leftStats).IncFound())) : (((!_dafny.Seq.contains((_pat_let_tv54).dtor_seenPCs, (_1025_rightSucc).PC())) ? (function (_pat_let28_0) {
+                return (((_1026_nextSeg).is_Some) ? ((((_1022_newSeenStates).contains(_1025_rightSucc)) ? (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv29).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv30)), true, (_1022_newSeenStates).get(_1025_rightSucc))), _dafny.ZERO), _1022_newSeenStates), (_1023_leftStats).IncFound())) : (((!_dafny.Seq.contains((_pat_let_tv54).dtor_seenPCs, (_1025_rightSucc).PC())) ? (function (_pat_let28_0) {
                   return function (_1027_src) {
                     return function (_pat_let29_0) {
                       return function (_1028_tgt) {
@@ -8359,11 +8359,11 @@ let BuildCFGraphV2 = (function() {
                               return function (_1030_h1) {
                                 return function (_pat_let32_0) {
                                   return function (_1031_gright) {
-                                    return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1031_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1027_src, true, _1028_tgt)), ((_1031_gright)[0]).dtor_states), (_1031_gright)[1]);
+                                    return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation((((_1031_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1027_src, true, _1028_tgt)), ((_1031_gright)[0]).dtor_states), (_1031_gright)[1]);
                                   }(_pat_let32_0);
-                                }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv37, (_pat_let_tv38).minus(_dafny.ONE), (_1026_nextSeg).dtor_v, _1025_rightSucc, _1030_h1, _1023_leftStats));
+                                }(BuildCFGraph.__default.BuildCFGV6(_pat_let_tv37, (_pat_let_tv38).minus(_dafny.ONE), (_1026_nextSeg).dtor_v, _1025_rightSucc, _1030_h1, _1023_leftStats));
                               }(_pat_let31_0);
-                            }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv34).dtor_seen, _dafny.Seq.of(_1028_tgt)), _dafny.Seq.Concat((_pat_let_tv35).dtor_seenPCs, _dafny.Seq.of((_1025_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv36).dtor_path, _dafny.Seq.of(true)), _1029_newSeenSegs));
+                            }(BuildCFGraph.History.create_History(_dafny.Seq.Concat((_pat_let_tv34).dtor_seen, _dafny.Seq.of(_1028_tgt)), _dafny.Seq.Concat((_pat_let_tv35).dtor_seenPCs, _dafny.Seq.of((_1025_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv36).dtor_path, _dafny.Seq.of(true)), _1029_newSeenSegs));
                           }(_pat_let30_0);
                         }((_1022_newSeenStates).update(_1025_rightSucc, _1028_tgt));
                       }(_pat_let29_0);
@@ -8381,11 +8381,11 @@ let BuildCFGraphV2 = (function() {
                                   return function (_1035_h1) {
                                     return function (_pat_let37_0) {
                                       return function (_1036_gright) {
-                                        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation((((_1036_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1032_src, true, _1033_tgt)), ((_1036_gright)[0]).dtor_states), (_1036_gright)[1]);
+                                        return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation((((_1036_gright)[0]).dtor_grph).AddEdge(CFGraph.BoolEdge.create_BoolEdge(_1032_src, true, _1033_tgt)), ((_1036_gright)[0]).dtor_states), (_1036_gright)[1]);
                                       }(_pat_let37_0);
-                                    }(BuildCFGraphV2.__default.BuildCFGV6(_pat_let_tv45, (_pat_let_tv46).minus(_dafny.ONE), (_1026_nextSeg).dtor_v, _1025_rightSucc, _1035_h1, _1023_leftStats));
+                                    }(BuildCFGraph.__default.BuildCFGV6(_pat_let_tv45, (_pat_let_tv46).minus(_dafny.ONE), (_1026_nextSeg).dtor_v, _1025_rightSucc, _1035_h1, _1023_leftStats));
                                   }(_pat_let36_0);
-                                }(BuildCFGraphV2.History.create_History(_dafny.Seq.Concat((_pat_let_tv42).dtor_seen, _dafny.Seq.of(_1033_tgt)), _dafny.Seq.Concat((_pat_let_tv43).dtor_seenPCs, _dafny.Seq.of((_1025_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv44).dtor_path, _dafny.Seq.of(true)), _1034_newSeenSegs));
+                                }(BuildCFGraph.History.create_History(_dafny.Seq.Concat((_pat_let_tv42).dtor_seen, _dafny.Seq.of(_1033_tgt)), _dafny.Seq.Concat((_pat_let_tv43).dtor_seenPCs, _dafny.Seq.of((_1025_rightSucc).PC())), _dafny.Seq.Concat((_pat_let_tv44).dtor_path, _dafny.Seq.of(true)), _1034_newSeenSegs));
                               }(_pat_let35_0);
                             }((_1022_newSeenStates).update(_1025_rightSucc, _1033_tgt));
                           }(_pat_let34_0);
@@ -8396,28 +8396,31 @@ let BuildCFGraphV2 = (function() {
                     let _1037___mcc_h0 = (_source71).v;
                     return function (_pat_let38_0) {
                       return function (_1038_prev) {
-                        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv47).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv48)), true, _1038_prev)), new BigNumber(((_pat_let_tv49).dtor_xs).length)), _1022_newSeenStates), (_1023_leftStats).IncWpre());
+                        return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv47).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv48)), true, _1038_prev)), new BigNumber(((_pat_let_tv49).dtor_xs).length)), _1022_newSeenStates), (_1023_leftStats).IncWpre());
                       }(_pat_let38_0);
                     }(_1037___mcc_h0);
                   }
-                }(LoopResolver.__default.SafeLoopFound((_pat_let_tv50).dtor_xs, (_1025_rightSucc).PC(), (_pat_let_tv51).dtor_seen, _dafny.Seq.Concat((_pat_let_tv52).dtor_path, _dafny.Seq.of(true)), (_pat_let_tv53).dtor_jumpDests))))))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv55).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv56)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv57).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1022_newSeenStates), _1023_leftStats)));
+                }(LoopResolver.__default.SafeLoopFound((_pat_let_tv50).dtor_xs, (_1025_rightSucc).PC(), (_pat_let_tv51).dtor_seen, _dafny.Seq.Concat((_pat_let_tv52).dtor_path, _dafny.Seq.of(true)), (_pat_let_tv53).dtor_jumpDests))))))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv55).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv56)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv57).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1022_newSeenStates), _1023_leftStats)));
               }(_pat_let27_0);
-            }(LinSegments.__default.PCToSeg((_pat_let_tv28).dtor_xs, (_1025_rightSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv58).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv59)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv60).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1022_newSeenStates), function (_pat_let39_0) {
+            }(LinSegments.__default.PCToSeg((_pat_let_tv28).dtor_xs, (_1025_rightSucc).PC(), _dafny.ZERO))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(CFGraph.BoolEdge.create_BoolEdge(CFGraph.CFGNode.create_CFGNode((_pat_let_tv58).dtor_path, MiscTypes.Option.create_Some(_pat_let_tv59)), true, CFGraph.CFGNode.create_CFGNode(_dafny.Seq.Concat((_pat_let_tv60).dtor_path, _dafny.Seq.of(true)), MiscTypes.Option.create_None()))), _dafny.ZERO), _1022_newSeenStates), function (_pat_let39_0) {
   return function (_1039_dt__update__tmp_h1) {
     return function (_pat_let40_0) {
       return function (_1040_dt__update_herrorState_h1) {
-        return BuildCFGraphV2.Stats.create_Stats((_1039_dt__update__tmp_h1).dtor_maxDepthReached, (_1039_dt__update__tmp_h1).dtor_statesAlreadyFound, (_1039_dt__update__tmp_h1).dtor_wPreInvSuccess, _1040_dt__update_herrorState_h1);
+        return BuildCFGraph.Stats.create_Stats((_1039_dt__update__tmp_h1).dtor_maxDepthReached, (_1039_dt__update__tmp_h1).dtor_statesAlreadyFound, (_1039_dt__update__tmp_h1).dtor_wPreInvSuccess, _1040_dt__update_herrorState_h1);
       }(_pat_let40_0);
     }(true);
   }(_pat_let39_0);
 }(_1023_leftStats))));
           }(_pat_let26_0);
-        }((((c).dtor_xs)[numSeg]).Run(s, true, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), _1022_newSeenStates), _1023_leftStats)));
-        return _dafny.Tuple.of(BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.Concat((((_1012_leftBranch)[0]).dtor_grph).dtor_edges, (((_1024_rightBranch)[0]).dtor_grph).dtor_edges), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), ((_1024_rightBranch)[0]).dtor_states), (_1024_rightBranch)[1]);
+        }((((c).dtor_xs)[numSeg]).Run(s, true, (c).dtor_jumpDests))) : (_dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.of(), _dafny.ZERO), _1022_newSeenStates), _1023_leftStats)));
+        return _dafny.Tuple.of(BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.create_BoolCFGraph(_dafny.Seq.Concat((((_1012_leftBranch)[0]).dtor_grph).dtor_edges, (((_1024_rightBranch)[0]).dtor_grph).dtor_edges), (new BigNumber(((c).dtor_xs).length)).minus(_dafny.ONE)), ((_1024_rightBranch)[0]).dtor_states), (_1024_rightBranch)[1]);
       }
     };
+    static get DEFAULT__HISTORY() {
+      return BuildCFGraph.History.create_History(_dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))));
+    };
     static get DEFAULT__STATS() {
-      return BuildCFGraphV2.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO, false);
+      return BuildCFGraph.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO, false);
     };
   };
 
@@ -8440,7 +8443,7 @@ let BuildCFGraphV2 = (function() {
     get dtor_seenStates() { return this.seenStates; }
     toString() {
       if (this.$tag === 0) {
-        return "BuildCFGraphV2.History.History" + "(" + _dafny.toString(this.seen) + ", " + _dafny.toString(this.seenPCs) + ", " + _dafny.toString(this.path) + ", " + _dafny.toString(this.seenStates) + ")";
+        return "BuildCFGraph.History.History" + "(" + _dafny.toString(this.seen) + ", " + _dafny.toString(this.seenPCs) + ", " + _dafny.toString(this.path) + ", " + _dafny.toString(this.seenStates) + ")";
       } else  {
         return "<unexpected>";
       }
@@ -8455,7 +8458,7 @@ let BuildCFGraphV2 = (function() {
       }
     }
     static Default() {
-      return BuildCFGraphV2.History.create_History(_dafny.Seq.of(), _dafny.Seq.of(), _dafny.Seq.of(), _dafny.Map.Empty);
+      return BuildCFGraph.History.create_History(_dafny.Seq.of(), _dafny.Seq.of(), _dafny.Seq.of(), _dafny.Map.Empty);
     }
     static Rtd() {
       return class {
@@ -8504,7 +8507,7 @@ let BuildCFGraphV2 = (function() {
     get dtor_errorState() { return this.errorState; }
     toString() {
       if (this.$tag === 0) {
-        return "BuildCFGraphV2.Stats.Stats" + "(" + _dafny.toString(this.maxDepthReached) + ", " + _dafny.toString(this.statesAlreadyFound) + ", " + _dafny.toString(this.wPreInvSuccess) + ", " + _dafny.toString(this.errorState) + ")";
+        return "BuildCFGraph.Stats.Stats" + "(" + _dafny.toString(this.maxDepthReached) + ", " + _dafny.toString(this.statesAlreadyFound) + ", " + _dafny.toString(this.wPreInvSuccess) + ", " + _dafny.toString(this.errorState) + ")";
       } else  {
         return "<unexpected>";
       }
@@ -8519,7 +8522,7 @@ let BuildCFGraphV2 = (function() {
       }
     }
     static Default() {
-      return BuildCFGraphV2.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO, false);
+      return BuildCFGraph.Stats.create_Stats(false, _dafny.ZERO, _dafny.ZERO, false);
     }
     static Rtd() {
       return class {
@@ -8532,19 +8535,19 @@ let BuildCFGraphV2 = (function() {
       let _this = this;
       let _1046_dt__update__tmp_h0 = _this;
       let _1047_dt__update_hmaxDepthReached_h0 = true;
-      return BuildCFGraphV2.Stats.create_Stats(_1047_dt__update_hmaxDepthReached_h0, (_1046_dt__update__tmp_h0).dtor_statesAlreadyFound, (_1046_dt__update__tmp_h0).dtor_wPreInvSuccess, (_1046_dt__update__tmp_h0).dtor_errorState);
+      return BuildCFGraph.Stats.create_Stats(_1047_dt__update_hmaxDepthReached_h0, (_1046_dt__update__tmp_h0).dtor_statesAlreadyFound, (_1046_dt__update__tmp_h0).dtor_wPreInvSuccess, (_1046_dt__update__tmp_h0).dtor_errorState);
     };
     IncFound() {
       let _this = this;
       let _1048_dt__update__tmp_h0 = _this;
       let _1049_dt__update_hstatesAlreadyFound_h0 = ((_this).dtor_statesAlreadyFound).plus(_dafny.ONE);
-      return BuildCFGraphV2.Stats.create_Stats((_1048_dt__update__tmp_h0).dtor_maxDepthReached, _1049_dt__update_hstatesAlreadyFound_h0, (_1048_dt__update__tmp_h0).dtor_wPreInvSuccess, (_1048_dt__update__tmp_h0).dtor_errorState);
+      return BuildCFGraph.Stats.create_Stats((_1048_dt__update__tmp_h0).dtor_maxDepthReached, _1049_dt__update_hstatesAlreadyFound_h0, (_1048_dt__update__tmp_h0).dtor_wPreInvSuccess, (_1048_dt__update__tmp_h0).dtor_errorState);
     };
     IncWpre() {
       let _this = this;
       let _1050_dt__update__tmp_h0 = _this;
       let _1051_dt__update_hwPreInvSuccess_h0 = ((_this).dtor_wPreInvSuccess).plus(_dafny.ONE);
-      return BuildCFGraphV2.Stats.create_Stats((_1050_dt__update__tmp_h0).dtor_maxDepthReached, (_1050_dt__update__tmp_h0).dtor_statesAlreadyFound, _1051_dt__update_hwPreInvSuccess_h0, (_1050_dt__update__tmp_h0).dtor_errorState);
+      return BuildCFGraph.Stats.create_Stats((_1050_dt__update__tmp_h0).dtor_maxDepthReached, (_1050_dt__update__tmp_h0).dtor_statesAlreadyFound, _1051_dt__update_hwPreInvSuccess_h0, (_1050_dt__update__tmp_h0).dtor_errorState);
     };
     PrettyPrint() {
       let _this = this;
@@ -8567,7 +8570,7 @@ let BuildCFGraphV2 = (function() {
     get dtor_states() { return this.states; }
     toString() {
       if (this.$tag === 0) {
-        return "BuildCFGraphV2.CFGComputation.CFGComputation" + "(" + _dafny.toString(this.grph) + ", " + _dafny.toString(this.states) + ")";
+        return "BuildCFGraph.CFGComputation.CFGComputation" + "(" + _dafny.toString(this.grph) + ", " + _dafny.toString(this.states) + ")";
       } else  {
         return "<unexpected>";
       }
@@ -8582,7 +8585,7 @@ let BuildCFGraphV2 = (function() {
       }
     }
     static Default() {
-      return BuildCFGraphV2.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.Default(), _dafny.Map.Empty);
+      return BuildCFGraph.CFGComputation.create_CFGComputation(CFGraph.BoolCFGraph.Default(), _dafny.Map.Empty);
     }
     static Rtd() {
       return class {
@@ -8601,7 +8604,7 @@ let BuildCFGraphV2 = (function() {
     };
   }
   return $module;
-})(); // end of module BuildCFGraphV2
+})(); // end of module BuildCFGraph
 let ProofObjectBuilder = (function() {
   let $module = {};
 
@@ -8742,7 +8745,7 @@ let Driver = (function() {
           process.stdout.write((_dafny.Seq.UnicodeFromString("// maxDepth is:")).toVerbatimString(false));
           process.stdout.write(_dafny.toString(_1069_cfgDepthOpt));
           process.stdout.write((_dafny.Seq.UnicodeFromString("\n")).toVerbatimString(false));
-          let _let_tmp_rhs2 = BuildCFGraphV2.__default.BuildCFGV6(_1077_prog, _1069_cfgDepthOpt, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, BuildCFGraphV2.History.create_History(_dafny.Seq.of(CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO))), _dafny.Seq.of(_dafny.ZERO), _dafny.Seq.of(), _dafny.Map.Empty.slice().updateUnsafe(State.__default.DEFAULT__VALIDSTATE,CFGraph.CFGNode.create_CFGNode(_dafny.Seq.of(), MiscTypes.Option.create_Some(_dafny.ZERO)))), BuildCFGraphV2.__default.DEFAULT__STATS);
+          let _let_tmp_rhs2 = BuildCFGraph.__default.BuildCFGV6(_1077_prog, _1069_cfgDepthOpt, _dafny.ZERO, State.__default.DEFAULT__VALIDSTATE, BuildCFGraph.__default.DEFAULT__HISTORY, BuildCFGraph.__default.DEFAULT__STATS);
           let _1079_g1 = (_let_tmp_rhs2)[0];
           let _1080_stats = (_let_tmp_rhs2)[1];
           let _1081_g;
@@ -8761,7 +8764,7 @@ let Driver = (function() {
             let _1082_g_k;
             _1082_g_k = (_1081_g).Minimise(false, _dafny.Seq.of());
             if (!((_1082_g_k).IsValid())) {
-              throw new _dafny.HaltException("src/dafny/Driver.dfy(137,10): " + (_dafny.Seq.UnicodeFromString("expectation violation")).toVerbatimString(false));
+              throw new _dafny.HaltException("src/dafny/Driver.dfy(135,10): " + (_dafny.Seq.UnicodeFromString("expectation violation")).toVerbatimString(false));
             }
             let _1083_g2;
             _1083_g2 = (_1081_g).Minimise(true, _1076_y);

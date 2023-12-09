@@ -32,7 +32,7 @@ import Automata
 import Minimiser
 import CFGraph
 import LoopResolver
-import BuildCFGraphV2
+import BuildCFGraph
 import ProofObjectBuilder
 
 # Module: Driver
@@ -135,7 +135,7 @@ class default__:
                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "// maxDepth is:"))).VerbatimString(False))
                 _dafny.print(_dafny.string_of(d_1063_cfgDepthOpt_))
                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                let_tmp_rhs2_ = BuildCFGraphV2.default__.BuildCFGV6(d_1071_prog_, d_1063_cfgDepthOpt_, 0, State.default__.DEFAULT__VALIDSTATE, BuildCFGraphV2.History_History(_dafny.SeqWithoutIsStrInference([CFGraph.CFGNode_CFGNode(_dafny.SeqWithoutIsStrInference([]), MiscTypes.Option_Some(0))]), _dafny.SeqWithoutIsStrInference([0]), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({State.default__.DEFAULT__VALIDSTATE: CFGraph.CFGNode_CFGNode(_dafny.SeqWithoutIsStrInference([]), MiscTypes.Option_Some(0))})), BuildCFGraphV2.default__.DEFAULT__STATS)
+                let_tmp_rhs2_ = BuildCFGraph.default__.BuildCFGV6(d_1071_prog_, d_1063_cfgDepthOpt_, 0, State.default__.DEFAULT__VALIDSTATE, BuildCFGraph.default__.DEFAULT__HISTORY, BuildCFGraph.default__.DEFAULT__STATS)
                 d_1073_g1_ = let_tmp_rhs2_[0]
                 d_1074_stats_ = let_tmp_rhs2_[1]
                 d_1075_g_: CFGraph.BoolCFGraph
@@ -154,7 +154,7 @@ class default__:
                     d_1076_g_k_: CFGraph.BoolCFGraph
                     d_1076_g_k_ = (d_1075_g_).Minimise(False, _dafny.SeqWithoutIsStrInference([]))
                     if not((d_1076_g_k_).IsValid()):
-                        raise _dafny.HaltException("src/dafny/Driver.dfy(137,10): " + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "expectation violation"))).VerbatimString(False))
+                        raise _dafny.HaltException("src/dafny/Driver.dfy(135,10): " + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "expectation violation"))).VerbatimString(False))
                     d_1077_g2_: CFGraph.BoolCFGraph
                     d_1077_g2_ = (d_1075_g_).Minimise(True, d_1070_y_)
                     _dafny.print(((d_1074_stats_).PrettyPrint()).VerbatimString(False))

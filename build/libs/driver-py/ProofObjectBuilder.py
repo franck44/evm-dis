@@ -32,7 +32,7 @@ import Automata
 import Minimiser
 import CFGraph
 import LoopResolver
-import BuildCFGraphV2
+import BuildCFGraph
 
 # Module: ProofObjectBuilder
 
