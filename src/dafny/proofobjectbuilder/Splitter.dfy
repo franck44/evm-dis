@@ -16,9 +16,10 @@ include "../utils/EVMOpcodes.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/Instructions.dfy"
 include "../utils/LinSegments.dfy"
-  /**
-    *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
-    */
+
+/**
+  *  Provides ability to split the code into sections, ending in a JUMP/RETURN/REVERT 
+  */
 module Splitter {
 
   import opened EVMOpcodes
@@ -44,7 +45,7 @@ module Splitter {
       STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case STOP   =>
       STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
-    case INVALID   => 
+    case INVALID   =>
       INVALIDSeg(xs, lastInst, DeltaOperandsHelper(xs))
     case _ =>
       //  Continuation segment
@@ -65,7 +66,8 @@ module Splitter {
 
   /**  
     *   Split the sequence of instructions according to jumps.
-    *   @note   Build a LinSeg for each section ending with a Jump or until end of sequence.
+    *   @note   Build a LinSeg for each section ending with a Jump or 
+    *           until end of sequence.
     */
   function SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): seq<ValidLinSeg>
   {

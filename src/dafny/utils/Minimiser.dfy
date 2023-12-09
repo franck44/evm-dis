@@ -106,7 +106,7 @@ module Minimiser {
       * @note   Tailrecursion is diasbled as there is a bug in the Dafny Java code generator.
       * @link{https://github.com/dafny-lang/dafny/issues/2346} 
       */
-     function {:tailrecursion false} GenerateReducedTailRec(index: nat := 0, acc: seq<(nat, bool, nat)> := []): (r : seq<(nat, bool, nat)>)
+    function {:tailrecursion false} GenerateReducedTailRec(index: nat := 0, acc: seq<(nat, bool, nat)> := []): (r : seq<(nat, bool, nat)>)
       requires this.IsValid()
       requires index <= |p.elem|
       requires forall k:: 0 <= k < |acc| ==> acc[k].0 < p.n && acc[k].2 < p.n

@@ -15,9 +15,10 @@
 include "./int.dfy"
 include "../utils/MiscTypes.dfy"
 include "./OpcodesConstants.dfy"
-  /**
-    *  Provides EVM Opcodes.
-    */
+
+/**
+  *  Provides EVM Opcodes.
+  */
 module EVMOpcodes {
 
   import opened Int
@@ -75,9 +76,9 @@ module EVMOpcodes {
                                             || (PUSH0 <= opcode <= DUP16 && pushes == 1 && pops == 0)
                                             || (SWAP1 <= opcode <= SWAP16 && pushes == pops == 0)
       case LogOp(_, _, _, _, _, _)       => LOG0 <= opcode <= LOG4 && pushes == 0 && pops == (opcode - LOG0) as nat  + 2
-      case SysOp(_, _, _, _, _, _)       => (opcode == STOP 
-                                            || opcode == EOF 
-                                            || CREATE <= opcode <= SELFDESTRUCT) && pushes <= 1
+      case SysOp(_, _, _, _, _, _)       => (opcode == STOP
+                                             || opcode == EOF
+                                             || CREATE <= opcode <= SELFDESTRUCT) && pushes <= 1
     }
 
     // Helpers

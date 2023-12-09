@@ -50,9 +50,9 @@ module BuildCFGraph {
     }
   }
 
-  const DEFAULT_HISTORY := 
-    History([CFGNode([], Some(0))], [0], [], 
-    map[DEFAULT_VALIDSTATE := CFGNode([], Some(0))])
+  const DEFAULT_HISTORY :=
+    History([CFGNode([], Some(0))], [0], [],
+            map[DEFAULT_VALIDSTATE := CFGNode([], Some(0))])
 
   /**   Statistics for the DFS. */
   datatype Stats = Stats(maxDepthReached: bool := false, statesAlreadyFound: nat := 0, wPreInvSuccess: nat := 0, errorState: bool := false) {
@@ -106,7 +106,7 @@ module BuildCFGraph {
     maxDepth: nat,
     numSeg: nat := 0,
     s: ValidState := DEFAULT_VALIDSTATE,
-    h: History := DEFAULT_HISTORY, 
+    h: History := DEFAULT_HISTORY,
     stat: Stats := DEFAULT_STATS): (r:(CFGComputation, Stats))
     requires numSeg < |c.xs|
     requires h.IsConsistent(c, s)

@@ -15,10 +15,11 @@
 include "../utils/ProofObject.dfy"
 include "../utils/int.dfy"
 include "../utils/Hex.dfy"
-  /**
-    * Given a sequence of segments with an unknown PC at the end,
-    * resolve it.
-    */
+
+/**
+  * Given a sequence of segments with an unknown PC at the end,
+  * resolve it.
+  */
 module PCResolver {
 
   import opened ProofObject

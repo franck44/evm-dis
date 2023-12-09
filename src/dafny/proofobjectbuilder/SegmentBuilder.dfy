@@ -13,7 +13,6 @@
  */
 
 include "../utils/EVMOpcodes.dfy"
-  // include "./Splitter.dfy"
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
 include "../utils/StackElement.dfy"
@@ -28,7 +27,7 @@ module SegBuilder {
   import opened LinSegments
   import opened MiscTypes
   import opened Instructions
-  import opened StackElement 
+  import opened StackElement
 
   /**
     *   Try to resolve target address of a JUMP 
@@ -55,7 +54,6 @@ module SegBuilder {
     *  
     */
   function StackPositionTracker(xs: seq<ValidInstruction>, pos: nat := 0): Either<StackElem, nat>
-    //   requires forall i:: 0 <= i < |xs| ==> xs[i].op.IsValid()
   {
     if |xs| == 0 then Right(pos)
     else

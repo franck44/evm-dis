@@ -110,7 +110,6 @@ module CFGraph {
     else CountNodes(xe[1..], seen + {xe[0].src, xe[0].tgt})
   }
 
-
   /**
     *   A control flow graph with boolean labels/ 
     */

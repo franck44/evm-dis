@@ -52,7 +52,7 @@ module BinaryDecoder {
       assert |s| >= 2;
       // Try to decode next instruction
       match HexToU8(s[..2])
-      case None => 
+      case None =>
         //  first two chars of s are not Hex
         p + [Instruction(Decode(INVALID), "'" + s[..2] + "' is not an Hex number", next)]
       case Some(v) =>

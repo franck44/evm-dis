@@ -19,9 +19,10 @@ include "../utils/StackElement.dfy"
 include "../utils/State.dfy"
 include "../utils/WeakPre.dfy"
 include "./EVMToolTips.dfy"
-  /** 
-    *  Provides EVM Instruction types.
-    */
+
+/** 
+  *  Provides EVM Instruction types.
+  */
 module Instructions {
 
   import opened Int
@@ -63,10 +64,10 @@ module Instructions {
     }
 
     /** The size of an instruction, in bytes. */
-    function Size(): nat 
-        requires this.IsValid()
+    function Size(): nat
+      requires this.IsValid()
     {
-        1 + |arg| / 2
+      1 + |arg| / 2
     }
 
     /** Print as a string. */

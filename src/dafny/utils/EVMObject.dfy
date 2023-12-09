@@ -39,8 +39,8 @@ module EVMObject {
 
     /** The size of the program in bytes. */
     function Size(ls: seq<ValidLinSeg> := xs): nat {
-        if |ls| == 0 then 0 
-        else ls[0].Size() + Size(ls[1..])
+      if |ls| == 0 then 0
+      else ls[0].Size() + Size(ls[1..])
     }
   }
 

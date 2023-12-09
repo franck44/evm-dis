@@ -29,16 +29,16 @@ module StackElement {
   datatype StackElem = Value(v: u256) | Random(s: string := "") {
 
     function ToString(): string {
-        match this
-            case Value(v) => NatToString(v as nat) + 
-                "(0x" + NatToHex(v as nat) + ")"
-            case Random(_) => "?"
+      match this
+      case Value(v) => NatToString(v as nat) +
+      "(0x" + NatToHex(v as nat) + ")"
+      case Random(_) => "?"
     }
 
-    function Extract(): u256 
-        requires this.Value?
+    function Extract(): u256
+      requires this.Value?
     {
-        this.v
+      this.v
     }
   }
 

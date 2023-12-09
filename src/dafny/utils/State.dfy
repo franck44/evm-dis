@@ -27,11 +27,6 @@ module State {
   import opened StackElement
   import opened WeakPre
 
-  /** The stack elements can be either concrete valies of unknown which is
-    * captured by Random().
-    */
-  //   datatype StackElem = Value(v: u256) | Random(s: string := "")
-
   /**
     *   A ValidState is a state from whihc we can execute an instruction.
     */
@@ -147,25 +142,25 @@ module State {
       this.(stack := this.stack[0 := nth][n := top])
     }
 
-    predicate Sat(c: ValidCond) 
-        requires this.EState?
-        requires c.StCond?
-        decreases c.Size()
+    predicate Sat(c: ValidCond)
+      requires this.EState?
+      requires c.StCond?
+      decreases c.Size()
     {
-        if c.Size() == 1 then 
-            checkPos(this, c.trackedPos[0],  c.trackedVals[0])
-        else 
-            assert c.Size() >= 2;
-            checkPos(this, c.trackedPos[0],  c.trackedVals[0]) 
-            && Sat(c.Tail()) 
+      if c.Size() == 1 then
+        checkPos(this, c.trackedPos[0],  c.trackedVals[0])
+      else
+        assert c.Size() >= 2;
+        checkPos(this, c.trackedPos[0],  c.trackedVals[0])
+        && Sat(c.Tail())
     }
 
   }
 
   predicate checkPos(s: ValidState, pos: nat, val: u256)
   {
-     if |s.stack| <= pos then false 
-     else s.stack[pos] == Value(val)
+    if |s.stack| <= pos then false
+    else s.stack[pos] == Value(val)
   }
 
   //    Helpers
@@ -176,23 +171,21 @@ module State {
       s[0].ToString() + "," + StackToString(s[1..])
   }
 
-   /**
-      * Build an initial state that satisfies a given condition.
-      * @param  c       A valid condition.
-      * @param  initpc  An optional initial value for the pc.
-      * @returns        A valid  state with a (minimal) stack that satisfies c and
-      *                 init value for pc.
-      */
-    function BuildInitState(c: ValidCond, initpc: nat := 0): (s: ValidState)
-      requires !c.StFalse?
-    {
-      var s0 := DEFAULT_VALIDSTATE;
-      if c.StCond? then
-        s0.(stack := c.BuildStack(), pc := initpc)
-      else
-        s0.(pc := initpc)
-    }
-
-
+  /**
+    * Build an initial state that satisfies a given condition.
+    * @param  c       A valid condition.
+    * @param  initpc  An optional initial value for the pc.
+    * @returns        A valid  state with a (minimal) stack that satisfies c and
+    *                 init value for pc.
+    */
+  function BuildInitState(c: ValidCond, initpc: nat := 0): (s: ValidState)
+    requires !c.StFalse?
+  {
+    var s0 := DEFAULT_VALIDSTATE;
+    if c.StCond? then
+      s0.(stack := c.BuildStack(), pc := initpc)
+    else
+      s0.(pc := initpc)
+  }
 
 }

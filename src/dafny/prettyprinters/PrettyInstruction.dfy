@@ -19,8 +19,8 @@ include "../utils/EVMOpcodes.dfy"
 /**
   *  Provides pretty printers\ for instruction.
   * @note   For some reasons unknown to me, including this function in Pretty.dfy
-  *         results in redundant branch warning. There seems to be issues with case K when k is a
-  *         integer.
+  *         results in redundant branch warning. There seems to be issues 
+  *         with case K when k is a integer.
   */
 module PrettyIns {
 
@@ -37,16 +37,16 @@ module PrettyIns {
     match i.op.opcode
     // case STOP       => SysOp("STOP", STOP)
     case ADD         => "var s" + DecToString(tgt) + " := Add(s" + DecToString(src) + ");"
-    case MUL        => "var s" + DecToString(tgt) + " := Mul(s" + DecToString(src) + ");" 
-    case SUB        => "var s" + DecToString(tgt) + " := Sub(s" + DecToString(src) + ");" 
-    case DIV        => "var s" + DecToString(tgt) + " := Div(s" + DecToString(src) + ");" 
-    case SDIV       => "var s" + DecToString(tgt) + " := SDiv(s" + DecToString(src) + ");" 
-    case MOD        => "var s" + DecToString(tgt) + " := Mod(s" + DecToString(src) + ");" 
-    case SMOD       => "var s" + DecToString(tgt) + " := SMod(s" + DecToString(src) + ");" 
-    case ADDMOD     => "var s" + DecToString(tgt) + " := AddMod(s" + DecToString(src) + ");" 
-    case MULMOD     => "var s" + DecToString(tgt) + " := MulMod(s" + DecToString(src) + ");" 
-    case EXP        => "var s" + DecToString(tgt) + " := Exp(s" + DecToString(src) + ");" 
-    case SIGNEXTEND => "var s" + DecToString(tgt) + " := SignExtended(s" + DecToString(src) + ");" 
+    case MUL        => "var s" + DecToString(tgt) + " := Mul(s" + DecToString(src) + ");"
+    case SUB        => "var s" + DecToString(tgt) + " := Sub(s" + DecToString(src) + ");"
+    case DIV        => "var s" + DecToString(tgt) + " := Div(s" + DecToString(src) + ");"
+    case SDIV       => "var s" + DecToString(tgt) + " := SDiv(s" + DecToString(src) + ");"
+    case MOD        => "var s" + DecToString(tgt) + " := Mod(s" + DecToString(src) + ");"
+    case SMOD       => "var s" + DecToString(tgt) + " := SMod(s" + DecToString(src) + ");"
+    case ADDMOD     => "var s" + DecToString(tgt) + " := AddMod(s" + DecToString(src) + ");"
+    case MULMOD     => "var s" + DecToString(tgt) + " := MulMod(s" + DecToString(src) + ");"
+    case EXP        => "var s" + DecToString(tgt) + " := Exp(s" + DecToString(src) + ");"
+    case SIGNEXTEND => "var s" + DecToString(tgt) + " := SignExtended(s" + DecToString(src) + ");"
     // 0x10s: Comparison & Bitwise Logic
     case LT     => "var s" + DecToString(tgt) + " := Bytecode.Lt(s" + DecToString(src) + ");"
     // case GT     => CompOp("GT", GT)
@@ -201,7 +201,7 @@ module PrettyIns {
     */
   function DecToChar(n: nat): char
     requires 0 <= n < 10
-    ensures '0' <= DecToChar(n) <= '9' 
+    ensures '0' <= DecToChar(n) <= '9'
   {
     match n
     case 0 => '0'
@@ -221,7 +221,6 @@ module PrettyIns {
     if n < 10 then [DecToChar(n)]
     else DecToString(n / 10) + [DecToChar(n % 10)]
   }
-
 
 }
 

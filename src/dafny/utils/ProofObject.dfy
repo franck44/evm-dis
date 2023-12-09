@@ -14,7 +14,7 @@
 
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
-// include "../utils/LinSegments.dfy"
+include "../utils/LinSegments.dfy"
 include "../utils/StackElement.dfy" 
  
 /**
@@ -27,7 +27,6 @@ module ProofObject {
   import opened Instructions
   import opened StackElement
   
-
   /**
     *   sp.Keys contaisn the tracked/needed stack positions AFTER
     *   the last instruction.
@@ -39,7 +38,6 @@ module ProofObject {
 
   }
 
-     
   /**
     *   Either a segment terminating with a JUMP or a segment terminating with a STOP/RETURN/REVERT
     */

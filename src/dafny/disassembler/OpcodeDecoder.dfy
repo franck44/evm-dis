@@ -13,7 +13,7 @@
  */
 
 include "./../utils/int.dfy"
-include "./../utils/EVMOpcodes.dfy" 
+include "./../utils/EVMOpcodes.dfy"
 
 /**
   * Provides EVM opcodes decoding into readable format.
@@ -30,8 +30,8 @@ module OpcodeDecoder {
     *   @returns    The readable opcode that corresponds to `op`.
     *   @note       If opcode is not in the set of EVM opcodes, returns `INVALID`.
     */
-  function Decode(op: u8): Opcode 
-    ensures Decode(op).IsValid() 
+  function Decode(op: u8): Opcode
+    ensures Decode(op).IsValid()
   {
     // paraneters are: name, value of opcode, minCapacity, minOperands, pushes, pops
     match op
@@ -87,7 +87,7 @@ module OpcodeDecoder {
     case COINBASE    => EnvOp("COINBASE", COINBASE, 1, 0, 1, 0)
     case TIMESTAMP   => EnvOp("TIMESTAMP", TIMESTAMP, 1, 0, 1, 0)
     case NUMBER      => EnvOp("NUMBER", NUMBER, 1, 0, 1, 0)
-    case DIFFICULTY  => EnvOp("DIFFICULTY", DIFFICULTY, 1, 0, 1, 0) 
+    case DIFFICULTY  => EnvOp("DIFFICULTY", DIFFICULTY, 1, 0, 1, 0)
     case GASLIMIT    => EnvOp("GASLIMIT", GASLIMIT, 1, 0, 1, 0)
     case CHAINID     => EnvOp("CHAINID", CHAINID, 1, 0, 1, 0)
     case SELFBALANCE => EnvOp("SELFBALANCE", SELFBALANCE, 1, 0, 1, 0)

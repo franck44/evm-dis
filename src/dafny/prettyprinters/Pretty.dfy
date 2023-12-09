@@ -19,9 +19,10 @@ include "../utils/ProofObject.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
 include "../utils/OpcodesConstants.dfy"
 include "./PrettyInstruction.dfy"
-  /**
-    *  Provides pretty printers.
-    */
+
+/**
+  *  Provides pretty printers.
+  */
 module PrettyPrinters {
 
   import opened EVMOpcodes
@@ -129,7 +130,6 @@ module PrettyPrinters {
       print "\n";
     }
 
-
     PrintProofObjectBody(xs);
     print "}", "\n";
   }
@@ -141,7 +141,6 @@ module PrettyPrinters {
   method {:tailrec} PrintProofObjectBody(xs: seq<ProofObj>, num: nat := 0)
     requires forall i:: 0 <= i < |xs| ==> xs[i].IsValid()
   {
-
     if |xs| > 0 {
       // 
       var startAddress := NatToHex(xs[0].s.Ins()[0].address);
@@ -177,11 +176,11 @@ module PrettyPrinters {
           print "  ensures s'.EXECUTING?\n";
           print "  ensures s'.PC() ==  ";
           { match tgt
-            case Left(xc) => 
-                match xc {
-                    case Value(v) => print "0x", NatToHex(xc.Extract() as nat);
-                    case _ => print "Could not extract value ";
-                }
+            case Left(xc) =>
+              match xc {
+                case Value(v) => print "0x", NatToHex(xc.Extract() as nat);
+                case _ => print "Could not extract value ";
+              }
             case Right(v) =>
               print "s0.Peek(", v, ") as nat";
           }

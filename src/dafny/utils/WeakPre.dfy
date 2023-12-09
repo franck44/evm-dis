@@ -15,7 +15,6 @@
 include "./int.dfy"
 include "./MiscTypes.dfy"
 include "./StackElement.dfy"
-  // include "./Instructions.dfy"
 
 /**
   * Provides conditions/predicates of a given type.
@@ -99,10 +98,10 @@ module WeakPre {
     }
 
     function Tail(): ValidCond
-        requires this.IsValid()
-        requires this.Size() > 1
+      requires this.IsValid()
+      requires this.Size() > 1
     {
-        this.(trackedPos := trackedPos[1..], trackedVals := trackedVals[1..])
+      this.(trackedPos := trackedPos[1..], trackedVals := trackedVals[1..])
     }
 
     function Add(pos: u256, val: u256): (c' :Cond)
@@ -114,10 +113,10 @@ module WeakPre {
 
     /** Build stack that satifies this cond. */
     function BuildStack(r: seq<StackElem> := [], index: nat := 0): (s: seq<StackElem>)
-        requires this.StCond?
-        requires this.IsValid()
-        requires index <= |trackedPos|
-        decreases |trackedPos| - index 
+      requires this.StCond?
+      requires this.IsValid()
+      requires index <= |trackedPos|
+      decreases |trackedPos| - index
     {
       if index == |trackedPos|  then r
       else
@@ -139,7 +138,7 @@ module WeakPre {
     *
     *   @returns    The condition that contains the trackedPos and 
     *               trackedValues of c1 and c2.
-    *   @note       If a position is in c1 and c2m then the tracked values
+    *   @note       If a position is in c1 and c2 then the tracked values
     *               are checked. If they are equal that's good, otherwise
     *               the resukt is StFalse as they contain incompatible 
     *               constraints.
