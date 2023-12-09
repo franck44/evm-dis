@@ -21,6 +21,8 @@ include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
+include "./utils/EVMObject.dfy"
+
   /**
     *  Provides input reader and write out to stout.
     */
@@ -29,12 +31,13 @@ module Driver {
   import opened BinaryDecoder
   import opened Splitter
   import opened PrettyPrinters
-  import opened ProofObjectBuilder
+  import opened EVMObject
   import opened ArgParser
   import opened BuildCFGraphV2
   import opened MiscTypes
   import opened State
   import opened Int
+  import opened ProofObjectBuilder
 
   /**
     *  Read the input string
@@ -51,7 +54,6 @@ module Driver {
     optionParser.AddOption("-d", "--dis", 0, "Disassemble <string>");
     optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <string>");
     optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
-    // optionParser.AddOption("-a", "--all", 0, "Same as -d -p");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
     optionParser.AddOption("-r", "--raw", 0, "Display non-minimised and minimised CFGs");
@@ -101,6 +103,7 @@ module Driver {
       }
 
       var y := SplitUpToTerminal(x, [], []);
+      var prog := EVMObj(y);
 
       if segmentOpt {
         print "Segments:\n"; 
@@ -113,14 +116,12 @@ module Driver {
         print "Dafny Proof Object:\n";
         PrintProofObjectToDafny(z, libOpt);
         print "----------------- Proof -------------------\n";
-      }
+      } 
 
       if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
         print "// maxDepth is:", cfgDepthOpt, "\n";
-        //  Collect jumpDests
-        var jumpDests := CollectJumpDests(y); 
         //  Build CFG upto depth
-        var (g1, stats) := BuildCFGV6(Context(y, jumpDests), cfgDepthOpt);   
+        var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);   
         var g := g1.Graph();
         if rawOpt {
           print stats.PrettyPrint(); 
