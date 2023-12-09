@@ -207,7 +207,7 @@ module CFGraph {
             "s" + g[0].src.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].src, xs[g[0].src.seg.v], simpleOutput);
         var tgttxt :=
-          if g[0].tgt in printed then ""
+          if g[0].tgt in printed + { g[0].src } then ""
           else if g[0].tgt.seg.None? then
             "s" + g[0].tgt.ToDot() + "[label=<ErrorEnd <BR ALIGN=\"CENTER\"/>>]\n"
           else DOTPrintNodeLabel(g[0].tgt, xs[g[0].tgt.seg.v], simpleOutput);
