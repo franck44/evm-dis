@@ -291,19 +291,6 @@ module CFGraph {
       p
   }
 
-  predicate EquivSeg(s1: ValidLinSeg, s2: ValidLinSeg) {
-    match s1
-    case JUMPSeg(_, _, _) =>
-      |s1.Ins()| == |s2.Ins()| >= 2
-      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
-      && s1.ins[..|s1.ins| - 1] == s2.ins[..|s2.ins| - 1]
-    case JUMPISeg(_,_, _) =>
-      |s1.Ins()| == |s2.Ins()| >= 2
-      && EVMConstants.PUSH1 <= s1.ins[|s1.ins| - 1].op.opcode == s2.ins[|s1.ins| - 1].op.opcode <= EVMConstants.PUSH32
-      && s1.ins[..|s1.ins| - 1] == s2.ins[..|s2.ins| - 1]
-    case _ => s1.Ins() == s2.Ins()
-  }
-
   function {:tailrecursion true} {:timeLimitMultiplier 10} EdgesToMap(edges: seq<BoolEdge>, seenNodes: map<CFGNode, nat> := map[CFGNode([], Some(0)) := 0], reverseSeenNodes: map<nat, CFGNode> := map[0 := CFGNode([], Some(0))] ,builtMap: map<(nat, bool), nat> := map[], lastNum: nat := 0, index: nat := 0, ghost segUpperBound: nat ): (a: (nat, map<(nat, bool), nat>, map<CFGNode, nat>, map<nat, CFGNode>))
     requires index <= |edges|
     // requires forall i, i':: 0 <= i < i' < |edges| ==> edges[i] != edges[i']
