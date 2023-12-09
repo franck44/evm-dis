@@ -18,11 +18,11 @@ include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFG.dfy"
+include "../../../src/dafny/CFGBuilder/BuildCFGV2.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 include "../../../src/dafny/prettyprinters/Pretty.dfy"
-// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
+  // include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 
 /**
   * Test correct computation of next State.
@@ -37,7 +37,7 @@ module BuildCFGBlogTests {
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-  import opened BuildCFGraph
+  import opened BuildCFGraphV2
   import opened PrettyPrinters
   import opened EVMObject
 
@@ -68,9 +68,10 @@ module BuildCFGBlogTests {
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
-      var g := BuildCFGV5(y, 10, [0x05, 0x0b, 0x0d]);
-      expect g.0.IsValid();
-      var g' := g.0.Minimise();
+      var p := EVMObj(y);
+      var g := BuildCFGV6(p, 10);
+      expect g.0.Graph().IsValid();
+      var g' := g.0.Graph().Minimise();
       expect g'.IsValid();
       print "CFG1\n";
       assert g'.maxSegNum < |y|;
@@ -85,14 +86,14 @@ module BuildCFGBlogTests {
   method {:main2} {:verify true} Test5()
   {
     //  Linear segment
-   var x := DisassembleU8(
+    var x := DisassembleU8(
       [
         // Segment 0
         /* 00000000: */ PUSH1, 0x02,
         //  Segment 1
         /* 00000002: */ JUMPDEST,
-        /* 00000003  */ PUSH0, 
-                        SWAP1,
+        /* 00000003  */ PUSH0,
+        SWAP1,
         /* 00000004: */ DUP1,
         /* 00000005: */ JUMP
 
@@ -103,10 +104,12 @@ module BuildCFGBlogTests {
     expect |y| == 2;
     expect y[1].StartAddress() == 0x02;
     expect y[0].StartAddress() == 0;
-    var g := BuildCFGV5(y, 10, [0x02]) ;
 
-    expect g.0.IsValid();
-    var g' := g.0.Minimise();
+    var p := EVMObj(y);
+    var g := BuildCFGV6(p, 10) ;
+
+    expect g.0.Graph().IsValid();
+    var g' := g.0.Graph().Minimise();
     expect g'.IsValid();
     assert g'.maxSegNum < |y|;
     print g'.DOTPrint(y);
@@ -120,11 +123,11 @@ module BuildCFGBlogTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-    var jumpDests := EVMObj(y).jumpDests;
 
-    var g := BuildCFGV5(y, 10, jumpDests) ;
-    expect g.0.IsValid();
-    var g' := g.0.Minimise();
+    var p := EVMObj(y);
+    var g := BuildCFGV6(p, 10) ;
+    expect g.0.Graph().IsValid(); 
+    var g' := g.0.Graph().Minimise();
     expect g'.IsValid();
     print "CFG test 1\n";
     assert g'.maxSegNum < |y|;
