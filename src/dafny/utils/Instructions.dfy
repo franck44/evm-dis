@@ -73,6 +73,15 @@ module Instructions {
     }
 
     /**
+      * Whwther an instruction is equivalent, semantics-wise to this.
+      * @note       Address may differ but effect is the same.
+      */
+    predicate Equiv(i: ValidInstruction)
+    {
+      op == i.op && arg == i.arg
+    }
+
+    /**
       * Print node information to simple HTML form.
       */
     function ToHTML(): string
