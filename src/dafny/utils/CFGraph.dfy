@@ -282,8 +282,8 @@ module CFGraph {
   {
     if n <= maxSegNum then
       //  split according to instructions in segment are the same
-      var f: nat --> bool := (x: nat) requires 0 <= x < p.n => 
-        m[x].seg.Some? && m[x].seg.v < |xs| && (m[x].seg == Some(n) && EquivSeg(xs[n], xs[m[x].seg.v]));
+      var f: nat --> bool := (x: nat) requires 0 <= x < p.n =>
+                               m[x].seg.Some? && m[x].seg.v < |xs| && (m[x].seg == Some(n) && EquivSeg(xs[n], xs[m[x].seg.v]));
       var p1 := p.SplitAt(f, |p.elem| - 1);
       SegNumPartition2(p1, m, maxSegNum, n + 1, xs)
     else
