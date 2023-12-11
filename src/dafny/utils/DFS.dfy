@@ -29,7 +29,7 @@ module DFS {
 
   /**  DFS current path history. */
   datatype PathHistory =
-    PathHistory(seen: seq<CFGNode>, seenPCs: seq<nat>, path: seq<bool>, seenStates: map<AState, CFGNode>) {
+    PathHistory(seen: seq<CFGNode>, seenPCs: seq<nat>, path: seq<bool>) {
 
     /** The history should be well-formed  */
     predicate IsConsistent(c: EVMObj, s: ValidState) {
@@ -40,12 +40,11 @@ module DFS {
       && (forall k:: k in seen && k.seg.Some? ==> k.seg.v < |c.xs|)
       && (s.PC() == seenPCs[|seenPCs| - 1])
       && (forall k:: 0 <= k < |seen| ==> seenPCs[k] == c.xs[seen[k].seg.v].StartAddress())
-         //   && (forall s:: s in seenStates && seenStates[s].seg.Some? ==> seenStates[s].seg.v < |c.xs|)
     }
   }
 
   const DEFAULT_PATH_HISTORY :=
-    PathHistory([CFGNode([], Some(0))], [0], [], map[DEFAULT_VALIDSTATE := CFGNode([], Some(0))])
+    PathHistory([CFGNode([], Some(0))], [0], [])
 
   /** DFS entire search history. */
   datatype DFSHistory =
