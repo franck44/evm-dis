@@ -34,13 +34,13 @@ module DFS {
     /** The history should be well-formed  */
     predicate IsConsistent(c: EVMObj, s: ValidState) {
       && |seen| == |seenPCs| == |path| + 1
-      && s in seenStates
+         //   && s in seenStates
       && (forall k:: 0 <= k < |seen| ==> seen[k].id == path[..k])
       && (forall k:: 0 <= k < |seen| ==> seen[k].seg.Some?)
       && (forall k:: k in seen && k.seg.Some? ==> k.seg.v < |c.xs|)
       && (s.PC() == seenPCs[|seenPCs| - 1])
       && (forall k:: 0 <= k < |seen| ==> seenPCs[k] == c.xs[seen[k].seg.v].StartAddress())
-      && (forall s:: s in seenStates && seenStates[s].seg.Some? ==> seenStates[s].seg.v < |c.xs|)
+         //   && (forall s:: s in seenStates && seenStates[s].seg.Some? ==> seenStates[s].seg.v < |c.xs|)
     }
   }
 
@@ -49,12 +49,13 @@ module DFS {
 
   /** DFS entire search history. */
   datatype DFSHistory =
-    DFSHistory(seenStates: map<AState, CFGNode>) {
+    DFSHistory(visitedStates: map<AState, CFGNode>) {
 
 
     /** The history should be well-formed  */
     predicate IsConsistent(c: EVMObj, s: ValidState) {
-      && (forall s:: s in seenStates && seenStates[s].seg.Some? ==> seenStates[s].seg.v < |c.xs|)
+      && s in visitedStates
+      && (forall s:: s in visitedStates && visitedStates[s].seg.Some? ==> visitedStates[s].seg.v < |c.xs|)
     }
   }
 
