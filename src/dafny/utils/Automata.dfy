@@ -49,7 +49,7 @@ module Automata {
       requires 0 <= s < numStates
       ensures Succ(s, l).Some? ==> 0 <= Succ(s, l).v < numStates
     {
-      if (s, l) in transitions then Some(transitions[(s, l)]) 
+      if (s, l) in transitions then Some(transitions[(s, l)])
       else None
     }
   }
