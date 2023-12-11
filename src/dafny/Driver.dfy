@@ -22,6 +22,7 @@ include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
 include "./utils/EVMObject.dfy"
+include "./utils/Statistics.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -37,6 +38,7 @@ module Driver {
   import opened MiscTypes
   import opened State
   import opened Int
+  import opened Statistics
   import opened ProofObjectBuilder
 
   /**
