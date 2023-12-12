@@ -31,7 +31,7 @@ module Driver {
 
   import opened BinaryDecoder
   import opened Splitter
-  import opened PrettyPrinters
+  import opened PrettyPrinters 
   import opened EVMObject
   import opened ArgParser
   import opened BuildCFGraph
