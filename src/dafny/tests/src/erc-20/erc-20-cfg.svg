@@ -9217,7 +9217,7 @@
 <title>s960_10</title>
 <polygon fill="none" stroke="black" points="2796.92,-5439 2159.92,-5439 2159.92,-4020 2796.92,-4020 2796.92,-5439"/>
 <text text-anchor="start" x="2411.17" y="-5420.07" font-family="arial" font-size="14.00">Segment 76 [0x486]</text>
-<g id="a_node85_1574"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(0)">
+<g id="a_node85_1574"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Stack on Entry.Peek(2)">
 <text text-anchor="start" x="2775.92" y="-5420.7" font-family="arial" font-size="14.00" fill="green">▤</text>
 </a>
 </g>
@@ -14940,7 +14940,7 @@
 <title>s7936_13</title>
 <polygon fill="none" stroke="black" points="1280.92,-3609 643.92,-3609 643.92,-1494 1280.92,-1494 1280.92,-3609"/>
 <text text-anchor="start" x="895.17" y="-3590.07" font-family="arial" font-size="14.00">Segment 82 [0x556]</text>
-<g id="a_node89_2602"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Stack on Entry.Peek(1)">
+<g id="a_node89_2602"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Stack on Entry.Peek(3)">
 <text text-anchor="start" x="1259.92" y="-3590.7" font-family="arial" font-size="14.00" fill="green">▤</text>
 </a>
 </g>
