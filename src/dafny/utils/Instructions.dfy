@@ -342,7 +342,7 @@ module Instructions {
 
       case LogOp(_, _, _, _, pushes, pops) =>
         assert pushes == 0 && 2 <= pops <= 6;
-        Right(pos' + 2)
+        Right(pos' + pops)
 
       case SysOp(_, _, _, _, pushes, pops) =>
         if pushes == 0 then
