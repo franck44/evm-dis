@@ -51,6 +51,7 @@ class default__:
         while True:
             with _dafny.label():
                 if (len(xs)) > (0):
+                    _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--------------------------------------------\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Segment "))).VerbatimString(False))
                     _dafny.print(_dafny.string_of(num))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
