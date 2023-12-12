@@ -68,12 +68,14 @@ module Driver {
     } else if |args| == 2 {
       //  No argument, try to disassemble
       //  Make sure the string is Hexa and has even length
-      if |args[1]| % 2 != 0 {
-        print "String must have even length, length is ", |args[1]|, "\n";
-      } else if Hex.IsHexString(args[1]) {
-        var x := Disassemble(args[1]);
-        print "Diassembled code:\n";
-        PrintInstructions(x);
+      if |args[1]| == 0 {
+        print "String must be non empty \n";
+      } else if |args[1]| % 2 != 0 { 
+        print "String must be non empty and have even length, length is ", |args[1]|, "\n";
+      } else if Hex.IsHexString(if args[1][..2] == "0x" then args[1][2..] else args[1]) {
+        var x := Disassemble(if args[1][..2] == "0x" then args[1][2..] else args[1]);
+        print "Disassembled code:\n";
+        PrintInstructions(x); 
         print "--------------- Disassembled ---------------------\n";
       } else {
         print "String must be hexadecimal\n";
@@ -84,12 +86,14 @@ module Driver {
     } else {
       // Collect the arguments
       var stringToProcess := args[|args| - 1];
-      if |stringToProcess| % 2 != 0 {
+        if |stringToProcess| == 0 {
+        print "String must be non empty \n";
+      } else if |stringToProcess| % 2 != 0 {
         print "String must have even length, length is ", |stringToProcess|, "\n";
-      } else if !Hex.IsHexString(stringToProcess) {
+      } else if !Hex.IsHexString(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess) {
         print "String must be hexadecimal\n";
       } else {
-        var x := Disassemble(stringToProcess);
+        var x := Disassemble(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess);
         //  Parse arguments
         var optArgs := args[1..|args| - 1];
         // Note: we use an if-then-else as otherwise compileToJava fails
@@ -110,7 +114,7 @@ module Driver {
 
         //    Process options
         if disOpt {
-          print "Diassembled code:\n";
+          print "Disassembled code:\n";
           PrintInstructions(x);
           print "--------------- Disassembled ---------------------\n";
         }
