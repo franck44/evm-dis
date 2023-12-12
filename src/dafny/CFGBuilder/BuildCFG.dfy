@@ -22,7 +22,7 @@ include "../../../src/dafny/utils/Statistics.dfy"
 include "../../../src/dafny/utils/DFS.dfy"
 
 /**
-  * Computation of the CFG via some DFS.  
+  * Computation of the CFG via some DFS.   
   */
 module BuildCFGraph {
 
@@ -74,7 +74,7 @@ module BuildCFGraph {
     requires pathHistory.IsConsistent(c, s)
     requires pathHistory.seen[|pathHistory.seen| - 1].seg.v == numSeg
     requires searchHistory.IsConsistent(c, s)
-
+ 
     ensures forall k:: k in r.0.grph.edges ==> k.src.seg.Some? ==> 0 <= k.src.seg.v < |c.xs|
     ensures forall k:: k in r.0.grph.edges ==> k.tgt.seg.Some? ==> 0 <= k.tgt.seg.v < |c.xs|
     ensures r.0.grph.IsValid()
