@@ -373,7 +373,7 @@ class Instruction:
             d_363___mcc_h65_ = source34_.pops
             d_364_pops_ = d_363___mcc_h65_
             d_365_pushes_ = d_362___mcc_h64_
-            return MiscTypes.Either_Right((pos_k) + (2))
+            return MiscTypes.Either_Right((pos_k) + (d_364_pops_))
         elif True:
             d_366___mcc_h66_ = source34_.name
             d_367___mcc_h67_ = source34_.opcode

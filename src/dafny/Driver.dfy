@@ -21,6 +21,7 @@ include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
+include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
 
@@ -67,87 +68,103 @@ module Driver {
       optionParser.PrintHelp();
     } else if |args| == 2 {
       //  No argument, try to disassemble
-      var x := Disassemble(args[1]);
-      print "Diassembled code:\n";
-      PrintInstructions(x);
-      print "--------------- Disassembled ---------------------\n";
-
+      //  Make sure the string is Hexa and has even length
+      if |args[1]| == 0 {
+        print "String must be non empty \n";
+      } else if |args[1]| % 2 != 0 { 
+        print "String must be non empty and have even length, length is ", |args[1]|, "\n";
+      } else if Hex.IsHexString(if args[1][..2] == "0x" then args[1][2..] else args[1]) {
+        var x := Disassemble(if args[1][..2] == "0x" then args[1][2..] else args[1]);
+        print "Disassembled code:\n";
+        PrintInstructions(x); 
+        print "--------------- Disassembled ---------------------\n";
+      } else {
+        print "String must be hexadecimal\n";
+      }
     } else if args[1] == "--help" || args[1] == "-h" {
       //  Note that this does not work with the dafny run command as --help is a dafny run option
       optionParser.PrintHelp();
     } else {
       // Collect the arguments
       var stringToProcess := args[|args| - 1];
-      var x := Disassemble(stringToProcess);
-      //  Parse arguments
-      var optArgs := args[1..|args| - 1];
-      // Note: we use an if-then-else as otherwise compileToJava fails
-      var disOpt: bool := if optionParser.GetArgs("--dis", optArgs).Success? then true else false;
-      var segmentOpt: bool := if optionParser.GetArgs("--segment", optArgs).Success? then true else false;
-      var proofOpt: bool := if optionParser.GetArgs("--proof", optArgs).Success? then true else false;
-      var libOpt: string :=
-        match optionParser.GetArgs("--lib", optArgs)
-        case Success(p) => p[0]
-        case Failure(_) => "" ;
-      var cfgDepthOpt: nat :=
-        match optionParser.GetArgs("--cfg", optArgs)
-        case Success(args) => if |args[0]| >= 1 && IsNatNumber(args[0]) then StringToNat(args[0]) else 0
-        case Failure(_) => 0;
-      var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
-      var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
-      var fancy := if optionParser.GetArgs("--fancy", optArgs).Success? then true else false;
-
-      //    Process options
-      if disOpt {
-        print "Diassembled code:\n";
-        PrintInstructions(x);
-        print "--------------- Disassembled ---------------------\n";
-      }
-
-      var y := SplitUpToTerminal(x, [], []);
-      var prog := EVMObj(y);
-
-      if segmentOpt {
-        print "Segments:\n";
-        PrintSegments(y);
-        print "----------------- Segments -------------------\n";
-      }
-
-      if proofOpt {
-        var z := BuildProofObject(y);
-        print "Dafny Proof Object:\n";
-        PrintProofObjectToDafny(z, libOpt);
-        print "----------------- Proof -------------------\n";
-      }
-
-      if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
-        print "// maxDepth is:", cfgDepthOpt, "\n";
-        //  Build CFG upto depth
-        var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);
-        var g := g1.Graph();
-        if rawOpt {
-          print stats.PrettyPrint();
-          print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
-          print "// Raw CFG\n";
-          print g.DOTPrint(y, noTable, fancy);
-          print "//----------------- Raw CFG -------------------\n";
-        } else {
-          //  Minimise
-          var g' := g.Minimise();
-          expect g'.IsValid();
-          assert g'.maxSegNum < |y|;
-          var g2 := g.Minimise(true, y);
-          print stats.PrettyPrint();
-          print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
-          print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
-          print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
-          print "// Minimised CFG\n";
-          print g'.DOTPrint(y, noTable, fancy);
-          print "//----------------- Minimised CFG -------------------\n";
-        }
+        if |stringToProcess| == 0 {
+        print "String must be non empty \n";
+      } else if |stringToProcess| % 2 != 0 {
+        print "String must have even length, length is ", |stringToProcess|, "\n";
+      } else if !Hex.IsHexString(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess) {
+        print "String must be hexadecimal\n";
       } else {
-        if optionParser.GetArgs("--cfg", optArgs).Success? {
-          print "No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n";
+        var x := Disassemble(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess);
+        //  Parse arguments
+        var optArgs := args[1..|args| - 1];
+        // Note: we use an if-then-else as otherwise compileToJava fails
+        var disOpt: bool := if optionParser.GetArgs("--dis", optArgs).Success? then true else false;
+        var segmentOpt: bool := if optionParser.GetArgs("--segment", optArgs).Success? then true else false;
+        var proofOpt: bool := if optionParser.GetArgs("--proof", optArgs).Success? then true else false;
+        var libOpt: string :=
+          match optionParser.GetArgs("--lib", optArgs)
+          case Success(p) => p[0]
+          case Failure(_) => "" ;
+        var cfgDepthOpt: nat :=
+          match optionParser.GetArgs("--cfg", optArgs)
+          case Success(args) => if |args[0]| >= 1 && IsNatNumber(args[0]) then StringToNat(args[0]) else 0
+          case Failure(_) => 0;
+        var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
+        var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
+        var fancy := if optionParser.GetArgs("--fancy", optArgs).Success? then true else false;
+
+        //    Process options
+        if disOpt {
+          print "Disassembled code:\n";
+          PrintInstructions(x);
+          print "--------------- Disassembled ---------------------\n";
+        }
+
+        var y := SplitUpToTerminal(x, [], []);
+        var prog := EVMObj(y);
+
+        if segmentOpt {
+          print "Segments:\n";
+          PrintSegments(y);
+          print "----------------- Segments -------------------\n";
+        }
+
+        if proofOpt {
+          var z := BuildProofObject(y);
+          print "Dafny Proof Object:\n";
+          PrintProofObjectToDafny(z, libOpt);
+          print "----------------- Proof -------------------\n";
+        }
+
+        if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
+          print "// maxDepth is:", cfgDepthOpt, "\n";
+          //  Build CFG upto depth
+          var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);
+          var g := g1.Graph();
+          if rawOpt {
+            print stats.PrettyPrint();
+            print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
+            print "// Raw CFG\n";
+            print g.DOTPrint(y, noTable, fancy);
+            print "//----------------- Raw CFG -------------------\n";
+          } else {
+            //  Minimise
+            var g' := g.Minimise();
+            expect g'.IsValid();
+            assert g'.maxSegNum < |y|;
+            var g2 := g.Minimise(true, y);
+            print stats.PrettyPrint();
+            print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
+            print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
+            print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
+            print "// Minimised CFG\n";
+            print g'.DOTPrint(y, noTable, fancy);
+            print "//----------------- Minimised CFG -------------------\n";
+          }
+        } else {
+          if optionParser.GetArgs("--cfg", optArgs).Success? {
+            print "No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n";
+          }
         }
       }
     }

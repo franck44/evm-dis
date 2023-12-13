@@ -1,11 +1,6 @@
 
 object "Runtime" {
   code {
-
-    // let i := 0
-    // while lt(i, 10) {
-    //   i := add(i, 1)
-    // }
     let r := 1
     for { let i := 0 } lt(i, 10) { } {
         for { let k := 0 } lt(k, 10) { } {

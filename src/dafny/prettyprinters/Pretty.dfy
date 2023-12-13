@@ -57,6 +57,7 @@ module PrettyPrinters {
                         (forall k:: 0 <= k < |xs[i].Ins()| ==> xs[i].Ins()[k].op.IsValid());
     if |xs| > 0 {
       //
+      print "--------------------------------------------\n";
       print "Segment ", num, "\n";
       var k := xs[0].WeakestPreOperands(0);
       var l := xs[0].WeakestPreCapacity(0);
