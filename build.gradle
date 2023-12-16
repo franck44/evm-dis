@@ -132,7 +132,8 @@ final DAFNY4_JS_BUILD_FLAGS = [
 final DAFNY4_VERIFY_FLAGS = [
     '/dafnyVerify:1',
     '/compile:0',
-    '/rlimit:10000000',
+    // '/rlimit:100000000',
+    '/timeLimit:20',
     // '--resource-limit','10000000',
     // '--verify-included-files',
     // '--log-format','csv;LogFileName=build/logs/verify.csv',
