@@ -35,12 +35,12 @@ module Driver {
   import opened PrettyPrinters 
   import opened EVMObject
   import opened ArgParser
-  import opened BuildCFGraph
+  import opened BuildCFGraph 
   import opened MiscTypes
   import opened State
   import opened Int
   import opened Statistics
-  import opened ProofObjectBuilder
+  import opened ProofObjectBuilder 
 
   /**
     *  Read the input string
