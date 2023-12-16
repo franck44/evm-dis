@@ -15,12 +15,14 @@
 include "../utils/MiscTypes.dfy"
 include "../utils/int.dfy"
 include "./BuildCFGSimplified.dfy"
+include "../utils/AutomataV2.dfy"
 
-module BuildCFGSimplifiedTests {
+module BuildCFGSimplifiedTests { 
 
   import opened MiscTypes
   import opened DFSSimple
   import opened Int
+  import opened AutomataV2
 
   function SimpleSucc(n: nat): seq<nat> {
     if n <= 2 then [n + 1, n + 3]
@@ -28,7 +30,7 @@ module BuildCFGSimplifiedTests {
   }
 
   function succ1(n: nat): seq<nat> {
-    if n == 0 then [1, 2]
+    if n == 0 then [1, 2] 
     else if n == 1 then [3]
     else if n == 2 then [0, 1]
     else if n == 3 then [0]
@@ -36,8 +38,8 @@ module BuildCFGSimplifiedTests {
   }
 
   method {:test} Test1() {
-    var g1: Graph<nat> := Graph(0 as nat, succ1);
-    var a1, h1 := DFS(g1, 0 as nat, History(0, [0]), Auto(x => NatToString(x)), 15);
+    // var g1: Graph<nat> := Graph(0 as nat, succ1);
+    var a1, h1 := DFS(succ1, 0 as nat, History(0, [0]), Auto(x => NatToString(x)), 15);
 
     // expect a1 == Auto(map[0 := [1, 2], 1 := [3], 2 := [0, 1], 3 := [0]], 0);
     // expect a1.IsValid();
@@ -46,8 +48,8 @@ module BuildCFGSimplifiedTests {
   }
 
   method {:test} Test2() {
-    var g1: Graph<nat> := Graph(0 as nat, SimpleSucc);
-    var a1, h1 := DFS(g1, 0 as nat, History(0, [0]), Auto(x => NatToString(x)), 15);
+    // var g1: Graph<nat> := Graph(0 as nat, SimpleSucc);
+    var a1, h1 := DFS(SimpleSucc, 0 as nat, History(0, [0]), Auto(x => NatToString(x)), 15);
     // expect a1 == Auto(map[0 := [1, 3], 1 := [2, 4], 2 := [3, 5], 3 := [1], 4 := [2], 5 := [3]], 0);
     // expect a1.IsValid();
     print a1, " ", a1.SSize(), "\n";
