@@ -43,6 +43,46 @@ module MiscTypes {
     }
   }
 
+  /** Attempt at defining a constraint on functions  */
+  type WellDefined<!K(!new)> =
+    f: (K, seq<K>) -> Option<K> | (forall x: K, xs: seq<K> {:triggers f(x, xs)} :: f(x, xs).Some? ==> f(x, xs).v in xs)
+    witness ( (x: K, xs: seq<K>) => None)
+
+
+  type WellDefined2<!K(!new)> =
+    f: (K, seq<K>) -> Option<nat> | (forall x: K, xs: seq<K> {:triggers f(x, xs)} :: f(x, xs).Some? ==> f(x, xs).v < |xs|)
+    witness ( (x: K, xs: seq<K>) => None)
+
+  type Foo = f: nat -> nat |  (forall x: nat :: x < 2 ==> f(x) == 0)
+    witness ((x: nat) => 0)
+
+  predicate Foobar(f: Foo)
+  {
+    foo101(f);
+    assert forall x: nat :: x < 2 ==> f(x) == 0;
+    true
+  }
+
+  lemma {:axiom} foo101(f: Foo)
+    ensures forall x: nat :: x < 2 ==> f(x) == 0
+
+  /**   For some reasons the following lemma cannot be proved. */
+  lemma {:axiom} Foo101<K(!new)>(f: WellDefined<K>)
+    ensures forall x: K, xs: seq<K> :: f(x, xs).Some? ==> f(x, xs).v in xs
+  //   {
+  //     assume forall x: K, xs: seq<K> :: f(x, xs).Some? ==> f(x, xs).v in xs;
+  //   }
+
+  lemma {:axiom} Foo102<K(!new)>(f: WellDefined2<K>)
+    ensures forall x: K, xs: seq<K> :: f(x, xs).Some? ==> f(x, xs).v < |xs|
+  // {}
+  //   {
+  //     assume forall x: K, xs: seq<K> :: f(x, xs).Some? ==> f(x, xs).v in xs;
+  //   }
+
+
+  //    Helper functions for sequences
+
   function {:tailrecursion true} Zip<U, V>(u: seq<U>, v: seq<V>): seq<(U, V)>
     requires |u| == |v|
   {
@@ -86,8 +126,13 @@ module MiscTypes {
     seq(|t|, i requires 0 <= i < |t| => f(t[i]))
   }
 
-  /** Find the index of an element in a list.  */
-  function Find<T(==)>(x: seq<T>, t: T): Option<nat>
+  /** Find the index of an element in a list.  
+    * @param x  The list.
+    * @param t  The element to find.
+    * @return   The index of the element in the list, 
+    *           or None if the element is not in the list.
+    */
+  function {:opaque} Find<T(==)>(x: seq<T>, t: T): Option<nat>
     ensures Find(x, t).Some? <==> t in x
     ensures Find(x, t).Some? ==> Find(x, t).Extract() < |x|
     ensures Find(x, t).Some? ==> x[Find(x, t).Extract()] == t
@@ -96,7 +141,7 @@ module MiscTypes {
     FindRec(x, t)
   }
 
-  function {:tailrecursion true} FindRec<T(==)>(x: seq<T>, t: T, i: nat := 0, ghost c: seq<T> := x): Option<nat>
+  function {:tailrecursion true} {:opaque} FindRec<T(==)>(x: seq<T>, t: T, i: nat := 0, ghost c: seq<T> := x): Option<nat>
     requires |c| == i + |x|
     requires c[i..] == x
     ensures FindRec(x, t, i, c).Some? ==> t in c
