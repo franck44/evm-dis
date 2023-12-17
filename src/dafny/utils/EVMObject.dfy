@@ -42,6 +42,18 @@ module EVMObject {
       if |ls| == 0 then 0
       else ls[0].Size() + Size(ls[1..])
     }
+
+    function Next(s: AState): seq<AState>
+    {
+      if s.Error? then []
+      else
+        match PCToSeg(xs, s.pc) {
+          case Some(s0) =>
+            var exit0 := if xs[s0].HasExit(false) then [xs[s0].Run(s, false, jumpDests)] else [];
+            var exit1 := if xs[s0].HasExit(true) then [xs[s0].Run(s, true, jumpDests)] else [];
+            exit0 + exit1
+          case None => []
+        }
   }
 
   /** Collect jumpdests in a list of segments.  */
