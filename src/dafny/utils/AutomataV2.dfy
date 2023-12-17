@@ -45,9 +45,17 @@ module AutomataV2 {
           .(transitions := transitions[i := transitions[i] + [j]] + (if j !in states then map[j := []] else map[]))
           .(states  := states + (if j in states then [] else [j]))
       else
-        this
-        .(transitions := transitions + map[i := [j]] + map[j := []])
-        .(states := states + [i, j])
+        assert i !in states;
+        if j in states || j == i then
+          this
+          .(transitions := transitions + map[i := [j]])
+          .(states := states + [i])
+        else
+          assert j !in states;
+          assert i !in states;
+          this
+          .(transitions := transitions + map[i := [j]] + map[j := []])
+          .(states := states + [i, j])
     }
 
     /**
@@ -115,6 +123,8 @@ module AutomataV2 {
       */
     ghost predicate IsValid() {
       && (forall i : T :: i in states <==> i in transitions)
+      && (forall k, k':: 0 <= k < k' < |states| ==> states[k] != states[k'])
+      && (forall i, j :: i in states && 0 <= j < |transitions[i]| ==> transitions[i][j] in states)
     }
   }
 }
