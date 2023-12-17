@@ -58,7 +58,7 @@ module EVMObject {
             exit0 + exit1
           case None => []
         }
-  }
+    }
 
     function ToHTML(a: AState): string {
       if a.Error? then
