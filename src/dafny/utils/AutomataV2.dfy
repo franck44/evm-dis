@@ -14,14 +14,21 @@
 
 include "./MiscTypes.dfy"
 include "../utils/int.dfy"
-
+include "../utils/LinSegments.dfy"
 /** 
   * Provides finite automata.
   */
-module AutomataV2 { 
+module AutomataV2 {
 
   import opened MiscTypes
   import opened Int
+  import opened LinSegments
+
+  type NatAuto = a: ValidAuto2<nat> | a.states == seq(|a.states|, i => i) witness Auto(_ => "")
+
+  type ValidAuto2<!T(!new)> = a: Auto<T> | a.IsValid() witness Auto(_ => "", map[])
+
+
 
   /**
     *  Automaton.
@@ -33,9 +40,37 @@ module AutomataV2 {
     */
   datatype Auto<!T(!new,==)> = Auto(toString: T -> string, transitions: map<T, seq<T>> := map[], states: seq<T> := [])
   {
+    predicate Equals(b: Auto<T>) {
+      && transitions == b.transitions
+      && states == b.states
+    }
+
+    /** Each state in states is mapped to its index.
+      * The transitions are also mapped to nat -> seq<nat>.
+      */
+    function ToNatAuto(index: nat := 0, a: NatAuto := Auto(_ => "")): (a': NatAuto)
+      requires this.IsValid()
+      ensures a'.IsValid()
+    {
+      var k := StatesToIndex();
+      // add transitions from index
+      //   a.addEdges(index, transitions[index])
+      //   a.addEdges(index, transitions[index])
+      a
+    }
+
+    function addEdges(i: T, xj: seq<T>): (a: Auto<T>)
+      requires this.IsValid()
+      ensures a.IsValid()
+      decreases |xj|
+    {
+      if xj == [] then this
+      else this.addEdge(i, xj[0]).addEdges(i, xj[1..])
+    }
+
     function addEdge(i: T, j: T): (a: Auto<T>)
       requires IsValid()
-      ensures a.IsValid()
+      ensures a.IsValid() 
     {
       if i in transitions then
         if j in transitions[i] then
@@ -103,17 +138,49 @@ module AutomataV2 {
       print "digraph G {\n";
       print "// Number of states: ", NatToString(SSize()), "\n";
       print "// Number of transitions : ", NatToString(TSize()), "\n";
-      for i := 0 to |states| {
-        print ToString(states[i]) + ";\n";
+      var m: map<T, nat> := map[];
+      //   ghost var k: set<K> := {};
+      for i := 0 to |states|
+        invariant forall k :: 0 <= k < i ==> states[k] in m
+      {
+        print "s_", i, " [label=", ToString(states[i]) + "]\n";
+        m := m + map[states[i] := i];
       }
+      assert forall k:: 0 <= k < |states| ==> states[k] in m;
       for i := 0 to |states| {
-        for j := 0 to |Succ(states[i])| {
-          print ToString(states[i]) + " -> " + ToString(transitions[states[i]][j]) +
-                "[label=\"" + NatToString(j) + "\"]"
+        for j := 0 to |transitions[states[i]]| {
+          //   assume transitions[states[i]][j] in states;
+          print "s_", i, " -> ", "s_", m[transitions[states[i]][j]],
+                " [label=\"" + NatToString(j) + "\"]"
                 + ";\n";
         }
       }
       print "}\n";
+    }
+
+    function StatesToIndex(m: map<T, nat> := map[], index: nat := 0) : (r: map<T, nat>)
+      requires index <= |states|
+      requires forall k:: k in m ==> 0 <= m[k] < index
+      requires forall i:: i in m ==> m[i] < index && states[m[i]] == i
+      requires forall k, k':: 0 <= k < k' < |states[index..]| ==> states[index..][k] != states[index..][k']
+      requires forall k:: k in m <==> k in states[..index] && k !in states[index..]
+
+      requires forall k:: k in m.Values <==> 0 <= k < index
+      requires m.Values == set z {:nowarn} | 0 <= z < index
+      requires forall i:: 0 <= i < index ==> states[i] in m && m[states[i]] == i
+
+      ensures forall i:: i in r ==> r[i] < |states| && states[r[i]] == i
+      ensures forall i:: 0 <= i < |states| ==> states[i] in r && r[states[i]] == i
+      ensures r.Values == set z {:nowarn} | 0 <= z < |states|
+
+      decreases |states| - index
+    {
+      if index == |states| then m
+      else
+        assert index !in m.Values;
+        assert states[index] !in m;
+        assert (m + map[states[index] := index]).Values == m.Values + { index  };
+        StatesToIndex(m + map[states[index] := index], index + 1)
     }
 
     /** 
