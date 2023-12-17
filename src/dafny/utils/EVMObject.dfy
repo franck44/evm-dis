@@ -13,6 +13,8 @@
  */
 
 include "../utils/LinSegments.dfy"
+include "../utils/State.dfy"
+include "../utils/CFGraph.dfy"
 
 /**
   *  Provides EVM Object.
@@ -22,6 +24,8 @@ include "../utils/LinSegments.dfy"
 module EVMObject {
 
   import opened LinSegments
+  import opened State
+  import CFGraph
 
   /**   A valid EVMObj should have jumpdests consistent with the segments. */
   type ValidEVMObj = e: EVMObj | e.jumpDests == CollectJumpDests(e.xs)
@@ -55,6 +59,20 @@ module EVMObject {
           case None => []
         }
   }
+
+    function ToHTML(a: AState): string {
+      if a.Error? then
+        "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
+      else
+        match PCToSeg(xs, a.pc) {
+          case Some(seg1) =>
+            "<" + CFGraph.DOTSeg(xs[seg1], seg1).0 +">"
+          case None =>  "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
+        }
+    }
+  }
+
+
 
   /** Collect jumpdests in a list of segments.  */
   function CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {
