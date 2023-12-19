@@ -16,37 +16,38 @@ include "./MiscTypes.dfy"
 include "./Partition.dfy"
 include "./Automata.dfy"
 include "./SeqOfSets.dfy"
+include "./State.dfy"
 
-/** 
+/**  
   * Provides minimisation of finite deterministic automata.
   */
-module Minimiser {
+abstract module Minimiser {
 
   import opened MiscTypes
   import opened PartitionMod
   import opened Automata
   import opened SeqOfSets
+  import opened State
 
-  type ValidPair = p: Pair | p.IsValid() witness Pair(Auto(1, map[]), Partition(1, [{0}]))
+  type T(!new,==)
+  const DEFAULT_STATE: T
 
-  /**   
-    *   A pair with a an automaton and a partition of its states.
+  type ValidPair = p: Pair | p.IsValid() witness Pair(Auto().AddState(DEFAULT_STATE), Partition(1, [{0}]))
+
+  function MakeInit(aut: ValidAuto<T>, clazz: ValidPartition): ValidPair
+    requires aut.SSize() == clazz.n
+    ensures MakeInit(aut, clazz).IsValid()
+  {
+    Pair(aut, clazz)
+  }
+  /**    
+    *   A pair with an automaton and a partition of its states.
     */
-  datatype Pair = Pair(a: ValidAuto, p: ValidPartition) {
+  datatype Pair = Pair(aut: ValidAuto<T>, clazz: ValidPartition) {
 
     predicate IsValid()
     {
-      a.numStates == p.n
-    }
-
-    function Auto(): ValidAuto
-    {
-      a
-    }
-
-    function Parts(): ValidPartition
-    {
-      p
+      aut.SSize() == clazz.n
     }
 
     /**
@@ -56,101 +57,56 @@ module Minimiser {
       *             if x -- true -> xT then s1 is Some(Class(xT)) and None otherwise.
       *             if x -- false -> xFthen s2 is Some(Class(xF)) and None otherwise.
       */
-    function ClassSucc(x: nat): (Option<nat>, Option<nat>)
+    function ClassSucc(x: nat): seq<nat>
       requires this.IsValid()
-      requires x < a.numStates
-      ensures ClassSucc(x).0.Some? ==> ClassSucc(x).0.v < |p.elem|
-      ensures ClassSucc(x).1.Some? ==> ClassSucc(x).1.v < |p.elem|
+      requires x < aut.SSize()
+      ensures forall k:: k in ClassSucc(x) ==> k < |clazz.elem|
     {
-      var s1 := match a.Succ(x, false)
-        case None => None
-        case Some(n) =>
-          assert p.GetClass(n) < p.n == a.numStates;
-          Some(p.GetClass(n));
-      var s2 := match a.Succ(x, true)
-        case None => None
-        case Some(n) =>
-          assert p.GetClass(n) < p.n == a.numStates;
-          Some(p.GetClass(n));
-      (s1, s2)
+      var l := aut.SuccNat(x);
+      seq(|l|, z requires 0 <= z < |l|=> clazz.GetClass(l[z]))
     }
 
-    /**
-      * Split all classes according to value of first elem of each class.
-      * @returns    A pair where each class[index] has been split according to 
-      */
-    function SplitFrom(): (p' :ValidPair)
+    function ClassSplitter() : ValidPair
       requires this.IsValid()
-      ensures p'.IsValid()
-      ensures |p'.p.elem| >= |p.elem|
     {
-      //  split class[index] with function that is true only
-      //  when ClassSucc is the same as ClassSucc[index] first element
-      //  Note that this ClassSucc[index] is a set so it is first
-      //  enumerated as a sequence in the process.
-
-      //  Partial function to define each class splitter.
-      //  This is a bit more tricky than total function but
-      //  provides more guarantee e.g. on the value of ClassSucc.
-      assert p.n == a.numStates;
-      var splitterF: nat --> (nat --> bool) :=
-        (k: nat) requires 0 <= k < |p.elem|
-        => ((y: nat) requires y < p.n =>
-              ClassSucc(SetToSequence(p.elem[k])[0]) == ClassSucc(y));
-      var r := SplitAll(p, splitterF);
-      this.(p := r)
+      IsEquivRelF();
+      this.(clazz := clazz.RefineAll(Splitter))
     }
 
-    /**
-      *  for each class in p.elem get the successor classes and create edges. 
-      * @note   Tailrecursion is diasbled as there is a bug in the Dafny Java code generator.
-      * @link{https://github.com/dafny-lang/dafny/issues/2346} 
-      */
-    function {:tailrecursion false} GenerateReducedTailRec(index: nat := 0, acc: seq<(nat, bool, nat)> := []): (r : seq<(nat, bool, nat)>)
+    function Splitter(x: nat, y: nat): bool
       requires this.IsValid()
-      requires index <= |p.elem|
-      requires forall k:: 0 <= k < |acc| ==> acc[k].0 < p.n && acc[k].2 < p.n
-      ensures forall k:: 0 <= k < |r| ==> r[k].0 < p.n && r[k].2 < p.n
-      decreases |p.elem| - index
+      requires x < aut.SSize() && y < aut.SSize()
+      ensures Splitter(x, y) <==> ClassSucc(x) == ClassSucc(y)
     {
-      AllBoundedBy(p.elem, p.n);
-      MaxNumberOfClasses(p.elem, p.n);
-      if index == |p.elem| then acc
-      else
-        var firstElem := SetToSequence(p.elem[index])[0];
-        //  Get successor classes of first elem
-        var succs := ClassSucc(firstElem);
-        var newEdges := match (succs.0, succs.1)
-          case (None, None) => []
-          case (Some(sFalse), None) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0])]
-          case (None, Some(sTrue)) => [(firstElem, true, SetToSequence(p.elem[sTrue])[0])]
-          case (Some(sFalse), Some(sTrue)) => [(firstElem, false, SetToSequence(p.elem[sFalse])[0]), (firstElem, true, SetToSequence(p.elem[sTrue])[0])]
-          ;
-        GenerateReducedTailRec(index + 1, acc + newEdges)
+      ClassSucc(x) == ClassSucc(y)
     }
+
+    function Minimise(): ValidPair
+      requires this.IsValid()
+    {
+      IterSplit(this)
+    }
+   
+    lemma IsEquivRelF()
+      requires this.IsValid()
+      ensures IsEquivRel(Splitter, aut.SSize())
+    {
+      //  Thanks Dafny
+    }
+
   }
 
   //   Helper and Main function.
 
-  /**
-    *   Minimise an automaton.
-    * @note   Tailrecursion is disabled as there is a bug in the Dafny Java code generator.
-    * @link{https://github.com/dafny-lang/dafny/issues/2346} 
-    *   
+  /**    
+    *   Iterate splitting until nore more splits are possible.
     */
-  function {:tailrecursion false} Minimise(ap: ValidPair): ValidPair
-    requires ap.IsValid()
-    ensures Minimise(ap).IsValid()
-    ensures Minimise(ap).p.n == ap.p.n
-    decreases ap.p.n - |ap.p.elem|
+  function IterSplit(pp: ValidPair): ValidPair
+    decreases pp.clazz.n - |pp.clazz.elem|
   {
-    assert AllNonEmpty(ap.p.elem);
-    var p1 := ap.SplitFrom();
-    MaxNumberOfClasses(p1.p.elem, p1.p.n);
-    if |p1.p.elem| == |ap.p.elem| then p1
-    else
-      assert |ap.p.elem| < |p1.p.elem| <= ap.p.n == ap.a.numStates;
-      Minimise(p1)
+    var p1 := pp.ClassSplitter();
+    if |p1.clazz.elem| == |pp.clazz.elem| then pp 
+    else IterSplit(p1)
   }
 
 }
