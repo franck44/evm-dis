@@ -220,6 +220,4 @@ module MiscTypes {
     //  Thanks Dafny
   }
 
-
-
 }
