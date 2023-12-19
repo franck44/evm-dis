@@ -15,6 +15,7 @@
 include "../utils/LinSegments.dfy"
 include "../utils/State.dfy"
 include "../utils/CFGraph.dfy"
+include "../utils/MiscTypes.dfy"
 
 /**
   *  Provides EVM Object.
@@ -25,6 +26,7 @@ module EVMObject {
 
   import opened LinSegments
   import opened State
+  import opened MiscTypes
   import CFGraph
 
   /**   A valid EVMObj should have jumpdests consistent with the segments. */
@@ -51,7 +53,7 @@ module EVMObject {
     {
       if s.Error? then []
       else
-        match PCToSeg(xs, s.pc) {
+        match PCToSeg(s.pc) {
           case Some(s0) =>
             var exit0 := if xs[s0].HasExit(false) then [xs[s0].Run(s, false, jumpDests)] else [];
             var exit1 := if xs[s0].HasExit(true) then [xs[s0].Run(s, true, jumpDests)] else [];
@@ -64,12 +66,43 @@ module EVMObject {
       if a.Error? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else
-        match PCToSeg(xs, a.pc) {
+        match PCToSeg(a.pc) {
           case Some(seg1) =>
             "<" + CFGraph.DOTSeg(xs[seg1], seg1).0 +">"
           case None =>  "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
         }
     }
+
+    /**
+      *   Retrieve num of segments that correspond to a PC if any.
+      */
+    function PCToSeg(pc: nat, rank: nat := 0): (r: Option<nat>)
+      requires rank <= |xs|
+      ensures r.Some? ==> r.v < |xs|
+      ensures r.Some?  ==> xs[r.v].StartAddress() == pc
+      decreases |xs| - rank
+    {
+      if rank == |xs| then None
+      else if xs[rank].StartAddress() == pc then Some(rank)
+      else PCToSeg(pc, rank + 1)
+    }
+
+//     function SegNumPartition(p: ValidPartition, m: map<nat, CFGNode>, maxSegNum: nat, n: nat := 0): (p': ValidPartition)
+//     requires n <= maxSegNum + 1
+//     requires forall k:: 0 <= k < p.n ==> k in m.Keys
+//     ensures p'.n == p.n
+//     decreases maxSegNum - n
+//   {
+//     if n <= maxSegNum then
+//       //  split according to NumSegment == n
+//       var f: nat --> bool := (x: nat) requires 0 <= x < p.n => m[x].seg == Some(n);
+//       var p1 := p.SplitAt(f, |p.elem| - 1);
+//       SegNumPartition(p1, m, maxSegNum, n + 1)
+//     else
+//       //  collect states with seg number n
+//       p
+//   }
+
   }
 
 
