@@ -15,6 +15,7 @@
 include "./MiscTypes.dfy"
 include "../utils/int.dfy"
 include "../utils/LinSegments.dfy"
+
 /** 
   * Provides finite automata.
   */
@@ -24,73 +25,87 @@ module AutomataV2 {
   import opened Int
   import opened LinSegments
 
-  type NatAuto = a: ValidAuto2<nat> | a.states == seq(|a.states|, i => i) witness Auto(_ => "")
-
-  type ValidAuto2<!T(!new)> = a: Auto<T> | a.IsValid() witness Auto(_ => "", map[])
-
-
+  /** A valid automaton satisfies some invariants given by IsValid(). */
+  type ValidAuto<!T(!new)> = a: Auto<T> | a.IsValid() witness Auto()
 
   /**
     *  Automaton.
-    *  @param toString     The string representation of a state.
     *  @param transitions  The transition function.
+    *  @param transitions2 The transition function using the id of the states.
     *  @param states       The set of states.
+    *  @toString           The string representation of a state.
+    *  @indexOf            The index of a state.
     *  @note               A valid automaton is such that every state has an entry in the transitions map.
     *                      If the state has no successor then the entry is the empty list.
+    *  @note               The transition function is givem as transitions2, but the datatype
+    *                      uses transitions which is a map from stateId to stateIds. The reason
+    *                      is that it is easier to manipulate the transitions using the stateId .e.g.
+    *                      when minising an automaton.
     */
-  datatype Auto<!T(!new,==)> = Auto(toString: T -> string, transitions: map<T, seq<T>> := map[], states: seq<T> := [])
+  datatype Auto<!T(!new,==)> =
+    Auto(ghost transitions: map<T, seq<T>> := map[],
+         transitions2: map<nat, seq<nat>> := map[],
+         states: seq<T> := [],
+         toString: T -> string := (_  => ""),
+         indexOf: map<T, nat> := map[])
   {
-    predicate Equals(b: Auto<T>) {
-      && transitions == b.transitions
+    predicate Equals(b: Auto<T>)
+    {
+      && transitions2 == b.transitions2
       && states == b.states
     }
 
-    /** Each state in states is mapped to its index.
-      * The transitions are also mapped to nat -> seq<nat>.
+    /**
+      * Add a state to the automaton.
+      * @param i  The state to add.
       */
-    function ToNatAuto(index: nat := 0, a: NatAuto := Auto(_ => "")): (a': NatAuto)
-      requires this.IsValid()
-      ensures a'.IsValid()
-    {
-      var k := StatesToIndex();
-      // add transitions from index
-      //   a.addEdges(index, transitions[index])
-      //   a.addEdges(index, transitions[index])
-      a
-    }
-
-    function addEdges(i: T, xj: seq<T>): (a: Auto<T>)
-      requires this.IsValid()
-      ensures a.IsValid()
-      decreases |xj|
-    {
-      if xj == [] then this
-      else this.addEdge(i, xj[0]).addEdges(i, xj[1..])
-    }
-
-    function addEdge(i: T, j: T): (a: Auto<T>)
+    function {:timeLimitMultiplier 8} AddState(i: T): (a: Auto<T>)
       requires IsValid()
-      ensures a.IsValid() 
+      ensures i in a.states
+      ensures a.IsValid()
     {
-      if i in transitions then
-        if j in transitions[i] then
-          this
-        else
-          this
-          .(transitions := transitions[i := transitions[i] + [j]] + (if j !in states then map[j := []] else map[]))
-          .(states  := states + (if j in states then [] else [j]))
+      if i in states then
+        this
       else
-        assert i !in states;
-        if j in states || j == i then
-          this
-          .(transitions := transitions + map[i := [j]])
-          .(states := states + [i])
-        else
-          assert j !in states;
-          assert i !in states;
-          this
-          .(transitions := transitions + map[i := [j]] + map[j := []])
-          .(states := states + [i, j])
+        assert (indexOf + map[i := |states|]).Values == indexOf.Values + { |states| };
+        this
+        .(states := states + [i])
+        .(indexOf := indexOf + map[i := |states|])
+        .(transitions := transitions + map[i := []])
+        .(transitions2 := transitions2 + map[|states| := []])
+    }
+
+    /**
+      * Add a transition from i to j to the automaton.
+      * @param i  The source state.
+      * @param j  The destination state.
+      * @returns  An automaton with the transition added.  
+      * @note     If i or j are not in the automaton then they are added.
+      * @note     The transitions from i to j are in a seq, and j is added at the end of the seq.
+      */
+    function {:timeLimitMultiplier 8} AddEdge(i: T, j: T): (a: Auto<T>)
+      requires IsValid()
+      ensures a.IsValid()
+    {
+      var a1 := this.AddState(i).AddState(j);
+      if a1.indexOf[j] in a1.transitions2[a1.indexOf[i]] then
+        a1
+      else
+        a1
+        .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
+        .(transitions2 := a1.transitions2 + map[a1.indexOf[i] := a1.transitions2[a1.indexOf[i]] + [a1.indexOf[j]]])
+    }
+
+    /**
+      *  Add several transitions from i to all the elements of js.
+      */
+    function AddEdges(i: T, js: seq<T>): (a: Auto<T>)
+      requires IsValid()
+      ensures a.IsValid()
+      decreases |js|
+    {
+      if |js| == 0 then this
+      else this.AddEdge(i, js[0]).AddEdges(i, js[1..])
     }
 
     /**
@@ -102,26 +117,40 @@ module AutomataV2 {
       |states|
     }
 
-    /** Number of transitions of the automaton. */
-    function TSize(xd: seq<T> := states): nat
+    function TSize(index: nat := 0): nat
       requires this.IsValid()
-      requires (forall i : T :: i in xd ==> i in transitions)
+      requires index <= |states|
+      decreases |states| - index
     {
-      if xd == [] then 0
+      if index == |states| then 0
       else
-        assert xd[0] in states;
-        |transitions[xd[0]]| + TSize(xd[1..])
+        |transitions2[index]| + TSize(index + 1)
     }
 
     /** 
       *  Successors of a state.
       *  @param s  The state.
+      *  @returns  The successors of s.
       */
-    function Succ(s: T): seq<T>
+    function Succ(s: T): (r: seq<T>)
       requires this.IsValid()
       requires s in states
+      ensures r == transitions[s]
     {
-      transitions[s]
+      seq(|transitions2[indexOf[s]]|, i requires 0 <= i < |transitions2[indexOf[s]]| => states[transitions2[indexOf[s]][i]])
+    }
+
+    /**
+      *  The successors using the id of the states.
+      *  @param      i  The id of the source state.
+      *  @returns        The ids of the successors.
+      */
+    function SuccNat(i: nat): (r: seq<nat>)
+      requires this.IsValid()
+      requires i < |states|
+      ensures forall j: nat :: 0 <= j < |r| ==> r[j] < |states|
+    {
+      transitions2[i]
     }
 
     /**
@@ -138,19 +167,13 @@ module AutomataV2 {
       print "digraph G {\n";
       print "// Number of states: ", NatToString(SSize()), "\n";
       print "// Number of transitions : ", NatToString(TSize()), "\n";
-      var m: map<T, nat> := map[];
-      //   ghost var k: set<K> := {};
       for i := 0 to |states|
-        invariant forall k :: 0 <= k < i ==> states[k] in m
       {
         print "s_", i, " [label=", ToString(states[i]) + "]\n";
-        m := m + map[states[i] := i];
       }
-      assert forall k:: 0 <= k < |states| ==> states[k] in m;
       for i := 0 to |states| {
-        for j := 0 to |transitions[states[i]]| {
-          //   assume transitions[states[i]][j] in states;
-          print "s_", i, " -> ", "s_", m[transitions[states[i]][j]],
+        for j := 0 to |transitions2[i]| {
+          print "s_", i, " -> ", "s_", transitions2[i][j],
                 " [label=\"" + NatToString(j) + "\"]"
                 + ";\n";
         }
@@ -158,40 +181,24 @@ module AutomataV2 {
       print "}\n";
     }
 
-    function StatesToIndex(m: map<T, nat> := map[], index: nat := 0) : (r: map<T, nat>)
-      requires index <= |states|
-      requires forall k:: k in m ==> 0 <= m[k] < index
-      requires forall i:: i in m ==> m[i] < index && states[m[i]] == i
-      requires forall k, k':: 0 <= k < k' < |states[index..]| ==> states[index..][k] != states[index..][k']
-      requires forall k:: k in m <==> k in states[..index] && k !in states[index..]
-
-      requires forall k:: k in m.Values <==> 0 <= k < index
-      requires m.Values == set z {:nowarn} | 0 <= z < index
-      requires forall i:: 0 <= i < index ==> states[i] in m && m[states[i]] == i
-
-      ensures forall i:: i in r ==> r[i] < |states| && states[r[i]] == i
-      ensures forall i:: 0 <= i < |states| ==> states[i] in r && r[states[i]] == i
-      ensures r.Values == set z {:nowarn} | 0 <= z < |states|
-
-      decreases |states| - index
-    {
-      if index == |states| then m
-      else
-        assert index !in m.Values;
-        assert states[index] !in m;
-        assert (m + map[states[index] := index]).Values == m.Values + { index  };
-        StatesToIndex(m + map[states[index] := index], index + 1)
-    }
-
-    /** 
-      *  Check that the automaton is well formed.
-      *  @note   A well-formed automaton is such that every state has an entry in the transitions map.
-      *          If the state has no successor then the entry is the empty list.
+    /**
+      * Check if the automaton is valid.
       */
     ghost predicate IsValid() {
       && (forall i : T :: i in states <==> i in transitions)
       && (forall k, k':: 0 <= k < k' < |states| ==> states[k] != states[k'])
       && (forall i, j :: i in states && 0 <= j < |transitions[i]| ==> transitions[i][j] in states)
+      && (forall s:: s in states <==> s in indexOf)
+      && (forall i:: i in indexOf ==> indexOf[i] < |states| && states[indexOf[i]] == i)
+      && (forall i:: 0 <= i < |states| ==> states[i] in indexOf && indexOf[states[i]] == i)
+      && (indexOf.Values == set z {:nowarn} | 0 <= z < |states|)
+      && (transitions2.Keys == set z {:nowarn} | 0 <= z < |states|)
+      && (indexOf.Values == transitions2.Keys)
+      && (forall k:: k in transitions2 ==> |transitions2[k]| == |transitions[states[k]]|)
+      && (forall k:: k in transitions ==> |transitions[k]| == |transitions2[indexOf[k]]|)
+      && (forall i, j :: 0 <= i < |states| && 0 <= j < |transitions2[i]| ==> 0 <= transitions2[i][j] < |states|)
+      && ((forall i, j :: 0 <= i < |states| && 0 <= j < |transitions2[i]| ==> states[transitions2[i][j]] == transitions[states[i]][j]))
+      && ((forall i:T , j :: i in states && 0 <= j < |transitions[i]| ==> indexOf[transitions[i][j]] == indexOf[transitions[i][j]]))
     }
   }
 }
