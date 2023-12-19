@@ -118,6 +118,12 @@ module MiscTypes {
     else Exists(xs[1..], f)
   }
 
+  function Flatten<T>(x: seq<seq<T>>): seq<T>
+  {
+    if |x| == 0 then []
+    else x[0] + Flatten(x[1..])
+  }
+
   /**   Map each value of a seq according to a function. */
   function Map<T, U>(t: seq<T>, f: T -> U): seq<U>
     ensures |t| == |Map(t, f)|
@@ -154,5 +160,66 @@ module MiscTypes {
     else if x[0] == t then Some(i)
     else FindRec(x[1..], t, i + 1, c)
   }
+
+  //    Helper Lemmas
+
+  /**   
+    *  Given an index in a flat seq, retrieve the pair of indices
+    *   that would have been used to access the element in the
+    *   original seq of seq.
+    */
+  ghost function UnFlatIndex<T>(r: seq<seq<set<T>>>, r': seq<set<T>>, j: nat): (n: (nat, nat))
+    requires r' == Flatten(r)
+    requires j < |r'|
+    ensures 0 <= n.0 < |r|
+    ensures 0 <= n.1 < |r[n.0]|
+    ensures r'[j] == r[n.0][n.1]
+  {
+    if |r| == 0 then (0, 0)
+    else if j < |r[0]| then (0, j)
+    else
+      var i := UnFlatIndex(r[1..], r'[|r[0]|..], j - |r[0]|);
+      (i.0 + 1, i.1)
+  }
+
+  /**
+    *  Two distinc indices in the flat seq correspond to two 
+    *   distinct pair of indices in the original seq of seq.
+    */
+  lemma FlatDistinctImpliesUnFlatDistinct(r: seq<seq<set<nat>>>, r': seq<set<nat>>, j: nat, j': nat)
+    requires r' == Flatten(r)
+    requires 0 <= j < j' < |r'|
+    ensures UnFlatIndex(r, r', j) != UnFlatIndex(r, r', j')
+  {
+    if |r| == 0 {
+      //  Thanks Dafny
+    } else if j < |r[0]| && j' < |r[0]| {
+      assert UnFlatIndex(r, r', j) == (0, j);
+      assert UnFlatIndex(r, r', j') == (0, j');
+      assert j != j';
+    } else if j < |r[0]| && j' >= |r[0]| {
+      assert UnFlatIndex(r, r', j) == (0, j);
+      assert UnFlatIndex(r, r', j').0 >= 1;
+    } else if j >= |r[0]| && j' < |r[0]| {
+      assert UnFlatIndex(r, r', j) == (1, j - |r[0]|);
+      assert UnFlatIndex(r, r', j') == (0, j');
+      assert j != j';
+    } else {
+      FlatDistinctImpliesUnFlatDistinct(r[1..], r'[|r[0]|..], j - |r[0]|, j' - |r[0]|);
+    }
+  }
+
+  /**
+    *    If all the non flat seqs are non-emtpy, then the
+    *    flat seq has at least the same number of elements.
+    */
+  lemma MinSizeOfFlattenForAllNonEmpty(r: seq<seq<set<nat>>>)
+    requires forall i:: 0 <= i < |r| ==> |r[i]| >= 1
+    ensures |Flatten(r)| >= |r|
+  {
+    //  Thanks Dafny
+  }
+
+
 
 }
