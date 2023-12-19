@@ -30,28 +30,28 @@ module AutomataV2 {
 
   /**
     *  Automaton.
-    *  @param transitions  The transition function.
-    *  @param transitions2 The transition function using the id of the states.
-    *  @param states       The set of states.
-    *  @toString           The string representation of a state.
-    *  @indexOf            The index of a state.
-    *  @note               A valid automaton is such that every state has an entry in the transitions map.
-    *                      If the state has no successor then the entry is the empty list.
-    *  @note               The transition function is givem as transitions2, but the datatype
-    *                      uses transitions which is a map from stateId to stateIds. The reason
-    *                      is that it is easier to manipulate the transitions using the stateId .e.g.
-    *                      when minising an automaton.
+    *  @param transitions       The transition function.
+    *  @param transitionsNat    The transition function using the id of the states.
+    *  @param states            The set of states.
+    *  @toString                The string representation of a state.
+    *  @indexOf                 The index of a state.
+    *  @note                    A valid automaton is such that every state has an entry in the transitions map.
+    *                           If the state has no successor then the entry is the empty list.
+    *  @note                    The transition function is givem as transitionsNat, but the datatype
+    *                           uses transitions which is a map from stateId to stateIds. The reason
+    *                           is that it is easier to manipulate the transitions using the stateId .e.g.
+    *                           when minising an automaton.
     */
   datatype Auto<!T(!new,==)> =
     Auto(ghost transitions: map<T, seq<T>> := map[],
-         transitions2: map<nat, seq<nat>> := map[],
+         transitionsNat: map<nat, seq<nat>> := map[],
          states: seq<T> := [],
          toString: T -> string := (_  => ""),
          indexOf: map<T, nat> := map[])
   {
     predicate Equals(b: Auto<T>)
     {
-      && transitions2 == b.transitions2
+      && transitionsNat == b.transitionsNat
       && states == b.states
     }
 
@@ -72,7 +72,7 @@ module AutomataV2 {
         .(states := states + [i])
         .(indexOf := indexOf + map[i := |states|])
         .(transitions := transitions + map[i := []])
-        .(transitions2 := transitions2 + map[|states| := []])
+        .(transitionsNat := transitionsNat + map[|states| := []])
     }
 
     /**
@@ -88,12 +88,12 @@ module AutomataV2 {
       ensures a.IsValid()
     {
       var a1 := this.AddState(i).AddState(j);
-      if a1.indexOf[j] in a1.transitions2[a1.indexOf[i]] then
+      if a1.indexOf[j] in a1.transitionsNat[a1.indexOf[i]] then
         a1
       else
         a1
         .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
-        .(transitions2 := a1.transitions2 + map[a1.indexOf[i] := a1.transitions2[a1.indexOf[i]] + [a1.indexOf[j]]])
+        .(transitionsNat := a1.transitionsNat + map[a1.indexOf[i] := a1.transitionsNat[a1.indexOf[i]] + [a1.indexOf[j]]])
     }
 
     /**
@@ -124,7 +124,7 @@ module AutomataV2 {
     {
       if index == |states| then 0
       else
-        |transitions2[index]| + TSize(index + 1)
+        |transitionsNat[index]| + TSize(index + 1)
     }
 
     /** 
@@ -137,7 +137,7 @@ module AutomataV2 {
       requires s in states
       ensures r == transitions[s]
     {
-      seq(|transitions2[indexOf[s]]|, i requires 0 <= i < |transitions2[indexOf[s]]| => states[transitions2[indexOf[s]][i]])
+      seq(|transitionsNat[indexOf[s]]|, i requires 0 <= i < |transitionsNat[indexOf[s]]| => states[transitionsNat[indexOf[s]][i]])
     }
 
     /**
@@ -150,7 +150,7 @@ module AutomataV2 {
       requires i < |states|
       ensures forall j: nat :: 0 <= j < |r| ==> r[j] < |states|
     {
-      transitions2[i]
+      transitionsNat[i]
     }
 
     /**
@@ -172,8 +172,8 @@ module AutomataV2 {
         print "s_", i, " [label=", ToString(states[i]) + "]\n";
       }
       for i := 0 to |states| {
-        for j := 0 to |transitions2[i]| {
-          print "s_", i, " -> ", "s_", transitions2[i][j],
+        for j := 0 to |transitionsNat[i]| {
+          print "s_", i, " -> ", "s_", transitionsNat[i][j],
                 " [label=\"" + NatToString(j) + "\"]"
                 + ";\n";
         }
@@ -192,12 +192,12 @@ module AutomataV2 {
       && (forall i:: i in indexOf ==> indexOf[i] < |states| && states[indexOf[i]] == i)
       && (forall i:: 0 <= i < |states| ==> states[i] in indexOf && indexOf[states[i]] == i)
       && (indexOf.Values == set z {:nowarn} | 0 <= z < |states|)
-      && (transitions2.Keys == set z {:nowarn} | 0 <= z < |states|)
-      && (indexOf.Values == transitions2.Keys)
-      && (forall k:: k in transitions2 ==> |transitions2[k]| == |transitions[states[k]]|)
-      && (forall k:: k in transitions ==> |transitions[k]| == |transitions2[indexOf[k]]|)
-      && (forall i, j :: 0 <= i < |states| && 0 <= j < |transitions2[i]| ==> 0 <= transitions2[i][j] < |states|)
-      && ((forall i, j :: 0 <= i < |states| && 0 <= j < |transitions2[i]| ==> states[transitions2[i][j]] == transitions[states[i]][j]))
+      && (transitionsNat.Keys == set z {:nowarn} | 0 <= z < |states|)
+      && (indexOf.Values == transitionsNat.Keys)
+      && (forall k:: k in transitionsNat ==> |transitionsNat[k]| == |transitions[states[k]]|)
+      && (forall k:: k in transitions ==> |transitions[k]| == |transitionsNat[indexOf[k]]|)
+      && (forall i, j :: 0 <= i < |states| && 0 <= j < |transitionsNat[i]| ==> 0 <= transitionsNat[i][j] < |states|)
+      && ((forall i, j :: 0 <= i < |states| && 0 <= j < |transitionsNat[i]| ==> states[transitionsNat[i][j]] == transitions[states[i]][j]))
       && ((forall i:T , j :: i in states && 0 <= j < |transitions[i]| ==> indexOf[transitions[i][j]] == indexOf[transitions[i][j]]))
     }
   }
