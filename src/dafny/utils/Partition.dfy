@@ -106,23 +106,27 @@ module PartitionMod {
     {
       SizeOfNatsUpToNBound(n, SetU(elem));
       var k := SplitAllClasses(elem, equiv, n);
-      assert |k| <= |elem|;
+      //    The split preserves some properties
+      assert |k| == |elem|;
       assert forall i:: 0 <= i < |k| ==> SetU(k[i]) == elem[i];
       assert forall i:: 0 <= i < |k| ==> AllClassesAreEquiv(k[i], equiv, n);
-      // assert forall i:: 0 <= i < |k| ==> DisjointClassesAreNonEquiv(k[i], equiv, n);
+      assert forall i:: 0 <= i < |k| ==> DisjointClassesAreNonEquiv(k[i], equiv, n);
+
+      //    Now flatten it.
       var d := Flatten(k);
-      MinSizeOfFlattenForAllNonEmpty(k);
-      assert |d| >= |elem|;
       var e := this.(elem := d);
+      //    and prove the validity properties.
+      MinSizeOfFlattenForAllNonEmpty(k);
+      assert |e.elem| >= |elem|;
       FlattenAllNonEmpty(k, n);
       assert AllNonEmpty(e.elem);
-      NonFlatDisjointImpliesFlatDisjoint(k, d);
-      assert DisjointAnyTwo(e.elem);
       assert  forall i:: 0 <= i < |k| ==> SetU(k[i]) == elem[i];
+      NonFlatDisjointImpliesFlatDisjoint(k, e.elem);
+      assert DisjointAnyTwo(e.elem);
       FlattenPreservesSetU(elem, k);
       assert SetU(elem) == SetU(e.elem);
       MaxNumberOfClasses(e.elem, n);
-      assert |e.elem| <= n; 
+      assert |e.elem| <= n;
       assert e.IsValid();
       e
     }
@@ -150,7 +154,6 @@ module PartitionMod {
       if x in elem[index] then index
       else GetClass(x, index + 1)
     }
-
   }
 
   //    Helpers
