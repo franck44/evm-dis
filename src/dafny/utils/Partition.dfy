@@ -96,7 +96,7 @@ module PartitionMod {
       * @param  equiv  The equivalence relation.
       * @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
       */
-    function RefineAll(equiv: (nat, nat) --> bool): (p': ValidPartition)
+    function {:timeLimitMultiplier 2} RefineAll(equiv: (nat, nat) --> bool): (p': ValidPartition)
       requires this.IsValid()
       requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
       requires IsEquivRel(equiv, n)
