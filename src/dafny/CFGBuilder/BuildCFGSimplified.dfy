@@ -14,13 +14,13 @@
 
 include "../utils/MiscTypes.dfy"
 include "../utils/int.dfy"
-include "../utils/AutomataV2.dfy" 
+include "../utils/Automata.dfy" 
 
-module DFSSimple {
+module DFSSimple { 
 
   import opened MiscTypes 
   import opened Int
-  import opened AutomataV2
+  import opened Automata 
 
   /**
     *   History of the DFS.
@@ -117,17 +117,17 @@ module DFSSimple {
     * @param maxDepth   The maximum depth of the search.
     * @returns          The automaton and the history of visited nodes.
     */
-  method DFS<T(!new)>(
+  method DFS<T(!new)>( 
     succ: T -> seq<T>,
     s: T,
     history: History<T>,
-    a: Auto<T>,
-    maxDepth: nat := 0) returns (a': Auto<T>, h': History<T>)
+    a: ValidAuto<T>,
+    maxDepth: nat := 0) returns (a': ValidAuto<T>, h': History<T>)  
 
-    requires a.IsValid()
+    // requires a.IsValid2() 
     requires history.IsValid()
     requires s in history.visited
-    ensures a'.IsValid()
+    // ensures a'.IsValid2()
     ensures h'.IsValid()
     ensures |h'.path| == |history.path|
 
@@ -137,7 +137,7 @@ module DFSSimple {
       //  stop the construction of the automaton.
       return a, history;
     }
-    else {
+    else { 
       // DFS from s
       h' := history;
       a' := a;
@@ -146,16 +146,16 @@ module DFSSimple {
         invariant h'.IsValid()
         invariant |h'.path| == |history.path|
       {
-        print "Unfolding ", s, " -> ", succ(s)[i], "\n"; 
+        // print "Unfolding ", s, " -> ", succ(s)[i], "\n"; 
         var n := h'.IsCovered(succ(s)[i]);
         if n.None? {
           var h1 := h'.AddToPathHistory(i, succ(s)[i]);
           //   print "a' = ", a'.addEdge(s, succ(s)[i]), "\n";
-          a', h' := DFS(succ, succ(s)[i], h1, a'.addEdge(s, succ(s)[i]), maxDepth - 1);
+          a', h' := DFS(succ, succ(s)[i], h1, a'.AddEdge(s, succ(s)[i]), maxDepth - 1);
           h' := h'.PathHistoryInit();
           print a', "\n";
         } else {
-          a' := a'.addEdge(s, n.v);
+          a' := a'.AddEdge(s, n.v);
           //   print a', "\n";
         }
       }
