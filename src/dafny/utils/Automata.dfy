@@ -59,7 +59,7 @@ module Automata {
       * Add a state to the automaton.
       * @param i  The state to add.
       */
-    function {:timeLimitMultiplier 8} AddState(i: T): (a: Auto<T>)
+    function {:timeLimitMultiplier 8} AddState(i: T): (a: ValidAuto<T>)
       requires IsValid()
       ensures i in a.states
       ensures a.IsValid()
@@ -75,6 +75,15 @@ module Automata {
         .(transitionsNat := transitionsNat + map[|states| := []])
     }
 
+    function AddStates(xs: seq<T>): (a: ValidAuto<T>)
+      requires IsValid()
+      ensures a.IsValid()
+      decreases |xs|
+    {
+      if |xs| == 0 then this
+      else this.AddState(xs[0]).AddStates(xs[1..])
+    }
+
     /**
       * Add a transition from i to j to the automaton.
       * @param i  The source state.
@@ -83,7 +92,7 @@ module Automata {
       * @note     If i or j are not in the automaton then they are added.
       * @note     The transitions from i to j are in a seq, and j is added at the end of the seq.
       */
-    function {:timeLimitMultiplier 8} AddEdge(i: T, j: T): (a: Auto<T>)
+    function {:timeLimitMultiplier 8} AddEdge(i: T, j: T): (a: ValidAuto<T>)
       requires IsValid()
       ensures a.IsValid()
     {
@@ -99,7 +108,7 @@ module Automata {
     /**
       *  Add several transitions from i to all the elements of js.
       */
-    function AddEdges(i: T, js: seq<T>): (a: Auto<T>)
+    function AddEdges(i: T, js: seq<T>): (a: ValidAuto<T>)
       requires IsValid()
       ensures a.IsValid()
       decreases |js|
