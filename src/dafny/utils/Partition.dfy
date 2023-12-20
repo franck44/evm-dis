@@ -32,7 +32,7 @@ module PartitionMod {
     *   @return     A valid partition of {0, ..., n - 1} with a single class
     *               containing all the elements.    
     */
-  function InitValid(n: nat): (p: ValidPartition)
+  function MakeInit(n: nat): (p: ValidPartition)
     requires n > 0
     ensures p.IsValid()
   {
