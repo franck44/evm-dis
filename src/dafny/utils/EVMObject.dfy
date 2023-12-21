@@ -14,8 +14,11 @@
 
 include "../utils/LinSegments.dfy"
 include "../utils/State.dfy"
-include "../utils/CFGraph.dfy"
 include "../utils/MiscTypes.dfy"
+include "../utils/Instructions.dfy"
+include "../utils/int.dfy"
+include "../proofobjectbuilder/SegmentBuilder.dfy"
+include "../utils/Hex.dfy"
 
 /**
   *  Provides EVM Object.
@@ -27,7 +30,10 @@ module EVMObject {
   import opened LinSegments
   import opened State
   import opened MiscTypes
-  import CFGraph
+  import Instructions
+  import Int
+  import SegBuilder
+  import Hex
 
   /**   A valid EVMObj should have jumpdests consistent with the segments. */
   type ValidEVMObj = e: EVMObj | e.jumpDests == CollectJumpDests(e.xs)
@@ -49,6 +55,9 @@ module EVMObject {
       else ls[0].Size() + Size(ls[1..])
     }
 
+    /**
+      * Compute the next abstract states from a given abstract state.
+      */
     function Next(s: AState): seq<AState>
     {
       if s.Error? then []
@@ -62,19 +71,22 @@ module EVMObject {
         }
     }
 
+    /**
+      * Generate the HTNL representation of a given abstract state.
+      */
     function ToHTML(a: AState): string {
       if a.Error? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else
         match PCToSeg(a.pc) {
           case Some(seg1) =>
-            "<" + CFGraph.DOTSeg(xs[seg1], seg1).0 +">"
+            "<" + DOTSeg(xs[seg1], seg1).0 +">"
           case None =>  "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
         }
     }
 
     /**
-      *   Retrieve num of segments that correspond to a PC if any.
+      *   Retrieve num of segment that correspond to a PC if any.
       */
     function PCToSeg(pc: nat, rank: nat := 0): (r: Option<nat>)
       requires rank <= |xs|
@@ -87,25 +99,34 @@ module EVMObject {
       else PCToSeg(pc, rank + 1)
     }
 
-//     function SegNumPartition(p: ValidPartition, m: map<nat, CFGNode>, maxSegNum: nat, n: nat := 0): (p': ValidPartition)
-//     requires n <= maxSegNum + 1
-//     requires forall k:: 0 <= k < p.n ==> k in m.Keys
-//     ensures p'.n == p.n
-//     decreases maxSegNum - n
-//   {
-//     if n <= maxSegNum then
-//       //  split according to NumSegment == n
-//       var f: nat --> bool := (x: nat) requires 0 <= x < p.n => m[x].seg == Some(n);
-//       var p1 := p.SplitAt(f, |p.elem| - 1);
-//       SegNumPartition(p1, m, maxSegNum, n + 1)
-//     else
-//       //  collect states with seg number n
-//       p
-//   }
-
   }
 
+  /**   Print the content of a segment. */
+  function DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
+  {
+    //  Jump target
+    var jumpTip :=
+      if s.JUMPSeg? || s.JUMPISeg? then
+        var r := SegBuilder.JUMPResolver(s);
+        match r {
+          case Left(v) =>
+            match v {
+              case Value(address) => "&#10;Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
+              case Random(msg) => "&#10;Exit Jump target: Unknown"
+            }
+          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
 
+        } else "";
+    var stackSizeEffect := "Stack Size &#916;: " + Int.IntToString(s.StackEffect());
+    var mninNumOpe := "&#10;Stack Size on Entry &#8805; " + Int.NatToString(s.WeakestPreOperands());
+    var prefix := "<B>Segment "
+                  + Int.NatToString(numSeg)
+                  + " [0x"
+                  + Hex.NatToHex(s.StartAddress())
+                  + "]</B><BR ALIGN=\"CENTER\"/>\n";
+    var body := Instructions.ToDot(s.Ins());
+    (prefix + body, stackSizeEffect +  jumpTip + mninNumOpe)
+  }
 
   /** Collect jumpdests in a list of segments.  */
   function CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {
