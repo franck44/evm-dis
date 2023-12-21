@@ -16,7 +16,6 @@ include "./MiscTypes.dfy"
 include "./Partition.dfy"
 include "./Automata.dfy"
 include "./SeqOfSets.dfy"
-include "./State.dfy"
 
 /**  
   * Provides minimisation of finite deterministic automata.
@@ -27,7 +26,6 @@ abstract module Minimiser {
   import opened PartitionMod
   import opened Automata
   import opened SeqOfSets
-  import opened State
 
   type T(!new,==)
   const DEFAULT_STATE: T
@@ -40,11 +38,16 @@ abstract module Minimiser {
   {
     Pair(aut, clazz)
   }
+
   /**    
-    *   A pair with an automaton and a partition of its states.
+    *   A pair is an automaton and a partition of its states.
     */
   datatype Pair = Pair(aut: ValidAuto<T>, clazz: ValidPartition) {
 
+    /** A valid Pair must have compatible sizes.
+     *  Each stateId of the automaton must be in the range of the partition.
+     *  @returns  True if and only if the sizes are compatible.
+     */
     predicate IsValid()
     {
       aut.SSize() == clazz.n
@@ -66,6 +69,9 @@ abstract module Minimiser {
       seq(|l|, z requires 0 <= z < |l|=> clazz.GetClass(l[z]))
     }
 
+    /**
+     *  Split all classes according to the class splitter relation.
+     */
     function ClassSplitter() : ValidPair
       requires this.IsValid()
     {
@@ -73,6 +79,13 @@ abstract module Minimiser {
       this.(clazz := clazz.RefineAll(Splitter))
     }
 
+    /**
+      *  The splitter relation.
+      *  @param     x   A stateId.
+      *  @param     y   A stateId.
+      *  @returns   True if and only if class successors of the 
+      *              two states are equal.
+      */
     function Splitter(x: nat, y: nat): bool
       requires this.IsValid()
       requires x < aut.SSize() && y < aut.SSize()
@@ -81,12 +94,23 @@ abstract module Minimiser {
       ClassSucc(x) == ClassSucc(y)
     }
 
-    function Minimise(): ValidPair
+    /**
+      *  Minimise the automaton.
+      *  @returns  The minimised automaton.
+      */
+    function Minimise(): ValidAuto<T>
       requires this.IsValid()
     {
-      IterSplit(this)
+      //  Compute fix point of splitter relation
+      var p1 := IterSplit(this);
+      //  Compute the new automaton
+      p1.MapToClasses()
+
     }
-   
+
+    /**
+      *  Make sure that the splitter relation is an equivalence relation.
+      */
     lemma IsEquivRelF()
       requires this.IsValid()
       ensures IsEquivRel(Splitter, aut.SSize())
@@ -94,19 +118,34 @@ abstract module Minimiser {
       //  Thanks Dafny
     }
 
+    /** Map an automaton to a new automaton.
+      * @param  acc     The accumulator automaton.
+      * @param  index   The index of the state to be processed.      
+      * @returns  The new automaton.
+      */
+    function MapToClasses(acc: ValidAuto<T> := Auto(), index: nat := 0): ValidAuto<T>
+      requires this.IsValid()
+      requires index <= |aut.states|
+      decreases |aut.states| - index
+    {
+      if index == |aut.states| then acc
+      else
+        var succs := MapP(clazz.GetClassRepOfSeqs(aut.transitionsNat[index]), (i: nat) requires 0 <= i < aut.SSize() => aut.states[i]);
+        MapToClasses(acc.AddEdges(aut.states[clazz.GetClassRepOf(index)], succs), index + 1)
+    }
+
   }
 
-  //   Helper and Main function.
+  //   Helpers.
 
   /**    
-    *   Iterate splitting until nore more splits are possible.
+    *   Iterate refining until no more splits are possible.
     */
   function IterSplit(pp: ValidPair): ValidPair
     decreases pp.clazz.n - |pp.clazz.elem|
   {
     var p1 := pp.ClassSplitter();
-    if |p1.clazz.elem| == |pp.clazz.elem| then pp 
+    if |p1.clazz.elem| == |pp.clazz.elem| then pp
     else IterSplit(p1)
   }
-
 }
