@@ -13,13 +13,11 @@
  */
 
 include "../utils/MiscTypes.dfy"
-include "../utils/int.dfy"
 include "../utils/Automata.dfy" 
 
 module DFSSimple { 
 
   import opened MiscTypes 
-  import opened Int
   import opened Automata 
 
   /**
@@ -115,6 +113,7 @@ module DFSSimple {
     * @param history    The history of visited nodes.
     * @param a          The automaton to build from the graph.
     * @param maxDepth   The maximum depth of the search.
+    * @param debugInfo  Print debug information.
     * @returns          The automaton and the history of visited nodes.
     */
   method DFS<T(!new)>( 
@@ -122,7 +121,7 @@ module DFSSimple {
     s: T,
     history: History<T>,
     a: ValidAuto<T>,
-    maxDepth: nat := 0) returns (a': ValidAuto<T>, h': History<T>)  
+    maxDepth: nat := 0, debugInfo: bool := false) returns (a': ValidAuto<T>, h': History<T>)  
 
     // requires a.IsValid2() 
     requires history.IsValid()
@@ -146,17 +145,17 @@ module DFSSimple {
         invariant h'.IsValid()
         invariant |h'.path| == |history.path|
       {
-        // print "Unfolding ", s, " -> ", succ(s)[i], "\n"; 
+        if debugInfo { print "Unfolding ", s, " -> ", succ(s)[i], "\n"; }
         var n := h'.IsCovered(succ(s)[i]);
         if n.None? {
           var h1 := h'.AddToPathHistory(i, succ(s)[i]);
-          //   print "a' = ", a'.addEdge(s, succ(s)[i]), "\n";
+          if debugInfo {print "a' = ", a'.AddEdge(s, succ(s)[i]), "\n"; }
           a', h' := DFS(succ, succ(s)[i], h1, a'.AddEdge(s, succ(s)[i]), maxDepth - 1);
           h' := h'.PathHistoryInit();
-          print a', "\n";
+          if debugInfo { print a', "\n"; }
         } else {
           a' := a'.AddEdge(s, n.v);
-          //   print a', "\n";
+          if debugInfo { print a', "\n";}
         }
       }
     }
