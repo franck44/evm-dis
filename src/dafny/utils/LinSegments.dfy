@@ -65,7 +65,7 @@ module LinSegments {
       case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
       case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
       case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
-      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID
+      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID && lastIns.op.opcode != JUMPI
       case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
     }
 
@@ -155,7 +155,9 @@ module LinSegments {
     /**
       *  Execute the segment up to the end.
       */
-    function Run(s: ValidState, exit: bool, jumpDests: seq<nat>): AState
+    function Run(s: ValidState, exit: nat, jumpDests: seq<nat>): AState
+      requires this.IsValid()
+      requires exit == 0 || (this.JUMPISeg? && exit == 1)
     {
       //  Run the instructions with exit false, except last
       var s' := RunIns(ins, s, jumpDests);
@@ -174,40 +176,69 @@ module LinSegments {
     }
 
     /** Whether a given segment has exit true or false. */
-    predicate HasExit(b: bool)
+    // predicate HasExit2(b: bool)
+    // {
+    //   match this
+    //   case JUMPSeg(_, _, _) => b
+    //   case JUMPISeg(_, _, _) => true
+    //   case CONTSeg(_, _, _)  => !b
+    //   case _ => false
+    // }
+
+    /**
+     *  Number of successors of a segment.
+     *  @note   JUMPI has 2, JUMP and mormal segments have 1, 
+     *          and RETURN/STOP/INVALID have 0.
+     */
+    function NumberOfExits(): nat
+      ensures NumberOfExits() <= 2
     {
       match this
-      case JUMPSeg(_, _, _) => b
-      case JUMPISeg(_, _, _) => true
-      case CONTSeg(_, _, _)  => !b
-      case _ => false
+      case JUMPISeg(_, _, _) => 2
+      case JUMPSeg(_, _, _) => 1
+      case CONTSeg(_, _, _)  => 1
+      case _ => 0
     }
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
-    function LeadsTo(k: nat, exit: bool): ValidCond
+    function LeadsTo(k: nat, exit: nat): ValidCond
       requires this.IsValid()
-      //   requires this.JUMPSeg? || this.JUMPISeg?
+      requires exit <= 1
+      requires IsValidExit(exit)
+      requires exit == 0 || (this.JUMPISeg? && exit == 1)
     {
       if k >= Int.TWO_256 then StFalse()
       else
         match this
         case JUMPSeg(_, _, _) =>
-          if exit then
+          if exit == 0 then
             var c := StCond([0], [k as Int.u256]);
             WPreIns(ins, c)
           else StFalse()
         case JUMPISeg(_, _, _)  =>
-          if exit then
+          if exit == 1 then
             var c := StCond([0], [k as Int.u256]);
             WPreIns(ins, c)
           else
           if k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case CONTSeg(_, _, _) =>
-          if !exit && k == this.StartAddressNextSeg() then StTrue() else StFalse()
+          if exit == 0 && k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case RETURNSeg(_, _, _) => StTrue()
         case STOPSeg(_, _, _) => StTrue()
         case INVALIDSeg(_, _, _) => StFalse()
 
+    }
+
+    /**
+      * Whether k is valid exit for this.
+      *
+      * @param   k   The exit number.
+      * @returns     Whether k is a valid exit for this.
+      */
+    predicate IsValidExit(k: nat)
+      requires this.IsValid()
+    {
+      k == 0 || (this.JUMPISeg? && k == 1)
     }
 
   }
@@ -260,7 +291,7 @@ module LinSegments {
   {
     if |xs| == 0 then s
     else
-      var next := xs[0].NextState(s, jumpDests);
+      var next := xs[0].NextState(s, jumpDests, 0);
       match next
       case Error(_) => next
       case EState(_, _) => RunIns(xs[1..], next, jumpDests)
@@ -286,10 +317,12 @@ module LinSegments {
     *   @param  xs      A list of known segments.
     *   @returns        
     */
-  function WPreSeqSegs(path: seq<nat>, exits: seq<bool>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
+  function WPreSeqSegs(path: seq<nat>, exits: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
+    requires |path| == |exits|
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
-    requires |path| == |exits|
+    requires forall i:: 0 <= i < |exits| ==> exits[i] <= 1
+    requires forall i:: 0 <= i < |exits| ==> exits[i] <= xs[path[i]].NumberOfExits() - 1
   {
     if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
@@ -300,25 +333,20 @@ module LinSegments {
       var w1 := xs[path[|path| - 1]].WPre(c);
       //    Compute Wpre for feasibility of the segment, i.e. to ensure that
       //    the segment leads to to the next one.
+      foo(xs[path[|path| - 1]], exits[|exits| - 1]);
       var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC, exits[|exits| - 1]);
       //  compute Wpre on last segment and iterate on prefix
       WPreSeqSegs(path[..|path| - 1], exits[..|exits| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
 
   }
 
-  /**
-    *   Retrieve num of segments that correspond to a PC if any.
-    */
-//   function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
-//     requires rank <= |xs|
-//     ensures r.Some? ==> r.v < |xs|
-//     ensures r.Some?  ==> xs[r.v].StartAddress() == pc
-//     decreases |xs| - rank
-//   {
-//     if rank == |xs| then None
-//     else if xs[rank].StartAddress() == pc then Some(rank)
-//     else PCToSeg(xs, pc, rank + 1)
-//   }
+  lemma foo(s: ValidLinSeg, k: nat)
+    requires s.IsValid()
+    requires k <= s.NumberOfExits() - 1
+    ensures s.IsValidExit(k)
+  {
+    //  Thanks Dafny for the proof
+  }
 
   /**   Whether two segments are equivalent.
     *
