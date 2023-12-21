@@ -33,7 +33,6 @@ module Automata {
     *  @param transitions       The transition function.
     *  @param transitionsNat    The transition function using the id of the states.
     *  @param states            The set of states.
-    *  @toString                The string representation of a state.
     *  @indexOf                 The index of a state.
     *  @note                    A valid automaton is such that every state has an entry in the transitions map.
     *                           If the state has no successor then the entry is the empty list.
@@ -46,7 +45,6 @@ module Automata {
     Auto(ghost transitions: map<T, seq<T>> := map[],
          transitionsNat: map<nat, seq<nat>> := map[],
          states: seq<T> := [],
-         toString: T -> string := (_  => ""),
          indexOf: map<T, nat> := map[])
   {
     predicate Equals(b: Auto<T>)
@@ -75,6 +73,9 @@ module Automata {
         .(transitionsNat := transitionsNat + map[|states| := []])
     }
 
+    /**
+      * Add several states to the automaton.
+      */
     function AddStates(xs: seq<T>): (a: ValidAuto<T>)
       requires IsValid()
       ensures a.IsValid()
@@ -94,15 +95,16 @@ module Automata {
       */
     function {:timeLimitMultiplier 8} AddEdge(i: T, j: T): (a: ValidAuto<T>)
       requires IsValid()
-      ensures a.IsValid()
     {
       var a1 := this.AddState(i).AddState(j);
       if a1.indexOf[j] in a1.transitionsNat[a1.indexOf[i]] then
         a1
       else
-        a1
-        .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
-        .(transitionsNat := a1.transitionsNat + map[a1.indexOf[i] := a1.transitionsNat[a1.indexOf[i]] + [a1.indexOf[j]]])
+        var w := a1
+                 .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
+                 .(transitionsNat := a1.transitionsNat + map[a1.indexOf[i] := a1.transitionsNat[a1.indexOf[i]] + [a1.indexOf[j]]]);
+        assert w.IsValid();
+        w
     }
 
     /**
@@ -126,6 +128,9 @@ module Automata {
       |states|
     }
 
+    /**
+      *  The number of transitions.
+      */
     function TSize(index: nat := 0): nat
       requires this.IsValid()
       requires index <= |states|
@@ -162,20 +167,13 @@ module Automata {
       transitionsNat[i]
     }
 
-    /**
-      * String representation of a state.
-      */
-    function ToString(t: T): string {
-      toString(t)
-    }
-
     /** Print to Dot format. */
-    method {:print} ToDot()
+    method {:print} ToDot(ToString: T -> string)
       requires this.IsValid()
     {
       print "digraph G {\n";
-      print "// Number of states: ", NatToString(SSize()), "\n";
-      print "// Number of transitions : ", NatToString(TSize()), "\n";
+      print "// Number of states: ", SSize(), "\n";
+      print "// Number of transitions : ", TSize(), "\n";
       for i := 0 to |states|
       {
         print "s_", i, " [label=", ToString(states[i]) + "]\n";
@@ -183,7 +181,7 @@ module Automata {
       for i := 0 to |states| {
         for j := 0 to |transitionsNat[i]| {
           print "s_", i, " -> ", "s_", transitionsNat[i][j],
-                " [label=\"" + NatToString(j) + "\"]"
+                " [label=\"", j, "\"]"
                 + ";\n";
         }
       }
@@ -201,8 +199,9 @@ module Automata {
       && (forall i:: i in indexOf ==> indexOf[i] < |states| && states[indexOf[i]] == i)
       && (forall i:: 0 <= i < |states| ==> states[i] in indexOf && indexOf[states[i]] == i)
       && (indexOf.Values == set z {:nowarn} | 0 <= z < |states|)
-      && (transitionsNat.Keys == set z {:nowarn} | 0 <= z < |states|)
       && (indexOf.Values == transitionsNat.Keys)
+         //   && (transitionsNat.Keys == set z {:nowarn} | 0 <= z < |states|)
+
       && (forall k:: k in transitionsNat ==> |transitionsNat[k]| == |transitions[states[k]]|)
       && (forall k:: k in transitions ==> |transitions[k]| == |transitionsNat[indexOf[k]]|)
       && (forall i, j :: 0 <= i < |states| && 0 <= j < |transitionsNat[i]| ==> 0 <= transitionsNat[i][j] < |states|)
