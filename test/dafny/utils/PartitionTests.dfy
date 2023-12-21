@@ -26,7 +26,7 @@ module PartitionTests {
   {
     {
       print "Killing test 1\n";
-      var p := InitValid(10);
+      var p := MakeInit(10);
       var f: (nat, nat) -> bool :=
         (x: nat, y: nat) => if x == y then true else x % 2 == y % 2;
       assert IsEquivRel(f, 10);
@@ -39,7 +39,7 @@ module PartitionTests {
   {
     {
       print "Killing test 2\n";
-      var p := InitValid(10);
+      var p := MakeInit(10);
       var f: (nat, nat) -> bool :=
         (x: nat, y: nat) => if x == y then true else x / 2 == y / 2;
       assert IsEquivRel(f, 10);
@@ -52,7 +52,7 @@ module PartitionTests {
   {
     {
       print "Killing test 3\n";
-      var p := InitValid(10);
+      var p := MakeInit(10);
       var f: (nat, nat) -> bool :=
         (x: nat, y: nat) => if x == y then true else x % 2 == y % 2;
       assert IsEquivRel(f, 10);
