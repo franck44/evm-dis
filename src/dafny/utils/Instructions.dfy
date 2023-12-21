@@ -366,13 +366,15 @@ module Instructions {
       *                 JUMPI true means branch to top of stack, 
       *                 and false, go to next instruction.
       */
-    function NextState(s: ValidState, jumpDests: seq<nat>, cond: bool := false): AState
+    function NextState(s: ValidState, jumpDests: seq<nat>, exit: nat := 0): AState
       requires this.IsValid()
+      requires exit == 0 || (this.op.opcode == JUMPI && exit <= 1)
+    //   requires !
       requires this.op.IsValid()
     {
       match this.op
       case ArithOp(_, _, _, _, pushes, pops)      =>
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           assert pops == 2;
           assert pushes == 1;
           s.PopN(pops).PushNRandom(pushes).Skip(1)
@@ -380,53 +382,52 @@ module Instructions {
 
       case CompOp(_, _, _, _, pushes, pops)       =>
         //  Same as Arithmetic operator, except some have only one operand.
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Stack underflow")
 
       case BitwiseOp(_, _, _, _, pushes, pops)    =>
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Stack underflow")
 
       case KeccakOp(_, _, _, _, pushes, pops)     =>
-        if s.Size() >= 2 && !cond then
+        if s.Size() >= 2 then
           assert pushes == 1;
           assert pops == 2;
           s.PopN(2).Push(Random()).Skip(1)
         else Error("Stack underflow")
 
       case EnvOp(_, _, _, _, pushes, pops)        =>
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("EnvOp error")
 
       case MemOp(_, _, _, _, pushes, pops)        =>
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("MemOp error")
 
       case StorageOp(_, _, _, _, pushes, pops)    =>
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("Storage Op error")
 
       case JumpOp(_, opcode, _, _, pushes, pops)  =>
         assert pushes == 0;
-        if opcode == JUMPDEST then
-          if !cond then s.Skip(1) else Error("Cannot execute JUMPDEST/exit true")
+        if opcode == JUMPDEST then s.Skip(1)
         else if opcode == JUMP then
-          if s.Size() >= 1 && cond then
+          if s.Size() >= 1 then
             match s.Peek(0)
             case Value(v) => s.Pop().Goto(v as nat)
-            case Random(_) => Error("Jump to Random() error")
+            case Random(_) => Error("Jump to Random() unknown PC error")
           else
             Error("Cannot execute JUMP/exit false or stack underflow")
         else if opcode == JUMPI then
           if s.Size() >= 2 then
             match s.Peek(0)
             case Value(v) =>
-              if cond then s.PopN(2).Goto(v as nat)
+              if exit >= 1 then s.PopN(2).Goto(v as nat)
               else s.PopN(2).Skip(1)
             case Random(_) => Error("JumpI to Random() error")
           else
@@ -437,17 +438,15 @@ module Instructions {
           Error("RJUMPs not implemented")
 
       case RunOp(_, _, _, _, pushes, pops)        =>
-        if !cond then
           assert pops == 0;
           assert pushes == 1;
           s.Push(Random()).Skip(1)
-        else Error("RunOp error")
 
       case StackOp(_, opcode, _, _, pushes, pops) =>
-        if opcode == POP && s.Size() >= 1 && !cond then
+        if opcode == POP && s.Size() >= 1 then
           assert pushes == 0 && pops == 1;
           s.Pop().Skip(1)
-        else if PUSH0 <= opcode <= PUSH32 && !cond then
+        else if PUSH0 <= opcode <= PUSH32 then
           assert pushes == 1;
           assert pops == 0;
           var valToPush :=
@@ -455,10 +454,10 @@ module Instructions {
               Value(GetArgValuePush(arg))
             else Random();
           s.Push(valToPush).Skip(1 + (opcode - PUSH0) as nat)
-        else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 && !cond then
+        else if DUP1 <= opcode <= DUP16 && s.Size() >= (opcode - DUP1) as nat + 1 then
           assert pushes == 1 && pops == 0;
           s.Dup((opcode - DUP1) as nat + 1).Skip(1)
-        else if SWAP1 <= opcode <= SWAP16 && s.Size() > (opcode - SWAP1) as nat + 1 && !cond then
+        else if SWAP1 <= opcode <= SWAP16 && s.Size() > (opcode - SWAP1) as nat + 1 then
           assert pushes == pops == 0;
           s.Swap((opcode - SWAP1) as nat + 1).Skip(1)
         else
@@ -466,14 +465,14 @@ module Instructions {
 
       case LogOp(_, _, _, _, pushes, pops) =>
         assert pushes == 0;
-        if s.Size() >= pops && !cond then
+        if s.Size() >= pops then
           s.PopN(pops).Skip(1)
         else Error("LogOp error")
 
       case SysOp(_, op, _, _, pushes, pops) =>
         if op == INVALID || op == STOP || op == REVERT then
           Error("SysOp error")
-        else if s.Size() >= pops && !cond then
+        else if s.Size() >= pops then
           s.PopN(pops).PushNRandom(pushes).Skip(1)
         else Error("SysOp error")
     }
