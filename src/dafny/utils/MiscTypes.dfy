@@ -83,12 +83,18 @@ module MiscTypes {
 
   //    Helper functions for sequences
 
+  /**
+    *  Zip two seqs into a seq of pairs.
+    */
   function {:tailrecursion true} Zip<U, V>(u: seq<U>, v: seq<V>): seq<(U, V)>
     requires |u| == |v|
   {
     seq(|u|, i requires 0 <= i < |u| => (u[i], v[i]))
   }
 
+  /**
+    *  Unzip a seq of pairs into two seqs.
+    */
   function {:tailrecursion true} UnZip<U, V>(x: seq<(U, V)>): (seq<U>, seq<V>)
     ensures |UnZip(x).0| == |UnZip(x).1| == |x|
     ensures forall k:: 0 <= k < |x| ==> (UnZip(x).0[k] == x[k].0 && UnZip(x).1[k] == x[k].1)
@@ -98,6 +104,9 @@ module MiscTypes {
     (x0 ,x1)
   }
 
+  /**
+    *   Filter a seq according to a predicate.
+    */
   function {:tailrecursion true} Filter<U>(u: seq<U>, f: U -> bool): (r: seq<U>)
     ensures |r| <= |u|
     ensures forall x:: x in r ==> x in u
@@ -109,6 +118,9 @@ module MiscTypes {
     else Filter(u[1..], f)
   }
 
+  /**
+    *   Determine if an element that satisfies a predicate is in a seq.
+    */
   predicate {:tailrecursion true} Exists<T>(xs: seq<T>, f: T -> bool)
     ensures !Exists(xs, f) ==> forall k:: k in xs ==> !f(k)
     ensures !Exists(xs, f) ==> forall k:: 0 <= k < |xs| ==> !f(xs[k])
@@ -118,6 +130,9 @@ module MiscTypes {
     else Exists(xs[1..], f)
   }
 
+  /**
+    * Flatten a seq of seq into a seq.
+    */
   function Flatten<T>(x: seq<seq<T>>): seq<T>
   {
     if |x| == 0 then []
@@ -158,6 +173,10 @@ module MiscTypes {
     FindRec(x, t)
   }
 
+
+  /**
+    *  Find the index of an element in a list or None if the element is not in the list.
+    */
   function {:tailrecursion true} {:opaque} FindRec<T(==)>(x: seq<T>, t: T, i: nat := 0, ghost c: seq<T> := x): Option<nat>
     requires |c| == i + |x|
     requires c[i..] == x
