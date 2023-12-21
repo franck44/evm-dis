@@ -89,19 +89,19 @@ module SegWpreTests {
     else if xs[0] > m then MaxSeqVal(xs[1..], xs[0])
     else  MaxSeqVal(xs[1..], m)
   }
- 
+
   /**
     *   Sanity check.
     *   After computing the WPre of c, test that the post of
     *   the Wpre of c satisfies c.
     */
-  method TestPost(post: ValidCond, s: ValidLinSeg)
+  method TestPost(post: ValidCond, s: ValidLinSeg, jumpDests: seq<nat> := [])
     requires post.StCond?
   {
     var pre := s.WPre(post);
     var s0 := BuildInitState(pre);
-    if s.HasExit(false) {
-      var s1 := s.Run(s0, false, []);
+    for i := 0 to s.NumberOfExits() {
+      var s1 := s.Run(s0, i, jumpDests);
       expect s1.EState?;
       expect s1.Size() >= MaxSeqVal(post.TrackedPos());
       for k := 0 to post.Size() {
@@ -110,19 +110,8 @@ module SegWpreTests {
         expect s1.Peek(post.TrackedPosAt(k)) ==
                Value(post.TrackedValAt(k));
       }
-      if s.HasExit(true) {
-        var s1 := s.Run(s0, true, []);
-        expect s1.EState?;
-        expect s1.Size() >= MaxSeqVal(post.TrackedPos());
-        for k := 0 to post.Size() {
-          assert k < post.Size();
-          expect post.TrackedPosAt(k) < s1.Size();
-          expect s1.Peek(post.TrackedPosAt(k)) ==
-                 Value(post.TrackedValAt(k));
-        }
-      }
     }
-
+   
   }
 
   //  Simple example
@@ -145,12 +134,13 @@ module SegWpreTests {
     var c2 := StCond([4], [0x10]);
     var r2 := y[0].WPre(c2);
     expect r2 == StCond([1], [0x10]);
-    TestPost(c2, y[0]);
+    TestPost(c2, y[0], [0x13]);
+    
 
     var c3 := StCond([3], [0x10]);
     var r3 := y[0].WPre(c3);
     expect r3 == StCond([0], [0x10]);
-    TestPost(c3, y[0]);
+    TestPost(c3, y[0], [0x13]);
   }
 
   /** POP then DUP1 */
