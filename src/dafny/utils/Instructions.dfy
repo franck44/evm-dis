@@ -684,6 +684,14 @@ module Instructions {
     Hex.HexToU256(pad + xc).Extract()
   }
 
+   /**   Print a seq of instructions. */
+  function {:tailrecursion true} ToDot(xi: seq<ValidInstruction>): string
+  {
+    if |xi| == 0 then ""
+    else
+      xi[0].ToHTML() + ToDot(xi[1..])
+  }
+
   /** pencolour and background colour. */
   function Colours(i: ValidInstruction): (string, string)
   {
