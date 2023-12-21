@@ -19,6 +19,10 @@ include "../utils/Instructions.dfy"
 include "../utils/int.dfy"
 include "../proofobjectbuilder/SegmentBuilder.dfy"
 include "../utils/Hex.dfy"
+include "../utils/Automata.dfy"
+include "../utils/Partition.dfy"
+include "../utils/MinimiserAState.dfy"
+include "../CFGBuilder/BuildCFGSimplified.dfy"
 
 /**
   *  Provides EVM Object.
@@ -34,6 +38,11 @@ module EVMObject {
   import Int
   import SegBuilder
   import Hex
+  import Automata
+  import opened DFSSimple
+  import opened PartitionMod
+  import opened AStateMinimiser
+
 
   /**   A valid EVMObj should have jumpdests consistent with the segments. */
   type ValidEVMObj = e: EVMObj | e.jumpDests == CollectJumpDests(e.xs)
@@ -64,11 +73,48 @@ module EVMObject {
       else
         match PCToSeg(s.pc) {
           case Some(s0) =>
-            var exit0 := if xs[s0].HasExit(false) then [xs[s0].Run(s, false, jumpDests)] else [];
-            var exit1 := if xs[s0].HasExit(true) then [xs[s0].Run(s, true, jumpDests)] else [];
-            exit0 + exit1
+            seq(xs[s0].NumberOfExits(), i requires 0 <= i < xs[s0].NumberOfExits() => xs[s0].Run(s, i, jumpDests))
           case None => []
         }
+    }
+
+    /**
+      * Build the CFG of the EVMObj.
+      * The CFG is built by running a DFS from the initial state.
+      * @param maxDepth The maximum depth of the DFS.
+      * @param minimise If true, the CFG is minimised.   
+      */
+    method BuildCFG(maxDepth: nat := 100, minimise: bool := true) returns (a: Automata.ValidAuto<AState>)
+    {
+      //  For now we ignore the history
+      var a1, _ := DFS(
+        Next,
+        DEFAULT_VALIDSTATE,
+        History(DEFAULT_VALIDSTATE, [DEFAULT_VALIDSTATE]),
+        Automata.Auto(),
+        maxDepth);
+      if !minimise || a1.SSize() == 0 {
+        return a1;
+      } else {
+        var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
+        //  create an equivalence relation on nodes
+        var e :=
+          (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
+          => if x == y then
+              true
+            else
+              match (a1.states[x], a1.states[y])
+              case (EState(pc1,_), EState(pc2, _)) => PCToSeg(pc1).Some? && PCToSeg(pc2).Some? && pc1 == pc2
+              case (_, _) => false
+          ;
+        assert IsEquivRel(e, a1.SSize());
+        var p2 := p1.ComputeFinest(e);
+
+        var vp: AStateMinimiser.Pair := Pair(a1, p2);
+        var a2 := vp.Minimise();
+        return a2;
+      }
+
     }
 
     /**
