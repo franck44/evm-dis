@@ -92,7 +92,7 @@ module PartitionMod {
     }
 
     /**
-      *  Refines a given partition with respect to an equivalence relation.
+      * Refines a given partition with respect to an equivalence relation.
       * @param  equiv  The equivalence relation.
       * @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
       */
@@ -154,6 +154,35 @@ module PartitionMod {
       if x in elem[index] then index
       else GetClass(x, index + 1)
     }
+
+    /**
+      *  Get the representative of the class of x.
+      *  @param  x   An element in {0, ..., n - 1}.
+      *  @returns    The representative of the class of x.
+      */
+    function GetClassRepOf(x: nat): (c: nat)
+      requires IsValid()
+      requires 0 <= x < n
+      ensures c < n
+    {
+      var c := GetClass(x);
+      SetToSequence(elem[c])[0]
+    }
+
+    /**
+      * Get the representatives of the classes of a sequence of elements.
+      */
+    function GetClassRepOfSeqs(xs: seq<nat>): (c: seq<nat>)
+      requires IsValid()
+      requires forall i:: 0 <= i < |xs| ==> 0 <= xs[i] < n
+      ensures |xs| == |c|
+      ensures forall i:: 0 <= i < |xs| ==> c[i] < n
+    {
+      if |xs| == 0 then []
+      else [GetClassRepOf(xs[0])] + GetClassRepOfSeqs(xs[1..])
+    }
+
+
   }
 
   //    Helpers
