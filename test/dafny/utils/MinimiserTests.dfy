@@ -61,7 +61,7 @@ module MinimiserTests {
     {0, 2} - F, T -> {1, 3} -- T -> {4}
     */
     var p1: ValidPartition := Partition(5, [{0, 1, 2, 3}, {4}]);
-    var a1: ValidAuto<nat> := Auto(toString := x => NatToString(x)).AddEdges(0, [1, 2]);
+    var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 2]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [1, 3]);
     var a3: ValidAuto<nat> := a2.AddEdges(2, [1, 2]);
     var a4: ValidAuto<nat> := a3.AddEdges(3, [1, 4]);
@@ -71,8 +71,12 @@ module MinimiserTests {
     expect a5.SSize() == 5;
     var vp0 : MinimiserNat.ValidPair := MinimiserNat.MakeInit(a5, p1);
 
-    var vp1 := vp0.Minimise();
-    expect vp1.clazz.elem == [{0, 2}, {1}, {3}, {4}];
+    var vp1 := vp0.ClassSplitter();
+    // PrintPartition(vp1.clazz);
+    expect vp1.clazz.elem == [{0, 1, 2}, {3}, {4}];
+    var vp2 := vp1.ClassSplitter();
+    // PrintPartition(vp2.clazz);
+    expect vp2.clazz.elem == [{0, 2}, {1}, {3}, {4}];
   }
 
   method {:test} Test2()
@@ -92,7 +96,7 @@ module MinimiserTests {
       */
     var p1: ValidPartition := Partition(4, [{0, 3}, {1, 2}]);
 
-    var a1: ValidAuto<nat> := Auto(toString := x => NatToString(x)).AddEdges(0, [1, 0]);
+    var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 0]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [2, 1]);
     var a3: ValidAuto<nat> := a2.AddEdges(2, [1, 2]);
     var a4: ValidAuto<nat> := a3.AddEdges(3, [1, 2]);
@@ -101,7 +105,7 @@ module MinimiserTests {
     expect a4.SSize() == 4;
     var vp0 : MinimiserNat.ValidPair := MinimiserNat.MakeInit(a4, p1);
 
-    var vp1 := vp0.Minimise();
+    var vp1 := vp0.ClassSplitter();
     expect vp1.clazz.elem == [{0}, {3}, {1, 2}];
   }
 
@@ -116,7 +120,7 @@ module MinimiserTests {
     */
     var p1: ValidPartition := PartitionMod.MakeInit(5);
 
-    var a0: ValidAuto<nat> := Auto(toString := x => NatToString(x));
+    var a0: ValidAuto<nat> := Auto();
     var a1 := a0.AddStates(seq(5, i => i));
     var a2: ValidAuto<nat> := a1.AddEdges(0, [3, 1]);
     var a3: ValidAuto<nat> := a2.AddEdges(1, [2]);
@@ -143,7 +147,7 @@ module MinimiserTests {
     */
     var p1: ValidPartition :=  Partition(5, [{0, 1, 2, 3}, {4}]);
 
-    var a0: ValidAuto<nat> := Auto(toString := x => NatToString(x));
+    var a0: ValidAuto<nat> := Auto();
     var a1 := a0.AddStates(seq(5, i => i));
     var a2: ValidAuto<nat> := a1.AddEdges(0, [1, 3]);
     var a3: ValidAuto<nat> := a2.AddEdges(1, [2, 4]);
@@ -172,7 +176,7 @@ module MinimiserTests {
     */
     var p1: ValidPartition := Partition(6, [{0, 1, 3}, {2, 4}, {5}]);
 
-    var a0: ValidAuto<Option<nat>> := Auto(toString := (x:Option<nat>) => if x.Some? then NatToString(x.v) else "None");
+    var a0: ValidAuto<Option<nat>> := Auto();
     var a1 := a0.AddStates(seq(5, i => Some(i)) + [None]);
     var a2: ValidAuto<Option<nat>> := a1.AddEdges(Some(0), [Some(1), Some(3)]);
     var a3: ValidAuto<Option<nat>> := a2.AddEdges(Some(1), [None, Some(2)]);
