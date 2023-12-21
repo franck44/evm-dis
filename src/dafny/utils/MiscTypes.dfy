@@ -132,6 +132,17 @@ module MiscTypes {
     seq(|t|, i requires 0 <= i < |t| => f(t[i]))
   }
 
+  /**
+    *  Map each value of a seq according to a _Partial_ function.
+    */
+  function MapP<T, U>(t: seq<T>, f: T --> U): seq<U>
+    requires forall i:: 0 <= i < |t| ==> f.requires(t[i])
+    ensures |t| == |MapP(t, f)|
+    ensures forall i:: 0 <= i < |t| ==> MapP(t, f)[i] == f(t[i])
+  {
+    seq(|t|, i requires 0 <= i < |t| => f(t[i]))
+  }
+
   /** Find the index of an element in a list.  
     * @param x  The list.
     * @param t  The element to find.
