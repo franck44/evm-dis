@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "../utils/MiscTypes.dfy" 
+include "../utils/MiscTypes.dfy"
 include "../utils/int.dfy"
 include "./BuildCFGSimplified.dfy"
 include "../utils/Automata.dfy"
@@ -23,8 +23,6 @@ include "../utils/State.dfy"
 include "../utils/MinimiserAState.dfy"
 include "../utils/Partition.dfy "
 include "../utils/SeqOfSets.dfy"
-
-
 module BuildCFGSimplifiedTests {
 
   import opened MiscTypes
@@ -40,7 +38,7 @@ module BuildCFGSimplifiedTests {
   import opened PartitionMod
   import opened SeqOfSets
 
-  function SimpleSucc(n: nat): seq<nat> { 
+  function SimpleSucc(n: nat): seq<nat> {
     if n <= 2 then [n + 1, n + 3]
     else [n - 2]
   }
@@ -140,8 +138,8 @@ module BuildCFGSimplifiedTests {
         Auto(),
         15);
       assert a1.IsValid();
-    //   print "Size of a1: ", a1.SSize(), "\n";
-    //   a1.ToDot((x: AState) => p.ToHTML(x));
+      //   print "Size of a1: ", a1.SSize(), "\n";
+      //   a1.ToDot((x: AState) => p.ToHTML(x));
 
       //  Minimisation
       expect a1.SSize() >= 1;
@@ -158,13 +156,13 @@ module BuildCFGSimplifiedTests {
 
       var vp: AStateMinimiser.Pair := Pair(a1, p1);
       var a2 := vp.Minimise();
-    //   a2.ToDot((x: AState) => p.ToHTML(x));
+      //   a2.ToDot((x: AState) => p.ToHTML(x));
 
     }
   }
 
   // Simple example
-  method {:main} Nested(args: seq<string>)
+  method {:main} Main(args: seq<string>)
   {
     {
       //  Push and JUMP
@@ -181,7 +179,7 @@ module BuildCFGSimplifiedTests {
         DEFAULT_VALIDSTATE,
         History(DEFAULT_VALIDSTATE, [DEFAULT_VALIDSTATE]),
         Auto(),
-        15);
+        100);
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
       a1.ToDot((x: AState) => p.ToHTML(x));
@@ -202,7 +200,7 @@ module BuildCFGSimplifiedTests {
 
       var vp: AStateMinimiser.Pair := Pair(a1, p2);
       var a2 := vp.Minimise();
-      a2.ToDot((x: AState) => p.ToHTML(x)); 
+      a2.ToDot((x: AState) => p.ToHTML(x));
     }
   }
 }
