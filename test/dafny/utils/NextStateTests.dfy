@@ -15,7 +15,7 @@
 
 include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
-include "../../../src/dafny/utils/InstructionsV2.dfy"
+include "../../../src/dafny/utils/Instructions.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 include "../../../src/dafny/utils/int.dfy"
 

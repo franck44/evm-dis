@@ -17,11 +17,10 @@ include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
-include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
+include "../../../src/dafny/proofobjectbuilder/Splitter.dfy" 
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
- 
+
 /**
   * Test correct computation of next State for segments.
   * 

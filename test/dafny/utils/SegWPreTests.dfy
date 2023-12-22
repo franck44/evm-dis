@@ -113,7 +113,7 @@ module SegWpreTests {
     }
    
   }
-
+  
   //  Simple example
   method {:test} Test1()
   {
