@@ -11,7 +11,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
- 
+
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/CFGBuilder/BuildCFGSimplified.dfy"
@@ -23,7 +23,7 @@ include "../../../src/dafny/utils/EVMObject.dfy"
   */
 module BuildCFGBlogTests {
 
-      const debug:= false
+  const debug:= false
 
 
   import opened OpcodeDecoder
@@ -59,9 +59,10 @@ module BuildCFGBlogTests {
 
       expect |x| == 11;
       var y := SplitUpToTerminal(x, [], []);
+      assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() != y[i'].StartAddress();
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
-      var p := EVMObj(y);
+      var p: ValidEVMObj := EVMObj(y);
       var g := p.BuildCFG(10) ;
       assert g.IsValid();
       expect g.SSize() == 5;
@@ -95,19 +96,21 @@ module BuildCFGBlogTests {
 
     expect |x| == 6;
     var y := SplitUpToTerminal(x, [], []);
+    assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() != y[i'].StartAddress();
+
     expect |y| == 2;
     expect y[1].StartAddress() == 0x02;
     expect y[0].StartAddress() == 0;
 
     var p := EVMObj(y);
-      var g := p.BuildCFG(10) ;
-      assert g.IsValid();
-      expect g.SSize() == 11;
-      expect g.TSize() == 10;
-      if debug {
-        print "CFG Test1\n";
-        g.ToDot(x => p.ToHTML(x));
-      }
+    var g := p.BuildCFG(10) ;
+    assert g.IsValid();
+    expect g.SSize() == 11;
+    expect g.TSize() == 10;
+    if debug {
+      print "CFG Test1\n";
+      g.ToDot(x => p.ToHTML(x));
+    }
   }
 
   /** max-max. */
@@ -115,16 +118,17 @@ module BuildCFGBlogTests {
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
+    assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() != y[i'].StartAddress();
 
     var p := EVMObj(y);
-      var g := p.BuildCFG(10) ;
-      assert g.IsValid();
-      expect g.SSize() == 9;
-      expect g.TSize() == 10;
-      if debug {
-        print "CFG Test1\n";
-        g.ToDot(x => p.ToHTML(x));
-      }
+    var g := p.BuildCFG(10) ;
+    assert g.IsValid();
+    expect g.SSize() == 9;
+    expect g.TSize() == 10;
+    if debug {
+      print "CFG Test1\n";
+      g.ToDot(x => p.ToHTML(x));
+    }
   }
 }
 
