@@ -175,16 +175,6 @@ module LinSegments {
       WPreIns(Ins(), c)
     }
 
-    /** Whether a given segment has exit true or false. */
-    // predicate HasExit2(b: bool)
-    // {
-    //   match this
-    //   case JUMPSeg(_, _, _) => b
-    //   case JUMPISeg(_, _, _) => true
-    //   case CONTSeg(_, _, _)  => !b
-    //   case _ => false
-    // }
-
     /**
      *  Number of successors of a segment.
      *  @note   JUMPI has 2, JUMP and mormal segments have 1, 
