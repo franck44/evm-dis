@@ -13,26 +13,31 @@
  */
 
 include "../utils/MiscTypes.dfy"
-include "../utils/Automata.dfy" 
+include "../utils/Automata.dfy"
 
-module DFSSimple { 
+module DFSSimple {
 
-  import opened MiscTypes 
-  import opened Automata 
+  import opened MiscTypes
+  import opened Automata
 
   /**
     *   History of the DFS.
-    *   @param init         The current state.
-    *   @param visited      The set of visited states.
-    *   @param path         The path from the root state to the current state.
-    *   @param pathVisited  The set of visited states in the path.
+    *   @param init             The current state.
+    *   @param visited          The set of visited states.
+    *   @param path             The path from the root state to the current state.
+    *   @param visitedOnPath    The set of visited states in the path.
     *
-    *   @note               Ideally we would like to enforce that isCovered always 
-    *                       returns a value in pathVisited. And use `WellDefined` instead.
+    *   @note                   Ideally we would like to enforce that isCovered always 
+    *                           returns a value in visitedOnPath. And use `WellDefined` instead.
     */
-  datatype History<!K(!new,==)> = History(init: K, visited: seq<K>, path: seq<nat> := [], pathVisited: seq<K> := [], isCovered: WellDefined<K> := (x: K, xs: seq<K>) => None) {
+  datatype History<!K(!new,==)> = History(
+    init: K,
+    visited: seq<K>,
+    path: seq<nat> := [],
+    visitedOnPath: seq<K> := [],
+    isCovered: WellDefined<K> := (x: K, xs: seq<K>) => None) {
 
-    /** Add an state to the set of visited states. */
+    /** Add a state to the set of visited states. */
     function Add(k: K): (h: History<K>)
       requires this.IsValid()
       ensures h.IsValid()
@@ -68,7 +73,7 @@ module DFSSimple {
       this
       .Add(k)
       .(path := path + [i])
-      .(pathVisited := pathVisited + [k])
+      .(visitedOnPath := visitedOnPath + [k])
     }
 
     /** initial prefix of path histories. */
@@ -81,17 +86,17 @@ module DFSSimple {
     {
       this
       .(path := path[..|path| - 1])
-      .(pathVisited := pathVisited[.. |pathVisited| - 1])
+      .(visitedOnPath := visitedOnPath[.. |visitedOnPath| - 1])
     }
 
     /**
-      *  Ideally we woudl like to enforce isCovered to always return a value in the pathVisited.
+      *  Ideally we woudl like to enforce isCovered to always return a value in the visitedOnPath.
       */
     function IsCovered(k: K): Option<K>
       requires this.IsValid()
     {
       if k in visited then Some(visited[IndexOf(k).v])
-      else match isCovered(k, pathVisited)
+      else match isCovered(k, visitedOnPath)
            case None => None
            case Some(x) =>
              //  Force property of ValidFoo functions.
@@ -100,8 +105,8 @@ module DFSSimple {
     }
 
     ghost predicate IsValid() {
-      && |path| == |pathVisited|
-      && (forall s:: s in pathVisited ==> s in visited)
+      && |path| == |visitedOnPath|
+      && (forall s:: s in visitedOnPath ==> s in visited)
     }
   }
 
@@ -116,14 +121,14 @@ module DFSSimple {
     * @param debugInfo  Print debug information.
     * @returns          The automaton and the history of visited nodes.
     */
-  method DFS<T(!new)>( 
+  method DFS<T(!new)>(
     succ: T -> seq<T>,
     s: T,
     history: History<T>,
     a: ValidAuto<T>,
-    maxDepth: nat := 0, debugInfo: bool := false) returns (a': ValidAuto<T>, h': History<T>)  
+    maxDepth: nat := 0, debugInfo: bool := false) returns (a': ValidAuto<T>, h': History<T>)
 
-    // requires a.IsValid2() 
+    // requires a.IsValid2()
     requires history.IsValid()
     requires s in history.visited
     // ensures a'.IsValid2()
@@ -136,7 +141,7 @@ module DFSSimple {
       //  stop the construction of the automaton.
       return a, history;
     }
-    else { 
+    else {
       // DFS from s
       h' := history;
       a' := a;
@@ -149,7 +154,7 @@ module DFSSimple {
         var n := h'.IsCovered(succ(s)[i]);
         if n.None? {
           var h1 := h'.AddToPathHistory(i, succ(s)[i]);
-          if debugInfo {print "a' = ", a'.AddEdge(s, succ(s)[i]), "\n"; }
+          if debugInfo { print "a' = ", a'.AddEdge(s, succ(s)[i]), "\n"; }
           a', h' := DFS(succ, succ(s)[i], h1, a'.AddEdge(s, succ(s)[i]), maxDepth - 1);
           h' := h'.PathHistoryInit();
           if debugInfo { print a', "\n"; }
