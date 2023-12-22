@@ -42,8 +42,8 @@ module BinaryDecoder {
     */
   function {:tailrecursion true} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): (r: seq<ValidInstruction>)
     requires forall i:: 0 <= i < |p| ==> p[i].address < next
-    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address != p[i'].address
-    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address != r[i'].address
+    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address < p[i'].address
+    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address < r[i'].address
     decreases |s|
   {
     if |s| == 0 then
@@ -85,8 +85,8 @@ module BinaryDecoder {
     */
   function {:tailrecurseion true} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): (r: seq<ValidInstruction>)
     requires forall i:: 0 <= i < |p| ==> p[i].address < next
-    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address != p[i'].address
-    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address != r[i'].address
+    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address < p[i'].address
+    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address < r[i'].address
     decreases |s|
   {
     if |s| == 0 then
