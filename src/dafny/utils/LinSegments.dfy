@@ -60,7 +60,8 @@ module LinSegments {
       * the lastInst.
       */
     predicate IsValid() {
-      match this
+     && (forall i:: 1 <= i < |Ins()| ==> Ins()[i].op.opcode != JUMPDEST)
+     && match this
       case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
       case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
       case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
