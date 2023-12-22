@@ -33,6 +33,7 @@ module Splitter {
     *   @returns    A segment with instructions xs + [lastIns].
     */
   function BuildSeg(xs: seq<ValidInstruction>, lastInst: ValidInstruction): ValidLinSeg
+    requires forall i:: 1 <= i <= |xs| ==> (xs + [lastInst])[i].op.opcode != JUMPDEST
   {
     match lastInst.op.opcode
     case JUMP   =>
@@ -52,34 +53,53 @@ module Splitter {
       CONTSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
   }
 
-  /**
-    *  Whether the first instruction of a seq is at the end of
-    *  a linear segment.
-    */
-  predicate EndOfSegment(xs: seq<ValidInstruction>)
-    requires |xs| >= 1
-  {
-    if xs[0].IsTerminal() then true
-    else if |xs| > 1 && xs[1].IsJumpDest() then true
-    else false
-  }
-
   /**  
-    *   Split the sequence of instructions according to jumps.
+    *   Split the sequence of instructions according to boundaries jumpdests/jumps.
+    *   @param  xs          The sequence of instructions to split.
+    *   @param  curseq      The current sequence of instructions being built.
+    *   @param  collected   The list of segments collected so far.
+    *   @returns            A list of segments.
+    *
     *   @note   Build a LinSeg for each section ending with a Jump or 
     *           until end of sequence.
     */
-  function SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): seq<ValidLinSeg>
+  function SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): (r: seq<ValidLinSeg>)
+    requires forall i, i':: 0 <= i < i' < |xs| ==> xs[i].address < xs[i'].address
+    requires forall i:: 1 <= i < |curseq| ==> curseq[i].op.opcode != JUMPDEST
+    requires forall i:: 0 <= i < |collected| ==> |collected[i].Ins()| > 0
+    requires forall i, k:: 0 <= i < |curseq| && 0 <= k < |xs| ==> xs[k].address > curseq[i].address
+    requires forall i, k:: 0 <= i < |collected| && 0 <= k < |xs| ==> xs[k].address > collected[i].StartAddress()
+    requires forall i, k:: 0 <= i < |curseq| && 0 <= k < |collected| ==> collected[k].StartAddress() < curseq[i].address
+    requires forall i, i':: 0 <= i < i' < |collected| ==> collected[i].StartAddress() < collected[i'].StartAddress()
+
+    ensures forall i:: 0 <= i < |r| ==> |r[i].Ins()| > 0
+    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].StartAddress() < r[i'].StartAddress()
   {
-    if |xs| == 0 then collected
-    else if |xs| == 1 then
-      //  Last instruction in the code
-      collected + [BuildSeg(curseq, xs[0])]
-    //  if xs[0] is terminal then start a new seg, otherwise continue previous
-    else if EndOfSegment(xs) then // xs[0].IsTerminal() then
-      var newSeg := curseq + [xs[0]];
-      SplitUpToTerminal(xs[1..], [], collected + [BuildSeg(curseq, xs[0])])
+    if |xs| == 0 then
+      //  No more instructions
+      if |curseq| == 0 then collected
+      else
+        // Build the last segment from curseq
+        var newSeg := BuildSeg(curseq[..|curseq| - 1], curseq[|curseq| - 1]);
+        collected + [newSeg]
+    //  if xs[0] is a jumpdest then start a new seg.
+    else if xs[0].op.opcode == JUMPDEST then
+      // Check if curseq is empty or not
+      if |curseq| == 0 then
+        SplitUpToTerminal(xs[1..], [xs[0]], collected)
+      else
+        //  If curseq not empty, build a segemtnwith curseq and add it to collected
+        var newSeg := BuildSeg(curseq[..|curseq| - 1], curseq[|curseq| - 1]);
+        SplitUpToTerminal(xs[1..], [xs[0]], collected + [newSeg])
+    else if xs[0].IsTerminal() then
+      //    x[0] is a terminal instruction
+      assert xs[0].op.opcode != JUMPDEST;
+      //    Build a segment and start with empty curseq
+      var newSeg := BuildSeg(curseq, xs[0]);
+      SplitUpToTerminal(xs[1..], [], collected + [newSeg])
     else
+      //  x[0] is not a terminal instruction
+      assert !xs[0].IsTerminal() && xs[0].op.opcode != JUMPDEST;
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }
 
