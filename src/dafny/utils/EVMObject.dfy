@@ -55,7 +55,9 @@ module EVMObject {
 
     /** A valid EVMObj has jumpDests consistent with xs. */
     predicate IsValid() {
-      jumpDests == CollectJumpDests(xs)
+      && (forall i, i':: 0 <= i < i' < |xs| ==> xs[i].StartAddress() < xs[i'].StartAddress())
+    //   && jumpDests == CollectJumpDests(xs)
+    //   && startAddresses == CollectStartAddresses(xs)
     }
 
     /** The size of the program in bytes. */
