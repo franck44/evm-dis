@@ -65,7 +65,7 @@ module EVMObject {
   ) {
 
     /** A valid EVMObj has jumpDests consistent with xs. */
-    predicate IsValid() {
+    ghost predicate IsValid() {
       && (forall i, i':: 0 <= i < i' < |xs| ==> xs[i].StartAddress() < xs[i'].StartAddress())
       && (forall k:: k in PCToSegMap ==> PCToSegMap[k] < |xs| && xs[PCToSegMap[k]].StartAddress() == k)
     }
@@ -284,7 +284,7 @@ module EVMObject {
     /**
       * Generate the HTML representation of a given abstract state.
       */
-    function ToHTML(a: GState): string
+    function {:opaque} ToHTML(a: GState): string
       requires this.IsValid()
       requires a.EGState? ==> a.segNum < |xs|
     {
@@ -299,7 +299,7 @@ module EVMObject {
   }
 
   /**   Print the content of a segment. */
-  function DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
+  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
   {
     //  Jump target
     var jumpTip :=
