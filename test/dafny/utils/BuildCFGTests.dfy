@@ -119,12 +119,12 @@ module BuildCFGTests {
   }
 
   /** max-max. */
-  method {:test} {:verify false} Test6()
+  method {:test} {:verify true} Test6()
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-
-    var p := EVMObj(y);
+    expect |y| >= 1;
+    var p: EVMObj := EVMObj(y);
     var g := p.BuildCFG(10) ;
     assert g.IsValid();
     expect g.SSize() == 9;
