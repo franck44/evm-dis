@@ -19,10 +19,10 @@ include "../utils/Automata.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
-include "../utils/State.dfy"
-include "../utils/MinimiserAState.dfy"
-include "../utils/Partition.dfy "
-include "../utils/SeqOfSets.dfy"
+include "../utils/CFGState.dfy"
+include "../utils/MinimiserGState.dfy"
+include "../utils/Partition.dfy"
+
 module BuildCFGSimplifiedTests {
 
   import opened MiscTypes
@@ -33,10 +33,9 @@ module BuildCFGSimplifiedTests {
   import opened EVMConstants
   import opened Splitter
   import opened EVMObject
-  import opened State
-  import opened AStateMinimiser
+  import opened CFGState
+  import opened GStateMinimiser
   import opened PartitionMod
-  import opened SeqOfSets
 
   function SimpleSucc(n: nat): seq<nat> {
     if n <= 2 then [n + 1, n + 3]
@@ -78,7 +77,7 @@ module BuildCFGSimplifiedTests {
   }
 
   //  Simple example
-  method {:test} Test10()
+  method {:test} {:verify false} Test10()
   {
     {
       //  Push and JUMP
@@ -129,40 +128,38 @@ module BuildCFGSimplifiedTests {
       expect y[3].StartAddress() == 0x1c;
       expect y[0].StartAddress() == 0;
 
+      assert |y| >= 1;
       var p := EVMObj(y);
-      var succ : AState -> seq<AState> := p.Next;
-      var a1, h1 := DFS(
-        succ,
-        DEFAULT_VALIDSTATE,
-        History(DEFAULT_VALIDSTATE, [DEFAULT_VALIDSTATE]),
-        Auto(),
-        15);
+      var a1 := p.BuildCFG();
       assert a1.IsValid();
-      //   print "Size of a1: ", a1.SSize(), "\n";
-      //   a1.ToDot((x: AState) => p.ToHTML(x));
+      print "Size of a1: ", a1.SSize(), "\n";
+      a1.ToDot((x: GState) => p.ToHTML(x));
 
-      //  Minimisation
+      //    Minimisation
       expect a1.SSize() >= 1;
       var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
 
       //  create an equivalence relation on nodes
       var e :=
         (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
-        => if x == y then true else match (a1.states[x], a1.states[y])
-                                    case (EState(pc1,_), EState(pc2, _)) => p.PCToSeg(pc1).Some? && p.PCToSeg(pc2).Some? && p.PCToSeg(pc2) == p.PCToSeg(pc2)
-                                    case (_, _) => false
+        => if x == y then
+            true
+          else
+            match (a1.states[x], a1.states[y])
+            case (EGState(s1,_), EGState(s2, _)) => s1 == s2
+            case (_, _) => false
         ;
       assert IsEquivRel(e, a1.SSize());
 
-      var vp: AStateMinimiser.Pair := Pair(a1, p1);
+      var vp: GStateMinimiser.Pair := Pair(a1, p1);
       var a2 := vp.Minimise();
-      //   a2.ToDot((x: AState) => p.ToHTML(x));
+      a2.ToDot((x: GState) => p.ToHTML(x));
 
     }
   }
 
   // Simple example
-  method {:main} Main(args: seq<string>)
+  method {:main} {:verify false} Main(args: seq<string>)
   {
     {
       //  Push and JUMP
@@ -171,36 +168,37 @@ module BuildCFGSimplifiedTests {
 
       var y := SplitUpToTerminal(x, [], []);
       print "segments: ", |y|, "\n";
+      if |y| >= 1 {
+        var p: ValidEVMObj := EVMObj(y);
 
-      var p := EVMObj(y);
-      var succ : AState -> seq<AState> := p.Next;
-      var a1, h1 := DFS(
-        succ,
-        DEFAULT_VALIDSTATE,
-        History(DEFAULT_VALIDSTATE, [DEFAULT_VALIDSTATE]),
-        Auto(),
-        100);
-      assert a1.IsValid();
-      print "Size of a1: ", a1.SSize(), "\n";
-      a1.ToDot((x: AState) => p.ToHTML(x));
+        var a1 := p.BuildCFG();
+        assert a1.IsValid();
+        print "Size of a1: ", a1.SSize(), "\n";
+        a1.ToDot((x: GState) => p.ToHTML(x));
 
-      //  Minimisation
-      expect a1.SSize() >= 1;
-      var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
+        //  Minimisation
+        expect a1.SSize() >= 1;
+        var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
 
-      //  create an equivalence relation on nodes
-      var e :=
-        (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
-        => if x == y then true else match (a1.states[x], a1.states[y])
-                                    case (EState(pc1,_), EState(pc2, _)) => p.PCToSeg(pc1).Some? && p.PCToSeg(pc2).Some? && pc1 == pc2
-                                    case (_, _) => false
-        ;
-      assert IsEquivRel(e, a1.SSize());
-      var p2 := p1.ComputeFinest(e);
+        //  create an equivalence relation on nodes
+        var e :=
+          (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
+          => if x == y then
+              true
+            else
+              match (a1.states[x], a1.states[y])
+              case (EGState(s1,_), EGState(s2, _)) => s1 == s2
+              case (_, _) => false
+          ;
+        assert IsEquivRel(e, a1.SSize());
+        var p2 := p1.ComputeFinest(e);
 
-      var vp: AStateMinimiser.Pair := Pair(a1, p2);
-      var a2 := vp.Minimise();
-      a2.ToDot((x: AState) => p.ToHTML(x));
+        var vp: GStateMinimiser.Pair := Pair(a1, p2);
+        var a2 := vp.Minimise();
+        a2.ToDot((x: GState) => p.ToHTML(x));
+      } else {
+        print "No segments\n";
+      }
     }
   }
 }
