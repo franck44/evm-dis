@@ -32,9 +32,11 @@ module PartitionMod {
     *   @return     A valid partition of {0, ..., n - 1} with a single class
     *               containing all the elements.    
     */
-  function MakeInit(n: nat): (p: ValidPartition)
+  function {:opaque} MakeInit(n: nat): (p: ValidPartition)
     requires n > 0
     ensures p.IsValid()
+    ensures |p.elem| == 1
+    ensures p.n == n
   {
     var s := set q {:nowarn} | 0 <= q < n;
     assert {0} <= s;
@@ -75,13 +77,14 @@ module PartitionMod {
       *  @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
       *  @note          The finest partition is the partition with the largest number of classes.
       */
-    function {:timeLimitMultiplier 4} ComputeFinest(equiv: (nat, nat) --> bool): (p' :ValidPartition)
+    function {:timeLimitMultiplier 4} {:opaque} ComputeFinest(equiv: (nat, nat) --> bool): (p' :ValidPartition)
       requires this.IsValid()
       requires |elem| == 1
       requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
       requires IsEquivRel(equiv, n)
 
       ensures forall i:: 0 <= i < |p'.elem| ==> forall y:: y in p'.elem[i]  ==> y < n
+      ensures p'.n == this.n
       ensures AllClassesAreEquiv(p'.elem, equiv, n)
       ensures DisjointClassesAreNonEquiv(p'.elem, equiv, n)
     {
@@ -96,12 +99,13 @@ module PartitionMod {
       * @param  equiv  The equivalence relation.
       * @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
       */
-    function {:timeLimitMultiplier 2} RefineAll(equiv: (nat, nat) --> bool): (p': ValidPartition)
+    function {:timeLimitMultiplier 2} {:opaque} RefineAll(equiv: (nat, nat) --> bool): (p': ValidPartition)
       requires this.IsValid()
       requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
       requires IsEquivRel(equiv, n)
 
       ensures |p'.elem| >= |elem|
+      ensures p'.n == n
       ensures p'.IsValid()
     {
       SizeOfNatsUpToNBound(n, SetU(elem));
@@ -140,7 +144,7 @@ module PartitionMod {
       * @note           Because each x is necessarily in a class we always return 
       *                 an index in p.elem.
       */
-    function {:tailrecursion true} GetClass(x: nat, index: nat := 0): (c: nat)
+    function {:tailrecursion true} {:opaque} GetClass(x: nat, index: nat := 0): (c: nat)
       requires IsValid()
       requires 0 <= x < n
       requires index < |elem|
@@ -160,7 +164,7 @@ module PartitionMod {
       *  @param  x   An element in {0, ..., n - 1}.
       *  @returns    The representative of the class of x.
       */
-    function GetClassRepOf(x: nat): (c: nat)
+    function {:opaque} GetClassRepOf(x: nat): (c: nat)
       requires IsValid()
       requires 0 <= x < n
       ensures c < n
@@ -172,7 +176,7 @@ module PartitionMod {
     /**
       * Get the representatives of the classes of a sequence of elements.
       */
-    function GetClassRepOfSeqs(xs: seq<nat>): (c: seq<nat>)
+    function {:opaque} GetClassRepOfSeqs(xs: seq<nat>): (c: seq<nat>)
       requires IsValid()
       requires forall i:: 0 <= i < |xs| ==> 0 <= xs[i] < n
       ensures |xs| == |c|
@@ -227,7 +231,7 @@ module PartitionMod {
     * @note           The sequence of sets returned is a partition of xs.
     * @note           The sequence of sets returned is a coarsest partition of xs.
     */
-  function {:timeLimitMultiplier 2} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
+  function {:timeLimitMultiplier 2} {:opaque} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
     requires forall x:: x in xs ==> x < n
     requires xs != {}
     requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
@@ -260,7 +264,7 @@ module PartitionMod {
     *   @param  n       The size of the set.
     *   @returns        A sequence of sets with some good properties.
     */
-  function SplitAllClasses(xs: seq<set<nat>>, equiv: (nat, nat) --> bool, n: nat): (r: seq<seq<set<nat>>>)
+  function {:opaque} SplitAllClasses(xs: seq<set<nat>>, equiv: (nat, nat) --> bool, n: nat): (r: seq<seq<set<nat>>>)
     requires forall x, i:: x in xs && i in x ==> i < n
     requires AllNonEmpty(xs)
     requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)

@@ -83,8 +83,11 @@ abstract module Minimiser {
     /**
       *  Split all classes according to the class splitter relation.
       */
-    function {:opaquex} ClassSplitter() : ValidPair
+    function {:opaque} ClassSplitter() : (p': ValidPair)
       requires this.IsValid()
+      ensures p'.clazz.n == this.clazz.n
+      ensures p'.aut == this.aut
+      ensures |p'.clazz.elem| >= |this.clazz.elem|
     {
       IsEquivRelF();
       this.(clazz := clazz.RefineAll(Splitter))
@@ -126,7 +129,7 @@ abstract module Minimiser {
       */
     lemma IsEquivRelF()
       requires this.IsValid()
-      ensures IsEquivRel(Splitter, aut.SSize())
+      ensures IsEquivRel(Splitter, aut.SSize()) 
     {
       //  Thanks Dafny
     }
