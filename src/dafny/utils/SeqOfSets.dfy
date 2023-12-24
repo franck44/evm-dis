@@ -313,7 +313,7 @@ module SeqOfSets {
 
   /**
     *   Split a sequence of nat according to a function value f.
-    *   Tail recursice version.
+    *   Tail recursivse version.
     */
   function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
     requires index <= |xs|
