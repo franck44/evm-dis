@@ -15,21 +15,28 @@
 include "./MiscTypes.dfy"
 include "./Partition.dfy"
 include "./Automata.dfy"
-include "./SeqOfSets.dfy"
 
 /**  
-  * Provides minimisation of finite deterministic automata.
+  * Provides minimisation of finite deterministic automata of type T.
+  * @param  T   The type of the states of the automaton.
+  * @note       The type must support equality, not be a reference type, and have   
   */
 abstract module Minimiser {
 
-  import opened MiscTypes
+  import MiscTypes
   import opened PartitionMod
   import opened Automata
-  import opened SeqOfSets
 
+  /**
+    * The type of the states of the automaton and a default state.
+    */
   type T(!new,==)
   const DEFAULT_STATE: T
 
+  /**
+    *  A valid automaton is an automaton that satisfies the IsValid predicate.
+    *   i.e. the size of the automaton is the same as the sie pf the partition.
+    */
   type ValidPair = p: Pair | p.IsValid() witness Pair(Auto().AddState(DEFAULT_STATE), Partition(1, [{0}]))
 
   /**
@@ -138,13 +145,13 @@ abstract module Minimiser {
     {
       if index == |aut.states| then acc
       else
-        var succs := MapP(clazz.GetClassRepOfSeqs(aut.transitionsNat[index]), (i: nat) requires 0 <= i < aut.SSize() => aut.states[i]);
+        var succs := MiscTypes.MapP(clazz.GetClassRepOfSeqs(aut.transitionsNat[index]), (i: nat) requires 0 <= i < aut.SSize() => aut.states[i]);
         var a' := MapToClasses(acc.AddEdges(aut.states[clazz.GetClassRepOf(index)], succs), index + 1);
         a'
     }
 
-    //  Helpers 
-    
+    //  Helpers
+
     /**    
       *   Iterate refining until no more splits are possible.
       */
