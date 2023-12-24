@@ -22,7 +22,7 @@ include "../proofobjectbuilder/SegmentBuilder.dfy"
 include "../utils/Hex.dfy"
 include "../utils/Automata.dfy"
 include "../utils/Partition.dfy"
-include "../utils/MinimiserAState.dfy"
+include "../utils/MinimiserGState.dfy"
 include "../CFGBuilder/BuildCFGSimplified.dfy"
 
 /**
@@ -43,7 +43,7 @@ module EVMObject {
   import Automata
   import opened DFSSimple
   import opened PartitionMod
-  import opened AStateMinimiser
+  import opened GStateMinimiser
   import opened WeakPre
   import opened StackElement
 
@@ -282,7 +282,7 @@ module EVMObject {
         assert IsEquivRel(e, a1.SSize());
         var p2 := p1.ComputeFinest(e);
 
-        var vp: AStateMinimiser.Pair := Pair(a1, p2);
+        var vp: GStateMinimiser.Pair := Pair(a1, p2);
         var a2 := vp.Minimise();
         return a2;
       }

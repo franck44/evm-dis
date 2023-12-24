@@ -12,20 +12,18 @@
  * under the License.
  */
 
-// include "./MiscTypes.dfy"
-// include "./Partition.dfy"
-// include "./Automata.dfy"
-// include "./SeqOfSets.dfy"
-include "./Minimiser.dfy" 
-include "./State.dfy"
-  
-/**  
-  * Provides minimisation of finite deterministic automata.
-  */
-module AStateMinimiser refines Minimiser {
 
-  import opened State 
-  type T = State.AState
-  const DEFAULT_STATE := State.DEFAULT_VALIDSTATE
+include "./Minimiser.dfy" 
+include "./CFGState.dfy"
+
+/**  
+  * Provides minimisation of finite deterministic automata
+  * with states of type GState.
+  */
+module GStateMinimiser refines Minimiser {
+
+  import opened CFGState 
+  type T = CFGState.GState
+  const DEFAULT_STATE := CFGState.DEFAULT_GSTATE 
 
 }
