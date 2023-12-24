@@ -60,14 +60,14 @@ module LinSegments {
       * the lastInst.
       */
     predicate IsValid() {
-     && (forall i:: 1 <= i < |Ins()| ==> Ins()[i].op.opcode != JUMPDEST)
-     && match this
-      case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
-      case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
-      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
-      case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
-      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID && lastIns.op.opcode != JUMPI
-      case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
+      && (forall i:: 1 <= i < |Ins()| ==> Ins()[i].op.opcode != JUMPDEST)
+      && match this
+         case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
+         case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
+         case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
+         case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
+         case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID && lastIns.op.opcode != JUMPI
+         case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
     }
 
     /**
@@ -123,14 +123,48 @@ module LinSegments {
     /**
       * Collect the JUMPDEST in a sequence of instructions.
       */
-    function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := Ins()): seq<nat>
+    ghost function CollectAllJumpDest(rest: seq<Instruction>): seq<nat>
     {
       if |rest| == 0 then []
       else
       if rest[0].op.opcode == JUMPDEST then
-        [rest[0].address] + CollectJumpDest(rest[1..])
+        [rest[0].address] + CollectAllJumpDest(rest[1..])
       else
-        CollectJumpDest(rest[1..])
+        CollectAllJumpDest(rest[1..])
+    }
+
+    /**
+      *  In a valid segment, a JUMPDEST can only be the first instruction.
+      *  As per lemma xxx, so we can optimise the collection of JUMPDEST.
+      * Moreover there is ta ost one JUMPDEST in a valid segment.
+      */
+    function CollectJumpDest(): (r: seq<nat>)
+      requires this.IsValid()
+      ensures |r| <= 1
+    {
+      if Ins()[0].op.opcode == JUMPDEST then [Ins()[0].address]
+      else []
+    }
+
+    /**
+      *  In a valid segment, a JUMPDEST can only be the first instruction.
+      * As a result CollectJumpDest is the same as CollectAllJumpDest.
+      */
+    lemma CollectOnlyFirst()
+      requires this.IsValid()
+      ensures CollectJumpDest() == CollectAllJumpDest(Ins())
+    {
+      CollectIsEmpty(Ins()[1..]);
+    }
+
+    /**
+      * In a segment with no JUMPDEST, CollectAllJumpDest is empty.
+      */
+    lemma CollectIsEmpty(x: seq<Instruction>)
+      requires this.IsValid()
+      requires forall i:: 0 <= i < |x| ==> x[i].op.opcode != JUMPDEST
+      ensures CollectAllJumpDest(x) == []
+    {   //  Thanks Dafny
     }
 
     /**
@@ -177,10 +211,10 @@ module LinSegments {
     }
 
     /**
-     *  Number of successors of a segment.
-     *  @note   JUMPI has 2, JUMP and mormal segments have 1, 
-     *          and RETURN/STOP/INVALID have 0.
-     */
+      *  Number of successors of a segment.
+      *  @note   JUMPI has 2, JUMP and mormal segments have 1, 
+      *          and RETURN/STOP/INVALID have 0.
+      */
     function NumberOfExits(): nat
       ensures NumberOfExits() <= 2
     {
