@@ -32,6 +32,12 @@ abstract module Minimiser {
 
   type ValidPair = p: Pair | p.IsValid() witness Pair(Auto().AddState(DEFAULT_STATE), Partition(1, [{0}]))
 
+  /**
+    *  Make a valid pair from an automaton and a partition.
+    *  @param  aut     An automaton.
+    *  @param  clazz   A partition.
+    *  @returns        A valid pair with aut, clazz.
+    */
   function MakeInit(aut: ValidAuto<T>, clazz: ValidPartition): ValidPair
     requires aut.SSize() == clazz.n
     ensures MakeInit(aut, clazz).IsValid()
@@ -45,10 +51,10 @@ abstract module Minimiser {
   datatype Pair = Pair(aut: ValidAuto<T>, clazz: ValidPartition) {
 
     /** A valid Pair must have compatible sizes.
-     *  Each stateId of the automaton must be in the range of the partition.
-     *  @returns  True if and only if the sizes are compatible.
-     */
-    predicate IsValid()
+      *  Each stateId of the automaton must be in the range of the partition.
+      *  @returns  True if and only if the sizes are compatible.
+      */
+    ghost predicate IsValid()
     {
       aut.SSize() == clazz.n
     }
@@ -56,11 +62,9 @@ abstract module Minimiser {
     /**
       * The classes of the true and false successors.
       * @param  x   A state.
-      * @returns    A pair of optional successors  (s1, s2) such that 
-      *             if x -- true -> xT then s1 is Some(Class(xT)) and None otherwise.
-      *             if x -- false -> xFthen s2 is Some(Class(xF)) and None otherwise.
+      * @returns    The successor classes of x.
       */
-    function ClassSucc(x: nat): seq<nat>
+    function {:opaque} ClassSucc(x: nat): seq<nat>
       requires this.IsValid()
       requires x < aut.SSize()
       ensures forall k:: k in ClassSucc(x) ==> k < |clazz.elem|
@@ -70,9 +74,9 @@ abstract module Minimiser {
     }
 
     /**
-     *  Split all classes according to the class splitter relation.
-     */
-    function ClassSplitter() : ValidPair
+      *  Split all classes according to the class splitter relation.
+      */
+    function {:opaquex} ClassSplitter() : ValidPair
       requires this.IsValid()
     {
       IsEquivRelF();
@@ -86,7 +90,7 @@ abstract module Minimiser {
       *  @returns   True if and only if class successors of the 
       *              two states are equal.
       */
-    function Splitter(x: nat, y: nat): bool
+    function {:opaque} Splitter(x: nat, y: nat): bool
       requires this.IsValid()
       requires x < aut.SSize() && y < aut.SSize()
       ensures Splitter(x, y) <==> ClassSucc(x) == ClassSucc(y)
@@ -98,11 +102,13 @@ abstract module Minimiser {
       *  Minimise the automaton.
       *  @returns  The minimised automaton.
       */
-    function Minimise(): ValidAuto<T>
+    function {:opaque} Minimise(): (a: ValidAuto<T>)
       requires this.IsValid()
+      ensures forall s:: s in a.states ==> s in this.aut.states
     {
       //  Compute fix point of splitter relation
       var p1 := IterSplit(this);
+      assert p1.aut == this.aut;
       //  Compute the new automaton
       p1.MapToClasses()
 
@@ -123,29 +129,35 @@ abstract module Minimiser {
       * @param  index   The index of the state to be processed.      
       * @returns  The new automaton.
       */
-    function MapToClasses(acc: ValidAuto<T> := Auto(), index: nat := 0): ValidAuto<T>
+    function {:timeLimitMultiplier 3} {:opaque} MapToClasses(acc: ValidAuto<T> := Auto(), index: nat := 0): (r: ValidAuto<T>)
       requires this.IsValid()
       requires index <= |aut.states|
+      requires forall s:: s in acc.states ==> s in this.aut.states
+      ensures forall s:: s in r.states ==> s in this.aut.states
       decreases |aut.states| - index
     {
       if index == |aut.states| then acc
       else
         var succs := MapP(clazz.GetClassRepOfSeqs(aut.transitionsNat[index]), (i: nat) requires 0 <= i < aut.SSize() => aut.states[i]);
-        MapToClasses(acc.AddEdges(aut.states[clazz.GetClassRepOf(index)], succs), index + 1)
+        var a' := MapToClasses(acc.AddEdges(aut.states[clazz.GetClassRepOf(index)], succs), index + 1);
+        a'
     }
 
+    //  Helpers 
+    
+    /**    
+      *   Iterate refining until no more splits are possible.
+      */
+    static function {:opaque} IterSplit(pp: ValidPair): (r: ValidPair)
+      ensures r.aut == pp.aut
+      decreases pp.clazz.n - |pp.clazz.elem|
+    {
+      var p1 := pp.ClassSplitter();
+      if |p1.clazz.elem| == |pp.clazz.elem| then pp
+      else IterSplit(p1)
+    }
   }
 
-  //   Helpers.
 
-  /**    
-    *   Iterate refining until no more splits are possible.
-    */
-  function IterSplit(pp: ValidPair): ValidPair
-    decreases pp.clazz.n - |pp.clazz.elem|
-  {
-    var p1 := pp.ClassSplitter();
-    if |p1.clazz.elem| == |pp.clazz.elem| then pp
-    else IterSplit(p1)
-  }
+
 }
