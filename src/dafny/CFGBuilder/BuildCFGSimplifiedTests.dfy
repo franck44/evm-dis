@@ -57,7 +57,7 @@ module BuildCFGSimplifiedTests {
     expect a1.states == [0, 1, 3, 2];
     assert a1.IsValid();
     // print "a1 size: ", a1.SSize(), "\n";
-    // a1.ToDot(x => NatToString(x));
+    // a1.ToDot(x requires x in a1.states => NatToString(x));
   }
 
   method {:test} Test2() {
@@ -67,7 +67,7 @@ module BuildCFGSimplifiedTests {
     expect a1.transitionsNat == map[0 := [1, 3], 1 := [2, 5], 2 := [3, 4], 3 := [1], 4 := [3], 5 := [2]];
     assert a1.IsValid();
     // print "a1 size ", a1.SSize(), "\n";
-    // a1.ToDot(x => NatToString(x));
+    // a1.ToDot(x requires x in a1.states => NatToString(x));
   }
 
   function f(n: nat, xs: seq<nat>): Option<nat>
@@ -77,7 +77,7 @@ module BuildCFGSimplifiedTests {
   }
 
   //  Simple example
-  method {:test} {:verify false} Test10()
+  method {:test} {:verify true} Test10()
   {
     {
       //  Push and JUMP
@@ -133,7 +133,7 @@ module BuildCFGSimplifiedTests {
       var a1 := p.BuildCFG();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
-      a1.ToDot((x: GState) => p.ToHTML(x));
+      a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x));
 
       //    Minimisation
       expect a1.SSize() >= 1;
@@ -141,7 +141,7 @@ module BuildCFGSimplifiedTests {
 
       //  create an equivalence relation on nodes
       var e :=
-        (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
+        (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize() 
         => if x == y then
             true
           else
@@ -153,13 +153,13 @@ module BuildCFGSimplifiedTests {
 
       var vp: GStateMinimiser.Pair := Pair(a1, p1);
       var a2 := vp.Minimise();
-      a2.ToDot((x: GState) => p.ToHTML(x));
+      a2.ToDot((x: GState) requires x in a2.states => p.ToHTML(x));
 
     }
   }
 
   // Simple example
-  method {:main} {:verify false} Main(args: seq<string>)
+  method {:main} {:verify true} Main(args: seq<string>)
   {
     {
       //  Push and JUMP
@@ -174,7 +174,7 @@ module BuildCFGSimplifiedTests {
         var a1 := p.BuildCFG();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
-        a1.ToDot((x: GState) => p.ToHTML(x));
+        a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x)); 
 
         //  Minimisation
         expect a1.SSize() >= 1;
@@ -183,7 +183,7 @@ module BuildCFGSimplifiedTests {
         //  create an equivalence relation on nodes
         var e :=
           (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
-          => if x == y then
+          => if x == y then 
               true
             else
               match (a1.states[x], a1.states[y])
@@ -191,11 +191,12 @@ module BuildCFGSimplifiedTests {
               case (_, _) => false
           ;
         assert IsEquivRel(e, a1.SSize());
-        var p2 := p1.ComputeFinest(e);
-
-        var vp: GStateMinimiser.Pair := Pair(a1, p2);
+        var p2 := p1.ComputeFinest(e); 
+        assert a1.IsValid();
+        assert p2.n == a1.SSize();
+        var vp: GStateMinimiser.ValidPair := Pair(a1, p2);
         var a2 := vp.Minimise();
-        a2.ToDot((x: GState) => p.ToHTML(x));
+        a2.ToDot((x: GState) requires x in a2.states => p.ToHTML(x));
       } else {
         print "No segments\n";
       }
