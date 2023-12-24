@@ -57,9 +57,13 @@ module Automata {
       * Add a state to the automaton.
       * @param i  The state to add.
       */
-    function {:timeLimitMultiplier 8} AddState(i: T): (a: ValidAuto<T>)
+    function {:timeLimitMultiplier 8} {:opaque} AddState(i: T): (a: ValidAuto<T>)
       requires IsValid()
       ensures i in a.states
+      ensures forall s:: s in states ==> s in a.states
+      ensures forall s:: s in a.states ==> s in states || s == i
+      ensures i in states ==> a == this
+      ensures i !in states ==> a.SSize() == SSize() + 1
       ensures a.IsValid()
     {
       if i in states then
@@ -76,9 +80,12 @@ module Automata {
     /**
       * Add several states to the automaton.
       */
-    function AddStates(xs: seq<T>): (a: ValidAuto<T>)
+    function {:opaque} AddStates(xs: seq<T>): (a: ValidAuto<T>)
       requires IsValid()
       ensures a.IsValid()
+      ensures forall s:: s in states ==> s in a.states
+      ensures forall j:: 0 <= j < |xs| ==> xs[j] in a.states
+      ensures forall s:: s in a.states ==> s in states || s in xs
       decreases |xs|
     {
       if |xs| == 0 then this
@@ -93,10 +100,16 @@ module Automata {
       * @note     If i or j are not in the automaton then they are added.
       * @note     The transitions from i to j are in a seq, and j is added at the end of the seq.
       */
-    function {:timeLimitMultiplier 8} AddEdge(i: T, j: T): (a: ValidAuto<T>)
+    function {:timeLimitMultiplier 8} {:opaque} AddEdge(i: T, j: T): (a: ValidAuto<T>)
       requires IsValid()
+      ensures i in a.states
+      ensures j in a.states
+      ensures forall s:: s in states ==> s in a.states
+      ensures forall s:: s in a.states ==> s in states || s == i || s == j
     {
       var a1 := this.AddState(i).AddState(j);
+      assert i in a1.states;
+      assert j in a1.states;
       if a1.indexOf[j] in a1.transitionsNat[a1.indexOf[i]] then
         a1
       else
@@ -110,13 +123,22 @@ module Automata {
     /**
       *  Add several transitions from i to all the elements of js.
       */
-    function AddEdges(i: T, js: seq<T>): (a: ValidAuto<T>)
-      requires IsValid()
+    function {:timeLimitMultiplier 2} {:opaque} AddEdges(i: T, js: seq<T>, index: nat := 0): (a: ValidAuto<T>)
+      requires this.IsValid()
+      requires index <= |js|
+      requires forall j:: 0 <= j < index ==> js[j] in this.states
       ensures a.IsValid()
-      decreases |js|
+      ensures i in a.states
+      ensures forall s:: s in this.states ==> s in a.states
+      ensures forall j:: 0 <= j < |js| ==> js[j] in a.states
+      ensures forall s:: s in a.states ==> s in this.states || s == i || s in js
+      decreases |js| - index
     {
-      if |js| == 0 then this
-      else this.AddEdge(i, js[0]).AddEdges(i, js[1..])
+      if |js| == index then this.AddState(i)
+      else
+        var a1 := this.AddEdge(i, js[index]);
+        var a2 := a1.AddEdges(i, js, index + 1);
+        a2
     }
 
     /**
@@ -131,7 +153,7 @@ module Automata {
     /**
       *  The number of transitions.
       */
-    function TSize(index: nat := 0): nat
+    function {:opaque} TSize(index: nat := 0): nat
       requires this.IsValid()
       requires index <= |states|
       decreases |states| - index
@@ -146,7 +168,7 @@ module Automata {
       *  @param s  The state.
       *  @returns  The successors of s.
       */
-    function Succ(s: T): (r: seq<T>)
+    function {:opaque} Succ(s: T): (r: seq<T>)
       requires this.IsValid()
       requires s in states
       ensures r == transitions[s]
@@ -159,7 +181,7 @@ module Automata {
       *  @param      i  The id of the source state.
       *  @returns        The ids of the successors.
       */
-    function SuccNat(i: nat): (r: seq<nat>)
+    function {:opaque} SuccNat(i: nat): (r: seq<nat>)
       requires this.IsValid()
       requires i < |states|
       ensures forall j: nat :: 0 <= j < |r| ==> r[j] < |states|
@@ -168,8 +190,9 @@ module Automata {
     }
 
     /** Print to Dot format. */
-    method {:print} ToDot(ToString: T -> string)
+    method {:print} ToDot(ToString: T --> string)
       requires this.IsValid()
+      requires forall s:: s in states ==> ToString.requires(s) 
     {
       print "digraph G {\n";
       print "// Number of states: ", SSize(), "\n";
