@@ -110,6 +110,12 @@ module DFSSimple {
     }
   }
 
+  ghost predicate Inductive<T(!new)>(f: T --> seq<T>)
+  {
+    forall t: T:: f.requires(t) ==> (forall i:: 0 <= i < |f(t)| ==> f.requires(f(t)[i]))
+  }
+
+
   /** Depth first search g from s. 
     * @param g          A graph to unfold.
     * @param s          The initial node.
@@ -121,19 +127,24 @@ module DFSSimple {
     * @param debugInfo  Print debug information.
     * @returns          The automaton and the history of visited nodes.
     */
-  method DFS<T(!new)>(
-    succ: T -> seq<T>,
+  method {:timeLimitMultiplier 10} DFS<T(!new)>(
+    succ: T --> seq<T>,
     s: T,
     history: History<T>,
     a: ValidAuto<T>,
-    maxDepth: nat := 0, debugInfo: bool := false) returns (a': ValidAuto<T>, h': History<T>)
+    maxDepth: nat := 0,
+    debugInfo: bool := false) returns (a': ValidAuto<T>, h': History<T>)
 
-    // requires a.IsValid2()
     requires history.IsValid()
+    requires forall s:: s in history.visited ==> succ.requires(s)
+    requires forall s:: s in a.states ==> succ.requires(s)
+    requires succ.requires(s) && Inductive(succ)
     requires s in history.visited
-    // ensures a'.IsValid2()
+
     ensures h'.IsValid()
     ensures |h'.path| == |history.path|
+    ensures forall s:: s in h'.visited ==> succ.requires(s)
+    ensures forall s:: s in a'.states ==> succ.requires(s)
 
     decreases maxDepth
   {
@@ -149,6 +160,8 @@ module DFSSimple {
         invariant a'.IsValid()
         invariant h'.IsValid()
         invariant |h'.path| == |history.path|
+        invariant  forall s:: s in h'.visited ==> succ.requires(s)
+        invariant forall s:: s in a'.states ==> succ.requires(s)
       {
         if debugInfo { print "Unfolding ", s, " -> ", succ(s)[i], "\n"; }
         var n := h'.IsCovered(succ(s)[i]);
