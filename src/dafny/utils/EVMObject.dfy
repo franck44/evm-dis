@@ -60,7 +60,6 @@ module EVMObject {
   datatype EVMObj = EVMObj(
     xs: ValidSeqValidLinSeg,
     jumpDests: seq<nat> := CollectJumpDests(xs),
-    startAddresses: seq<nat> := CollectStartAddresses(xs),
     PCToSegMap: map<nat, nat> := CollectThem(xs)
     // PCToSegMap: map<nat, nat> := CollectPCToSeg(xs) . does not work with VsCode plugin ...hangs up
   ) {
@@ -76,13 +75,6 @@ module EVMObject {
       if |ls| == 0 then 0
       else ls[0].Size() + Size(ls[1..])
     }
-
-    // lemma foo101(s: ValidLinSeg, c:seq<nat>)
-    //   requires |c| <= s.NumberOfExits()
-    //   ensures forall k {:nowarn}:: 0 <= k < |c| ==> k < s.NumberOfExits()
-    //   ensures forall k:: 0 <= k < |c| ==> s.IsValidExit(k)
-    // {   //  Thanks Dafny
-    // }
 
     /**
       * Compute the next abstract states from a given abstract state.
@@ -130,9 +122,9 @@ module EVMObject {
       requires s.EState?
     {
       if |exits| == 0 then s
-      else match PCToSeg(s.pc)
-           case Some(seg) =>
-             if xs[seg].NumberOfExits() > exits[0] then
+      else if s.pc in PCToSegMap then
+        var seg := PCToSegMap[s.pc];
+        if xs[seg].NumberOfExits() > exits[0] then
                foo(xs[seg], exits[0]);
                var s' := xs[seg].Run(s, exits[0], jumpDests);
                if s'.EState? then
@@ -144,8 +136,8 @@ module EVMObject {
              else
                //  exit does not exist
                Error("Exit does not exist")
-           case None => Error("No segment found for state " + s.ToString())
-
+      else 
+        Error("No segment found for state " + s.ToString())
     }
 
     /**
@@ -265,6 +257,7 @@ module EVMObject {
         History(DEFAULT_GSTATE, [DEFAULT_GSTATE]),
         Automata.Auto(),
         maxDepth);
+
       if !minimise || a1.SSize() == 0 {
         return a1;
       } else {
@@ -286,14 +279,7 @@ module EVMObject {
         var a2 := vp.Minimise();
         return a2;
       }
-
     }
-
-    // lemma foo303()
-    //   requires this.IsValid()
-    //   requires |xs| >= 1
-    //   ensures NextG.requires(DEFAULT_GSTATE)
-    // { assert NextG.requires(DEFAULT_GSTATE); }
 
     /**
       * Generate the HTML representation of a given abstract state.
@@ -309,64 +295,6 @@ module EVMObject {
         //  and we can use xs[a.segNum]
         "<" + DOTSeg(xs[a.segNum], a.segNum).0 +">"
     }
-
-    /**
-      *   Retrieve num of segment that correspond to a PC if any.
-      */
-    // function PCToSeg(pc: nat, rank: nat := 0): (r: Option<nat>)
-    //   requires this.IsValid()
-    //   requires rank <= |xs|
-    //   ensures r.Some? ==> r.v < |xs|
-    //   ensures r.Some?  ==> xs[r.v].StartAddress() == pc
-    //   //   ensures pc in startAddresses ==> r.Some?
-    //   decreases |xs| - rank
-    // {
-    //   if rank == |xs| then None
-    //   else if xs[rank].StartAddress() == pc then Some(rank)
-    //   else PCToSeg(pc, rank + 1)
-    // }
-
-    function {:opaque} PCToSeg(pc: nat): (r: Option<nat>)
-      requires this.IsValid()
-      ensures r.Some? ==> r.v < |xs| && xs[r.v].StartAddress() == pc
-    {
-      if pc in PCToSegMap then
-        Some(PCToSegMap[pc])
-      else
-        None
-    }
-
-    // function CollectStartAddressOfSegs(): (r: seq<nat>)
-    //   ensures |xs| == |r|
-    // {
-    //   CollectStartAddresses(xs)
-    // }
-
-    // function CollectStartAddressesV2(index: nat := 0, m: map<nat, nat> := map[]): (r: map<nat, nat>)
-    //   requires index <= |xs|
-    //   requires |m| <= index <= |xs|
-    //   requires forall i:: 0 <= i < |m| ==> m[i] == xs[i].StartAddress()
-    //   ensures |r| <= |xs|
-    //   ensures forall i:: 0 <= i < |r| ==> r[i] == xs[i].StartAddress()
-    //   decreases |xs| - index
-    // {
-    //   if index == |xs| then m
-    //   else
-    //     // map[xs[index].StartAddress() := index] +
-    //     CollectStartAddressesV2(index + 1, m[xs[index].StartAddress() := index] )
-    // }
-
-    // lemma foo101(pc: nat)
-    //     requires pc in CollectStartAddressOfSegs()
-    //     // ensures PCToSeg(pc).Some?
-    // {
-    //     var k1 :| k1 in CollectStartAddressOfSegs() && k1 == pc;
-    //     var k :| 0 <= k < |CollectStartAddressOfSegs()| && CollectStartAddressOfSegs()[k] == pc;
-    //     assert 0 <= k < |xs|;
-    //     assert xs[k].StartAddress() == pc;
-    //     assert PCToSeg(pc).Some?;
-    // }
-
 
   }
 
@@ -404,15 +332,6 @@ module EVMObject {
       xs[0].CollectJumpDest() + CollectJumpDests(xs[1..])
   }
 
-  function {:opaque} CollectStartAddresses(segs: seq<ValidLinSeg>): (r: seq<nat>)
-    ensures |segs| == |r|
-    ensures forall i:: 0 <= i < |r| ==> r[i] == segs[i].StartAddress()
-  {
-    if |segs| == 0 then []
-    else
-      [segs[0].StartAddress()] + CollectStartAddresses(segs[1..])
-  }
-
   /**
     *  Collect the mapping from PC to segment number.
     *  @note This is essentially the same as CollectPCToSeg but with less pre-conditions.
@@ -432,7 +351,7 @@ module EVMObject {
   /** 
     *  Collect the mapping from PC to segment number.
     *  @param  xs      A list of segments.
-    *  @param  m       The map that has been built so far. 
+    *  @param  m       The part of the map that has been built so far. 
     *  @param  index   The current index in the list of segments.
     *  @returns        The map from PC to segment number.
     *  @note           The resulkt satisfies some properties given by the ensures clauses.
