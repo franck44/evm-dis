@@ -16,7 +16,7 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
-include "./CFGBuilder/BuildCFG.dfy"
+// include "./CFGBuilder/BuildCFGSimplified.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
@@ -32,15 +32,15 @@ module Driver {
 
   import opened BinaryDecoder
   import opened Splitter
-  import opened PrettyPrinters 
+  import opened PrettyPrinters
   import opened EVMObject
   import opened ArgParser
-  import opened BuildCFGraph 
+    //   import opened BuildCFGraph
   import opened MiscTypes
   import opened State
   import opened Int
   import opened Statistics
-  import opened ProofObjectBuilder 
+  import opened ProofObjectBuilder
 
   /**
     *  Read the input string
@@ -71,12 +71,12 @@ module Driver {
       //  Make sure the string is Hexa and has even length
       if |args[1]| == 0 {
         print "String must be non empty \n";
-      } else if |args[1]| % 2 != 0 { 
+      } else if |args[1]| % 2 != 0 {
         print "String must be non empty and have even length, length is ", |args[1]|, "\n";
       } else if Hex.IsHexString(if args[1][..2] == "0x" then args[1][2..] else args[1]) {
         var x := Disassemble(if args[1][..2] == "0x" then args[1][2..] else args[1]);
         print "Disassembled code:\n";
-        PrintInstructions(x); 
+        PrintInstructions(x);
         print "--------------- Disassembled ---------------------\n";
       } else {
         print "String must be hexadecimal\n";
@@ -87,7 +87,7 @@ module Driver {
     } else {
       // Collect the arguments
       var stringToProcess := args[|args| - 1];
-        if |stringToProcess| == 0 {
+      if |stringToProcess| == 0 {
         print "String must be non empty \n";
       } else if |stringToProcess| % 2 != 0 {
         print "String must have even length, length is ", |stringToProcess|, "\n";
@@ -136,29 +136,28 @@ module Driver {
           print "----------------- Proof -------------------\n";
         }
 
+
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
           print "// maxDepth is:", cfgDepthOpt, "\n";
-          //  Build CFG upto depth
-          var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);
-          var g := g1.Graph();
+          //    @todo figure out how to merge the following two branches
+          //    there is a lot of redundancy,
           if rawOpt {
-            print stats.PrettyPrint();
-            print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
+            //  Build CFG upto depth
+            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);  
+            assert a1.IsValid();
+            // print stats.PrettyPrint();
+            print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
             print "// Raw CFG\n";
-            print g.DOTPrint(y, noTable, fancy);
+            a1.ToDot(s requires s in a1.states => prog.ToHTML(s) );
             print "//----------------- Raw CFG -------------------\n";
           } else {
             //  Minimise
-            var g' := g.Minimise();
-            expect g'.IsValid();
-            assert g'.maxSegNum < |y|;
-            var g2 := g.Minimise(true, y);
-            print stats.PrettyPrint();
-            print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
-            print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
-            print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
-            print "// Minimised CFG\n";
-            print g'.DOTPrint(y, noTable, fancy);
+            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);  
+            assert a1.IsValid();
+            // print stats.PrettyPrint();
+            print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
+            print "// Raw CFG\n";
+            a1.ToDot(s requires s in a1.states => prog.ToHTML(s) );
             print "//----------------- Minimised CFG -------------------\n";
           }
         } else {
