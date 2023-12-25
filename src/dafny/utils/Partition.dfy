@@ -187,8 +187,6 @@ module PartitionMod {
       if |xs| == 0 then []
       else [GetClassRepOf(xs[0])] + GetClassRepOfSeqs(xs[1..])
     }
-
-
   }
 
   //    Helpers
@@ -287,7 +285,7 @@ module PartitionMod {
   /**
     *   Pretty print a set.
     */
-  method {:tailrecursion true} PrintPartition(p: Partition)
+  method PrintPartition(p: Partition)
   {
     for k := 0 to |p.elem| {
       var setToSeq := SetToSequence(p.elem[k]);
