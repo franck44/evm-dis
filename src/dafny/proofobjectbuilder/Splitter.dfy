@@ -63,7 +63,7 @@ module Splitter {
     *   @note   Build a LinSeg for each section ending with a Jump or 
     *           until end of sequence.
     */
-  function SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): (r: seq<ValidLinSeg>)
+  function {:opaque} SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): (r: seq<ValidLinSeg>)
     requires forall i, i':: 0 <= i < i' < |xs| ==> xs[i].address < xs[i'].address
     requires forall i:: 1 <= i < |curseq| ==> curseq[i].op.opcode != JUMPDEST
     requires forall i:: 0 <= i < |collected| ==> |collected[i].Ins()| > 0

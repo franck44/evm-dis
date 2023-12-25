@@ -29,6 +29,8 @@ module OpcodeDecoder {
     *   @param op   The hex/u8 value to decode.
     *   @returns    The readable opcode that corresponds to `op`.
     *   @note       If opcode is not in the set of EVM opcodes, returns `INVALID`.
+    *   @note       Don't make it {:opaque} as othewise the instruction that corresponds 
+    *               to opcode is not knowm and cannot proved to be Valid.
     */
   function Decode(op: u8): Opcode
     ensures Decode(op).IsValid()
