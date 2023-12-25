@@ -22,9 +22,9 @@ module PartitionMod {
  
   import opened SeqOfSets
   import opened MiscTypes 
- 
+  
   /** A Valid partition. */
-  type ValidPartition = x: Partition | x.IsValid() witness Partition(1, [{0}])
+  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1) // Partition(1, [{0}])
  
   /**
     *   Generate the trivial and valid partition of {0, ..., n - 1}.
@@ -32,7 +32,7 @@ module PartitionMod {
     *   @return     A valid partition of {0, ..., n - 1} with a single class
     *               containing all the elements.    
     */
-  function {:opaque} MakeInit(n: nat): (p: ValidPartition)
+  function {:opaque} MakeInit(n: nat): (p: Partition)
     requires n > 0
     ensures p.IsValid()
     ensures |p.elem| == 1
@@ -40,7 +40,7 @@ module PartitionMod {
   {
     var s := set q {:nowarn} | 0 <= q < n;
     assert {0} <= s;
-    // reveal_SetU();
+    reveal_SetU();
     assert SetN([s], n);
     Partition(n, [s])
   }
@@ -248,9 +248,10 @@ module PartitionMod {
     ensures forall i, i', x, x':: (0 <= i < i' < |r| &&  x in r[i] && x' in r[i']) ==> !equiv(x, x')
     ensures DisjointClassesAreNonEquiv(r, equiv, n)
   {
-    // reveal_SetU();
+    reveal_SetU(); 
+    reveal_SetToSequence();
     var first := SetToSequence(xs)[0];
-    var xsTrue := set x: nat | x in xs && equiv(first, x);
+    var xsTrue := set x: nat | x in xs && equiv(first, x); 
     assert first in xsTrue;
     var xsFalse := xs - xsTrue;
     if xsFalse == {} then [xsTrue]

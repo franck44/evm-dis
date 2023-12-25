@@ -24,7 +24,7 @@ module SeqOfSets {
   /**
     *   Union of a seq of sets.
     */
-  function {:tailrecursion true} SetU<T>(xs: seq<set<T>>): (r: set<T>)
+  function {:tailrecursion true} {:opaque} SetU<T>(xs: seq<set<T>>): (r: set<T>)
     // ensures forall x:: x in r ==> exists k:: 0 <= k < |xs| && x in xs[k]
     ensures forall k:: 0 <= k < |xs| ==> xs[k] <= SetU(xs)
   {
@@ -62,7 +62,7 @@ module SeqOfSets {
  
   ghost predicate SetN(xs: seq<set<nat>>, n: nat)
   {
-    // reveal_SetU();
+    reveal_SetU();
     SetU(xs) == set z {:nowarn} | 0 <= z < n
   }
 
@@ -107,7 +107,7 @@ module SeqOfSets {
     requires t in SetU(xt)
     ensures exists k:: 0 <= k < |xt| && t in xt[k]
   { //  Thanks Dafny
-    // reveal_SetU();
+    reveal_SetU();
   }
 
   /**   
@@ -159,7 +159,7 @@ module SeqOfSets {
     requires AllNonEmpty(xs)
     ensures |SetU(xs)| >= |xs|
   {
-    // reveal_SetU();
+    reveal_SetU();
     if |xs| == 0 {
       //  
     } else {
@@ -207,9 +207,10 @@ module SeqOfSets {
     *   Iterate over sets. 
     *   @link{https://leino.science/papers/krml275.html}
     */
-  function {:tailrecursion true} {:opaquex} SetToSequence(s: set<nat>): (r: seq<nat>)
+  function {:tailrecursion true} {:opaque} SetToSequence(s: set<nat>): (r: seq<nat>)
     ensures |s| == |r| 
-    ensures forall i :: i in s <==> i in r
+    ensures forall i :: i in s ==> i in r
+    ensures forall i :: 0 <= i < |r|  ==> r[i] in s
   {
     if s == {} then []
     else
@@ -242,7 +243,7 @@ module SeqOfSets {
   lemma DistribUnion<T>(a : seq<set<T>>, b: seq<set<T>>)
     ensures SetU(a + b) == SetU(a) + SetU(b)
   {
-    // reveal_SetU();
+    reveal_SetU();
     if |a| == 0 {
       assert [] + b == b;
       assert SetU(a) == {};
@@ -272,7 +273,7 @@ module SeqOfSets {
     requires index < |xs|
     ensures SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]) == SetU(xs)
   {
-    // reveal_SetU();
+    reveal_SetU();
     calc == {
       SetU(xs);
       { assert xs == xs[..index] + [xs[index]] + xs[index + 1..] ; }
@@ -391,7 +392,7 @@ module SeqOfSets {
     requires forall i:: 0 <= i < |r| ==> SetU(r[i]) == xs[i]
     ensures SetU(Flatten(r)) == SetU(xs)
   {
-    // reveal_SetU();
+    reveal_SetU();
     if |xs| == 0 {
       //  Thanks Dafny
     } else {
