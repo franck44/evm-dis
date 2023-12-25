@@ -19,13 +19,13 @@ include "./MiscTypes.dfy"
   * Provides partitions of sets of the form {0, ..., n}.
   */
 module PartitionMod {
-
+ 
   import opened SeqOfSets
-  import opened MiscTypes
-
+  import opened MiscTypes 
+ 
   /** A Valid partition. */
   type ValidPartition = x: Partition | x.IsValid() witness Partition(1, [{0}])
-
+ 
   /**
     *   Generate the trivial and valid partition of {0, ..., n - 1}.
     *   @param  n   The size of the set to partition.
@@ -40,6 +40,7 @@ module PartitionMod {
   {
     var s := set q {:nowarn} | 0 <= q < n;
     assert {0} <= s;
+    // reveal_SetU();
     assert SetN([s], n);
     Partition(n, [s])
   }
@@ -64,6 +65,7 @@ module PartitionMod {
       */
     ghost predicate IsValid()
     {
+    //   reveal_SetU(); 
       && n > 0
       && AllNonEmpty(elem)
       && DisjointAnyTwo(elem)
@@ -237,7 +239,7 @@ module PartitionMod {
     requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
     requires IsEquivRel(equiv, n)
 
-    ensures |r| <= |xs|
+    ensures 1 <= |r| <= |xs|
     ensures SetU(r) == xs
     ensures forall x:: x in SetU(r) ==> x < n
     ensures forall i, i':: i in r && i' in i ==> i' < n
@@ -248,6 +250,7 @@ module PartitionMod {
     ensures forall i, i', x, x':: (0 <= i < i' < |r| &&  x in r[i] && x' in r[i']) ==> !equiv(x, x')
     ensures DisjointClassesAreNonEquiv(r, equiv, n)
   {
+    // reveal_SetU();
     var first := SetToSequence(xs)[0];
     var xsTrue := set x: nat | x in xs && equiv(first, x);
     assert first in xsTrue;

@@ -35,14 +35,14 @@ module SeqOfSets {
   /**
     *   Intersection of a seq of sets.
     */
-  function {:tailrecursion false} SetI<T>(xs: seq<set<T>>): (r: set<T>)
+  function {:tailrecursion false} {:opaque} SetI<T>(xs: seq<set<T>>): (r: set<T>)
   {
     if |xs| == 0 then {}
     else if |xs| == 1 then xs[0]
     else xs[0] * SetI(xs[1..])
   }
 
-  predicate AllNonEmpty<T>(xs: seq<set<T>>)
+  ghost predicate AllNonEmpty<T>(xs: seq<set<T>>)
   {
     forall k:: 0 <= k < |xs| ==> xs[k] != {}
   }
@@ -55,13 +55,14 @@ module SeqOfSets {
 
   }
 
-  predicate DisjointAnyTwo<T>(xs: seq<set<T>>)
+  ghost predicate DisjointAnyTwo<T>(xs: seq<set<T>>)
   {
     forall k, k':: 0 <= k < k' < |xs| ==> xs[k] * xs[k'] == {}
   }
-
-  predicate SetN(xs: seq<set<nat>>, n: nat)
+ 
+  ghost predicate SetN(xs: seq<set<nat>>, n: nat)
   {
+    // reveal_SetU();
     SetU(xs) == set z {:nowarn} | 0 <= z < n
   }
 
@@ -106,6 +107,7 @@ module SeqOfSets {
     requires t in SetU(xt)
     ensures exists k:: 0 <= k < |xt| && t in xt[k]
   { //  Thanks Dafny
+    // reveal_SetU();
   }
 
   /**   
@@ -157,6 +159,7 @@ module SeqOfSets {
     requires AllNonEmpty(xs)
     ensures |SetU(xs)| >= |xs|
   {
+    // reveal_SetU();
     if |xs| == 0 {
       //  
     } else {
@@ -174,7 +177,7 @@ module SeqOfSets {
   /**
     *   Split a set into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
-  function SplitSet(xs: set<nat>, f: nat --> bool): (r: (set<nat>, set<nat>))
+  function {:opaque} SplitSet(xs: set<nat>, f: nat --> bool): (r: (set<nat>, set<nat>))
     requires forall x:: x in xs ==> f.requires(x)
     ensures xs == r.0 + r.1
     ensures r.0 * r.1 == {}
@@ -188,7 +191,7 @@ module SeqOfSets {
   /**
     *   Split a sequence of sets into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
-  function {:tailrecursion true} SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
+  function {:tailrecursion true} {:opaque} SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
     ensures |xs| == |r|
     ensures forall k:: 0 <= k < |r| ==> r[k].0 * r[k].1 == {}
     ensures forall k:: 0 <= k < |r| ==> r[k].0 + r[k].1 == xs[k]
@@ -204,7 +207,8 @@ module SeqOfSets {
     *   Iterate over sets. 
     *   @link{https://leino.science/papers/krml275.html}
     */
-  function {:tailrecursion true} SetToSequence(s: set<nat>): (r: seq<nat>)
+  function {:tailrecursion true} {:opaquex} SetToSequence(s: set<nat>): (r: seq<nat>)
+    ensures |s| == |r| 
     ensures forall i :: i in s <==> i in r
   {
     if s == {} then []
@@ -238,6 +242,7 @@ module SeqOfSets {
   lemma DistribUnion<T>(a : seq<set<T>>, b: seq<set<T>>)
     ensures SetU(a + b) == SetU(a) + SetU(b)
   {
+    // reveal_SetU();
     if |a| == 0 {
       assert [] + b == b;
       assert SetU(a) == {};
@@ -267,6 +272,7 @@ module SeqOfSets {
     requires index < |xs|
     ensures SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]) == SetU(xs)
   {
+    // reveal_SetU();
     calc == {
       SetU(xs);
       { assert xs == xs[..index] + [xs[index]] + xs[index + 1..] ; }
@@ -315,7 +321,7 @@ module SeqOfSets {
     *   Split a sequence of nat according to a function value f.
     *   Tail recursivse version.
     */
-  function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
+  function {:tailrecursion true} {:opaque} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
     requires index <= |xs|
     requires forall  k:: k in xs ==> f.requires(k)
     requires  forall k:: k in xs[..index] <==> k in cTrue + cFalse
@@ -385,6 +391,7 @@ module SeqOfSets {
     requires forall i:: 0 <= i < |r| ==> SetU(r[i]) == xs[i]
     ensures SetU(Flatten(r)) == SetU(xs)
   {
+    // reveal_SetU();
     if |xs| == 0 {
       //  Thanks Dafny
     } else {
