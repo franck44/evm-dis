@@ -44,6 +44,7 @@ module NextStateTests {
       //   var n := i.NextState(s, [], 1);
     }
     {
+      reveal Instruction.NextState();
       var i := Instruction(Decode(op));
       if s.Size() >= 2 {
         assert i.NextState(s, [], 0).EState?;
@@ -76,6 +77,7 @@ module NextStateTests {
   method Comps1(k: nat, op: Int.u8)
     requires LT <= op <= ISZERO
   {
+    reveal Instruction.NextState();
     {
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(op));
@@ -98,6 +100,7 @@ module NextStateTests {
       //   assert i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Value(10)]);
       var i := Instruction(Decode(LT));
       //   assert i.NextState(s, [], 1).Error?;
@@ -106,6 +109,7 @@ module NextStateTests {
     }
 
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(ISZERO));
       //   assert i.NextState(s, [], 1).Error?;
@@ -123,6 +127,7 @@ module NextStateTests {
       //   assert i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Value(10)]);
       var i := Instruction(Decode(OR));
       //   assert i.NextState(s, [], 1).Error?;
@@ -132,6 +137,7 @@ module NextStateTests {
     }
 
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(NOT));
       //   assert i.NextState(s, [], 1).Error?;
@@ -145,12 +151,14 @@ module NextStateTests {
   method {:test} KeccakTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(KECCAK256));
       assert i.NextState(s, [], 0).Error?;
       //   assert i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
       var i := Instruction(Decode(KECCAK256));
       assert i.NextState(s, [], 0).EState?;
@@ -164,6 +172,7 @@ module NextStateTests {
   method {:test} EnvTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(ADDRESS));
       expect i.NextState(s, [], 0).EState?;
@@ -172,6 +181,7 @@ module NextStateTests {
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(BASEFEE));
       expect i.NextState(s, [], 0).EState?;
@@ -185,6 +195,7 @@ module NextStateTests {
   method {:test} MemTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random(), Value(0)]);
       var i := Instruction(Decode(MSTORE));
       expect i.NextState(s, [], 0).EState?;
@@ -193,12 +204,14 @@ module NextStateTests {
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(MSTORE8));
       expect i.NextState(s, [], 0).Error?;
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(MLOAD));
       expect i.NextState(s, [], 0).EState?;
@@ -212,6 +225,7 @@ module NextStateTests {
   method {:test} StorageTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random(), Value(10)]);
       var i := Instruction(Decode(SSTORE));
       expect i.NextState(s, [], 0).EState?;
@@ -220,6 +234,7 @@ module NextStateTests {
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(SSTORE));
       expect i.NextState(s, [], 0).Error?;
@@ -239,6 +254,7 @@ module NextStateTests {
   method {:test} RunTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(PC));
       expect i.NextState(s, [], 0).EState?;
@@ -247,6 +263,7 @@ module NextStateTests {
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(GAS));
       expect i.NextState(s, [], 0).EState?;
@@ -255,6 +272,7 @@ module NextStateTests {
       //   expect i.NextState(s, [], 1).Error?;
     }
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
       var i := Instruction(Decode(MSIZE));
       expect i.NextState(s, [], 0).EState?;
@@ -268,6 +286,7 @@ module NextStateTests {
   method {:test} PushTests1()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
       var i := Instruction(Decode(PUSH1), "09");
       assert |i.arg| == 2 * (i.op.opcode - PUSH0) as nat;
@@ -283,6 +302,7 @@ module NextStateTests {
   method {:test} PushTests2()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(2)]);
       var i := Instruction(Decode(PUSH5), "0900000011");
       assert i.IsValid();
@@ -338,18 +358,21 @@ module NextStateTests {
   method {:test} DupTests()
   {
     {
+      reveal Instruction.NextState();
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(5, i requires 0 <= i < 5 => Value(i as Int.u256)));
       var i := Instruction(Decode(DUP5));
       // expect i.NextState(s, [], 1).Error?;
       expect i.NextState(s, [], 0).EState?;
       expect i.NextState(s, [], 0).Peek(0) == Value(4);
     }
+    reveal Instruction.NextState();
+
     for k: Int.u8 := 0 to 15 {
       var size := k as nat + 1;
       var s := DEFAULT_VALIDSTATE.(pc := 4, stack := seq(size, i requires 0 <= i < size => Value(i as Int.u256)));
       var i := Instruction(Decode(DUP1 + k));
       assert i.op.opcode != JUMPI;
-    //   expect i.NextState(s, [], 1).Error?;
+      //   expect i.NextState(s, [], 1).Error?;
       expect i.NextState(s, [], 0).EState?;
       expect i.NextState(s, [], 0).Peek(0) == Value(k as Int.u256);
     }
@@ -390,88 +413,88 @@ module NextStateTests {
     *   Reminder: jump woth condition false is an error.
     *   Only true condition is valid for JUMP.
     */
-    method {:test} Jumps()
+  method {:test} Jumps()
+  {
     {
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
-        var i := Instruction(Decode(JUMP));
-        expect i.NextState(s, [], 0).Error?;
-        // expect i.NextState(s, [], 1).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-        var i := Instruction(Decode(JUMP));
-        expect i.NextState(s, [], 0).Error?;
-        // expect i.NextState(s, [], 1).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(10), Random()]);
-        var i := Instruction(Decode(JUMP));
-        expect i.NextState(s, [], 0).EState?;
-        // expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).pc == 10;
-      }
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random()]);
+      var i := Instruction(Decode(JUMP));
+      expect i.NextState(s, [], 0).Error?;
+      // expect i.NextState(s, [], 1).Error?;
     }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(JUMP));
+      expect i.NextState(s, [], 0).Error?;
+      // expect i.NextState(s, [], 1).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(10), Random()]);
+      var i := Instruction(Decode(JUMP));
+      expect i.NextState(s, [], 0).EState?;
+      // expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).pc == 10;
+    }
+  }
 
   /**   JUMPDEST */
-    method {:test} JumpDests()
+  method {:test} JumpDests()
+  {
     {
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-        var i := Instruction(Decode(JUMPDEST));
-        // expect i.NextState(s, [], 1).Error?; 
-        expect i.NextState(s, [], 0).EState?;
-        expect i.NextState(s, [], 0).pc == 5;
-      }
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(JUMPDEST));
+      // expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).EState?;
+      expect i.NextState(s, [], 0).pc == 5;
     }
+  }
 
   /**   JUMPI */
-    method {:test} JumpIs()
+  method {:test} JumpIs()
+  {
     {
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-        var i := Instruction(Decode(JUMPI));
-        expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(1)]);
-        var i := Instruction(Decode(JUMPI));
-        expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
-        var i := Instruction(Decode(JUMPI));
-        expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(10), Random()]);
-        var i := Instruction(Decode(JUMPI));
-        expect i.NextState(s, [], 1).EState?;
-        expect i.NextState(s, [], 1).pc == 10;
-        expect i.NextState(s, [], 0).EState?;
-        expect i.NextState(s, [], 0).pc == 5;
-      }
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(JUMPI));
+      expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).Error?;
     }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(1)]);
+      var i := Instruction(Decode(JUMPI));
+      expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Random(), Random()]);
+      var i := Instruction(Decode(JUMPI));
+      expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).Error?;
+    }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := [Value(10), Random()]);
+      var i := Instruction(Decode(JUMPI));
+      expect i.NextState(s, [], 1).EState?;
+      expect i.NextState(s, [], 1).pc == 10;
+      expect i.NextState(s, [], 0).EState?;
+      expect i.NextState(s, [], 0).pc == 5;
+    }
+  }
 
   /**   RJUMP (not implemented an result in Error). */
-    method {:test} RJumps()
+  method {:test} RJumps()
+  {
     {
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-        var i := Instruction(Decode(RJUMPI));
-        // expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).Error?;
-      }
-      {
-        var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
-        var i := Instruction(Decode(RJUMPV));
-        // expect i.NextState(s, [], 1).Error?;
-        expect i.NextState(s, [], 0).Error?;
-      }
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(RJUMPI));
+      // expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).Error?;
     }
+    {
+      var s := DEFAULT_VALIDSTATE.(pc := 4, stack := []);
+      var i := Instruction(Decode(RJUMPV));
+      // expect i.NextState(s, [], 1).Error?;
+      expect i.NextState(s, [], 0).Error?;
+    }
+  }
 
 }
 
