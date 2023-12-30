@@ -23,7 +23,6 @@ include "../utils/Hex.dfy"
 include "../utils/Automata.dfy"
 include "../utils/Partition.dfy"
 include "../utils/MinimiserGState.dfy"
-include "../CFGBuilder/BuildCFGSimplified.dfy"
 
 /**
   *  Provides EVM Object.
@@ -40,12 +39,16 @@ module EVMObject {
   import Int
   import SegBuilder
   import Hex
-  import Automata
-  import opened DFSSimple
+  import opened Automata
   import opened PartitionMod
   import opened GStateMinimiser
   import opened WeakPre
   import opened StackElement
+
+  /**
+    * A path is a sequence of states and a sequence of exits.
+    */
+  datatype Path<T(!new)> = Path(states: seq<T>, exits: seq<nat>)
 
   /**
     *    A valid sequence of valid linear segments. To be valid the sequence 
@@ -70,6 +73,15 @@ module EVMObject {
       && (forall k:: k in PCToSegMap ==> PCToSegMap[k] < |xs| && xs[PCToSegMap[k]].StartAddress() == k)
     }
 
+    /**
+      *  Helper to provide the start address of a segment,
+      */
+    function StartAddress(i: nat): nat
+      requires i < |xs|
+    {
+      xs[i].StartAddress()
+    }
+
     /** The size of the program in bytes. */
     function Size(ls: seq<ValidLinSeg> := xs): nat {
       if |ls| == 0 then 0
@@ -85,8 +97,11 @@ module EVMObject {
       */
     function {:opaque} NextG(s: GState): (r: seq<GState>)
       requires this.IsValid()
-      requires s.EGState? ==> s.segNum < |xs|
-      ensures forall k:: 0 <= k < |r| && r[k].EGState? ==> r[k].segNum < |xs|
+      requires s.IsBounded(|xs|)
+      ensures forall k:: 0 <= k < |r| ==> r[k].IsBounded(|xs|)
+      ensures |r| > 0 ==> s.EGState?
+      ensures  s.EGState?  ==> |r| == xs[s.segNum].NumberOfExits()
+      ensures s.ErrorGState? ==> |r| == 0
     {
       match s
       case ErrorGState(_) => []
@@ -125,18 +140,18 @@ module EVMObject {
       else if s.pc in PCToSegMap then
         var seg := PCToSegMap[s.pc];
         if xs[seg].NumberOfExits() > exits[0] then
-               foo(xs[seg], exits[0]);
-               var s' := xs[seg].Run(s, exits[0], jumpDests);
-               if s'.EState? then
-                 // Run the rest of the path
-                 RunAll(exits[1..], s')
-               else
-                 //  exit does not exist, return the error state.
-                 Error("Successor state of " + s.ToString() + " is not an EState")
-             else
-               //  exit does not exist
-               Error("Exit does not exist")
-      else 
+          ValidExitLemma(xs[seg], exits[0]);
+          var s' := xs[seg].Run(s, exits[0], jumpDests);
+          if s'.EState? then
+            // Run the rest of the path
+            RunAll(exits[1..], s')
+          else
+            //  exit does not exist, return the error state.
+            Error("Successor state of " + s.ToString() + " is not an EState")
+        else
+          //  exit does not exist
+          Error("Exit does not exist")
+      else
         Error("No segment found for state " + s.ToString())
     }
 
@@ -157,88 +172,152 @@ module EVMObject {
     }
 
     /**
-      *   Check if a state whit this pc has been seen before, and whether we can loop back 
-      *   to an already seen state on this path.
+      *   Check if a segment has been found on a path, If it has been found,
+      *   check if the path is inductive, i.e. if the weakest precondition is invariant 
+      *   on the path from the state occurrenc to the end of the path.
+      *   @param  i           The segment number to find.
+      *   @param p            The path to check. The path should be such that 
+      *                       the last state is an EGState and the segment number is i.
+      *   @returns            The state that covers the last one, or None if no covering. 
       *
       *   @note   The seenOnPath has all the nodes seen before the current one.
       *           The current one has startAddress == pc.
       */
-    // function SafeLoopFound(pc: nat, seenOnPath: seq<AState>, exits: seq<nat>): (r: Option<AState>)
-    //   requires this.IsValid()
-    //   requires |xs| >= 1
-    //   requires pc < Int.TWO_256
-    //   requires 0 < |seenOnPath| // == |path|
-    //   requires |exits| == |seenOnPath|
-    //   requires forall k :: 0 <= k < |seenOnPath| ==> seenOnPath[k].EState? && PCToSeg(seenOnPath[k].pc).Some?
-    //   // requires forall k:: k in seenOnPath ==> k.seg.Some? && k.seg.v < |xs|
-    //   // requires xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPSeg? || xs[seenOnPath[|seenOnPath| - 1].seg.v].JUMPISeg?
-    //   // ensures r.Some? ==> r.v.seg.Some? && r.v.seg.v < |xs|
-    //   decreases |seenOnPath|
-    // {
-    //   match FindFirstNodeWithPC(pc, seenOnPath)
-    //   case Some(v) =>
-    //     //  pc occurs on this path and v is an abstract state s with s.pc == pc
-    //     assert v.0.EState?;
-    //     assert v.0.pc == pc;
-    //     //  some properties must hold on the path defined by the index v.1
-    //     var init := seenOnPath[v.1];
-    //     //  the CFGMNode at index v.1 has a segment with start address == pc
-    //     //   assert xs[init.seg.v].StartAddress() == pc;
-    //     //  get the path false|true that led from init to last node
-    //     var path := seenOnPath[v.1..];
-    //     //   //  compute the list of segments defined by the nodes in path
-    //     //   var segs := NodesToSeg(path);
-    //     assert forall k :: 0 <= k < |path| ==> path[k].EState? && PCToSeg(path[k].pc).Some?;
-    //     var segs := seq(|path|, i requires 0 <= i < |path| => PCToSeg(path[i].pc).v);
-    //     //  compute the Wpre for last node path to lead to pc (via true)
-    //     assert pc < Int.TWO_256;
-    //     assume xs[PCToSeg(seenOnPath[|seenOnPath| - 1].pc).v].IsValidExit(exits[|exits| - 1]);
-    //     var tgtCond := xs[PCToSeg(seenOnPath[|seenOnPath| - 1].pc).v].LeadsTo(pc, exits[|exits| - 1]);
-    //     //    Compute the WPre for for segments in path
-    //     var w1 := WPreSeqSegs(segs, exits[v.1..], tgtCond, xs, pc);
-    //     //   if w1.StTrue? then
-    //     //     Some(v.0)
-    //     //   else if w1.StFalse? then
-    //     //     None
-    //     //   else if PreservesCond(w1, segs, boolPath[v.1..], xs, jumpDests) then
-    //     //     Some(v.0)
-    //     //   //  Try a potential second occurrence of pc om seenOnPath
-    //     //   else if 0 < |seenOnPath[v.1..|seenOnPath|]| < |seenOnPath| then
-    //     //     SafeLoopFound(xs, pc, seenOnPath[v.1..|seenOnPath|], boolPath[v.1..|boolPath|], jumpDests)
-    //     //   else None
-    //     None
+    function SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: Option<nat>)
+      requires this.IsValid()
+      requires i < |xs|
+      requires  |pStates| == |pExits|
+      requires forall s:: s in pStates ==> s.EGState? && s.IsBounded(|xs|)
+      requires forall k:: 0 <= k < |pExits| ==> pExits[k] < |NextG(pStates[k])|
 
-    //   case None =>
-    //     //  No occurrence of pc on this path
-    //     None
-    // }
+      ensures r.Some? ==> r.v < |pStates|
+      decreases |pStates|
+    {
+      match FindFirstNodeWithSegIndex(i, pStates)
+      case Some(index) =>
+        //  The segment of pStates[index]
+        assert index < |pStates|;
+        assert pStates[index].segNum == i;
+        //  Get the states/exits on the path from index to end
+        var pathFromIndex := pStates[index..];
+        assert pathFromIndex[0].segNum == i;
+        var exitsFromIndex := pExits[index..];
+        //  Map to the segment numbers
+        var segmentsOnPathFromIndex := seq(|pathFromIndex|, i requires 0 <= i < |pathFromIndex| => pathFromIndex[i].segNum);
+        //  Tgt pos condition is that the last node leads to the startAddress of segment i
+        var tgtCond := xs[Last(pStates).segNum].LeadsTo(xs[i].StartAddress(), Last(pExits));
+        //  compute the Wpre of the tgtCond for the path from index to end
+        var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond, xs, xs[i].StartAddress());
+        if w1.StTrue? then
+          Some(index)
+        else if w1.StFalse? then
+          None
+        else if PreservesCond(w1, exitsFromIndex) then
+          Some(index)
+        //  Try a potential second occurrence of segment i on the path
+        else if 0 < |pathFromIndex| then // < |pStates| then
+          SafeLoopFound(i, pathFromIndex[1..], exitsFromIndex[1..])
+        else None
+
+      // no occurrence of segment i on this path
+      case None => None
+    }
 
     /**
       *   Find the first node in a sequence with a givem value for pc.
-      *   @param  pc      The pc to find in s.
-      *   @param  s       A sequence of states.
+      *   @param  i       The segment number to find
+      *   @param  gs      A sequence of states.
       *   @param  index   The current index in the search.
-      *   @returns        The node, index of the first occurrence of a state in s with 
-      *                   s.pc equals to pc. 
+      *   @returns        The index of the first state in xs with a segment 
+      *                   number equal to i if any and None otherwise.
       */
-    // function FindFirstNodeWithPC(pc: nat, s: seq<AState>, index: nat := 0): (r: Option<(AState, nat)>)
-    //   requires index <= |s|
-    //   ensures r.Some? ==> r.v.0.EState?
-    //   ensures r.Some? ==> r.v.1 < |s|
-    //   ensures r.Some? ==> s[r.v.1].EState?
-    //   ensures r.Some? ==> s[r.v.1].pc == pc == r.v.0.pc
-    //   decreases |s| - index
-    // {
-    //   if |s| == index then None
-    //   else
-    //     match s[index]
-    //     case EState(pc', st) =>
-    //       if pc' == pc then Some((s[index], index))
-    //       else FindFirstNodeWithPC(pc, s, index + 1)
-    //     case Error(m) => None
-    // }
+    function FindFirstNodeWithSegIndex(i: nat, gs: seq<GState>, index: nat := 0): (r: Option<nat>)
+      requires index <= |gs|
+      requires forall s:: s in gs ==> s.EGState?
+      ensures r.Some? ==> r.v < |gs| && gs[r.v].segNum == i
+      decreases |gs| - index
+    {
+      if |gs| == index then None
+      else
+        match gs[index]
+        case EGState(i', st) =>
+          if i' == i then Some(index)
+          else FindFirstNodeWithSegIndex(i, gs, index + 1)
+        case ErrorGState(m) => None
+    }
 
-    /**
+    /** 
+      * Build the CFG of the EVMObj.
+      * The CFG is built by running a DFS from the initial state.
+      * @param maxDepth The maximum depth of the DFS.
+      * @param minimise If true, the CFG is minimised.   
+      */
+    method {:timeLimitMultiplier 1} DFS(
+      p: Path<GState>,
+      a: ValidAuto<GState>,
+      maxDepth: nat := 0,
+      debugInfo: bool := false) returns (a': ValidAuto<T>)
+
+      requires this.IsValid()
+      requires  |p.states| == |p.exits| + 1
+      requires forall s:: s in p.states ==> s in a.states
+      requires forall s:: s in a.states ==> s.IsBounded(|xs|)
+      requires forall s:: s in p.states ==> s.EGState?
+      requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
+      requires (forall k:: 0 <= k < |p.exits| ==> p.states[k + 1] == NextG(p.states[k])[p.exits[k]])
+
+      ensures forall s:: s in p.states ==> s in a'.states
+      ensures forall s:: s in a'.states ==> s.IsBounded(|xs|)
+
+      decreases maxDepth
+    {
+      var LastOnPath := Last(p.states);
+      if maxDepth == 0 || LastOnPath.ErrorGState? {
+        //  stop the construction of the automaton.
+        return a;
+      }
+      else {
+        // DFS from last state on the path
+        a' := a;
+        for i := 0 to |NextG(LastOnPath)|
+          invariant a'.IsValid()
+          invariant forall s:: s in a'.states ==> NextG.requires(s)
+          invariant forall s:: s in p.states ==> s in a'.states
+        {
+          var i_th_succ := NextG(LastOnPath)[i];
+          if i_th_succ.ErrorGState? {
+            a' := a'.AddEdge(LastOnPath, i_th_succ);
+          } else if i_th_succ in a'.indexOf {
+            a' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]);
+          } else if !xs[LastOnPath.segNum].IsJump() {
+            //  not already seen and not a jump
+            assert i_th_succ !in a'.indexOf;
+            a' := DFS(
+              Path(p.states + [i_th_succ], p.exits + [i]),
+              a'.AddEdge(LastOnPath, i_th_succ),
+              maxDepth - 1,
+              debugInfo);
+          } else {
+            assert i_th_succ.EGState?;
+            match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
+              case Some(index) =>
+                //  s' is the state that covers LastOnPath
+                print "found one", "\n";
+                a' := a'.AddEdge(LastOnPath, p.states[index]);
+              case None =>
+                //  not already seen and not covered
+                a' := DFS(
+                  Path(p.states + [i_th_succ], p.exits + [i]),
+                  a'.AddEdge(LastOnPath, i_th_succ),
+                  maxDepth - 1,
+                  debugInfo);
+            }
+          }
+        }
+      }
+    }
+
+    /** 
       * Build the CFG of the EVMObj.
       * The CFG is built by running a DFS from the initial state.
       * @param maxDepth The maximum depth of the DFS.
@@ -250,17 +329,16 @@ module EVMObject {
       ensures forall s:: s in a.states && s.EGState? ==> s.segNum < |xs|
     {
       //  For now we ignore the history
-      var a1, _ := DFS(
-        NextG,
-        // DEFAULT_VALIDSTATE,
-        DEFAULT_GSTATE,
-        History(DEFAULT_GSTATE, [DEFAULT_GSTATE]),
-        Automata.Auto(),
-        maxDepth);
+      var a1 := DFS(
+        Path([DEFAULT_GSTATE], []),
+        Automata.Auto().AddState(DEFAULT_GSTATE),
+        maxDepth,
+        true);
 
       if !minimise || a1.SSize() == 0 {
         return a1;
       } else {
+        //  Minimise the automaton
         var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
         //  create an equivalence relation on nodes
         var e :=
@@ -295,7 +373,6 @@ module EVMObject {
         //  and we can use xs[a.segNum]
         "<" + DOTSeg(xs[a.segNum], a.segNum).0 +">"
     }
-
   }
 
   /**   Print the content of a segment. */
