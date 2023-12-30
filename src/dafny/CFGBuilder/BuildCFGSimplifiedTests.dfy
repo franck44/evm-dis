@@ -14,21 +14,17 @@
 
 include "../utils/MiscTypes.dfy"
 include "../utils/int.dfy"
-include "./BuildCFGSimplified.dfy"
-include "../utils/Automata.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 include "../utils/CFGState.dfy" 
 include "../utils/MinimiserGState.dfy"
 include "../utils/Partition.dfy"
- 
-module BuildCFGSimplifiedTests {
+  
+module BuildCFGSimplifiedTests { 
  
   import opened MiscTypes
-  import opened DFSSimple
   import opened Int
-  import opened Automata
   import opened BinaryDecoder
   import opened EVMConstants
   import opened Splitter
@@ -36,45 +32,6 @@ module BuildCFGSimplifiedTests {
   import opened CFGState
   import opened GStateMinimiser
   import opened PartitionMod
-
-  function SimpleSucc(n: nat): seq<nat> {
-    if n <= 2 then [n + 1, n + 3]
-    else [n - 2]
-  }
-
-  function succ1(n: nat): seq<nat> {
-    if n == 0 then [1, 2]
-    else if n == 1 then [3]
-    else if n == 2 then [0, 1]
-    else if n == 3 then [0]
-    else []
-  }
- 
-  method {:test} Test1() {
-    var a: Auto<nat> := Auto();
-    var a1, h1 := DFS(succ1, 0 as nat, History(0, [0]), a, 15);
-    expect a1.transitionsNat ==map[0 := [1, 3], 1 := [2], 2 := [0], 3 := [0, 1]];
-    expect a1.states == [0, 1, 3, 2];
-    assert a1.IsValid();
-    // print "a1 size: ", a1.SSize(), "\n";
-    // a1.ToDot(x requires x in a1.states => NatToString(x));
-  }
-
-  method {:test} Test2() {
-    var a: Auto<nat> := Auto();
-    var a1, h1 := DFS(SimpleSucc, 0 as nat, History(0, [0]), a, 15);
-    expect a1.states == [0, 1, 2, 3, 5, 4];
-    expect a1.transitionsNat == map[0 := [1, 3], 1 := [2, 5], 2 := [3, 4], 3 := [1], 4 := [3], 5 := [2]];
-    assert a1.IsValid();
-    // print "a1 size ", a1.SSize(), "\n";
-    // a1.ToDot(x requires x in a1.states => NatToString(x));
-  }
-
-  function f(n: nat, xs: seq<nat>): Option<nat>
-  {
-    if n in xs then Some(xs[0])
-    else None
-  }
 
   //  Simple example
   method {:test} {:verify true} Test10()
@@ -130,7 +87,7 @@ module BuildCFGSimplifiedTests {
 
       assert |y| >= 1;
       var p := EVMObj(y);
-      var a1 := p.BuildCFG2();
+      var a1 := p.BuildCFG();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
       a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x));
@@ -158,11 +115,11 @@ module BuildCFGSimplifiedTests {
     }
   }
 
-  // Simple example
+  // Simple tester
   method {:main} {:verify true} Main(args: seq<string>)
   {
     {
-      //  Push and JUMP
+      //  Make sure a string is passed to the program.
       expect |args| >= 2;
       var x := Disassemble(args[1]);
 
@@ -171,7 +128,7 @@ module BuildCFGSimplifiedTests {
       if |y| >= 1 {
         var p: ValidEVMObj := EVMObj(y);
 
-        var a1 := p.BuildCFG2();
+        var a1 := p.BuildCFG();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
         a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x)); 
