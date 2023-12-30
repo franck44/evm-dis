@@ -13,6 +13,7 @@
  */
 
 include "../utils/StackElement.dfy"
+include "../utils/int.dfy"
 
 /**
   *Provides control flow graph states.
@@ -20,6 +21,7 @@ include "../utils/StackElement.dfy"
 module CFGState {
 
   import opened StackElement
+  import Int
 
   const DEFAULT_GSTATE: GState := EGState(0, [])
   /**
@@ -28,6 +30,25 @@ module CFGState {
     *   @param st       the stack.
     */
   datatype GState = EGState(segNum: nat, st: seq<StackElem>) | ErrorGState(msg: string := "")
+  {
+    /**
+      * Pretty print a state
+      */
+    function ToString(): string
+    {
+      match this
+      case EGState(segNum, st) => "(" + Int.NatToString(segNum) + ", [" + StackToString(st) + "])"
+      case ErrorGState(msg) => "ErrorGState(" + msg + ")"
+    }
+
+    /**
+      * Whether the segment number is bounded by n.
+      */
+    predicate IsBounded(n: nat)
+    {
+      this.ErrorGState? || (this.EGState? && this.segNum < n)
+    }
+  }
 }
 
 
