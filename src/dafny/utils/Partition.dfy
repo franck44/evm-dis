@@ -16,16 +16,16 @@ include "./SeqOfSets.dfy"
 include "./MiscTypes.dfy"
 
 /** 
-  * Provides partitions of sets of the form {0, ..., n}.
+  * Provides partitions of sets of integers of the form {0, ..., n}.
   */
 module PartitionMod {
- 
+
   import opened SeqOfSets
-  import opened MiscTypes 
-  
+  import opened MiscTypes
+
   /** A Valid partition. */
-  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1) // Partition(1, [{0}])
- 
+  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1) 
+
   /**
     *   Generate the trivial and valid partition of {0, ..., n - 1}.
     *   @param  n   The size of the set to partition.
@@ -65,12 +65,36 @@ module PartitionMod {
       */
     ghost predicate IsValid()
     {
-    //   reveal_SetU(); 
       && n > 0
       && AllNonEmpty(elem)
       && DisjointAnyTwo(elem)
       && SetN(elem, n)
       && 0 < |elem| <= n
+    }
+
+    /**
+     *  Split an trivial partition (one class) into two partitions.
+     *  @param  f   A predicate on the elements of the set.
+     *  @returns    A valid partition of {0, ..., n - 1} with at most two classes.
+     */
+    function SplitIn2(f: nat -> bool): (p': Partition)
+      requires this.IsValid()
+      requires |elem| == 1
+      ensures p'.IsValid()
+      ensures |p'.elem| <= 2
+      ensures p'.n == n
+    {
+      reveal_SetU();
+      var sTrue := set q | q in SetU(elem) && f(q);
+      var sFalse :=  SetU(elem) - sTrue;
+      assert SetU(elem) != {};
+      assert sTrue != {} || sFalse != {};
+      var d := (if sTrue != {} then [sTrue] else []) + (if sFalse != {} then [sFalse] else []);
+      var e := this.(elem := d);
+      assert sTrue + sFalse == SetU([sTrue]) + SetU([sFalse]);
+      assert SetU(d) == sTrue + sFalse;
+      assert e.IsValid();
+      e
     }
 
     /**
@@ -248,10 +272,10 @@ module PartitionMod {
     ensures forall i, i', x, x':: (0 <= i < i' < |r| &&  x in r[i] && x' in r[i']) ==> !equiv(x, x')
     ensures DisjointClassesAreNonEquiv(r, equiv, n)
   {
-    reveal_SetU(); 
+    reveal_SetU();
     reveal_SetToSequence();
     var first := SetToSequence(xs)[0];
-    var xsTrue := set x: nat | x in xs && equiv(first, x); 
+    var xsTrue := set x: nat | x in xs && equiv(first, x);
     assert first in xsTrue;
     var xsFalse := xs - xsTrue;
     if xsFalse == {} then [xsTrue]
@@ -284,7 +308,7 @@ module PartitionMod {
   }
 
   /**
-    *   Pretty print a set.
+    *   Pretty-print a set.
     */
   method PrintPartition(p: Partition)
   {
