@@ -23,7 +23,7 @@ include "./Automata.dfy"
   */
 abstract module Minimiser {
 
-  import MiscTypes
+  import MiscTypes 
   import opened PartitionMod
   import opened Automata
 
@@ -37,7 +37,7 @@ abstract module Minimiser {
     *  A valid automaton is an automaton that satisfies the IsValid predicate.
     *   i.e. the size of the automaton is the same as the sie pf the partition.
     */
-  type ValidPair = p: Pair | p.IsValid() witness Pair(Auto().AddState(DEFAULT_STATE), Partition(1, [{0}]))
+  type ValidPair = p: Pair | p.IsValid() witness Pair(Auto().AddState(DEFAULT_STATE), PartitionMod.MakeInit(1))
 
   /**
     *  Make a valid pair from an automaton and a partition.
