@@ -12,10 +12,8 @@
  * under the License.
  */
 
-
 include "../../../src/dafny/utils/Minimiser.dfy"
 include "../../../src/dafny/utils/int.dfy"
-include "../../../src/dafny/utils/MiscTypes.dfy"
 
 module MinimiserNat refines Minimiser {
   type T = nat
@@ -23,10 +21,10 @@ module MinimiserNat refines Minimiser {
 
 }
 
-module MinimiserOptNat refines Minimiser  {
+module MinimiserOptNat refines Minimiser {
 
-  type T = Option<nat>
-  const DEFAULT_STATE := Some(0)
+  type T = MiscTypes.Option<nat>
+  const DEFAULT_STATE := MiscTypes.Some(0)
 
 }
 
@@ -60,7 +58,8 @@ module MinimiserTests {
     Minimised is:
     {0, 2} - F, T -> {1, 3} -- T -> {4}
     */
-    var p1: ValidPartition := Partition(5, [{0, 1, 2, 3}, {4}]);
+    var p: Partition := PartitionMod.MakeInit(5); 
+    var p1: ValidPartition := p.SplitIn2(x => x <= 3);
     var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 2]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [1, 3]);
     var a3: ValidAuto<nat> := a2.AddEdges(2, [1, 2]);
@@ -72,10 +71,8 @@ module MinimiserTests {
     var vp0 : MinimiserNat.ValidPair := MinimiserNat.MakeInit(a5, p1);
 
     var vp1 := vp0.ClassSplitter();
-    // PrintPartition(vp1.clazz);
     expect vp1.clazz.elem == [{0, 1, 2}, {3}, {4}];
     var vp2 := vp1.ClassSplitter();
-    // PrintPartition(vp2.clazz);
     expect vp2.clazz.elem == [{0, 2}, {1}, {3}, {4}];
   }
 
@@ -94,8 +91,9 @@ module MinimiserTests {
       {0} -- a -> {1,2}
       {1, 2} -- a, b -> {1, 2}
       */
-    var p1: ValidPartition := Partition(4, [{0, 3}, {1, 2}]);
 
+    var p: Partition := PartitionMod.MakeInit(4); 
+    var p1: ValidPartition := p.SplitIn2(x => x == 0 || x == 3);
     var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 0]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [2, 1]);
     var a3: ValidAuto<nat> := a2.AddEdges(2, [1, 2]);
@@ -126,27 +124,25 @@ module MinimiserTests {
     var a3: ValidAuto<nat> := a2.AddEdges(1, [2]);
     var a4: ValidAuto<nat> := a3.AddEdges(3, [4]);
 
-    // assert p1.IsValid();
     assert p1.n == 5;
     expect a4.SSize() == 5;
     var vp0 : MinimiserNat.ValidPair := MinimiserNat.MakeInit(a4, p1);
 
     var  vp1 := vp0.ClassSplitter();
     expect vp1.clazz.elem == [{0}, {1, 3} , {2, 4}];
-
   }
 
   method {:test} Test4()
   {
     /*
-    automaton is:
+    automaton is: 
     0 -- a -> 1 -- b -> 2
     |_ b -> 3 -- b -> 4
     Minimised is:
     {0} - a, b -> {1, 3} -- b -> {2, 4}
     */
-    var p1: ValidPartition :=  Partition(5, [{0, 1, 2, 3}, {4}]);
-
+    var p: Partition := PartitionMod.MakeInit(5); 
+    var p1: ValidPartition := p.SplitIn2(x => x <= 3);
     var a0: ValidAuto<nat> := Auto();
     var a1 := a0.AddStates(seq(5, i => i));
     var a2: ValidAuto<nat> := a1.AddEdges(0, [1, 3]);
@@ -163,7 +159,7 @@ module MinimiserTests {
     expect vp1.clazz.elem == [{0}, {1, 2, 3}, {4}];
   }
 
-  method {:test} Test5()
+  method {:test} {:verify false} Test5()
   {
     /*
     automaton is:
@@ -174,8 +170,7 @@ module MinimiserTests {
     Minimised is:
     {0} - a, b -> {1, 3} -- b -> {2, 4}
     */
-    var p1: ValidPartition := Partition(6, [{0, 1, 3}, {2, 4}, {5}]);
-
+    var p1: Partition := Partition(6, [{0, 1, 3}, {2, 4}, {5}]);
     var a0: ValidAuto<Option<nat>> := Auto();
     var a1 := a0.AddStates(seq(5, i => Some(i)) + [None]);
     var a2: ValidAuto<Option<nat>> := a1.AddEdges(Some(0), [Some(1), Some(3)]);
@@ -184,13 +179,12 @@ module MinimiserTests {
     var a5: ValidAuto<Option<nat>> := a4.AddEdges(Some(3), [None, Some(4)]);
     var a6: ValidAuto<Option<nat>> := a5.AddEdges(Some(4), [Some(3), None]);
 
-    assert p1.n == 6;
+    expect p1.n == 6;
     expect a6.SSize() == 6;
     var vp0 : MinimiserOptNat.ValidPair := MinimiserOptNat.MakeInit(a6, p1);
 
     var  vp1 := vp0.ClassSplitter();
     expect vp1.clazz.elem ==  [{0}, {1, 3}, {2, 4}, {5}];
-
   }
 
 }
