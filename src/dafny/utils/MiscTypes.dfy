@@ -66,7 +66,7 @@ module MiscTypes {
   lemma {:axiom} foo101(f: Foo)
     ensures forall x: nat :: x < 2 ==> f(x) == 0
 
-  /**   For some reasons the following lemma cannot be proved. */
+  /**   For some reasons the following lemmas cannot be proved by Dafny. */
   lemma {:axiom} Foo101<K(!new)>(f: WellDefined<K>)
     ensures forall x: K, xs: seq<K> :: f(x, xs).Some? ==> f(x, xs).v in xs
   //   {
@@ -82,6 +82,33 @@ module MiscTypes {
 
 
   //    Helper functions for sequences
+
+  /**   Last element */
+  function Last<T>(x: seq<T>): T
+    requires |x| > 0
+  {
+    x[|x| - 1]
+  }
+
+  /**
+    *  Drop the first n elements of a seq.
+    */
+  function Drop<T>(x: seq<T>, n: nat): seq<T>
+    requires n <= |x|
+    ensures |Drop(x, n)| == |x| - n
+  {
+    x[n..]
+  }
+
+  /**
+    * Initial segment (all but the last element).
+    */
+  function Init<T>(x: seq<T>): seq<T>
+    requires 1 <= |x|
+    ensures |Init(x)| == |x| - 1
+  {
+    x[..|x| - 1]
+  }
 
   /**
     *  Zip two seqs into a seq of pairs.
@@ -172,7 +199,6 @@ module MiscTypes {
   {
     FindRec(x, t)
   }
-
 
   /**
     *  Find the index of an element in a list or None if the element is not in the list.
