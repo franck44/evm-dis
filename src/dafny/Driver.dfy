@@ -16,12 +16,11 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
-// include "./CFGBuilder/BuildCFGSimplified.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
-include "./utils/Hex.dfy"
+include "./utils/Hex.dfy" 
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
 
@@ -35,9 +34,7 @@ module Driver {
   import opened PrettyPrinters
   import opened EVMObject
   import opened ArgParser
-    //   import opened BuildCFGraph
   import opened MiscTypes
-  import opened State
   import opened Int
   import opened Statistics
   import opened ProofObjectBuilder
@@ -150,7 +147,7 @@ module Driver {
             print "// Raw CFG\n";
             a1.ToDot(s requires s in a1.states => prog.ToHTML(s) );
             print "//----------------- Raw CFG -------------------\n";
-          } else {
+          } else { 
             //  Minimise
             var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);  
             assert a1.IsValid();
