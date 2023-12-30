@@ -64,6 +64,7 @@ module Automata {
       ensures forall s:: s in a.states ==> s in states || s == i
       ensures i in states ==> a == this
       ensures i !in states ==> a.SSize() == SSize() + 1
+      ensures i !in states ==> (forall s:: s in states ==> a.transitions[s] == transitions[s]) && a.transitions[i] == []
       ensures a.IsValid()
     {
       if i in states then
@@ -106,11 +107,15 @@ module Automata {
       ensures j in a.states
       ensures forall s:: s in states ==> s in a.states
       ensures forall s:: s in a.states ==> s in states || s == i || s == j
+      ensures forall s:: s in a.states && s != i && s != j ==> a.transitions[s] == transitions[s]
+      ensures i in states ==> |a.transitions[i]| <= |transitions[i]| + 1
+      ensures i !in states ==> a.transitions[i] == [j]
     {
       var a1 := this.AddState(i).AddState(j);
       assert i in a1.states;
       assert j in a1.states;
       if a1.indexOf[j] in a1.transitionsNat[a1.indexOf[i]] then
+        assert j in a1.transitions[i];
         a1
       else
         var w := a1
@@ -123,7 +128,7 @@ module Automata {
     /**
       *  Add several transitions from i to all the elements of js.
       */
-    function {:timeLimitMultiplier 2} {:opaque} AddEdges(i: T, js: seq<T>, index: nat := 0): (a: ValidAuto<T>)
+    function {:timeLimitMultiplier 4} {:opaque} AddEdges(i: T, js: seq<T>, index: nat := 0): (a: ValidAuto<T>)
       requires this.IsValid()
       requires index <= |js|
       requires forall j:: 0 <= j < index ==> js[j] in this.states
@@ -192,7 +197,7 @@ module Automata {
     /** Print to Dot format. */
     method {:print} ToDot(ToString: T --> string)
       requires this.IsValid()
-      requires forall s:: s in states ==> ToString.requires(s) 
+      requires forall s:: s in states ==> ToString.requires(s)
     {
       print "digraph G {\n";
       print "// Number of states: ", SSize(), "\n";
