@@ -15,11 +15,9 @@
 
 include "../../../src/dafny/utils/EVMOpcodes.dfy"
 include "../../../src/dafny/utils/Instructions.dfy"
-  // include "../utils/MiscTypes.dfy"
 include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/StackElement.dfy"
-  // include "../../../src/dafny/disassembler/OpcodeDecoder.dfy"
 
 /**
   * Test correct computation of back propagation of a given position.
@@ -41,6 +39,7 @@ module PosTrackerTests {
   {
     {
       var i := Instruction(Decode(op));
+      reveal Instruction.StackPosBackWardTracker();
       var r := i.StackPosBackWardTracker(k);
       if k > 0 {
         assert r == Right(k + 1);
@@ -71,6 +70,7 @@ module PosTrackerTests {
     requires LT <= op <= EQ
   {
     {
+      reveal Instruction.StackPosBackWardTracker();
       var i := Instruction(Decode(op));
       var r := i.StackPosBackWardTracker(k);
       if k >= 1 {
@@ -85,6 +85,7 @@ module PosTrackerTests {
     requires op == ISZERO
   {
     {
+      reveal Instruction.StackPosBackWardTracker();
       var i := Instruction(Decode(op));
       var r := i.StackPosBackWardTracker(k);
       if k > 0 {
@@ -240,6 +241,7 @@ module PosTrackerTests {
   /** Jump instructions. */
   method Jumps(k: nat)
   {
+    reveal Instruction.StackPosBackWardTracker();
     {
       var i := Instruction(Decode(JUMP));
       var r := i.StackPosBackWardTracker(k);
@@ -272,6 +274,7 @@ module PosTrackerTests {
   /** Pops  */
   method Pops(k: nat)
   {
+    reveal Instruction.StackPosBackWardTracker();
     {
       var i := Instruction(Decode(POP));
       assert i.arg == [];
@@ -290,6 +293,7 @@ module PosTrackerTests {
     requires |arg| == 2 * offset
     requires forall k:: 0 <= k < |arg| ==> Hex.IsHex(arg[k])
   {
+    reveal Instruction.StackPosBackWardTracker();
     {
       var i := Instruction(Decode(PUSH0 + (offset) as Int.u8), arg);
       assert i.IsValid();
@@ -307,6 +311,7 @@ module PosTrackerTests {
   method Dup(k: nat, offset: nat)
     requires 0 <= offset <= 15
   {
+    reveal Instruction.StackPosBackWardTracker();
     var i := Instruction(Decode(DUP1 + (offset) as Int.u8));
     var r := i.StackPosBackWardTracker(k);
     if k == 0 {
@@ -320,6 +325,7 @@ module PosTrackerTests {
   method Swap(k: nat, offset: nat)
     requires 0 <= offset <= 15
   {
+    reveal Instruction.StackPosBackWardTracker();
     var i := Instruction(Decode(SWAP1 + (offset) as Int.u8));
     var r := i.StackPosBackWardTracker(k);
 
@@ -334,6 +340,7 @@ module PosTrackerTests {
 
   method {:test} SwapTests()
   {
+    reveal Instruction.StackPosBackWardTracker();
     {
       var i := Instruction(Decode(SWAP1));
       var r := i.StackPosBackWardTracker(1);
