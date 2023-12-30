@@ -190,7 +190,7 @@ module Instructions {
       *              k = 3 => Max(1, 3 - (- 1)) = 4
       *  @example    SWAP2 pushes 0, pops 0, minOperands 3
       *              k = 0 => r = 0 
-      *              k = 1 => r = 1
+      *              k = 1 => r = 1 
       *              k => r = k!
       */
     function WeakestPreOperands(post: nat := 0): (r: nat)
