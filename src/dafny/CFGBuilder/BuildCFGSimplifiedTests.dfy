@@ -19,12 +19,12 @@ include "../utils/Automata.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
-include "../utils/CFGState.dfy"
+include "../utils/CFGState.dfy" 
 include "../utils/MinimiserGState.dfy"
 include "../utils/Partition.dfy"
-
+ 
 module BuildCFGSimplifiedTests {
-
+ 
   import opened MiscTypes
   import opened DFSSimple
   import opened Int
@@ -49,7 +49,7 @@ module BuildCFGSimplifiedTests {
     else if n == 3 then [0]
     else []
   }
-
+ 
   method {:test} Test1() {
     var a: Auto<nat> := Auto();
     var a1, h1 := DFS(succ1, 0 as nat, History(0, [0]), a, 15);
@@ -130,7 +130,7 @@ module BuildCFGSimplifiedTests {
 
       assert |y| >= 1;
       var p := EVMObj(y);
-      var a1 := p.BuildCFG();
+      var a1 := p.BuildCFG2();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
       a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x));
@@ -171,7 +171,7 @@ module BuildCFGSimplifiedTests {
       if |y| >= 1 {
         var p: ValidEVMObj := EVMObj(y);
 
-        var a1 := p.BuildCFG();
+        var a1 := p.BuildCFG2();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
         a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x)); 
