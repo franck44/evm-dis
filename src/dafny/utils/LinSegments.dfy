@@ -147,7 +147,7 @@ module LinSegments {
     }
 
 
-    //  Helper lemmas 
+    //  Helper lemmas
     /**
       *  In a valid segment, a JUMPDEST can only be the first instruction.
       * As a result CollectJumpDest is the same as CollectAllJumpDest.
@@ -227,6 +227,16 @@ module LinSegments {
       case CONTSeg(_, _, _)  => 1
       case _ => 0
     }
+
+    /**
+      * Whether this segment is a JUMP.
+      */
+    predicate IsJump()
+      requires this.IsValid()
+    {
+      this.JUMPSeg? || this.JUMPISeg?
+    }
+
 
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
     function {:opaque} LeadsTo(k: nat, exit: nat): ValidCond
@@ -350,7 +360,7 @@ module LinSegments {
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
     requires forall i:: 0 <= i < |exits| ==> exits[i] <= 1
-    requires forall i:: 0 <= i < |exits| ==> exits[i] <= xs[path[i]].NumberOfExits() - 1
+    requires forall i:: 0 <= i < |exits| ==> exits[i] < xs[path[i]].NumberOfExits()
   {
     if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
@@ -361,14 +371,14 @@ module LinSegments {
       var w1 := xs[path[|path| - 1]].WPre(c);
       //    Compute Wpre for feasibility of the segment, i.e. to ensure that
       //    the segment leads to to the next one.
-      foo(xs[path[|path| - 1]], exits[|exits| - 1]);
+      ValidExitLemma(xs[path[|path| - 1]], exits[|exits| - 1]);
       var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC, exits[|exits| - 1]);
       //  compute Wpre on last segment and iterate on prefix
       WPreSeqSegs(path[..|path| - 1], exits[..|exits| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
 
   }
 
-  lemma foo(s: ValidLinSeg, k: nat)
+  lemma ValidExitLemma(s: ValidLinSeg, k: nat)
     requires s.IsValid()
     requires k <= s.NumberOfExits() - 1
     ensures s.IsValidExit(k)
@@ -421,4 +431,5 @@ module LinSegments {
   }
 
 }
+
 
