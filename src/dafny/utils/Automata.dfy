@@ -166,7 +166,7 @@ module Automata {
       if index == |states| then 0
       else
         |transitionsNat[index]| + TSize(index + 1)
-    }
+    } 
 
     /** 
       *  Successors of a state.
@@ -195,22 +195,24 @@ module Automata {
     }
 
     /** Print to Dot format. */
-    method {:print} ToDot(ToString: T --> string)
+    method {:print} ToDot(nodeToString: T --> string, labelToString: (T, nat, T) --> string, prefix: string := "", name: string := "G")
       requires this.IsValid()
-      requires forall s:: s in states ==> ToString.requires(s)
+      requires forall s:: s in states ==> nodeToString.requires(s)
+      requires forall s, s', n:: s in states && s' in states ==> labelToString.requires(s, n, s')
     {
-      print "digraph G {\n";
       print "// Number of states: ", SSize(), "\n";
       print "// Number of transitions : ", TSize(), "\n";
+      print "digraph G {\n";
+      print prefix, "\n";
       for i := 0 to |states|
       {
-        print "s_", i, " [label=", ToString(states[i]) + "]\n";
+        print "s_", i, " [label=", nodeToString(states[i]) + "]\n";
       }
       for i := 0 to |states| {
         for j := 0 to |transitionsNat[i]| {
           print "s_", i, " -> ", "s_", transitionsNat[i][j],
-                " [label=\"", j, "\"]"
-                + ";\n";
+                labelToString(states[i], j, states[transitionsNat[i][j]]),
+                ";\n";
         }
       }
       print "}\n";
