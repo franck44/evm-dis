@@ -22,7 +22,7 @@ module Statistics {
   import Int
 
   /**   Statistics for the DFS. */
-  datatype Stats = Stats(maxDepthReached: bool := false, visitedStates: nat := 0, wPreInvSuccess: nat := 0, errorState: bool := false) {
+  datatype Stats = Stats(maxDepthReached: bool := false, visitedStates: nat := 0, wPreInvSuccess: nat := 0, errorState: nat := 0, nonMinimisedSize : (nat, nat) := (0,0)) {
 
     /** Set the indicator that maxDepth is reached to true. */
     function SetMaxDepth(): Stats {
@@ -39,10 +39,14 @@ module Statistics {
       this.(wPreInvSuccess := this.wPreInvSuccess + 1)
     }
 
+    function IncError(): Stats {
+      this.(errorState := this.errorState + 1)
+    }
+
     /** Pretty-print the statistics. */
     function PrettyPrint(): string {
       "// MaxDepth reached:" + (if maxDepthReached then "true" else "false") +"\n"
-      + "// ErrorState reached:" + (if errorState then "true" else "false") +"\n"
+      + "// ErrorStates reached:" + Int.NatToString(errorState) + "\n"
       + "// States seen:" + Int.NatToString(visitedStates) + "\n"
       + "// WPre success:" + Int.NatToString(wPreInvSuccess) + "\n"
     }
