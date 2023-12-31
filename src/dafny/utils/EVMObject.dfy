@@ -160,11 +160,11 @@ module EVMObject {
       *   @param  c           A condition.
       *   @param  exits       The exit after each segment.
       */
-    predicate {:opaque} PreservesCond(c: ValidCond, exits: seq<nat>)
+    predicate {:opaque} PreservesCond(c: ValidCond, exits: seq<nat>, initpc: nat)
       requires this.IsValid()
       requires c.StCond?
     {
-      var initState := BuildInitState(c);
+      var initState := BuildInitState(c).(pc := initpc);
       var endState := RunAll(exits, initState);
       if endState.EState? then
         endState.Sat(c)
@@ -212,7 +212,7 @@ module EVMObject {
           Some(index)
         else if w1.StFalse? then
           None
-        else if PreservesCond(w1, exitsFromIndex) then
+        else if PreservesCond(w1, exitsFromIndex, xs[i].StartAddress()) then
           Some(index)
         //  Try a potential second occurrence of segment i on the path
         else if 0 < |pathFromIndex| then // < |pStates| then
