@@ -11,7 +11,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
+ 
 include "../utils/LinSegments.dfy"
 include "../utils/CFGState.dfy"
 include "../utils/State.dfy"
@@ -183,7 +183,7 @@ module EVMObject {
       *   @note   The seenOnPath has all the nodes seen before the current one.
       *           The current one has startAddress == pc.
       */
-    function SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: Option<nat>)
+    function SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: (Option<nat>))
       requires this.IsValid()
       requires i < |xs|
       requires  |pStates| == |pExits|
@@ -216,6 +216,7 @@ module EVMObject {
           Some(index)
         //  Try a potential second occurrence of segment i on the path
         else if 0 < |pathFromIndex| then // < |pStates| then
+          assert forall i:: 0 <= i < |exitsFromIndex| ==> exitsFromIndex[i] < |NextG(pathFromIndex[i])|;
           SafeLoopFound(i, pathFromIndex[1..], exitsFromIndex[1..])
         else None
 
@@ -302,7 +303,6 @@ module EVMObject {
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
                 //  s' is the state that covers LastOnPath
-                print "found one", "\n";
                 a' := a'.AddEdge(LastOnPath, p.states[index]);
               case None =>
                 //  not already seen and not covered
@@ -362,16 +362,38 @@ module EVMObject {
     /**
       * Generate the HTML representation of a given abstract state.
       */
-    function {:opaque} ToHTML(a: GState): string
+    function {:opaque} ToHTML(a: GState, withTable: bool := false): string
       requires this.IsValid()
-      requires a.EGState? ==> a.segNum < |xs|
+      requires a.IsBounded(|xs|) // a.EGState? ==> a.segNum < |xs|
     {
+      //  if s.EGState?, because of the pre-condition, we are sure that a has a segNum < |xs|
+      //  and we can use xs[a.segNum]
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
+      else if withTable then
+        "<" + DOTSegTable(xs[a.segNum], a.segNum) +">"
       else
-        //  because of the pre-condition, we are sure that a has a segNum < |xs|
-        //  and we can use xs[a.segNum]
         "<" + DOTSeg(xs[a.segNum], a.segNum).0 +">"
+    }
+
+    /**
+      *  Generate a DOT edge's label.
+      */
+    function DotLabel(s: GState, exit: nat): string
+      requires this.IsValid()
+      requires s.IsBounded(|xs|)
+    {
+      var lab := if s.ErrorGState? then
+                   "Error"
+                 else if s.EGState? && exit < xs[s.segNum].NumberOfExits() then
+                   if xs[s.segNum].IsJump() && exit == xs[s.segNum].NumberOfExits() - 1 then
+                     "tooltip=\"Jump\",style=dashed"
+                   else
+                     "tooltip=\"Next\""
+                 else
+                   "Error Number of exits"
+        ;
+      " [" + lab + "]"
     }
   }
 
@@ -400,6 +422,54 @@ module EVMObject {
                   + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := Instructions.ToDot(s.Ins());
     (prefix + body, stackSizeEffect +  jumpTip + mninNumOpe)
+  }
+
+  /**
+    *   Print content of a segment in a table= with tooltips.
+    */
+  function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
+  {
+    //  Jump target
+    var jumpTip :=
+      if s.JUMPSeg? || s.JUMPISeg? then
+        var r := SegBuilder.JUMPResolver(s);
+        match r {
+          case Left(v) =>
+            match v {
+              case Value(address) =>   "&#10;Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
+              case Random(msg) => "&#10;Exit Jump target: Unknown"
+            }
+          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
+
+        } else "";
+
+    var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
+    var prefix := "<TR><TD "
+                  + ">Segment " + Int.NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress())
+                  + "]</TD>"
+                  + "<TD"
+                  + " href=\"\" tooltip=\"Stack Size &#916;: " + Int.IntToString(s.StackEffect())
+                  + "&#10;Stack Size on Entry &#8805; " + Int.NatToString(s.WeakestPreOperands())
+                  + jumpTip
+                  + "\""
+                  + "><FONT color=\"green\">&#9636;</FONT></TD>"    // old symbol for stack of books is &#128218;
+                  + "</TR><HR/>\n";
+    var tableEnd := "</TABLE>\n";
+    var body := DOTInsTable(s.Ins());
+    tableStart + prefix + body + tableEnd
+  }
+
+  /**   Print a seq of instructions. */
+  function {:tailrecursion true} DOTInsTable(xi: seq<Instructions.ValidInstruction>, isFirst: bool := true): string
+  {
+    if |xi| == 0 then ""
+    else
+      var prefix := "<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n";
+      var suffix := "</TD></TR>\n";
+      var exitPortTag := if xi[0].IsJump() then "PORT=\"exit\"" else "";
+      var entryPortTag := if isFirst then "PORT=\"entry\"" else "";
+      var a := xi[0].ToHTMLTable(entryPortTag, exitPortTag);
+      (prefix + a + suffix) +  DOTInsTable(xi[1..], false)
   }
 
   /** Collect jumpdests in a list of segments.  */
