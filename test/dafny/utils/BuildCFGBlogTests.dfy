@@ -14,7 +14,6 @@
 
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFGSimplified.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 
 /**
@@ -25,14 +24,11 @@ module BuildCFGBlogTests {
 
   const debug:= false
 
-
   import opened OpcodeDecoder
   import opened EVMConstants
   import opened BinaryDecoder
   import opened Splitter
-  import opened DFSSimple
   import opened EVMObject
-
 
   //  Simple example. Two successive calls to same functions.
   method {:test} TestCFG1()
@@ -63,13 +59,14 @@ module BuildCFGBlogTests {
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
       var p: ValidEVMObj := EVMObj(y);
-      var g := p.BuildCFG(10) ;
+      var g := p.BuildCFG(10, false) ;
       assert g.IsValid();
       expect g.SSize() == 5;
       expect g.TSize() == 4;
       if debug {
         print "CFG Test1\n";
-        g.ToDot(x => p.ToHTML(x));
+        g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+                labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
       }
     }
   }
@@ -105,11 +102,12 @@ module BuildCFGBlogTests {
     var p := EVMObj(y);
     var g := p.BuildCFG(10) ;
     assert g.IsValid();
-    expect g.SSize() == 11;
-    expect g.TSize() == 10;
+    expect g.SSize() == 2;
+    expect g.TSize() == 2;
     if debug {
       print "CFG Test1\n";
-      g.ToDot(x => p.ToHTML(x));
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
 
@@ -127,7 +125,8 @@ module BuildCFGBlogTests {
     expect g.TSize() == 10;
     if debug {
       print "CFG Test1\n";
-      g.ToDot(x => p.ToHTML(x));
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
 }

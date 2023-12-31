@@ -14,7 +14,6 @@
 
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFGSimplified.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 
 /**
@@ -29,7 +28,6 @@ module BuildCFGTests {
   import opened EVMConstants
   import opened BinaryDecoder
   import opened Splitter
-  import opened DFSSimple
   import opened EVMObject
 
   //  Simple example
@@ -49,7 +47,8 @@ module BuildCFGTests {
       expect g.TSize() == 1;
       if debug {
         print "CFG Test1\n";
-        g.ToDot(x => p.ToHTML(x));
+        g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
       }
     }
   }
@@ -114,7 +113,8 @@ module BuildCFGTests {
     expect g.TSize() == 5;
     if debug {
       print "CFG Test5\n";
-      g.ToDot(x => p.ToHTML(x));
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
 
@@ -131,7 +131,8 @@ module BuildCFGTests {
     expect g.TSize() == 10;
     if debug {
       print "CFG Test6\n";
-      g.ToDot(x=> p.ToHTML(x));
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
 }
