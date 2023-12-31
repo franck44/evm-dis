@@ -279,7 +279,7 @@ module EVMObject {
       if maxDepth == 0 || LastOnPath.ErrorGState? {
         //  stop the construction of the automaton.
         var stats' := if maxDepth == 0 then stats.SetMaxDepth() else stats;
-        return a, stats';
+        return a, stats'; 
       }
       else {
         // DFS from last state on the path
