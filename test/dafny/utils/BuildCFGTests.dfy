@@ -41,7 +41,7 @@ module BuildCFGTests {
       expect |y| == 1;
       expect y[0].StartAddress() == 0;
       var p := EVMObj(y);
-      var g := p.BuildCFG(10) ;
+      var g, _ := p.BuildCFG(10) ;
       assert g.IsValid();
       expect g.SSize() == 2;
       expect g.TSize() == 1;
@@ -107,7 +107,7 @@ module BuildCFGTests {
     expect y[0].StartAddress() == 0;
 
     var p := EVMObj(y);
-    var g := p.BuildCFG(10) ;
+    var g, _ := p.BuildCFG(10) ;
     assert g.IsValid();
     expect g.SSize() == 5;
     expect g.TSize() == 5;
@@ -125,7 +125,7 @@ module BuildCFGTests {
     var y := SplitUpToTerminal(x, [], []);
     expect |y| >= 1;
     var p: EVMObj := EVMObj(y);
-    var g := p.BuildCFG(10) ;
+    var g, _ := p.BuildCFG(10) ;
     assert g.IsValid();
     expect g.SSize() == 9;
     expect g.TSize() == 10;

@@ -22,6 +22,7 @@ include "../proofobjectbuilder/SegmentBuilder.dfy"
 include "../utils/Hex.dfy"
 include "../utils/Automata.dfy"
 include "../utils/Partition.dfy"
+include "../utils/Statistics.dfy"
 include "../utils/MinimiserGState.dfy"
 
 /**
@@ -44,6 +45,7 @@ module EVMObject {
   import opened GStateMinimiser
   import opened WeakPre
   import opened StackElement
+  import opened Statistics
 
   /**
     * A path is a sequence of states and a sequence of exits.
@@ -257,7 +259,8 @@ module EVMObject {
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
-      debugInfo: bool := false) returns (a': ValidAuto<T>)
+      debugInfo: bool := false,
+      stats: Stats := Stats()) returns (a': ValidAuto<T>, stats': Stats)
 
       requires this.IsValid()
       requires  |p.states| == |p.exits| + 1
@@ -275,11 +278,13 @@ module EVMObject {
       var LastOnPath := Last(p.states);
       if maxDepth == 0 || LastOnPath.ErrorGState? {
         //  stop the construction of the automaton.
-        return a;
+        var stats' := if maxDepth == 0 then stats.SetMaxDepth() else stats;
+        return a, stats';
       }
       else {
         // DFS from last state on the path
         a' := a;
+        stats' := stats;
         for i := 0 to |NextG(LastOnPath)|
           invariant a'.IsValid()
           invariant forall s:: s in a'.states ==> NextG.requires(s)
@@ -287,30 +292,32 @@ module EVMObject {
         {
           var i_th_succ := NextG(LastOnPath)[i];
           if i_th_succ.ErrorGState? {
-            a' := a'.AddEdge(LastOnPath, i_th_succ);
+            a', stats' := a'.AddEdge(LastOnPath, i_th_succ), stats'.IncError(); 
           } else if i_th_succ in a'.indexOf {
-            a' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]);
+            a', stats' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
           } else if !xs[LastOnPath.segNum].IsJump() {
             //  not already seen and not a jump
             assert i_th_succ !in a'.indexOf;
-            a' := DFS(
+            a', stats' := DFS(
               Path(p.states + [i_th_succ], p.exits + [i]),
               a'.AddEdge(LastOnPath, i_th_succ),
               maxDepth - 1,
-              debugInfo);
+              debugInfo, 
+              stats');
           } else {
             assert i_th_succ.EGState?;
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
                 //  s' is the state that covers LastOnPath
-                a' := a'.AddEdge(LastOnPath, p.states[index]);
+                a', stats' := a'.AddEdge(LastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
-                a' := DFS(
+                a', stats' := DFS(
                   Path(p.states + [i_th_succ], p.exits + [i]),
                   a'.AddEdge(LastOnPath, i_th_succ),
                   maxDepth - 1,
-                  debugInfo);
+                  debugInfo,
+                  stats');
             }
           }
         }
@@ -323,20 +330,20 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:opaque} BuildCFG(maxDepth: nat := 100, minimise: bool := true) returns (a: Automata.ValidAuto<GState>)
+    method {:opaque} BuildCFG(maxDepth: nat := 100, minimise: bool := true) returns (a: Automata.ValidAuto<GState>, stats: Stats)
       requires this.IsValid()
       requires |xs| >= 1
       ensures forall s:: s in a.states && s.EGState? ==> s.segNum < |xs|
     {
       //  For now we ignore the history
-      var a1 := DFS(
+      var a1, s1 := DFS(
         Path([DEFAULT_GSTATE], []),
         Automata.Auto().AddState(DEFAULT_GSTATE),
         maxDepth,
         true);
 
       if !minimise || a1.SSize() == 0 {
-        return a1;
+        return a1, s1;
       } else {
         //  Minimise the automaton
         var p1: ValidPartition := PartitionMod.MakeInit(a1.SSize());
@@ -355,7 +362,7 @@ module EVMObject {
 
         var vp: GStateMinimiser.Pair := Pair(a1, p2);
         var a2 := vp.Minimise();
-        return a2;
+        return a2, s1.(nonMinimisedSize := (a1.SSize(), a1.TSize()));
       }
     }
 

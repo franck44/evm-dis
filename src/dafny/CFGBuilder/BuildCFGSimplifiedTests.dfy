@@ -87,7 +87,7 @@ module BuildCFGSimplifiedTests {
 
       assert |y| >= 1;
       var p := EVMObj(y);
-      var a1 := p.BuildCFG();
+      var a1, _ := p.BuildCFG();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
       a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
@@ -130,7 +130,7 @@ module BuildCFGSimplifiedTests {
       if |y| >= 1 {
         var p: ValidEVMObj := EVMObj(y);
 
-        var a1 := p.BuildCFG();
+        var a1, _ := p.BuildCFG();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
         a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),

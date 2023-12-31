@@ -59,7 +59,7 @@ module BuildCFGBlogTests {
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
       var p: ValidEVMObj := EVMObj(y);
-      var g := p.BuildCFG(10, false) ;
+      var g, _ := p.BuildCFG(10, false) ;
       assert g.IsValid();
       expect g.SSize() == 5;
       expect g.TSize() == 4;
@@ -100,7 +100,7 @@ module BuildCFGBlogTests {
     expect y[0].StartAddress() == 0;
 
     var p := EVMObj(y);
-    var g := p.BuildCFG(10) ;
+    var g, _ := p.BuildCFG(10) ;
     assert g.IsValid();
     expect g.SSize() == 2;
     expect g.TSize() == 2;
@@ -119,7 +119,7 @@ module BuildCFGBlogTests {
     assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
 
     var p := EVMObj(y);
-    var g := p.BuildCFG(10) ;
+    var g, _ := p.BuildCFG(10) ;
     assert g.IsValid();
     expect g.SSize() == 9;
     expect g.TSize() == 10;
