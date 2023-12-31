@@ -20,6 +20,9 @@ include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/WeakPre.dfy"
+include "../../../src/dafny/utils/EVMObject.dfy"
+include "../../../src/dafny/utils/CFGState.dfy"
+include "../../../src/dafny/utils/MiscTypes.dfy"
 
 /**
   * Test correct computation of Wpre on segments.
@@ -36,6 +39,10 @@ module SegWpreTests {
   import opened Splitter
   import opened WeakPre
   import opened LinSegments
+  import opened EVMObject
+  import opened CFGState
+  import opened MiscTypes
+
 
   //  Helpers
   function BuildInitState(c: ValidCond): (s: AState)
@@ -111,9 +118,9 @@ module SegWpreTests {
                Value(post.TrackedValAt(k));
       }
     }
-   
+
   }
-  
+
   //  Simple example
   method {:test} Test1()
   {
@@ -135,7 +142,7 @@ module SegWpreTests {
     var r2 := y[0].WPre(c2);
     expect r2 == StCond([1], [0x10]);
     TestPost(c2, y[0], [0x13]);
-    
+
 
     var c3 := StCond([3], [0x10]);
     var r3 := y[0].WPre(c3);
@@ -167,6 +174,82 @@ module SegWpreTests {
       expect r1 == StCond([1], [0x10]);
     }
   }
+
+  method {:timeLimitMultiplier 1} {:test} Test5()
+  {
+    var x := DisassembleU8(
+      [
+        /* 0x00: */ PUSH1, 0x05,
+        /* 0x02: */ PUSH1, 0x0d,
+        /* 0x04: */ JUMP,
+
+        /* 0x05: */ JUMPDEST,
+        /* 0x06: */ PUSH1, 0x0b,
+        /* 0x08: */ PUSH1, 0x0d,
+        /* 0x0a: */ JUMP,
+
+        /* 0x0b: */ JUMPDEST,
+        /* 0x0c: */ STOP,
+
+        /* 0x0d: */ JUMPDEST,
+        /* 0x0e: */ JUMP
+      ]
+    );
+
+    expect |x| == 11;
+    var y := SplitUpToTerminal(x, [], []);
+    assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
+    expect |y| == 4;
+
+    // 
+    expect y[0].StartAddress() == 0x00;
+    var p: ValidEVMObj := EVMObj(y);
+
+    var pStates := [DEFAULT_GSTATE];
+
+    var pExits: seq<nat>  := [];
+    // Create a path 0 -> 3 -> 1 -> 3
+    for i := 0 to 3
+      invariant |pStates| >= 1
+      invariant |pStates| == |pExits| + 1
+      invariant forall s:: s in pStates ==> s.IsBounded(|p.xs|)
+      invariant forall k:: 0 <= k < |pExits| ==> pExits[k] < |p.NextG(pStates[k])|
+    {
+      expect Last(pStates).IsBounded(|p.xs|);
+      expect |p.NextG(Last(pStates))| == 1;
+      pStates := pStates + [p.NextG(Last(pStates))[0]];
+      pExits := pExits + [0];
+    }
+    expect forall s:: s in pStates ==> s.EGState? && s.IsBounded(|p.xs|);
+    var index := p.FindFirstNodeWithSegIndex(3, Init(pStates));
+    expect index == Some(1);
+
+    var d := p.SafeLoopFound(3, Init(pStates), pExits);
+    expect d == None();
+
+    //  Simulation of safeLoopGFound on the same path
+    var pathFromIndex := Init(pStates)[index.v..];
+    assert pathFromIndex[0].EGState? && pathFromIndex[0].segNum == 3;
+    var exitsFromIndex : seq<nat> := pExits[index.v..];
+    //  Map to the segment numbers
+    var segmentsOnPathFromIndex : seq<nat> := seq(|pathFromIndex|, i requires 0 <= i < |pathFromIndex| => pathFromIndex[i].segNum);
+
+    expect Last(pExits) == 0;
+    expect p.xs[Last(pStates).segNum].NumberOfExits() == 1;
+    var tgtCond := p.xs[Last(Init(pStates)).segNum].LeadsTo(p.xs[3].StartAddress(), Last(pExits));
+
+    expect tgtCond == StTrue();
+    expect |segmentsOnPathFromIndex| == |exitsFromIndex|;
+    expect forall k:: 0 <= k < |segmentsOnPathFromIndex| ==> segmentsOnPathFromIndex[k] < |p.xs|;
+    expect forall i:: 0 <= i < |exitsFromIndex| ==> exitsFromIndex[i] < p.xs[segmentsOnPathFromIndex[i]].NumberOfExits();
+    var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond, p.xs, p.xs[3].StartAddress());
+
+    expect w1 == StCond([0], [5]);
+    var r :=  p.PreservesCond(w1, exitsFromIndex, 0x0d);
+
+    expect r == false;
+  }
+
 }
 
 
