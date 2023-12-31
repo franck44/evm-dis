@@ -20,7 +20,7 @@ include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
-include "./utils/Hex.dfy" 
+include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
 
@@ -133,28 +133,35 @@ module Driver {
           print "----------------- Proof -------------------\n";
         }
 
-
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
           print "// maxDepth is:", cfgDepthOpt, "\n";
           //    @todo figure out how to merge the following two branches
           //    there is a lot of redundancy,
           if rawOpt {
             //  Build CFG upto depth
-            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);  
+            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);
             assert a1.IsValid();
             // print stats.PrettyPrint();
             print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
             print "// Raw CFG\n";
-            a1.ToDot(s requires s in a1.states => prog.ToHTML(s) );
+            a1.ToDot(
+              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
+              prefix := "node [shape=box]\nnode [fontname=arial]\nedge [fontname=arial]\nranking=TB"
+            );
             print "//----------------- Raw CFG -------------------\n";
-          } else { 
+          } else {
             //  Minimise
-            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);  
+            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);
             assert a1.IsValid();
-            // print stats.PrettyPrint();
+            // print stats.PrettyPrint(); 
             print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
             print "// Raw CFG\n";
-            a1.ToDot(s requires s in a1.states => prog.ToHTML(s) );
+            a1.ToDot(
+              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
+              prefix := "node [shape=box]\nnode [fontname=arial]\nedge [fontname=arial]\nranking=TB"
+            );
             print "//----------------- Minimised CFG -------------------\n";
           }
         } else {
@@ -165,6 +172,5 @@ module Driver {
       }
     }
   }
-
 }
 
