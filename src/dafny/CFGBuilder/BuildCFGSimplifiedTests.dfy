@@ -90,7 +90,8 @@ module BuildCFGSimplifiedTests {
       var a1 := p.BuildCFG();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
-      a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x));
+      a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
 
       //    Minimisation
       expect a1.SSize() >= 1;
@@ -110,7 +111,8 @@ module BuildCFGSimplifiedTests {
 
       var vp: GStateMinimiser.Pair := Pair(a1, p1);
       var a2 := vp.Minimise();
-      a2.ToDot((x: GState) requires x in a2.states => p.ToHTML(x));
+      a2.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
 
     }
   }
@@ -131,7 +133,8 @@ module BuildCFGSimplifiedTests {
         var a1 := p.BuildCFG();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
-        a1.ToDot((x: GState) requires x in a1.states => p.ToHTML(x)); 
+        a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l)); 
 
         //  Minimisation
         expect a1.SSize() >= 1;
@@ -153,7 +156,8 @@ module BuildCFGSimplifiedTests {
         assert p2.n == a1.SSize();
         var vp: GStateMinimiser.ValidPair := Pair(a1, p2);
         var a2 := vp.Minimise();
-        a2.ToDot((x: GState) requires x in a2.states => p.ToHTML(x));
+        a2.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
       } else {
         print "No segments\n";
       }
