@@ -139,9 +139,9 @@ module Driver {
           //    there is a lot of redundancy,
           if rawOpt {
             //  Build CFG upto depth
-            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);
+            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);
             assert a1.IsValid();
-            // print stats.PrettyPrint();
+            print s1.PrettyPrint();
             print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
             print "// Raw CFG\n";
             a1.ToDot(
@@ -152,11 +152,12 @@ module Driver {
             print "//----------------- Raw CFG -------------------\n";
           } else {
             //  Minimise
-            var a1:= prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);
+            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);
             assert a1.IsValid();
-            // print stats.PrettyPrint(); 
-            print "// Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
-            print "// Raw CFG\n";
+            print s1.PrettyPrint();
+            print "// Size of non minimised CFG: ", s1.nonMinimisedSize.0, " nodes, ", s1.nonMinimisedSize.1, " edges\n";
+            print "// Size of minimised CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
+            print "// Minimised CFG\n";
             a1.ToDot(
               nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
               labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
