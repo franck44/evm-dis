@@ -35,7 +35,7 @@ module OpcodeDecoder {
   function Decode(op: u8): Opcode
     ensures Decode(op).IsValid()
   {
-    // paraneters are: name, value of opcode, minCapacity, minOperands, pushes, pops
+    // parameters are: name, value of opcode, minCapacity, minOperands, pushes, pops
     match op
     case STOP       => SysOp("STOP", STOP, 0, 0, 0, 0)
     case ADD        => ArithOp("ADD", ADD)
