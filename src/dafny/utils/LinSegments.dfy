@@ -73,7 +73,7 @@ module LinSegments {
     /**
       *  The instructions in this segment.
       */
-    function Ins(): seq<Instruction>
+    function Ins(): seq<ValidInstruction>
       ensures |Ins()| >= 1
     {
       this.ins + [this.lastIns]
