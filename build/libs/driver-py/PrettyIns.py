@@ -163,15 +163,15 @@ class default__:
 
     @staticmethod
     def DecToString(n):
-        d_758___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_748___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_758___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_748___accumulator_)
                 elif True:
-                    d_758___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_758___accumulator_)
-                    in73_ = _dafny.euclidian_division(n, 10)
-                    n = in73_
+                    d_748___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_748___accumulator_)
+                    in74_ = _dafny.euclidian_division(n, 10)
+                    n = in74_
                     raise _dafny.TailCall()
                 break
 
