@@ -11,7 +11,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
- 
+
 include "../utils/LinSegments.dfy"
 include "../utils/CFGState.dfy"
 include "../utils/State.dfy"
@@ -24,6 +24,7 @@ include "../utils/Automata.dfy"
 include "../utils/Partition.dfy"
 include "../utils/Statistics.dfy"
 include "../utils/MinimiserGState.dfy"
+include "../utils/HTML.dfy"
 
 /**
   *  Provides EVM Object.
@@ -46,6 +47,7 @@ module EVMObject {
   import opened WeakPre
   import opened StackElement
   import opened Statistics
+  import opened HTML
 
   /**
     * A path is a sequence of states and a sequence of exits.
@@ -56,7 +58,8 @@ module EVMObject {
     *    A valid sequence of valid linear segments. To be valid the sequence 
     *    must be ordered by start addresses.
     */
-  type ValidSeqValidLinSeg = xs: seq<ValidLinSeg> | forall i, i':: 0 <= i < i' < |xs| ==> xs[i].StartAddress() < xs[i'].StartAddress()
+  type ValidSeqValidLinSeg = xs: seq<ValidLinSeg> |
+      forall i, i':: 0 <= i < i' < |xs| ==> xs[i].StartAddress() < xs[i'].StartAddress()
 
   /**   A valid EVMObj should have a PCToSegMap that is the reverse of xs -> startAddress() . */
   type ValidEVMObj = e: EVMObj | e.IsValid() witness EVMObj([], [])
@@ -255,7 +258,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:timeLimitMultiplier 1} DFS(
+    method {:timeLimitMultiplier 2} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
@@ -279,7 +282,7 @@ module EVMObject {
       if maxDepth == 0 || LastOnPath.ErrorGState? {
         //  stop the construction of the automaton.
         var stats' := if maxDepth == 0 then stats.SetMaxDepth() else stats;
-        return a, stats'; 
+        return a, stats';
       }
       else {
         // DFS from last state on the path
@@ -292,7 +295,7 @@ module EVMObject {
         {
           var i_th_succ := NextG(LastOnPath)[i];
           if i_th_succ.ErrorGState? {
-            a', stats' := a'.AddEdge(LastOnPath, i_th_succ), stats'.IncError(); 
+            a', stats' := a'.AddEdge(LastOnPath, i_th_succ), stats'.IncError();
           } else if i_th_succ in a'.indexOf {
             a', stats' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
           } else if !xs[LastOnPath.segNum].IsJump() {
@@ -302,7 +305,7 @@ module EVMObject {
               Path(p.states + [i_th_succ], p.exits + [i]),
               a'.AddEdge(LastOnPath, i_th_succ),
               maxDepth - 1,
-              debugInfo, 
+              debugInfo,
               stats');
           } else {
             assert i_th_succ.EGState?;
@@ -402,82 +405,45 @@ module EVMObject {
         ;
       " [" + lab + "]"
     }
+
+    /**
+     *  Print info for the bytecode.
+     */
+    method {:print} PrintByteCodeInfo() {
+      var listIns: seq<Instructions.ValidInstruction> :=  Flatten(Map(xs, (s: ValidLinSeg) => s.Ins()));
+      print "Bytecode Size: ", Size(), " Bytes\n";
+      print "Number of instructions: ", |listIns|, "\n";
+      print "Arithmetic opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.ArithOp?)|, "\n";
+      print "Comparison opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.CompOp?)|, "\n";
+      print "Bitwise opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.BitwiseOp?)|, "\n";
+      print "Keccak opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.KeccakOp?)|, "\n";
+      print "Environmental opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.EnvOp?)|, "\n";
+      print "Storage opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.StorageOp?)|, "\n";
+      print "Memory opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.MemOp?)|, "\n";
+      print "Stack opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.StackOp?)|, "\n";
+      print "Jump opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.JumpOp?)|, "\n";
+      print "Log opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.LogOp?)|, "\n";
+      print "Revert/stop opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.SysOp? && i.op.IsRevertStop())|, "\n";
+      print "Return opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.SysOp? && i.op.IsReturn())|, "\n";
+      print "Invalid opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.SysOp? && i.op.IsInvalid())|, "\n";
+      print "Other Systems opcodes: ", |Filter(listIns, (i: Instructions.ValidInstruction) => i.op.SysOp? && !i.op.IsInvalid() && !i.op.IsRevertStop() && !i.op.IsReturn())|, "\n";
+    }
+
+    /**
+     *  Print info for the segnments of the bytecode.
+     */
+    method PrintSegmentInfo() {
+        print "Total number of segments: ", |xs|, "\n";
+        print "# of JUMP segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPSeg?)|, "\n";
+        print "# of JUMPI segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPISeg?)|, "\n";
+        print "# of RETURN segments: ", |Filter(xs, (s: ValidLinSeg) => s.RETURNSeg?)|, "\n";
+        print "# of STOP segments: ", |Filter(xs, (s: ValidLinSeg) => s.STOPSeg?)|, "\n";
+        print "# of CONT segments: ", |Filter(xs, (s: ValidLinSeg) => s.CONTSeg?)|, "\n";
+        print "# of INVALID segments: ", |Filter(xs, (s: ValidLinSeg) => s.INVALIDSeg?)|, "\n";
+    }
+
   }
 
-  /**   Print the content of a segment. */
-  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
-  {
-    //  Jump target
-    var jumpTip :=
-      if s.JUMPSeg? || s.JUMPISeg? then
-        var r := SegBuilder.JUMPResolver(s);
-        match r {
-          case Left(v) =>
-            match v {
-              case Value(address) => "&#10;Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
-              case Random(msg) => "&#10;Exit Jump target: Unknown"
-            }
-          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
-
-        } else "";
-    var stackSizeEffect := "Stack Size &#916;: " + Int.IntToString(s.StackEffect());
-    var mninNumOpe := "&#10;Stack Size on Entry &#8805; " + Int.NatToString(s.WeakestPreOperands());
-    var prefix := "<B>Segment "
-                  + Int.NatToString(numSeg)
-                  + " [0x"
-                  + Hex.NatToHex(s.StartAddress())
-                  + "]</B><BR ALIGN=\"CENTER\"/>\n";
-    var body := Instructions.ToDot(s.Ins());
-    (prefix + body, stackSizeEffect +  jumpTip + mninNumOpe)
-  }
-
-  /**
-    *   Print content of a segment in a table= with tooltips.
-    */
-  function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
-  {
-    //  Jump target
-    var jumpTip :=
-      if s.JUMPSeg? || s.JUMPISeg? then
-        var r := SegBuilder.JUMPResolver(s);
-        match r {
-          case Left(v) =>
-            match v {
-              case Value(address) =>   "&#10;Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
-              case Random(msg) => "&#10;Exit Jump target: Unknown"
-            }
-          case Right(stackPos) => "&#10;Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
-
-        } else "";
-
-    var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
-    var prefix := "<TR><TD "
-                  + ">Segment " + Int.NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress())
-                  + "]</TD>"
-                  + "<TD"
-                  + " href=\"\" tooltip=\"Stack Size &#916;: " + Int.IntToString(s.StackEffect())
-                  + "&#10;Stack Size on Entry &#8805; " + Int.NatToString(s.WeakestPreOperands())
-                  + jumpTip
-                  + "\""
-                  + "><FONT color=\"green\">&#9636;</FONT></TD>"    // old symbol for stack of books is &#128218;
-                  + "</TR><HR/>\n";
-    var tableEnd := "</TABLE>\n";
-    var body := DOTInsTable(s.Ins());
-    tableStart + prefix + body + tableEnd
-  }
-
-  /**   Print a seq of instructions. */
-  function {:tailrecursion true} DOTInsTable(xi: seq<Instructions.ValidInstruction>, isFirst: bool := true): string
-  {
-    if |xi| == 0 then ""
-    else
-      var prefix := "<TR><TD width=\"1\" fixedsize=\"true\" align=\"left\">\n";
-      var suffix := "</TD></TR>\n";
-      var exitPortTag := if xi[0].IsJump() then "PORT=\"exit\"" else "";
-      var entryPortTag := if isFirst then "PORT=\"entry\"" else "";
-      var a := xi[0].ToHTMLTable(entryPortTag, exitPortTag);
-      (prefix + a + suffix) +  DOTInsTable(xi[1..], false)
-  }
 
   /** Collect jumpdests in a list of segments.  */
   function {:opaque} CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {
