@@ -12,17 +12,9 @@
  * under the License.
  */
 
-
-include "../../../src/dafny/utils/StackElement.dfy" 
-include "../../../src/dafny/utils/State.dfy"
-include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-include "../../../src/dafny/CFGBuilder/BuildCFG.dfy" 
-include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
-include "../../../src/dafny/prettyprinters/Pretty.dfy"
-// include "../../../src/dafny/proofobjectbuilder/ProofObjectBuilder.dfy"
 
 /**
   * Test correct computation of next State.
@@ -30,19 +22,16 @@ include "../../../src/dafny/prettyprinters/Pretty.dfy"
   */
 module BuildCFGTests {
 
+  const debug:= false
+
   import opened OpcodeDecoder
   import opened EVMConstants
-  import Int
-  import opened State
-  import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
-  import opened BuildCFGraph
-  import opened PrettyPrinters
   import opened EVMObject
 
   //  Simple example
-  method {:test1} Test1()
+  method {:test} Test1()
   {
     {
       //  Push and JUMP
@@ -52,42 +41,17 @@ module BuildCFGTests {
       expect |y| == 1;
       expect y[0].StartAddress() == 0;
       var p := EVMObj(y);
-      var g := BuildCFGV6(p, 2);
-      expect g.0.Graph().IsValid();
-      var g' := g.0.Graph().Minimise();
-      expect g'.IsValid();
-      print "CFG Test1\n";
-      assert g'.maxSegNum < |y|;
-      print g'.DOTPrint(y);
+      var g, _ := p.BuildCFG(10) ;
+      assert g.IsValid();
+      expect g.SSize() == 2;
+      expect g.TSize() == 1;
+      if debug {
+        print "CFG Test1\n";
+        g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
+      }
     }
   }
-
-  /** POP then DUP1 */
-  //   method {:test} {:verify true} Test4()
-  //   {
-  //     //  Linear segment
-  //     var x := DisassembleU8([POP, DUP1]);
-  //     expect |x| == 2;
-  //     var y := SplitUpToTerminal(x, [], []);
-  //     expect |y| == 1;
-  //     expect y[0].CONTSeg?;
-  //     //    Run Segment exit false. Should be Error
-  //     var s0 := DEFAULT_VALIDSTATE;
-  //     var s' := y[0].Run(s0, true);
-  //     expect s'.Error?;
-
-  //     //  Not enough stakc element
-  //     var s1 := y[0].Run(s0, false);
-  //     expect s'.Error?;
-
-  //     //  Good
-  //     var s2 := y[0].Run(s0.(stack := [Random(), Random()]), false);
-  //     expect s2.EState?;
-  //     expect s2 == EState(0x02, [Random(), Random()]);
-
-  //     var s3 := y[0].Run(s0.(stack := [Random(), Random()]), true);
-  //     expect s3.Error?;
-  //   }
 
   /**   Run more than one segment
     *   max-return.bin program
@@ -143,35 +107,33 @@ module BuildCFGTests {
     expect y[0].StartAddress() == 0;
 
     var p := EVMObj(y);
-    var g := BuildCFGV6(p, 10) ;
-
-    expect g.0.Graph().IsValid();
-    var g' := g.0.Graph().Minimise();
-    expect g'.IsValid();
-    assert g'.maxSegNum < |y|;
-    print g'.DOTPrint(y);
-
-    print "CFG Test5\n";
-    print g'.DOTPrint(y);
+    var g, _ := p.BuildCFG(10) ;
+    assert g.IsValid();
+    expect g.SSize() == 5;
+    expect g.TSize() == 5;
+    if debug {
+      print "CFG Test5\n";
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
+    }
   }
 
   /** max-max. */
-  method {:test1} {:verify false} Test6()
+  method {:test} {:verify true} Test6()
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
     var y := SplitUpToTerminal(x, [], []);
-
-    var p := EVMObj(y);
-    var g := BuildCFGV6(p, 10) ;
-    expect g.0.Graph().IsValid();
-    var g' := g.0.Graph().Minimise();
-    expect g'.IsValid();
-    print "CFG test 1\n";
-    assert g'.maxSegNum < |y|;
-    print g'.DOTPrint(y);
-
-    print "CFG Test6\n";
-    print g'.DOTPrint(y);
+    expect |y| >= 1;
+    var p: EVMObj := EVMObj(y);
+    var g, _ := p.BuildCFG(10) ;
+    assert g.IsValid();
+    expect g.SSize() == 9;
+    expect g.TSize() == 10;
+    if debug {
+      print "CFG Test6\n";
+      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+              labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
+    }
   }
 }
 

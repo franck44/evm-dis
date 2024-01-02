@@ -34,13 +34,16 @@ module BinaryDecoder {
     *  Disassemble a string into a sequence of instructions.
     *
     *   @param  s       The string that remains to be disassembled.
-    *   @param  p       The part thathas already been disassembled.
+    *   @param  p       The part that has already been disassembled.
     *   @param  next    The next available address to store the instructions.
     *   @returns        A seq of valid instructions that correspond to `s`.
     *
     *   @note           Some of the instructions may be instances of INVALID.
     */
-  function {:tailrecursion true} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
+  function {:tailrecursion true} {:opaque} Disassemble(s: string, p: seq<ValidInstruction> := [], next: nat := 0): (r: seq<ValidInstruction>)
+    requires forall i:: 0 <= i < |p| ==> p[i].address < next
+    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address < p[i'].address
+    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address < r[i'].address
     decreases |s|
   {
     if |s| == 0 then
@@ -80,7 +83,10 @@ module BinaryDecoder {
     *   @note   Used in tests, rather than disassembling hex, we can write tests
     *           code as seq of bytes directly.
     */
-  function {:tailrecurseion true} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): seq<ValidInstruction>
+  function {:tailrecursion true} {:opaque} DisassembleU8(s: seq<u8>, p: seq<ValidInstruction> := [], next: nat := 0): (r: seq<ValidInstruction>)
+    requires forall i:: 0 <= i < |p| ==> p[i].address < next
+    requires forall i, i':: 0 <= i < i' < |p| ==> p[i].address < p[i'].address
+    ensures forall i, i':: 0 <= i < i' < |r| ==> r[i].address < r[i'].address
     decreases |s|
   {
     if |s| == 0 then
@@ -90,8 +96,8 @@ module BinaryDecoder {
       var op := Decode(s[0]);
       if op.Args() > 0 then
         //  try to skip Args()
-        if |s[1..]| < op.Args() then
-          p + [Instruction(Decode(INVALID))]
+        if |s[1..]| < op.Args() then 
+          p + [Instruction(Decode(INVALID), "not enough arguments for opcode " + op.name, next)]
         else
           assert |s[1..][op.Args()..]| < |s|;
           DisassembleU8(s[1..][op.Args()..], p + [Instruction(op, HexHelper(s[1..][..op.Args()]), next)], next + 1 + op.Args())

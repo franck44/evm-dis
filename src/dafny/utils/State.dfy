@@ -45,6 +45,9 @@ module State {
                   | Error(msg: string := "Error")
   {
 
+    /**
+      * Pretty print a state.
+      */
     function ToString(): string
     {
       match this
@@ -142,6 +145,9 @@ module State {
       this.(stack := this.stack[0 := nth][n := top])
     }
 
+    /**
+      * Whether a state satisfies a condition.
+      */
     predicate Sat(c: ValidCond)
       requires this.EState?
       requires c.StCond?
@@ -157,6 +163,9 @@ module State {
 
   }
 
+  /**
+    * Check that the value at position pos is val.
+    */
   predicate checkPos(s: ValidState, pos: nat, val: u256)
   {
     if |s.stack| <= pos then false
@@ -164,12 +173,6 @@ module State {
   }
 
   //    Helpers
-  function StackToString(s: seq<StackElem>): string
-  {
-    if |s| == 0 then ""
-    else
-      s[0].ToString() + "," + StackToString(s[1..])
-  }
 
   /**
     * Build an initial state that satisfies a given condition.

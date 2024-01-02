@@ -136,6 +136,24 @@ module EVMOpcodes {
       this.opcode == JUMPDEST
     }
 
+    predicate IsRevertStop()
+      requires IsValid()
+    {
+      this.opcode == REVERT || this.opcode == STOP
+    }
+
+    predicate IsReturn()
+      requires IsValid()
+    {
+      this.opcode == RETURN 
+    }
+
+    predicate IsInvalid()
+      requires IsValid()
+    {
+      this.opcode == INVALID 
+    }
+
     /**
       * The readable name of an Opcode.
       */

@@ -12,15 +12,19 @@
  * under the License.
  */
 
+
+include "MiscTypes.dfy"
 /** 
   * Provides seqeuence of sets.
   */
 module SeqOfSets {
 
+  import opened MiscTypes
+
   /**
     *   Union of a seq of sets.
     */
-  function {:tailrecursion true} SetU<T>(xs: seq<set<T>>): (r: set<T>)
+  function {:tailrecursion true} {:opaque} SetU<T>(xs: seq<set<T>>): (r: set<T>)
     // ensures forall x:: x in r ==> exists k:: 0 <= k < |xs| && x in xs[k]
     ensures forall k:: 0 <= k < |xs| ==> xs[k] <= SetU(xs)
   {
@@ -31,26 +35,42 @@ module SeqOfSets {
   /**
     *   Intersection of a seq of sets.
     */
-  function {:tailrecursion false} SetI<T>(xs: seq<set<T>>): (r: set<T>)
+  function {:tailrecursion false} {:opaque} SetI<T>(xs: seq<set<T>>): (r: set<T>)
   {
     if |xs| == 0 then {}
     else if |xs| == 1 then xs[0]
     else xs[0] * SetI(xs[1..])
   }
 
-  predicate AllNonEmpty<T>(xs: seq<set<T>>)
+  ghost predicate AllNonEmpty<T>(xs: seq<set<T>>)
   {
     forall k:: 0 <= k < |xs| ==> xs[k] != {}
   }
 
-  predicate DisjointAnyTwo<T>(xs: seq<set<T>>)
+  lemma AllNonEmptySubset<T>(r1: seq<set<T>>, r2: seq<set<T>>)
+    requires AllNonEmpty(r1)
+    requires AllNonEmpty(r2)
+    ensures AllNonEmpty(r1 + r2)
+  {
+
+  }
+
+  ghost predicate DisjointAnyTwo<T>(xs: seq<set<T>>)
   {
     forall k, k':: 0 <= k < k' < |xs| ==> xs[k] * xs[k'] == {}
   }
-
-  predicate SetN(xs: seq<set<nat>>, n: nat)
+ 
+  ghost predicate SetN(xs: seq<set<nat>>, n: nat)
   {
+    reveal_SetU();
     SetU(xs) == set z {:nowarn} | 0 <= z < n
+  }
+
+  lemma EmptySubsetIntersection<T>(a: set<T>, b: set<T>, c: set<T>, d: set<T>)
+    requires a * b == {}
+    requires c <= a && d <= b
+    ensures c * d == {}
+  {
   }
 
   /**
@@ -59,7 +79,8 @@ module SeqOfSets {
     */
   lemma AllBoundedBy(xs: seq<set<nat>>, n: nat)
     requires SetN(xs, n)
-    ensures forall k, e:: k in xs ==> e in k ==> 0 <= e < n
+    ensures forall k, e:: k in xs && e in k ==> 0 <= e < n
+    ensures forall k, e:: 0 <= k < |xs| &&  e in xs[k] ==> 0 <= e < n
     ensures forall e:: 0 <= e < n <==> e in SetU(xs)
   { //  Thanks Dafny
   }
@@ -86,6 +107,7 @@ module SeqOfSets {
     requires t in SetU(xt)
     ensures exists k:: 0 <= k < |xt| && t in xt[k]
   { //  Thanks Dafny
+    reveal_SetU();
   }
 
   /**   
@@ -137,6 +159,7 @@ module SeqOfSets {
     requires AllNonEmpty(xs)
     ensures |SetU(xs)| >= |xs|
   {
+    reveal_SetU();
     if |xs| == 0 {
       //  
     } else {
@@ -154,7 +177,7 @@ module SeqOfSets {
   /**
     *   Split a set into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
-  function SplitSet(xs: set<nat>, f: nat --> bool): (r: (set<nat>, set<nat>))
+  function {:opaque} SplitSet(xs: set<nat>, f: nat --> bool): (r: (set<nat>, set<nat>))
     requires forall x:: x in xs ==> f.requires(x)
     ensures xs == r.0 + r.1
     ensures r.0 * r.1 == {}
@@ -168,7 +191,7 @@ module SeqOfSets {
   /**
     *   Split a sequence of sets into two subsets X and Y such that X = f^-1(true) and Y = f^-1(false)
     */
-  function {:tailrecursion true} SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
+  function {:tailrecursion true} {:opaque} SplitSeqOfSet(xs: seq<set<nat>>, f: nat -> bool): (r: seq<(set<nat>, set<nat>)>)
     ensures |xs| == |r|
     ensures forall k:: 0 <= k < |r| ==> r[k].0 * r[k].1 == {}
     ensures forall k:: 0 <= k < |r| ==> r[k].0 + r[k].1 == xs[k]
@@ -184,8 +207,10 @@ module SeqOfSets {
     *   Iterate over sets. 
     *   @link{https://leino.science/papers/krml275.html}
     */
-  function {:tailrecursion true} SetToSequence(s: set<nat>): (r: seq<nat>)
-    ensures forall i :: i in s <==> i in r
+  function {:tailrecursion true} {:opaque} SetToSequence(s: set<nat>): (r: seq<nat>)
+    ensures |s| == |r| 
+    ensures forall i :: i in s ==> i in r
+    ensures forall i :: 0 <= i < |r|  ==> r[i] in s
   {
     if s == {} then []
     else
@@ -218,6 +243,7 @@ module SeqOfSets {
   lemma DistribUnion<T>(a : seq<set<T>>, b: seq<set<T>>)
     ensures SetU(a + b) == SetU(a) + SetU(b)
   {
+    reveal_SetU();
     if |a| == 0 {
       assert [] + b == b;
       assert SetU(a) == {};
@@ -247,6 +273,7 @@ module SeqOfSets {
     requires index < |xs|
     ensures SetU(xs[..index]) + xs[index] + SetU(xs[index + 1..]) == SetU(xs)
   {
+    reveal_SetU();
     calc == {
       SetU(xs);
       { assert xs == xs[..index] + [xs[index]] + xs[index + 1..] ; }
@@ -293,9 +320,9 @@ module SeqOfSets {
 
   /**
     *   Split a sequence of nat according to a function value f.
-    *   Tail recursice version.
+    *   Tail recursivse version.
     */
-  function {:tailrecursion true} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
+  function {:tailrecursion true} {:opaque} SplitSeqTail(xs: seq<nat>, f: nat --> bool, cTrue: set<nat> := {}, cFalse: set<nat> := {}, index: nat := 0): (r: (set<nat>, set<nat>))
     requires index <= |xs|
     requires forall  k:: k in xs ==> f.requires(k)
     requires  forall k:: k in xs[..index] <==> k in cTrue + cFalse
@@ -336,6 +363,61 @@ module SeqOfSets {
       if f(xs[0]) then (r.0 + {xs[0]}, r.1)
       else
         (r.0, r.1 + {xs[0]})
+  }
+
+  /**
+    *   Flattening a seq of disjoint sets yield 
+    *   a set of disjoint sets.
+    */
+  lemma NonFlatDisjointImpliesFlatDisjoint(r: seq<seq<set<nat>>>, r': seq<set<nat>>)
+    requires r' == Flatten(r)
+    requires forall i, i':: 0 <= i < i' < |r| ==> SetU(r[i]) * SetU(r[i']) == {}
+    requires forall i:: 0 <= i < |r| ==> DisjointAnyTwo(r[i])
+    ensures DisjointAnyTwo(Flatten(r))
+  {
+    forall i, i' | 0 <= i < i' < |r'|
+      ensures r'[i] * r'[i'] == {}
+    {
+      var (i1, k1) := UnFlatIndex(r, r', i);
+      var (i2, k2) := UnFlatIndex(r, r', i');
+      FlatDistinctImpliesUnFlatDistinct(r, r', i, i');
+    }
+  }
+
+  /**
+    *   Flatten preserves SetU.
+    */
+  lemma FlattenPreservesSetU(xs: seq<set<nat>>, r: seq<seq<set<nat>>>)
+    requires |xs| == |r|
+    requires forall i:: 0 <= i < |r| ==> SetU(r[i]) == xs[i]
+    ensures SetU(Flatten(r)) == SetU(xs)
+  {
+    reveal_SetU();
+    if |xs| == 0 {
+      //  Thanks Dafny
+    } else {
+      calc == {
+        SetU(Flatten(r));
+        SetU(r[0] + Flatten(r[1..]));
+        { DistribUnion(r[0], Flatten(r[1..])); }
+        SetU(r[0]) + SetU(Flatten(r[1..]));
+        xs[0] + SetU(Flatten(r[1..]));
+        { FlattenPreservesSetU(xs[1..], r[1..]); }
+        xs[0] + SetU(xs[1..]);
+      }
+    }
+  }
+
+  /**
+    *   Flattening all non-empty sets preserves all non-empty.
+    */
+  lemma FlattenAllNonEmpty(r: seq<seq<set<nat>>>, n: nat)
+    requires forall i:: 0 <= i < |r| ==> AllNonEmpty(r[i])
+    requires forall i, k:: 0 <= i < |r| && 0 <= k < |r[i]| ==> forall x:: x in r[i][k] ==> x < n
+    ensures forall i:: i in Flatten(r) ==> i != {}
+    ensures AllNonEmpty(Flatten(r))
+    ensures forall i:: i in Flatten(r) ==> forall x:: x in i ==> x < n
+  { // Thanks Dafny
   }
 
 }

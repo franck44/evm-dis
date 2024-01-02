@@ -16,13 +16,15 @@ include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
 include "./proofobjectbuilder/ProofObjectBuilder.dfy"
-include "./CFGBuilder/BuildCFG.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
 include "./utils/int.dfy"
 include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
+include "./utils/Statistics.dfy"
+include "./utils/CFGState.dfy"
+include "./utils/HTML.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -34,12 +36,12 @@ module Driver {
   import opened PrettyPrinters
   import opened EVMObject
   import opened ArgParser
-  import opened BuildCFGraph
   import opened MiscTypes
-  import opened State
   import opened Int
-  import Hex
+  import opened Statistics
   import opened ProofObjectBuilder
+  import opened CFGState
+  import opened HTML
 
   /**
     *  Read the input string
@@ -61,6 +63,8 @@ module Driver {
     optionParser.AddOption("-r", "--raw", 0, "Display non-minimised and minimised CFGs");
     optionParser.AddOption("-f", "--fancy", 0, "Use exit and entry ports in segments do draw arrows.");
     optionParser.AddOption("-n", "--notable", 0, "Don't use tables to pretty-print DOT file. Reduces size of the DOT file.");
+    optionParser.AddOption("-t", "--title", 1, "The name of the program.");
+    optionParser.AddOption("-i", "--info", 0, "The stats of the program (size, segments).");
 
     if |args| < 2 || args[1] == "--help" {
       print "Not enough arguments\n";
@@ -70,12 +74,12 @@ module Driver {
       //  Make sure the string is Hexa and has even length
       if |args[1]| == 0 {
         print "String must be non empty \n";
-      } else if |args[1]| % 2 != 0 { 
+      } else if |args[1]| % 2 != 0 {
         print "String must be non empty and have even length, length is ", |args[1]|, "\n";
       } else if Hex.IsHexString(if args[1][..2] == "0x" then args[1][2..] else args[1]) {
         var x := Disassemble(if args[1][..2] == "0x" then args[1][2..] else args[1]);
         print "Disassembled code:\n";
-        PrintInstructions(x); 
+        PrintInstructions(x);
         print "--------------- Disassembled ---------------------\n";
       } else {
         print "String must be hexadecimal\n";
@@ -86,7 +90,7 @@ module Driver {
     } else {
       // Collect the arguments
       var stringToProcess := args[|args| - 1];
-        if |stringToProcess| == 0 {
+      if |stringToProcess| == 0 {
         print "String must be non empty \n";
       } else if |stringToProcess| % 2 != 0 {
         print "String must have even length, length is ", |stringToProcess|, "\n";
@@ -110,7 +114,13 @@ module Driver {
           case Failure(_) => 0;
         var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
         var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
+        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false;
         var fancy := if optionParser.GetArgs("--fancy", optArgs).Success? then true else false;
+        var name: string :=
+          match optionParser.GetArgs("--title", optArgs)
+          case Success(args) => args[0]
+          case Failure(_) => "Name not set";
+
 
         //    Process options
         if disOpt {
@@ -121,6 +131,16 @@ module Driver {
 
         var y := SplitUpToTerminal(x, [], []);
         var prog := EVMObj(y);
+
+        if info {
+          print "-------- Program Stats ---------\n";
+          prog.PrintByteCodeInfo();
+          print "-------- End Program Stats ---------\n";
+          print "-------- Segment Stats ---------\n";
+          prog.PrintSegmentInfo();
+          print "-------- End Segment Stats ---------\n";
+
+        }
 
         if segmentOpt {
           print "Segments:\n";
@@ -136,28 +156,54 @@ module Driver {
         }
 
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
-          print "// maxDepth is:", cfgDepthOpt, "\n";
-          //  Build CFG upto depth
-          var (g1, stats) := BuildCFGV6(prog, cfgDepthOpt);
-          var g := g1.Graph();
+          //    @todo figure out how to merge the following two branches
+          //    there is a lot of redundancy,
           if rawOpt {
-            print stats.PrettyPrint();
-            print "// Size of CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
-            print "// Raw CFG\n";
-            print g.DOTPrint(y, noTable, fancy);
+            //  Build CFG upto depth
+            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);
+            assert a1.IsValid();
+            //  Number of invalid segments reachable in the CFG
+            var k := Filter(a1.states, (s: GState) requires s in a1.states => s.EGState? && s.IsBounded(|prog.xs|) && prog.xs[s.segNum].INVALIDSeg?);
+            print "/*\n";
+            print "maxDepth is:", cfgDepthOpt, "\n";
+            print s1.PrettyPrint();
+            print "# of reachable invalid segments is: ", |k|, "\n";
+            print "Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
+            print "Raw CFG\n";
+            print "*/\n";
+
+            a1.ToDot(
+              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
+              prefix :=
+                "graph[labelloc=\"t\", labeljust=\"l\", label=<"
+                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
+                + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
+            );
             print "//----------------- Raw CFG -------------------\n";
           } else {
             //  Minimise
-            var g' := g.Minimise();
-            expect g'.IsValid();
-            assert g'.maxSegNum < |y|;
-            var g2 := g.Minimise(true, y);
-            print stats.PrettyPrint();
-            print "// Size of non-minimised CFG: ", g.NumNodes(), " nodes, ", g.NumEdges(), " edges\n";
-            print "// Size of minimised CFG: ", g'.NumNodes(), " nodes, ", g'.NumEdges(), " edges\n";
-            print "// Size of equiv-minimised CFG: ", g2.NumNodes(), " nodes, ", g2.NumEdges(), " edges\n";
-            print "// Minimised CFG\n";
-            print g'.DOTPrint(y, noTable, fancy);
+            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);
+            assert a1.IsValid();
+            //  Number of invalid segments reachable in the CFG
+            var k := Filter(a1.states, (s: GState) requires s in a1.states => s.EGState? && s.IsBounded(|prog.xs|) && prog.xs[s.segNum].INVALIDSeg?);
+            print "/*\n";
+            print "maxDepth is:", cfgDepthOpt, "\n";
+            print s1.PrettyPrint();
+            print "# of reachable invalid segments is: ", |k|, "\n";
+            print "Size of non minimised CFG: ", s1.nonMinimisedSize.0, " nodes, ", s1.nonMinimisedSize.1, " edges\n";
+            print "Size of minimised CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
+            print "Minimised CFG\n";
+            print "*/\n";
+            a1.ToDot(
+              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
+              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
+              prefix :=
+                "graph[labelloc=\"t\", labeljust=\"l\", fontname=\"Arial\", label=<"
+                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
+                + ">]\n"
+                + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
+            );
             print "//----------------- Minimised CFG -------------------\n";
           }
         } else {
@@ -167,6 +213,15 @@ module Driver {
         }
       }
     }
+  }
+
+  function MakeTitle(name: string, numNodes: nat, numEdges: nat, maxDepth: nat, reached: bool): string
+  {
+    "<B>Program Name: </B> " + name + "<BR ALIGN=\"left\"/>"
+    + "<B>Control Flow Graph Info: </B><BR ALIGN=\"left\"/>"
+    + "Max depth: " + Int.NatToString(maxDepth) +  " [" + (if reached then "Was reached" else "Was not reached") + "]" + "<BR ALIGN=\"left\"/>"
+    + Int.NatToString(numNodes) + " nodes/"
+    + Int.NatToString(numEdges) + " edges<BR ALIGN=\"left\"/>"
   }
 
 }

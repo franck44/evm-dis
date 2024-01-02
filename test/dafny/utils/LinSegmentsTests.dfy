@@ -12,11 +12,9 @@
  * under the License.
  */
 
-
-
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
-// include "../../../src/dafny/utils/int.dfy"
+include "../../../src/dafny/prettyprinters/Pretty.dfy"
 
 /**
   * Test equialence between segments.
@@ -29,6 +27,7 @@ module EquivSegTests {
   import opened BinaryDecoder
   import opened Splitter
   import opened LinSegments
+  import PrettyPrinters
 
   method {:test} Test1()
   {
@@ -99,7 +98,7 @@ module EquivSegTests {
     }
   }
 
-  method {:test} Test4()
+  method {:test} Test4a()
   {
     {
       var x := DisassembleU8(
@@ -119,10 +118,41 @@ module EquivSegTests {
       expect |x| == 10;
       var y := SplitUpToTerminal(x, [], []);
       expect |y| == 2;
-
+      // print "number of segments :", |y|, "\n";
+      //   PrettyPrinters.PrintSegments(y);
       expect y[0].CONTSeg?;
       expect y[1].CONTSeg?;
       expect EquivSeg(y[0], y[1]);
+    }
+  }
+
+  method {:test} Test4b()
+  {
+    {
+      var x := DisassembleU8(
+        [
+          JUMPDEST
+        ]
+      );
+      expect |x| == 1;
+      var y := SplitUpToTerminal(x, [], []);
+      expect |y| == 1;
+
+    }
+  }
+
+   method {:test} Test4c()
+  {
+    {
+      var x := DisassembleU8(
+        [
+          JUMPDEST, JUMPDEST
+        ]
+      );
+      expect |x| == 2;
+      var y := SplitUpToTerminal(x, [], []);
+      expect |y| == 2;
+
     }
   }
 

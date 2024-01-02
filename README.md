@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
 [![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f42ff.svg)](https://code.visualstudio.com/)
-[![Checks](https://img.shields.io/badge/DafnyVerify-Verified%20with%204.3.0-green.svg)](https://shields.io/)
+[![Checks](https://img.shields.io/badge/DafnyVerify-Verified%20with%204.4.0-green.svg)](https://shields.io/)
 
 # Overview
 

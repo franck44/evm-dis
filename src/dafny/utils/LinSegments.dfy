@@ -59,27 +59,28 @@ module LinSegments {
       * To be valid the type of the segment must agree with the type of
       * the lastInst.
       */
-    predicate IsValid() {
-      match this
-      case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
-      case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
-      case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
-      case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
-      case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID
-      case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
+    ghost predicate IsValid() {
+      && (forall i:: 1 <= i < |Ins()| ==> Ins()[i].op.opcode != JUMPDEST)
+      && match this
+         case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
+         case JUMPISeg(_, _ , _) => lastIns.op.opcode == JUMPI
+         case RETURNSeg(_, _ , _) => lastIns.op.opcode == RETURN
+         case STOPSeg(_, _ , _) => lastIns.op.opcode == STOP || lastIns.op.opcode == REVERT
+         case CONTSeg(_, _, _) => lastIns.op.opcode != INVALID && lastIns.op.opcode != JUMPI
+         case INVALIDSeg(_, _, _) => lastIns.op.opcode == INVALID
     }
 
     /**
       *  The instructions in this segment.
       */
-    function Ins(): seq<Instruction>
+    function Ins(): seq<ValidInstruction>
       ensures |Ins()| >= 1
     {
       this.ins + [this.lastIns]
     }
 
     /** The size of this segment, in bytes. */
-    function Size(xi: seq<ValidInstruction> := Ins()): nat {
+    function {:opaque} Size(xi: seq<ValidInstruction> := Ins()): nat {
       if |xi| == 0 then 0
       else xi[0].Size() + Size(xi[1..])
     }
@@ -113,7 +114,7 @@ module LinSegments {
     /**
       *  The address just after the last instruction in this segment.
       */
-    function StartAddressNextSeg(): nat
+    function {:opaque} StartAddressNextSeg(): nat
       requires |this.lastIns.arg| % 2 == 0
     {
       this.lastIns.address + 1 + |this.lastIns.arg|/2
@@ -122,14 +123,51 @@ module LinSegments {
     /**
       * Collect the JUMPDEST in a sequence of instructions.
       */
-    function {:tailrecursion true} CollectJumpDest(rest: seq<Instruction> := Ins()): seq<nat>
+    ghost function CollectAllJumpDest(rest: seq<Instruction>): seq<nat>
     {
       if |rest| == 0 then []
       else
       if rest[0].op.opcode == JUMPDEST then
-        [rest[0].address] + CollectJumpDest(rest[1..])
+        [rest[0].address] + CollectAllJumpDest(rest[1..])
       else
-        CollectJumpDest(rest[1..])
+        CollectAllJumpDest(rest[1..])
+    }
+
+    /**
+      *  In a valid segment, a JUMPDEST can only be the first instruction.
+      *  As per lemma xxx, so we can optimise the collection of JUMPDEST.
+      * Moreover there is ta ost one JUMPDEST in a valid segment.
+      */
+    function {:opaque} CollectJumpDest(): (r: seq<nat>)
+      requires this.IsValid()
+      ensures |r| <= 1
+    {
+      if Ins()[0].op.opcode == JUMPDEST then [Ins()[0].address]
+      else []
+    }
+
+
+    //  Helper lemmas
+    /**
+      *  In a valid segment, a JUMPDEST can only be the first instruction.
+      * As a result CollectJumpDest is the same as CollectAllJumpDest.
+      */
+    lemma CollectOnlyFirst()
+      requires this.IsValid()
+      ensures CollectJumpDest() == CollectAllJumpDest(Ins())
+    {
+      reveal_CollectJumpDest();
+      CollectIsEmpty(Ins()[1..]);
+    }
+
+    /**
+      * In a segment with no JUMPDEST, CollectAllJumpDest is empty.
+      */
+    lemma CollectIsEmpty(x: seq<Instruction>)
+      requires this.IsValid()
+      requires forall i:: 0 <= i < |x| ==> x[i].op.opcode != JUMPDEST
+      ensures CollectAllJumpDest(x) == []
+    {   //  Thanks Dafny
     }
 
     /**
@@ -155,7 +193,9 @@ module LinSegments {
     /**
       *  Execute the segment up to the end.
       */
-    function Run(s: ValidState, exit: bool, jumpDests: seq<nat>): AState
+    function {:opaque} Run(s: ValidState, exit: nat, jumpDests: seq<nat>): AState
+      requires this.IsValid()
+      requires exit == 0 || (this.JUMPISeg? && exit == 1)
     {
       //  Run the instructions with exit false, except last
       var s' := RunIns(ins, s, jumpDests);
@@ -173,47 +213,76 @@ module LinSegments {
       WPreIns(Ins(), c)
     }
 
-    /** Whether a given segment has exit true or false. */
-    predicate HasExit(b: bool)
+    /**
+      *  Number of successors of a segment.
+      *  @note   JUMPI has 2, JUMP and mormal segments have 1, 
+      *          and RETURN/STOP/INVALID have 0.
+      */
+    function NumberOfExits(): nat
+      ensures NumberOfExits() <= 2
     {
       match this
-      case JUMPSeg(_, _, _) => b
-      case JUMPISeg(_, _, _) => true
-      case CONTSeg(_, _, _)  => !b
-      case _ => false
+      case JUMPISeg(_, _, _) => 2
+      case JUMPSeg(_, _, _) => 1
+      case CONTSeg(_, _, _)  => 1
+      case _ => 0
     }
 
-    /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
-    function LeadsTo(k: nat, exit: bool): ValidCond
+    /**
+      * Whether this segment is a JUMP.
+      */
+    predicate IsJump()
       requires this.IsValid()
-      //   requires this.JUMPSeg? || this.JUMPISeg?
+    {
+      this.JUMPSeg? || this.JUMPISeg?
+    }
+
+
+    /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
+    function {:opaque} LeadsTo(k: nat, exit: nat): ValidCond
+      requires this.IsValid()
+      requires exit <= 1
+      requires IsValidExit(exit)
+      requires exit == 0 || (this.JUMPISeg? && exit == 1)
     {
       if k >= Int.TWO_256 then StFalse()
       else
         match this
         case JUMPSeg(_, _, _) =>
-          if exit then
+          if exit == 0 then
             var c := StCond([0], [k as Int.u256]);
             WPreIns(ins, c)
           else StFalse()
         case JUMPISeg(_, _, _)  =>
-          if exit then
+          if exit == 1 then
             var c := StCond([0], [k as Int.u256]);
             WPreIns(ins, c)
           else
           if k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case CONTSeg(_, _, _) =>
-          if !exit && k == this.StartAddressNextSeg() then StTrue() else StFalse()
+          if exit == 0 && k == this.StartAddressNextSeg() then StTrue() else StFalse()
         case RETURNSeg(_, _, _) => StTrue()
         case STOPSeg(_, _, _) => StTrue()
         case INVALIDSeg(_, _, _) => StFalse()
 
     }
 
+    /**
+      * Whether k is valid exit for this.
+      *
+      * @param   k   The exit number.
+      * @returns     Whether k is a valid exit for this.
+      */
+    ghost predicate IsValidExit(k: nat)
+      requires this.IsValid()
+    {
+      k == 0 || (this.JUMPISeg? && k == 1)
+    }
+
   }
 
   //    Helpers
-  function {:tailrecursion true} StackEffectHelper(xs: seq<Instruction>): int {
+  function {:tailrecursion true} {:opaque} StackEffectHelper(xs: seq<Instruction>): int {
     if |xs| == 0 then 0
     else
       xs[0].StackEffect() + StackEffectHelper(xs[1..])
@@ -226,7 +295,7 @@ module LinSegments {
     *
     *   @returns    The weakest pre cond as nat or None if the result is negative. 
     */
-  function WeakestPreOperandsHelper(xs: seq<Instruction>, postCond: nat := 0): nat
+  function {:opaque} WeakestPreOperandsHelper(xs: seq<Instruction>, postCond: nat := 0): nat
     decreases |xs|
   {
     if |xs| == 0 then postCond
@@ -243,7 +312,7 @@ module LinSegments {
     *
     *   @returns    The weakest pre cond as nat or None if the result is negative. 
     */
-  function WeakestPreCapacityHelper(xs: seq<Instruction>, postCond: nat := 0): nat
+  function {:opaque} WeakestPreCapacityHelper(xs: seq<Instruction>, postCond: nat := 0): nat
     decreases |xs|
   {
     if |xs| == 0 then postCond
@@ -256,11 +325,11 @@ module LinSegments {
   /**
     *   Run a sequence of (valid) instructions with exit condition false (default).
     */
-  function RunIns(xs: seq<ValidInstruction>, s: ValidState, jumpDests: seq<nat>): AState
+  function {:opaque} RunIns(xs: seq<ValidInstruction>, s: ValidState, jumpDests: seq<nat>): AState
   {
     if |xs| == 0 then s
     else
-      var next := xs[0].NextState(s, jumpDests);
+      var next := xs[0].NextState(s, jumpDests, 0);
       match next
       case Error(_) => next
       case EState(_, _) => RunIns(xs[1..], next, jumpDests)
@@ -269,7 +338,7 @@ module LinSegments {
   /**
     *   WPre for a sequence of instructions.
     */
-  function WPreIns(xs: seq<ValidInstruction>, c: ValidCond): ValidCond
+  function {:opaque} WPreIns(xs: seq<ValidInstruction>, c: ValidCond): ValidCond
   {
     if |xs| == 0 then c
     else if !c.StCond? then c // Wpre(_, false) = false and Wpre(_, true) = true
@@ -286,10 +355,12 @@ module LinSegments {
     *   @param  xs      A list of known segments.
     *   @returns        
     */
-  function WPreSeqSegs(path: seq<nat>, exits: seq<bool>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
+  function {:opaque} WPreSeqSegs(path: seq<nat>, exits: seq<nat>, c: ValidCond, xs: seq<ValidLinSeg>, tgtPC: nat): ValidCond
+    requires |path| == |exits|
     requires forall k:: k in path ==> k < |xs|
     requires forall i:: 0 <= i < |path| ==> path[i] < |xs|
-    requires |path| == |exits|
+    requires forall i:: 0 <= i < |exits| ==> exits[i] <= 1
+    requires forall i:: 0 <= i < |exits| ==> exits[i] < xs[path[i]].NumberOfExits()
   {
     if |path| == 0 then
       //    path is empty or c is true of false so no need to back propagate further.
@@ -300,24 +371,19 @@ module LinSegments {
       var w1 := xs[path[|path| - 1]].WPre(c);
       //    Compute Wpre for feasibility of the segment, i.e. to ensure that
       //    the segment leads to to the next one.
+      ValidExitLemma(xs[path[|path| - 1]], exits[|exits| - 1]);
       var wp2 := xs[path[|path| - 1]].LeadsTo(tgtPC, exits[|exits| - 1]);
       //  compute Wpre on last segment and iterate on prefix
       WPreSeqSegs(path[..|path| - 1], exits[..|exits| - 1], w1.And(wp2), xs, xs[path[|path| - 1]].StartAddress())
 
   }
 
-  /**
-    *   Retrieve num of segments that correspond to a PC if any.
-    */
-  function PCToSeg(xs: seq<ValidLinSeg>, pc: nat, rank: nat := 0): (r: Option<nat>)
-    requires rank <= |xs|
-    ensures r.Some? ==> r.v < |xs|
-    ensures r.Some?  ==> xs[r.v].StartAddress() == pc
-    decreases |xs| - rank
+  lemma ValidExitLemma(s: ValidLinSeg, k: nat)
+    requires s.IsValid()
+    requires k <= s.NumberOfExits() - 1
+    ensures s.IsValidExit(k)
   {
-    if rank == |xs| then None
-    else if xs[rank].StartAddress() == pc then Some(rank)
-    else PCToSeg(xs, pc, rank + 1)
+    //  Thanks Dafny for the proof
   }
 
   /**   Whether two segments are equivalent.
@@ -365,4 +431,5 @@ module LinSegments {
   }
 
 }
+
 

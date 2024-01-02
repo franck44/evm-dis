@@ -14,6 +14,22 @@ class default__:
         pass
 
     @staticmethod
+    def Foobar(f):
+        return True
+
+    @staticmethod
+    def Last(x):
+        return (x)[(len(x)) - (1)]
+
+    @staticmethod
+    def Drop(x, n):
+        return _dafny.SeqWithoutIsStrInference((x)[n::])
+
+    @staticmethod
+    def Init(x):
+        return _dafny.SeqWithoutIsStrInference((x)[:(len(x)) - (1):])
+
+    @staticmethod
     def Zip(u, v):
         return _dafny.SeqWithoutIsStrInference([((u)[d_0_i_], (v)[d_0_i_]) for d_0_i_ in range(len(u))])
 
@@ -62,8 +78,26 @@ class default__:
                 break
 
     @staticmethod
+    def Flatten(x):
+        d_6___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        while True:
+            with _dafny.label():
+                if (len(x)) == (0):
+                    return (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                elif True:
+                    d_6___accumulator_ = (d_6___accumulator_) + ((x)[0])
+                    in6_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    x = in6_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
     def Map(t, f):
-        return _dafny.SeqWithoutIsStrInference([f((t)[d_6_i_]) for d_6_i_ in range(len(t))])
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_7_i_]) for d_7_i_ in range(len(t))])
+
+    @staticmethod
+    def MapP(t, f):
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_8_i_]) for d_8_i_ in range(len(t))])
 
     @staticmethod
     def Find(x, t):
@@ -78,12 +112,12 @@ class default__:
                 elif ((x)[0]) == (t):
                     return Option_Some(i)
                 elif True:
-                    in6_ = _dafny.SeqWithoutIsStrInference((x)[1::])
-                    in7_ = t
-                    in8_ = (i) + (1)
-                    x = in6_
-                    t = in7_
-                    i = in8_
+                    in7_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    in8_ = t
+                    in9_ = (i) + (1)
+                    x = in7_
+                    t = in8_
+                    i = in9_
                     raise _dafny.TailCall()
                 break
 
@@ -186,3 +220,36 @@ class Either_Right(Either, NamedTuple('Right', [('r', Any)])):
     def __hash__(self) -> int:
         return super().__hash__()
 
+
+class WellDefined:
+    def  __init__(self):
+        pass
+
+    @staticmethod
+    def default():
+        def lambda0_(d_9_x_, d_10_xs_):
+            return Option_None()
+
+        return lambda0_
+
+class WellDefined2:
+    def  __init__(self):
+        pass
+
+    @staticmethod
+    def default():
+        def lambda1_(d_11_x_, d_12_xs_):
+            return Option_None()
+
+        return lambda1_
+
+class Foo:
+    def  __init__(self):
+        pass
+
+    @staticmethod
+    def default():
+        def lambda2_(d_13_x_):
+            return 0
+
+        return lambda2_

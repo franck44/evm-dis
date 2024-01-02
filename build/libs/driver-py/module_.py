@@ -24,15 +24,15 @@ import SegBuilder
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import EVMObject
-import ArgParser
+import CFGState
+import Automata
 import SeqOfSets
 import PartitionMod
-import Automata
-import Minimiser
-import CFGraph
-import LoopResolver
-import BuildCFGraph
+import GStateMinimiser
+import Statistics
+import HTML
+import EVMObject
+import ArgParser
 import ProofObjectBuilder
 import Driver
 

@@ -37,15 +37,15 @@ class default__:
 
     @staticmethod
     def NatToString(n):
-        d_7___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_14___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_7___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_14___accumulator_)
                 elif True:
-                    d_7___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_7___accumulator_)
-                    in9_ = _dafny.euclidian_division(n, 10)
-                    n = in9_
+                    d_14___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_14___accumulator_)
+                    in10_ = _dafny.euclidian_division(n, 10)
+                    n = in10_
                     raise _dafny.TailCall()
                 break
 
@@ -117,10 +117,10 @@ class default__:
                     if source0_.is_None:
                         return False
                     elif True:
-                        d_8___mcc_h0_ = source0_.v
-                        d_9_v_ = d_8___mcc_h0_
-                        in10_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                        s = in10_
+                        d_15___mcc_h0_ = source0_.v
+                        d_16_v_ = d_15___mcc_h0_
+                        in11_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                        s = in11_
                         raise _dafny.TailCall()
                 break
 
@@ -129,8 +129,8 @@ class default__:
         if (len(s)) == (1):
             return (default__.CharToDigit((s)[0])).v
         elif True:
-            d_10_v_ = (default__.CharToDigit((s)[(len(s)) - (1)])).v
-            return (d_10_v_) + ((10) * (default__.StringToNat(_dafny.SeqWithoutIsStrInference((s)[:(len(s)) - (1):]), 0)))
+            d_17_v_ = (default__.CharToDigit((s)[(len(s)) - (1)])).v
+            return (d_17_v_) + ((10) * (default__.StringToNat(_dafny.SeqWithoutIsStrInference((s)[:(len(s)) - (1):]), 0)))
 
     @_dafny.classproperty
     def TWO__8(instance):

@@ -16,7 +16,7 @@ include "./SeqOfSets.dfy"
 include "./MiscTypes.dfy"
 
 /** 
-  * Provides partitions of sets of the form {0, ..., n}.
+  * Provides partitions of sets of integers of the form {0, ..., n}.
   */
 module PartitionMod {
 
@@ -24,7 +24,26 @@ module PartitionMod {
   import opened MiscTypes
 
   /** A Valid partition. */
-  type ValidPartition = x: Partition | x.IsValid() witness Partition(1, [{0}])
+  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1) 
+
+  /**
+    *   Generate the trivial and valid partition of {0, ..., n - 1}.
+    *   @param  n   The size of the set to partition.
+    *   @return     A valid partition of {0, ..., n - 1} with a single class
+    *               containing all the elements.    
+    */
+  function {:opaque} MakeInit(n: nat): (p: Partition)
+    requires n > 0
+    ensures p.IsValid()
+    ensures |p.elem| == 1
+    ensures p.n == n
+  {
+    var s := set q {:nowarn} | 0 <= q < n;
+    assert {0} <= s;
+    reveal_SetU();
+    assert SetN([s], n);
+    Partition(n, [s])
+  }
 
   /**
     *   A partition is a list of sets and we represent it by a seq of sets to 
@@ -38,7 +57,7 @@ module PartitionMod {
       * We consider only partition of non empty sets {0, ..., n} and 
       *     0. requires n > 0.
       * For a seq<set<nat>> to be partition of {0, .., n - 1} the following properties
-      * must ne satisfied:
+      * must be satisfied:
       *     1. each class (set) in the partition is non empty
       *     2. the intersection of two distinct classes is empty
       *     3. the union of the classes is the whole set {0, .., n - 1}
@@ -54,104 +73,92 @@ module PartitionMod {
     }
 
     /**
-      * Split all the classes according to a predicate.
-      * @param  f       A boolean splitter function f(index) for each index.
-      * @param  index   The current class to split according to f.
-      * @returns        Splits each class C_1, C_2, C_k into C_1_True, C_1_False
-      *                 C_2_True, C_2_False etc. Remove empty classes and returns 
-      *                 a Valid partition. 
-      */
-    // function {:tailrecursion true} {:timeLimitMultiplier 8} SplitAllFrom2(f: nat --> nat --> bool, index: nat := 0, ghost from: nat := index): (p': ValidPartition)
-    //   requires this.IsValid()
-    //   requires from <= index <= |elem|
-    //   requires forall x:nat :: index <= x < |elem| ==> f.requires(x)
-    //   requires forall x :: index <= x < |elem| ==> (forall y:nat :: y < n ==> f(x).requires(y))
-    //   requires forall x:nat :: index <= x < |elem| ==> (forall y:nat:: y in elem[x] ==> f(x).requires(y))
-    //   decreases |elem| - index
-    //   ensures p'.IsValid()
-    //   ensures |p'.elem| >= |elem|
-    //   ensures p'.elem[..from] == elem[..from]
-    //   ensures p'.n == n
-    // {
-    //   if |elem| == index then this
-    //   else
-    //     var p1 := SplitAt(f(index), index);
-    //     //  We may add one or zero sets depending on whether splitting elem[index]
-    //     //  results in one empty set. If we get one set we advance to index + 1 and
-    //     //  if we get two we advance to index + 2
-    //     //  We have so shift f too
-    //     var f': nat --> nat --> bool := (x:nat) requires index + 1 <= x < |p1.elem| => f(x - (|p1.elem| - |elem|));
-    //     assert p1.elem[..from] == elem[..from];
-    //     p1.SplitAllFrom2(f', index + 1 + |p1.elem| - |elem|, from)
-    // }
+     *  Split an trivial partition (one class) into two partitions.
+     *  @param  f   A predicate on the elements of the set.
+     *  @returns    A valid partition of {0, ..., n - 1} with at most two classes.
+     */
+    function SplitIn2(f: nat -> bool): (p': Partition)
+      requires this.IsValid()
+      requires |elem| == 1
+      ensures p'.IsValid()
+      ensures |p'.elem| <= 2
+      ensures p'.n == n
+    {
+      reveal_SetU();
+      var sTrue := set q | q in SetU(elem) && f(q);
+      var sFalse :=  SetU(elem) - sTrue;
+      assert SetU(elem) != {};
+      assert sTrue != {} || sFalse != {};
+      var d := (if sTrue != {} then [sTrue] else []) + (if sFalse != {} then [sFalse] else []);
+      var e := this.(elem := d);
+      assert sTrue + sFalse == SetU([sTrue]) + SetU([sFalse]);
+      assert SetU(d) == sTrue + sFalse;
+      assert e.IsValid();
+      e
+    }
 
     /**
-      * Split a partition according to a predicate.
-      * @param  f       A boolean splitter function.
-      * @param  index   The class to split according to f.
-      * @returns        p with the class C at index split into cTrue and CFalse 
-      *                 where CTrue = { c in C | f(c) = true} (and similar for false).
-      * @note           C is not empty but the split can create an empty e.g. if 
-      *                 forall c in C f(c). The result discards any empty sets 
-      *                 and returns a ValidPartition. 
-      * @note           The last 2 classes agree on the value of f for each of their elements.
+      *  Compute the finest partition of {0, ..., n - 1} that is consistent with equiv.
+      *  @param  equiv  The equivalence relation.
+      *  @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
+      *  @note          The finest partition is the partition with the largest number of classes.
       */
-    function {:tailrecursion true} SplitAt(f: nat --> bool, index: nat): (p': ValidPartition)
-      requires index < |elem|
+    function {:timeLimitMultiplier 4} {:opaque} ComputeFinest(equiv: (nat, nat) --> bool): (p' :ValidPartition)
       requires this.IsValid()
-      requires forall x:: 0 <= x < n ==> f.requires(x)
-      ensures p'.IsValid()
-      ensures |elem| <= |p'.elem| <= |elem| + 1
-      ensures p'.n == n
-      ensures |elem| == |p'.elem| ==> p'.elem[|p'.elem| - 1] == elem[index]
-      //  needed to establish the last 2
-      ensures forall x:: x in p'.elem[|elem| - 1] ==> f.requires(x)
-      ensures forall x:: x in p'.elem[|p'.elem| - 1] ==> f.requires(x)
-      ensures forall e, e':: e in p'.elem[|elem| - 1] && e' in p'.elem[|elem| - 1] ==> f(e) == f(e')
-      ensures forall e, e':: e in p'.elem[|p'.elem| - 1] && e' in p'.elem[|p'.elem| - 1] ==> f(e) == f(e')
-      //   ensures p'.Refines2(this)
+      requires |elem| == 1
+      requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+      requires IsEquivRel(equiv, n)
+
+      ensures forall i:: 0 <= i < |p'.elem| ==> forall y:: y in p'.elem[i]  ==> y < n
+      ensures p'.n == this.n
+      ensures AllClassesAreEquiv(p'.elem, equiv, n)
+      ensures DisjointClassesAreNonEquiv(p'.elem, equiv, n)
     {
-      // Split elem[index] according to value of f for its elements
-      // each class is non empty including elem[index]
-      assert AllNonEmpty(elem);
-      // elem[index] <= 0 .. n and f is defined on elem[index]
-      AllBoundedBy(elem, n);
-      var r := SplitSet(elem[index], f);
-      assert elem[index] == r.0 + r.1 != {} && r.0 * r.1 == {};
+      SizeOfNatsUpToNBound(n, SetU(elem));
+      var k := SplitTrueAndFalse(SetU(elem), equiv, n);
+      AllBoundedBy(k, n);
+      this.(elem := k)
+    }
 
-      //  Append new classes at the end and remove elem[index]
-      if r.0 != {} && r.1 != {} then
-        var j := elem[..index] + elem[index + 1..] + [r.0, r.1];
-        calc == {
-          SetU([r.0, r.1]);
-          SetU([r.0]) + SetU([r.1]);
-          r.0 + r.1;
-          elem[index];
-        }
-        PermutePreservesUnionG(elem, index, [r.0, r.1]);
-        MaxNumberOfClasses(j, n);
-        var pp := Partition(n, j);
-        // assert pp.elem[..index] == elem[..index];
-        // assert pp.elem[index..|j| - 2] == elem[index + 1..];
-        // assert pp.elem[|j| - 2] == r.0;
-        // assert pp.elem[|j| - 1] == r.1;
-        // assert (forall k |  k in pp.elem
-        //     ensures forall k:: k in pp.elem ==> exists c:: c in p.elem && k <= c
-        //     {
+    /**
+      * Refines a given partition with respect to an equivalence relation.
+      * @param  equiv  The equivalence relation.
+      * @returns       A valid partition of {0, ..., n - 1} that is consistent with equiv.
+      */
+    function {:timeLimitMultiplier 2} {:opaque} RefineAll(equiv: (nat, nat) --> bool): (p': ValidPartition)
+      requires this.IsValid()
+      requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+      requires IsEquivRel(equiv, n)
 
-        // });
-        // assert pp.Refines2(this);
-        pp
-      else if r.0 != {} then
-        var j := elem[..index] + elem[index + 1..] + [r.0];
-        assert |j| == |elem| <= n;
-        PermutePreservesUnionG(elem, index, [r.0]);
-        Partition(n, j)
-      else
-        var j := elem[..index] + elem[index + 1..] + [r.1];
-        assert |j| == |elem| <= n;
-        PermutePreservesUnionG(elem, index, [r.1]);
-        Partition(n, j)
+      ensures |p'.elem| >= |elem|
+      ensures p'.n == n
+      ensures p'.IsValid()
+    {
+      SizeOfNatsUpToNBound(n, SetU(elem));
+      var k := SplitAllClasses(elem, equiv, n);
+      //    The split preserves some properties
+      assert |k| == |elem|;
+      assert forall i:: 0 <= i < |k| ==> SetU(k[i]) == elem[i];
+      assert forall i:: 0 <= i < |k| ==> AllClassesAreEquiv(k[i], equiv, n);
+      assert forall i:: 0 <= i < |k| ==> DisjointClassesAreNonEquiv(k[i], equiv, n);
+
+      //    Now flatten it.
+      var d := Flatten(k);
+      var e := this.(elem := d);
+      //    and prove the validity properties.
+      MinSizeOfFlattenForAllNonEmpty(k);
+      assert |e.elem| >= |elem|;
+      FlattenAllNonEmpty(k, n);
+      assert AllNonEmpty(e.elem);
+      assert  forall i:: 0 <= i < |k| ==> SetU(k[i]) == elem[i];
+      NonFlatDisjointImpliesFlatDisjoint(k, e.elem);
+      assert DisjointAnyTwo(e.elem);
+      FlattenPreservesSetU(elem, k);
+      assert SetU(elem) == SetU(e.elem);
+      MaxNumberOfClasses(e.elem, n);
+      assert |e.elem| <= n;
+      assert e.IsValid();
+      e
     }
 
     /**
@@ -163,11 +170,10 @@ module PartitionMod {
       * @note           Because each x is necessarily in a class we always return 
       *                 an index in p.elem.
       */
-    function {:tailrecursion true} GetClass(x: nat, index: nat := 0): (c: nat)
+    function {:tailrecursion true} {:opaque} GetClass(x: nat, index: nat := 0): (c: nat)
       requires IsValid()
       requires 0 <= x < n
       requires index < |elem|
-      //    index has not been found yet
       requires forall k:: 0 <= k < index ==> x !in elem[k]
       ensures c < |elem| <= n && x in elem[c]
       decreases |elem| - index
@@ -180,98 +186,131 @@ module PartitionMod {
     }
 
     /**
-      * Whether two nats are equivalemt i.e. in the same class.
+      *  Get the representative of the class of x.
+      *  @param  x   An element in {0, ..., n - 1}.
+      *  @returns    The representative of the class of x.
       */
-    predicate Equiv(x: nat, y: nat)
-      requires this.IsValid()
-      requires 0 <= x < n
-      requires 0 <= y < n
-      //   ensures Equiv(x, y) ==> exists k:: 0 <= k < |elem| && x in elem[k] && y in elem[k]
-      ensures x == y ==> Equiv(x, y)
-    {
-      assert GetClass(x) == GetClass(y) ==> x in elem[GetClass(x)] && y in elem[GetClass(y)];
-      GetClass(x) == GetClass(y)
-    }
-
-    predicate Refines2(p: Partition)
+    function {:opaque} GetClassRepOf(x: nat): (c: nat)
       requires IsValid()
-      requires p.IsValid()
-      requires p.n == n
+      requires 0 <= x < n
+      ensures c < n
     {
-      forall k:: k in elem ==> exists c:: c in p.elem && k <= c
+      var c := GetClass(x);
+      SetToSequence(elem[c])[0]
     }
 
     /**
-      * Whether this refines p.
+      * Get the representatives of the classes of a sequence of elements.
       */
-    predicate Refines(p: Partition)
+    function {:opaque} GetClassRepOfSeqs(xs: seq<nat>): (c: seq<nat>)
       requires IsValid()
-      requires p.IsValid()
-      requires p.n == n
-      // ensures Refines(p) ==> |elem| >= |p.elem|
+      requires forall i:: 0 <= i < |xs| ==> 0 <= xs[i] < n
+      ensures |xs| == |c|
+      ensures forall i:: 0 <= i < |xs| ==> c[i] < n
     {
-      && |elem| >= |p.elem|
-      //   && (forall x, x':: 0 <= x < x' < n ==> (Equiv(x, x') ==> p.Equiv(x, x')))
+      if |xs| == 0 then []
+      else [GetClassRepOf(xs[0])] + GetClassRepOfSeqs(xs[1..])
     }
   }
 
-  // in the SplitAll, f must be applied to all the values so must be a total function
-  function {:tailrecursion true} SplitAll(p: ValidPartition, f : nat --> nat --> bool, index: nat := 0, max : nat := |p.elem|): (p': ValidPartition)
-    requires p.IsValid()
-    requires index <= max
-    requires forall x:: 0 <= x < max - index ==> f.requires(x)
-    requires forall x:: 0 <= x < max - index ==>  f.requires(x) && (forall y:: 0 <= y < p.n ==> f(x).requires(y))
-    ensures p'.IsValid()
-    ensures |p'.elem| >= |p.elem|
-    ensures p'.n == p.n
-    decreases max - index
+  //    Helpers
+
+  /**
+    *   Whether f is an equivalence relation.
+    */
+  ghost predicate IsEquivRel(f: (nat, nat) --> bool, n: nat)
+    requires forall x, y:: 0 <= x < n && 0 <= y < n ==> f.requires(x, y)
   {
-    if max == index then p
+    && (forall x:: 0 <= x < n ==> f(x, x))
+    && (forall x, x':: 0 <= x < n &&  0 <= x' < n ==> f(x, x') == f(x', x))
+    && (forall x, x', x'':: 0 <= x < n &&  0 <= x' < n && 0 <= x'' < n && f(x, x') && f(x', x'') ==> f(x, x''))
+  }
+
+  /**
+    *   All sets of r are consistent with equiv.
+    */
+  ghost predicate AllClassesAreEquiv(r: seq<set<nat>>, equiv: (nat, nat) --> bool, n: nat)
+    requires forall i, i':: i in r && i' in i ==> i' < n
+    requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+  {
+    forall x, y, y':: x in r && y in x && y' in x ==> equiv(y, y')
+  }
+
+  /**
+    *    Whether two elements of two distinct sets of r are not equivalent.
+    */
+  ghost predicate DisjointClassesAreNonEquiv(r: seq<set<nat>>, equiv: (nat, nat) --> bool, n: nat)
+    requires forall i, i':: i in r && i' in i ==> i' < n
+    requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+  {
+    forall i, i':: 0 <= i < i' < |r| ==> (forall x, x':: x in r[i] && x' in r[i'] ==> !equiv(x, x'))
+  }
+
+  /**
+    * Split a set according to a predicate.
+    * @param  xs      The set to split.
+    * @param  equiv   The equivalence relation.
+    * @param  n       The size of the set.
+    * @returns        A sequence of sets with some properties.
+    * @note           The sequence of sets returned is a partition of xs.
+    * @note           The sequence of sets returned is a coarsest partition of xs.
+    */
+  function {:timeLimitMultiplier 2} {:opaque} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
+    requires forall x:: x in xs ==> x < n
+    requires xs != {}
+    requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+    requires IsEquivRel(equiv, n)
+
+    ensures 1 <= |r| <= |xs|
+    ensures SetU(r) == xs
+    ensures forall x:: x in SetU(r) ==> x < n
+    ensures forall i, i':: i in r && i' in i ==> i' < n
+    ensures AllNonEmpty(r)
+    ensures DisjointAnyTwo(r)
+    ensures forall x:: x in r ==> (forall y, y':: y in x && y' in x ==> equiv(y, y'))
+    ensures AllClassesAreEquiv(r, equiv, n)
+    ensures forall i, i', x, x':: (0 <= i < i' < |r| &&  x in r[i] && x' in r[i']) ==> !equiv(x, x')
+    ensures DisjointClassesAreNonEquiv(r, equiv, n)
+  {
+    reveal_SetU();
+    reveal_SetToSequence();
+    var first := SetToSequence(xs)[0];
+    var xsTrue := set x: nat | x in xs && equiv(first, x);
+    assert first in xsTrue;
+    var xsFalse := xs - xsTrue;
+    if xsFalse == {} then [xsTrue]
     else
-      assert |p.elem| > 0;
-      AllBoundedBy(p.elem, p.n);
-      var f' : nat --> nat --> bool := (x: nat) requires 0 <= x < max - (index + 1) => f(x + 1);
-      var p1 := p.SplitAt(f(0), 0);
-      SplitAll(p1, f', index + 1, max)
+      [xsTrue] + SplitTrueAndFalse(xsFalse, equiv, n)
   }
 
-  //  Helper lemma
-
   /**
-    *   Replacing xs[i] by a seq that has the same elements 
-    *   preservers the union.
+    *   Split all the classes of a partition according to a predicate.
+    *   @param  xs      The partition to split.
+    *   @param  equiv   The equivalence relation.
+    *   @param  n       The size of the set.
+    *   @returns        A sequence of sets with some good properties.
     */
-  lemma PermutePreservesUnionG(xs: seq<set<nat>>, i: nat, xs2: seq<set<nat>>)
-    requires 0 <= i < |xs|
-    requires SetU(xs2) == xs[i]
-    requires 0 <= i < |xs|
-    ensures SetU(xs[..i] + xs[i + 1..] + xs2) == SetU(xs)
+  function {:opaque} SplitAllClasses(xs: seq<set<nat>>, equiv: (nat, nat) --> bool, n: nat): (r: seq<seq<set<nat>>>)
+    requires forall x, i:: x in xs && i in x ==> i < n
+    requires AllNonEmpty(xs)
+    requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
+    requires IsEquivRel(equiv, n)
+    ensures |r| == |xs|
+    ensures forall i:: i in r ==> AllNonEmpty(i) && DisjointAnyTwo(i)
+    ensures forall i:: 0 <= i < |r| ==> SetU(r[i]) == xs[i]
+    ensures forall i:: 0 <= i < |r| ==> |r[i]| >= 1
+    ensures |r| >= |xs|
+    ensures forall i:: 0 <= i < |r| ==> forall x:: x in r[i] ==> forall y:: y in x ==> y < n
+    ensures forall i:: i in r ==> AllClassesAreEquiv(i, equiv, n)
+    ensures forall i:: i in r ==> DisjointClassesAreNonEquiv(i, equiv, n)
   {
-    calc == {
-       SetU(xs[..i] + xs[i + 1..] + xs2);
-      { DistribUnion3(xs[..i], xs[i + 1..], xs2) ; }
-       SetU(xs[..i]) + SetU(xs[i + 1..]) + SetU(xs2) ;
-    == SetU(xs[..i]) + SetU(xs[i + 1..]) + xs[i];
-      calc == {
-        xs[i];
-        SetU([xs[i]]);
-      }
-       SetU(xs[..i]) + SetU(xs[i + 1..]) + SetU([xs[i]]);
-       SetU(xs[..i])  + SetU([xs[i]]) + SetU(xs[i + 1..]);
-      { DistribUnion3(xs[..i], [xs[i]], xs[i + 1..]) ; }
-       SetU(xs[..i] + [xs[i]] + xs[i + 1..]);
-      calc == {
-        xs[..i] + [xs[i]] + xs[i + 1..];
-        xs;
-      }
-       SetU(xs);
-    }
+    seq(|xs|, i requires 0 <= i < |xs| => SplitTrueAndFalse(xs[i], equiv, n))
   }
 
   /**
-    *   Pretty print a set.
+    *   Pretty-print a set.
     */
-  method {:tailrecursion true} PrintPartition(p: Partition)
+  method PrintPartition(p: Partition)
   {
     for k := 0 to |p.elem| {
       var setToSeq := SetToSequence(p.elem[k]);

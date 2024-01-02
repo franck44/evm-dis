@@ -28,6 +28,9 @@ module StackElement {
     */
   datatype StackElem = Value(v: u256) | Random(s: string := "") {
 
+    /**
+      *  Pretty print a stack element.
+      */
     function ToString(): string {
       match this
       case Value(v) => NatToString(v as nat) +
@@ -35,11 +38,25 @@ module StackElement {
       case Random(_) => "?"
     }
 
+    /**
+      * Extract the value of a stack Value element.
+      */
     function Extract(): u256
       requires this.Value?
     {
       this.v
     }
   }
+
+  /**
+    *  Pretty print a stack.
+    */
+  function StackToString(s: seq<StackElem>): string
+  {
+    if |s| == 0 then "Ø"
+    else
+      s[0].ToString() + "," + StackToString(s[1..])
+  }
+
 
 }

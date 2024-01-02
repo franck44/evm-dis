@@ -22,7 +22,7 @@ include "../utils/StackElement.dfy"
   */
 module ProofObject {
 
-  import opened MiscTypes
+  import opened MiscTypes 
   import opened LinSegments
   import opened Instructions
   import opened StackElement
