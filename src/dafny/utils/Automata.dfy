@@ -118,11 +118,23 @@ module Automata {
         assert j in a1.transitions[i];
         a1
       else
-        var w := a1
-                 .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
-                 .(transitionsNat := a1.transitionsNat + map[a1.indexOf[i] := a1.transitionsNat[a1.indexOf[i]] + [a1.indexOf[j]]]);
-        assert w.IsValid();
+        AddEdgeInTRandTrNatPreservesValid(a1, i, j);
+        var w :=
+          a1
+          .(transitions := a1.transitions + map[i := a1.transitions[i] + [j]])
+          .(transitionsNat := a1.transitionsNat + map[a1.indexOf[i] := a1.transitionsNat[a1.indexOf[i]] + [a1.indexOf[j]]]);
         w
+    }
+
+    /** A lemma to make verification of AddEdge easier. */
+    lemma AddEdgeInTRandTrNatPreservesValid(a: ValidAuto<T>, i: T, j: T)
+      requires a.IsValid()
+      requires i in a.states
+      requires j in a.states
+      ensures a
+              .(transitions := a.transitions + map[i := a.transitions[i] + [j]])
+              .(transitionsNat := a.transitionsNat + map[a.indexOf[i] := a.transitionsNat[a.indexOf[i]] + [a.indexOf[j]]]).IsValid()
+    {   //  Thanks Dafny 
     }
 
     /**
@@ -166,7 +178,7 @@ module Automata {
       if index == |states| then 0
       else
         |transitionsNat[index]| + TSize(index + 1)
-    } 
+    }
 
     /** 
       *  Successors of a state.
