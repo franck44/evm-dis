@@ -177,7 +177,7 @@ module Driver {
               labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
               prefix :=
                 "graph[labelloc=\"t\", labeljust=\"l\", label=<"
-                + MakeTitle(name, a1.SSize(),a1.TSize())
+                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
                 + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
             );
             print "//----------------- Raw CFG -------------------\n";
@@ -200,7 +200,7 @@ module Driver {
               labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
               prefix :=
                 "graph[labelloc=\"t\", labeljust=\"l\", fontname=\"Arial\", label=<"
-                + MakeTitle(name, a1.SSize(),a1.TSize())
+                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
                 + ">]\n"
                 + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
             );
@@ -215,11 +215,12 @@ module Driver {
     }
   }
 
-  function MakeTitle(name: string, numNodes: nat, numEdges: nat): string
+  function MakeTitle(name: string, numNodes: nat, numEdges: nat, maxDepth: nat, reached: bool): string
   {
     "<B>Program Name: </B> " + name + "<BR ALIGN=\"left\"/>"
-    + "<B>Control Flow Graph Info: </B>"
-    + Int.NatToString(numNodes) + " nodes and "
+    + "<B>Control Flow Graph Info: </B><BR ALIGN=\"left\"/>"
+    + "Max depth: " + Int.NatToString(maxDepth) +  " [" + (if reached then "Was reached" else "Was not reached") + "]" + "<BR ALIGN=\"left\"/>"
+    + Int.NatToString(numNodes) + " nodes/"
     + Int.NatToString(numEdges) + " edges<BR ALIGN=\"left\"/>"
   }
 
