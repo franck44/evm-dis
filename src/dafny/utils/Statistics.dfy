@@ -45,10 +45,10 @@ module Statistics {
 
     /** Pretty-print the statistics. */
     function PrettyPrint(): string {
-      "// MaxDepth reached:" + (if maxDepthReached then "true" else "false") +"\n"
-      + "// ErrorStates reached:" + Int.NatToString(errorState) + "\n"
-      + "// States seen:" + Int.NatToString(visitedStates) + "\n"
-      + "// WPre success:" + Int.NatToString(wPreInvSuccess) + "\n"
+      "MaxDepth reached:" + (if maxDepthReached then "true" else "false") +"\n"
+      + "ErrorStates reached:" + Int.NatToString(errorState) + "\n"
+      + "States seen:" + Int.NatToString(visitedStates) + "\n"
+      + "WPre success:" + Int.NatToString(wPreInvSuccess) + "\n"
     }
   }
 
