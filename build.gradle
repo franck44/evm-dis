@@ -150,7 +150,7 @@ final DAFNY4_TEST_FLAGS = [
     // '--target','java',
     // '--function-syntax','4',
     // '--quantifier-syntax','4'
-]  + Z3_OPTION
+] // + Z3_OPTION
 
 // ======================================================================
 // Dafny Build
@@ -354,6 +354,12 @@ task generateTestCFGs {
 task deleteTestBuild(type: Delete) {
     delete fileTree('test/dafny') {
         include '**/*.dll',  '**/*.json'
+    }
+}
+
+task deleteTestCFG(type: Delete) {
+    delete fileTree('src/dafny/tests/src') {
+        include '**/*.dot'
     }
 }
 
