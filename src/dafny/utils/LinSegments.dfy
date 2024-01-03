@@ -33,7 +33,7 @@ module LinSegments {
   /**
     *   A valid linear segment.
     */
-  type ValidLinSeg = s: LinSeg | s.IsValid() witness CONTSeg([], Instruction(ArithOp("ADD" ,ADD)), 0)
+  type ValidLinSeg = s: LinSeg | s.IsValid() witness CONTSeg([], Instruction(ArithOp("ADD" ,ADD)))
 
   /**
     *   A linear segment of bytecode.
@@ -176,9 +176,59 @@ module LinSegments {
       *  without a stack underflow, and such that at the end there are at least 
       *  n operands on the stack.
       */
-    function WeakestPreOperands(n: nat := 0): nat
+    function {:opaque} WeakestPreOperands(xs: seq<Instruction> := Ins(), postCond: nat := 0): nat
+      decreases |xs|
     {
-      WeakestPreOperandsHelper(this.Ins(), n)
+      if |xs| == 0 then postCond
+      else
+        var lastI := xs[|xs| - 1];
+        var e := lastI.WeakestPreOperands(postCond);
+        WeakestPreOperands(xs[..|xs| - 1], e)
+    }
+
+    /**
+      *  If weakest pre-operands are to be computed for several values
+      *  of the target k, then it is more efficient to compute them
+      *  with this function. It is more efficient because ot os (1) 
+      *  compared to O(|Ins|)..
+      *  For example this is the case for the fixpoint on the CFG that determnines the
+      *  stack size at each program point.
+      *  To use this function, the caller must first compute the weakest pre-operand(0)
+      *  and cache it.
+      *  @note   Yes I have lectured dynamic programming several times.
+      */
+    function {:opaque} FastWeakestPreOperands(k: nat, wpre0: nat): nat
+      requires this.IsValid()
+      requires wpre0 == WeakestPreOperands()
+      ensures FastWeakestPreOperands(k, wpre0) == WeakestPreOperands(Ins(), k)
+    {
+      // as this is valid, the net effect is the same as the sum of the stack effect of the instructions.  
+      assert netOpEffect == StackEffectHelper(Ins());
+      // The fast version if correct
+      FastWeakestPreOperandsCorrect(this.Ins(), k);
+      if k <= StackEffect() then
+        wpre0
+      else
+        Int.Max(wpre0, k - StackEffect())
+    }
+
+    /** Use anequivalent computation of weakest pre operands on the the reverse list. */
+    lemma FastWeakestpreOperandsReverse(xs: seq<Instruction>, k: nat)
+      ensures k <= StackEffectHelperReverse(xs) ==> WeakestPreOperands(xs, k) == WeakestPreOperands(xs, 0)
+      ensures k > StackEffectHelperReverse(xs) ==>  WeakestPreOperands(xs, k) == Int.Max(WeakestPreOperands(xs, 0), k - StackEffectHelperReverse(xs))
+    { // Thanks Dafny
+      reveal_WeakestPreOperands();
+    }
+
+    //  Main lemma
+    lemma FastWeakestPreOperandsCorrect(xs: seq<Instruction>, k: nat)
+      ensures k <= StackEffectHelper(xs) ==> WeakestPreOperands(xs, k) == WeakestPreOperands(xs, 0)
+      ensures k > StackEffectHelper(xs) ==>  WeakestPreOperands(xs, k) == Int.Max(WeakestPreOperands(xs, 0), k - StackEffectHelper(xs))
+    {
+      // the conclusion holds if StackEffectHelper is replaced with StackEffectHelperReverse
+      FastWeakestpreOperandsReverse(xs, k);
+      // the forward and reverse StackHelpers compute the same value.
+      StackEffectHelpersEquiv(xs);
     }
 
     /**
@@ -238,7 +288,6 @@ module LinSegments {
       this.JUMPSeg? || this.JUMPISeg?
     }
 
-
     /** Determine the condition such that the PC after the JUMP/JUMPI/true is k */
     function {:opaque} LeadsTo(k: nat, exit: nat): ValidCond
       requires this.IsValid()
@@ -289,21 +338,54 @@ module LinSegments {
       xs[0].StackEffect() + StackEffectHelper(xs[1..])
   }
 
-  /** 
-    *   Compute the weakest pre condition on operands to ensure that 
-    *   the sequence xs can be executed without a stack underflow, and 
-    *   at the end, there are at least postCond operands on the stack.
-    *
-    *   @returns    The weakest pre cond as nat or None if the result is negative. 
-    */
-  function {:opaque} WeakestPreOperandsHelper(xs: seq<Instruction>, postCond: nat := 0): nat
-    decreases |xs|
-  {
-    if |xs| == 0 then postCond
+  ghost function StackEffectHelperReverse(xs: seq<Instruction>): int {
+    if |xs| == 0 then 0
     else
-      var lastI := xs[|xs| - 1];
-      var e := lastI.WeakestPreOperands(postCond);
-      WeakestPreOperandsHelper(xs[..|xs| - 1], e)
+      StackEffectHelperReverse(xs[..|xs| - 1]) + xs[|xs| - 1].StackEffect()
+  }
+
+  /**
+    *    The stack effect of a sequence of instructions is the sum of the stack effect
+    *    and the order of elements is irrelevant.
+    *    As a result the reverse list of instructions produces the same net effect.
+    */
+  lemma StackEffectHelpersEquiv(xs: seq<Instruction>)
+    ensures StackEffectHelper(xs) == StackEffectHelperReverse(xs)
+  {
+    reveal_StackEffectHelper();
+    if |xs| == 0 {
+      //  Thanks Dafny
+    } else {
+      calc == {
+        StackEffectHelper(xs);
+        { assert xs == xs[..|xs| - 1] + [xs[|xs| - 1]];}
+        StackEffectHelper(xs[..|xs| - 1] + [xs[|xs| - 1]]);
+        { CommuteStackEffect(xs[..|xs| - 1], [xs[|xs| - 1]]);}
+        StackEffectHelper([xs[|xs| - 1]] + xs[..|xs| - 1]);
+      }
+    }
+  }
+
+  /**
+    * The stack effect distraibutes over sequence concatenation.
+    */
+  lemma DistribStackEffect(xs1: seq<Instruction>, xs2: seq<Instruction>)
+    ensures StackEffectHelper(xs1 + xs2) == StackEffectHelper(xs1) + StackEffectHelper(xs2)
+  {
+    reveal_StackEffectHelper();
+    if |xs1| == 0 {
+      assert xs1 + xs2 == xs2;
+    } else {
+      DistribStackEffect(xs1[1..], xs2);
+      assert (xs1 + xs2)[1..] == xs1[1..] + xs2;
+    }
+  }
+
+  lemma CommuteStackEffect(xs1: seq<Instruction>, xs2: seq<Instruction>)
+    ensures  StackEffectHelper(xs1 + xs2) == StackEffectHelper(xs2 + xs1)
+  {
+    DistribStackEffect(xs1, xs2);
+    DistribStackEffect(xs2, xs1);
   }
 
   /** 
