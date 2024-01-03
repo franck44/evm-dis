@@ -48,18 +48,19 @@ module LinSegments {
     *               segment of type RETURN.
     */
   datatype LinSeg =
-      JUMPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int )
-    |   JUMPISeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
-    |   RETURNSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
-    |   STOPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
-    |   CONTSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
-    |   INVALIDSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int)
+      JUMPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]) )
+    |   JUMPISeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]))
+    |   RETURNSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]))
+    |   STOPSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]))
+    |   CONTSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]))
+    |   INVALIDSeg(ins: seq<ValidInstruction>, lastIns: ValidInstruction, netOpEffect: int := StackEffectHelper(ins + [lastIns]))
   {
     /**
       * To be valid the type of the segment must agree with the type of
       * the lastInst.
       */
     ghost predicate IsValid() {
+      netOpEffect == StackEffectHelper(Ins())
       && (forall i:: 1 <= i < |Ins()| ==> Ins()[i].op.opcode != JUMPDEST)
       && match this
          case JUMPSeg(_, _ , _) => lastIns.op.opcode == JUMP
