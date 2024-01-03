@@ -171,7 +171,7 @@ module EVMOpcodes {
       *  Determine the minimum of operands needed before the
       *  instruction is executed to ensure that
       *  1. the instruction does not trigger a Stack underflow
-      *  2. there are at least k operands on the stack after execuitng the instruction.
+      *  2. there are at least k operands on the stack after executing the instruction.
       *
       *  @example    POP: pushes 0, pops 1, minOperands 1
       *              k = 0 => Max(1, 0 -(-1)) = 1 
