@@ -36,7 +36,7 @@ module Automata {
     *  @indexOf                 The index of a state.
     *  @note                    A valid automaton is such that every state has an entry in the transitions map.
     *                           If the state has no successor then the entry is the empty list.
-    *  @note                    The transition function is givem as transitionsNat, but the datatype
+    *  @note                    The transition function is given as transitionsNat, but the datatype
     *                           uses transitions which is a map from stateId to stateIds. The reason
     *                           is that it is easier to manipulate the transitions using the stateId .e.g.
     *                           when minising an automaton.
