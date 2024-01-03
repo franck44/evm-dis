@@ -367,7 +367,7 @@ module LinSegments {
   }
 
   /**
-    * The stack effect distraibutes over sequence concatenation.
+    * The stack effect distributes over sequence concatenation.
     */
   lemma DistribStackEffect(xs1: seq<Instruction>, xs2: seq<Instruction>)
     ensures StackEffectHelper(xs1 + xs2) == StackEffectHelper(xs1) + StackEffectHelper(xs2)
