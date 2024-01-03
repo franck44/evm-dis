@@ -31,26 +31,26 @@ module Splitter {
   /**
     *   Determine the type of the segment according to the last instruction.
     *   @returns    A segment with instructions xs + [lastIns].
-    */
+    */ 
   function BuildSeg(xs: seq<ValidInstruction>, lastInst: ValidInstruction): ValidLinSeg
     requires forall i:: 1 <= i <= |xs| ==> (xs + [lastInst])[i].op.opcode != JUMPDEST
   {
     match lastInst.op.opcode
     case JUMP   =>
-      JUMPSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+      JUMPSeg(xs, lastInst)
     case JUMPI  =>
-      JUMPISeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+      JUMPISeg(xs, lastInst)
     case RETURN =>
-      RETURNSeg(xs, lastInst, DeltaOperandsHelper(xs))
+      RETURNSeg(xs, lastInst)
     case REVERT =>
-      STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
+      STOPSeg(xs, lastInst)
     case STOP   =>
-      STOPSeg(xs, lastInst, DeltaOperandsHelper(xs))
+      STOPSeg(xs, lastInst)
     case INVALID   =>
-      INVALIDSeg(xs, lastInst, DeltaOperandsHelper(xs))
+      INVALIDSeg(xs, lastInst)
     case _ =>
       //  Continuation segment
-      CONTSeg(xs, lastInst, DeltaOperandsHelper(xs + [lastInst]))
+      CONTSeg(xs, lastInst)
   }
 
   /**  
@@ -102,65 +102,6 @@ module Splitter {
       assert !xs[0].IsTerminal() && xs[0].op.opcode != JUMPDEST;
       SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
   }
-
-  /**
-    *   The global effect of xs on the stack size.
-    */
-  function DeltaOperandsHelper(xs: seq<Instruction>, current: int := 0): int
-    decreases |xs|
-  {
-    if |xs| == 0 then current
-    else
-      var e := current + (xs[0].op.pushes - xs[0].op.pops);
-      DeltaOperandsHelper(xs[1..], e)
-  }
-
-  /**
-    *   The global effect of xs on the capacity.
-    */
-  ghost function DeltaCapacityHelper(xs: seq<Instruction>, current: int := 0): int
-    decreases |xs|
-  {
-    if |xs| == 0 then current
-    else
-      var e := current + (xs[0].op.pops - xs[0].op.pushes);
-      DeltaCapacityHelper(xs[1..], e)
-  }
-
-  //  Helper lemmas
-
-  /**
-    *   Increase or decrease in the stack size is the opposite 
-    *   of increase or decrease in capacity.
-    */
-  lemma PreserveDelta(xs: seq<Instruction>)
-    ensures DeltaCapacityHelper(xs, 0) == -DeltaOperandsHelper(xs, 0)
-  {
-    if |xs| > 0 {
-      var e := 0 + (xs[0].op.pushes - xs[0].op.pops);
-      var e' := 0 + (xs[0].op.pops - xs[0].op.pushes);
-      calc == {
-        DeltaCapacityHelper(xs, 0);
-        DeltaCapacityHelper(xs[1..], e');
-        { DistributeDelta(xs[1..], xs[0].op.pops - xs[0].op.pushes); }
-        (xs[0].op.pops - xs[0].op.pushes) + DeltaCapacityHelper(xs[1..], 0);
-        { PreserveDelta(xs[1..]); }
-        (xs[0].op.pops - xs[0].op.pushes) + (-DeltaOperandsHelper(xs[1..], 0));
-        (xs[0].op.pops - xs[0].op.pushes - DeltaOperandsHelper(xs[1..], 0));
-        { DistributeDelta(xs[1..], xs[0].op.pushes - xs[0].op.pops);}
-        -DeltaOperandsHelper(xs[1..], e);
-        -DeltaOperandsHelper(xs, 0);
-      }
-    }
-  }
-
-  lemma DistributeDelta(xs: seq<Instruction>, v1: int)
-    ensures DeltaCapacityHelper(xs, v1) == v1 + DeltaCapacityHelper(xs, 0)
-    ensures DeltaOperandsHelper(xs, v1) == v1 + DeltaOperandsHelper(xs, 0)
-  {
-    //  Thanks Dafny
-  }
-
 
 }
 
