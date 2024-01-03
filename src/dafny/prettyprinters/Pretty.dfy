@@ -59,7 +59,7 @@ module PrettyPrinters {
       //
       print "--------------------------------------------\n";
       print "Segment ", num, "\n";
-      var k := xs[0].WeakestPreOperands(0);
+      var k := xs[0].WeakestPreOperands();
       var l := xs[0].WeakestPreCapacity(0);
       if xs[0].JUMPSeg? || xs[0].JUMPISeg? {
         //  Print the stack tracker value
@@ -80,7 +80,7 @@ module PrettyPrinters {
           var nextPC := xs[0].StartAddressNextSeg();
           print "CONT: PC of instruction after last is: " + " 0x" + NatToHex(nextPC) + "\n";
         } else {
-          print "CONT: has an invaid instructiom" + "\n";
+          print "CONT: has an invalid instruction" + "\n";
         }
         print "WeakestPre Operands:", k, "\n";
         print "WeakestPre Capacity:", l, "\n";

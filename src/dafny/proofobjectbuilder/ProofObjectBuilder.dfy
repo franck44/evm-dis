@@ -37,7 +37,7 @@ module ProofObjectBuilder {
   {
     if |xs| == 0 then []
     else
-      var wpOp := xs[0].WeakestPreOperands(0);
+      var wpOp := xs[0].WeakestPreOperands();
       var wpCap := xs[0].WeakestPreCapacity(0);
       var obj :=
         (if xs[0].JUMPSeg? || xs[0].JUMPISeg? then
