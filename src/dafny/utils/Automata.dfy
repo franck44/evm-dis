@@ -60,7 +60,6 @@ module Automata {
       */
     function {:timeLimitMultiplier 8} {:opaque} AddState(i: T): (a: ValidAuto<T>)
       requires IsValid()
-      requires IsReversemapValid()
       ensures i in a.states
       ensures forall s:: s in states ==> s in a.states
       ensures forall s:: s in a.states ==> s in states || s == i
@@ -70,7 +69,6 @@ module Automata {
       ensures i !in states ==> a.transitionsNat[|states|] == []
       ensures i !in states ==> a.revTransitionsNat[|states|] == []
       ensures a.IsValid()
-      ensures a.IsReversemapValid()
     {
       if i in states then
         this
@@ -91,7 +89,6 @@ module Automata {
       */
     function {:opaque} AddStates(xs: seq<T>): (a: ValidAuto<T>)
       requires IsValid()
-      requires IsReversemapValid()
       ensures a.IsValid()
       ensures forall s:: s in states ==> s in a.states
       ensures forall j:: 0 <= j < |xs| ==> xs[j] in a.states
@@ -112,7 +109,6 @@ module Automata {
       */
     function {:timeLimitMultiplier 8} {:opaque} AddEdge(i: T, j: T): (a: ValidAuto<T>)
       requires IsValid()
-      requires IsReversemapValid()
 
       ensures i in a.states
       ensures j in a.states
@@ -123,7 +119,6 @@ module Automata {
       ensures i in a.transitions
       ensures i in states ==> |a.transitions[i]| <= |transitions[i]| + 1
       ensures i !in states ==> a.transitions[i] == [j]
-      ensures a.IsReversemapValid()
     {
       var a1 := this.AddState(i).AddState(j);
       if a1.indexOf[j] in a1.transitionsNat[a1.indexOf[i]] then
@@ -131,250 +126,55 @@ module Automata {
         a1
       else
         AddEdgeInTRandTrNatPreservesValid(a1, i, j);
-        var w := a1.(transitions := AddKeyVal2(a1.transitions, i, j),
+        var w := a1.(transitions := AddKeyVal(a1.transitions, i, j),
                  transitionsNat := AddKeyVal(a1.transitionsNat, a1.indexOf[i], a1.indexOf[j]),
                  revTransitionsNat := AddKeyVal(a1.revTransitionsNat, a1.indexOf[j], a1.indexOf[i]));
         w
     }
 
     /** A lemma to make verification of AddEdge easier. */
-    lemma {:timeLimitMultiplier 6} AddEdgeInTRandTrNatPreservesValid(a: ValidAuto<T>, i: T, j: T)
+    static lemma {:timeLimitMultiplier 6} AddEdgeInTRandTrNatPreservesValid(a: ValidAuto<T>, i: T, j: T)
       requires a.IsValid()
-      requires a.IsReversemapValid()
       requires i in a.states
       requires j in a.states
       ensures a
-              .(transitions := AddKeyVal2(a.transitions, i, j))
+              .(transitions := AddKeyVal(a.transitions, i, j))
               .(transitionsNat := AddKeyVal(a.transitionsNat, a.indexOf[i], a.indexOf[j]))
               .(revTransitionsNat := AddKeyVal(a.revTransitionsNat, a.indexOf[j], a.indexOf[i]))
               .IsValid()
-      ensures var a1 := a
-                        .(transitions := AddKeyVal2(a.transitions, i, j),
-                        transitionsNat := AddKeyVal(a.transitionsNat, a.indexOf[i], a.indexOf[j]),
-                        revTransitionsNat := AddKeyVal(a.revTransitionsNat, a.indexOf[j], a.indexOf[i]));
-              a1.IsReversemapValid()
     {
-      var a1 := a.(transitions := AddKeyVal2(a.transitions, i, j));
-      assert a1.transitionsNat == a.transitionsNat;
-      assert a1.revTransitionsNat == a.revTransitionsNat;
-      foo303(a, a1);
-      assert a1.IsReversemapValid();
-      var a2 := a1.(
-      transitionsNat := AddKeyVal(a1.transitionsNat, a.indexOf[i], a.indexOf[j]),
-      revTransitionsNat := AddKeyVal(a1.revTransitionsNat, a.indexOf[j], a.indexOf[i]));
-      assert a2.transitionsNat == AddKeyVal(a1.transitionsNat, a.indexOf[i], a.indexOf[j]);
-      assert a2.revTransitionsNat == AddKeyVal(a1.revTransitionsNat, a.indexOf[j], a.indexOf[i]);
-      foo(a1.transitionsNat, a1.revTransitionsNat, a.indexOf[i], a.indexOf[j]);
-      assert a2.IsReversemapValid();
+      var a1 := a.(transitions := AddKeyVal(a.transitions, i, j));
+      ReverseMapsIsCongruent(a.transitionsNat, a.revTransitionsNat, a1.transitionsNat, a1.revTransitionsNat);
     }
-
-    // lemma {:timeLimitMultiplier 2} foo202(i: T, j: T)
-    //   requires i in transitions
-    //   requires j in transitions
-    //   requires IsReversemapValid()
-    //   ensures
-    //     var a1 := this.(transitions := AddKeyVal2(this.transitions, i, j));
-    //     a1.IsReversemapValid()
-    // {
-    //   var a1 := this.(transitions := AddKeyVal2(this.transitions, i, j));
-    //   assert a1.transitionsNat == this.transitionsNat;
-    //   assert a1.revTransitionsNat == this.revTransitionsNat;
-    //   foo303(this, a1);
-    //   assert a1.IsReversemapValid();
-
-    // }
-
-    static lemma foo303(a: Auto<T>, b: Auto<T>)
-      requires a.IsReversemapValid()
-      requires a.transitionsNat == b.transitionsNat
-      requires a.revTransitionsNat == b.revTransitionsNat
-      ensures b.IsReversemapValid()
-    {
-      forall src, tgt | src in b.transitionsNat && tgt in b.transitionsNat[src]
-        ensures tgt in b.revTransitionsNat && src in b.revTransitionsNat[tgt]
-      {
-        assert tgt in a.revTransitionsNat && src in a.revTransitionsNat[tgt];
-        assert a.revTransitionsNat == b.revTransitionsNat;
-        assert tgt in b.revTransitionsNat && src in b.revTransitionsNat[tgt];
-      }
-      forall src, tgt | src in b.revTransitionsNat && tgt in b.revTransitionsNat[src]
-        ensures tgt in b.transitionsNat && src in b.transitionsNat[tgt]
-      {
-        assert tgt in a.transitionsNat && src in a.transitionsNat[tgt];
-        assert a.transitionsNat == b.transitionsNat;
-        assert tgt in b.transitionsNat && src in b.transitionsNat[tgt];
-      }
-    }
-
-    static lemma foo(m: map<nat, seq<nat>>, m': map<nat, seq<nat>>, i: nat, j: nat)
-      //   requires m.Keys == m'.Keys
-      requires i in m
-      requires j in m
-      requires IsReversemap(m, m')
-      ensures IsReversemap(AddKeyVal(m, i, j), AddKeyVal(m', j, i))
-    {
-
-    }
-
-    // static lemma foo2<T(==)>(m: map<T, seq<T>>, m': map<T, seq<T>>, i: T, j: T)
-    //   requires m.Keys == m'.Keys
-    //   requires i in m
-    //   requires j in m
-    //   requires IsReversemap2(m, m')
-    //   ensures IsReversemap2(AddKeyVal2(m, i, j), AddKeyVal2(m', j, i))
-    // {
-
-    // }
-
-    static function AddKeyVal(m: map<nat, seq<nat>>, key: nat, val: nat): (m': map<nat, seq<nat>>)
-      requires key in m
-    {
-      m[key := m[key] + [val]]
-    }
-
-    static function AddKeyVal2<T(==)>(m: map<T, seq<T>>, key: T, val: T): (m': map<T, seq<T>>)
-      requires key in m
-      requires val in m
-    {
-      m[key := m[key] + [val]]
-    }
-
 
     /**
       *  Add several transitions from i to all the elements of js.
       */
     function {:timeLimitMultiplier 6} {:opaque} AddEdges(i: T, js: seq<T>, index: nat := 0): (a: ValidAuto<T>)
       requires this.IsValid()
-        requires IsReversemapValid()
       requires index <= |js|
       requires forall j:: 0 <= j < index ==> js[j] in this.states
       ensures a.IsValid()
-      ensures a.IsReversemapValid()
       ensures i in a.states
       ensures forall s:: s in this.states ==> s in a.states
       ensures forall j:: 0 <= j < |js| ==> js[j] in a.states
       ensures forall s:: s in a.states ==> s in this.states || s == i || s in js
       decreases |js| - index
     {
-    //   assume this.IsReversemapValid();
       if |js| == index then
         this.AddState(i)
       else
-        // assume this.AddEdge.requires(i, js[index]);
         var a1: ValidAuto<T> := this.AddEdge(i, js[index]);
         assert i in a1.states;
         assert js[index] in a1.states;
         assert a1.IsValid();
-        // // assume a1.IsReversemapValid();
-        // assume a1.AddEdges.requires(i, js, index + 1);
-        // assume a1.IsValid();
         assert  forall j:: 0 <= j < index  ==> js[j] in a1.states;
         assert js[index] in a1.states;
-        foo404(index, js, a1.states);
+        ExtendByOneGoodIsGood(index, js, i => i in a1.states);
         assert forall j:: 0 <= j < index + 1 ==> js[j] in a1.states;
         var a2 := a1.AddEdges(i, js, index + 1);
-        // assume a2.IsValid();
-        // assume a2.IsReversemapValid();
-        // a2
         a2
     }
-
-    static lemma foo404(index: nat, js: seq<T>, b: seq<T>)
-      requires index < |js|
-      requires  forall j:: 0 <= j < index  ==> js[j] in b
-      requires js[index] in b
-      ensures forall j:: 0 <= j < index + 1 ==> js[j] in b
-    {
-
-    }
-
-    /**
-      *  Add edges from each j in js to i 
-      */
-    // function {:timeLimitMultiplier 4} {:opaque} AddReverseEdges(i: T, js: seq<T>, index: nat := 0): (a: ValidAuto<T>)
-    //   requires this.IsValid()
-    //   requires index <= |js|
-    //   requires forall j:: 0 <= j < |js| ==> js[j] in this.states
-    //   requires i in states
-    //   requires forall j:: 0 <= j < index ==> i in transitions[js[j]]
-    //   //   requires forall j, tgt:: 0 <= j < index && tgt in transitions[states[j]] ==> (states[j] in transitions[tgt])
-
-    //   ensures a.IsValid()
-    //   ensures a.states == this.states
-    //   ensures forall t:: t in a.transitions <==> t in this.transitions || (t in js && i in transitions[t])
-    //   ensures forall j:: j in js ==> j in a.transitions
-    //   ensures forall j:: 0 <= j < |js| ==> i in a.transitions[js[j]]
-    //   //   ensures forall j, tgt:: 0 <= j < |js| && tgt in transitions[states[j]] ==> (states[j] in a.transitions[tgt])
-
-    //   decreases |js| - index
-    // {
-    //   reveal_AddEdge();
-    //   if |js| == index then this
-    //   else
-    //     var a1 := this.AddEdge(js[index], i);
-    //     a1.AddReverseEdges(i, js, index + 1)
-    // }
-
-    // function {:timeLimitMultiplier 4} {:opaque} AddReverseEdges2(i: nat, js: seq<nat>, index: nat := 0): (a: Auto<T>)
-    //   requires this.IsValid()
-    //   requires i in transitionsNat
-    //   requires index <= |js|
-    // //   requires
-    // //   requires forall j:: 0 <= j < |js| ==> js[j] in this.states
-    // //   requires i in states
-    // //   requires forall j:: 0 <= j < index ==> i in transitions[js[j]]
-    // //   requires forall j, tgt:: 0 <= j < index && tgt in transitions[states[j]] ==> (states[j] in transitions[tgt])
-
-    // //   ensures a.IsValid()
-    //   ensures a.states == this.states
-    // //   ensures forall t:: t in a.transitions <==> t in this.transitions || (t in js && i in transitions[t])
-    // //   ensures forall j:: j in js ==> j in a.transitions
-    // //   ensures forall j:: 0 <= j < |js| ==> i in a.transitions[js[j]]
-    // //   ensures forall j, tgt:: 0 <= j < |js| && tgt in transitions[states[j]] ==> (states[j] in a.transitions[tgt])
-
-    //   decreases |js| - index
-    // {
-    //   reveal_AddEdge();
-    //   if index == |js| then this
-    //   else
-    //     // var forwardTrans := if indextransitionsNat[index] else [];
-    //     var a1 := this.(transitionsNat := transitionsNat[index := transitionsNat[index] + [i]]);
-    //     assume a1.IsValid();
-    //     a1.AddReverseEdges2(i, js, index + 1)
-    // }
-
-    // function ReverseMap(m: map<nat, seq<nat>>, index: nat := 0): (m': map<nat, seq<nat>>)
-    //   requires forall k:: k in m <==> 0 <= k < |m|
-    // {
-    //   m
-    // }
-
-    // function AddReverseEntries(m: map<nat, seq<nat>>, k: nat, xe: seq<nat>, b: nat): (m': map<nat, seq<nat>>)
-    //   requires forall key:: key in m <==> 0 <= key < b
-    //   requires forall i:: 0 <= i < |xe| ==> 0 <= xe[i] < b
-    //   requires forall  key, i:: key in m && 0 <= i < |m[key]| ==> 0 <= m[key][i] < b
-    //   requires k < b
-    //   //  tuples of m are preserved
-    //   ensures forall key, val:: key in m && val in m[key] ==> key in m' && val in m'[key]
-    //   //  k is added to the tuples of xe
-    //   ensures forall e:: e in xe ==> e in m' && k in m'[e]
-    //   //  A key in m' is either in m or in xe
-    //   ensures forall key:: key in m' <==> key in m || key in xe
-    //   ensures forall key:: key in m' <==> 0 <= key < b
-    //   ensures forall key, i:: key in m' && 0 <= i < |m'[key]| ==> 0 <= m'[key][i] < b
-
-    //    //  A value in m' is either in m[key] or k
-    //   ensures forall key, val:: key in m' && val in m'[key] <==> ((key in m && val in m[key]) || (val == k && key in xe))
-    // {
-    //   if |xe| == 0 then m
-    //   else
-    //     var m1 := m[xe[0] := m[xe[0]] + [k]];
-    //     // assert forall key, val:: key in m && val in m[key] ==> key in m1 && val in m1[key];
-    //     // assert forall key, i:: key in m1 && 0 <= i < |m1[key]| ==> 0 <= m1[key][i] < b;
-    //     AddReverseEntries(m[xe[0] := m[xe[0]] + [k]], k, xe[1..], b)
-    // }
-
-
 
     /**
       * Returns the number of states of the automaton.
@@ -388,7 +188,7 @@ module Automata {
     /**
       *  The number of transitions.
       */
-    function {:opaque} TSize(index: nat := 0): nat 
+    function {:opaque} TSize(index: nat := 0): nat
       requires this.IsValid()
       requires index <= |states|
       decreases |states| - index
@@ -424,6 +224,36 @@ module Automata {
       transitionsNat[i]
     }
 
+    /**
+      *  The successors using the id of the states.
+      *  @param      i  The id of the source state.
+      *  @returns        The ids of the successors.
+      */
+    function {:opaque} PredNat(i: nat): (r: seq<nat>)
+      requires this.IsValid()
+      requires i < |states|
+      ensures forall j: nat :: 0 <= j < |r| ==> r[j] < |states|
+    {
+      revTransitionsIsBounded();
+      assert forall j: nat :: 0 <= j < |revTransitionsNat[i]| ==> revTransitionsNat[i][j] in revTransitionsNat[i];
+      revTransitionsNat[i]
+    }
+
+    /**
+      *  Given all the constraints in IsValid, 
+      *  the predecessors must be in 0..|states| - 1.
+      */
+    lemma {:timeLimitMultiplier 2} revTransitionsIsBounded()
+      requires this.IsValid()
+      ensures forall k, v:: k in revTransitionsNat &&  v in revTransitionsNat[k] ==> v < |states|
+    {
+      forall k, v | k in revTransitionsNat.Keys && v in revTransitionsNat[k]
+        ensures v < |states|
+      {
+        assert v in transitionsNat;
+      }
+    }
+
     /** Print to Dot format. */
     method {:print} ToDot(nodeToString: T --> string, labelToString: (T, nat, T) --> string, prefix: string := "", name: string := "G")
       requires this.IsValid()
@@ -448,66 +278,33 @@ module Automata {
       print "}\n";
     }
 
-    // function {:timeLimitMultiplier 2} ReverseAuto(index: nat := 0, a: ValidAuto<T>): (a': ValidAuto<T>)
-    //   requires this.IsValid()
-    //   requires index <= |states|
-    //   requires a.states == states
-    //   requires forall j, tgt:: 0 <= j < index && tgt in transitions[states[j]] ==> (states[j] in a.transitions[tgt])
-    //   ensures a'.states == states
-    //   //   ensures forall j, tgt:: j in  states && tgt in transitions[j] ==> (j in a'.transitions[tgt])
-    //   ensures forall j, tgt:: 0 <= j < |states| && tgt in transitions[states[j]] ==> (states[j] in a'.transitions[tgt])
-
-    //   decreases |states| - index
-    // {
-    //   //   reveal_AddReverseEdges();
-    //   //   reveal_AddStates();
-    //   if |states| == index then a
-    //   else
-    //     var aut2 := a.AddReverseEdges(
-    //                   states[index],
-    //                   MapP(transitionsNat[index], i requires i in transitionsNat[index] => states[i]));
-    //     // assert forall j:: 0 <= j < |js| ==> i in a.transitions[js[j]];
-    //     assume  forall j, tgt:: 0 <= j < index + 1 && tgt in transitions[states[j]] ==> (states[j] in aut2.transitions[tgt]);
-    //     ReverseAuto(index + 1, aut2)
-    // }
-
     /**
       * Check if the automaton is valid.
       */
     ghost predicate IsValid() {
-      //   && (forall i : T :: i in states <==> i in transitions)
-      //   && (forall k, k':: 0 <= k < k' < |states| ==> states[k] != states[k'])
-      //   && (forall i, j :: i in states && 0 <= j < |transitions[i]| ==> transitions[i][j] in states)
       && StatesTransValid()
-
-      //   && (forall s:: s in states <==> s in indexOf)
-      //   && (forall i:: i in indexOf ==> indexOf[i] < |states| && states[indexOf[i]] == i)
-      //   && (forall i:: 0 <= i < |states| ==> states[i] in indexOf && indexOf[states[i]] == i)
-      //   && (indexOf.Values == set z {:nowarn} | 0 <= z < |states|)
-      //   && (indexOf.Values == transitionsNat.Keys)
       && IndexOfValid()
-
-      //   && (forall k:: k in transitionsNat ==> |transitionsNat[k]| == |transitions[states[k]]|)
-      //   && (forall k:: k in transitions ==> |transitions[k]| == |transitionsNat[indexOf[k]]|)
-      //   && (forall i, j :: 0 <= i < |states| && 0 <= j < |transitionsNat[i]| ==> 0 <= transitionsNat[i][j] < |states|)
-      //   && ((forall i, j :: 0 <= i < |states| && 0 <= j < |transitionsNat[i]| ==> states[transitionsNat[i][j]] == transitions[states[i]][j]))
-      //   && ((forall i:T , j :: i in states && 0 <= j < |transitions[i]| ==> indexOf[transitions[i][j]] == indexOf[transitions[i][j]]))
       && TransNatTransIsValid()
-
-      //   && transitionsNat.Keys == revTransitionsNat.Keys
-      //        && (forall src, tgt:: src in transitionsNat && tgt in transitionsNat[src]
-      //                              ==> tgt in revTransitionsNat && src in revTransitionsNat[tgt])
-      //   && (forall src, tgt:: src in revTransitionsNat && tgt in revTransitionsNat[src]
-      //                         ==> tgt in transitionsNat && src in transitionsNat[tgt])
-      //   && IsReversemap(transitionsNat, revTransitionsNat)
+      && IsReverseMapValid()
     }
 
+    /**
+      *  1. Each state must have a seq (possibly empty) of successors.
+      *  2. Each successor must be a state.No towo states are equal. That means the seq
+      *  is similar to a set.
+      *  3. The successor states must be in the set of states.
+      */
     ghost predicate StatesTransValid() {
       && (forall i : T :: i in states <==> i in transitions)
       && (forall k, k':: 0 <= k < k' < |states| ==> states[k] != states[k'])
       && (forall i, j :: i in states && 0 <= j < |transitions[i]| ==> transitions[i][j] in states)
     }
 
+    /**
+      * The index of a state is the position of the state in the seq of states.
+      * The indexOf maap must be in sycn with states
+      *
+      */
     ghost predicate IndexOfValid()
     {
       && (forall s:: s in states <==> s in indexOf)
@@ -518,6 +315,9 @@ module Automata {
       && (indexOf.Values == revTransitionsNat.Keys)
     }
 
+    /**
+      * The transitionNat map must be in sync with the transitions map.
+      */
     ghost predicate TransNatTransIsValid()
       requires StatesTransValid()
       requires IndexOfValid()
@@ -529,40 +329,14 @@ module Automata {
       && ((forall i:T , j :: i in states && 0 <= j < |transitions[i]| ==> indexOf[transitions[i][j]] == indexOf[transitions[i][j]]))
     }
 
-    ghost predicate IsReversemapValid()
+    /**
+      *  The map that gives the transitions in reverse must be in one-to-one
+      *  correspondence with the transitionsNat map.
+      */
+    ghost predicate IsReverseMapValid()
     {
-      //   && transitionsNat.Keys == revTransitionsNat.Keys
       && (forall src, tgt:: src in transitionsNat && tgt in transitionsNat[src]
                             <==> tgt in revTransitionsNat && src in revTransitionsNat[tgt])
     }
-
-    ghost predicate IsReversemapValid2()
-    {
-      IsReversemap(transitionsNat, revTransitionsNat)
-      //   && m.Keys == m'.Keys
-      //   && (forall src, tgt:: src in m && tgt in m[src]
-      //                         ==> tgt in m' && src in m'[tgt])
-      //   && (forall src, tgt:: src in m' && tgt in m'[src]
-      //                         ==> tgt in m && src in m[tgt])
-    }
-
-    static ghost predicate IsReversemap(m: map<nat, seq<nat>>, m': map<nat, seq<nat>>)
-    {
-      && m.Keys == m'.Keys
-      && (forall src, tgt:: src in m && tgt in m[src]
-                            <==> tgt in m' && src in m'[tgt])
-         //   && (forall src, tgt:: src in m' && tgt in m'[src]
-         //                         ==> tgt in m && src in m[tgt])
-    }
-
-    static ghost predicate IsReversemap2<T>(m: map<T, seq<T>>, m': map<T, seq<T>>)
-    {
-      && m.Keys == m'.Keys
-      && (forall src, tgt:: src in m && tgt in m[src]
-                            ==> tgt in m' && src in m'[tgt])
-         //   && (forall src, tgt:: src in m' && tgt in m'[src]
-         //                         ==> tgt in m && src in m[tgt])
-    }
-
   }
 }
