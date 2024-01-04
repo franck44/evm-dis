@@ -240,7 +240,62 @@ module MiscTypes {
   }
 
   /**
-    *  Two distinc indices in the flat seq correspond to two 
+    *    Add a key value pair top a map of seq.
+    */
+  function AddKeyVal<T(==)>(m: map<T, seq<T>>, key: T, val: T): (m': map<T, seq<T>>)
+    requires key in m
+    ensures m'.Keys == m.Keys
+    ensures forall k:: k in m && k != key ==> m[k] == m'[k]
+    ensures m'[key] == m[key] + [val]
+  {
+    m[key := m[key] + [val]]
+  }
+
+  /**
+    * If a seq satisfies a property, and a new element that satisfies the 
+    * the property is added at the end of the seq, then the property is satisfied by the 
+    * new seq.
+    */
+  lemma ExtendByOneGoodIsGood<T>(index: nat, js: seq<T>, p: T -> bool)
+    requires index < |js|
+    requires  forall j:: 0 <= j < index  ==> p(js[j])
+    requires p(js[index])
+    ensures forall j:: 0 <= j < index + 1 ==> p(js[j])
+  { //    Thanks Dafny
+  }
+
+  /**
+    * If two maps are revsered maps, then adding (key, val) to m and and (val, key) to m'
+    * preserves the reverse map property.
+    */
+  lemma ReverseAddKeyValPreservesReverseMaps<T>(m: map<T, seq<T>>, m': map<T, seq<T>>, i: T, j: T)
+    requires i in m
+    requires j in m'
+    requires IsReverseMap(m, m')
+    ensures IsReverseMap(AddKeyVal(m, i, j), AddKeyVal(m', j, i))
+  {   //  Thanks Dafny
+  }
+
+  lemma ReverseMapsIsCongruent<T>(m1: map<T, seq<T>>, m1': map<T, seq<T>>, m2: map<T, seq<T>>, m2': map<T, seq<T>>)
+   requires m1 == m2 
+   requires m1' == m2'
+    requires IsReverseMap(m1, m1')
+    ensures IsReverseMap(m2, m2')
+  {   //  Thanks Dafny
+  }
+
+
+  /**
+    * Whether a map is the reverse of another map.
+    */
+  ghost predicate IsReverseMap<T(!new)>(m: map<T, seq<T>>, m': map<T, seq<T>>)
+  {
+    forall src, tgt::
+      src in m && tgt in m[src] <==> tgt in m' && src in m'[tgt]
+  }
+
+  /**
+    *  Two distinct indices in the flat seq correspond to two 
     *   distinct pair of indices in the original seq of seq.
     */
   lemma FlatDistinctImpliesUnFlatDistinct(r: seq<seq<set<nat>>>, r': seq<set<nat>>, j: nat, j': nat)
