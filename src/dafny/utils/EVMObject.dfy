@@ -292,31 +292,36 @@ module EVMObject {
           invariant forall s:: s in a'.states ==> NextG.requires(s)
           invariant forall s:: s in p.states ==> s in a'.states
         {
-          var i_th_succ := NextG(LastOnPath)[i];
+          var i_th_succ := NextG(lastOnPath)[i];
           if i_th_succ.ErrorGState? {
-            a', stats' := a'.AddEdge(LastOnPath, i_th_succ), stats'.IncError();
+            a', stats' := a'.AddEdge(lastOnPath, i_th_succ), stats'.IncError();
           } else if i_th_succ in a'.indexOf {
-            a', stats' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
-          } else if !xs[LastOnPath.segNum].IsJump() {
+            a', stats' := a'.AddEdge(lastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
+          } else if !xs[lastOnPath.segNum].IsJump() {
             //  not already seen and not a jump
-            assert i_th_succ !in a'.indexOf;
+            var j: ValidAuto<GState> := a'.AddEdge(lastOnPath, i_th_succ);
+            PathHelperLemma(p, i_th_succ, i);
+            var p' := Path(p.states + [i_th_succ], p.exits + [i]);
+            assert |p'.exits| + 1 == |p'.states|;
+
             a', stats' := DFS(
-              Path(p.states + [i_th_succ], p.exits + [i]),
-              a'.AddEdge(LastOnPath, i_th_succ),
+              p',
+              j,
               maxDepth - 1,
               debugInfo,
               stats');
           } else {
+            PathHelperLemma(p, i_th_succ, i);
             assert i_th_succ.EGState?;
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
-                //  s' is the state that covers LastOnPath
-                a', stats' := a'.AddEdge(LastOnPath, p.states[index]), stats'.IncWpre();
+                //  s' is the state that covers lastOnPath
+                a', stats' := a'.AddEdge(lastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
                 a', stats' := DFS(
                   Path(p.states + [i_th_succ], p.exits + [i]),
-                  a'.AddEdge(LastOnPath, i_th_succ),
+                  a'.AddEdge(lastOnPath, i_th_succ),
                   maxDepth - 1,
                   debugInfo,
                   stats');
@@ -324,6 +329,20 @@ module EVMObject {
           }
         }
       }
+    }
+
+    lemma PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
+      requires this.IsValid()
+      requires  |p.states| == |p.exits| + 1
+      requires forall k:: 0 <= k < |p.states| ==> p.states[k].IsBounded(|xs|)
+      requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
+      requires (forall k:: 0 <= k < |p.exits| ==> p.states[k + 1] == NextG(p.states[k])[p.exits[k]])
+      requires i < |NextG(Last(p.states))|
+      requires i_th_succ == NextG(Last(p.states))[i]
+      ensures var p' := Path(p.states + [i_th_succ], p.exits + [i]);
+              && (forall k:: 0 <= k < |p'.exits| ==> p'.exits[k] < |NextG(p'.states[k])|)
+              && (forall k:: 0 <= k < |p'.exits| ==> p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]])
+    {   //  Thanks Dafny 
     }
 
     /** 
