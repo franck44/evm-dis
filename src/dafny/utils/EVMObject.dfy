@@ -104,7 +104,7 @@ module EVMObject {
       requires s.IsBounded(|xs|)
       ensures forall k:: 0 <= k < |r| ==> r[k].IsBounded(|xs|)
       ensures |r| > 0 ==> s.EGState?
-      ensures  s.EGState?  ==> |r| == xs[s.segNum].NumberOfExits()
+      ensures s.EGState?  ==> |r| == xs[s.segNum].NumberOfExits()
       ensures s.ErrorGState? ==> |r| == 0
     {
       match s
@@ -219,7 +219,7 @@ module EVMObject {
         else if PreservesCond(w1, exitsFromIndex, xs[i].StartAddress()) then
           Some(index)
         //  Try a potential second occurrence of segment i on the path
-        else if 0 < |pathFromIndex| then // < |pStates| then
+        else if 0 < |pathFromIndex| then
           assert forall i:: 0 <= i < |exitsFromIndex| ==> exitsFromIndex[i] < |NextG(pathFromIndex[i])|;
           SafeLoopFound(i, pathFromIndex[1..], exitsFromIndex[1..])
         else None
@@ -257,7 +257,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:timeLimitMultiplier 2} DFS(
+    method {:timeLimitMultiplier 6} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
