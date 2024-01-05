@@ -277,8 +277,8 @@ module EVMObject {
 
       decreases maxDepth
     {
-      var LastOnPath := Last(p.states);
-      if maxDepth == 0 || LastOnPath.ErrorGState? {
+      var lastOnPath := Last(p.states);
+      if maxDepth == 0 || lastOnPath.ErrorGState? {
         //  stop the construction of the automaton.
         var stats' := if maxDepth == 0 then stats.SetMaxDepth() else stats;
         return a, stats';
@@ -287,7 +287,7 @@ module EVMObject {
         // DFS from last state on the path
         a' := a;
         stats' := stats;
-        for i := 0 to |NextG(LastOnPath)|
+        for i := 0 to |NextG(lastOnPath)|
           invariant a'.IsValid()
           invariant forall s:: s in a'.states ==> NextG.requires(s)
           invariant forall s:: s in p.states ==> s in a'.states
