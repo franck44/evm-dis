@@ -98,7 +98,6 @@ module EVMObject {
       * @param s The abstract state.
       * @returns The next abstract states.
       *
-      * @note   This function is _inductive_ in the sense of the Inductive predicate (see BuildCFG).
       */
     function {:opaque} NextG(s: GState): (r: seq<GState>)
       requires this.IsValid()
@@ -407,8 +406,8 @@ module EVMObject {
     }
 
     /**
-     *  Print info for the bytecode.
-     */
+      *  Print info for the bytecode.
+      */
     method {:print} PrintByteCodeInfo() {
       var listIns: seq<Instructions.ValidInstruction> :=  Flatten(Map(xs, (s: ValidLinSeg) => s.Ins()));
       print "Bytecode Size: ", Size(), " Bytes\n";
@@ -430,16 +429,16 @@ module EVMObject {
     }
 
     /**
-     *  Print info for the segnments of the bytecode.
-     */
+      *  Print info for the segnments of the bytecode.
+      */
     method PrintSegmentInfo() {
-        print "Total number of segments: ", |xs|, "\n";
-        print "# of JUMP segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPSeg?)|, "\n";
-        print "# of JUMPI segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPISeg?)|, "\n";
-        print "# of RETURN segments: ", |Filter(xs, (s: ValidLinSeg) => s.RETURNSeg?)|, "\n";
-        print "# of STOP segments: ", |Filter(xs, (s: ValidLinSeg) => s.STOPSeg?)|, "\n";
-        print "# of CONT segments: ", |Filter(xs, (s: ValidLinSeg) => s.CONTSeg?)|, "\n";
-        print "# of INVALID segments: ", |Filter(xs, (s: ValidLinSeg) => s.INVALIDSeg?)|, "\n";
+      print "Total number of segments: ", |xs|, "\n";
+      print "# of JUMP segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPSeg?)|, "\n";
+      print "# of JUMPI segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPISeg?)|, "\n";
+      print "# of RETURN segments: ", |Filter(xs, (s: ValidLinSeg) => s.RETURNSeg?)|, "\n";
+      print "# of STOP segments: ", |Filter(xs, (s: ValidLinSeg) => s.STOPSeg?)|, "\n";
+      print "# of CONT segments: ", |Filter(xs, (s: ValidLinSeg) => s.CONTSeg?)|, "\n";
+      print "# of INVALID segments: ", |Filter(xs, (s: ValidLinSeg) => s.INVALIDSeg?)|, "\n";
     }
 
   }
