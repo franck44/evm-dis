@@ -186,6 +186,15 @@ module MiscTypes {
     seq(|t|, i requires 0 <= i < |t| => f(t[i]))
   }
 
+  /**
+    *  Fold left a function.
+    */
+  function FoldLeft<T, U>(t: seq<T>, u0: U, f: (U, T) -> U): U
+  {
+    if |t| == 0 then u0
+    else FoldLeft(t[1..], f(u0, t[0]), f)
+  }
+
   /** Find the index of an element in a list.  
     * @param x  The list.
     * @param t  The element to find.
@@ -277,8 +286,8 @@ module MiscTypes {
   }
 
   lemma ReverseMapsIsCongruent<T>(m1: map<T, seq<T>>, m1': map<T, seq<T>>, m2: map<T, seq<T>>, m2': map<T, seq<T>>)
-   requires m1 == m2 
-   requires m1' == m2'
+    requires m1 == m2
+    requires m1' == m2'
     requires IsReverseMap(m1, m1')
     ensures IsReverseMap(m2, m2')
   {   //  Thanks Dafny
