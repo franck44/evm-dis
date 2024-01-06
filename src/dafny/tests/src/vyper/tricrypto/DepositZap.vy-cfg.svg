@@ -9,17 +9,17 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 18080)">
 <title>G</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-18080 3954.32,-18080 3954.32,4 -4,4"/>
-<text text-anchor="start" x="8" y="-18059.7" font-family="Arial" font-weight="bold" font-size="14.00">Program Name: </text>
-<text text-anchor="start" x="113.75" y="-18059.7" font-family="Arial" font-size="14.00"> DepositZap.vy.bin</text>
-<text text-anchor="start" x="8" y="-18045.7" font-family="Arial" font-weight="bold" font-size="14.00">Control Flow Graph Info: </text>
-<text text-anchor="start" x="8" y="-18031.7" font-family="Arial" font-size="14.00">Max depth: 100 [Was not reached]</text>
-<text text-anchor="start" x="8" y="-18017.7" font-family="Arial" font-size="14.00">116 nodes/162 edges</text>
+<text text-anchor="start" x="8" y="-18059.7" font-family="Times,serif" font-weight="bold" font-size="14.00">Program Name: </text>
+<text text-anchor="start" x="107" y="-18059.7" font-family="Times,serif" font-size="14.00"> DepositZap.vy.bin</text>
+<text text-anchor="start" x="8" y="-18045.7" font-family="Times,serif" font-weight="bold" font-size="14.00">Control Flow Graph Info: </text>
+<text text-anchor="start" x="8" y="-18031.7" font-family="Times,serif" font-size="14.00">Max depth: 100 [Was not reached]</text>
+<text text-anchor="start" x="8" y="-18017.7" font-family="Times,serif" font-size="14.00">116 nodes/162 edges</text>
 <!-- s_0 -->
 <g id="node1" class="node">
 <title>s_0</title>
 <path fill="whitesmoke" stroke="none" d="M2866.5,-18012C2866.5,-18012 2698.5,-18012 2698.5,-18012 2692.5,-18012 2686.5,-18006 2686.5,-18000 2686.5,-18000 2686.5,-17852 2686.5,-17852 2686.5,-17846 2692.5,-17840 2698.5,-17840 2698.5,-17840 2866.5,-17840 2866.5,-17840 2872.5,-17840 2878.5,-17846 2878.5,-17852 2878.5,-17852 2878.5,-18000 2878.5,-18000 2878.5,-18006 2872.5,-18012 2866.5,-18012"/>
 <text text-anchor="start" x="2725.5" y="-17992.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
-<g id="a_node1_0"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xd">
+<g id="a_node1_0"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0xd">
 <text text-anchor="start" x="2855.38" y="-17993.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -93,7 +93,7 @@
 <title>s_1</title>
 <path fill="whitesmoke" stroke="none" d="M1442.5,-17196C1442.5,-17196 1278.5,-17196 1278.5,-17196 1272.5,-17196 1266.5,-17190 1266.5,-17184 1266.5,-17184 1266.5,-17132 1266.5,-17132 1266.5,-17126 1272.5,-17120 1278.5,-17120 1278.5,-17120 1442.5,-17120 1442.5,-17120 1448.5,-17120 1454.5,-17126 1454.5,-17132 1454.5,-17132 1454.5,-17184 1454.5,-17184 1454.5,-17190 1448.5,-17196 1442.5,-17196"/>
 <text text-anchor="start" x="1303.5" y="-17176.58" font-family="arial" font-size="14.00">Segment 1 [0x9]</text>
-<g id="a_node2_13"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9df">
+<g id="a_node2_13"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9df">
 <text text-anchor="start" x="1431.38" y="-17177.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -135,7 +135,7 @@
 <title>s_2</title>
 <path fill="whitesmoke" stroke="none" d="M2994,-17804C2994,-17804 2801,-17804 2801,-17804 2795,-17804 2789,-17798 2789,-17792 2789,-17792 2789,-17500 2789,-17500 2789,-17494 2795,-17488 2801,-17488 2801,-17488 2994,-17488 2994,-17488 3000,-17488 3006,-17494 3006,-17500 3006,-17500 3006,-17792 3006,-17792 3006,-17798 3000,-17804 2994,-17804"/>
 <text text-anchor="start" x="2840.5" y="-17784.58" font-family="arial" font-size="14.00">Segment 2 [0xd]</text>
-<g id="a_node3_18"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x2b">
+<g id="a_node3_18"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x2b">
 <text text-anchor="start" x="2982.88" y="-17785.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -282,7 +282,7 @@
 <title>s_3</title>
 <path fill="whitesmoke" stroke="none" d="M461,-1564C461,-1564 12,-1564 12,-1564 6,-1564 0,-1558 0,-1552 0,-1552 0,-1404 0,-1404 0,-1398 6,-1392 12,-1392 12,-1392 461,-1392 461,-1392 467,-1392 473,-1398 473,-1404 473,-1404 473,-1552 473,-1552 473,-1558 467,-1564 461,-1564"/>
 <text text-anchor="start" x="166.75" y="-1544.58" font-family="arial" font-size="14.00">Segment 114 [0x9df]</text>
-<g id="a_node4_43"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node4_43"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="449.88" y="-1545.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -365,7 +365,7 @@
 <title>s_6</title>
 <path fill="whitesmoke" stroke="none" d="M3276.5,-17440C3276.5,-17440 3108.5,-17440 3108.5,-17440 3102.5,-17440 3096.5,-17434 3096.5,-17428 3096.5,-17428 3096.5,-17304 3096.5,-17304 3096.5,-17298 3102.5,-17292 3108.5,-17292 3108.5,-17292 3276.5,-17292 3276.5,-17292 3282.5,-17292 3288.5,-17298 3288.5,-17304 3288.5,-17304 3288.5,-17428 3288.5,-17428 3288.5,-17434 3282.5,-17440 3276.5,-17440"/>
 <text text-anchor="start" x="3131.75" y="-17420.58" font-family="arial" font-size="14.00">Segment 3 [0x23]</text>
-<g id="a_node7_56"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x45">
+<g id="a_node7_56"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x45">
 <text text-anchor="start" x="3265.38" y="-17421.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -438,7 +438,7 @@
 <title>s_7</title>
 <path fill="whitesmoke" stroke="none" d="M2995.5,-17452C2995.5,-17452 2799.5,-17452 2799.5,-17452 2793.5,-17452 2787.5,-17446 2787.5,-17440 2787.5,-17440 2787.5,-17292 2787.5,-17292 2787.5,-17286 2793.5,-17280 2799.5,-17280 2799.5,-17280 2995.5,-17280 2995.5,-17280 3001.5,-17280 3007.5,-17286 3007.5,-17292 3007.5,-17292 3007.5,-17440 3007.5,-17440 3007.5,-17446 3001.5,-17452 2995.5,-17452"/>
 <text text-anchor="start" x="2836.75" y="-17432.58" font-family="arial" font-size="14.00">Segment 4 [0x2b]</text>
-<g id="a_node8_67"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x380">
+<g id="a_node8_67"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x380">
 <text text-anchor="start" x="2984.38" y="-17433.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -521,7 +521,7 @@
 <title>s_4</title>
 <path fill="whitesmoke" stroke="none" d="M303,-1104C303,-1104 170,-1104 170,-1104 164,-1104 158,-1098 158,-1092 158,-1092 158,-1064 158,-1064 158,-1058 164,-1052 170,-1052 170,-1052 303,-1052 303,-1052 309,-1052 315,-1058 315,-1064 315,-1064 315,-1092 315,-1092 315,-1098 309,-1104 303,-1104"/>
 <text text-anchor="start" x="166.75" y="-1084.58" font-family="arial" font-size="14.00">Segment 115 [0x9fb]</text>
-<g id="a_node5_80"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0">
+<g id="a_node5_80"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="291.88" y="-1085.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -552,7 +552,7 @@
 <title>s_5</title>
 <path fill="whitesmoke" stroke="none" d="M2214.5,-1140C2214.5,-1140 2050.5,-1140 2050.5,-1140 2044.5,-1140 2038.5,-1134 2038.5,-1128 2038.5,-1128 2038.5,-1028 2038.5,-1028 2038.5,-1022 2044.5,-1016 2050.5,-1016 2050.5,-1016 2214.5,-1016 2214.5,-1016 2220.5,-1016 2226.5,-1022 2226.5,-1028 2226.5,-1028 2226.5,-1128 2226.5,-1128 2226.5,-1134 2220.5,-1140 2214.5,-1140"/>
 <text text-anchor="start" x="2063.12" y="-1120.58" font-family="arial" font-size="14.00">Segment 116 [0x9fc]</text>
-<g id="a_node6_83"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node6_83"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2203.38" y="-1121.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -614,7 +614,7 @@
 <title>s_8</title>
 <path fill="whitesmoke" stroke="none" d="M3332.5,-16572C3332.5,-16572 3156.5,-16572 3156.5,-16572 3150.5,-16572 3144.5,-16566 3144.5,-16560 3144.5,-16560 3144.5,-16388 3144.5,-16388 3144.5,-16382 3150.5,-16376 3156.5,-16376 3156.5,-16376 3332.5,-16376 3332.5,-16376 3338.5,-16376 3344.5,-16382 3344.5,-16388 3344.5,-16388 3344.5,-16560 3344.5,-16560 3344.5,-16566 3338.5,-16572 3332.5,-16572"/>
 <text text-anchor="start" x="3183.75" y="-16552.58" font-family="arial" font-size="14.00">Segment 7 [0x45]</text>
-<g id="a_node9_92"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node9_92"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3321.38" y="-16553.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -707,7 +707,7 @@
 <title>s_37</title>
 <path fill="whitesmoke" stroke="none" d="M3087.5,-17036C3087.5,-17036 2911.5,-17036 2911.5,-17036 2905.5,-17036 2899.5,-17030 2899.5,-17024 2899.5,-17024 2899.5,-16852 2899.5,-16852 2899.5,-16846 2905.5,-16840 2911.5,-16840 2911.5,-16840 3087.5,-16840 3087.5,-16840 3093.5,-16840 3099.5,-16846 3099.5,-16852 3099.5,-16852 3099.5,-17024 3099.5,-17024 3099.5,-17030 3093.5,-17036 3087.5,-17036"/>
 <text text-anchor="start" x="2938.75" y="-17016.58" font-family="arial" font-size="14.00">Segment 5 [0x37]</text>
-<g id="a_node38_107"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node38_107"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3076.38" y="-17017.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -801,7 +801,7 @@
 <title>s_38</title>
 <path fill="whitesmoke" stroke="none" d="M2959.5,-17244C2959.5,-17244 2747.5,-17244 2747.5,-17244 2741.5,-17244 2735.5,-17238 2735.5,-17232 2735.5,-17232 2735.5,-17084 2735.5,-17084 2735.5,-17078 2741.5,-17072 2747.5,-17072 2747.5,-17072 2959.5,-17072 2959.5,-17072 2965.5,-17072 2971.5,-17078 2971.5,-17084 2971.5,-17084 2971.5,-17232 2971.5,-17232 2971.5,-17238 2965.5,-17244 2959.5,-17244"/>
 <text text-anchor="start" x="2785.25" y="-17224.58" font-family="arial" font-size="14.00">Segment 36 [0x380]</text>
-<g id="a_node39_122"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x394">
+<g id="a_node39_122"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x394">
 <text text-anchor="start" x="2948.38" y="-17225.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -893,7 +893,7 @@
 <title>s_9</title>
 <path fill="whitesmoke" stroke="none" d="M3463.5,-16340C3463.5,-16340 3029.5,-16340 3029.5,-16340 3023.5,-16340 3017.5,-16334 3017.5,-16328 3017.5,-16328 3017.5,-16132 3017.5,-16132 3017.5,-16126 3023.5,-16120 3029.5,-16120 3029.5,-16120 3463.5,-16120 3463.5,-16120 3469.5,-16120 3475.5,-16126 3475.5,-16132 3475.5,-16132 3475.5,-16328 3475.5,-16328 3475.5,-16334 3469.5,-16340 3463.5,-16340"/>
 <text text-anchor="start" x="3187.62" y="-16320.58" font-family="arial" font-size="14.00">Segment 8 [0x4f]</text>
-<g id="a_node10_135"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node10_135"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3452.38" y="-16321.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -1007,7 +1007,7 @@
 <title>s_10</title>
 <path fill="whitesmoke" stroke="none" d="M3501.5,-15916C3501.5,-15916 3067.5,-15916 3067.5,-15916 3061.5,-15916 3055.5,-15910 3055.5,-15904 3055.5,-15904 3055.5,-15660 3055.5,-15660 3055.5,-15654 3061.5,-15648 3067.5,-15648 3067.5,-15648 3501.5,-15648 3501.5,-15648 3507.5,-15648 3513.5,-15654 3513.5,-15660 3513.5,-15660 3513.5,-15904 3513.5,-15904 3513.5,-15910 3507.5,-15916 3501.5,-15916"/>
 <text text-anchor="start" x="3223.75" y="-15896.58" font-family="arial" font-size="14.00">Segment 9 [0x73]</text>
-<g id="a_node11_152"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0xa2">
+<g id="a_node11_152"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0xa2">
 <text text-anchor="start" x="3490.38" y="-15897.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -1134,7 +1134,7 @@
 <title>s_11</title>
 <path fill="whitesmoke" stroke="none" d="M3267.5,-15432C3267.5,-15432 3067.5,-15432 3067.5,-15432 3061.5,-15432 3055.5,-15426 3055.5,-15420 3055.5,-15420 3055.5,-15248 3055.5,-15248 3055.5,-15242 3061.5,-15236 3067.5,-15236 3067.5,-15236 3267.5,-15236 3267.5,-15236 3273.5,-15236 3279.5,-15242 3279.5,-15248 3279.5,-15248 3279.5,-15420 3279.5,-15420 3279.5,-15426 3273.5,-15432 3267.5,-15432"/>
 <text text-anchor="start" x="3103" y="-15412.58" font-family="arial" font-size="14.00">Segment 10 [0x98]</text>
-<g id="a_node12_173"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node12_173"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3256.38" y="-15413.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -1228,7 +1228,7 @@
 <title>s_12</title>
 <path fill="whitesmoke" stroke="none" d="M3477.5,-15444C3477.5,-15444 3309.5,-15444 3309.5,-15444 3303.5,-15444 3297.5,-15438 3297.5,-15432 3297.5,-15432 3297.5,-15236 3297.5,-15236 3297.5,-15230 3303.5,-15224 3309.5,-15224 3309.5,-15224 3477.5,-15224 3477.5,-15224 3483.5,-15224 3489.5,-15230 3489.5,-15236 3489.5,-15236 3489.5,-15432 3489.5,-15432 3489.5,-15438 3483.5,-15444 3477.5,-15444"/>
 <text text-anchor="start" x="3329.38" y="-15424.58" font-family="arial" font-size="14.00">Segment 11 [0xa2]</text>
-<g id="a_node13_188"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node13_188"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3466.38" y="-15425.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -1332,7 +1332,7 @@
 <title>s_13</title>
 <path fill="whitesmoke" stroke="none" d="M3362.5,-15020C3362.5,-15020 3186.5,-15020 3186.5,-15020 3180.5,-15020 3174.5,-15014 3174.5,-15008 3174.5,-15008 3174.5,-14692 3174.5,-14692 3174.5,-14686 3180.5,-14680 3186.5,-14680 3186.5,-14680 3362.5,-14680 3362.5,-14680 3368.5,-14680 3374.5,-14686 3374.5,-14692 3374.5,-14692 3374.5,-15008 3374.5,-15008 3374.5,-15014 3368.5,-15020 3362.5,-15020"/>
 <text text-anchor="start" x="3210" y="-15000.58" font-family="arial" font-size="14.00">Segment 12 [0xae]</text>
-<g id="a_node14_205"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x1da">
+<g id="a_node14_205"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x1da">
 <text text-anchor="start" x="3351.38" y="-15001.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -1488,7 +1488,7 @@
 <title>s_14</title>
 <path fill="whitesmoke" stroke="none" d="M3747.5,-14476C3747.5,-14476 3123.5,-14476 3123.5,-14476 3117.5,-14476 3111.5,-14470 3111.5,-14464 3111.5,-14464 3111.5,-12204 3111.5,-12204 3111.5,-12198 3117.5,-12192 3123.5,-12192 3123.5,-12192 3747.5,-12192 3747.5,-12192 3753.5,-12192 3759.5,-12198 3759.5,-12204 3759.5,-12204 3759.5,-14464 3759.5,-14464 3759.5,-14470 3753.5,-14476 3747.5,-14476"/>
 <text text-anchor="start" x="3371.38" y="-14456.58" font-family="arial" font-size="14.00">Segment 13 [0xc2]</text>
-<g id="a_node15_232"><a xlink:title="Stack Size Δ: +7&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node15_232"><a xlink:title="Stack Size Δ: +7&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3736.38" y="-14457.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -2483,7 +2483,7 @@
 <title>s_15</title>
 <path fill="whitesmoke" stroke="none" d="M3416,-8956C3416,-8956 3233,-8956 3233,-8956 3227,-8956 3221,-8950 3221,-8944 3221,-8944 3221,-8628 3221,-8628 3221,-8622 3227,-8616 3233,-8616 3233,-8616 3416,-8616 3416,-8616 3422,-8616 3428,-8622 3428,-8628 3428,-8628 3428,-8944 3428,-8944 3428,-8950 3422,-8956 3416,-8956"/>
 <text text-anchor="start" x="3256.25" y="-8936.58" font-family="arial" font-size="14.00">Segment 21 [0x1da]</text>
-<g id="a_node16_421"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0xae">
+<g id="a_node16_421"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0xae">
 <text text-anchor="start" x="3404.88" y="-8937.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -2645,7 +2645,7 @@
 <title>s_16</title>
 <path fill="whitesmoke" stroke="none" d="M3527,-12108C3527,-12108 3344,-12108 3344,-12108 3338,-12108 3332,-12102 3332,-12096 3332,-12096 3332,-11900 3332,-11900 3332,-11894 3338,-11888 3344,-11888 3344,-11888 3527,-11888 3527,-11888 3533,-11888 3539,-11894 3539,-11900 3539,-11900 3539,-12096 3539,-12096 3539,-12102 3533,-12108 3527,-12108"/>
 <text text-anchor="start" x="3367.25" y="-12088.58" font-family="arial" font-size="14.00">Segment 14 [0x170]</text>
-<g id="a_node17_448"><a xlink:title="Stack Size Δ: &#45;7&#10;Stack Size on Entry ≥ 7&#10;Exit Jump target: Constant 0x185">
+<g id="a_node17_448"><a xlink:title="Stack Size Δ: &#45;7&#10;Stack Size on Entry for this segment ≥ 7&#10;Stack Size on Entry for this segment at this node ≥ 9&#10;Exit Jump target: Constant 0x185">
 <text text-anchor="start" x="3515.88" y="-12089.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -2757,7 +2757,7 @@
 <title>s_23</title>
 <path fill="whitesmoke" stroke="none" d="M3641,-7980C3641,-7980 3434,-7980 3434,-7980 3428,-7980 3422,-7974 3422,-7968 3422,-7968 3422,-7316 3422,-7316 3422,-7310 3428,-7304 3434,-7304 3434,-7304 3641,-7304 3641,-7304 3647,-7304 3653,-7310 3653,-7316 3653,-7316 3653,-7968 3653,-7968 3653,-7974 3647,-7980 3641,-7980"/>
 <text text-anchor="start" x="3469.25" y="-7960.57" font-family="arial" font-size="14.00">Segment 22 [0x1ea]</text>
-<g id="a_node24_465"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node24_465"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3629.88" y="-7961.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3060,7 +3060,7 @@
 <title>s_17</title>
 <path fill="whitesmoke" stroke="none" d="M3716,-11768C3716,-11768 3501,-11768 3501,-11768 3495,-11768 3489,-11762 3489,-11756 3489,-11756 3489,-11584 3489,-11584 3489,-11578 3495,-11572 3501,-11572 3501,-11572 3716,-11572 3716,-11572 3722,-11572 3728,-11578 3728,-11584 3728,-11584 3728,-11756 3728,-11756 3728,-11762 3722,-11768 3716,-11768"/>
 <text text-anchor="start" x="3540.25" y="-11748.58" font-family="arial" font-size="14.00">Segment 15 [0x17b]</text>
-<g id="a_node18_520"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node18_520"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3704.88" y="-11749.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3154,7 +3154,7 @@
 <title>s_18</title>
 <path fill="whitesmoke" stroke="none" d="M3458.5,-11792C3458.5,-11792 3252.5,-11792 3252.5,-11792 3246.5,-11792 3240.5,-11786 3240.5,-11780 3240.5,-11780 3240.5,-11560 3240.5,-11560 3240.5,-11554 3246.5,-11548 3252.5,-11548 3252.5,-11548 3458.5,-11548 3458.5,-11548 3464.5,-11548 3470.5,-11554 3470.5,-11560 3470.5,-11560 3470.5,-11780 3470.5,-11780 3470.5,-11786 3464.5,-11792 3458.5,-11792"/>
 <text text-anchor="start" x="3287.25" y="-11772.58" font-family="arial" font-size="14.00">Segment 16 [0x185]</text>
-<g id="a_node19_535"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x198">
+<g id="a_node19_535"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x198">
 <text text-anchor="start" x="3447.38" y="-11773.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3268,7 +3268,7 @@
 <title>s_19</title>
 <path fill="whitesmoke" stroke="none" d="M3366,-11248C3366,-11248 3183,-11248 3183,-11248 3177,-11248 3171,-11242 3171,-11236 3171,-11236 3171,-11160 3171,-11160 3171,-11154 3177,-11148 3183,-11148 3183,-11148 3366,-11148 3366,-11148 3372,-11148 3378,-11154 3378,-11160 3378,-11160 3378,-11236 3378,-11236 3378,-11242 3372,-11248 3366,-11248"/>
 <text text-anchor="start" x="3206.25" y="-11228.58" font-family="arial" font-size="14.00">Segment 17 [0x193]</text>
-<g id="a_node20_554"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x19a">
+<g id="a_node20_554"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 5&#10;Exit Jump target: Constant 0x19a">
 <text text-anchor="start" x="3354.88" y="-11229.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3320,7 +3320,7 @@
 <title>s_20</title>
 <path fill="whitesmoke" stroke="none" d="M3566.5,-11236C3566.5,-11236 3408.5,-11236 3408.5,-11236 3402.5,-11236 3396.5,-11230 3396.5,-11224 3396.5,-11224 3396.5,-11172 3396.5,-11172 3396.5,-11166 3402.5,-11160 3408.5,-11160 3408.5,-11160 3566.5,-11160 3566.5,-11160 3572.5,-11160 3578.5,-11166 3578.5,-11172 3578.5,-11172 3578.5,-11224 3578.5,-11224 3578.5,-11230 3572.5,-11236 3566.5,-11236"/>
 <text text-anchor="start" x="3419.25" y="-11216.58" font-family="arial" font-size="14.00">Segment 18 [0x198]</text>
-<g id="a_node21_561"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node21_561"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 5">
 <text text-anchor="start" x="3555.38" y="-11217.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3361,7 +3361,7 @@
 <title>s_21</title>
 <path fill="whitesmoke" stroke="none" d="M3505,-10860C3505,-10860 3322,-10860 3322,-10860 3316,-10860 3310,-10854 3310,-10848 3310,-10848 3310,-10148 3310,-10148 3310,-10142 3316,-10136 3322,-10136 3322,-10136 3505,-10136 3505,-10136 3511,-10136 3517,-10142 3517,-10148 3517,-10148 3517,-10848 3517,-10848 3517,-10854 3511,-10860 3505,-10860"/>
 <text text-anchor="start" x="3345.25" y="-10840.58" font-family="arial" font-size="14.00">Segment 19 [0x19a]</text>
-<g id="a_node22_566"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x1da">
+<g id="a_node22_566"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry for this segment ≥ 4&#10;Stack Size on Entry for this segment at this node ≥ 6&#10;Exit Jump target: Constant 0x1da">
 <text text-anchor="start" x="3493.88" y="-10841.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3696,7 +3696,7 @@
 <title>s_22</title>
 <path fill="whitesmoke" stroke="none" d="M3546.5,-10040C3546.5,-10040 3364.5,-10040 3364.5,-10040 3358.5,-10040 3352.5,-10034 3352.5,-10028 3352.5,-10028 3352.5,-9592 3352.5,-9592 3352.5,-9586 3358.5,-9580 3364.5,-9580 3364.5,-9580 3546.5,-9580 3546.5,-9580 3552.5,-9580 3558.5,-9586 3558.5,-9592 3558.5,-9592 3558.5,-10028 3558.5,-10028 3558.5,-10034 3552.5,-10040 3546.5,-10040"/>
 <text text-anchor="start" x="3387.62" y="-10020.58" font-family="arial" font-size="14.00">Segment 20 [0x1c0]</text>
-<g id="a_node23_625"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node23_625"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3535.38" y="-10021.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -3929,7 +3929,7 @@
 <title>s_24</title>
 <path fill="whitesmoke" stroke="none" d="M3629,-7064C3629,-7064 3446,-7064 3446,-7064 3440,-7064 3434,-7058 3434,-7052 3434,-7052 3434,-6784 3434,-6784 3434,-6778 3440,-6772 3446,-6772 3446,-6772 3629,-6772 3629,-6772 3635,-6772 3641,-6778 3641,-6784 3641,-6784 3641,-7052 3641,-7052 3641,-7058 3635,-7064 3629,-7064"/>
 <text text-anchor="start" x="3469.25" y="-7044.57" font-family="arial" font-size="14.00">Segment 23 [0x21a]</text>
-<g id="a_node25_662"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x238">
+<g id="a_node25_662"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x238">
 <text text-anchor="start" x="3617.88" y="-7045.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -4067,7 +4067,7 @@
 <title>s_25</title>
 <path fill="whitesmoke" stroke="none" d="M3517,-6436C3517,-6436 3302,-6436 3302,-6436 3296,-6436 3290,-6430 3290,-6424 3290,-6424 3290,-6252 3290,-6252 3290,-6246 3296,-6240 3302,-6240 3302,-6240 3517,-6240 3517,-6240 3523,-6240 3529,-6246 3529,-6252 3529,-6252 3529,-6424 3529,-6424 3529,-6430 3523,-6436 3517,-6436"/>
 <text text-anchor="start" x="3341.25" y="-6416.57" font-family="arial" font-size="14.00">Segment 24 [0x22e]</text>
-<g id="a_node26_685"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node26_685"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3505.88" y="-6417.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -4161,7 +4161,7 @@
 <title>s_26</title>
 <path fill="whitesmoke" stroke="none" d="M3772,-6604C3772,-6604 3559,-6604 3559,-6604 3553,-6604 3547,-6598 3547,-6592 3547,-6592 3547,-6084 3547,-6084 3547,-6078 3553,-6072 3559,-6072 3559,-6072 3772,-6072 3772,-6072 3778,-6072 3784,-6078 3784,-6084 3784,-6084 3784,-6592 3784,-6592 3784,-6598 3778,-6604 3772,-6604"/>
 <text text-anchor="start" x="3597.25" y="-6584.57" font-family="arial" font-size="14.00">Segment 25 [0x238]</text>
-<g id="a_node27_700"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x26c">
+<g id="a_node27_700"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x26c">
 <text text-anchor="start" x="3760.88" y="-6585.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -4403,7 +4403,7 @@
 <title>s_27</title>
 <path fill="whitesmoke" stroke="none" d="M3783,-5772C3783,-5772 3568,-5772 3568,-5772 3562,-5772 3556,-5766 3556,-5760 3556,-5760 3556,-5588 3556,-5588 3556,-5582 3562,-5576 3568,-5576 3568,-5576 3783,-5576 3783,-5576 3789,-5576 3795,-5582 3795,-5588 3795,-5588 3795,-5760 3795,-5760 3795,-5766 3789,-5772 3783,-5772"/>
 <text text-anchor="start" x="3607.25" y="-5752.57" font-family="arial" font-size="14.00">Segment 26 [0x262]</text>
-<g id="a_node28_743"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node28_743"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3771.88" y="-5753.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -4497,7 +4497,7 @@
 <title>s_28</title>
 <path fill="whitesmoke" stroke="none" d="M3525.5,-5772C3525.5,-5772 3323.5,-5772 3323.5,-5772 3317.5,-5772 3311.5,-5766 3311.5,-5760 3311.5,-5760 3311.5,-5588 3311.5,-5588 3311.5,-5582 3317.5,-5576 3323.5,-5576 3323.5,-5576 3525.5,-5576 3525.5,-5576 3531.5,-5576 3537.5,-5582 3537.5,-5588 3537.5,-5588 3537.5,-5760 3537.5,-5760 3537.5,-5766 3531.5,-5772 3525.5,-5772"/>
 <text text-anchor="start" x="3356.62" y="-5752.57" font-family="arial" font-size="14.00">Segment 27 [0x26c]</text>
-<g id="a_node29_758"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node29_758"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3514.38" y="-5753.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -4599,7 +4599,7 @@
 <title>s_29</title>
 <path fill="whitesmoke" stroke="none" d="M3745,-5276C3745,-5276 3106,-5276 3106,-5276 3100,-5276 3094,-5270 3094,-5264 3094,-5264 3094,-3364 3094,-3364 3094,-3358 3100,-3352 3106,-3352 3106,-3352 3745,-3352 3745,-3352 3751,-3352 3757,-3358 3757,-3364 3757,-3364 3757,-5264 3757,-5264 3757,-5270 3751,-5276 3745,-5276"/>
 <text text-anchor="start" x="3357.25" y="-5256.57" font-family="arial" font-size="14.00">Segment 28 [0x276]</text>
-<g id="a_node30_773"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x31c">
+<g id="a_node30_773"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x31c">
 <text text-anchor="start" x="3733.88" y="-5257.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -5440,7 +5440,7 @@
 <title>s_30</title>
 <path fill="whitesmoke" stroke="none" d="M3331,-3244C3331,-3244 3116,-3244 3116,-3244 3110,-3244 3104,-3238 3104,-3232 3104,-3232 3104,-3060 3104,-3060 3104,-3054 3110,-3048 3116,-3048 3116,-3048 3331,-3048 3331,-3048 3337,-3048 3343,-3054 3343,-3060 3343,-3060 3343,-3232 3343,-3232 3343,-3238 3337,-3244 3331,-3244"/>
 <text text-anchor="start" x="3155.25" y="-3224.57" font-family="arial" font-size="14.00">Segment 29 [0x312]</text>
-<g id="a_node31_932"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node31_932"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3319.88" y="-3225.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -5534,7 +5534,7 @@
 <title>s_31</title>
 <path fill="whitesmoke" stroke="none" d="M3579.5,-3268C3579.5,-3268 3373.5,-3268 3373.5,-3268 3367.5,-3268 3361.5,-3262 3361.5,-3256 3361.5,-3256 3361.5,-3036 3361.5,-3036 3361.5,-3030 3367.5,-3024 3373.5,-3024 3373.5,-3024 3579.5,-3024 3579.5,-3024 3585.5,-3024 3591.5,-3030 3591.5,-3036 3591.5,-3036 3591.5,-3256 3591.5,-3256 3591.5,-3262 3585.5,-3268 3579.5,-3268"/>
 <text text-anchor="start" x="3408.62" y="-3248.57" font-family="arial" font-size="14.00">Segment 30 [0x31c]</text>
-<g id="a_node32_947"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x32f">
+<g id="a_node32_947"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x32f">
 <text text-anchor="start" x="3568.38" y="-3249.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -5648,7 +5648,7 @@
 <title>s_32</title>
 <path fill="whitesmoke" stroke="none" d="M3375,-2772C3375,-2772 3192,-2772 3192,-2772 3186,-2772 3180,-2766 3180,-2760 3180,-2760 3180,-2684 3180,-2684 3180,-2678 3186,-2672 3192,-2672 3192,-2672 3375,-2672 3375,-2672 3381,-2672 3387,-2678 3387,-2684 3387,-2684 3387,-2760 3387,-2760 3387,-2766 3381,-2772 3375,-2772"/>
 <text text-anchor="start" x="3215.25" y="-2752.57" font-family="arial" font-size="14.00">Segment 31 [0x32a]</text>
-<g id="a_node33_966"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x331">
+<g id="a_node33_966"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 3&#10;Exit Jump target: Constant 0x331">
 <text text-anchor="start" x="3363.88" y="-2753.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -5700,7 +5700,7 @@
 <title>s_33</title>
 <path fill="whitesmoke" stroke="none" d="M3572,-2760C3572,-2760 3417,-2760 3417,-2760 3411,-2760 3405,-2754 3405,-2748 3405,-2748 3405,-2696 3405,-2696 3405,-2690 3411,-2684 3417,-2684 3417,-2684 3572,-2684 3572,-2684 3578,-2684 3584,-2690 3584,-2696 3584,-2696 3584,-2748 3584,-2748 3584,-2754 3578,-2760 3572,-2760"/>
 <text text-anchor="start" x="3428.12" y="-2740.57" font-family="arial" font-size="14.00">Segment 32 [0x32f]</text>
-<g id="a_node34_973"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node34_973"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 3">
 <text text-anchor="start" x="3560.88" y="-2741.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -5741,7 +5741,7 @@
 <title>s_34</title>
 <path fill="whitesmoke" stroke="none" d="M3384,-2468C3384,-2468 3201,-2468 3201,-2468 3195,-2468 3189,-2462 3189,-2456 3189,-2456 3189,-1756 3189,-1756 3189,-1750 3195,-1744 3201,-1744 3201,-1744 3384,-1744 3384,-1744 3390,-1744 3396,-1750 3396,-1756 3396,-1756 3396,-2456 3396,-2456 3396,-2462 3390,-2468 3384,-2468"/>
 <text text-anchor="start" x="3224.25" y="-2448.57" font-family="arial" font-size="14.00">Segment 33 [0x331]</text>
-<g id="a_node35_978"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x371">
+<g id="a_node35_978"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry for this segment ≥ 4&#10;Stack Size on Entry for this segment at this node ≥ 4&#10;Exit Jump target: Constant 0x371">
 <text text-anchor="start" x="3372.88" y="-2449.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6067,7 +6067,7 @@
 <title>s_35</title>
 <path fill="whitesmoke" stroke="none" d="M3289,-1708C3289,-1708 3106,-1708 3106,-1708 3100,-1708 3094,-1702 3094,-1696 3094,-1696 3094,-1260 3094,-1260 3094,-1254 3100,-1248 3106,-1248 3106,-1248 3289,-1248 3289,-1248 3295,-1248 3301,-1254 3301,-1260 3301,-1260 3301,-1696 3301,-1696 3301,-1702 3295,-1708 3289,-1708"/>
 <text text-anchor="start" x="3129.25" y="-1688.58" font-family="arial" font-size="14.00">Segment 34 [0x357]</text>
-<g id="a_node36_1037"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node36_1037"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="3277.88" y="-1689.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6273,7 +6273,7 @@
 <title>s_36</title>
 <path fill="whitesmoke" stroke="none" d="M3355,-1188C3355,-1188 3172,-1188 3172,-1188 3166,-1188 3160,-1182 3160,-1176 3160,-1176 3160,-980 3160,-980 3160,-974 3166,-968 3172,-968 3172,-968 3355,-968 3355,-968 3361,-968 3367,-974 3367,-980 3367,-980 3367,-1176 3367,-1176 3367,-1182 3361,-1188 3355,-1188"/>
 <text text-anchor="start" x="3195.25" y="-1168.58" font-family="arial" font-size="14.00">Segment 35 [0x371]</text>
-<g id="a_node37_1074"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node37_1074"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="3343.88" y="-1169.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6405,7 +6405,7 @@
 <title>s_39</title>
 <path fill="whitesmoke" stroke="none" d="M3190,-16744C3190,-16744 3037,-16744 3037,-16744 3031,-16744 3025,-16738 3025,-16732 3025,-16732 3025,-16680 3025,-16680 3025,-16674 3031,-16668 3037,-16668 3037,-16668 3190,-16668 3190,-16668 3196,-16668 3202,-16674 3202,-16680 3202,-16680 3202,-16732 3202,-16732 3202,-16738 3196,-16744 3190,-16744"/>
 <text text-anchor="start" x="3052.75" y="-16724.58" font-family="arial" font-size="14.00">Segment 6 [0x42]</text>
-<g id="a_node40_1091"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node40_1091"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1">
 <text text-anchor="start" x="3178.88" y="-16725.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6447,7 +6447,7 @@
 <title>s_40</title>
 <path fill="whitesmoke" stroke="none" d="M2955,-16780C2955,-16780 2772,-16780 2772,-16780 2766,-16780 2760,-16774 2760,-16768 2760,-16768 2760,-16644 2760,-16644 2760,-16638 2766,-16632 2772,-16632 2772,-16632 2955,-16632 2955,-16632 2961,-16632 2967,-16638 2967,-16644 2967,-16644 2967,-16768 2967,-16768 2967,-16774 2961,-16780 2955,-16780"/>
 <text text-anchor="start" x="2795.62" y="-16760.58" font-family="arial" font-size="14.00">Segment 37 [0x38c]</text>
-<g id="a_node41_1096"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x3ae">
+<g id="a_node41_1096"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x3ae">
 <text text-anchor="start" x="2943.88" y="-16761.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6520,7 +6520,7 @@
 <title>s_41</title>
 <path fill="whitesmoke" stroke="none" d="M2740.5,-17024C2740.5,-17024 2528.5,-17024 2528.5,-17024 2522.5,-17024 2516.5,-17018 2516.5,-17012 2516.5,-17012 2516.5,-16864 2516.5,-16864 2516.5,-16858 2522.5,-16852 2528.5,-16852 2528.5,-16852 2740.5,-16852 2740.5,-16852 2746.5,-16852 2752.5,-16858 2752.5,-16864 2752.5,-16864 2752.5,-17012 2752.5,-17012 2752.5,-17018 2746.5,-17024 2740.5,-17024"/>
 <text text-anchor="start" x="2566.25" y="-17004.58" font-family="arial" font-size="14.00">Segment 38 [0x394]</text>
-<g id="a_node42_1107"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x6cc">
+<g id="a_node42_1107"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x6cc">
 <text text-anchor="start" x="2729.38" y="-17005.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6612,7 +6612,7 @@
 <title>s_42</title>
 <path fill="whitesmoke" stroke="none" d="M2857.5,-16292C2857.5,-16292 2679.5,-16292 2679.5,-16292 2673.5,-16292 2667.5,-16286 2667.5,-16280 2667.5,-16280 2667.5,-16180 2667.5,-16180 2667.5,-16174 2673.5,-16168 2679.5,-16168 2679.5,-16168 2857.5,-16168 2857.5,-16168 2863.5,-16168 2869.5,-16174 2869.5,-16180 2869.5,-16180 2869.5,-16280 2869.5,-16280 2869.5,-16286 2863.5,-16292 2857.5,-16292"/>
 <text text-anchor="start" x="2700.25" y="-16272.58" font-family="arial" font-size="14.00">Segment 41 [0x3ae]</text>
-<g id="a_node43_1120"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node43_1120"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2846.38" y="-16273.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6674,7 +6674,7 @@
 <title>s_73</title>
 <path fill="whitesmoke" stroke="none" d="M2730,-16804C2730,-16804 2539,-16804 2539,-16804 2533,-16804 2527,-16798 2527,-16792 2527,-16792 2527,-16620 2527,-16620 2527,-16614 2533,-16608 2539,-16608 2539,-16608 2730,-16608 2730,-16608 2736,-16608 2742,-16614 2742,-16620 2742,-16620 2742,-16792 2742,-16792 2742,-16798 2736,-16804 2730,-16804"/>
 <text text-anchor="start" x="2566.25" y="-16784.58" font-family="arial" font-size="14.00">Segment 39 [0x3a0]</text>
-<g id="a_node74_1129"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node74_1129"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2718.88" y="-16785.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6768,7 +6768,7 @@
 <title>s_74</title>
 <path fill="whitesmoke" stroke="none" d="M1977.5,-15420C1977.5,-15420 1771.5,-15420 1771.5,-15420 1765.5,-15420 1759.5,-15414 1759.5,-15408 1759.5,-15408 1759.5,-15260 1759.5,-15260 1759.5,-15254 1765.5,-15248 1771.5,-15248 1771.5,-15248 1977.5,-15248 1977.5,-15248 1983.5,-15248 1989.5,-15254 1989.5,-15260 1989.5,-15260 1989.5,-15408 1989.5,-15408 1989.5,-15414 1983.5,-15420 1977.5,-15420"/>
 <text text-anchor="start" x="1807" y="-15400.58" font-family="arial" font-size="14.00">Segment 72 [0x6cc]</text>
-<g id="a_node75_1144"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x6e0">
+<g id="a_node75_1144"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x6e0">
 <text text-anchor="start" x="1966.38" y="-15401.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -6860,7 +6860,7 @@
 <title>s_43</title>
 <path fill="whitesmoke" stroke="none" d="M2692,-16084C2692,-16084 2479,-16084 2479,-16084 2473,-16084 2467,-16078 2467,-16072 2467,-16072 2467,-15492 2467,-15492 2467,-15486 2473,-15480 2479,-15480 2479,-15480 2692,-15480 2692,-15480 2698,-15480 2704,-15486 2704,-15492 2704,-15492 2704,-16072 2704,-16072 2704,-16078 2698,-16084 2692,-16084"/>
 <text text-anchor="start" x="2517.25" y="-16064.58" font-family="arial" font-size="14.00">Segment 42 [0x3b4]</text>
-<g id="a_node44_1157"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x3ed">
+<g id="a_node44_1157"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x3ed">
 <text text-anchor="start" x="2680.88" y="-16065.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7134,7 +7134,7 @@
 <title>s_44</title>
 <path fill="whitesmoke" stroke="none" d="M2693,-15432C2693,-15432 2478,-15432 2478,-15432 2472,-15432 2466,-15426 2466,-15420 2466,-15420 2466,-15248 2466,-15248 2466,-15242 2472,-15236 2478,-15236 2478,-15236 2693,-15236 2693,-15236 2699,-15236 2705,-15242 2705,-15248 2705,-15248 2705,-15420 2705,-15420 2705,-15426 2699,-15432 2693,-15432"/>
 <text text-anchor="start" x="2517.25" y="-15412.58" font-family="arial" font-size="14.00">Segment 43 [0x3e3]</text>
-<g id="a_node45_1206"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node45_1206"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2681.88" y="-15413.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7228,7 +7228,7 @@
 <title>s_45</title>
 <path fill="whitesmoke" stroke="none" d="M2269.5,-15432C2269.5,-15432 2067.5,-15432 2067.5,-15432 2061.5,-15432 2055.5,-15426 2055.5,-15420 2055.5,-15420 2055.5,-15248 2055.5,-15248 2055.5,-15242 2061.5,-15236 2067.5,-15236 2067.5,-15236 2269.5,-15236 2269.5,-15236 2275.5,-15236 2281.5,-15242 2281.5,-15248 2281.5,-15248 2281.5,-15420 2281.5,-15420 2281.5,-15426 2275.5,-15432 2269.5,-15432"/>
 <text text-anchor="start" x="2100.25" y="-15412.58" font-family="arial" font-size="14.00">Segment 44 [0x3ed]</text>
-<g id="a_node46_1221"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node46_1221"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2258.38" y="-15413.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7330,7 +7330,7 @@
 <title>s_46</title>
 <path fill="whitesmoke" stroke="none" d="M2272.5,-15188C2272.5,-15188 2064.5,-15188 2064.5,-15188 2058.5,-15188 2052.5,-15182 2052.5,-15176 2052.5,-15176 2052.5,-14524 2052.5,-14524 2052.5,-14518 2058.5,-14512 2064.5,-14512 2064.5,-14512 2272.5,-14512 2272.5,-14512 2278.5,-14512 2284.5,-14518 2284.5,-14524 2284.5,-14524 2284.5,-15176 2284.5,-15176 2284.5,-15182 2278.5,-15188 2272.5,-15188"/>
 <text text-anchor="start" x="2102.12" y="-15168.58" font-family="arial" font-size="14.00">Segment 45 [0x3f7]</text>
-<g id="a_node47_1236"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node47_1236"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2261.38" y="-15169.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7643,7 +7643,7 @@
 <title>s_47</title>
 <path fill="whitesmoke" stroke="none" d="M2281,-13480C2281,-13480 2098,-13480 2098,-13480 2092,-13480 2086,-13474 2086,-13468 2086,-13468 2086,-13200 2086,-13200 2086,-13194 2092,-13188 2098,-13188 2098,-13188 2281,-13188 2281,-13188 2287,-13188 2293,-13194 2293,-13200 2293,-13200 2293,-13468 2293,-13468 2293,-13474 2287,-13480 2281,-13480"/>
 <text text-anchor="start" x="2121.25" y="-13460.58" font-family="arial" font-size="14.00">Segment 46 [0x429]</text>
-<g id="a_node48_1291"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x447">
+<g id="a_node48_1291"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x447">
 <text text-anchor="start" x="2269.88" y="-13461.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7781,7 +7781,7 @@
 <title>s_48</title>
 <path fill="whitesmoke" stroke="none" d="M2297,-12096C2297,-12096 2082,-12096 2082,-12096 2076,-12096 2070,-12090 2070,-12084 2070,-12084 2070,-11912 2070,-11912 2070,-11906 2076,-11900 2082,-11900 2082,-11900 2297,-11900 2297,-11900 2303,-11900 2309,-11906 2309,-11912 2309,-11912 2309,-12084 2309,-12084 2309,-12090 2303,-12096 2297,-12096"/>
 <text text-anchor="start" x="2121.25" y="-12076.58" font-family="arial" font-size="14.00">Segment 47 [0x43d]</text>
-<g id="a_node49_1314"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node49_1314"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2285.88" y="-12077.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -7875,7 +7875,7 @@
 <title>s_49</title>
 <path fill="whitesmoke" stroke="none" d="M2531.5,-12156C2531.5,-12156 2339.5,-12156 2339.5,-12156 2333.5,-12156 2327.5,-12150 2327.5,-12144 2327.5,-12144 2327.5,-11852 2327.5,-11852 2327.5,-11846 2333.5,-11840 2339.5,-11840 2339.5,-11840 2531.5,-11840 2531.5,-11840 2537.5,-11840 2543.5,-11846 2543.5,-11852 2543.5,-11852 2543.5,-12144 2543.5,-12144 2543.5,-12150 2537.5,-12156 2531.5,-12156"/>
 <text text-anchor="start" x="2367.25" y="-12136.58" font-family="arial" font-size="14.00">Segment 48 [0x447]</text>
-<g id="a_node50_1329"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node50_1329"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2520.38" y="-12137.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8021,7 +8021,7 @@
 <title>s_50</title>
 <path fill="whitesmoke" stroke="none" d="M2396,-11804C2396,-11804 2213,-11804 2213,-11804 2207,-11804 2201,-11798 2201,-11792 2201,-11792 2201,-11548 2201,-11548 2201,-11542 2207,-11536 2213,-11536 2213,-11536 2396,-11536 2396,-11536 2402,-11536 2408,-11542 2408,-11548 2408,-11548 2408,-11792 2408,-11792 2408,-11798 2402,-11804 2396,-11804"/>
 <text text-anchor="start" x="2236.25" y="-11784.58" font-family="arial" font-size="14.00">Segment 49 [0x45a]</text>
-<g id="a_node51_1354"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node51_1354"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2384.88" y="-11785.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8155,7 +8155,7 @@
 <title>s_51</title>
 <path fill="whitesmoke" stroke="none" d="M2515,-11476C2515,-11476 2302,-11476 2302,-11476 2296,-11476 2290,-11470 2290,-11464 2290,-11464 2290,-10932 2290,-10932 2290,-10926 2296,-10920 2302,-10920 2302,-10920 2515,-10920 2515,-10920 2521,-10920 2527,-10926 2527,-10932 2527,-10932 2527,-11464 2527,-11464 2527,-11470 2521,-11476 2515,-11476"/>
 <text text-anchor="start" x="2340.25" y="-11456.58" font-family="arial" font-size="14.00">Segment 50 [0x46a]</text>
-<g id="a_node52_1375"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x49f">
+<g id="a_node52_1375"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 4&#10;Exit Jump target: Constant 0x49f">
 <text text-anchor="start" x="2503.88" y="-11457.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8407,7 +8407,7 @@
 <title>s_52</title>
 <path fill="whitesmoke" stroke="none" d="M2769,-10596C2769,-10596 2554,-10596 2554,-10596 2548,-10596 2542,-10590 2542,-10584 2542,-10584 2542,-10412 2542,-10412 2542,-10406 2548,-10400 2554,-10400 2554,-10400 2769,-10400 2769,-10400 2775,-10400 2781,-10406 2781,-10412 2781,-10412 2781,-10584 2781,-10584 2781,-10590 2775,-10596 2769,-10596"/>
 <text text-anchor="start" x="2593.25" y="-10576.58" font-family="arial" font-size="14.00">Segment 51 [0x495]</text>
-<g id="a_node53_1420"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node53_1420"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2757.88" y="-10577.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8501,7 +8501,7 @@
 <title>s_53</title>
 <path fill="whitesmoke" stroke="none" d="M2511.5,-10596C2511.5,-10596 2305.5,-10596 2305.5,-10596 2299.5,-10596 2293.5,-10590 2293.5,-10584 2293.5,-10584 2293.5,-10412 2293.5,-10412 2293.5,-10406 2299.5,-10400 2305.5,-10400 2305.5,-10400 2511.5,-10400 2511.5,-10400 2517.5,-10400 2523.5,-10406 2523.5,-10412 2523.5,-10412 2523.5,-10584 2523.5,-10584 2523.5,-10590 2517.5,-10596 2511.5,-10596"/>
 <text text-anchor="start" x="2342.12" y="-10576.58" font-family="arial" font-size="14.00">Segment 52 [0x49f]</text>
-<g id="a_node54_1435"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node54_1435"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2500.38" y="-10577.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8603,7 +8603,7 @@
 <title>s_54</title>
 <path fill="whitesmoke" stroke="none" d="M2500,-9956C2500,-9956 2317,-9956 2317,-9956 2311,-9956 2305,-9950 2305,-9944 2305,-9944 2305,-9676 2305,-9676 2305,-9670 2311,-9664 2317,-9664 2317,-9664 2500,-9664 2500,-9664 2506,-9664 2512,-9670 2512,-9676 2512,-9676 2512,-9944 2512,-9944 2512,-9950 2506,-9956 2500,-9956"/>
 <text text-anchor="start" x="2340.25" y="-9936.58" font-family="arial" font-size="14.00">Segment 53 [0x4a9]</text>
-<g id="a_node55_1450"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node55_1450"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2488.88" y="-9937.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -8748,7 +8748,7 @@
 <title>s_55</title>
 <path fill="whitesmoke" stroke="none" d="M2835,-9484C2835,-9484 2196,-9484 2196,-9484 2190,-9484 2184,-9478 2184,-9472 2184,-9472 2184,-8100 2184,-8100 2184,-8094 2190,-8088 2196,-8088 2196,-8088 2835,-8088 2835,-8088 2841,-8088 2847,-8094 2847,-8100 2847,-8100 2847,-9472 2847,-9472 2847,-9478 2841,-9484 2835,-9484"/>
 <text text-anchor="start" x="2447.25" y="-9464.58" font-family="arial" font-size="14.00">Segment 54 [0x4bd]</text>
-<g id="a_node56_1473"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node56_1473"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 3&#10;Stack Size on Entry for this segment at this node ≥ 5&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2823.88" y="-9465.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -9368,7 +9368,7 @@
 <title>s_56</title>
 <path fill="whitesmoke" stroke="none" d="M2607,-8052C2607,-8052 2424,-8052 2424,-8052 2418,-8052 2412,-8046 2412,-8040 2412,-8040 2412,-7244 2412,-7244 2412,-7238 2418,-7232 2424,-7232 2424,-7232 2607,-7232 2607,-7232 2613,-7232 2619,-7238 2619,-7244 2619,-7244 2619,-8040 2619,-8040 2619,-8046 2613,-8052 2607,-8052"/>
 <text text-anchor="start" x="2447.25" y="-8032.57" font-family="arial" font-size="14.00">Segment 55 [0x531]</text>
-<g id="a_node57_1588"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry ≥ 3&#10;Exit Jump target: Constant 0x571">
+<g id="a_node57_1588"><a xlink:title="Stack Size Δ: &#45;3&#10;Stack Size on Entry for this segment ≥ 3&#10;Stack Size on Entry for this segment at this node ≥ 5&#10;Exit Jump target: Constant 0x571">
 <text text-anchor="start" x="2595.88" y="-8033.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -9732,7 +9732,7 @@
 <title>s_57</title>
 <path fill="whitesmoke" stroke="none" d="M2806.5,-7016C2806.5,-7016 2592.5,-7016 2592.5,-7016 2586.5,-7016 2580.5,-7010 2580.5,-7004 2580.5,-7004 2580.5,-6832 2580.5,-6832 2580.5,-6826 2586.5,-6820 2592.5,-6820 2592.5,-6820 2806.5,-6820 2806.5,-6820 2812.5,-6820 2818.5,-6826 2818.5,-6832 2818.5,-6832 2818.5,-7004 2818.5,-7004 2818.5,-7010 2812.5,-7016 2806.5,-7016"/>
 <text text-anchor="start" x="2631.25" y="-6996.57" font-family="arial" font-size="14.00">Segment 56 [0x567]</text>
-<g id="a_node58_1655"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node58_1655"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2795.38" y="-6997.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -9826,7 +9826,7 @@
 <title>s_58</title>
 <path fill="whitesmoke" stroke="none" d="M2550.5,-7040C2550.5,-7040 2344.5,-7040 2344.5,-7040 2338.5,-7040 2332.5,-7034 2332.5,-7028 2332.5,-7028 2332.5,-6808 2332.5,-6808 2332.5,-6802 2338.5,-6796 2344.5,-6796 2344.5,-6796 2550.5,-6796 2550.5,-6796 2556.5,-6796 2562.5,-6802 2562.5,-6808 2562.5,-6808 2562.5,-7028 2562.5,-7028 2562.5,-7034 2556.5,-7040 2550.5,-7040"/>
 <text text-anchor="start" x="2379.25" y="-7020.57" font-family="arial" font-size="14.00">Segment 57 [0x571]</text>
-<g id="a_node59_1670"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x584">
+<g id="a_node59_1670"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x584">
 <text text-anchor="start" x="2539.38" y="-7021.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -9940,7 +9940,7 @@
 <title>s_59</title>
 <path fill="whitesmoke" stroke="none" d="M2450,-6388C2450,-6388 2267,-6388 2267,-6388 2261,-6388 2255,-6382 2255,-6376 2255,-6376 2255,-6300 2255,-6300 2255,-6294 2261,-6288 2267,-6288 2267,-6288 2450,-6288 2450,-6288 2456,-6288 2462,-6294 2462,-6300 2462,-6300 2462,-6376 2462,-6376 2462,-6382 2456,-6388 2450,-6388"/>
 <text text-anchor="start" x="2292.12" y="-6368.57" font-family="arial" font-size="14.00">Segment 58 [0x57f]</text>
-<g id="a_node60_1689"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x586">
+<g id="a_node60_1689"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 5&#10;Exit Jump target: Constant 0x586">
 <text text-anchor="start" x="2438.88" y="-6369.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -9992,7 +9992,7 @@
 <title>s_60</title>
 <path fill="whitesmoke" stroke="none" d="M2650.5,-6376C2650.5,-6376 2492.5,-6376 2492.5,-6376 2486.5,-6376 2480.5,-6370 2480.5,-6364 2480.5,-6364 2480.5,-6312 2480.5,-6312 2480.5,-6306 2486.5,-6300 2492.5,-6300 2492.5,-6300 2650.5,-6300 2650.5,-6300 2656.5,-6300 2662.5,-6306 2662.5,-6312 2662.5,-6312 2662.5,-6364 2662.5,-6364 2662.5,-6370 2656.5,-6376 2650.5,-6376"/>
 <text text-anchor="start" x="2503.25" y="-6356.57" font-family="arial" font-size="14.00">Segment 59 [0x584]</text>
-<g id="a_node61_1696"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node61_1696"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 5">
 <text text-anchor="start" x="2639.38" y="-6357.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -10033,7 +10033,7 @@
 <title>s_61</title>
 <path fill="whitesmoke" stroke="none" d="M2648,-6036C2648,-6036 2465,-6036 2465,-6036 2459,-6036 2453,-6030 2453,-6024 2453,-6024 2453,-5324 2453,-5324 2453,-5318 2459,-5312 2465,-5312 2465,-5312 2648,-5312 2648,-5312 2654,-5312 2660,-5318 2660,-5324 2660,-5324 2660,-6024 2660,-6024 2660,-6030 2654,-6036 2648,-6036"/>
 <text text-anchor="start" x="2488.25" y="-6016.57" font-family="arial" font-size="14.00">Segment 60 [0x586]</text>
-<g id="a_node62_1701"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x5c6">
+<g id="a_node62_1701"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry for this segment ≥ 4&#10;Stack Size on Entry for this segment at this node ≥ 6&#10;Exit Jump target: Constant 0x5c6">
 <text text-anchor="start" x="2636.88" y="-6017.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -10359,7 +10359,7 @@
 <title>s_62</title>
 <path fill="whitesmoke" stroke="none" d="M2701,-4544C2701,-4544 2518,-4544 2518,-4544 2512,-4544 2506,-4538 2506,-4532 2506,-4532 2506,-4096 2506,-4096 2506,-4090 2512,-4084 2518,-4084 2518,-4084 2701,-4084 2701,-4084 2707,-4084 2713,-4090 2713,-4096 2713,-4096 2713,-4532 2713,-4532 2713,-4538 2707,-4544 2701,-4544"/>
 <text text-anchor="start" x="2541.62" y="-4524.57" font-family="arial" font-size="14.00">Segment 61 [0x5ac]</text>
-<g id="a_node63_1760"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node63_1760"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2689.88" y="-4525.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -10565,7 +10565,7 @@
 <title>s_63</title>
 <path fill="whitesmoke" stroke="none" d="M2569,-3316C2569,-3316 2386,-3316 2386,-3316 2380,-3316 2374,-3310 2374,-3304 2374,-3304 2374,-2988 2374,-2988 2374,-2982 2380,-2976 2386,-2976 2386,-2976 2569,-2976 2569,-2976 2575,-2976 2581,-2982 2581,-2988 2581,-2988 2581,-3304 2581,-3304 2581,-3310 2575,-3316 2569,-3316"/>
 <text text-anchor="start" x="2409.62" y="-3296.57" font-family="arial" font-size="14.00">Segment 62 [0x5c6]</text>
-<g id="a_node64_1797"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x45a">
+<g id="a_node64_1797"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x45a">
 <text text-anchor="start" x="2557.88" y="-3297.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -10745,7 +10745,7 @@
 <title>s_64</title>
 <path fill="whitesmoke" stroke="none" d="M2700,-2940C2700,-2940 2255,-2940 2255,-2940 2249,-2940 2243,-2934 2243,-2928 2243,-2928 2243,-2516 2243,-2516 2243,-2510 2249,-2504 2255,-2504 2255,-2504 2700,-2504 2700,-2504 2706,-2504 2712,-2510 2712,-2516 2712,-2516 2712,-2928 2712,-2928 2712,-2934 2706,-2940 2700,-2940"/>
 <text text-anchor="start" x="2409.25" y="-2920.57" font-family="arial" font-size="14.00">Segment 63 [0x5d6]</text>
-<g id="a_node65_1824"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x615">
+<g id="a_node65_1824"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x615">
 <text text-anchor="start" x="2688.88" y="-2921.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -10945,7 +10945,7 @@
 <title>s_65</title>
 <path fill="whitesmoke" stroke="none" d="M2709,-2204C2709,-2204 2494,-2204 2494,-2204 2488,-2204 2482,-2198 2482,-2192 2482,-2192 2482,-2020 2482,-2020 2482,-2014 2488,-2008 2494,-2008 2494,-2008 2709,-2008 2709,-2008 2715,-2008 2721,-2014 2721,-2020 2721,-2020 2721,-2192 2721,-2192 2721,-2198 2715,-2204 2709,-2204"/>
 <text text-anchor="start" x="2533.25" y="-2184.57" font-family="arial" font-size="14.00">Segment 64 [0x60b]</text>
-<g id="a_node66_1859"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node66_1859"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2697.88" y="-2185.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11039,7 +11039,7 @@
 <title>s_66</title>
 <path fill="whitesmoke" stroke="none" d="M2451.5,-2204C2451.5,-2204 2245.5,-2204 2245.5,-2204 2239.5,-2204 2233.5,-2198 2233.5,-2192 2233.5,-2192 2233.5,-2020 2233.5,-2020 2233.5,-2014 2239.5,-2008 2245.5,-2008 2245.5,-2008 2451.5,-2008 2451.5,-2008 2457.5,-2008 2463.5,-2014 2463.5,-2020 2463.5,-2020 2463.5,-2192 2463.5,-2192 2463.5,-2198 2457.5,-2204 2451.5,-2204"/>
 <text text-anchor="start" x="2280.25" y="-2184.57" font-family="arial" font-size="14.00">Segment 65 [0x615]</text>
-<g id="a_node67_1874"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node67_1874"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2440.38" y="-2185.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11141,7 +11141,7 @@
 <title>s_67</title>
 <path fill="whitesmoke" stroke="none" d="M2721,-1684C2721,-1684 2272,-1684 2272,-1684 2266,-1684 2260,-1678 2260,-1672 2260,-1672 2260,-1284 2260,-1284 2260,-1278 2266,-1272 2272,-1272 2272,-1272 2721,-1272 2721,-1272 2727,-1272 2733,-1278 2733,-1284 2733,-1284 2733,-1672 2733,-1672 2733,-1678 2727,-1684 2721,-1684"/>
 <text text-anchor="start" x="2430.12" y="-1664.58" font-family="arial" font-size="14.00">Segment 66 [0x61f]</text>
-<g id="a_node68_1889"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node68_1889"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="2709.88" y="-1665.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11339,7 +11339,7 @@
 <title>s_68</title>
 <path fill="whitesmoke" stroke="none" d="M2721,-1212C2721,-1212 2272,-1212 2272,-1212 2266,-1212 2260,-1206 2260,-1200 2260,-1200 2260,-956 2260,-956 2260,-950 2266,-944 2272,-944 2272,-944 2721,-944 2721,-944 2727,-944 2733,-950 2733,-956 2733,-956 2733,-1200 2733,-1200 2733,-1206 2727,-1212 2721,-1212"/>
 <text text-anchor="start" x="2428.25" y="-1192.58" font-family="arial" font-size="14.00">Segment 67 [0x653]</text>
-<g id="a_node69_1922"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x683">
+<g id="a_node69_1922"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x683">
 <text text-anchor="start" x="2709.88" y="-1193.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11467,7 +11467,7 @@
 <title>s_69</title>
 <path fill="whitesmoke" stroke="none" d="M2483,-776C2483,-776 2268,-776 2268,-776 2262,-776 2256,-770 2256,-764 2256,-764 2256,-592 2256,-592 2256,-586 2262,-580 2268,-580 2268,-580 2483,-580 2483,-580 2489,-580 2495,-586 2495,-592 2495,-592 2495,-764 2495,-764 2495,-770 2489,-776 2483,-776"/>
 <text text-anchor="start" x="2307.25" y="-756.58" font-family="arial" font-size="14.00">Segment 68 [0x679]</text>
-<g id="a_node70_1943"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node70_1943"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2471.88" y="-757.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11561,7 +11561,7 @@
 <title>s_70</title>
 <path fill="whitesmoke" stroke="none" d="M2708,-908C2708,-908 2525,-908 2525,-908 2519,-908 2513,-902 2513,-896 2513,-896 2513,-460 2513,-460 2513,-454 2519,-448 2525,-448 2525,-448 2708,-448 2708,-448 2714,-448 2720,-454 2720,-460 2720,-460 2720,-896 2720,-896 2720,-902 2714,-908 2708,-908"/>
 <text text-anchor="start" x="2548.25" y="-888.58" font-family="arial" font-size="14.00">Segment 69 [0x683]</text>
-<g id="a_node71_1958"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x6ad">
+<g id="a_node71_1958"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x6ad">
 <text text-anchor="start" x="2696.88" y="-889.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11771,7 +11771,7 @@
 <title>s_71</title>
 <path fill="whitesmoke" stroke="none" d="M2604,-304C2604,-304 2389,-304 2389,-304 2383,-304 2377,-298 2377,-292 2377,-292 2377,-120 2377,-120 2377,-114 2383,-108 2389,-108 2389,-108 2604,-108 2604,-108 2610,-108 2616,-114 2616,-120 2616,-120 2616,-292 2616,-292 2616,-298 2610,-304 2604,-304"/>
 <text text-anchor="start" x="2428.25" y="-284.57" font-family="arial" font-size="14.00">Segment 70 [0x6a3]</text>
-<g id="a_node72_1995"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node72_1995"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2592.88" y="-285.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -11865,7 +11865,7 @@
 <title>s_72</title>
 <path fill="whitesmoke" stroke="none" d="M2829,-412C2829,-412 2646,-412 2646,-412 2640,-412 2634,-406 2634,-400 2634,-400 2634,-12 2634,-12 2634,-6 2640,0 2646,0 2646,0 2829,0 2829,0 2835,0 2841,-6 2841,-12 2841,-12 2841,-400 2841,-400 2841,-406 2835,-412 2829,-412"/>
 <text text-anchor="start" x="2669.25" y="-392.57" font-family="arial" font-size="14.00">Segment 71 [0x6ad]</text>
-<g id="a_node73_2010"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node73_2010"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="2817.88" y="-393.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12063,7 +12063,7 @@
 <title>s_75</title>
 <path fill="whitesmoke" stroke="none" d="M2755.5,-16512C2755.5,-16512 2587.5,-16512 2587.5,-16512 2581.5,-16512 2575.5,-16506 2575.5,-16500 2575.5,-16500 2575.5,-16448 2575.5,-16448 2575.5,-16442 2581.5,-16436 2587.5,-16436 2587.5,-16436 2755.5,-16436 2755.5,-16436 2761.5,-16436 2767.5,-16442 2767.5,-16448 2767.5,-16448 2767.5,-16500 2767.5,-16500 2767.5,-16506 2761.5,-16512 2755.5,-16512"/>
 <text text-anchor="start" x="2603.25" y="-16492.58" font-family="arial" font-size="14.00">Segment 40 [0x3ab]</text>
-<g id="a_node76_2043"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node76_2043"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1">
 <text text-anchor="start" x="2744.38" y="-16493.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12105,7 +12105,7 @@
 <title>s_76</title>
 <path fill="whitesmoke" stroke="none" d="M1963.5,-13408C1963.5,-13408 1785.5,-13408 1785.5,-13408 1779.5,-13408 1773.5,-13402 1773.5,-13396 1773.5,-13396 1773.5,-13272 1773.5,-13272 1773.5,-13266 1779.5,-13260 1785.5,-13260 1785.5,-13260 1963.5,-13260 1963.5,-13260 1969.5,-13260 1975.5,-13266 1975.5,-13272 1975.5,-13272 1975.5,-13396 1975.5,-13396 1975.5,-13402 1969.5,-13408 1963.5,-13408"/>
 <text text-anchor="start" x="1806.25" y="-13388.58" font-family="arial" font-size="14.00">Segment 73 [0x6d8]</text>
-<g id="a_node77_2048"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x6fa">
+<g id="a_node77_2048"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x6fa">
 <text text-anchor="start" x="1952.38" y="-13389.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12178,7 +12178,7 @@
 <title>s_77</title>
 <path fill="whitesmoke" stroke="none" d="M1751.5,-14936C1751.5,-14936 1543.5,-14936 1543.5,-14936 1537.5,-14936 1531.5,-14930 1531.5,-14924 1531.5,-14924 1531.5,-14776 1531.5,-14776 1531.5,-14770 1537.5,-14764 1543.5,-14764 1543.5,-14764 1751.5,-14764 1751.5,-14764 1757.5,-14764 1763.5,-14770 1763.5,-14776 1763.5,-14776 1763.5,-14924 1763.5,-14924 1763.5,-14930 1757.5,-14936 1751.5,-14936"/>
 <text text-anchor="start" x="1579.25" y="-14916.58" font-family="arial" font-size="14.00">Segment 74 [0x6e0]</text>
-<g id="a_node78_2059"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x979">
+<g id="a_node78_2059"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x979">
 <text text-anchor="start" x="1740.38" y="-14917.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12270,7 +12270,7 @@
 <title>s_78</title>
 <path fill="whitesmoke" stroke="none" d="M1886.5,-11732C1886.5,-11732 1712.5,-11732 1712.5,-11732 1706.5,-11732 1700.5,-11726 1700.5,-11720 1700.5,-11720 1700.5,-11620 1700.5,-11620 1700.5,-11614 1706.5,-11608 1712.5,-11608 1712.5,-11608 1886.5,-11608 1886.5,-11608 1892.5,-11608 1898.5,-11614 1898.5,-11620 1898.5,-11620 1898.5,-11720 1898.5,-11720 1898.5,-11726 1892.5,-11732 1886.5,-11732"/>
 <text text-anchor="start" x="1733.12" y="-11712.58" font-family="arial" font-size="14.00">Segment 77 [0x6fa]</text>
-<g id="a_node79_2072"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node79_2072"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1875.38" y="-11713.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12332,7 +12332,7 @@
 <title>s_103</title>
 <path fill="whitesmoke" stroke="none" d="M1743,-13432C1743,-13432 1552,-13432 1552,-13432 1546,-13432 1540,-13426 1540,-13420 1540,-13420 1540,-13248 1540,-13248 1540,-13242 1546,-13236 1552,-13236 1552,-13236 1743,-13236 1743,-13236 1749,-13236 1755,-13242 1755,-13248 1755,-13248 1755,-13420 1755,-13420 1755,-13426 1749,-13432 1743,-13432"/>
 <text text-anchor="start" x="1579.62" y="-13412.58" font-family="arial" font-size="14.00">Segment 75 [0x6ec]</text>
-<g id="a_node104_2081"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node104_2081"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1731.88" y="-13413.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12426,7 +12426,7 @@
 <title>s_104</title>
 <path fill="whitesmoke" stroke="none" d="M796.5,-4400C796.5,-4400 588.5,-4400 588.5,-4400 582.5,-4400 576.5,-4394 576.5,-4388 576.5,-4388 576.5,-4240 576.5,-4240 576.5,-4234 582.5,-4228 588.5,-4228 588.5,-4228 796.5,-4228 796.5,-4228 802.5,-4228 808.5,-4234 808.5,-4240 808.5,-4240 808.5,-4388 808.5,-4388 808.5,-4394 802.5,-4400 796.5,-4400"/>
 <text text-anchor="start" x="620.5" y="-4380.57" font-family="arial" font-size="14.00">Segment 103 [0x979]</text>
-<g id="a_node105_2096"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x995">
+<g id="a_node105_2096"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x995">
 <text text-anchor="start" x="785.38" y="-4381.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12518,7 +12518,7 @@
 <title>s_79</title>
 <path fill="whitesmoke" stroke="none" d="M1886,-11500C1886,-11500 1673,-11500 1673,-11500 1667,-11500 1661,-11494 1661,-11488 1661,-11488 1661,-10908 1661,-10908 1661,-10902 1667,-10896 1673,-10896 1673,-10896 1886,-10896 1886,-10896 1892,-10896 1898,-10902 1898,-10908 1898,-10908 1898,-11488 1898,-11488 1898,-11494 1892,-11500 1886,-11500"/>
 <text text-anchor="start" x="1711.25" y="-11480.58" font-family="arial" font-size="14.00">Segment 78 [0x700]</text>
-<g id="a_node80_2109"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x739">
+<g id="a_node80_2109"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x739">
 <text text-anchor="start" x="1874.88" y="-11481.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12792,7 +12792,7 @@
 <title>s_80</title>
 <path fill="whitesmoke" stroke="none" d="M1887,-10596C1887,-10596 1672,-10596 1672,-10596 1666,-10596 1660,-10590 1660,-10584 1660,-10584 1660,-10412 1660,-10412 1660,-10406 1666,-10400 1672,-10400 1672,-10400 1887,-10400 1887,-10400 1893,-10400 1899,-10406 1899,-10412 1899,-10412 1899,-10584 1899,-10584 1899,-10590 1893,-10596 1887,-10596"/>
 <text text-anchor="start" x="1713.12" y="-10576.58" font-family="arial" font-size="14.00">Segment 79 [0x72f]</text>
-<g id="a_node81_2158"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node81_2158"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1875.88" y="-10577.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12886,7 +12886,7 @@
 <title>s_81</title>
 <path fill="whitesmoke" stroke="none" d="M1630,-10596C1630,-10596 1425,-10596 1425,-10596 1419,-10596 1413,-10590 1413,-10584 1413,-10584 1413,-10412 1413,-10412 1413,-10406 1419,-10400 1425,-10400 1425,-10400 1630,-10400 1630,-10400 1636,-10400 1642,-10406 1642,-10412 1642,-10412 1642,-10584 1642,-10584 1642,-10590 1636,-10596 1630,-10596"/>
 <text text-anchor="start" x="1459.25" y="-10576.58" font-family="arial" font-size="14.00">Segment 80 [0x739]</text>
-<g id="a_node82_2173"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node82_2173"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1618.88" y="-10577.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -12988,7 +12988,7 @@
 <title>s_82</title>
 <path fill="whitesmoke" stroke="none" d="M1719,-10100C1719,-10100 1512,-10100 1512,-10100 1506,-10100 1500,-10094 1500,-10088 1500,-10088 1500,-9532 1500,-9532 1500,-9526 1506,-9520 1512,-9520 1512,-9520 1719,-9520 1719,-9520 1725,-9520 1731,-9526 1731,-9532 1731,-9532 1731,-10088 1731,-10088 1731,-10094 1725,-10100 1719,-10100"/>
 <text text-anchor="start" x="1547.25" y="-10080.58" font-family="arial" font-size="14.00">Segment 81 [0x743]</text>
-<g id="a_node83_2188"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node83_2188"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1707.88" y="-10081.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13259,7 +13259,7 @@
 <title>s_83</title>
 <path fill="whitesmoke" stroke="none" d="M1706.5,-8932C1706.5,-8932 1524.5,-8932 1524.5,-8932 1518.5,-8932 1512.5,-8926 1512.5,-8920 1512.5,-8920 1512.5,-8652 1512.5,-8652 1512.5,-8646 1518.5,-8640 1524.5,-8640 1524.5,-8640 1706.5,-8640 1706.5,-8640 1712.5,-8640 1718.5,-8646 1718.5,-8652 1718.5,-8652 1718.5,-8920 1718.5,-8920 1718.5,-8926 1712.5,-8932 1706.5,-8932"/>
 <text text-anchor="start" x="1547.25" y="-8912.58" font-family="arial" font-size="14.00">Segment 82 [0x76e]</text>
-<g id="a_node84_2235"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x78c">
+<g id="a_node84_2235"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x78c">
 <text text-anchor="start" x="1695.38" y="-8913.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13397,7 +13397,7 @@
 <title>s_84</title>
 <path fill="whitesmoke" stroke="none" d="M1811,-7740C1811,-7740 1596,-7740 1596,-7740 1590,-7740 1584,-7734 1584,-7728 1584,-7728 1584,-7556 1584,-7556 1584,-7550 1590,-7544 1596,-7544 1596,-7544 1811,-7544 1811,-7544 1817,-7544 1823,-7550 1823,-7556 1823,-7556 1823,-7728 1823,-7728 1823,-7734 1817,-7740 1811,-7740"/>
 <text text-anchor="start" x="1635.25" y="-7720.57" font-family="arial" font-size="14.00">Segment 83 [0x782]</text>
-<g id="a_node85_2258"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node85_2258"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1799.88" y="-7721.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13491,7 +13491,7 @@
 <title>s_85</title>
 <path fill="whitesmoke" stroke="none" d="M1554,-7776C1554,-7776 1363,-7776 1363,-7776 1357,-7776 1351,-7770 1351,-7764 1351,-7764 1351,-7520 1351,-7520 1351,-7514 1357,-7508 1363,-7508 1363,-7508 1554,-7508 1554,-7508 1560,-7508 1566,-7514 1566,-7520 1566,-7520 1566,-7764 1566,-7764 1566,-7770 1560,-7776 1554,-7776"/>
 <text text-anchor="start" x="1390.62" y="-7756.57" font-family="arial" font-size="14.00">Segment 84 [0x78c]</text>
-<g id="a_node86_2273"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node86_2273"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1542.88" y="-7757.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13625,7 +13625,7 @@
 <title>s_86</title>
 <path fill="whitesmoke" stroke="none" d="M1565,-7196C1565,-7196 1352,-7196 1352,-7196 1346,-7196 1340,-7190 1340,-7184 1340,-7184 1340,-6652 1340,-6652 1340,-6646 1346,-6640 1352,-6640 1352,-6640 1565,-6640 1565,-6640 1571,-6640 1577,-6646 1577,-6652 1577,-6652 1577,-7184 1577,-7184 1577,-7190 1571,-7196 1565,-7196"/>
 <text text-anchor="start" x="1390.25" y="-7176.57" font-family="arial" font-size="14.00">Segment 85 [0x79b]</text>
-<g id="a_node87_2294"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x7d0">
+<g id="a_node87_2294"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2&#10;Exit Jump target: Constant 0x7d0">
 <text text-anchor="start" x="1553.88" y="-7177.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13877,7 +13877,7 @@
 <title>s_87</title>
 <path fill="whitesmoke" stroke="none" d="M1773.5,-6436C1773.5,-6436 1559.5,-6436 1559.5,-6436 1553.5,-6436 1547.5,-6430 1547.5,-6424 1547.5,-6424 1547.5,-6252 1547.5,-6252 1547.5,-6246 1553.5,-6240 1559.5,-6240 1559.5,-6240 1773.5,-6240 1773.5,-6240 1779.5,-6240 1785.5,-6246 1785.5,-6252 1785.5,-6252 1785.5,-6424 1785.5,-6424 1785.5,-6430 1779.5,-6436 1773.5,-6436"/>
 <text text-anchor="start" x="1598.62" y="-6416.57" font-family="arial" font-size="14.00">Segment 86 [0x7c6]</text>
-<g id="a_node88_2339"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node88_2339"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1762.38" y="-6417.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -13971,7 +13971,7 @@
 <title>s_88</title>
 <path fill="whitesmoke" stroke="none" d="M1517.5,-6436C1517.5,-6436 1311.5,-6436 1311.5,-6436 1305.5,-6436 1299.5,-6430 1299.5,-6424 1299.5,-6424 1299.5,-6252 1299.5,-6252 1299.5,-6246 1305.5,-6240 1311.5,-6240 1311.5,-6240 1517.5,-6240 1517.5,-6240 1523.5,-6240 1529.5,-6246 1529.5,-6252 1529.5,-6252 1529.5,-6424 1529.5,-6424 1529.5,-6430 1523.5,-6436 1517.5,-6436"/>
 <text text-anchor="start" x="1346.25" y="-6416.57" font-family="arial" font-size="14.00">Segment 87 [0x7d0]</text>
-<g id="a_node89_2354"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node89_2354"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1506.38" y="-6417.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -14073,7 +14073,7 @@
 <title>s_89</title>
 <path fill="whitesmoke" stroke="none" d="M1510,-5808C1510,-5808 1319,-5808 1319,-5808 1313,-5808 1307,-5802 1307,-5796 1307,-5796 1307,-5552 1307,-5552 1307,-5546 1313,-5540 1319,-5540 1319,-5540 1510,-5540 1510,-5540 1516,-5540 1522,-5546 1522,-5552 1522,-5552 1522,-5796 1522,-5796 1522,-5802 1516,-5808 1510,-5808"/>
 <text text-anchor="start" x="1346.25" y="-5788.57" font-family="arial" font-size="14.00">Segment 88 [0x7da]</text>
-<g id="a_node90_2369"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x876">
+<g id="a_node90_2369"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x876">
 <text text-anchor="start" x="1498.88" y="-5789.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -14199,7 +14199,7 @@
 <title>s_90</title>
 <path fill="whitesmoke" stroke="none" d="M1735,-2880C1735,-2880 1290,-2880 1290,-2880 1284,-2880 1278,-2874 1278,-2868 1278,-2868 1278,-2576 1278,-2576 1278,-2570 1284,-2564 1290,-2564 1290,-2564 1735,-2564 1735,-2564 1741,-2564 1747,-2570 1747,-2576 1747,-2576 1747,-2868 1747,-2868 1747,-2874 1741,-2880 1735,-2880"/>
 <text text-anchor="start" x="1444.62" y="-2860.57" font-family="arial" font-size="14.00">Segment 89 [0x7ec]</text>
-<g id="a_node91_2390"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node91_2390"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1723.88" y="-2861.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -14346,7 +14346,7 @@
 <title>s_91</title>
 <path fill="whitesmoke" stroke="none" d="M1474.5,-5240C1474.5,-5240 838.5,-5240 838.5,-5240 832.5,-5240 826.5,-5234 826.5,-5228 826.5,-5228 826.5,-3400 826.5,-3400 826.5,-3394 832.5,-3388 838.5,-3388 838.5,-3388 1474.5,-3388 1474.5,-3388 1480.5,-3388 1486.5,-3394 1486.5,-3400 1486.5,-3400 1486.5,-5228 1486.5,-5228 1486.5,-5234 1480.5,-5240 1474.5,-5240"/>
 <text text-anchor="start" x="1088.25" y="-5220.57" font-family="arial" font-size="14.00">Segment 95 [0x876]</text>
-<g id="a_node92_2415"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x915">
+<g id="a_node92_2415"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x915">
 <text text-anchor="start" x="1463.38" y="-5221.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15164,7 +15164,7 @@
 <title>s_92</title>
 <path fill="whitesmoke" stroke="none" d="M1735,-2240C1735,-2240 1286,-2240 1286,-2240 1280,-2240 1274,-2234 1274,-2228 1274,-2228 1274,-1984 1274,-1984 1274,-1978 1280,-1972 1286,-1972 1286,-1972 1735,-1972 1735,-1972 1741,-1972 1747,-1978 1747,-1984 1747,-1984 1747,-2228 1747,-2228 1747,-2234 1741,-2240 1735,-2240"/>
 <text text-anchor="start" x="1442.25" y="-2220.57" font-family="arial" font-size="14.00">Segment 90 [0x818]</text>
-<g id="a_node93_2568"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x848">
+<g id="a_node93_2568"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x848">
 <text text-anchor="start" x="1723.88" y="-2221.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15292,7 +15292,7 @@
 <title>s_97</title>
 <path fill="whitesmoke" stroke="none" d="M1043,-3244C1043,-3244 828,-3244 828,-3244 822,-3244 816,-3238 816,-3232 816,-3232 816,-3060 816,-3060 816,-3054 822,-3048 828,-3048 828,-3048 1043,-3048 1043,-3048 1049,-3048 1055,-3054 1055,-3060 1055,-3060 1055,-3232 1055,-3232 1055,-3238 1049,-3244 1043,-3244"/>
 <text text-anchor="start" x="867.25" y="-3224.57" font-family="arial" font-size="14.00">Segment 96 [0x90b]</text>
-<g id="a_node98_2589"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node98_2589"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1031.88" y="-3225.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15386,7 +15386,7 @@
 <title>s_98</title>
 <path fill="whitesmoke" stroke="none" d="M1291.5,-3268C1291.5,-3268 1085.5,-3268 1085.5,-3268 1079.5,-3268 1073.5,-3262 1073.5,-3256 1073.5,-3256 1073.5,-3036 1073.5,-3036 1073.5,-3030 1079.5,-3024 1085.5,-3024 1085.5,-3024 1291.5,-3024 1291.5,-3024 1297.5,-3024 1303.5,-3030 1303.5,-3036 1303.5,-3036 1303.5,-3256 1303.5,-3256 1303.5,-3262 1297.5,-3268 1291.5,-3268"/>
 <text text-anchor="start" x="1120.25" y="-3248.57" font-family="arial" font-size="14.00">Segment 97 [0x915]</text>
-<g id="a_node99_2604"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x928">
+<g id="a_node99_2604"><a xlink:title="Stack Size Δ: +3&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x928">
 <text text-anchor="start" x="1280.38" y="-3249.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15500,7 +15500,7 @@
 <title>s_93</title>
 <path fill="whitesmoke" stroke="none" d="M1618,-1576C1618,-1576 1403,-1576 1403,-1576 1397,-1576 1391,-1570 1391,-1564 1391,-1564 1391,-1392 1391,-1392 1391,-1386 1397,-1380 1403,-1380 1403,-1380 1618,-1380 1618,-1380 1624,-1380 1630,-1386 1630,-1392 1630,-1392 1630,-1564 1630,-1564 1630,-1570 1624,-1576 1618,-1576"/>
 <text text-anchor="start" x="1442.25" y="-1556.58" font-family="arial" font-size="14.00">Segment 91 [0x83e]</text>
-<g id="a_node94_2623"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node94_2623"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1606.88" y="-1557.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15594,7 +15594,7 @@
 <title>s_94</title>
 <path fill="whitesmoke" stroke="none" d="M1310,-1708C1310,-1708 1127,-1708 1127,-1708 1121,-1708 1115,-1702 1115,-1696 1115,-1696 1115,-1260 1115,-1260 1115,-1254 1121,-1248 1127,-1248 1127,-1248 1310,-1248 1310,-1248 1316,-1248 1322,-1254 1322,-1260 1322,-1260 1322,-1696 1322,-1696 1322,-1702 1316,-1708 1310,-1708"/>
 <text text-anchor="start" x="1150.25" y="-1688.58" font-family="arial" font-size="14.00">Segment 92 [0x848]</text>
-<g id="a_node95_2638"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x96a">
+<g id="a_node95_2638"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x96a">
 <text text-anchor="start" x="1298.88" y="-1689.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15804,7 +15804,7 @@
 <title>s_95</title>
 <path fill="whitesmoke" stroke="none" d="M1334,-1176C1334,-1176 1119,-1176 1119,-1176 1113,-1176 1107,-1170 1107,-1164 1107,-1164 1107,-992 1107,-992 1107,-986 1113,-980 1119,-980 1119,-980 1334,-980 1334,-980 1340,-980 1346,-986 1346,-992 1346,-992 1346,-1164 1346,-1164 1346,-1170 1340,-1176 1334,-1176"/>
 <text text-anchor="start" x="1158.25" y="-1156.58" font-family="arial" font-size="14.00">Segment 93 [0x868]</text>
-<g id="a_node96_2675"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node96_2675"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1322.88" y="-1157.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -15898,7 +15898,7 @@
 <title>s_96</title>
 <path fill="whitesmoke" stroke="none" d="M1077,-1188C1077,-1188 894,-1188 894,-1188 888,-1188 882,-1182 882,-1176 882,-1176 882,-980 882,-980 882,-974 888,-968 894,-968 894,-968 1077,-968 1077,-968 1083,-968 1089,-974 1089,-980 1089,-980 1089,-1176 1089,-1176 1089,-1182 1083,-1188 1077,-1188"/>
 <text text-anchor="start" x="913.5" y="-1168.58" font-family="arial" font-size="14.00">Segment 102 [0x96a]</text>
-<g id="a_node97_2690"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node97_2690"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="1065.88" y="-1169.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16003,7 +16003,7 @@
 <title>s_99</title>
 <path fill="whitesmoke" stroke="none" d="M1047,-2772C1047,-2772 864,-2772 864,-2772 858,-2772 852,-2766 852,-2760 852,-2760 852,-2684 852,-2684 852,-2678 858,-2672 864,-2672 864,-2672 1047,-2672 1047,-2672 1053,-2672 1059,-2678 1059,-2684 1059,-2684 1059,-2760 1059,-2760 1059,-2766 1053,-2772 1047,-2772"/>
 <text text-anchor="start" x="887.25" y="-2752.57" font-family="arial" font-size="14.00">Segment 98 [0x923]</text>
-<g id="a_node100_2707"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 2&#10;Exit Jump target: Constant 0x92a">
+<g id="a_node100_2707"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 3&#10;Exit Jump target: Constant 0x92a">
 <text text-anchor="start" x="1035.88" y="-2753.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16055,7 +16055,7 @@
 <title>s_100</title>
 <path fill="whitesmoke" stroke="none" d="M1247.5,-2760C1247.5,-2760 1089.5,-2760 1089.5,-2760 1083.5,-2760 1077.5,-2754 1077.5,-2748 1077.5,-2748 1077.5,-2696 1077.5,-2696 1077.5,-2690 1083.5,-2684 1089.5,-2684 1089.5,-2684 1247.5,-2684 1247.5,-2684 1253.5,-2684 1259.5,-2690 1259.5,-2696 1259.5,-2696 1259.5,-2748 1259.5,-2748 1259.5,-2754 1253.5,-2760 1247.5,-2760"/>
 <text text-anchor="start" x="1100.25" y="-2740.57" font-family="arial" font-size="14.00">Segment 99 [0x928]</text>
-<g id="a_node101_2714"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node101_2714"><a xlink:title="Stack Size Δ: +1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 3">
 <text text-anchor="start" x="1236.38" y="-2741.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16096,7 +16096,7 @@
 <title>s_101</title>
 <path fill="whitesmoke" stroke="none" d="M1066,-2468C1066,-2468 883,-2468 883,-2468 877,-2468 871,-2462 871,-2456 871,-2456 871,-1756 871,-1756 871,-1750 877,-1744 883,-1744 883,-1744 1066,-1744 1066,-1744 1072,-1744 1078,-1750 1078,-1756 1078,-1756 1078,-2456 1078,-2456 1078,-2462 1072,-2468 1066,-2468"/>
 <text text-anchor="start" x="902.5" y="-2448.57" font-family="arial" font-size="14.00">Segment 100 [0x92a]</text>
-<g id="a_node102_2719"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry ≥ 4&#10;Exit Jump target: Constant 0x96a">
+<g id="a_node102_2719"><a xlink:title="Stack Size Δ: &#45;4&#10;Stack Size on Entry for this segment ≥ 4&#10;Stack Size on Entry for this segment at this node ≥ 4&#10;Exit Jump target: Constant 0x96a">
 <text text-anchor="start" x="1054.88" y="-2449.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16431,7 +16431,7 @@
 <title>s_102</title>
 <path fill="whitesmoke" stroke="none" d="M1085,-1708C1085,-1708 902,-1708 902,-1708 896,-1708 890,-1702 890,-1696 890,-1696 890,-1260 890,-1260 890,-1254 896,-1248 902,-1248 902,-1248 1085,-1248 1085,-1248 1091,-1248 1097,-1254 1097,-1260 1097,-1260 1097,-1696 1097,-1696 1097,-1702 1091,-1708 1085,-1708"/>
 <text text-anchor="start" x="921.5" y="-1688.58" font-family="arial" font-size="14.00">Segment 101 [0x950]</text>
-<g id="a_node103_2778"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node103_2778"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="1073.88" y="-1689.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16664,7 +16664,7 @@
 <title>s_105</title>
 <path fill="whitesmoke" stroke="none" d="M1805.5,-12036C1805.5,-12036 1641.5,-12036 1641.5,-12036 1635.5,-12036 1629.5,-12030 1629.5,-12024 1629.5,-12024 1629.5,-11972 1629.5,-11972 1629.5,-11966 1635.5,-11960 1641.5,-11960 1641.5,-11960 1805.5,-11960 1805.5,-11960 1811.5,-11960 1817.5,-11966 1817.5,-11972 1817.5,-11972 1817.5,-12024 1817.5,-12024 1817.5,-12030 1811.5,-12036 1805.5,-12036"/>
 <text text-anchor="start" x="1657.12" y="-12016.58" font-family="arial" font-size="14.00">Segment 76 [0x6f7]</text>
-<g id="a_node106_2815"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node106_2815"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1">
 <text text-anchor="start" x="1794.38" y="-12017.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16706,7 +16706,7 @@
 <title>s_106</title>
 <path fill="whitesmoke" stroke="none" d="M785.5,-3196C785.5,-3196 607.5,-3196 607.5,-3196 601.5,-3196 595.5,-3190 595.5,-3184 595.5,-3184 595.5,-3108 595.5,-3108 595.5,-3102 601.5,-3096 607.5,-3096 607.5,-3096 785.5,-3096 785.5,-3096 791.5,-3096 797.5,-3102 797.5,-3108 797.5,-3108 797.5,-3184 797.5,-3184 797.5,-3190 791.5,-3196 785.5,-3196"/>
 <text text-anchor="start" x="624.5" y="-3176.57" font-family="arial" font-size="14.00">Segment 104 [0x985]</text>
-<g id="a_node107_2820"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node107_2820"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="774.38" y="-3177.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16758,7 +16758,7 @@
 <title>s_107</title>
 <path fill="whitesmoke" stroke="none" d="M565,-3232C565,-3232 358,-3232 358,-3232 352,-3232 346,-3226 346,-3220 346,-3220 346,-3072 346,-3072 346,-3066 352,-3060 358,-3060 358,-3060 565,-3060 565,-3060 571,-3060 577,-3066 577,-3072 577,-3072 577,-3220 577,-3220 577,-3226 571,-3232 565,-3232"/>
 <text text-anchor="start" x="389.5" y="-3212.57" font-family="arial" font-size="14.00">Segment 106 [0x995]</text>
-<g id="a_node108_2827"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x9b1">
+<g id="a_node108_2827"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x9b1">
 <text text-anchor="start" x="553.88" y="-3213.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16859,7 +16859,7 @@
 <title>s_108</title>
 <path fill="whitesmoke" stroke="none" d="M783.5,-2820C783.5,-2820 615.5,-2820 615.5,-2820 609.5,-2820 603.5,-2814 603.5,-2808 603.5,-2808 603.5,-2636 603.5,-2636 603.5,-2630 609.5,-2624 615.5,-2624 615.5,-2624 783.5,-2624 783.5,-2624 789.5,-2624 795.5,-2630 795.5,-2636 795.5,-2636 795.5,-2808 795.5,-2808 795.5,-2814 789.5,-2820 783.5,-2820"/>
 <text text-anchor="start" x="627.5" y="-2800.57" font-family="arial" font-size="14.00">Segment 105 [0x98a]</text>
-<g id="a_node109_2840"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node109_2840"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="772.38" y="-2801.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -16954,7 +16954,7 @@
 <title>s_109</title>
 <path fill="whitesmoke" stroke="none" d="M573.5,-2772C573.5,-2772 395.5,-2772 395.5,-2772 389.5,-2772 383.5,-2766 383.5,-2760 383.5,-2760 383.5,-2684 383.5,-2684 383.5,-2678 389.5,-2672 395.5,-2672 395.5,-2672 573.5,-2672 573.5,-2672 579.5,-2672 585.5,-2678 585.5,-2684 585.5,-2684 585.5,-2760 585.5,-2760 585.5,-2766 579.5,-2772 573.5,-2772"/>
 <text text-anchor="start" x="412.5" y="-2752.57" font-family="arial" font-size="14.00">Segment 107 [0x9a1]</text>
-<g id="a_node110_2855"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node110_2855"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="562.38" y="-2753.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17006,7 +17006,7 @@
 <title>s_110</title>
 <path fill="whitesmoke" stroke="none" d="M353.5,-2808C353.5,-2808 141.5,-2808 141.5,-2808 135.5,-2808 129.5,-2802 129.5,-2796 129.5,-2796 129.5,-2648 129.5,-2648 129.5,-2642 135.5,-2636 141.5,-2636 141.5,-2636 353.5,-2636 353.5,-2636 359.5,-2636 365.5,-2642 365.5,-2648 365.5,-2648 365.5,-2796 365.5,-2796 365.5,-2802 359.5,-2808 353.5,-2808"/>
 <text text-anchor="start" x="175.5" y="-2788.57" font-family="arial" font-size="14.00">Segment 109 [0x9b1]</text>
-<g id="a_node111_2862"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 1&#10;Exit Jump target: Constant 0x9dd">
+<g id="a_node111_2862"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1&#10;Exit Jump target: Constant 0x9dd">
 <text text-anchor="start" x="342.38" y="-2789.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17098,7 +17098,7 @@
 <title>s_111</title>
 <path fill="whitesmoke" stroke="none" d="M745.5,-2204C745.5,-2204 577.5,-2204 577.5,-2204 571.5,-2204 565.5,-2198 565.5,-2192 565.5,-2192 565.5,-2020 565.5,-2020 565.5,-2014 571.5,-2008 577.5,-2008 577.5,-2008 745.5,-2008 745.5,-2008 751.5,-2008 757.5,-2014 757.5,-2020 757.5,-2020 757.5,-2192 757.5,-2192 757.5,-2198 751.5,-2204 745.5,-2204"/>
 <text text-anchor="start" x="589.5" y="-2184.57" font-family="arial" font-size="14.00">Segment 108 [0x9a6]</text>
-<g id="a_node112_2875"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0">
+<g id="a_node112_2875"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0">
 <text text-anchor="start" x="734.38" y="-2185.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17193,7 +17193,7 @@
 <title>s_112</title>
 <path fill="whitesmoke" stroke="none" d="M535.5,-2156C535.5,-2156 357.5,-2156 357.5,-2156 351.5,-2156 345.5,-2150 345.5,-2144 345.5,-2144 345.5,-2068 345.5,-2068 345.5,-2062 351.5,-2056 357.5,-2056 357.5,-2056 535.5,-2056 535.5,-2056 541.5,-2056 547.5,-2062 547.5,-2068 547.5,-2068 547.5,-2144 547.5,-2144 547.5,-2150 541.5,-2156 535.5,-2156"/>
 <text text-anchor="start" x="374.88" y="-2136.57" font-family="arial" font-size="14.00">Segment 110 [0x9bd]</text>
-<g id="a_node113_2890"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node113_2890"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="524.38" y="-2137.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17245,7 +17245,7 @@
 <title>s_113</title>
 <path fill="whitesmoke" stroke="none" d="M315.5,-2144C315.5,-2144 157.5,-2144 157.5,-2144 151.5,-2144 145.5,-2138 145.5,-2132 145.5,-2132 145.5,-2080 145.5,-2080 145.5,-2074 151.5,-2068 157.5,-2068 157.5,-2068 315.5,-2068 315.5,-2068 321.5,-2068 327.5,-2074 327.5,-2080 327.5,-2080 327.5,-2132 327.5,-2132 327.5,-2138 321.5,-2144 315.5,-2144"/>
 <text text-anchor="start" x="164.88" y="-2124.57" font-family="arial" font-size="14.00">Segment 113 [0x9dd]</text>
-<g id="a_node114_2897"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry ≥ 1">
+<g id="a_node114_2897"><a xlink:title="Stack Size Δ: &#45;1&#10;Stack Size on Entry for this segment ≥ 1&#10;Stack Size on Entry for this segment at this node ≥ 1">
 <text text-anchor="start" x="304.38" y="-2125.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17295,7 +17295,7 @@
 <title>s_114</title>
 <path fill="whitesmoke" stroke="none" d="M700.5,-1600C700.5,-1600 510.5,-1600 510.5,-1600 504.5,-1600 498.5,-1594 498.5,-1588 498.5,-1588 498.5,-1368 498.5,-1368 498.5,-1362 504.5,-1356 510.5,-1356 510.5,-1356 700.5,-1356 700.5,-1356 706.5,-1356 712.5,-1362 712.5,-1368 712.5,-1368 712.5,-1588 712.5,-1588 712.5,-1594 706.5,-1600 700.5,-1600"/>
 <text text-anchor="start" x="534.62" y="-1580.58" font-family="arial" font-size="14.00">Segment 111 [0x9c2]</text>
-<g id="a_node115_2902"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry ≥ 0&#10;Exit Jump target: Constant 0x9fc">
+<g id="a_node115_2902"><a xlink:title="Stack Size Δ: +2&#10;Stack Size on Entry for this segment ≥ 0&#10;Stack Size on Entry for this segment at this node ≥ 0&#10;Exit Jump target: Constant 0x9fc">
 <text text-anchor="start" x="689.38" y="-1581.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
@@ -17428,7 +17428,7 @@
 <title>s_115</title>
 <path fill="whitesmoke" stroke="none" d="M689.5,-1200C689.5,-1200 521.5,-1200 521.5,-1200 515.5,-1200 509.5,-1194 509.5,-1188 509.5,-1188 509.5,-968 509.5,-968 509.5,-962 515.5,-956 521.5,-956 521.5,-956 689.5,-956 689.5,-956 695.5,-956 701.5,-962 701.5,-968 701.5,-968 701.5,-1188 701.5,-1188 701.5,-1194 695.5,-1200 689.5,-1200"/>
 <text text-anchor="start" x="533.88" y="-1180.58" font-family="arial" font-size="14.00">Segment 112 [0x9d0]</text>
-<g id="a_node116_2921"><a xlink:title="Stack Size Δ: 0&#10;Stack Size on Entry ≥ 2">
+<g id="a_node116_2921"><a xlink:title="Stack Size Δ: &#45;2&#10;Stack Size on Entry for this segment ≥ 2&#10;Stack Size on Entry for this segment at this node ≥ 2">
 <text text-anchor="start" x="678.38" y="-1181.7" font-family="arial" font-size="14.00" fill="green">ℹ️</text>
 </a>
 </g>
