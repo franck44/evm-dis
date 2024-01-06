@@ -23,8 +23,7 @@ include "./utils/int.dfy"
 include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
-include "./utils/CFGState.dfy"
-include "./utils/HTML.dfy"
+include "./utils/CFGObject.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -40,8 +39,7 @@ module Driver {
   import opened Int
   import opened Statistics
   import opened ProofObjectBuilder
-  import opened CFGState
-  import opened HTML
+  import opened CFGObject
 
   /**
     *  Read the input string
@@ -158,67 +156,14 @@ module Driver {
         }
 
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
-          //    @todo figure out how to merge the following two branches
-          //    there is a lot of redundancy,
           var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := !rawOpt);
           assert a1.IsValid();
-          var k := Filter(a1.states, (s: GState) requires s in a1.states => s.EGState? && s.IsBounded(|prog.xs|) && prog.xs[s.segNum].INVALIDSeg?);
-          print "/*\n";
-          print "maxDepth is:", cfgDepthOpt, "\n";
-          print s1.PrettyPrint();
-          print "# of reachable invalid segments is: ", |k|, "\n";
-          if rawOpt {
-            print "Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
-            print "Raw CFG\n";
-            print "*/\n";
-          } else {
-            print "Size of non minimised CFG: ", s1.nonMinimisedSize.0, " nodes, ", s1.nonMinimisedSize.1, " edges\n";
-            print "Size of minimised CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
-            print "Minimised CFG\n";
-            print "*/\n";
-          }
-
-          var ok := prog.HasNoErrorState(a1);
-        //   var pp := prog.ComputeWPreOperands(a1);
-          var z := if ok then Some(prog.ComputeWPreOperands(a1)) else None;
-            // match prog.ComputeWPreOperands(a1)
-            //     case Left(x) => Some((x, true))
-            //     case Right(x) => Some((x, false))
-            // else None ;
-
-          if z.Some? {
-            print "// Wpre fixpoint status: ", (if z.v.Left? then "Reached" else "Not reached"), "\n";
-          }
-          var vv := if z.Some? && z.v.Left? then z.v.l else z.v.r;
-
-        //   assume forall s:: s in a1.states ==> a1.indexOf[s] < |z|;
-          a1.ToDot(
-            // nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable, None),
-            nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable, if ok && a1.indexOf[s] < |vv| then Some(vv[a1.indexOf[s]]) else None),
-            labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
-            prefix :=
-              "graph[labelloc=\"t\", labeljust=\"l\", label=<"
-              + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
-              + ">]\n"
-              + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
-          ); 
-          if rawOpt {
-            print "//----------------- Raw CFG -------------------\n";
-          } else {
-            print "//----------------- Minimised CFG -------------------\n";
-          }
+          var cfgObj := CFGObj(prog, cfgDepthOpt, a1, !rawOpt, s1);
+          assert cfgObj.IsValid();
+          cfgObj.ToDot(noTable, name);
         }
       }
     }
-  }
-
-  function MakeTitle(name: string, numNodes: nat, numEdges: nat, maxDepth: nat, reached: bool): string
-  {
-    "<B>Program Name: </B> " + name + "<BR ALIGN=\"left\"/>"
-    + "<B>Control Flow Graph Info: </B><BR ALIGN=\"left\"/>"
-    + "Max depth: " + Int.NatToString(maxDepth) +  " [" + (if reached then "Was reached" else "Was not reached") + "]" + "<BR ALIGN=\"left\"/>"
-    + Int.NatToString(numNodes) + " nodes/"
-    + Int.NatToString(numEdges) + " edges<BR ALIGN=\"left\"/>"
   }
 
 }
