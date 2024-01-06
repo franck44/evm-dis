@@ -196,20 +196,38 @@ module LinSegments {
       *  To use this function, the caller must first compute the weakest pre-operand(0)
       *  and cache it.
       *  @note   Yes I have lectured dynamic programming several times.
+      *  @note   The requirement that this.IsValid() ensures that 
+      *          netOpEffect == StackEffectHelper(Ins()).
       */
     function {:opaque} FastWeakestPreOperands(k: nat, wpre0: nat): nat
       requires this.IsValid()
       requires wpre0 == WeakestPreOperands()
       ensures FastWeakestPreOperands(k, wpre0) == WeakestPreOperands(Ins(), k)
     {
-      // as this is valid, the net effect is the same as the sum of the stack effect of the instructions.  
+      // as this is valid, the net effect is the same as the sum of the stack effect of the instructions.
       assert netOpEffect == StackEffectHelper(Ins());
-      // The fast version if correct
+      // The fast version is correct
       FastWeakestPreOperandsCorrect(this.Ins(), k);
       if k <= StackEffect() then
         wpre0
       else
         Int.Max(wpre0, k - StackEffect())
+    }
+
+    /**
+      *  The weakest pre is a monotonic function of the target k.
+      */
+    lemma WeakestPreMonotonic(xs: seq<Instruction> , k: nat, k': nat, wpre0: nat)
+      requires this.IsValid() 
+      requires wpre0 == WeakestPreOperands()
+      requires k' >= k
+      ensures WeakestPreOperands(xs, k') >= WeakestPreOperands(xs, k) >= WeakestPreOperands(xs, 0)
+      ensures FastWeakestPreOperands(k', wpre0) >= FastWeakestPreOperands(k, wpre0) 
+    {
+      reveal_WeakestPreOperands();
+      reveal_FastWeakestPreOperands();
+      FastWeakestPreOperandsCorrect(xs, k);
+      FastWeakestPreOperandsCorrect(xs, k');
     }
 
     /** Use anequivalent computation of weakest pre operands on the the reverse list. */
