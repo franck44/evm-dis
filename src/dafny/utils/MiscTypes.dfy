@@ -195,6 +195,14 @@ module MiscTypes {
     else FoldLeft(t[1..], f(u0, t[0]), f)
   }
 
+  function SeqToSet<T(!new)>(t: seq<T>): set<T>
+    ensures |SeqToSet(t)| <= |t|
+    ensures forall x:: x in SeqToSet(t) <==> x in t
+  {
+    if |t| == 0 then {}
+    else {t[0]} + SeqToSet(t[1..])
+  }
+
   /** Find the index of an element in a list.  
     * @param x  The list.
     * @param t  The element to find.
