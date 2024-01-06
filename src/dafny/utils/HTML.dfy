@@ -126,7 +126,7 @@ module HTML {
         } else "";
     var stackSizeEffect := "Stack Size " + DELTA_SYMBOL + " : " + Int.IntToString(s.StackEffect());
     var minNumOpe := LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands());
-    var minNumOpAtNode :=  if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "";
+    var minNumOpAtNode :=  if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "";
     var prefix := "<B>Segment "
                   + Int.NatToString(numSeg)
                   + " [0x"
@@ -163,7 +163,7 @@ module HTML {
                   + "<TD"
                   + " href=\"\" tooltip=\"Stack Size " + DELTA_SYMBOL + ": " + Int.IntToString(s.StackEffect())
                   + LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands())
-                  + (if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "")
+                  + (if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "")
                   + jumpTip
                   + "\""
                   + "><FONT color=\"green\">" + INFO_SYMBOL  + "</FONT></TD>"
