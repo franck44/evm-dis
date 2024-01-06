@@ -42,23 +42,23 @@ class default__:
 
     @staticmethod
     def BuildProofObject(xs):
-        d_1013___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_1030___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
-                pat_let_tv9_ = xs
+                pat_let_tv17_ = xs
                 if (len(xs)) == (0):
-                    return (d_1013___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_1030___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_1014_wpOp_ = ((xs)[0]).WeakestPreOperands(0)
-                    d_1015_wpCap_ = ((xs)[0]).WeakestPreCapacity(0)
-                    def iife36_(_pat_let17_0):
-                        def iife37_(d_1017_tgt_):
-                            return ProofObject.ProofObj_JUMP((pat_let_tv9_)[0], d_1014_wpOp_, d_1015_wpCap_, d_1017_tgt_, _dafny.Map({}))
-                        return iife37_(_pat_let17_0)
-                    d_1016_obj_ = (iife36_(SegBuilder.default__.JUMPResolver((xs)[0])) if (((xs)[0]).is_JUMPSeg) or (((xs)[0]).is_JUMPISeg) else (ProofObject.ProofObj_CONT((xs)[0], d_1014_wpOp_, d_1015_wpCap_, _dafny.Map({})) if ((xs)[0]).is_CONTSeg else ProofObject.ProofObj_TERMINAL((xs)[0], d_1014_wpOp_, d_1015_wpCap_, _dafny.Map({}))))
-                    d_1013___accumulator_ = (d_1013___accumulator_) + (_dafny.SeqWithoutIsStrInference([d_1016_obj_]))
-                    in135_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in135_
+                    d_1031_wpOp_ = ((xs)[0]).WeakestPreOperands(((xs)[0]).Ins(), 0)
+                    d_1032_wpCap_ = ((xs)[0]).WeakestPreCapacity(0)
+                    def iife39_(_pat_let18_0):
+                        def iife40_(d_1034_tgt_):
+                            return ProofObject.ProofObj_JUMP((pat_let_tv17_)[0], d_1031_wpOp_, d_1032_wpCap_, d_1034_tgt_, _dafny.Map({}))
+                        return iife40_(_pat_let18_0)
+                    d_1033_obj_ = (iife39_(SegBuilder.default__.JUMPResolver((xs)[0])) if (((xs)[0]).is_JUMPSeg) or (((xs)[0]).is_JUMPISeg) else (ProofObject.ProofObj_CONT((xs)[0], d_1031_wpOp_, d_1032_wpCap_, _dafny.Map({})) if ((xs)[0]).is_CONTSeg else ProofObject.ProofObj_TERMINAL((xs)[0], d_1031_wpOp_, d_1032_wpCap_, _dafny.Map({}))))
+                    d_1030___accumulator_ = (d_1030___accumulator_) + (_dafny.SeqWithoutIsStrInference([d_1033_obj_]))
+                    in152_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in152_
                     raise _dafny.TailCall()
                 break
 

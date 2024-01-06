@@ -100,6 +100,36 @@ class default__:
         return _dafny.SeqWithoutIsStrInference([f((t)[d_8_i_]) for d_8_i_ in range(len(t))])
 
     @staticmethod
+    def FoldLeft(t, u0, f):
+        while True:
+            with _dafny.label():
+                if (len(t)) == (0):
+                    return u0
+                elif True:
+                    in7_ = _dafny.SeqWithoutIsStrInference((t)[1::])
+                    in8_ = f(u0, (t)[0])
+                    in9_ = f
+                    t = in7_
+                    u0 = in8_
+                    f = in9_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
+    def SeqToSet(t):
+        d_9___accumulator_ = _dafny.Set({})
+        while True:
+            with _dafny.label():
+                if (len(t)) == (0):
+                    return (_dafny.Set({})) | (d_9___accumulator_)
+                elif True:
+                    d_9___accumulator_ = (d_9___accumulator_) | (_dafny.Set({(t)[0]}))
+                    in10_ = _dafny.SeqWithoutIsStrInference((t)[1::])
+                    t = in10_
+                    raise _dafny.TailCall()
+                break
+
+    @staticmethod
     def Find(x, t):
         return default__.FindRec(x, t, 0)
 
@@ -112,14 +142,18 @@ class default__:
                 elif ((x)[0]) == (t):
                     return Option_Some(i)
                 elif True:
-                    in7_ = _dafny.SeqWithoutIsStrInference((x)[1::])
-                    in8_ = t
-                    in9_ = (i) + (1)
-                    x = in7_
-                    t = in8_
-                    i = in9_
+                    in11_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    in12_ = t
+                    in13_ = (i) + (1)
+                    x = in11_
+                    t = in12_
+                    i = in13_
                     raise _dafny.TailCall()
                 break
+
+    @staticmethod
+    def AddKeyVal(m, key, val):
+        return (m).set(key, ((m)[key]) + (_dafny.SeqWithoutIsStrInference([val])))
 
 
 class Try:
@@ -227,7 +261,7 @@ class WellDefined:
 
     @staticmethod
     def default():
-        def lambda0_(d_9_x_, d_10_xs_):
+        def lambda0_(d_10_x_, d_11_xs_):
             return Option_None()
 
         return lambda0_
@@ -238,7 +272,7 @@ class WellDefined2:
 
     @staticmethod
     def default():
-        def lambda1_(d_11_x_, d_12_xs_):
+        def lambda1_(d_12_x_, d_13_xs_):
             return Option_None()
 
         return lambda1_
@@ -249,7 +283,7 @@ class Foo:
 
     @staticmethod
     def default():
-        def lambda2_(d_13_x_):
+        def lambda2_(d_14_x_):
             return 0
 
         return lambda2_

@@ -42,39 +42,39 @@ class default__:
     @staticmethod
     def default_Main_():
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "hello! Testing ArgParser!\n"))).VerbatimString(False))
-        d_994_cli_: ArgumentParser
+        d_1011_cli_: ArgumentParser
         nw0_ = ArgumentParser()
         nw0_.ctor__(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<filename>")))
-        d_994_cli_ = nw0_
-        (d_994_cli_).AddOption(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-o")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--one")), 0, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "No help provided")))
-        (d_994_cli_).AddOption(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-tw")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), 2, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "don't do that!")))
-        d_995_r_: _dafny.Seq
-        d_995_r_ = _dafny.SeqWithoutIsStrInference([_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-one")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "a1")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "a2")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-unknwon"))])
-        source68_ = (d_994_cli_).GetArgs(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-o")), d_995_r_)
+        d_1011_cli_ = nw0_
+        (d_1011_cli_).AddOption(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-o")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--one")), 0, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "No help provided")))
+        (d_1011_cli_).AddOption(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-tw")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), 2, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "don't do that!")))
+        d_1012_r_: _dafny.Seq
+        d_1012_r_ = _dafny.SeqWithoutIsStrInference([_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-one")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "a1")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "a2")), _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-unknwon"))])
+        source68_ = (d_1011_cli_).GetArgs(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "-o")), d_1012_r_)
         if source68_.is_Success:
-            d_996___mcc_h0_ = source68_.v
-            d_997_a_ = d_996___mcc_h0_
+            d_1013___mcc_h0_ = source68_.v
+            d_1014_a_ = d_1013___mcc_h0_
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Success -o! has arguments:"))).VerbatimString(False))
-            _dafny.print(_dafny.string_of(d_997_a_))
+            _dafny.print(_dafny.string_of(d_1014_a_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
         elif True:
-            d_998___mcc_h1_ = source68_.msg
-            d_999_m_ = d_998___mcc_h1_
+            d_1015___mcc_h1_ = source68_.msg
+            d_1016_m_ = d_1015___mcc_h1_
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "No -o! "))).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-        source69_ = (d_994_cli_).GetArgs(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), d_995_r_)
+        source69_ = (d_1011_cli_).GetArgs(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "--two")), d_1012_r_)
         if source69_.is_Success:
-            d_1000___mcc_h2_ = source69_.v
-            d_1001_a_ = d_1000___mcc_h2_
+            d_1017___mcc_h2_ = source69_.v
+            d_1018_a_ = d_1017___mcc_h2_
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Success -two! has arguments: "))).VerbatimString(False))
-            _dafny.print(_dafny.string_of(d_1001_a_))
+            _dafny.print(_dafny.string_of(d_1018_a_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
         elif True:
-            d_1002___mcc_h3_ = source69_.msg
-            d_1003_m_ = d_1002___mcc_h3_
+            d_1019___mcc_h3_ = source69_.msg
+            d_1020_m_ = d_1019___mcc_h3_
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "No --two! "))).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-        (d_994_cli_).PrintHelp()
+        (d_1011_cli_).PrintHelp()
 
 
 class CLIOption:
@@ -121,33 +121,33 @@ class ArgumentParser:
     def PrintHelp(self):
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "usage: <this program> "))).VerbatimString(False))
         hi5_ = len(self.knownKeys)
-        for d_1004_i_ in range(0, hi5_):
-            d_1005_k_: CLIOption
-            d_1005_k_ = (self.knownArgs)[(self.knownKeys)[d_1004_i_]]
+        for d_1021_i_ in range(0, hi5_):
+            d_1022_k_: CLIOption
+            d_1022_k_ = (self.knownArgs)[(self.knownKeys)[d_1021_i_]]
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ["))).VerbatimString(False))
-            _dafny.print(((self.knownKeys)[d_1004_i_]).VerbatimString(False))
+            _dafny.print(((self.knownKeys)[d_1021_i_]).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "] "))).VerbatimString(False))
-            hi6_ = (d_1005_k_).numArgs
-            for d_1006_i_ in range(0, hi6_):
+            hi6_ = (d_1022_k_).numArgs
+            for d_1023_i_ in range(0, hi6_):
                 _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " arg"))).VerbatimString(False))
-                _dafny.print(_dafny.string_of(d_1006_i_))
+                _dafny.print(_dafny.string_of(d_1023_i_))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " "))).VerbatimString(False))
         _dafny.print((self.usageSuffix).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "options"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-        d_1007_maxL_: int
-        d_1007_maxL_ = (self).MaxValueFast(self.knownKeys, 0)
+        d_1024_maxL_: int
+        d_1024_maxL_ = (self).MaxValueFast(self.knownKeys, 0)
         hi7_ = len(self.knownKeys)
-        for d_1008_i_ in range(0, hi7_):
-            d_1009_k_: CLIOption
-            d_1009_k_ = (self.knownArgs)[(self.knownKeys)[d_1008_i_]]
-            _dafny.print(((self.knownKeys)[d_1008_i_]).VerbatimString(False))
-            _dafny.print((_dafny.SeqWithoutIsStrInference([_dafny.CodePoint(' ') for d_1010___v0_ in range(((d_1007_maxL_) - (len((self.knownKeys)[d_1008_i_]))) + (2))])).VerbatimString(False))
+        for d_1025_i_ in range(0, hi7_):
+            d_1026_k_: CLIOption
+            d_1026_k_ = (self.knownArgs)[(self.knownKeys)[d_1025_i_]]
+            _dafny.print(((self.knownKeys)[d_1025_i_]).VerbatimString(False))
+            _dafny.print((_dafny.SeqWithoutIsStrInference([_dafny.CodePoint(' ') for d_1027___v0_ in range(((d_1024_maxL_) - (len((self.knownKeys)[d_1025_i_]))) + (2))])).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ["))).VerbatimString(False))
-            _dafny.print(((d_1009_k_).name).VerbatimString(False))
+            _dafny.print(((d_1026_k_).name).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "] "))).VerbatimString(False))
-            _dafny.print(((d_1009_k_).desc).VerbatimString(False))
+            _dafny.print(((d_1026_k_).desc).VerbatimString(False))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
     def GetArgs(self, key, s):
@@ -159,20 +159,20 @@ class ArgumentParser:
                 elif (key) not in ((_this.knownArgs).keys):
                     return MiscTypes.Try_Failure(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Not a key")))
                 elif ((_this).Canonical((s)[0])) == (key):
-                    d_1011_opt_ = (_this.knownArgs)[key]
-                    d_1012_numArgs_ = (d_1011_opt_).numArgs
-                    if (len(_dafny.SeqWithoutIsStrInference((s)[1::]))) < (d_1012_numArgs_):
+                    d_1028_opt_ = (_this.knownArgs)[key]
+                    d_1029_numArgs_ = (d_1028_opt_).numArgs
+                    if (len(_dafny.SeqWithoutIsStrInference((s)[1::]))) < (d_1029_numArgs_):
                         return MiscTypes.Try_Failure(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "argument "))) + ((s)[0])) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " needs more arguments"))))
                     elif True:
-                        return MiscTypes.Try_Success(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[:d_1012_numArgs_:]))
+                        return MiscTypes.Try_Success(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[:d_1029_numArgs_:]))
                 elif True:
-                    in129_ = _this
-                    in130_ = key
-                    in131_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    _this = in129_
+                    in146_ = _this
+                    in147_ = key
+                    in148_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    _this = in146_
                     
-                    key = in130_
-                    s = in131_
+                    key = in147_
+                    s = in148_
                     raise _dafny.TailCall()
                 break
 
@@ -189,13 +189,13 @@ class ArgumentParser:
                 if (len(s)) == (0):
                     return max
                 elif True:
-                    in132_ = _this
-                    in133_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    in134_ = Int.default__.Max(len((s)[0]), max)
-                    _this = in132_
+                    in149_ = _this
+                    in150_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    in151_ = Int.default__.Max(len((s)[0]), max)
+                    _this = in149_
                     
-                    s = in133_
-                    max = in134_
+                    s = in150_
+                    max = in151_
                     raise _dafny.TailCall()
                 break
 

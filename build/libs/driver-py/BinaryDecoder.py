@@ -37,27 +37,27 @@ class default__:
                     if source42_.is_None:
                         return (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMConstants.default__.INVALID), ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "'"))) + (_dafny.SeqWithoutIsStrInference((s)[:2:]))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "' is not an Hex number"))), next)]))
                     elif True:
-                        d_646___mcc_h0_ = source42_.v
-                        d_647_v_ = d_646___mcc_h0_
-                        d_648_op_ = OpcodeDecoder.default__.Decode(d_647_v_)
-                        if ((d_648_op_).Args()) > (0):
-                            if ((len(_dafny.SeqWithoutIsStrInference((s)[2::]))) < ((2) * ((d_648_op_).Args()))) or (not(Hex.default__.IsHexString(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_648_op_).Args()):])))):
-                                return (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMConstants.default__.INVALID), (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "not enough arguments for opcode "))) + ((d_648_op_).name), next)]))
+                        d_647___mcc_h0_ = source42_.v
+                        d_648_v_ = d_647___mcc_h0_
+                        d_649_op_ = OpcodeDecoder.default__.Decode(d_648_v_)
+                        if ((d_649_op_).Args()) > (0):
+                            if ((len(_dafny.SeqWithoutIsStrInference((s)[2::]))) < ((2) * ((d_649_op_).Args()))) or (not(Hex.default__.IsHexString(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_649_op_).Args()):])))):
+                                return (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMConstants.default__.INVALID), (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "not enough arguments for opcode "))) + ((d_649_op_).name), next)]))
                             elif True:
-                                in29_ = _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[(2) * ((d_648_op_).Args())::])
-                                in30_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_648_op_, _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_648_op_).Args()):]), next)]))
-                                in31_ = ((next) + (1)) + ((d_648_op_).Args())
-                                s = in29_
-                                p = in30_
-                                next = in31_
+                                in33_ = _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[(2) * ((d_649_op_).Args())::])
+                                in34_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_649_op_, _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[2::]))[:(2) * ((d_649_op_).Args()):]), next)]))
+                                in35_ = ((next) + (1)) + ((d_649_op_).Args())
+                                s = in33_
+                                p = in34_
+                                next = in35_
                                 raise _dafny.TailCall()
                         elif True:
-                            in32_ = _dafny.SeqWithoutIsStrInference((s)[2::])
-                            in33_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_648_op_, _dafny.SeqWithoutIsStrInference([]), next)]))
-                            in34_ = (next) + (1)
-                            s = in32_
-                            p = in33_
-                            next = in34_
+                            in36_ = _dafny.SeqWithoutIsStrInference((s)[2::])
+                            in37_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_649_op_, _dafny.SeqWithoutIsStrInference([]), next)]))
+                            in38_ = (next) + (1)
+                            s = in36_
+                            p = in37_
+                            next = in38_
                             raise _dafny.TailCall()
                 break
 
@@ -68,25 +68,25 @@ class default__:
                 if (len(s)) == (0):
                     return p
                 elif True:
-                    d_649_op_ = OpcodeDecoder.default__.Decode((s)[0])
-                    if ((d_649_op_).Args()) > (0):
-                        if (len(_dafny.SeqWithoutIsStrInference((s)[1::]))) < ((d_649_op_).Args()):
-                            return (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMConstants.default__.INVALID), (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "not enough arguments for opcode "))) + ((d_649_op_).name), next)]))
+                    d_650_op_ = OpcodeDecoder.default__.Decode((s)[0])
+                    if ((d_650_op_).Args()) > (0):
+                        if (len(_dafny.SeqWithoutIsStrInference((s)[1::]))) < ((d_650_op_).Args()):
+                            return (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(OpcodeDecoder.default__.Decode(EVMConstants.default__.INVALID), (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "not enough arguments for opcode "))) + ((d_650_op_).name), next)]))
                         elif True:
-                            in35_ = _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[(d_649_op_).Args()::])
-                            in36_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_649_op_, Hex.default__.HexHelper(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[:(d_649_op_).Args():])), next)]))
-                            in37_ = ((next) + (1)) + ((d_649_op_).Args())
-                            s = in35_
-                            p = in36_
-                            next = in37_
+                            in39_ = _dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[(d_650_op_).Args()::])
+                            in40_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_650_op_, Hex.default__.HexHelper(_dafny.SeqWithoutIsStrInference((_dafny.SeqWithoutIsStrInference((s)[1::]))[:(d_650_op_).Args():])), next)]))
+                            in41_ = ((next) + (1)) + ((d_650_op_).Args())
+                            s = in39_
+                            p = in40_
+                            next = in41_
                             raise _dafny.TailCall()
                     elif True:
-                        in38_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                        in39_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_649_op_, _dafny.SeqWithoutIsStrInference([]), next)]))
-                        in40_ = (next) + (1)
-                        s = in38_
-                        p = in39_
-                        next = in40_
+                        in42_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                        in43_ = (p) + (_dafny.SeqWithoutIsStrInference([Instructions.Instruction_Instruction(d_650_op_, _dafny.SeqWithoutIsStrInference([]), next)]))
+                        in44_ = (next) + (1)
+                        s = in42_
+                        p = in43_
+                        next = in44_
                         raise _dafny.TailCall()
                 break
 

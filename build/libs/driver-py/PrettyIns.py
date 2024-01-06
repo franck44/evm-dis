@@ -170,8 +170,8 @@ class default__:
                     return (_dafny.SeqWithoutIsStrInference([default__.DecToChar(n)])) + (d_748___accumulator_)
                 elif True:
                     d_748___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToChar(_dafny.euclidian_modulus(n, 10))])) + (d_748___accumulator_)
-                    in74_ = _dafny.euclidian_division(n, 10)
-                    n = in74_
+                    in77_ = _dafny.euclidian_division(n, 10)
+                    n = in77_
                     raise _dafny.TailCall()
                 break
 

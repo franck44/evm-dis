@@ -47,10 +47,10 @@ class default__:
                     elif True:
                         d_733___mcc_h1_ = source47_.r
                         d_734_v_ = d_733___mcc_h1_
-                        in72_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                        in73_ = d_734_v_
-                        xs = in72_
-                        pos = in73_
+                        in75_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                        in76_ = d_734_v_
+                        xs = in75_
+                        pos = in76_
                         raise _dafny.TailCall()
                 break
 

@@ -41,8 +41,8 @@ class default__:
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ": "))).VerbatimString(False))
                     _dafny.print((((s)[0]).ToString()).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    in75_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in75_
+                    in78_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in78_
                     raise _dafny.TailCall()
                 break
 
@@ -56,7 +56,7 @@ class default__:
                     _dafny.print(_dafny.string_of(num))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     d_750_k_: int
-                    d_750_k_ = ((xs)[0]).WeakestPreOperands(0)
+                    d_750_k_ = ((xs)[0]).WeakestPreOperands(((xs)[0]).Ins(), 0)
                     d_751_l_: int
                     d_751_l_ = ((xs)[0]).WeakestPreCapacity(0)
                     if (((xs)[0]).is_JUMPSeg) or (((xs)[0]).is_JUMPISeg):
@@ -89,7 +89,7 @@ class default__:
                             d_761_nextPC_ = ((xs)[0]).StartAddressNextSeg()
                             _dafny.print(((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: PC of instruction after last is: "))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " 0x")))) + (Hex.default__.NatToHex(d_761_nextPC_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
                         elif True:
-                            _dafny.print(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: has an invaid instructiom"))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
+                            _dafny.print(((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT: has an invalid instruction"))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))).VerbatimString(False))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "WeakestPre Operands:"))).VerbatimString(False))
                         _dafny.print(_dafny.string_of(d_750_k_))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
@@ -100,10 +100,10 @@ class default__:
                         _dafny.print(_dafny.string_of(((xs)[0]).StackEffect()))
                         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     default__.PrintInstructions(((xs)[0]).Ins())
-                    in76_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in77_ = (num) + (1)
-                    xs = in76_
-                    num = in77_
+                    in79_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in80_ = (num) + (1)
+                    xs = in79_
+                    num = in80_
                     raise _dafny.TailCall()
                 break
 
@@ -116,8 +116,8 @@ class default__:
                     return (d_762___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
                     d_762___accumulator_ = (d_762___accumulator_) + (((xs)[0]).CollectJumpDest())
-                    in78_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in78_
+                    in81_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in81_
                     raise _dafny.TailCall()
                 break
 
@@ -130,8 +130,8 @@ class default__:
                     return (d_763___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
                     d_763___accumulator_ = (d_763___accumulator_) + (((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " ensures s.IsJumpDest(0x"))) + (Hex.default__.NatToHex((xs)[0]))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " as u256)\n"))))
-                    in79_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in79_
+                    in82_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in82_
                     raise _dafny.TailCall()
                 break
 
@@ -290,10 +290,10 @@ class default__:
                     _dafny.print(_dafny.string_of(len((((xs)[0]).s).Ins())))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "}\n"))).VerbatimString(False))
-                    in80_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in81_ = (num) + (1)
-                    xs = in80_
-                    num = in81_
+                    in83_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in84_ = (num) + (1)
+                    xs = in83_
+                    num = in84_
                     raise _dafny.TailCall()
                 break
 
@@ -307,10 +307,10 @@ class default__:
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "  "))).VerbatimString(False))
                     _dafny.print((d_796_k_).VerbatimString(False))
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-                    in82_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in83_ = (pos) + (1)
-                    xs = in82_
-                    pos = in83_
+                    in85_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in86_ = (pos) + (1)
+                    xs = in85_
+                    pos = in86_
                     raise _dafny.TailCall()
                 break
 

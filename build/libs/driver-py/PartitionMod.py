@@ -36,7 +36,7 @@ class default__:
 
     @staticmethod
     def MakeInit(n):
-        def iife13_():
+        def iife7_():
             coll0_ = _dafny.Set()
             compr_0_: int
             for compr_0_ in _dafny.IntegerRange(0, n):
@@ -44,7 +44,7 @@ class default__:
                 if ((0) <= (d_827_q_)) and ((d_827_q_) < (n)):
                     coll0_ = coll0_.union(_dafny.Set([d_827_q_]))
             return _dafny.Set(coll0_)
-        d_826_s_ = iife13_()
+        d_826_s_ = iife7_()
 
         return Partition_Partition(n, _dafny.SeqWithoutIsStrInference([d_826_s_]))
 
@@ -54,7 +54,7 @@ class default__:
         while True:
             with _dafny.label():
                 d_829_first_ = (SeqOfSets.default__.SetToSequence(xs))[0]
-                def iife14_():
+                def iife8_():
                     coll1_ = _dafny.Set()
                     compr_1_: int
                     for compr_1_ in (xs).Elements:
@@ -62,19 +62,19 @@ class default__:
                         if ((d_831_x_) in (xs)) and (equiv(d_829_first_, d_831_x_)):
                             coll1_ = coll1_.union(_dafny.Set([d_831_x_]))
                     return _dafny.Set(coll1_)
-                d_830_xsTrue_ = iife14_()
+                d_830_xsTrue_ = iife8_()
 
                 d_832_xsFalse_ = (xs) - (d_830_xsTrue_)
                 if (d_832_xsFalse_) == (_dafny.Set({})):
                     return (d_828___accumulator_) + (_dafny.SeqWithoutIsStrInference([d_830_xsTrue_]))
                 elif True:
                     d_828___accumulator_ = (d_828___accumulator_) + (_dafny.SeqWithoutIsStrInference([d_830_xsTrue_]))
-                    in101_ = d_832_xsFalse_
-                    in102_ = equiv
-                    in103_ = n
-                    xs = in101_
-                    equiv = in102_
-                    n = in103_
+                    in104_ = d_832_xsFalse_
+                    in105_ = equiv
+                    in106_ = n
+                    xs = in104_
+                    equiv = in105_
+                    n = in106_
                     raise _dafny.TailCall()
                 break
 
@@ -110,7 +110,7 @@ class Partition:
     def is_Partition(self) -> bool:
         return isinstance(self, Partition_Partition)
     def SplitIn2(self, f):
-        def iife15_():
+        def iife9_():
             coll2_ = _dafny.Set()
             compr_2_: int
             for compr_2_ in (SeqOfSets.default__.SetU((self).elem)).Elements:
@@ -118,19 +118,19 @@ class Partition:
                 if ((d_837_q_) in (SeqOfSets.default__.SetU((self).elem))) and (f(d_837_q_)):
                     coll2_ = coll2_.union(_dafny.Set([d_837_q_]))
             return _dafny.Set(coll2_)
-        d_836_sTrue_ = iife15_()
+        d_836_sTrue_ = iife9_()
 
         d_838_sFalse_ = (SeqOfSets.default__.SetU((self).elem)) - (d_836_sTrue_)
         d_839_d_ = ((_dafny.SeqWithoutIsStrInference([d_836_sTrue_]) if (d_836_sTrue_) != (_dafny.Set({})) else _dafny.SeqWithoutIsStrInference([]))) + ((_dafny.SeqWithoutIsStrInference([d_838_sFalse_]) if (d_838_sFalse_) != (_dafny.Set({})) else _dafny.SeqWithoutIsStrInference([])))
-        def iife16_(_pat_let7_0):
-            def iife17_(d_841_dt__update__tmp_h0_):
-                def iife18_(_pat_let8_0):
-                    def iife19_(d_842_dt__update_helem_h0_):
+        def iife10_(_pat_let4_0):
+            def iife11_(d_841_dt__update__tmp_h0_):
+                def iife12_(_pat_let5_0):
+                    def iife13_(d_842_dt__update_helem_h0_):
                         return Partition_Partition((d_841_dt__update__tmp_h0_).n, d_842_dt__update_helem_h0_)
-                    return iife19_(_pat_let8_0)
-                return iife18_(d_839_d_)
-            return iife17_(_pat_let7_0)
-        d_840_e_ = iife16_(self)
+                    return iife13_(_pat_let5_0)
+                return iife12_(d_839_d_)
+            return iife11_(_pat_let4_0)
+        d_840_e_ = iife10_(self)
         return d_840_e_
 
     def ComputeFinest(self, equiv):
@@ -142,15 +142,15 @@ class Partition:
     def RefineAll(self, equiv):
         d_846_k_ = default__.SplitAllClasses((self).elem, equiv, (self).n)
         d_847_d_ = MiscTypes.default__.Flatten(d_846_k_)
-        def iife20_(_pat_let9_0):
-            def iife21_(d_849_dt__update__tmp_h0_):
-                def iife22_(_pat_let10_0):
-                    def iife23_(d_850_dt__update_helem_h0_):
+        def iife14_(_pat_let6_0):
+            def iife15_(d_849_dt__update__tmp_h0_):
+                def iife16_(_pat_let7_0):
+                    def iife17_(d_850_dt__update_helem_h0_):
                         return Partition_Partition((d_849_dt__update__tmp_h0_).n, d_850_dt__update_helem_h0_)
-                    return iife23_(_pat_let10_0)
-                return iife22_(d_847_d_)
-            return iife21_(_pat_let9_0)
-        d_848_e_ = iife20_(self)
+                    return iife17_(_pat_let7_0)
+                return iife16_(d_847_d_)
+            return iife15_(_pat_let6_0)
+        d_848_e_ = iife14_(self)
         return d_848_e_
 
     def GetClass(self, x, index):
@@ -160,13 +160,13 @@ class Partition:
                 if (x) in (((_this).elem)[index]):
                     return index
                 elif True:
-                    in104_ = _this
-                    in105_ = x
-                    in106_ = (index) + (1)
-                    _this = in104_
+                    in107_ = _this
+                    in108_ = x
+                    in109_ = (index) + (1)
+                    _this = in107_
                     
-                    x = in105_
-                    index = in106_
+                    x = in108_
+                    index = in109_
                     raise _dafny.TailCall()
                 break
 
@@ -183,11 +183,11 @@ class Partition:
                     return (d_852___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
                     d_852___accumulator_ = (d_852___accumulator_) + (_dafny.SeqWithoutIsStrInference([(_this).GetClassRepOf((xs)[0])]))
-                    in107_ = _this
-                    in108_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    _this = in107_
+                    in110_ = _this
+                    in111_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    _this = in110_
                     
-                    xs = in108_
+                    xs = in111_
                     raise _dafny.TailCall()
                 break
 
