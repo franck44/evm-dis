@@ -189,11 +189,11 @@ module OpcodeDecoder {
     //  @todo: verify call effect on stack
     case CALL => SysOp("CALL", CALL, 1, 7, 1, 7)
     case CALLCODE => SysOp("CALLCODE", CALLCODE, 1, 7, 1, 7)
-    case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 0)
+    case RETURN => SysOp("RETURN", RETURN, 0, 2, 0, 2)
     case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 1, 6, 1, 6)
     case CREATE2 => SysOp("CREATE2", CREATE2, 1, 4, 1, 4)
     case STATICCALL => SysOp("STATICCALL", STATICCALL,1, 6, 1, 6)
-    case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 0)
+    case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 2)
     case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT, 0, 1, 0, 1)
     case _ => SysOp("INVALID", INVALID, 0, 0, 0, 0)
   }
