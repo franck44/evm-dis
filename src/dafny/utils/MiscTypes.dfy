@@ -134,10 +134,10 @@ module MiscTypes {
   /**
     *   Filter a seq according to a predicate.
     */
-  function {:tailrecursion true} Filter<U>(u: seq<U>, f: U --> bool): (r: seq<U>)
+  function {:tailrecursion true} Filter<U(!new)>(u: seq<U>, f: U --> bool): (r: seq<U>)
     ensures |r| <= |u|
     requires forall x:: x in u ==> f.requires(x)
-    ensures forall x:: x in r ==> x in u
+    ensures forall x:: x in r <==> x in u && f(x)
     ensures forall k:: 0 <= k < |r| ==> f(r[k])
     ensures forall x:: x in r ==> f(x)
   {
