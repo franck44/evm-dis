@@ -130,17 +130,20 @@ final DAFNY4_JS_BUILD_FLAGS = [
 ]
 
 final DAFNY4_VERIFY_FLAGS = [
-    '/dafnyVerify:1',
-    '/compile:0',
+    'verify',
+    '--verification-time-limit', '20'
+    // '/dafnyVerify:1',
+    // '--isolate-assertions'
+    // '/compile:0',
     // '/rlimit:100000000',
-    '/timeLimit:20',
+    // '/timeLimit:20',
     // '--resource-limit','10000000',
     // '--verify-included-files',
     // '--log-format','csv;LogFileName=build/logs/verify.csv',
     // '--relax-definite-assignment',
     // '--function-syntax','4',
     // '--quantifier-syntax','4',
-    '/vcsCores:12', 
+    // '/vcsCores:12', 
 ] 
 // + Z3_OPTION + BOOGIE_FLAGS
 
@@ -173,8 +176,8 @@ task verify {
             File file -> {
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))
-                // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
-                def logging = '/verificationLogger:csv;LogFileName=build/logs/' + name + '.csv'
+                def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
+                // def logging = '/verificationLogger:csv;LogFileName=build/logs/' + name + '.csv'
                 // Run test
                 // project.logger.info('my info message')
                 project.logger.lifecycle('Verifying ' + [file])

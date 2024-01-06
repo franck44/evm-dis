@@ -9,15 +9,16 @@ Size of non minimised CFG: 122 nodes, 162 edges
 Size of minimised CFG: 116 nodes, 162 edges
 Minimised CFG
 */
+// Wpre fixpoint status: Reached
 // Number of states: 116
 // Number of transitions : 162
 digraph G {
-graph[labelloc="t", labeljust="l", fontname="Arial", label=<<B>Program Name: </B> DepositZap.vy.bin<BR ALIGN="left"/><B>Control Flow Graph Info: </B><BR ALIGN="left"/>Max depth: 100 [Was not reached]<BR ALIGN="left"/>116 nodes/162 edges<BR ALIGN="left"/>>]
+graph[labelloc="t", labeljust="l", label=<<B>Program Name: </B> DepositZap.vy.bin<BR ALIGN="left"/><B>Control Flow Graph Info: </B><BR ALIGN="left"/>Max depth: 100 [Was not reached]<BR ALIGN="left"/>116 nodes/162 edges<BR ALIGN="left"/>>]
 node [shape=none, fontname=arial, style="rounded, filled", fillcolor= "whitesmoke"]
 edge [fontname=arial]
 ranking=TB
 s_0 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 0 [0x0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0xd"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 0 [0x0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0xd"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x00 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x04</TD></TR></TABLE></TD></TR>
@@ -39,7 +40,7 @@ s_0 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_1 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 1 [0x9]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9df"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 1 [0x9]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9df"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x09df</TD></TR></TABLE></TD></TR>
@@ -49,7 +50,7 @@ s_1 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_2 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 2 [0xd]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x2b"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 2 [0xd]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x2b"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0d </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -89,7 +90,7 @@ s_2 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_3 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 114 [0x9df]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 114 [0x9df]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09df </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -111,14 +112,14 @@ s_3 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_4 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 115 [0x9fb]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 115 [0x9fb]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09fb </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 0 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightsalmon" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L32" target="_blank"  tooltip="Halts the machine without return output data" ><FONT color="brown">STOP</FONT></TD></TR></TABLE></TD></TR>
 </TABLE>
 >]
 s_5 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 116 [0x9fc]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 116 [0x9fc]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09fc </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -134,7 +135,7 @@ s_5 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_6 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 3 [0x23]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x45"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 3 [0x23]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x45"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x23 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L692" target="_blank"  tooltip="Caller address" ><FONT color="darkslategrey">CALLER</FONT></TD></TR></TABLE></TD></TR>
@@ -153,7 +154,7 @@ s_6 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_7 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 4 [0x2b]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x380"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 4 [0x2b]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x380"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x2b </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -175,7 +176,7 @@ s_7 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_8 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 7 [0x45]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 7 [0x45]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x45 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -200,7 +201,7 @@ s_8 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_9 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 8 [0x4f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 8 [0x4f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x4f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1500" target="_blank"  tooltip="Push 4 bytes" ><FONT color="royalblue">PUSH4</FONT></TD><TD width="1" fixedsize="true" align="left">  0xd0e30db0</TD></TR></TABLE></TD></TR>
@@ -228,7 +229,7 @@ s_9 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLS
 </TABLE>
 >]
 s_10 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 9 [0x73]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0xa2"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 9 [0x73]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0xa2"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x73 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -262,7 +263,7 @@ s_10 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_11 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 10 [0x98]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 10 [0x98]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x98 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -287,7 +288,7 @@ s_11 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_12 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 11 [0xa2]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 11 [0xa2]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0xa2 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -315,7 +316,7 @@ s_12 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_13 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 12 [0xae]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x1da"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 12 [0xae]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x1da"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0xae </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -358,7 +359,7 @@ s_13 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_14 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 13 [0xc2]</TD><TD href="" tooltip="Stack Size &#916;: +7&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 13 [0xc2]</TD><TD href="" tooltip="Stack Size &#916;: +7&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0xc2 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -644,7 +645,7 @@ s_14 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_15 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 21 [0x1da]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0xae"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 21 [0x1da]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0xae"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x01da </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -687,7 +688,7 @@ s_15 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_16 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 14 [0x170]</TD><TD href="" tooltip="Stack Size &#916;: -7&#10;Stack Size on Entry &#8805; 7&#10;Exit Jump target: Constant 0x185"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 14 [0x170]</TD><TD href="" tooltip="Stack Size &#916;: -7&#10;Stack Size on Entry for this segment &#8805; 7&#10;Stack Size on Entry for this segment at this node &#8805; 9&#10;Exit Jump target: Constant 0x185"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0170 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 5 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L61" target="_blank"  tooltip="Unsigned integer multiplication modulo TWO_256" ><FONT color="#316152">MUL</FONT></TD></TR></TABLE></TD></TR>
@@ -715,7 +716,7 @@ s_16 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_17 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 15 [0x17b]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 15 [0x17b]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x017b </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -740,7 +741,7 @@ s_17 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_18 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 16 [0x185]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x198"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 16 [0x185]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x198"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0185 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -771,7 +772,7 @@ s_18 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_19 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 17 [0x193]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x19a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 17 [0x193]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 5&#10;Exit Jump target: Constant 0x19a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0193 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" target="_blank"  tooltip="Duplicate 2nd element on top of the stack" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
@@ -784,7 +785,7 @@ s_19 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_20 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 18 [0x198]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 18 [0x198]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 5"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0198 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -794,7 +795,7 @@ s_20 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_21 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 19 [0x19a]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Constant 0x1da"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 19 [0x19a]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry for this segment &#8805; 4&#10;Stack Size on Entry for this segment at this node &#8805; 6&#10;Exit Jump target: Constant 0x1da"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x019a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -885,7 +886,7 @@ s_21 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_22 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 20 [0x1c0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 20 [0x1c0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x01c0 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0140</TD></TR></TABLE></TD></TR>
@@ -943,7 +944,7 @@ s_22 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_23 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 22 [0x1ea]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 22 [0x1ea]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x01ea </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1097" target="_blank"  tooltip="Pop top of stack" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
@@ -1028,7 +1029,7 @@ s_23 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_24 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 23 [0x21a]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x238"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 23 [0x21a]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x238"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x021a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -1065,7 +1066,7 @@ s_24 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_25 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 24 [0x22e]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 24 [0x22e]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x022e </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -1090,7 +1091,7 @@ s_25 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_26 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 25 [0x238]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x26c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 25 [0x238]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x26c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0238 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1157,7 +1158,7 @@ s_26 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_27 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 26 [0x262]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 26 [0x262]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0262 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -1182,7 +1183,7 @@ s_27 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_28 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 27 [0x26c]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 27 [0x26c]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x026c </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1207,7 +1208,7 @@ s_28 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_29 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 28 [0x276]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x31c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 28 [0x276]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x31c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0276 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0140</TD></TR></TABLE></TD></TR>
@@ -1448,7 +1449,7 @@ s_29 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_30 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 29 [0x312]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 29 [0x312]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0312 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -1473,7 +1474,7 @@ s_30 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_31 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 30 [0x31c]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x32f"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 30 [0x31c]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x32f"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x031c </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1504,7 +1505,7 @@ s_31 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_32 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 31 [0x32a]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x331"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 31 [0x32a]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 3&#10;Exit Jump target: Constant 0x331"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x032a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" target="_blank"  tooltip="Duplicate 2nd element on top of the stack" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
@@ -1517,7 +1518,7 @@ s_32 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_33 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 32 [0x32f]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 32 [0x32f]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 3"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x032f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1527,7 +1528,7 @@ s_33 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_34 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 33 [0x331]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Constant 0x371"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 33 [0x331]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry for this segment &#8805; 4&#10;Stack Size on Entry for this segment at this node &#8805; 4&#10;Exit Jump target: Constant 0x371"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0331 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1618,7 +1619,7 @@ s_34 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_35 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 34 [0x357]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 34 [0x357]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0357 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0160</TD></TR></TABLE></TD></TR>
@@ -1676,7 +1677,7 @@ s_35 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_36 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 35 [0x371]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 35 [0x371]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0371 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1704,7 +1705,7 @@ s_36 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_37 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 5 [0x37]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 5 [0x37]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x37 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x84</TD></TR></TABLE></TD></TR>
@@ -1729,7 +1730,7 @@ s_37 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_38 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 36 [0x380]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x394"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 36 [0x380]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x394"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0380 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1751,7 +1752,7 @@ s_38 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_39 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 6 [0x42]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 6 [0x42]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x42 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0xe0</TD></TR></TABLE></TD></TR>
@@ -1761,7 +1762,7 @@ s_39 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_40 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 37 [0x38c]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x3ae"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 37 [0x38c]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x3ae"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x038c </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L692" target="_blank"  tooltip="Caller address" ><FONT color="darkslategrey">CALLER</FONT></TD></TR></TABLE></TD></TR>
@@ -1780,7 +1781,7 @@ s_40 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_41 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 38 [0x394]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x6cc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 38 [0x394]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x6cc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0394 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1802,7 +1803,7 @@ s_41 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_42 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 41 [0x3ae]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 41 [0x3ae]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03ae </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1818,7 +1819,7 @@ s_42 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_43 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 42 [0x3b4]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x3ed"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 42 [0x3b4]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x3ed"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03b4 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1500" target="_blank"  tooltip="Push 4 bytes" ><FONT color="royalblue">PUSH4</FONT></TD><TD width="1" fixedsize="true" align="left">  0x23b872dd</TD></TR></TABLE></TD></TR>
@@ -1894,7 +1895,7 @@ s_43 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_44 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 43 [0x3e3]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 43 [0x3e3]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03e3 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -1919,7 +1920,7 @@ s_44 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_45 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 44 [0x3ed]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 44 [0x3ed]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03ed </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -1944,7 +1945,7 @@ s_45 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_46 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 45 [0x3f7]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 45 [0x3f7]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03f7 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0100</TD></TR></TABLE></TD></TR>
@@ -2029,7 +2030,7 @@ s_46 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_47 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 46 [0x429]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x447"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 46 [0x429]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x447"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0429 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -2066,7 +2067,7 @@ s_47 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_48 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 47 [0x43d]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 47 [0x43d]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x043d </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -2091,7 +2092,7 @@ s_48 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_49 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 48 [0x447]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 48 [0x447]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0447 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2131,7 +2132,7 @@ s_49 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_50 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 49 [0x45a]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 49 [0x45a]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x045a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2165,7 +2166,7 @@ s_50 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_51 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 50 [0x46a]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x49f"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 50 [0x46a]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 4&#10;Exit Jump target: Constant 0x49f"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x046a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 5 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L61" target="_blank"  tooltip="Unsigned integer multiplication modulo TWO_256" ><FONT color="#316152">MUL</FONT></TD></TR></TABLE></TD></TR>
@@ -2235,7 +2236,7 @@ s_51 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_52 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 51 [0x495]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 51 [0x495]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0495 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -2260,7 +2261,7 @@ s_52 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_53 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 52 [0x49f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 52 [0x49f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x049f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2285,7 +2286,7 @@ s_53 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_54 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 53 [0x4a9]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 53 [0x4a9]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x04a9 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01a0</TD></TR></TABLE></TD></TR>
@@ -2322,7 +2323,7 @@ s_54 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_55 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 54 [0x4bd]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 3&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 54 [0x4bd]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 3&#10;Stack Size on Entry for this segment at this node &#8805; 5&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x04bd </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
@@ -2497,7 +2498,7 @@ s_55 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_56 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 55 [0x531]</TD><TD href="" tooltip="Stack Size &#916;: -3&#10;Stack Size on Entry &#8805; 3&#10;Exit Jump target: Constant 0x571"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 55 [0x531]</TD><TD href="" tooltip="Stack Size &#916;: -3&#10;Stack Size on Entry for this segment &#8805; 3&#10;Stack Size on Entry for this segment at this node &#8805; 5&#10;Exit Jump target: Constant 0x571"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0531 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x20</TD></TR></TABLE></TD></TR>
@@ -2600,7 +2601,7 @@ s_56 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_57 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 56 [0x567]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 56 [0x567]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0567 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -2625,7 +2626,7 @@ s_57 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_58 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 57 [0x571]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x584"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 57 [0x571]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x584"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0571 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2656,7 +2657,7 @@ s_58 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_59 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 58 [0x57f]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x586"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 58 [0x57f]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 5&#10;Exit Jump target: Constant 0x586"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x057f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" target="_blank"  tooltip="Duplicate 2nd element on top of the stack" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
@@ -2669,7 +2670,7 @@ s_59 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_60 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 59 [0x584]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 59 [0x584]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 5"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0584 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2679,7 +2680,7 @@ s_60 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_61 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 60 [0x586]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Constant 0x5c6"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 60 [0x586]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry for this segment &#8805; 4&#10;Stack Size on Entry for this segment at this node &#8805; 6&#10;Exit Jump target: Constant 0x5c6"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0586 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2770,7 +2771,7 @@ s_61 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_62 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 61 [0x5ac]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 61 [0x5ac]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x05ac </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01c0</TD></TR></TABLE></TD></TR>
@@ -2828,7 +2829,7 @@ s_62 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_63 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 62 [0x5c6]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x45a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 62 [0x5c6]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x45a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x05c6 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2871,7 +2872,7 @@ s_63 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_64 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 63 [0x5d6]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x615"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 63 [0x5d6]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x615"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x05d6 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1097" target="_blank"  tooltip="Pop top of stack" ><FONT color="royalblue">POP</FONT></TD></TR></TABLE></TD></TR>
@@ -2926,7 +2927,7 @@ s_64 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_65 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 64 [0x60b]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 64 [0x60b]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x060b </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -2951,7 +2952,7 @@ s_65 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_66 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 65 [0x615]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 65 [0x615]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0615 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -2976,7 +2977,7 @@ s_66 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_67 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 66 [0x61f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 66 [0x61f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x061f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0160</TD></TR></TABLE></TD></TR>
@@ -3028,7 +3029,7 @@ s_67 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_68 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 67 [0x653]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x683"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 67 [0x653]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x683"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0653 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -3062,7 +3063,7 @@ s_68 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_69 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 68 [0x679]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 68 [0x679]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0679 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -3087,7 +3088,7 @@ s_69 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_70 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 69 [0x683]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x6ad"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 69 [0x683]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x6ad"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0683 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3145,7 +3146,7 @@ s_70 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_71 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 70 [0x6a3]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 70 [0x6a3]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06a3 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -3170,7 +3171,7 @@ s_71 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_72 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 71 [0x6ad]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 71 [0x6ad]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06ad </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3222,7 +3223,7 @@ s_72 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_73 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 39 [0x3a0]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 39 [0x3a0]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03a0 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x84</TD></TR></TABLE></TD></TR>
@@ -3247,7 +3248,7 @@ s_73 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_74 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 72 [0x6cc]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x6e0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 72 [0x6cc]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x6e0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06cc </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3269,7 +3270,7 @@ s_74 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_75 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 40 [0x3ab]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 40 [0x3ab]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x03ab </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0xe0</TD></TR></TABLE></TD></TR>
@@ -3279,7 +3280,7 @@ s_75 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_76 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 73 [0x6d8]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x6fa"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 73 [0x6d8]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x6fa"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06d8 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L692" target="_blank"  tooltip="Caller address" ><FONT color="darkslategrey">CALLER</FONT></TD></TR></TABLE></TD></TR>
@@ -3298,7 +3299,7 @@ s_76 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_77 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 74 [0x6e0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x979"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 74 [0x6e0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x979"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06e0 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3320,7 +3321,7 @@ s_77 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_78 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 77 [0x6fa]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 77 [0x6fa]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06fa </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3336,7 +3337,7 @@ s_78 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_79 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 78 [0x700]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x739"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 78 [0x700]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x739"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0700 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1500" target="_blank"  tooltip="Push 4 bytes" ><FONT color="royalblue">PUSH4</FONT></TD><TD width="1" fixedsize="true" align="left">  0x23b872dd</TD></TR></TABLE></TD></TR>
@@ -3412,7 +3413,7 @@ s_79 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_80 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 79 [0x72f]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 79 [0x72f]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x072f </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -3437,7 +3438,7 @@ s_80 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_81 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 80 [0x739]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 80 [0x739]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0739 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3462,7 +3463,7 @@ s_81 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_82 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 81 [0x743]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 81 [0x743]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0743 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0100</TD></TR></TABLE></TD></TR>
@@ -3535,7 +3536,7 @@ s_82 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_83 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 82 [0x76e]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x78c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 82 [0x76e]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x78c"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x076e </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -3572,7 +3573,7 @@ s_83 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_84 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 83 [0x782]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 83 [0x782]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0782 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -3597,7 +3598,7 @@ s_84 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_85 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 84 [0x78c]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 84 [0x78c]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x078c </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3631,7 +3632,7 @@ s_85 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_86 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 85 [0x79b]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x7d0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 85 [0x79b]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2&#10;Exit Jump target: Constant 0x7d0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x079b </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 5 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L61" target="_blank"  tooltip="Unsigned integer multiplication modulo TWO_256" ><FONT color="#316152">MUL</FONT></TD></TR></TABLE></TD></TR>
@@ -3701,7 +3702,7 @@ s_86 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_87 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 86 [0x7c6]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 86 [0x7c6]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x07c6 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -3726,7 +3727,7 @@ s_87 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_88 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 87 [0x7d0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 87 [0x7d0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x07d0 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -3751,7 +3752,7 @@ s_88 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_89 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 88 [0x7da]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x876"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 88 [0x7da]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x876"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x07da </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0140</TD></TR></TABLE></TD></TR>
@@ -3785,7 +3786,7 @@ s_89 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_90 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 89 [0x7ec]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 89 [0x7ec]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x07ec </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1500" target="_blank"  tooltip="Push 4 bytes" ><FONT color="royalblue">PUSH4</FONT></TD><TD width="1" fixedsize="true" align="left">  0x2e1a7d4d</TD></TR></TABLE></TD></TR>
@@ -3825,7 +3826,7 @@ s_90 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_91 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 95 [0x876]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x915"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 95 [0x876]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x915"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0876 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4057,7 +4058,7 @@ s_91 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_92 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 90 [0x818]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x848"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 90 [0x818]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x848"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0818 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -4091,7 +4092,7 @@ s_92 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_93 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 91 [0x83e]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 91 [0x83e]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x083e </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -4116,7 +4117,7 @@ s_93 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_94 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 92 [0x848]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x96a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 92 [0x848]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x96a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0848 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4174,7 +4175,7 @@ s_94 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_95 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 93 [0x868]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 93 [0x868]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0868 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -4199,7 +4200,7 @@ s_95 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_96 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 102 [0x96a]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 102 [0x96a]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x096a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4227,7 +4228,7 @@ s_96 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_97 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 96 [0x90b]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 96 [0x90b]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x090b </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L920" target="_blank"  tooltip="Size of return data from previous call" ><FONT color="darkslategrey">RETURNDATASIZE</FONT></TD></TR></TABLE></TD></TR>
@@ -4252,7 +4253,7 @@ s_97 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_98 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 97 [0x915]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x928"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 97 [0x915]</TD><TD href="" tooltip="Stack Size &#916;: +3&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x928"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0915 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4283,7 +4284,7 @@ s_98 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_99 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 98 [0x923]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 2&#10;Exit Jump target: Constant 0x92a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 98 [0x923]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 3&#10;Exit Jump target: Constant 0x92a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0923 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" target="_blank"  tooltip="Duplicate 2nd element on top of the stack" ><FONT color="royalblue">DUP2</FONT></TD></TR></TABLE></TD></TR>
@@ -4296,7 +4297,7 @@ s_99 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELL
 </TABLE>
 >]
 s_100 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 99 [0x928]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 99 [0x928]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 3"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0928 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4306,7 +4307,7 @@ s_100 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_101 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 100 [0x92a]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry &#8805; 4&#10;Exit Jump target: Constant 0x96a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 100 [0x92a]</TD><TD href="" tooltip="Stack Size &#916;: -4&#10;Stack Size on Entry for this segment &#8805; 4&#10;Stack Size on Entry for this segment at this node &#8805; 4&#10;Exit Jump target: Constant 0x96a"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x092a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4397,7 +4398,7 @@ s_101 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_102 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 101 [0x950]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 101 [0x950]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0950 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" target="_blank"  tooltip="Push 2 bytes" ><FONT color="royalblue">PUSH2</FONT></TD><TD width="1" fixedsize="true" align="left">  0x0160</TD></TR></TABLE></TD></TR>
@@ -4455,7 +4456,7 @@ s_102 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_103 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 75 [0x6ec]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 75 [0x6ec]</TD><TD href="" tooltip="Stack Size &#916;: +1&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06ec </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x64</TD></TR></TABLE></TD></TR>
@@ -4480,7 +4481,7 @@ s_103 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_104 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 103 [0x979]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x995"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 103 [0x979]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x995"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0979 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4502,7 +4503,7 @@ s_104 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_105 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 76 [0x6f7]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 76 [0x6f7]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x06f7 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0xe0</TD></TR></TABLE></TD></TR>
@@ -4512,7 +4513,7 @@ s_105 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_106 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 104 [0x985]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 104 [0x985]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0985 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L707" target="_blank"  tooltip="Value deposited by function call" ><FONT color="darkslategrey">CALLVALUE</FONT></TD></TR></TABLE></TD></TR>
@@ -4525,7 +4526,7 @@ s_106 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_107 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 106 [0x995]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x9b1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 106 [0x995]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x9b1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x0995 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4547,7 +4548,7 @@ s_107 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_108 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 105 [0x98a]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 105 [0x98a]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x098a </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x00</TD></TR></TABLE></TD></TR>
@@ -4572,7 +4573,7 @@ s_108 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_109 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 107 [0x9a1]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 107 [0x9a1]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09a1 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L707" target="_blank"  tooltip="Value deposited by function call" ><FONT color="darkslategrey">CALLVALUE</FONT></TD></TR></TABLE></TD></TR>
@@ -4585,7 +4586,7 @@ s_109 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_110 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 109 [0x9b1]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 1&#10;Exit Jump target: Constant 0x9dd"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 109 [0x9b1]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1&#10;Exit Jump target: Constant 0x9dd"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09b1 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4607,7 +4608,7 @@ s_110 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_111 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 108 [0x9a6]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 108 [0x9a6]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09a6 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01</TD></TR></TABLE></TD></TR>
@@ -4632,7 +4633,7 @@ s_111 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_112 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 110 [0x9bd]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 110 [0x9bd]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09bd </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 2 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="lightgrey" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L707" target="_blank"  tooltip="Value deposited by function call" ><FONT color="darkslategrey">CALLVALUE</FONT></TD></TR></TABLE></TD></TR>
@@ -4645,7 +4646,7 @@ s_112 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_113 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 113 [0x9dd]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 113 [0x9dd]</TD><TD href="" tooltip="Stack Size &#916;: -1&#10;Stack Size on Entry for this segment &#8805; 1&#10;Stack Size on Entry for this segment at this node &#8805; 1"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09dd </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 1 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="thistle" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" target="_blank"  tooltip="A valid destination for a jump" ><FONT color="purple">JUMPDEST</FONT></TD></TR></TABLE></TD></TR>
@@ -4655,7 +4656,7 @@ s_113 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_114 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 111 [0x9c2]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 111 [0x9c2]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0&#10;Exit Jump target: Constant 0x9fc"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09c2 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 3 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="powderblue" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" target="_blank"  tooltip="Push 1 byte" ><FONT color="royalblue">PUSH1</FONT></TD><TD width="1" fixedsize="true" align="left">  0x01</TD></TR></TABLE></TD></TR>
@@ -4686,7 +4687,7 @@ s_114 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CEL
 </TABLE>
 >]
 s_115 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
-<TR><TD >Segment 112 [0x9d0]</TD><TD href="" tooltip="Stack Size &#916;: 0&#10;Stack Size on Entry &#8805; 2"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
+<TR><TD >Segment 112 [0x9d0]</TD><TD href="" tooltip="Stack Size &#916;: -2&#10;Stack Size on Entry for this segment &#8805; 2&#10;Stack Size on Entry for this segment at this node &#8805; 2"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">
 <TABLE  border="0" cellpadding="0" cellborder="0" CELLSPACING="1"><TR><TD width="1" fixedsize="false" align="left" cellpadding="1" PORT="entry">0x09d0 </TD>
 <TD width="1" fixedsize="false" align="left" cellpadding="1" tooltip="Gas: 5 " target="_blank" href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103">&#9981;</TD><TD width="1" fixedsize="true" style="Rounded" BORDER="0" BGCOLOR="#c6eb76" align="left" cellpadding="3"  href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L61" target="_blank"  tooltip="Unsigned integer multiplication modulo TWO_256" ><FONT color="#316152">MUL</FONT></TD></TR></TABLE></TD></TR>

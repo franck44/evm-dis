@@ -23,8 +23,7 @@ include "./utils/int.dfy"
 include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
-include "./utils/CFGState.dfy"
-include "./utils/HTML.dfy"
+include "./utils/CFGObject.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -40,8 +39,7 @@ module Driver {
   import opened Int
   import opened Statistics
   import opened ProofObjectBuilder
-  import opened CFGState
-  import opened HTML
+  import opened CFGObject
 
   /**
     *  Read the input string
@@ -50,7 +48,7 @@ module Driver {
     *  @note   If two args, first one must be "-d" or "-p" or "-a" to select
     *           the type of outputs.
     */
-  method {:verify true} {:timeLimitMultiplier 4} {:main} Main(args: seq<string>)
+  method {:verify true} {:print} {:timeLimitMultiplier 7} {:main} Main(args: seq<string>)
   {
     var optionParser := new ArgumentParser("<string>");
 
@@ -77,6 +75,8 @@ module Driver {
       } else if |args[1]| % 2 != 0 {
         print "String must be non empty and have even length, length is ", |args[1]|, "\n";
       } else if Hex.IsHexString(if args[1][..2] == "0x" then args[1][2..] else args[1]) {
+        assert |args| > 1;
+        assert |args[1]| >= 2;
         var x := Disassemble(if args[1][..2] == "0x" then args[1][2..] else args[1]);
         print "Disassembled code:\n";
         PrintInstructions(x);
@@ -88,6 +88,7 @@ module Driver {
       //  Note that this does not work with the dafny run command as --help is a dafny run option
       optionParser.PrintHelp();
     } else {
+      assert |args| > 2;
       // Collect the arguments
       var stringToProcess := args[|args| - 1];
       if |stringToProcess| == 0 {
@@ -98,9 +99,9 @@ module Driver {
         print "String must be hexadecimal\n";
       } else {
         var x := Disassemble(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess);
-        //  Parse arguments
+        // //  Parse arguments
         var optArgs := args[1..|args| - 1];
-        // Note: we use an if-then-else as otherwise compileToJava fails
+        // // Note: we use an if-then-else as otherwise compileToJava fails
         var disOpt: bool := if optionParser.GetArgs("--dis", optArgs).Success? then true else false;
         var segmentOpt: bool := if optionParser.GetArgs("--segment", optArgs).Success? then true else false;
         var proofOpt: bool := if optionParser.GetArgs("--proof", optArgs).Success? then true else false;
@@ -121,7 +122,6 @@ module Driver {
           case Success(args) => args[0]
           case Failure(_) => "Name not set";
 
-
         //    Process options
         if disOpt {
           print "Disassembled code:\n";
@@ -139,7 +139,6 @@ module Driver {
           print "-------- Segment Stats ---------\n";
           prog.PrintSegmentInfo();
           print "-------- End Segment Stats ---------\n";
-
         }
 
         if segmentOpt {
@@ -149,6 +148,7 @@ module Driver {
         }
 
         if proofOpt {
+          assert forall k:: 0 <= k < |y| ==> y[k].IsValid();
           var z := BuildProofObject(y);
           print "Dafny Proof Object:\n";
           PrintProofObjectToDafny(z, libOpt);
@@ -156,72 +156,14 @@ module Driver {
         }
 
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
-          //    @todo figure out how to merge the following two branches
-          //    there is a lot of redundancy,
-          if rawOpt {
-            //  Build CFG upto depth
-            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := false);
-            assert a1.IsValid();
-            //  Number of invalid segments reachable in the CFG
-            var k := Filter(a1.states, (s: GState) requires s in a1.states => s.EGState? && s.IsBounded(|prog.xs|) && prog.xs[s.segNum].INVALIDSeg?);
-            print "/*\n";
-            print "maxDepth is:", cfgDepthOpt, "\n";
-            print s1.PrettyPrint();
-            print "# of reachable invalid segments is: ", |k|, "\n";
-            print "Size of CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
-            print "Raw CFG\n";
-            print "*/\n";
-
-            a1.ToDot(
-              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
-              prefix :=
-                "graph[labelloc=\"t\", labeljust=\"l\", label=<"
-                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
-                + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
-            );
-            print "//----------------- Raw CFG -------------------\n";
-          } else {
-            //  Minimise
-            var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := true);
-            assert a1.IsValid();
-            //  Number of invalid segments reachable in the CFG
-            var k := Filter(a1.states, (s: GState) requires s in a1.states => s.EGState? && s.IsBounded(|prog.xs|) && prog.xs[s.segNum].INVALIDSeg?);
-            print "/*\n";
-            print "maxDepth is:", cfgDepthOpt, "\n";
-            print s1.PrettyPrint();
-            print "# of reachable invalid segments is: ", |k|, "\n";
-            print "Size of non minimised CFG: ", s1.nonMinimisedSize.0, " nodes, ", s1.nonMinimisedSize.1, " edges\n";
-            print "Size of minimised CFG: ", a1.SSize(), " nodes, ", a1.TSize(), " edges\n";
-            print "Minimised CFG\n";
-            print "*/\n";
-            a1.ToDot(
-              nodeToString := s requires s in a1.states => prog.ToHTML(s, !noTable),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => prog.DotLabel(s, l),
-              prefix :=
-                "graph[labelloc=\"t\", labeljust=\"l\", fontname=\"Arial\", label=<"
-                + MakeTitle(name, a1.SSize(),a1.TSize(), cfgDepthOpt, s1.maxDepthReached)
-                + ">]\n"
-                + "node [shape=none, fontname=arial, style=\"rounded, filled\", fillcolor= \"whitesmoke\"]\nedge [fontname=arial]\nranking=TB"
-            );
-            print "//----------------- Minimised CFG -------------------\n";
-          }
-        } else {
-          if optionParser.GetArgs("--cfg", optArgs).Success? {
-            print "No segment found or --cfg argument is 0 or segment 0 does not start at pc=0\n";
-          }
+          var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := !rawOpt);
+          assert a1.IsValid();
+          var cfgObj := CFGObj(prog, cfgDepthOpt, a1, !rawOpt, s1);
+          assert cfgObj.IsValid();
+          cfgObj.ToDot(noTable, name);
         }
       }
     }
-  }
-
-  function MakeTitle(name: string, numNodes: nat, numEdges: nat, maxDepth: nat, reached: bool): string
-  {
-    "<B>Program Name: </B> " + name + "<BR ALIGN=\"left\"/>"
-    + "<B>Control Flow Graph Info: </B><BR ALIGN=\"left\"/>"
-    + "Max depth: " + Int.NatToString(maxDepth) +  " [" + (if reached then "Was reached" else "Was not reached") + "]" + "<BR ALIGN=\"left\"/>"
-    + Int.NatToString(numNodes) + " nodes/"
-    + Int.NatToString(numEdges) + " edges<BR ALIGN=\"left\"/>"
   }
 
 }

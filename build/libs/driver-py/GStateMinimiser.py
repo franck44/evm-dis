@@ -49,7 +49,7 @@ class ValidPair:
 
     @staticmethod
     def default():
-        return Pair_Pair((Automata.Auto_Auto(_dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({}))).AddState(default__.DEFAULT__STATE), PartitionMod.default__.MakeInit(1))
+        return Pair_Pair((Automata.Auto_Auto(_dafny.Map({}), _dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({}))).AddState(default__.DEFAULT__STATE), PartitionMod.default__.MakeInit(1))
 
 class Pair:
     @classmethod
@@ -74,7 +74,7 @@ class Pair:
 
     def Minimise(self):
         d_857_p1_ = Pair.IterSplit(self)
-        return (d_857_p1_).MapToClasses(Automata.Auto_Auto(_dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({})), 0)
+        return (d_857_p1_).MapToClasses(Automata.Auto_Auto(_dafny.Map({}), _dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({})), 0)
 
     def MapToClasses(self, acc, index):
         if (index) == (len(((self).aut).states)):
@@ -95,8 +95,8 @@ class Pair:
                 if (len(((d_861_p1_).clazz).elem)) == (len(((pp).clazz).elem)):
                     return pp
                 elif True:
-                    in109_ = d_861_p1_
-                    pp = in109_
+                    in112_ = d_861_p1_
+                    pp = in112_
                     raise _dafny.TailCall()
                 break
 

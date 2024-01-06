@@ -34,6 +34,7 @@ import HTML
 import EVMObject
 import ArgParser
 import ProofObjectBuilder
+import CFGObject
 import Driver
 
 # Module: module_

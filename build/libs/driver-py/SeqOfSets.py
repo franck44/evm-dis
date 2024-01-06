@@ -42,8 +42,8 @@ class default__:
                     return (_dafny.Set({})) | (d_820___accumulator_)
                 elif True:
                     d_820___accumulator_ = (d_820___accumulator_) | ((xs)[0])
-                    in88_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in88_
+                    in91_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in91_
                     raise _dafny.TailCall()
                 break
 
@@ -70,10 +70,10 @@ class default__:
                     return (d_822___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
                     d_822___accumulator_ = (d_822___accumulator_) + (_dafny.SeqWithoutIsStrInference([default__.SplitSet((xs)[0], f)]))
-                    in89_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in90_ = f
-                    xs = in89_
-                    f = in90_
+                    in92_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in93_ = f
+                    xs = in92_
+                    f = in93_
                     raise _dafny.TailCall()
                 break
 
@@ -82,11 +82,11 @@ class default__:
         d_823___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
-                pat_let_tv5_ = s
+                pat_let_tv4_ = s
                 if (s) == (_dafny.Set({})):
                     return (d_823___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    def iife12_(_let_dummy_6):
+                    def iife6_(_let_dummy_3):
                         d_824_x_: int = None
                         with _dafny.label("_ASSIGN_SUCH_THAT_d_0"):
                             assign_such_that_0_: int
@@ -100,8 +100,8 @@ class default__:
                                     raise _dafny.Break("_ASSIGN_SUCH_THAT_d_0")
                             raise Exception("assign-such-that search produced no value (line 218)")
                             pass
-                        return (_dafny.SeqWithoutIsStrInference([d_824_x_])) + (default__.SetToSequence((pat_let_tv5_) - (_dafny.Set({d_824_x_}))))
-                    return iife12_(0)
+                        return (_dafny.SeqWithoutIsStrInference([d_824_x_])) + (default__.SetToSequence((pat_let_tv4_) - (_dafny.Set({d_824_x_}))))
+                    return iife6_(0)
                     
                 break
 
@@ -112,28 +112,28 @@ class default__:
                 if (len(xs)) == (index):
                     return (cTrue, cFalse)
                 elif f((xs)[index]):
-                    in91_ = xs
-                    in92_ = f
-                    in93_ = (cTrue) | (_dafny.Set({(xs)[index]}))
-                    in94_ = cFalse
-                    in95_ = (index) + (1)
-                    xs = in91_
-                    f = in92_
-                    cTrue = in93_
-                    cFalse = in94_
-                    index = in95_
+                    in94_ = xs
+                    in95_ = f
+                    in96_ = (cTrue) | (_dafny.Set({(xs)[index]}))
+                    in97_ = cFalse
+                    in98_ = (index) + (1)
+                    xs = in94_
+                    f = in95_
+                    cTrue = in96_
+                    cFalse = in97_
+                    index = in98_
                     raise _dafny.TailCall()
                 elif True:
-                    in96_ = xs
-                    in97_ = f
-                    in98_ = cTrue
-                    in99_ = (cFalse) | (_dafny.Set({(xs)[index]}))
-                    in100_ = (index) + (1)
-                    xs = in96_
-                    f = in97_
-                    cTrue = in98_
-                    cFalse = in99_
-                    index = in100_
+                    in99_ = xs
+                    in100_ = f
+                    in101_ = cTrue
+                    in102_ = (cFalse) | (_dafny.Set({(xs)[index]}))
+                    in103_ = (index) + (1)
+                    xs = in99_
+                    f = in100_
+                    cTrue = in101_
+                    cFalse = in102_
+                    index = in103_
                     raise _dafny.TailCall()
                 break
 

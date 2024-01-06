@@ -109,7 +109,7 @@ module HTML {
   }
 
   /**   Print the content of a segment. */
-  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat): (string, string)
+  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat, minStackSize: Option<nat>): (string, string)
   {
     //  Jump target
     var jumpTip :=
@@ -125,20 +125,21 @@ module HTML {
 
         } else "";
     var stackSizeEffect := "Stack Size " + DELTA_SYMBOL + " : " + Int.IntToString(s.StackEffect());
-    var mninNumOpe := LINE_FEED_SYMBOL + "Stack Size on Entry " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands());
+    var minNumOpe := LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands());
+    var minNumOpAtNode :=  if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "";
     var prefix := "<B>Segment "
                   + Int.NatToString(numSeg)
                   + " [0x"
                   + Hex.NatToHex(s.StartAddress())
                   + "]</B><BR ALIGN=\"CENTER\"/>\n";
     var body := Instructions.ToDot(s.Ins());
-    (prefix + body, stackSizeEffect +  jumpTip + mninNumOpe)
+    (prefix + body, stackSizeEffect +  jumpTip + minNumOpe + minNumOpAtNode)
   }
 
   /**
     *   Print content of a segment in a table with tooltips.
     */
-  function DOTSegTable(s: ValidLinSeg, numSeg: nat): string
+  function DOTSegTable(s: ValidLinSeg, numSeg: nat, minStackSize: Option<nat>): string
   {
 
     //  Jump target
@@ -161,7 +162,8 @@ module HTML {
                   + "]</TD>"
                   + "<TD"
                   + " href=\"\" tooltip=\"Stack Size " + DELTA_SYMBOL + ": " + Int.IntToString(s.StackEffect())
-                  + LINE_FEED_SYMBOL + "Stack Size on Entry " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands())
+                  + LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands())
+                  + (if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "")
                   + jumpTip
                   + "\""
                   + "><FONT color=\"green\">" + INFO_SYMBOL  + "</FONT></TD>"

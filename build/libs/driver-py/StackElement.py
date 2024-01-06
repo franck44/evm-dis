@@ -21,15 +21,15 @@ class default__:
 
     @staticmethod
     def StackToString(s):
-        d_135___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_136___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(s)) == (0):
-                    return (d_135___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Ø")))
+                    return (d_136___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Ø")))
                 elif True:
-                    d_135___accumulator_ = (d_135___accumulator_) + ((((s)[0]).ToString()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
-                    in14_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in14_
+                    d_136___accumulator_ = (d_136___accumulator_) + ((((s)[0]).ToString()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
+                    in18_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in18_
                     raise _dafny.TailCall()
                 break
 
@@ -49,11 +49,11 @@ class StackElem:
     def ToString(self):
         source26_ = self
         if source26_.is_Value:
-            d_136___mcc_h0_ = source26_.v
-            d_137_v_ = d_136___mcc_h0_
-            return (((Int.default__.NatToString(d_137_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_137_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+            d_137___mcc_h0_ = source26_.v
+            d_138_v_ = d_137___mcc_h0_
+            return (((Int.default__.NatToString(d_138_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_138_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
         elif True:
-            d_138___mcc_h1_ = source26_.s
+            d_139___mcc_h1_ = source26_.s
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
 
     def Extract(self):

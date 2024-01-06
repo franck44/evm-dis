@@ -212,6 +212,12 @@ module Instructions {
     { // Thanks Dafny
     }
 
+    lemma WeakestPreOperandsMonotonic(k: nat, k': nat) 
+        requires k <= k'
+        ensures WeakestPreOperands(k) <= WeakestPreOperands(k')
+    { // Thanks Dafny
+    }
+
     /**
       *  Determine the minimum of capacity needed before the
       *  instruction is executed to ensure that

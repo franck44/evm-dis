@@ -300,7 +300,7 @@ class default__:
         elif (op) == (242):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CALLCODE")), EVMConstants.default__.CALLCODE, 1, 7, 1, 7)
         elif (op) == (243):
-            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURN")), EVMConstants.default__.RETURN, 0, 2, 0, 0)
+            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURN")), EVMConstants.default__.RETURN, 0, 2, 0, 2)
         elif (op) == (244):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "DELEGATECALL")), EVMConstants.default__.DELEGATECALL, 1, 6, 1, 6)
         elif (op) == (245):
@@ -308,7 +308,7 @@ class default__:
         elif (op) == (250):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "STATICCALL")), EVMConstants.default__.STATICCALL, 1, 6, 1, 6)
         elif (op) == (253):
-            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "REVERT")), EVMConstants.default__.REVERT, 0, 2, 0, 0)
+            return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "REVERT")), EVMConstants.default__.REVERT, 0, 2, 0, 2)
         elif (op) == (255):
             return EVMOpcodes.Opcode_SysOp(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "SELFDESTRUCT")), EVMConstants.default__.SELFDESTRUCT, 0, 1, 0, 1)
         elif True:

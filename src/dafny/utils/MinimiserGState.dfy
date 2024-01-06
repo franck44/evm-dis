@@ -19,7 +19,7 @@ include "./CFGState.dfy"
 /**  
   * Provides minimisation of finite deterministic automata
   * with states of type GState.
-  */
+  */ 
 module GStateMinimiser refines Minimiser {
 
   import opened CFGState 

@@ -98,14 +98,13 @@ module EVMObject {
       * @param s The abstract state.
       * @returns The next abstract states.
       *
-      * @note   This function is _inductive_ in the sense of the Inductive predicate (see BuildCFG).
       */
     function {:opaque} NextG(s: GState): (r: seq<GState>)
       requires this.IsValid()
       requires s.IsBounded(|xs|)
       ensures forall k:: 0 <= k < |r| ==> r[k].IsBounded(|xs|)
       ensures |r| > 0 ==> s.EGState?
-      ensures  s.EGState?  ==> |r| == xs[s.segNum].NumberOfExits()
+      ensures s.EGState?  ==> |r| == xs[s.segNum].NumberOfExits()
       ensures s.ErrorGState? ==> |r| == 0
     {
       match s
@@ -220,7 +219,7 @@ module EVMObject {
         else if PreservesCond(w1, exitsFromIndex, xs[i].StartAddress()) then
           Some(index)
         //  Try a potential second occurrence of segment i on the path
-        else if 0 < |pathFromIndex| then // < |pStates| then
+        else if 0 < |pathFromIndex| then
           assert forall i:: 0 <= i < |exitsFromIndex| ==> exitsFromIndex[i] < |NextG(pathFromIndex[i])|;
           SafeLoopFound(i, pathFromIndex[1..], exitsFromIndex[1..])
         else None
@@ -258,7 +257,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:timeLimitMultiplier 2} DFS(
+    method {:timeLimitMultiplier 6} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
@@ -278,8 +277,8 @@ module EVMObject {
 
       decreases maxDepth
     {
-      var LastOnPath := Last(p.states);
-      if maxDepth == 0 || LastOnPath.ErrorGState? {
+      var lastOnPath := Last(p.states);
+      if maxDepth == 0 || lastOnPath.ErrorGState? {
         //  stop the construction of the automaton.
         var stats' := if maxDepth == 0 then stats.SetMaxDepth() else stats;
         return a, stats';
@@ -288,36 +287,41 @@ module EVMObject {
         // DFS from last state on the path
         a' := a;
         stats' := stats;
-        for i := 0 to |NextG(LastOnPath)|
+        for i := 0 to |NextG(lastOnPath)|
           invariant a'.IsValid()
           invariant forall s:: s in a'.states ==> NextG.requires(s)
           invariant forall s:: s in p.states ==> s in a'.states
         {
-          var i_th_succ := NextG(LastOnPath)[i];
+          var i_th_succ := NextG(lastOnPath)[i];
           if i_th_succ.ErrorGState? {
-            a', stats' := a'.AddEdge(LastOnPath, i_th_succ), stats'.IncError();
+            a', stats' := a'.AddEdge(lastOnPath, i_th_succ), stats'.IncError();
           } else if i_th_succ in a'.indexOf {
-            a', stats' := a'.AddEdge(LastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
-          } else if !xs[LastOnPath.segNum].IsJump() {
+            a', stats' := a'.AddEdge(lastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
+          } else if !xs[lastOnPath.segNum].IsJump() {
             //  not already seen and not a jump
-            assert i_th_succ !in a'.indexOf;
+            var j: ValidAuto<GState> := a'.AddEdge(lastOnPath, i_th_succ);
+            PathHelperLemma(p, i_th_succ, i);
+            var p' := Path(p.states + [i_th_succ], p.exits + [i]);
+            assert |p'.exits| + 1 == |p'.states|;
+
             a', stats' := DFS(
-              Path(p.states + [i_th_succ], p.exits + [i]),
-              a'.AddEdge(LastOnPath, i_th_succ),
+              p',
+              j,
               maxDepth - 1,
               debugInfo,
               stats');
           } else {
+            PathHelperLemma(p, i_th_succ, i);
             assert i_th_succ.EGState?;
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
-                //  s' is the state that covers LastOnPath
-                a', stats' := a'.AddEdge(LastOnPath, p.states[index]), stats'.IncWpre();
+                //  s' is the state that covers lastOnPath
+                a', stats' := a'.AddEdge(lastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
                 a', stats' := DFS(
                   Path(p.states + [i_th_succ], p.exits + [i]),
-                  a'.AddEdge(LastOnPath, i_th_succ),
+                  a'.AddEdge(lastOnPath, i_th_succ),
                   maxDepth - 1,
                   debugInfo,
                   stats');
@@ -325,6 +329,20 @@ module EVMObject {
           }
         }
       }
+    }
+
+    lemma PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
+      requires this.IsValid()
+      requires  |p.states| == |p.exits| + 1
+      requires forall k:: 0 <= k < |p.states| ==> p.states[k].IsBounded(|xs|)
+      requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
+      requires (forall k:: 0 <= k < |p.exits| ==> p.states[k + 1] == NextG(p.states[k])[p.exits[k]])
+      requires i < |NextG(Last(p.states))|
+      requires i_th_succ == NextG(Last(p.states))[i]
+      ensures var p' := Path(p.states + [i_th_succ], p.exits + [i]);
+              && (forall k:: 0 <= k < |p'.exits| ==> p'.exits[k] < |NextG(p'.states[k])|)
+              && (forall k:: 0 <= k < |p'.exits| ==> p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]])
+    {   //  Thanks Dafny
     }
 
     /** 
@@ -372,7 +390,7 @@ module EVMObject {
     /**
       * Generate the HTML representation of a given abstract state.
       */
-    function {:opaque} ToHTML(a: GState, withTable: bool := false): string
+    function {:opaque} ToHTML(a: GState, withTable: bool := false, minStackSizeForState: Option<nat> := None): string
       requires this.IsValid()
       requires a.IsBounded(|xs|) // a.EGState? ==> a.segNum < |xs|
     {
@@ -381,9 +399,9 @@ module EVMObject {
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else if withTable then
-        "<" + DOTSegTable(xs[a.segNum], a.segNum) +">"
+        "<" + DOTSegTable(xs[a.segNum], a.segNum, minStackSizeForState) +">"
       else
-        "<" + DOTSeg(xs[a.segNum], a.segNum).0 +">"
+        "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState).0 +">"
     }
 
     /**
@@ -407,8 +425,132 @@ module EVMObject {
     }
 
     /**
-     *  Print info for the bytecode.
-     */
+      *  Compute a fixpoint on the states of an automaton.
+      *  @param  xu The set of states to update.
+      *  @param  xc The current values of the states.
+      *  @param  maxIter The maximum number of iterations.
+      *  @returns Either the new values of the states or the old values.
+      */
+    function {:timeLimitMultiplier 3} Fix(a: ValidAuto<GState>, wpre0: seq<nat>, xu: set<nat>, xc: seq<nat>, maxIter: nat): (r: Either<seq<nat>, seq<nat>>)
+      requires a.IsValid()
+      requires HasNoErrorState(a)
+      requires forall s:: s in a.states ==> s.IsBounded(|this.xs|)
+      requires |wpre0| == |xc| == |a.states|
+      requires forall x:: x in xu ==> 0 <= x < |a.states|
+      requires forall k:: 0 <= k < |xc| ==> a.states[k].segNum < |xs|
+      requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
+      ensures r.Left? ==> |r.l| == |xc|
+      ensures r.Right? ==> |r.r| == |xc|
+    //   ensures r.Left? ==> (forall k:: 0 <= k < |xc| ==> r.l[k] >= xc[k])
+    //   ensures r.Right? ==> (forall k:: 0 <= k < |xc| ==> r.r[k] >= xc[k])
+      decreases maxIter
+    {
+      if xu == {} then Left(xc)
+      else if maxIter == 0 then Right(xc)
+      else
+        // compute the new values
+        var newV := UpdateValues(a, wpre0, xc, xu);
+        Fix(a, wpre0, newV.1, newV.0, maxIter - 1)
+    }
+
+    /**
+      * 
+      * @param   a       The automaton.
+      * @param   wpre0   The values fo the weakest pre operands for the segment of the stateId.
+      * @param   xc      The current values of the weakest pre operands for the stateIds.
+      * @param   xu      The set of indices of stateIds to update.
+      * @param   newxc   The new values of the weakest pre operands for the stateIds.
+      * @param   newxu   The set of indices of stateIds to update in the next round.
+      * @param   index   The current index in the list of stateIds.
+      *
+      * @note            We should prove that the new values newxc 
+      *                  are greater or equal than the old ones. This is not a trivial 
+      *                  proof as it would require to keep track of previous  values (possibly 
+      *                  in a ghost variable). The jey ingredient is that if index is in xu
+      *                  then it must be that one of its successors has been updated in the previous 
+      *                  round and has a larger value. As a resul the max m is larger than before 
+      *                 and the new value d is larger than before.  
+      *                 I have left the proof as a todo and some commented out assertions 
+      *                 and lemmas that can bse used.
+      */
+    function {:timeLimitMultiplier 2} UpdateValues(a: ValidAuto<GState>, wpre0: seq<nat>, xc: seq<nat>, xu: set<nat>, newxc: seq<nat> := [], newxu: set<nat> := {}, index: nat := 0): (r: (seq<nat>, set<nat>))
+      requires a.IsValid()
+      requires HasNoErrorState(a)
+      requires index <= |xc|
+      requires forall s:: s in a.states ==> s.IsBounded(|this.xs|)
+      requires forall x:: x in xu ==> 0 <= x < |a.states|
+      requires forall k:: k in newxu ==> k < |a.states|
+      requires |wpre0| == |xc| == |a.states|
+      requires |newxc| == index
+    //   requires forall k :: 0 <= k < |newxc| ==> newxc[k] >= xc[k]
+      requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
+      ensures |r.0| == |a.states|
+    //   ensures forall k:: 0 <= k < |r.0| ==> r.0[k] >= xc[k]
+      ensures forall k:: k in r.1 ==> k < |a.states|
+      decreases |xc| - index
+    {
+      if |xc| == index then (newxc, newxu)
+      else
+        //  update stateId index
+        var n :=
+          if index in xu then
+            //    We have to re-evaluate the value of xc[index]
+            var seg := xs[a.states[index].segNum];
+            //    Collect max of successors of i
+            assert forall k:: k in a.SuccNat(index) ==> k < |xc|;
+            var succWPre := MapP(a.SuccNat(index), i requires 0 <= i < |xc| => xc[i]) ;
+            var m := MaxNatSeq(succWPre);
+            assert xs[a.states[index].segNum].WeakestPreOperands() == wpre0[index];
+            var d := seg.FastWeakestPreOperands(m, wpre0[index]);
+            // assume m >= xc[index];
+            // seg.WeakestPreMonotonic(seg.Ins(), xc[index], m, wpre0[index]);
+            // assume d >= xc[index];
+            (d, if d > xc[index] then SeqToSet(a.PredNat(index)) else {})
+          else
+            //    predecessors of i are not scheduled for re-evaluation
+            (xc[index], {})
+          ;
+
+        UpdateValues(a, wpre0, xc, xu, newxc + [n.0], newxu + n.1, index + 1)
+    }
+
+    static function MaxNat(a: nat, b: nat) : nat {
+      if a > b then a else b
+    }
+
+    static function MaxNatSeq(xs: seq<nat>): (r: nat)
+      ensures forall k:: 0 <= k < |xs| ==> xs[k] <= r
+      ensures forall k:: k in xs ==> k <= r
+    {
+      if |xs| == 0 then 0
+      else
+        MaxNat(xs[0], MaxNatSeq(xs[1..]))
+    }
+
+    function {:timeLimitMultiplier 2} ComputeWPreOperands(a: ValidAuto<GState>): (r: Either<seq<nat>, seq<nat>>)
+      requires a.IsValid()
+      requires HasNoErrorState(a)
+      requires forall s :: s in a.states ==> s.IsBounded(|this.xs|)
+      ensures r.Left? ==> |r.l| == |a.states|
+      ensures r.Right? ==> |r.r| == |a.states|
+    {
+      // Compute the initial values
+      var wpre0 := MapP(seq(|a.states|,i => i), i requires 0 <= i < |a.states| => xs[a.states[i].segNum].WeakestPreOperands());
+      //    surprinsingly enough the following does not typecheck as
+      //    the result cannot be inferred to be of tyope seq<nat>, although
+      //    WeakestPreOperands() returns a nat.
+      //   var wpre2 : seq<nat> := seq(|a.states|, i requires 0 <= i < |a.states| => xs[a.states[i].segNum].WeakestPreOperands());
+      //   Fix(a, wpre0, (set z  {:nowarn} | 0 <= z < |a.states|), wpre0, |a.states|)
+      Fix(a, wpre0, (set z  {:nowarn} | 0 <= z < |a.states|), wpre0, |a.states| + 1)
+    }
+
+    predicate HasNoErrorState(a: ValidAuto<GState>) {
+      forall s:: s in a.states ==> s.EGState?
+    }
+
+    /**
+      *  Print info for the bytecode.
+      */
     method {:print} PrintByteCodeInfo() {
       var listIns: seq<Instructions.ValidInstruction> :=  Flatten(Map(xs, (s: ValidLinSeg) => s.Ins()));
       print "Bytecode Size: ", Size(), " Bytes\n";
@@ -430,16 +572,16 @@ module EVMObject {
     }
 
     /**
-     *  Print info for the segnments of the bytecode.
-     */
+      *  Print info for the segnments of the bytecode.
+      */
     method PrintSegmentInfo() {
-        print "Total number of segments: ", |xs|, "\n";
-        print "# of JUMP segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPSeg?)|, "\n";
-        print "# of JUMPI segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPISeg?)|, "\n";
-        print "# of RETURN segments: ", |Filter(xs, (s: ValidLinSeg) => s.RETURNSeg?)|, "\n";
-        print "# of STOP segments: ", |Filter(xs, (s: ValidLinSeg) => s.STOPSeg?)|, "\n";
-        print "# of CONT segments: ", |Filter(xs, (s: ValidLinSeg) => s.CONTSeg?)|, "\n";
-        print "# of INVALID segments: ", |Filter(xs, (s: ValidLinSeg) => s.INVALIDSeg?)|, "\n";
+      print "Total number of segments: ", |xs|, "\n";
+      print "# of JUMP segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPSeg?)|, "\n";
+      print "# of JUMPI segments: ", |Filter(xs, (s: ValidLinSeg) => s.JUMPISeg?)|, "\n";
+      print "# of RETURN segments: ", |Filter(xs, (s: ValidLinSeg) => s.RETURNSeg?)|, "\n";
+      print "# of STOP segments: ", |Filter(xs, (s: ValidLinSeg) => s.STOPSeg?)|, "\n";
+      print "# of CONT segments: ", |Filter(xs, (s: ValidLinSeg) => s.CONTSeg?)|, "\n";
+      print "# of INVALID segments: ", |Filter(xs, (s: ValidLinSeg) => s.INVALIDSeg?)|, "\n";
     }
 
   }
