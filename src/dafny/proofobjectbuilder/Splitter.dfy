@@ -31,7 +31,7 @@ module Splitter {
   /**
     *   Determine the type of the segment according to the last instruction.
     *   @returns    A segment with instructions xs + [lastIns].
-    */ 
+    */
   function BuildSeg(xs: seq<ValidInstruction>, lastInst: ValidInstruction): ValidLinSeg
     requires forall i:: 1 <= i <= |xs| ==> (xs + [lastInst])[i].op.opcode != JUMPDEST
   {
@@ -63,7 +63,7 @@ module Splitter {
     *   @note   Build a LinSeg for each section ending with a Jump or 
     *           until end of sequence.
     */
-  function {:opaque} SplitUpToTerminal(xs: seq<ValidInstruction>, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): (r: seq<ValidLinSeg>)
+  function {:opaque} SplitUpToTerminal(xs: seq<ValidInstruction>, maxSegSize: Option<nat> := None, curseq: seq<ValidInstruction> := [], collected: seq<ValidLinSeg> := []): (r: seq<ValidLinSeg>)
     requires forall i, i':: 0 <= i < i' < |xs| ==> xs[i].address < xs[i'].address
     requires forall i:: 1 <= i < |curseq| ==> curseq[i].op.opcode != JUMPDEST
     requires forall i:: 0 <= i < |collected| ==> |collected[i].Ins()| > 0
@@ -86,21 +86,24 @@ module Splitter {
     else if xs[0].op.opcode == JUMPDEST then
       // Check if curseq is empty or not
       if |curseq| == 0 then
-        SplitUpToTerminal(xs[1..], [xs[0]], collected)
+        SplitUpToTerminal(xs[1..], maxSegSize, [xs[0]], collected)
       else
-        //  If curseq not empty, build a segemtnwith curseq and add it to collected
+        //  If curseq not empty, build a segment with curseq and add it to collected
         var newSeg := BuildSeg(curseq[..|curseq| - 1], curseq[|curseq| - 1]);
-        SplitUpToTerminal(xs[1..], [xs[0]], collected + [newSeg])
+        SplitUpToTerminal(xs[1..], maxSegSize, [xs[0]], collected + [newSeg])
     else if xs[0].IsTerminal() then
       //    x[0] is a terminal instruction
       assert xs[0].op.opcode != JUMPDEST;
       //    Build a segment and start with empty curseq
       var newSeg := BuildSeg(curseq, xs[0]);
-      SplitUpToTerminal(xs[1..], [], collected + [newSeg])
+      SplitUpToTerminal(xs[1..], maxSegSize , [], collected + [newSeg])
+    else if maxSegSize.Some? && |curseq| >= maxSegSize.v then
+      var newSeg := BuildSeg(curseq, xs[0]);
+      SplitUpToTerminal(xs[1..], maxSegSize, [], collected + [newSeg])
     else
       //  x[0] is not a terminal instruction
       assert !xs[0].IsTerminal() && xs[0].op.opcode != JUMPDEST;
-      SplitUpToTerminal(xs[1..], curseq + [xs[0]], collected)
+      SplitUpToTerminal(xs[1..], maxSegSize, curseq + [xs[0]], collected)
   }
 
 }
