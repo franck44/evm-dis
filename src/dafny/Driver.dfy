@@ -61,7 +61,7 @@ module Driver {
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
     optionParser.AddOption("-r", "--raw", 0, "Display non-minimised and minimised CFGs");
-    optionParser.AddOption("-f", "--fancy", 0, "Use exit and entry ports in segments do draw arrows.");
+    optionParser.AddOption("-z", "--size", 1, "The max size of segments. Default is upto terminal instructions or JUMPDEST.");
     optionParser.AddOption("-n", "--notable", 0, "Don't use tables to pretty-print DOT file. Reduces size of the DOT file.");
     optionParser.AddOption("-t", "--title", 1, "The name of the program.");
     optionParser.AddOption("-i", "--info", 0, "The stats of the program (size, segments).");
@@ -117,12 +117,16 @@ module Driver {
           case Failure(_) => 0;
         var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
         var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
-        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false;
-        var fancy := if optionParser.GetArgs("--fancy", optArgs).Success? then true else false;
+        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false; 
+        var maxSegSize :=
+          match optionParser.GetArgs("--size", optArgs) 
+          case Success(args) =>  if |args[0]| >= 1 && IsNatNumber(args[0]) then Some(StringToNat(args[0])) else None
+          case Failure(_) => None;
+
         var name: string :=
           match optionParser.GetArgs("--title", optArgs)
           case Success(args) => args[0]
-          case Failure(_) => "Name not set";
+          case Failure(_) => "Name not set"; 
 
         //    Process options
         if disOpt {
@@ -131,7 +135,7 @@ module Driver {
           print "--------------- Disassembled ---------------------\n";
         }
 
-        var y := SplitUpToTerminal(x, [], []);
+        var y := SplitUpToTerminal(x, maxSegSize);
         var prog := EVMObj(y);
 
         if info {
@@ -164,7 +168,11 @@ module Driver {
           assert cfgObj.IsValid();
 
           if proofOpt {
-            cfgObj.ToDafny(pathToEVMDafny := libOpt);
+            if cfgObj.HasNoErrorState() {
+                cfgObj.ToDafny(pathToEVMDafny := libOpt);
+            } else {
+                print "The CFG has some error states and the Dafny proof object cannot be generated\n";
+            }
           } else {
             cfgObj.ToDot(noTable, name);
           }
