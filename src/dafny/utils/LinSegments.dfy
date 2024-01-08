@@ -218,11 +218,11 @@ module LinSegments {
       *  The weakest pre is a monotonic function of the target k.
       */
     lemma WeakestPreMonotonic(xs: seq<Instruction> , k: nat, k': nat, wpre0: nat)
-      requires this.IsValid() 
+      requires this.IsValid()
       requires wpre0 == WeakestPreOperands()
       requires k' >= k
       ensures WeakestPreOperands(xs, k') >= WeakestPreOperands(xs, k) >= WeakestPreOperands(xs, 0)
-      ensures FastWeakestPreOperands(k', wpre0) >= FastWeakestPreOperands(k, wpre0) 
+      ensures FastWeakestPreOperands(k', wpre0) >= FastWeakestPreOperands(k, wpre0)
     {
       reveal_WeakestPreOperands();
       reveal_FastWeakestPreOperands();
@@ -345,6 +345,19 @@ module LinSegments {
       requires this.IsValid()
     {
       k == 0 || (this.JUMPISeg? && k == 1)
+    }
+
+    /**
+      *  Whether this segment is a JUMP.
+      */
+    function SegTypeName(): string {
+      match this
+      case JUMPSeg(_, _, _) => "JUMP Segment"
+      case JUMPISeg(_,_, _) => "JUMPI Segment"
+      case RETURNSeg(_, _, _) => "RETURN Segment"
+      case STOPSeg(_, _, _) => "STOP Segment"
+      case CONTSeg(_, _, _) => "CONT Segment"
+      case INVALIDSeg(_, _, _) => "INVALID Segment"
     }
 
   }
