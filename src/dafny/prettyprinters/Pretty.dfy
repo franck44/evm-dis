@@ -232,8 +232,8 @@ module PrettyPrinters {
   method PrintInstructionsToDafny(xs:seq<ValidInstruction>, pos: nat := 0)
   {
     if |xs| > 0 {
-      var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
-      print "  ", k, "\n";
+        var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
+        print "  ", k, "\n";
       PrintInstructionsToDafny(xs[1..], pos + 1);
     }
   }
