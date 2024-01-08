@@ -43,7 +43,7 @@ module RuNSegTests {
       //  Push and JUMP
       var x := DisassembleU8([PUSH1, 0x0a, PUSH1, 0x08, PUSH1, 0x03, SWAP1, PUSH1, 0x13, JUMP] );
       expect |x| == 6;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 1;
       
       expect y[0].JUMPSeg?;
@@ -64,7 +64,7 @@ module RuNSegTests {
     //  Linear segment
     var x := DisassembleU8([POP, DUP1]);
     expect |x| == 2;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 1;
     expect y[0].CONTSeg?;
     //    Run Segment exit 1. Should be Error
@@ -86,7 +86,7 @@ module RuNSegTests {
   /**   Run more than one segment
     *   max-return.bin program
     */
-  method {:test} {:verify false} Test5()
+  method {:test} {:verify true} Test5()
   {
     //  Linear segment
     var x := DisassembleU8(
@@ -129,7 +129,7 @@ module RuNSegTests {
       ]
     );
     expect |x| == 31;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 5;
     expect y[0].JUMPSeg?;
     expect y[1].RETURNSeg?;
@@ -171,7 +171,7 @@ module RuNSegTests {
     expect s4.pc == y[1].StartAddress();
     var s5 := y[1].Run(s4, 0, jd);
     expect s5.EState?;
-    expect s5 == EState(0x12 + 1, [Random(), Random()]);
+    expect s5 == EState(0x12 + 1, []);
 
     //  Now test JUMPI false (we go directly to successor of JUMPI)
     //  y[2] starts at 0x13, and JUMPI
@@ -182,7 +182,7 @@ module RuNSegTests {
 
     //  y[3] starts at 0x1c, and JUMP
     expect s2'.pc == y[3].StartAddress();
-    var s3' := y[3].Run(s2', 1, jd);
+    var s3' := y[3].Run(s2', 0, jd);
     expect s3'.EState?;
     expect s3' == EState(0x0a,  [Random()]);
 
@@ -243,7 +243,7 @@ module RuNSegTests {
     );
 
     expect |x| == 36;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 6;
     expect y[0].JUMPSeg?;
     expect y[1].JUMPSeg?;

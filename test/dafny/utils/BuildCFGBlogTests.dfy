@@ -54,7 +54,7 @@ module BuildCFGBlogTests {
       );
 
       expect |x| == 11;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
       expect |y| == 4;
       expect y[0].StartAddress() == 0x00;
@@ -92,7 +92,7 @@ module BuildCFGBlogTests {
       ]);
 
     expect |x| == 6;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
 
     expect |y| == 2;
@@ -115,7 +115,7 @@ module BuildCFGBlogTests {
   method {:test} {:verify false} Test6()
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
 
     var p := EVMObj(y);

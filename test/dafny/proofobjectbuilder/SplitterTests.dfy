@@ -402,7 +402,7 @@ module StackEffectTests {
       var r1 := i.StackEffect();
       var r2 := i.WeakestPreOperands(0);
       var r3 := i.WeakestPreCapacity(0);
-      expect r1 == 0;
+      expect r1 == -2;
       expect r2 == 2;
       expect r3 == 0;
     }
@@ -416,7 +416,7 @@ module StackEffectTests {
       var r1 := i.StackEffect();
       var r2 := i.WeakestPreOperands(0);
       var r3 := i.WeakestPreCapacity(0);
-      expect r1 == 0;
+      expect r1 == -2;
       expect r2 == 2;
       expect r3 == 0;
     }

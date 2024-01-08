@@ -37,7 +37,7 @@ module BuildCFGTests {
       //  Push and JUMP
       var x := DisassembleU8([PUSH1, 0x0a, PUSH1, 0x08, PUSH1, 0x03, SWAP1, PUSH1, 0x13, JUMP] );
       expect |x| == 6;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 1;
       expect y[0].StartAddress() == 0;
       var p := EVMObj(y);
@@ -99,7 +99,7 @@ module BuildCFGTests {
       ]
     );
     expect |x| == 31;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 5;
     expect y[1].StartAddress() == 0x0a;
     expect y[2].StartAddress() == 0x13;
@@ -122,7 +122,7 @@ module BuildCFGTests {
   method {:test} {:verify true} Test6()
   {
     var x := Disassemble("60126008600e6003600a92601b565b601b565b60405260206040f35b91908083106027575b50565b909150905f602456");
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| >= 1;
     var p: EVMObj := EVMObj(y);
     var g, _ := p.BuildCFG(10) ;

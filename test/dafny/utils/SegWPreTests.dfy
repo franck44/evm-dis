@@ -127,7 +127,7 @@ module SegWpreTests {
     //  Push and JUMP
     var x := DisassembleU8([PUSH1, 0x0a, PUSH1, 0x08, PUSH1, 0x03, SWAP1, PUSH1, 0x13, JUMP] );
     expect |x| == 6;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 1;
     expect y[0].JUMPSeg?;
 
@@ -156,7 +156,7 @@ module SegWpreTests {
     //  Linear segment
     var x := DisassembleU8([POP, DUP1]);
     expect |x| == 2;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 1;
     expect y[0].CONTSeg?;
 
@@ -197,7 +197,7 @@ module SegWpreTests {
     );
 
     expect |x| == 11;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     assert forall i, i' :: 0 <= i < i' < |y| ==> y[i].StartAddress() < y[i'].StartAddress();
     expect |y| == 4;
 
