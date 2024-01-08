@@ -87,6 +87,51 @@ module EVMObject {
       xs[i].StartAddress()
     }
 
+    /**
+      * Stack effect of segment i.
+      */
+    function StackEffect(i: nat): int
+      requires i < |xs|
+    {
+      xs[i].StackEffect()
+    }
+
+    /**
+      * Capacity effect of segment i.
+      */
+    function CapEffect(i: nat): int
+      requires i < |xs|
+    {
+      xs[i].NetCapEffect()
+    }
+
+    /**
+      * Min stack size on entry for segment i.
+      */
+    function WpOp(i: nat): nat
+      requires i < |xs|
+    {
+      xs[i].WeakestPreOperands()
+    }
+
+    /**
+      * Whether segment i is a JUMP/JUMPI.
+      */
+    predicate IsJump(i: nat)
+      requires i < |xs|
+    {
+      xs[i].IsJump()
+    }
+
+    /**
+      *  Minimum capacity on entry for segment i.
+      */
+    function WpCap(i: nat): nat
+      requires i < |xs|
+    {
+      xs[i].WeakestPreCapacity(0)
+    }
+
     /** The size of the program in bytes. */
     function Size(ls: seq<ValidLinSeg> := xs): nat {
       if |ls| == 0 then 0
@@ -257,7 +302,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:timeLimitMultiplier 6} DFS(
+    method {:print} {:timeLimitMultiplier 6} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
@@ -292,10 +337,16 @@ module EVMObject {
           invariant forall s:: s in a'.states ==> NextG.requires(s)
           invariant forall s:: s in p.states ==> s in a'.states
         {
+
           var i_th_succ := NextG(lastOnPath)[i];
+          //   if a'.states[a'.indexOf[i_th_succ]].segNum == 13 {
+          //     print i_th_succ.ToString(), "\n";
+          //   }
           if i_th_succ.ErrorGState? {
             a', stats' := a'.AddEdge(lastOnPath, i_th_succ), stats'.IncError();
           } else if i_th_succ in a'.indexOf {
+            // print "State ", i_th_succ.ToString(), " already seen\n";
+            // print "seen state is:", a'.states[a'.indexOf[i_th_succ]].ToString(), "\n";
             a', stats' := a'.AddEdge(lastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
           } else if !xs[lastOnPath.segNum].IsJump() {
             //  not already seen and not a jump
@@ -331,8 +382,8 @@ module EVMObject {
       }
     }
 
-    lemma PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
-      requires this.IsValid()
+    lemma {:timeLimitMultiplier 2} PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
+      requires this.IsValid() 
       requires  |p.states| == |p.exits| + 1
       requires forall k:: 0 <= k < |p.states| ==> p.states[k].IsBounded(|xs|)
       requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
@@ -441,8 +492,8 @@ module EVMObject {
       requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
       ensures r.Left? ==> |r.l| == |xc|
       ensures r.Right? ==> |r.r| == |xc|
-    //   ensures r.Left? ==> (forall k:: 0 <= k < |xc| ==> r.l[k] >= xc[k])
-    //   ensures r.Right? ==> (forall k:: 0 <= k < |xc| ==> r.r[k] >= xc[k])
+      //   ensures r.Left? ==> (forall k:: 0 <= k < |xc| ==> r.l[k] >= xc[k])
+      //   ensures r.Right? ==> (forall k:: 0 <= k < |xc| ==> r.r[k] >= xc[k])
       decreases maxIter
     {
       if xu == {} then Left(xc)
@@ -482,10 +533,10 @@ module EVMObject {
       requires forall k:: k in newxu ==> k < |a.states|
       requires |wpre0| == |xc| == |a.states|
       requires |newxc| == index
-    //   requires forall k :: 0 <= k < |newxc| ==> newxc[k] >= xc[k]
+      //   requires forall k :: 0 <= k < |newxc| ==> newxc[k] >= xc[k]
       requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
       ensures |r.0| == |a.states|
-    //   ensures forall k:: 0 <= k < |r.0| ==> r.0[k] >= xc[k]
+      //   ensures forall k:: 0 <= k < |r.0| ==> r.0[k] >= xc[k]
       ensures forall k:: k in r.1 ==> k < |a.states|
       decreases |xc| - index
     {
@@ -585,7 +636,6 @@ module EVMObject {
     }
 
   }
-
 
   /** Collect jumpdests in a list of segments.  */
   function {:opaque} CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {
