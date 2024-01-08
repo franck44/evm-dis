@@ -209,7 +209,7 @@ module LoopTests {
     }
 
   /** Double loop example */
-  method {:test} {:verify false} Test00()
+  method {:test} {:verify true} Test00()
   {
     var x := DisassembleU8(
       [
