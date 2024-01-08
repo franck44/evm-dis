@@ -12,14 +12,14 @@
  * under the License.
  */
 
-include "../utils/MiscTypes.dfy"
-include "../utils/int.dfy"
+include "../../../src/dafny/utils/MiscTypes.dfy"
+include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
-include "../utils/CFGState.dfy" 
-include "../utils/MinimiserGState.dfy"
-include "../utils/Partition.dfy"
+include "../../../src/dafny/utils/CFGState.dfy" 
+include "../../../src/dafny/utils/MinimiserGState.dfy"
+include "../../../src/dafny/utils/Partition.dfy"
   
 module BuildCFGSimplifiedTests { 
  
@@ -78,7 +78,7 @@ module BuildCFGSimplifiedTests {
         ]
       );
       expect |x| == 31;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 5;
       expect y[1].StartAddress() == 0x0a;
       expect y[2].StartAddress() == 0x13;
@@ -125,7 +125,7 @@ module BuildCFGSimplifiedTests {
       expect |args| >= 2;
       var x := Disassemble(args[1]);
 
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       print "segments: ", |y|, "\n";
       if |y| >= 1 {
         var p: ValidEVMObj := EVMObj(y);
