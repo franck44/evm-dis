@@ -24,6 +24,7 @@ include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
 include "./utils/CFGObject.dfy"
+include "./utils/ProofObject.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -40,6 +41,7 @@ module Driver {
   import opened Statistics
   import opened ProofObjectBuilder
   import opened CFGObject
+  import opened ProofObject
 
   /**
     *  Read the input string
@@ -147,7 +149,7 @@ module Driver {
           print "----------------- Segments -------------------\n";
         }
 
-        if proofOpt {
+        if proofOpt && cfgDepthOpt == 0 {
           assert forall k:: 0 <= k < |y| ==> y[k].IsValid();
           var z := BuildProofObject(y);
           print "Dafny Proof Object:\n";
@@ -160,7 +162,12 @@ module Driver {
           assert a1.IsValid();
           var cfgObj := CFGObj(prog, cfgDepthOpt, a1, !rawOpt, s1);
           assert cfgObj.IsValid();
-          cfgObj.ToDot(noTable, name);
+
+          if proofOpt {
+            cfgObj.ToDafny(pathToEVMDafny := libOpt);
+          } else {
+            cfgObj.ToDot(noTable, name);
+          }
         }
       }
     }
