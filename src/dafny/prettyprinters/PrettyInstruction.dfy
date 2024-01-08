@@ -35,11 +35,11 @@ module PrettyIns {
   function PrintInstructionToDafny(i: Instruction, src: nat, tgt: nat): string
   {
     match i.op.opcode
-    // case STOP       => SysOp("STOP", STOP)
+    case STOP       => "var s" + DecToString(tgt) + " := Stop(s" + DecToString(src) + ");"
     case ADD         => "var s" + DecToString(tgt) + " := Add(s" + DecToString(src) + ");"
     case MUL        => "var s" + DecToString(tgt) + " := Mul(s" + DecToString(src) + ");"
     case SUB        => "var s" + DecToString(tgt) + " := Sub(s" + DecToString(src) + ");"
-    case DIV        => "var s" + DecToString(tgt) + " := Div(s" + DecToString(src) + ");"
+    case DIV        => "var s" + DecToString(tgt) + " := Bytecode.Div(s" + DecToString(src) + ");"
     case SDIV       => "var s" + DecToString(tgt) + " := SDiv(s" + DecToString(src) + ");"
     case MOD        => "var s" + DecToString(tgt) + " := Mod(s" + DecToString(src) + ");"
     case SMOD       => "var s" + DecToString(tgt) + " := SMod(s" + DecToString(src) + ");"
@@ -48,38 +48,38 @@ module PrettyIns {
     case EXP        => "var s" + DecToString(tgt) + " := Exp(s" + DecToString(src) + ");"
     case SIGNEXTEND => "var s" + DecToString(tgt) + " := SignExtended(s" + DecToString(src) + ");"
     // 0x10s: Comparison & Bitwise Logic
-    case LT     => "var s" + DecToString(tgt) + " := Bytecode.Lt(s" + DecToString(src) + ");"
-    // case GT     => CompOp("GT", GT)
-    // case SLT    => CompOp("SLT", SLT)
-    // case SGT    => CompOp("SGT", SGT)
-    // case EQ     => CompOp("EQ", EQ)
-    // case ISZERO => CompOp("ISZERO", ISZERO, 0, 1, 1, 1)
-    // case AND    => BitwiseOp("AND", AND)
-    // case OR     => BitwiseOp("OR", OR)
-    // case XOR    => BitwiseOp("XOR", XOR)
-    // case NOT    => BitwiseOp("NOT", NOT, 0, 1, 1, 1)
-    // case BYTE   => BitwiseOp("BYTE", BYTE)
-    // case SHL    => BitwiseOp("SHL", SHL)
-    // case SHR    => BitwiseOp("SHR", SHR)
-    // case SAR    => BitwiseOp("SAR", SAR)
+    case LT     => "var s" + DecToString(tgt) + " := Lt(s" + DecToString(src) + ");"
+    case GT     => "var s" + DecToString(tgt) + " := Gt(s" + DecToString(src) + ");"
+    case SLT    => "var s" + DecToString(tgt) + " := Slt(s" + DecToString(src) + ");"
+    case SGT    => "var s" + DecToString(tgt) + " := Sgt(s" + DecToString(src) + ");"
+    case EQ     => "var s" + DecToString(tgt) + " := Eq(s" + DecToString(src) + ");"
+    case ISZERO => "var s" + DecToString(tgt) + " := IsZero(s" + DecToString(src) + ");"
+    case AND    => "var s" + DecToString(tgt) + " := And(s" + DecToString(src) + ");"
+    case OR     => "var s" + DecToString(tgt) + " := Or(s" + DecToString(src) + ");"
+    case XOR    => "var s" + DecToString(tgt) + " := Xor(s" + DecToString(src) + ");"
+    case NOT    => "var s" + DecToString(tgt) + " := Not(s" + DecToString(src) + ");"
+    case BYTE   => "var s" + DecToString(tgt) + " := Byte(s" + DecToString(src) + ");"
+    case SHL    => "var s" + DecToString(tgt) + " := Shl(s" + DecToString(src) + ");"
+    case SHR    => "var s" + DecToString(tgt) + " := Shr(s" + DecToString(src) + ");"
+    case SAR    => "var s" + DecToString(tgt) + " := Sar(s" + DecToString(src) + ");"
     // // 0x20s
-    // case KECCAK256 => KeccakOp("KECCAK256", KECCAK256)
+    case KECCAK256 => "var s" + DecToString(tgt) + " := Keccak256(s" + DecToString(src) + ");"
     // // 0x30s: Environment Information
-    // case ADDRESS        => EnvOp("ADDRESS", ADDRESS)
+    case ADDRESS        =>  "var s" + DecToString(tgt) + " := Address(s" + DecToString(src) + ");"
     // case BALANCE        => EnvOp("BALANCE", BALANCE)
     // case ORIGIN         => EnvOp("ORIGIN", ORIGIN)
-    // case CALLER         => EnvOp("CALLER", CALLER)
-    // case CALLVALUE      => EnvOp("CALLVALUE", CALLVALUE)
-    // case CALLDATALOAD   => EnvOp("CALLDATALOAD", CALLDATALOAD)
-    // case CALLDATASIZE   => EnvOp("CALLDATASIZE", CALLDATASIZE)
-    // case CALLDATACOPY   => EnvOp("CALLDATACOPY", CALLDATACOPY)
+    case CALLER         =>  "var s" + DecToString(tgt) + " := Caller(s" + DecToString(src) + ");"
+    case CALLVALUE      => "var s" + DecToString(tgt) + " := CallValue(s" + DecToString(src) + ");"
+    case CALLDATALOAD   => "var s" + DecToString(tgt) + " := CallDataLoad(s" + DecToString(src) + ");"
+    case CALLDATASIZE   => "var s" + DecToString(tgt) + " := CallDataSize(s" + DecToString(src) + ");"
+    case CALLDATACOPY   =>  "var s" + DecToString(tgt) + " := CallDataCopy(s" + DecToString(src) + ");"
     // case CODESIZE       => EnvOp("CODESIZE", CODESIZE)
-    // case CODECOPY       => EnvOp("CODECOPY", CODECOPY)
+    case CODECOPY       =>  "var s" + DecToString(tgt) + " := CodeCopy(s" + DecToString(src) + ");"
     // case GASPRICE       => EnvOp("GASPRICE", GASPRICE)
-    // case EXTCODESIZE    => EnvOp("EXTCODESIZE", EXTCODESIZE)
+    case EXTCODESIZE    =>  "var s" + DecToString(tgt) + " := ExtCodeSize(s" + DecToString(src) + ");"
     // case EXTCODECOPY    => EnvOp("EXTCODECOPY", EXTCODECOPY)
-    // case RETURNDATASIZE => EnvOp("RETURNDATASIZE", RETURNDATASIZE)
-    // case RETURNDATACOPY => EnvOp("RETURNDATACOPY", RETURNDATACOPY)
+    case RETURNDATASIZE => "var s" + DecToString(tgt) + " := ReturnDataSize(s" + DecToString(src) + ");"
+    case RETURNDATACOPY => "var s" + DecToString(tgt) + " := ReturnDataCopy(s" + DecToString(src) + ");"
     // case EXTCODEHASH    => EnvOp("EXTCODEHASH", EXTCODEHASH)
     // // 0x40s: Block Information
     // case BLOCKHASH   => EnvOp("BLOCKHASH", BLOCKHASH)
@@ -93,11 +93,13 @@ module PrettyIns {
     // case BASEFEE     => EnvOp("BASEFEE", BASEFEE)
     // // 0x50s: Stack, Memory, Storage and Flow
     case POP      => "var s" + DecToString(tgt) + " := Pop(s" + DecToString(src) + ");"
-    // case MLOAD    => MemOp("MLOAD", MLOAD, 0, 1, 1, 1)
-    case MSTORE   => "var s" + DecToString(tgt) + " := Bytecode.MStore(s" + DecToString(src) + ");"
-    // case MSTORE8  => MemOp("MSTORE8", MSTORE8, 0, 2, 0, 2)
-    // case SLOAD    => StorageOp("SLOAD", SLOAD, 0, 1, 1, 1)
-    // case SSTORE   => StorageOp("SSTORE", SSTORE, 0, 2, 0, 2)
+    case MLOAD    =>  "var s" + DecToString(tgt) + " := MLoad(s" + DecToString(src) + ");"
+    case MSTORE   =>  "var s" + DecToString(tgt) + " := MStore(s" + DecToString(src) + ");"
+    case MSTORE8  =>  "var s" + DecToString(tgt) + " := MStore8(s" + DecToString(src) + ");"
+    case SLOAD    =>  "var s" + DecToString(tgt) + " := SLoad(s" + DecToString(src) + ");"
+    case SSTORE   =>
+      "assume s" + DecToString(src) + ".WritesPermitted();\n" +
+      "var s" + DecToString(tgt) + " := SStore(s" + DecToString(src) + ");"
     case JUMP     => "var s" + DecToString(tgt) + " := Jump(s" + DecToString(src) + ");"
     case JUMPI    => "var s" + DecToString(tgt) + " := JumpI(s" + DecToString(src) + ");"
     // case RJUMP     => JumpOp("RJUMP", RJUMP, 0, 1, 0, 1)
@@ -105,18 +107,25 @@ module PrettyIns {
     // case RJUMPV    => JumpOp("RJUMPV", RJUMPV, 0, 2, 0, 2)
     // case PC       => RunOp("PC", PC, 1, 0, 1, 0)
     // case MSIZE    => RunOp("MSIZE", MSIZE, 1, 0, 1, 0)
-    // case GAS      => RunOp("GAS", GAS, 1, 0, 1, 0)
+    case GAS      =>  
+        "assume s" + DecToString(src) + ".Gas() <= MAX_U256;\n" +
+        "var s" + DecToString(tgt) + " := Gas(s" + DecToString(src) + ");"
     case JUMPDEST => "var s" + DecToString(tgt) + " := JumpDest(s" + DecToString(src) + ");"
     case PUSH0    => "var s" + DecToString(tgt) + " := Push0(s" + DecToString(src) + ");"
     // // 0x60s & 0x70s: Push operations
     case PUSH1 => "var s" + DecToString(tgt) + " := Push1(s" + DecToString(src) + ", 0x" + i.arg + ");"
+    case PUSH2 => "var s" + DecToString(tgt) + " := Push2(s" + DecToString(src) + ", 0x" + i.arg + ");"
+    case PUSH3 => "var s" + DecToString(tgt) + " := Push3(s" + DecToString(src) + ", 0x" + i.arg + ");"
+    case PUSH4 => "var s" + DecToString(tgt) + " := Push4(s" + DecToString(src) + ", 0x" + i.arg + ");"
+    case PUSH5 => "var s" + DecToString(tgt) + " := Push5(s" + DecToString(src) + ", 0x" + i.arg + ");"
+    case PUSH6 => "var s" + DecToString(tgt) + " := Push6(s" + DecToString(src) + ", 0x" + i.arg + ");"
     // case PUSH2 => StackOp("PUSH2", PUSH2, 1, 0, 1, 0)
     // case PUSH3 => StackOp("PUSH3", PUSH3, 1, 0, 1, 0)
     // case PUSH4 => StackOp("PUSH4", PUSH4, 1, 0, 1, 0)
     // case PUSH5 => StackOp("PUSH5", PUSH5, 1, 0, 1, 0)
     // case PUSH6 => StackOp("PUSH6", PUSH6, 1, 0, 1, 0)
     // case PUSH7 => StackOp("PUSH7", PUSH7, 1, 0, 1, 0)
-    // case PUSH8 => StackOp("PUSH8", PUSH8, 1, 0, 1, 0)
+    case PUSH8 => "var s" + DecToString(tgt) + " := Push8(s" + DecToString(src) + ", 0x" + i.arg + ");"
     // case PUSH9 => StackOp("PUSH9", PUSH9, 1, 0, 1, 0)
     // case PUSH10 => StackOp("PUSH10", PUSH10, 1, 0, 1, 0)
     // case PUSH11 => StackOp("PUSH11", PUSH11, 1, 0, 1, 0)
@@ -137,10 +146,10 @@ module PrettyIns {
     // case PUSH26 => StackOp("PUSH26", PUSH26, 1, 0, 1, 0)
     // case PUSH27 => StackOp("PUSH27", PUSH27, 1, 0, 1, 0)
     // case PUSH28 => StackOp("PUSH28", PUSH28, 1, 0, 1, 0)
-    // case PUSH29 => StackOp("PUSH29", PUSH29, 1, 0, 1, 0)
-    // case PUSH30 => StackOp("PUSH30", PUSH30, 1, 0, 1, 0)
-    // case PUSH31 => StackOp("PUSH31", PUSH31, 1, 0, 1, 0)
-    // case PUSH32 => StackOp("PUSH32", PUSH32, 1, 0, 1, 0)
+    case PUSH29 => "var s" + DecToString(tgt) + " := PushN(s" + DecToString(src) + ", 29, 0x" + i.arg + ");"
+    case PUSH30 => "var s" + DecToString(tgt) + " := PushN(s" + DecToString(src) + ", 30, 0x" + i.arg + ");"
+    case PUSH31 => "var s" + DecToString(tgt) + " := PushN(s" + DecToString(src) + ", 31, 0x" + i.arg + ");"
+    case PUSH32 => "var s" + DecToString(tgt) + " := PushN(s" + DecToString(src) + ", 32, 0x" + i.arg + ");"
     // // 0x80s: Duplicate operations
     case DUP1 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 1);"
     case DUP2 => "var s" + DecToString(tgt) + " := Dup(s" + DecToString(src) + ", 2);"
@@ -176,24 +185,24 @@ module PrettyIns {
     case SWAP15 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 15);"
     case SWAP16 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 16);"
     // // 0xA0s: Log operations
-    // case LOG0 => LogOp("LOG0", LOG0, 0, 0 + 2, 0, 0 + 2)
-    // case LOG1 => LogOp("LOG1", LOG1, 0, 1 + 2, 0, 1 + 2)
-    // case LOG2 => LogOp("LOG2", LOG2, 0, 2 + 2, 0, 2 + 2)
-    // case LOG3 => LogOp("LOG3", LOG3, 0, 3 + 2, 0, 3 + 2)
-    // case LOG4 => LogOp("LOG4", LOG4, 0, 4 + 2, 0, 4 + 2)
+    case LOG0 => "var s" + DecToString(tgt) + " := LogN(s" + DecToString(src) + ", 0);"
+    case LOG1 =>  "var s" + DecToString(tgt) + " := LogN(s" + DecToString(src) + ", 1);"
+    case LOG2 =>  "var s" + DecToString(tgt) + " := LogN(s" + DecToString(src) + ", 2);"
+    case LOG3 =>  "var s" + DecToString(tgt) + " := LogN(s" + DecToString(src) + ", 3);"
+    case LOG4 =>  "var s" + DecToString(tgt) + " := LogN(s" + DecToString(src) + ", 4);"
     // // 0xf0
     // case CREATE => SysOp("CREATE", CREATE, 3, 0, 2, 3)
     // //  @todo: verify call efeect on stack
-    // case CALL => SysOp("CALL", CALL, 0, 7, 7, 7)
+    case CALL => "var s" + DecToString(tgt) + " := ExternalCallLib.Call(s" + DecToString(src) + ");"
     // case CALLCODE => SysOp("CALLCODE", CALLCODE, 0, 7, 7, 7)
     case RETURN => "var s" + DecToString(tgt) + " := Return(s" + DecToString(src) + ");"
     // case DELEGATECALL => SysOp("DELEGATECALL", DELEGATECALL, 0, 6, 0, 6)
     // case CREATE2 => SysOp("CREATE2", CREATE2)
-    // case STATICCALL => SysOp("STATICCALL", STATICCALL)
-    // case REVERT => SysOp("REVERT", REVERT, 0, 2, 0, 0)
+    case STATICCALL => "var s" + DecToString(tgt) + " := StaticCall(s" + DecToString(src) + ");"
+    case REVERT => "var s" + DecToString(tgt) + " := Revert(s" + DecToString(src) + ");"
     // case SELFDESTRUCT => SysOp("SELFDESTRUCT", SELFDESTRUCT)
-    // case _ => SysOp("INVALID", INVALID)
-    case _ => "Unknwon instruction:" + i.op.name
+    case INVALID => "var s" + DecToString(tgt) + " := Stop(s" + DecToString(src) + "); // Invalid instruction:\n"
+    case _ => "Unknown instruction:" + i.op.name
   }
 
   /**
