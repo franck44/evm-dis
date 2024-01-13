@@ -62,6 +62,8 @@ module HTML {
   function CellTD(
     body: string,
     align: string := "left",
+    fixedsize: bool := false,
+    width: string := "",
     border: string  := "0",
     sides: string := "",
     colspan: string := "0",
@@ -72,6 +74,8 @@ module HTML {
   {
     "<TD "
     + "ALIGN=\"" + align + "\" "
+    + "fixedsize=\"" + (if fixedsize then "true" else "false") + "\" "
+    + (if width != ""  then "WIDTH=\"" + width + "\" " else "")
     + "BORDER=\"" + border + "\" "
     + "SIDES=\"" + sides + "\" "
     + "BGCOLOR=\"" + bgcolour + "\" "
@@ -79,6 +83,8 @@ module HTML {
     + "CELLSPACING=\"" + cellspacing + "\" "
     + (if colspan != "0" then "COLSPAN=\"" + colspan + "\" " else "")
     + (if rowspan != "1" then "ROWSPAN=\"" + rowspan + "\" " else "")
+    + "href=\"" + href + "\" "
+    + (if tooltip != "" then "tooltip=\"" + tooltip + "\" " else "")
     + ">"
     + body
     + "</TD>\n"
@@ -89,6 +95,7 @@ module HTML {
     */
   function Table(
     body: string,
+    align : string := "left",
     colour: string := "black",
     bgcolour: string := "white",
     cellborder: string := "0",
@@ -97,6 +104,7 @@ module HTML {
     cellspacing : string := "0"): string
   {
     "<TABLE "
+    + "ALIGN=\"" + align + "\" "
     + "BORDER=\"" + border + "\" "
     + "CELLBORDER=\"" + cellborder + "\" "
     + "CELLPADDING=\"" + cellpadding + "\" "
