@@ -68,9 +68,11 @@ module HTML {
     sides: string := "",
     colspan: string := "0",
     rowspan: string := "1",
-    bgcolour: string := "white",
+    bgcolour: string := "",
     cellspacing: string := "0",
-    cellpadding: string := "0"): string
+    cellpadding: string := "0",
+    href: string := "",
+    tooltip: string := ""): string
   {
     "<TD "
     + "ALIGN=\"" + align + "\" "
@@ -78,7 +80,7 @@ module HTML {
     + (if width != ""  then "WIDTH=\"" + width + "\" " else "")
     + "BORDER=\"" + border + "\" "
     + "SIDES=\"" + sides + "\" "
-    + "BGCOLOR=\"" + bgcolour + "\" "
+    + (if bgcolour != "" then "BGCOLOR=\"" + bgcolour + "\" " else "")
     + "CELLPADDING=\"" + cellpadding + "\" "
     + "CELLSPACING=\"" + cellspacing + "\" "
     + (if colspan != "0" then "COLSPAN=\"" + colspan + "\" " else "")
@@ -97,7 +99,7 @@ module HTML {
     body: string,
     align : string := "left",
     colour: string := "black",
-    bgcolour: string := "white",
+    bgcolour: string := "",
     cellborder: string := "0",
     border: string := "0",
     cellpadding: string := "0",
@@ -109,7 +111,7 @@ module HTML {
     + "CELLBORDER=\"" + cellborder + "\" "
     + "CELLPADDING=\"" + cellpadding + "\" "
     + "CELLSPACING=\"" + cellspacing + "\" "
-    + "BGCOLOR=\"" + bgcolour + "\" "
+    + (if bgcolour != "" then "BGCOLOR=\"" + bgcolour + "\" " else "")
     + "COLOR=\"" + colour + "\" "
     + ">"
     + body
