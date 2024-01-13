@@ -149,9 +149,9 @@ module HTML {
   /**
     *   Print content of a segment in a table with tooltips.
     */
-  function DOTSegTable(s: ValidLinSeg, numSeg: nat, minStackSize: Option<nat>): string
+  function DOTSegTable(s: ValidLinSeg, a: GState, minStackSize: Option<nat>): string
+    requires a.EGState?
   {
-
     //  Jump target
     var jumpTip :=
       if s.JUMPSeg? || s.JUMPISeg? then
@@ -159,28 +159,34 @@ module HTML {
         match r {
           case Left(v) =>
             match v {
-              case Value(address) =>  LINE_FEED_SYMBOL + "Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
-              case Random(msg) => LINE_FEED_SYMBOL + "Exit Jump target: Unknown"
+              case Value(address) =>  "Exit Jump target: Constant 0x" + Hex.NatToHex(address as nat)
+              case Random(msg) =>  "Exit Jump target: Unknown"
             }
-          case Right(stackPos) => LINE_FEED_SYMBOL + "Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
+          case Right(stackPos) => "Exit Jump target: Stack on Entry.Peek(" + Int.NatToString(stackPos) +  ")"
 
         } else "";
 
-    var tableStart := "<TABLE ALIGN=\"LEFT\" CELLBORDER=\"0\" BORDER=\"0\" cellpadding=\"0\"  CELLSPACING=\"1\">\n";
-    var prefix := "<TR><TD "
-                  + ">Segment " + Int.NatToString(numSeg) + " [0x" + Hex.NatToHex(s.StartAddress())
-                  + "]</TD>"
-                  + "<TD"
-                  + " href=\"\" tooltip=\"Stack Size " + DELTA_SYMBOL + ": " + Int.IntToString(s.StackEffect())
-                  + LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands())
-                  + (if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "")
-                  + jumpTip
-                  + "\""
-                  + "><FONT color=\"green\">" + INFO_SYMBOL  + "</FONT></TD>"
-                  + "</TR><HR/>\n";
-    var tableEnd := "</TABLE>\n";
-    var body := DOTInsTable(s.Ins());
-    tableStart + prefix + body + tableEnd
+    var gasSymbol := "&#9981; ";
+    Table(
+      cellspacing := "1",
+      body :=
+        RowTR(
+          CellTD(
+            "Segment " + Int.NatToString(a.segNum) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]")
+          + CellTD(
+            body := Font(INFO_SYMBOL),
+            tooltip :=
+              "Stack Size " + DELTA_SYMBOL + ": " + Int.IntToString(s.StackEffect())
+              + LINE_FEED_SYMBOL + "Abstract stack at this node: [" + a.StackToHTML() + "]"
+              + (if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "")
+              + LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands())
+              + (if jumpTip != "" then LINE_FEED_SYMBOL + jumpTip else "")
+          )
+          + CellTD(gasSymbol, tooltip := "lots of gas!")
+        )
+        + "<HR/>"
+        + DOTInsTable(s.Ins())
+    )
   }
 
   /**   Print a seq of instructions. */
