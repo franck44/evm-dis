@@ -25,7 +25,7 @@ include "../utils/Partition.dfy"
 include "../utils/Statistics.dfy"
 include "../utils/MinimiserGState.dfy"
 include "../utils/HTML.dfy"
-
+ 
 /**
   *  Provides EVM Object.
   *  An EVM object is a list of segments together with some 
@@ -450,7 +450,7 @@ module EVMObject {
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else if withTable then
-        "<" + DOTSegTable(xs[a.segNum], a.segNum, minStackSizeForState) +">"
+        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState) +">" 
       else
         "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState).0 +">"
     }
