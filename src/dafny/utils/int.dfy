@@ -16,7 +16,7 @@ include "./MiscTypes.dfy"
 
 module Int {
 
-  import opened MiscTypes
+  import opened MiscTypes 
 
   const TWO_4   : nat := 0x10
   // const TWO_7   : nat := 0x0_80
