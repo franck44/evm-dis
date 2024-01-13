@@ -38,6 +38,12 @@ module StackElement {
       case Random(_) => "?"
     }
 
+     function ToHTML(): string {
+      match this
+      case Value(v) => "(0x" + NatToHex(v as nat) + ")"
+      case Random(_) => "?"
+    }
+
     /**
       * Extract the value of a stack Value element.
       */
