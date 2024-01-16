@@ -56,7 +56,7 @@ module Driver {
 
     //  Register the options and their descriptions
     optionParser.AddOption("-d", "--dis", 0, "Disassemble <string>");
-    optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <string>");
+    optionParser.AddOption("-p", "--proof", 0, "Generate proof object to verify the CFG for <string>");
     optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
@@ -169,7 +169,7 @@ module Driver {
 
           if proofOpt {
             if cfgObj.HasNoErrorState() {
-                cfgObj.ToDafny(pathToEVMDafny := libOpt);
+                cfgObj.CFGCheckerToDafny(pathToEVMDafny := libOpt);
             } else {
                 print "The CFG has some error states and the Dafny proof object cannot be generated\n";
             }
