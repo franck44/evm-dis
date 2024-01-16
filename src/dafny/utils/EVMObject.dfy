@@ -232,7 +232,7 @@ module EVMObject {
       *   @note   The seenOnPath has all the nodes seen before the current one.
       *           The current one has startAddress == pc.
       */
-    function SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: (Option<nat>))
+    function {:opaque} {:timeLimitMultiplier 3} SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: (Option<nat>))
       requires this.IsValid()
       requires i < |xs|
       requires  |pStates| == |pExits|
@@ -282,7 +282,7 @@ module EVMObject {
       *   @returns        The index of the first state in xs with a segment 
       *                   number equal to i if any and None otherwise.
       */
-    function FindFirstNodeWithSegIndex(i: nat, gs: seq<GState>, index: nat := 0): (r: Option<nat>)
+    function {:opaque} FindFirstNodeWithSegIndex(i: nat, gs: seq<GState>, index: nat := 0): (r: Option<nat>)
       requires index <= |gs|
       requires forall s:: s in gs ==> s.EGState?
       ensures r.Some? ==> r.v < |gs| && gs[r.v].segNum == i
@@ -368,6 +368,8 @@ module EVMObject {
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
                 //  s' is the state that covers lastOnPath
+                // print "Found loop from ", lastOnPath.ToString(), " to ", p.states[index].ToString(), "\n"; 
+                // print "States numbers :", a'.indexOf[lastOnPath], " to ", a'.indexOf[p.states[index]], "\n"; 
                 a', stats' := a'.AddEdge(lastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
