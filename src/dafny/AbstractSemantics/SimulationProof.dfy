@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./AbstractSemantic.dfy"
+include "./AbstractSemantics.dfy"
 include "../../../../evm-dafny/src/dafny/state.dfy"
 include "../../../../evm-dafny/src/dafny/bytecode.dfy"
 
