@@ -174,11 +174,11 @@ module CFGObject {
       requires this.HasNoErrorState()
     {
       //    optional include of the dafny-EVM files
-      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
+      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantic/AbstractSemantic.dfy\"", "\n\n";
 
       //    Module
       print "module " + name + " {", "\n\n";
-      print "import opened AbstractSemantics", "\n";
+      print "import opened AbstractSemantic", "\n";
       print "import opened AbstractState", "\n";
 
       // Print the transfer functions for each state of the graph.
