@@ -56,6 +56,16 @@ class StackElem:
             d_139___mcc_h1_ = source26_.s
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
 
+    def ToHTML(self):
+        source27_ = self
+        if source27_.is_Value:
+            d_140___mcc_h0_ = source27_.v
+            d_141_v_ = d_140___mcc_h0_
+            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x"))) + (Hex.default__.NatToHex(d_141_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+        elif True:
+            d_142___mcc_h1_ = source27_.s
+            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
+
     def Extract(self):
         return (self).v
 

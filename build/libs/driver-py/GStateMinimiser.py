@@ -21,10 +21,10 @@ import BinaryDecoder
 import LinSegments
 import Splitter
 import SegBuilder
+import CFGState
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import CFGState
 import Automata
 import SeqOfSets
 import PartitionMod
@@ -61,42 +61,42 @@ class Pair:
     def is_Pair(self) -> bool:
         return isinstance(self, Pair_Pair)
     def ClassSucc(self, x):
-        d_853_l_ = ((self).aut).SuccNat(x)
-        return _dafny.SeqWithoutIsStrInference([((self).clazz).GetClass((d_853_l_)[d_854_z_], 0) for d_854_z_ in range(len(d_853_l_))])
+        d_879_l_ = ((self).aut).SuccNat(x)
+        return _dafny.SeqWithoutIsStrInference([((self).clazz).GetClass((d_879_l_)[d_880_z_], 0) for d_880_z_ in range(len(d_879_l_))])
 
     def ClassSplitter(self):
-        d_855_dt__update__tmp_h0_ = self
-        d_856_dt__update_hclazz_h0_ = ((self).clazz).RefineAll(self.Splitter)
-        return Pair_Pair((d_855_dt__update__tmp_h0_).aut, d_856_dt__update_hclazz_h0_)
+        d_881_dt__update__tmp_h0_ = self
+        d_882_dt__update_hclazz_h0_ = ((self).clazz).RefineAll(self.Splitter)
+        return Pair_Pair((d_881_dt__update__tmp_h0_).aut, d_882_dt__update_hclazz_h0_)
 
     def Splitter(self, x, y):
         return ((self).ClassSucc(x)) == ((self).ClassSucc(y))
 
     def Minimise(self):
-        d_857_p1_ = Pair.IterSplit(self)
-        return (d_857_p1_).MapToClasses(Automata.Auto_Auto(_dafny.Map({}), _dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({})), 0)
+        d_883_p1_ = Pair.IterSplit(self)
+        return (d_883_p1_).MapToClasses(Automata.Auto_Auto(_dafny.Map({}), _dafny.Map({}), _dafny.SeqWithoutIsStrInference([]), _dafny.Map({})), 0)
 
     def MapToClasses(self, acc, index):
         if (index) == (len(((self).aut).states)):
             return acc
         elif True:
-            def lambda42_(d_859_i_):
-                return (((self).aut).states)[d_859_i_]
+            def lambda42_(d_885_i_):
+                return (((self).aut).states)[d_885_i_]
 
-            d_858_succs_ = MiscTypes.default__.MapP(((self).clazz).GetClassRepOfSeqs((((self).aut).transitionsNat)[index]), lambda42_)
-            d_860_a_k_ = (self).MapToClasses((acc).AddEdges((((self).aut).states)[((self).clazz).GetClassRepOf(index)], d_858_succs_, 0), (index) + (1))
-            return d_860_a_k_
+            d_884_succs_ = MiscTypes.default__.MapP(((self).clazz).GetClassRepOfSeqs((((self).aut).transitionsNat)[index]), lambda42_)
+            d_886_a_k_ = (self).MapToClasses((acc).AddEdges((((self).aut).states)[((self).clazz).GetClassRepOf(index)], d_884_succs_, 0), (index) + (1))
+            return d_886_a_k_
 
     @staticmethod
     def IterSplit(pp):
         while True:
             with _dafny.label():
-                d_861_p1_ = (pp).ClassSplitter()
-                if (len(((d_861_p1_).clazz).elem)) == (len(((pp).clazz).elem)):
+                d_887_p1_ = (pp).ClassSplitter()
+                if (len(((d_887_p1_).clazz).elem)) == (len(((pp).clazz).elem)):
                     return pp
                 elif True:
-                    in112_ = d_861_p1_
-                    pp = in112_
+                    in127_ = d_887_p1_
+                    pp = in127_
                     raise _dafny.TailCall()
                 break
 

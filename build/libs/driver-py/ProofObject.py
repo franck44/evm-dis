@@ -21,6 +21,7 @@ import BinaryDecoder
 import LinSegments
 import Splitter
 import SegBuilder
+import CFGState
 
 # Module: ProofObject
 
@@ -60,25 +61,25 @@ class ProofObj:
     def is_TERMINAL(self) -> bool:
         return isinstance(self, ProofObj_TERMINAL)
     def IsValid(self):
-        source48_ = self
-        if source48_.is_JUMP:
-            d_735___mcc_h0_ = source48_.s
-            d_736___mcc_h1_ = source48_.wpOp
-            d_737___mcc_h2_ = source48_.wpCap
-            d_738___mcc_h3_ = source48_.tgt
-            d_739___mcc_h4_ = source48_.stacks
+        source51_ = self
+        if source51_.is_JUMP:
+            d_767___mcc_h0_ = source51_.s
+            d_768___mcc_h1_ = source51_.wpOp
+            d_769___mcc_h2_ = source51_.wpCap
+            d_770___mcc_h3_ = source51_.tgt
+            d_771___mcc_h4_ = source51_.stacks
             return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
-        elif source48_.is_CONT:
-            d_740___mcc_h5_ = source48_.s
-            d_741___mcc_h6_ = source48_.wpOp
-            d_742___mcc_h7_ = source48_.wpCap
-            d_743___mcc_h8_ = source48_.stacks
+        elif source51_.is_CONT:
+            d_772___mcc_h5_ = source51_.s
+            d_773___mcc_h6_ = source51_.wpOp
+            d_774___mcc_h7_ = source51_.wpCap
+            d_775___mcc_h8_ = source51_.stacks
             return ((self).s).is_CONTSeg
         elif True:
-            d_744___mcc_h9_ = source48_.s
-            d_745___mcc_h10_ = source48_.wpOp
-            d_746___mcc_h11_ = source48_.wpCap
-            d_747___mcc_h12_ = source48_.stacks
+            d_776___mcc_h9_ = source51_.s
+            d_777___mcc_h10_ = source51_.wpOp
+            d_778___mcc_h11_ = source51_.wpCap
+            d_779___mcc_h12_ = source51_.stacks
             return ((((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)) or (((self).s).is_INVALIDSeg)
 
     def CollectJumpDest(self):
