@@ -41,6 +41,26 @@ module CFGState {
       case ErrorGState(msg) => "ErrorGState(" + msg + ")"
     }
 
+    function StackToHTML(): string
+      requires this.EGState?
+    {
+      if |st| == 0 then ""
+      else
+        var o := StackToHTMLHelper(st);
+        o[..|o| - 1]
+    }
+
+    /**
+      *  Pretty print a stack.
+      */
+    static function StackToHTMLHelper(s: seq<StackElem>): string
+    {
+      if |s| == 0 then ""
+      else
+        s[0].ToHTML() + "," + StackToHTMLHelper(s[1..])
+    }
+
+
     /**
       * Whether the segment number is bounded by n.
       */
