@@ -14,19 +14,24 @@
 
 include "../utils/MiscTypes.dfy"
 include "../utils/LinSegments.dfy"
-include "../utils/LinSegments.dfy"
-include "../utils/StackElement.dfy" 
+include "../utils/int.dfy"
+include "../utils/Hex.dfy"
+include "../utils/CFGState.dfy"
+include "../utils/StackElement.dfy"
  
 /**
   *  Provides proof objects types.
   */
 module ProofObject {
 
-  import opened MiscTypes 
+  import opened MiscTypes
   import opened LinSegments
+  import opened Int
+  import opened Hex
   import opened Instructions
-  import opened StackElement
-  
+  import opened StackElement 
+  import opened CFGState
+
   /**
     *   sp.Keys contaisn the tracked/needed stack positions AFTER
     *   the last instruction.
@@ -43,15 +48,15 @@ module ProofObject {
     */
   datatype ProofObj =
     |  JUMP(s: ValidLinSeg, wpOp: nat, wpCap: nat, tgt: Either<StackElem, nat>, stacks: StackResolver := StackResolver(map[]))
-    |   CONT(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[])) 
+    |   CONT(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[]))
     |  TERMINAL(s: ValidLinSeg, wpOp: nat, wpCap: nat, stacks: StackResolver := StackResolver(map[]))
   {
     predicate IsValid() {
-         match this 
-            case JUMP(_, _, _, _, _) => s.JUMPSeg? || s.JUMPISeg?
-            case CONT(_, _, _, _) => s.CONTSeg? 
-            case TERMINAL(_, _, _, _) => s.RETURNSeg? || s.STOPSeg? ||s.INVALIDSeg?
-    } 
+      match this
+      case JUMP(_, _, _, _, _) => s.JUMPSeg? || s.JUMPISeg?
+      case CONT(_, _, _, _) => s.CONTSeg?
+      case TERMINAL(_, _, _, _) => s.RETURNSeg? || s.STOPSeg? ||s.INVALIDSeg?
+    }
 
     /**
       * The addresses of the JUMPDEST instructions.
@@ -66,7 +71,7 @@ module ProofObject {
       * @note   The number of pushes minus the number of pops.
       */
     function StackEffect(): int {
-      s.StackEffect() 
+      s.StackEffect()
     }
   }
 

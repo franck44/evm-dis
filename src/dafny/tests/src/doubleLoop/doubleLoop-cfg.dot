@@ -17,6 +17,9 @@ graph[labelloc="t", labeljust="l", label=<<B>Program Name: </B> doubleLoop.bin<B
 node [shape=none, fontname=arial, style="rounded, filled", fillcolor= "whitesmoke"]
 edge [fontname=arial]
 ranking=TB
+nodesep=2.5;
+{rank = same; s_1; s_3, s_4;}
+
 s_0 [label=<<TABLE ALIGN="LEFT" CELLBORDER="0" BORDER="0" cellpadding="0"  CELLSPACING="1">
 <TR><TD >Segment 0 [0x0]</TD><TD href="" tooltip="Stack Size &#916;: +2&#10;Stack Size on Entry for this segment &#8805; 0&#10;Stack Size on Entry for this segment at this node &#8805; 0"><FONT color="green">&#8505;&#65039;</FONT></TD></TR><HR/>
 <TR><TD width="1" fixedsize="true" align="left">

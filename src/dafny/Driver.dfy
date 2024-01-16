@@ -24,6 +24,7 @@ include "./utils/Hex.dfy"
 include "./utils/EVMObject.dfy"
 include "./utils/Statistics.dfy"
 include "./utils/CFGObject.dfy"
+include "./utils/ProofObject.dfy"
 
 /**
   *  Provides input reader and write out to stout.
@@ -40,6 +41,7 @@ module Driver {
   import opened Statistics
   import opened ProofObjectBuilder
   import opened CFGObject
+  import opened ProofObject
 
   /**
     *  Read the input string
@@ -54,12 +56,12 @@ module Driver {
 
     //  Register the options and their descriptions
     optionParser.AddOption("-d", "--dis", 0, "Disassemble <string>");
-    optionParser.AddOption("-p", "--proof", 0, "Generate proof object for <string>");
+    optionParser.AddOption("-p", "--proof", 0, "Generate proof object to verify the CFG for <string>");
     optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
     optionParser.AddOption("-r", "--raw", 0, "Display non-minimised and minimised CFGs");
-    optionParser.AddOption("-f", "--fancy", 0, "Use exit and entry ports in segments do draw arrows.");
+    optionParser.AddOption("-z", "--size", 1, "The max size of segments. Default is upto terminal instructions or JUMPDEST.");
     optionParser.AddOption("-n", "--notable", 0, "Don't use tables to pretty-print DOT file. Reduces size of the DOT file.");
     optionParser.AddOption("-t", "--title", 1, "The name of the program.");
     optionParser.AddOption("-i", "--info", 0, "The stats of the program (size, segments).");
@@ -115,12 +117,16 @@ module Driver {
           case Failure(_) => 0;
         var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
         var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
-        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false;
-        var fancy := if optionParser.GetArgs("--fancy", optArgs).Success? then true else false;
+        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false; 
+        var maxSegSize :=
+          match optionParser.GetArgs("--size", optArgs) 
+          case Success(args) =>  if |args[0]| >= 1 && IsNatNumber(args[0]) then Some(StringToNat(args[0])) else None
+          case Failure(_) => None;
+
         var name: string :=
           match optionParser.GetArgs("--title", optArgs)
           case Success(args) => args[0]
-          case Failure(_) => "Name not set";
+          case Failure(_) => "Name not set"; 
 
         //    Process options
         if disOpt {
@@ -129,7 +135,7 @@ module Driver {
           print "--------------- Disassembled ---------------------\n";
         }
 
-        var y := SplitUpToTerminal(x, [], []);
+        var y := SplitUpToTerminal(x, maxSegSize);
         var prog := EVMObj(y);
 
         if info {
@@ -147,7 +153,7 @@ module Driver {
           print "----------------- Segments -------------------\n";
         }
 
-        if proofOpt {
+        if proofOpt && cfgDepthOpt == 0 {
           assert forall k:: 0 <= k < |y| ==> y[k].IsValid();
           var z := BuildProofObject(y);
           print "Dafny Proof Object:\n";
@@ -160,7 +166,16 @@ module Driver {
           assert a1.IsValid();
           var cfgObj := CFGObj(prog, cfgDepthOpt, a1, !rawOpt, s1);
           assert cfgObj.IsValid();
-          cfgObj.ToDot(noTable, name);
+
+          if proofOpt {
+            if cfgObj.HasNoErrorState() {
+                cfgObj.CFGCheckerToDafny(pathToEVMDafny := libOpt);
+            } else {
+                print "The CFG has some error states and the Dafny proof object cannot be generated\n";
+            }
+          } else {
+            cfgObj.ToDot(noTable, name);
+          }
         }
       }
     }

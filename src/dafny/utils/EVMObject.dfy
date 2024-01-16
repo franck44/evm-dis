@@ -25,7 +25,7 @@ include "../utils/Partition.dfy"
 include "../utils/Statistics.dfy"
 include "../utils/MinimiserGState.dfy"
 include "../utils/HTML.dfy"
-
+ 
 /**
   *  Provides EVM Object.
   *  An EVM object is a list of segments together with some 
@@ -85,6 +85,51 @@ module EVMObject {
       requires i < |xs|
     {
       xs[i].StartAddress()
+    }
+
+    /**
+      * Stack effect of segment i.
+      */
+    function StackEffect(i: nat): int
+      requires i < |xs|
+    {
+      xs[i].StackEffect()
+    }
+
+    /**
+      * Capacity effect of segment i.
+      */
+    function CapEffect(i: nat): int
+      requires i < |xs|
+    {
+      xs[i].NetCapEffect()
+    }
+
+    /**
+      * Min stack size on entry for segment i.
+      */
+    function WpOp(i: nat): nat
+      requires i < |xs|
+    {
+      xs[i].WeakestPreOperands()
+    }
+
+    /**
+      * Whether segment i is a JUMP/JUMPI.
+      */
+    predicate IsJump(i: nat)
+      requires i < |xs|
+    {
+      xs[i].IsJump()
+    }
+
+    /**
+      *  Minimum capacity on entry for segment i.
+      */
+    function WpCap(i: nat): nat
+      requires i < |xs|
+    {
+      xs[i].WeakestPreCapacity(0)
     }
 
     /** The size of the program in bytes. */
@@ -187,7 +232,7 @@ module EVMObject {
       *   @note   The seenOnPath has all the nodes seen before the current one.
       *           The current one has startAddress == pc.
       */
-    function SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: (Option<nat>))
+    function {:opaque} {:timeLimitMultiplier 3} SafeLoopFound(i: nat, pStates: seq<GState>, pExits: seq<nat>): (r: (Option<nat>))
       requires this.IsValid()
       requires i < |xs|
       requires  |pStates| == |pExits|
@@ -211,7 +256,8 @@ module EVMObject {
         //  Tgt pos condition is that the last node leads to the startAddress of segment i
         var tgtCond := xs[Last(pStates).segNum].LeadsTo(xs[i].StartAddress(), Last(pExits));
         //  compute the Wpre of the tgtCond for the path from index to end
-        var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond, xs, xs[i].StartAddress());
+        //  And with the constraints at pStates[index]
+        var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond.And( StackToCond(pStates[index].st)), xs, xs[i].StartAddress());
         if w1.StTrue? then
           Some(index)
         else if w1.StFalse? then
@@ -236,7 +282,7 @@ module EVMObject {
       *   @returns        The index of the first state in xs with a segment 
       *                   number equal to i if any and None otherwise.
       */
-    function FindFirstNodeWithSegIndex(i: nat, gs: seq<GState>, index: nat := 0): (r: Option<nat>)
+    function {:opaque} FindFirstNodeWithSegIndex(i: nat, gs: seq<GState>, index: nat := 0): (r: Option<nat>)
       requires index <= |gs|
       requires forall s:: s in gs ==> s.EGState?
       ensures r.Some? ==> r.v < |gs| && gs[r.v].segNum == i
@@ -257,7 +303,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:timeLimitMultiplier 6} DFS(
+    method {:print} {:timeLimitMultiplier 6} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
@@ -292,10 +338,16 @@ module EVMObject {
           invariant forall s:: s in a'.states ==> NextG.requires(s)
           invariant forall s:: s in p.states ==> s in a'.states
         {
+
           var i_th_succ := NextG(lastOnPath)[i];
+          //   if a'.states[a'.indexOf[i_th_succ]].segNum == 13 {
+          //     print i_th_succ.ToString(), "\n";
+          //   }
           if i_th_succ.ErrorGState? {
             a', stats' := a'.AddEdge(lastOnPath, i_th_succ), stats'.IncError();
           } else if i_th_succ in a'.indexOf {
+            // print "State ", i_th_succ.ToString(), " already seen\n";
+            // print "seen state is:", a'.states[a'.indexOf[i_th_succ]].ToString(), "\n";
             a', stats' := a'.AddEdge(lastOnPath, a'.states[a'.indexOf[i_th_succ]]), stats'.IncVisited();
           } else if !xs[lastOnPath.segNum].IsJump() {
             //  not already seen and not a jump
@@ -316,6 +368,8 @@ module EVMObject {
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
                 //  s' is the state that covers lastOnPath
+                // print "Found loop from ", lastOnPath.ToString(), " to ", p.states[index].ToString(), "\n"; 
+                // print "States numbers :", a'.indexOf[lastOnPath], " to ", a'.indexOf[p.states[index]], "\n"; 
                 a', stats' := a'.AddEdge(lastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
@@ -331,8 +385,8 @@ module EVMObject {
       }
     }
 
-    lemma PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
-      requires this.IsValid()
+    lemma {:timeLimitMultiplier 2} PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
+      requires this.IsValid() 
       requires  |p.states| == |p.exits| + 1
       requires forall k:: 0 <= k < |p.states| ==> p.states[k].IsBounded(|xs|)
       requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
@@ -399,7 +453,7 @@ module EVMObject {
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else if withTable then
-        "<" + DOTSegTable(xs[a.segNum], a.segNum, minStackSizeForState) +">"
+        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState) +">" 
       else
         "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState).0 +">"
     }
@@ -441,8 +495,8 @@ module EVMObject {
       requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
       ensures r.Left? ==> |r.l| == |xc|
       ensures r.Right? ==> |r.r| == |xc|
-    //   ensures r.Left? ==> (forall k:: 0 <= k < |xc| ==> r.l[k] >= xc[k])
-    //   ensures r.Right? ==> (forall k:: 0 <= k < |xc| ==> r.r[k] >= xc[k])
+      //   ensures r.Left? ==> (forall k:: 0 <= k < |xc| ==> r.l[k] >= xc[k])
+      //   ensures r.Right? ==> (forall k:: 0 <= k < |xc| ==> r.r[k] >= xc[k])
       decreases maxIter
     {
       if xu == {} then Left(xc)
@@ -482,10 +536,10 @@ module EVMObject {
       requires forall k:: k in newxu ==> k < |a.states|
       requires |wpre0| == |xc| == |a.states|
       requires |newxc| == index
-    //   requires forall k :: 0 <= k < |newxc| ==> newxc[k] >= xc[k]
+      //   requires forall k :: 0 <= k < |newxc| ==> newxc[k] >= xc[k]
       requires forall k:: 0 <= k < |wpre0| ==> wpre0[k] == xs[a.states[k].segNum].WeakestPreOperands()
       ensures |r.0| == |a.states|
-    //   ensures forall k:: 0 <= k < |r.0| ==> r.0[k] >= xc[k]
+      //   ensures forall k:: 0 <= k < |r.0| ==> r.0[k] >= xc[k]
       ensures forall k:: k in r.1 ==> k < |a.states|
       decreases |xc| - index
     {
@@ -585,7 +639,6 @@ module EVMObject {
     }
 
   }
-
 
   /** Collect jumpdests in a list of segments.  */
   function {:opaque} CollectJumpDests(xs: seq<ValidLinSeg>): seq<nat> {

@@ -21,10 +21,10 @@ import BinaryDecoder
 import LinSegments
 import Splitter
 import SegBuilder
+import CFGState
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import CFGState
 import Automata
 import SeqOfSets
 import PartitionMod
@@ -50,24 +50,24 @@ class Stats:
     def is_Stats(self) -> bool:
         return isinstance(self, Stats_Stats)
     def SetMaxDepth(self):
-        d_862_dt__update__tmp_h0_ = self
-        d_863_dt__update_hmaxDepthReached_h0_ = True
-        return Stats_Stats(d_863_dt__update_hmaxDepthReached_h0_, (d_862_dt__update__tmp_h0_).visitedStates, (d_862_dt__update__tmp_h0_).wPreInvSuccess, (d_862_dt__update__tmp_h0_).errorState, (d_862_dt__update__tmp_h0_).nonMinimisedSize)
+        d_888_dt__update__tmp_h0_ = self
+        d_889_dt__update_hmaxDepthReached_h0_ = True
+        return Stats_Stats(d_889_dt__update_hmaxDepthReached_h0_, (d_888_dt__update__tmp_h0_).visitedStates, (d_888_dt__update__tmp_h0_).wPreInvSuccess, (d_888_dt__update__tmp_h0_).errorState, (d_888_dt__update__tmp_h0_).nonMinimisedSize)
 
     def IncVisited(self):
-        d_864_dt__update__tmp_h0_ = self
-        d_865_dt__update_hvisitedStates_h0_ = ((self).visitedStates) + (1)
-        return Stats_Stats((d_864_dt__update__tmp_h0_).maxDepthReached, d_865_dt__update_hvisitedStates_h0_, (d_864_dt__update__tmp_h0_).wPreInvSuccess, (d_864_dt__update__tmp_h0_).errorState, (d_864_dt__update__tmp_h0_).nonMinimisedSize)
+        d_890_dt__update__tmp_h0_ = self
+        d_891_dt__update_hvisitedStates_h0_ = ((self).visitedStates) + (1)
+        return Stats_Stats((d_890_dt__update__tmp_h0_).maxDepthReached, d_891_dt__update_hvisitedStates_h0_, (d_890_dt__update__tmp_h0_).wPreInvSuccess, (d_890_dt__update__tmp_h0_).errorState, (d_890_dt__update__tmp_h0_).nonMinimisedSize)
 
     def IncWpre(self):
-        d_866_dt__update__tmp_h0_ = self
-        d_867_dt__update_hwPreInvSuccess_h0_ = ((self).wPreInvSuccess) + (1)
-        return Stats_Stats((d_866_dt__update__tmp_h0_).maxDepthReached, (d_866_dt__update__tmp_h0_).visitedStates, d_867_dt__update_hwPreInvSuccess_h0_, (d_866_dt__update__tmp_h0_).errorState, (d_866_dt__update__tmp_h0_).nonMinimisedSize)
+        d_892_dt__update__tmp_h0_ = self
+        d_893_dt__update_hwPreInvSuccess_h0_ = ((self).wPreInvSuccess) + (1)
+        return Stats_Stats((d_892_dt__update__tmp_h0_).maxDepthReached, (d_892_dt__update__tmp_h0_).visitedStates, d_893_dt__update_hwPreInvSuccess_h0_, (d_892_dt__update__tmp_h0_).errorState, (d_892_dt__update__tmp_h0_).nonMinimisedSize)
 
     def IncError(self):
-        d_868_dt__update__tmp_h0_ = self
-        d_869_dt__update_herrorState_h0_ = ((self).errorState) + (1)
-        return Stats_Stats((d_868_dt__update__tmp_h0_).maxDepthReached, (d_868_dt__update__tmp_h0_).visitedStates, (d_868_dt__update__tmp_h0_).wPreInvSuccess, d_869_dt__update_herrorState_h0_, (d_868_dt__update__tmp_h0_).nonMinimisedSize)
+        d_894_dt__update__tmp_h0_ = self
+        d_895_dt__update_herrorState_h0_ = ((self).errorState) + (1)
+        return Stats_Stats((d_894_dt__update__tmp_h0_).maxDepthReached, (d_894_dt__update__tmp_h0_).visitedStates, (d_894_dt__update__tmp_h0_).wPreInvSuccess, d_895_dt__update_herrorState_h0_, (d_894_dt__update__tmp_h0_).nonMinimisedSize)
 
     def PrettyPrint(self):
         return (((((((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "MaxDepth reached:"))) + ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "true")) if (self).maxDepthReached else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "false"))))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ErrorStates reached:")))) + (Int.default__.NatToString((self).errorState))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "States seen:")))) + (Int.default__.NatToString((self).visitedStates))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "WPre success:")))) + (Int.default__.NatToString((self).wPreInvSuccess))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n")))

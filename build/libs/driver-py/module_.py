@@ -21,10 +21,10 @@ import BinaryDecoder
 import LinSegments
 import Splitter
 import SegBuilder
+import CFGState
 import ProofObject
 import PrettyIns
 import PrettyPrinters
-import CFGState
 import Automata
 import SeqOfSets
 import PartitionMod

@@ -165,7 +165,7 @@ module LoopTests {
         /* 00000020: */ JUMP
       ] );
     expect |x| == 25;
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 4;
     expect y[0].CONTSeg?;
     expect y[1].JUMPISeg?;
@@ -209,7 +209,7 @@ module LoopTests {
     }
 
   /** Double loop example */
-  method {:test} Test00()
+  method {:test} {:verify true} Test00()
   {
     var x := DisassembleU8(
       [
@@ -223,7 +223,7 @@ module LoopTests {
         /* 00000006: */ JUMP
 
       ]);
-    var y := SplitUpToTerminal(x, [], []);
+    var y := SplitUpToTerminal(x);
     expect |y| == 2;
     expect y[0].CONTSeg?;
     expect y[1].JUMPSeg?;
@@ -258,7 +258,7 @@ module LoopTests {
       expect s.EGState?;
       var x := prog.FindFirstNodeWithSegIndex(s.segNum, path.states);
       print "FindFirst node with index ", s.segNum, " is ", x, "\n";
-      var loopFound := prog.SafeLoopFound(s.segNum, path.states, path.exits + [exits[k]]);
+      var loopFound := prog.SafeLoopFound(s.segNum, path.states, path.exits + [exits[k]]); 
       print "Safe to loop back? ", loopFound, "\n";
 
       path := Path(path.states + [s], path.exits + [exits[k]]);
@@ -269,7 +269,7 @@ module LoopTests {
       
       //   print "SeenPCs is: ", seenPCs, "\n";
       //   print "Seen is: ", seen, "\n";
-    }
+    } 
 
     //  print "--- Checks ---", "\n";
     // expect s.EState?;

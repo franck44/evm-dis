@@ -56,7 +56,7 @@ module WeakPre {
       * And of two conditions, with check that similar positions
       * have the same constraints.
       */
-    function And(c: ValidCond): ValidCond
+    function {:opaque} And(c: ValidCond): ValidCond
       requires this.IsValid()
     {
       match (this, c)
@@ -132,6 +132,37 @@ module WeakPre {
   }
 
   //   Helper
+
+  /**
+    *    Build a cond that captures a stack value 
+    */
+  function {:opaque} StackToCond(xs: seq<StackElem>): (c: ValidCond)
+    ensures c.IsValid()
+  {
+    var r := StackToCondHelper(xs);
+    if |r.0| == 0 then StTrue()
+    else
+      StCond(r.0, r.1)
+  }
+
+  function StackToCondHelper(xs: seq<StackElem>, c: (seq<nat>, seq<u256>) := ([], []), index: nat := 0): (r: (seq<nat>, seq<u256>))
+    requires index <= |xs|
+    requires |c.0| == |c.1|
+    requires forall k, k':: 0 <= k < k' < |c.0| ==> c.0[k] < c.0[k']
+    requires forall k:: 0 <= k < |c.0| ==> c.0[k] < index
+    ensures |r.0| == |r.1|
+    ensures forall k, k':: 0 <= k < k' < |r.0| ==> r.0[k] < r.0[k']
+    ensures forall k, k':: 0 <= k < k' < |r.0| ==> r.0[k] != r.0[k']
+    decreases |xs| - index
+  {
+    if |xs| == index then c
+    else if xs[index].Value? then
+      var c' := (c.0 + [index], c.1 + [xs[index].v]);
+      StackToCondHelper(xs, c', index + 1)
+    else
+      StackToCondHelper(xs, c, index + 1)
+  }
+
 
   /**
     *   Merge two conditions.

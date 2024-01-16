@@ -172,7 +172,7 @@ task verify {
         // Create build directory (Dafny doesn't do this for us)
         mkdir "build/logs"
         //
-        fileTree("src/dafny").include('**/*.dfy').each {
+        fileTree("src/dafny").include('**/*.dfy').exclude('tests/src/**/*.dfy').each {
             File file -> {
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))

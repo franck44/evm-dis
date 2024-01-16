@@ -43,7 +43,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 6;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].JUMPSeg?;
@@ -66,7 +66,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 6;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].JUMPSeg?;
@@ -89,7 +89,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 6;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].JUMPISeg?;
@@ -116,7 +116,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 10;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
       // print "number of segments :", |y|, "\n";
       //   PrettyPrinters.PrintSegments(y);
@@ -135,7 +135,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 1;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 1;
 
     }
@@ -150,7 +150,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 2;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
     }
@@ -174,7 +174,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 10;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].CONTSeg?;
@@ -201,7 +201,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 10;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].RETURNSeg?;
@@ -228,7 +228,7 @@ module EquivSegTests {
         ]
       );
       expect |x| == 10;
-      var y := SplitUpToTerminal(x, [], []);
+      var y := SplitUpToTerminal(x);
       expect |y| == 2;
 
       expect y[0].RETURNSeg?;
