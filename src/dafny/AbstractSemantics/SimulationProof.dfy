@@ -12,7 +12,7 @@
  * under the License.
  */
 
-include "./AbstractSemantics.dfy"
+include "./AbstractSemanticsWithDafnyEVMInt.dfy"
 include "../../../../evm-dafny/src/dafny/state.dfy"
 include "../../../../evm-dafny/src/dafny/bytecode.dfy"
 
@@ -28,14 +28,14 @@ include "../../../../evm-dafny/src/dafny/bytecode.dfy"
   *     to add this at some point.
   */
 module SimluationProof {
-
+ 
   import opened EvmState
   import Bytecode
-  import opened AbstractSemantics 
-  import opened AbstractState
+  import opened AbstractSemanticsDafnyEVM 
+  import opened AbstractStateDafnyEVM
 
   lemma SimulationCorrectnessStackOp(s: EState, n: nat, k: nat, st: ExecutingState)
-    requires s.Abstracts(st)
+    requires s.Abstracts(st) 
     ensures Bytecode.Pop(st).EXECUTING? ==> Pop.requires(s) && Pop(s).Abstracts(Bytecode.Pop(st))
     ensures k > 0 && Bytecode.Dup(st, k).EXECUTING? ==> Dup.requires(s, k) && Dup(s, k).Abstracts(Bytecode.Dup(st, k))
     ensures 1 <= k <= 16 && Bytecode.Swap(st, k).EXECUTING? ==> Swap.requires(s, k) && Swap(s, k).Abstracts(Bytecode.Swap(st, k))

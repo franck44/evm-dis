@@ -12,116 +12,55 @@
  * under the License.
  */
 
-// include "../../../../evm-dafny/src/dafny/state.dfy"
-// include "../../../../evm-dafny/src/dafny/bytecode.dfy"
-include "../utils/int.dfy"
+include "../../../../evm-dafny/src/dafny/state.dfy"
+include "../../../../evm-dafny/src/dafny/util/int.dfy"
 
-//    StackElem already exists but uses the Int module in this project.
-//    The bytecode in the Dafny EVM also uses a module name Int and if we import
-//    StackElem this creates a conflict.
-//    For the time being, we just re-declare locally StackElem and use
-//    the Int defined in the Dafny EVM module Myint.
-//    The same holds for CFGState so we also use a local EState declaration here.
-module AbstractState {
+/**
+ *  This project and the Dafny-EVM both use an Int module.
+ *  There is a name clash when we want to mix them together.
+ *  For the time being the module in these files are copies
+ *  of the absttact semantics but using the Dafny-EVM int instead of
+ *  of this project's Int module. 
+ *  The two moduels are the same so it is not an issue.
+ */
+module AbstractStateDafnyEVM {
 
   import opened Int
+  import opened EvmState
 
-  datatype EState = EState(pc: nat, stack: seq<Int.u256>)
+
+  datatype StackElem = Value(v: Int.u256) | Random() 
+
+  datatype EState = EState(pc: nat, stack: seq<StackElem>)
   {
     function Operands(): nat { |stack| }
+
+    predicate Abstracts(st: ExecutingState) {
+      && st.PC() == pc 
+      && st.Operands() == Operands()
+      && forall k:: 0 <= k < Operands() && stack[k].Value? ==> stack[k].v == st.GetStack().contents[k]
+    }
   }
 }
 
 /**
   * Provides the abstract semantics for external calls.
   */
-module AbstractSemantics {
+module AbstractSemanticsDafnyEVM {
 
-  //   import opened EvmState
-  //   import Bytecode
-  import opened AbstractState
-
-  //   function Call(st: EvmState.ExecutingState): (st': EvmState.ExecutingState)
-  //     // ensures st'.CONTINUING? || st' == ERROR(STACK_UNDERFLOW) || st' == ERROR(WRITE_PROTECTION_VIOLATED)
-  //     requires st.Operands() >= 7 // && (st.WritesPermitted() || st.Peek(2) == 0)
-  //     // ensures st' == ERROR(STACK_UNDERFLOW)  <==> st.Operands() < 7
-  //     // ensures st' == ERROR(WRITE_PROTECTION_VIOLATED) <==>
-  //     // st.Operands() >= 7 && !st.WritesPermitted() && st.Peek(2) > 0
-  //     ensures st'.EXECUTING?
-  //     ensures st'.Operands() == st.Operands() - 7 + 1
-  //     ensures st'.Capacity() == st.Capacity() + 7 - 1
-  //     ensures st'.GetStack().contents[1..] == st.GetStack().contents[7..]
-  //     // ensures forall k:: 1 <= k < st'.Operands() ==> st'.Peek(k) == st.Peek(k + 6)
-
-  //     // ensures st'.SlicePeek(1, st'.Operands()) == st.SlicePeek(7, st.Operands())
-  //     ensures st'.PC() == st.PC() + 1
-  //     ensures st'.WritesPermitted() == st.WritesPermitted()
+  import opened AbstractStateDafnyEVM
 
   function Call(s: EState): (s': EState)
-    // requires s.IsValid()
-    // ensures st'.CONTINUING? || st' == ERROR(STACK_UNDERFLOW) || st' == ERROR(WRITE_PROTECTION_VIOLATED)
     requires s.Operands() >= 7 // && (st.WritesPermitted() || st.Peek(2) == 0)
-    // ensures st' == ERROR(STACK_UNDERFLOW)  <==> st.Operands() < 7
-    // ensures st' == ERROR(WRITE_PROTECTION_VIOLATED) <==>
-    // st.Operands() >= 7 && !st.WritesPermitted() && st.Peek(2) > 0
-    // ensures s'.IsValid()
-    // ensures st'.Operands() == st.Operands() - 7 + 1
-    // ensures st'.Capacity() == st.Capacity() + 7 - 1
-    // ensures st'.GetStack().contents[1..] == st.GetStack().contents[7..]
-    // ensures forall k:: 1 <= k < st'.Operands() ==> st'.Peek(k) == st.Peek(k + 6)
-
-    // ensures st'.SlicePeek(1, st'.Operands()) == st.SlicePeek(7, st.Operands())
-    // ensures st'.PC() == st.PC() + 1
-    // ensures st'.WritesPermitted() == st.WritesPermitted()
   {
-    EState(s.pc + 1, [0] + s.stack[7..])
+    EState(s.pc + 1, [Random()] + s.stack[7..])
   }
 
   function StaticCall(s: EState): (s': EState)
-    // requires s.IsValid()
-    // ensures st'.CONTINUING? || st' == ERROR(STACK_UNDERFLOW) || st' == ERROR(WRITE_PROTECTION_VIOLATED)
-    requires s.Operands() >= 6 // && (st.WritesPermitted() || st.Peek(2) == 0)
-    // ensures st' == ERROR(STACK_UNDERFLOW)  <==> st.Operands() < 7
-    // ensures st' == ERROR(WRITE_PROTECTION_VIOLATED) <==>
-    // st.Operands() >= 7 && !st.WritesPermitted() && st.Peek(2) > 0
-    // ensures s'.IsValid()
-    // ensures st'.Operands() == st.Operands() - 7 + 1
-    // ensures st'.Capacity() == st.Capacity() + 7 - 1
-    // ensures st'.GetStack().contents[1..] == st.GetStack().contents[7..]
-    // ensures forall k:: 1 <= k < st'.Operands() ==> st'.Peek(k) == st.Peek(k + 6)
-
-    // ensures st'.SlicePeek(1, st'.Operands()) == st.SlicePeek(7, st.Operands())
-    // ensures st'.PC() == st.PC() + 1
-    // ensures st'.WritesPermitted() == st.WritesPermitted()
+    requires s.Operands() >= 6 
   {
-    EState(s.pc + 1, [0] + s.stack[6..])
+    EState(s.pc + 1, [Random()] + s.stack[6..])
   }
-
-
-  //   lemma SimulationCorrectness(s: EState, n: nat, k: nat, st: ExecutingState)
-  //     ensures Pop.requires(s) &&  s.Abstracts(st) ==> Pop(s).Abstracts(Bytecode.Pop(st))
-  //     ensures Dup.requires(s, k) &&  s.Abstracts(st) ==> Dup(s, k).Abstracts(Bytecode.Dup(st, k))
-  //     ensures Swap.requires(s, k) &&  s.Abstracts(st) ==> Swap(s, k).Abstracts(Bytecode.Swap(st, k))
-  //     ensures MLoad.requires(s) &&  s.Abstracts(st) ==> MLoad(s).Abstracts(Bytecode.MLoad(st))
-  //     ensures MStore.requires(s) &&  s.Abstracts(st) ==> MStore(s).Abstracts(Bytecode.MStore(st))
-  //     ensures Pop.requires(s) &&  s.Abstracts(st) ==> Pop(s).Abstracts(Bytecode.Pop(st))
-  //   {   //  Thanks Dafny
-  //   }
-
-  //   lemma SimulationCorrectnessStackOp(s: EState, n: nat, k: nat, st: ExecutingState)
-  //     requires s.Abstracts(st)
-  //     ensures Bytecode.Pop(st).EXECUTING? ==> Pop.requires(s) && Pop(s).Abstracts(Bytecode.Pop(st))
-  //     ensures k > 0 && Bytecode.Dup(st, k).EXECUTING? ==> Dup.requires(s, k) && Dup(s, k).Abstracts(Bytecode.Dup(st, k))
-  //     ensures 1 <= k <= 16 && Bytecode.Swap(st, k).EXECUTING? ==> Swap.requires(s, k) && Swap(s, k).Abstracts(Bytecode.Swap(st, k))
-  //   {   //  Thanks Dafny
-  //   }
-
-  //   lemma SimulationCorrectnessV2MemOp(s: EState, n: nat, k: nat, st: ExecutingState)
-  //     requires s.Abstracts(st)
-  //     ensures Bytecode.MLoad(st).EXECUTING? ==> MLoad.requires(s) && MLoad(s).Abstracts(Bytecode.MLoad(st))
-  //     ensures Bytecode.MStore(st).EXECUTING? ==> MStore(s).Abstracts(Bytecode.MStore(st))
-  //   {   //  Thanks Dafny
-  //   }
 
   function PushN(s: EState, n: nat, k: nat): (s': EState)
     // requires s.IsValid()
@@ -134,7 +73,7 @@ module AbstractSemantics {
     ensures s'.stack[1..] == s.stack
     // ensures s'.IsValid()
   {
-    EState(s.pc + n + 1, [k as Int.u256] + s.stack)
+    EState(s.pc + n + 1, [Value(k as Int.u256)] + s.stack)
   }
 
   function Push0(s: EState): (s': EState)
@@ -146,7 +85,7 @@ module AbstractSemantics {
     // ensures s'.Capacity() == s.Capacity() - 1
     ensures s'.stack[1..] == s.stack
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function Pop(s: EState): (s': EState)
@@ -193,7 +132,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity()
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
   function SStore(s: EState): (s': EState)
@@ -215,7 +154,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity()
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
   function MStore(s: EState): (s': EState)
@@ -243,27 +182,27 @@ module AbstractSemantics {
   function Jump(s: EState): (s': EState)
     // requires s.IsValid()
     requires s.Operands() >= 1
-    // requires s.stack[0].Value?
+    requires s.stack[0].Value?
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.stack[0] as nat, s.stack[1..])
+    EState(s.stack[0].v as nat, s.stack[1..])
   }
 
   function JumpI(s: EState): (s': EState)
     // requires s.IsValid()
     requires s.Operands() >= 2
-    // requires s.stack[0].Value?
+    requires s.stack[0].Value?
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
-    ensures s'.pc == s.stack[0] as nat || s'.pc == s.pc + 1
+    ensures s'.pc == s.stack[0].v as nat || s'.pc == s.pc + 1
     ensures s'.stack == s.stack[2..]
-  {
+//   {
 
-    EState(if s.stack[1] > 0 then s.stack[0] as nat else s.pc + 1 as nat, s.stack[2..])
-  }
+//     EState(if s.stack[1] > 0 then s.stack[0] as nat else s.pc + 1 as nat, s.stack[2..])
+//   }
 
   function Add(s: EState): (s': EState)
     // requires s.IsValid()
@@ -272,7 +211,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Sub(s: EState): (s': EState)
@@ -282,7 +221,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Mul(s: EState): (s': EState)
@@ -292,7 +231,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Div(s: EState): (s': EState)
@@ -302,7 +241,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Mod(s: EState): (s': EState)
@@ -312,7 +251,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Exp(s: EState): (s': EState)
@@ -322,7 +261,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Byte(s: EState): (s': EState)
@@ -332,7 +271,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Lt(s: EState): (s': EState)
@@ -342,7 +281,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Gt(s: EState): (s': EState)
@@ -352,7 +291,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Slt(s: EState): (s': EState)
@@ -362,7 +301,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
    function Sgt(s: EState): (s': EState)
@@ -372,7 +311,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Eq(s: EState): (s': EState)
@@ -382,7 +321,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Shr(s: EState): (s': EState)
@@ -392,7 +331,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Shl(s: EState): (s': EState)
@@ -402,7 +341,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
 
@@ -413,7 +352,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
   function And(s: EState): (s': EState)
@@ -423,7 +362,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Or(s: EState): (s': EState)
@@ -433,7 +372,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
 
@@ -444,7 +383,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
 
@@ -455,7 +394,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity() + 1
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
   function Address(s: EState): (s': EState)
@@ -466,7 +405,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
    function Balance(s: EState): (s': EState)
@@ -477,7 +416,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() 
     // ensures s'.Capacity() == s.Capacity() - 1
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
    function SelfBalance(s: EState): (s': EState)
@@ -488,7 +427,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function Gas(s: EState): (s': EState)
@@ -499,7 +438,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function Keccak256(s: EState): (s': EState)
@@ -510,7 +449,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() - 1
     // ensures s'.Capacity() == s.Capacity() - 1
   {
-    EState(s.pc + 1, [0] + s.stack[2..])
+    EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function CallValue(s: EState): (s': EState)
@@ -520,7 +459,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity()
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function CallDataLoad(s: EState): (s': EState)
@@ -530,7 +469,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity()
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
 
   function CallDataCopy(s: EState): (s': EState)
@@ -560,7 +499,7 @@ module AbstractSemantics {
     // ensures s'.Operands() == s.Operands() - 3
     // ensures s'.Capacity() == s.Capacity() + 3
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function ExtCodeSize(s: EState): (s': EState)
@@ -570,7 +509,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands()
     // ensures s'.Capacity() == s.Capacity() + 3
   {
-    EState(s.pc + 1, [0] + s.stack[1..])
+    EState(s.pc + 1, [Random()] + s.stack[1..])
   }
   function Caller(s: EState): (s': EState)
     // requires s.IsValid()
@@ -578,9 +517,9 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
-    ensures s'.stack == [0] + s.stack
+    ensures s'.stack == [Random()] + s.stack
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function ReturnDataSize(s: EState): (s': EState)
@@ -590,7 +529,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() + 3
   {
-    EState(s.pc + 1, [0] + s.stack)
+    EState(s.pc + 1, [Random()] + s.stack)
   }
 
   function ReturnDataCopy(s: EState): (s': EState)
@@ -609,7 +548,7 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
-    // ensures s'.stack == [0] + s.stack
+    // ensures s'.stack == [Random()] + s.stack
   {
     EState(s.pc + 1, s.stack)
   }
@@ -620,7 +559,7 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
-    // ensures s'.stack == [0] + s.stack
+    // ensures s'.stack == [Random()] + s.stack
   {
     EState(s.pc + 1, s.stack)
   }
@@ -631,7 +570,7 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
-    // ensures s'.stack == [0] + s.stack
+    // ensures s'.stack == [Random()] + s.stack
   {
     EState(s.pc + 1, s.stack)
   }
@@ -642,7 +581,7 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     // ensures s'.Operands() == s.Operands() + 1
     // ensures s'.Capacity() == s.Capacity() - 1
-    // ensures s'.stack == [0] + s.stack
+    // ensures s'.stack == [Random()] + s.stack
   {
     EState(s.pc + 1, s.stack)
   }
@@ -655,7 +594,7 @@ module AbstractSemantics {
     // ensures s'.IsValid()
     ensures s'.Operands() == s.Operands() - (n + 2)
     // ensures s'.Capacity() == s.Capacity() - 1
-    // ensures s'.stack == [0] + s.stack
+    // ensures s'.stack == [Random()] + s.stack
   {
     EState(s.pc + 1, s.stack[n + 2..])
   }
