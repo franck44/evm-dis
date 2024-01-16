@@ -256,7 +256,8 @@ module EVMObject {
         //  Tgt pos condition is that the last node leads to the startAddress of segment i
         var tgtCond := xs[Last(pStates).segNum].LeadsTo(xs[i].StartAddress(), Last(pExits));
         //  compute the Wpre of the tgtCond for the path from index to end
-        var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond, xs, xs[i].StartAddress());
+        //  And with the constraints at pStates[index]
+        var w1 := WPreSeqSegs(segmentsOnPathFromIndex, exitsFromIndex, tgtCond.And( StackToCond(pStates[index].st)), xs, xs[i].StartAddress());
         if w1.StTrue? then
           Some(index)
         else if w1.StFalse? then
