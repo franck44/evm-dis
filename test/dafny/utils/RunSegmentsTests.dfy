@@ -17,7 +17,7 @@ include "../../../src/dafny/utils/StackElement.dfy"
 include "../../../src/dafny/utils/State.dfy"
 include "../../../src/dafny/utils/LinSegments.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
-include "../../../src/dafny/proofobjectbuilder/Splitter.dfy" 
+include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
 
@@ -30,7 +30,7 @@ module RuNSegTests {
   import opened OpcodeDecoder
   import opened EVMConstants
   import Int
-  import opened State 
+  import opened State
   import opened StackElement
   import opened BinaryDecoder
   import opened Splitter
@@ -45,12 +45,12 @@ module RuNSegTests {
       expect |x| == 6;
       var y := SplitUpToTerminal(x);
       expect |y| == 1;
-      
+
       expect y[0].JUMPSeg?;
       //    Run Segment exit 1. Should be Error
       var s0 := DEFAULT_VALIDSTATE;
-    //   var s' := y[0].Run(s0, 1, []);
-    //   expect s'.Error?; 
+      //   var s' := y[0].Run(s0, 1, []);
+      //   expect s'.Error?;
 
       var s1 := y[0].Run(s0, 0, [0x13]);
       expect s1.EState?;
@@ -274,7 +274,7 @@ module RuNSegTests {
     var s3 := y[4].Run(s2, 0, jd);
 
     expect |y[4].ins| == 2;
-    var s3' := y[4].ins[0].NextState(s2, jd); 
+    var s3' := y[4].ins[0].NextState(s2, jd);
 
     expect s3'.EState?;
     var s4' := y[4].ins[1].NextState(s3', jd);
@@ -301,5 +301,37 @@ module RuNSegTests {
     expect s6.EState?;
     expect s6.pc == 0x12;
   }
+
+  method {:test} Test7()
+  {
+    //  Linear segment, from max-return.bin
+    var x := DisassembleU8(
+      [
+        /* 00000000 */ JUMPDEST,
+        /* 00000000 */ PUSH2, 0x1, 0x3f,
+        /* 00000002 */ PUSH1, 0x02,
+        /* 00000004 */ DUP4,
+        /* 00000006 */ SUB,
+        /* 00000008 */ PUSH2, 0x00, 0x00,
+        /* 0000000a */ JUMP
+      ]);
+
+    expect |x| >= 1;
+    var y := SplitUpToTerminal(x);
+    expect |y| == 1;
+    expect y[0].JUMPSeg?;
+
+    var jd := EVMObj(y).jumpDests;
+    print jd, "\n";
+    expect jd == [ 0x0];
+
+    var se := y[0].StackEffect();
+    print "Stack effect of y[0]:", se, "\n";
+
+    var s0 := DEFAULT_VALIDSTATE.(stack := [Random(), Random(), Value(0x77), Random()]);
+    var s1 := y[0].Run(s0, 0, [0x0]);
+    print s1.ToString(), "\n";
+  }
+
 }
 
