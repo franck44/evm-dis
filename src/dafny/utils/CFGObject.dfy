@@ -23,7 +23,7 @@ include "../utils/EVMObject.dfy"
 include "../utils/Statistics.dfy"
 include "../prettyprinters/PrettyInstruction.dfy"
 /**
-  *  Provides proof objects types.
+  *  Provides CFG objects & types.
   */
 module CFGObject {
 
@@ -134,30 +134,32 @@ module CFGObject {
     {
       //    optional include of the dafny-EVM files
       if |pathToEVMDafny| > 0 {
-        print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
-        print "include \"", pathToEVMDafny, "/src/dafny/bytecode.dfy\"", "\n";
+        // print "include \"", pathToEVMDafny, "/src/dafny/state.dfy\"", "\n";
+        // print "include \"", pathToEVMDafny, "/src/dafny/bytecode.dfy\"", "\n";
         print "\n";
       }
 
-      print "include \"./ExternalCallsLib.dfy\"", "\n";
+      print "include \"./src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
 
       //    Module
       print "module " + name + " {", "\n\n";
-      print "import opened Int", "\n";
-      print "import EvmState", "\n";
-      print "import opened Bytecode", "\n";
-      print "import ExternalCallLib", "\n";
+      //   print "import opened Int", "\n";
+      //   print "import EvmState", "\n";
+      //   print "import opened Bytecode", "\n";
+      //   print "import ExternalCallLib", "\n";
+      print "import opened AbstractSemantics", "\n";
+      print "import opened AbstractState", "\n";
 
       //  build a const with the jumpdests
-      var j := Map(prog.jumpDests, k => "0x" + Hex.NatToHex(k) + ",");
+      //   var j := Map(prog.jumpDests, k => "0x" + Hex.NatToHex(k) + ",");
       /** Set of jumdests. */
-      var jAsString := if |j| == 0 then "{}" else "{" + Init(Flatten(j)) + "}";
-      print "/** Set of valid JUMPDESTS for this program. */", "\n";
-      print "const VALID_JUMPDESTS: set<u256> := " + jAsString + "\n";
-      print "\n";
-      print "/** Lemma for Jumpdest */", "\n";
-      print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
-      print "   ensures forall k:: k in VALID_JUMPDESTS ==> s.IsJumpDest(k)", "\n";
+      //   var jAsString := if |j| == 0 then "{}" else "{" + Init(Flatten(j)) + "}";
+      //   print "/** Set of valid JUMPDESTS for this program. */", "\n";
+      //   print "const VALID_JUMPDESTS: set<u256> := " + jAsString + "\n";
+      //   print "\n";
+      //   print "/** Lemma for Jumpdest */", "\n";
+      //   print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
+      //   print "   ensures forall k:: k in VALID_JUMPDESTS ==> s.IsJumpDest(k)", "\n";
 
       // Print the transfer functions for each state of the graph.
       PrintProofObjectBody();
@@ -165,7 +167,28 @@ module CFGObject {
     }
 
     /**
+      * Print the CFG object to Dafny code to verify the CFG.
+      */
+    method {:print} CFGCheckerToDafny(name: string := "EVMProofObject", pathToEVMDafny: string := "")
+      requires this.IsValid()
+      requires this.HasNoErrorState()
+    {
+      //    optional include of the dafny-EVM files
+      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
+
+      //    Module
+      print "module " + name + " {", "\n\n";
+      print "import opened AbstractSemantics", "\n";
+      print "import opened AbstractState", "\n";
+
+      // Print the transfer functions for each state of the graph.
+      PrintCFGVerifierBody();
+      print "}", "\n";
+    }
+
+    /**
       * Iterate over the states of the CFG and print the transfer functions.
+      * This proof object is for analysing and reasoning about the program.
       */
     method PrintProofObjectBody(index: nat := 0)
       requires this.IsValid()
@@ -185,27 +208,29 @@ module CFGObject {
         var minCap := prog.WpCap(currentState.segNum);
         print "* Minimum capacity for this segment to prevent stack overflow: ", minCap, "\n";
         var netStackEffect := prog.StackEffect(currentState.segNum);
-        print "* Net Stack Effect: ", (if netStackEffect >= 0 then "+" else "-"), netStackEffect , "\n";
+        print "* Net Stack Effect: ", (if netStackEffect >= 0 then "+" else ""), netStackEffect , "\n";
         var netCapEffect := prog.CapEffect(currentState.segNum);
-        print "* Net Capacity Effect: ", (if netCapEffect >= 0 then "+" else "-"), netStackEffect , "\n";
+        print "* Net Capacity Effect: ", (if netCapEffect >= 0 then "+" else ""), netCapEffect , "\n";
         print "*/\n";
-        print "function {:opaque} {:verify false} ExecuteFromCFGNode_s", index, "(s0: EvmState.ExecutingState, gas: nat): (s': EvmState.State)\n";
-        print "  // Writes permission for this segment.", "\n";
-        print "  requires s0.WritesPermitted()", "\n";
+        print "function {:opaque} {:verify false} ExecuteFromCFGNode_s", index, "(s0: EState, gas: nat): (s': EState)\n";
+        // print "  // Writes permission for this segment.", "\n";
+        // print "  requires s0.WritesPermitted()", "\n";
         print "  // PC requirement for this node.", "\n";
-        print "  requires s0.PC() == 0x",  Hex.NatToHex(startAddress), " as nat\n";
+        print "  requires s0.pc == 0x",  Hex.NatToHex(startAddress), " as nat\n";
 
         //  requirements on the content of the stack at this node
         print "  // Stack requirements for this node.", "\n";
-        print "  requires s0.Operands() == ", |currentState.st|, "\n";
-        print "  requires s0.Capacity() >= ", minCap, "\n";
+        print "  requires s0.IsValid() \n";
+        print "  requires s0.Operands()", (if index ==0 then " == " else " >= "), |currentState.st|, "\n";
+        // print "  requires s0.Capacity() >= ", minCap, "\n";
         for k := 0 to |currentState.st| {
           if currentState.st[k].Value? {
-            print "\n  requires s0.Peek(", k, ") == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
+            // print "\n  requires s0.Peek(", k, ") == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
+            print "\n  requires s0.stack[", k, "] == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
           }
         }
         print "\n";
-        print "   decreases gas\n";
+        print "  decreases gas\n";
 
         //  Print the code for this segment
         var nodeInstructions := prog.xs[currentState.segNum].ins;
@@ -215,8 +240,8 @@ module CFGObject {
         // print "  ValidJumpDest(s0);\n";
         PrintInstructionsToDafny(nodeInstructions, EState(startAddress, currentState.st));
         // print "  ValidJumpDest(s", |nodeInstructions|, ");\n";
-        print "  assume s", |nodeInstructions|, ".EXECUTING?", ";\n";
-        print "  assume s", |nodeInstructions|, ".IsJumpDest(s", |nodeInstructions|, ".Peek(0)", ");\n";
+        // print "  assume s", |nodeInstructions|, ".EXECUTING?", ";\n";
+        // print "  assume s", |nodeInstructions|, ".IsJumpDest(s", |nodeInstructions|, ".Peek(0)", ");\n";
         print "   ", PrintInstructionToDafny(prog.xs[currentState.segNum].lastIns, |nodeInstructions|, |nodeInstructions| + 1), "\n";
 
         // TODO: assert |a.SuccNat(index)| <= 2;
@@ -235,10 +260,10 @@ module CFGObject {
 
         } else {
           // This must must be two and a JUMPI
-          print "  if s", |nodeInstructions|, ".Peek(1) > 0 then ";
+          print "  if s", |nodeInstructions|, ".stack[1] > 0 then ";
           //   print "\nassert ExecuteFromCFGNode_s", a.SuccNat(index)[1], ".requires(s", |nodeInstructions|, ");\n";
           //   print "s", |nodeInstructions|, "\n";
-          print "\nExecuteFromCFGNode_s", a.SuccNat(index)[1], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
+          print "\n   ExecuteFromCFGNode_s", a.SuccNat(index)[1], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
 
           //   print "  else assert ExecuteFromCFGNode_s", a.SuccNat(index)[0], ".requires(s", |nodeInstructions|, ")", ";\n";
           //   print "s", |nodeInstructions|, "\n";
@@ -249,6 +274,84 @@ module CFGObject {
 
         PrintProofObjectBody(index + 1);
 
+      }
+    }
+
+    /**
+      * This proof object is for verifying/validating the CFG.
+      */
+    method PrintCFGVerifierBody(index: nat := 0)
+      requires this.IsValid()
+      requires this.HasNoErrorState()
+      requires index <= |a.states|
+      decreases |a.states| - index
+    {
+      if index < |a.states| {
+        // 
+        var currentState := a.states[index];
+        var startAddress := prog.StartAddress(currentState.segNum);
+        print "\n/** Node " , index , "\n";
+        print "* Segment Id for this node is: ", currentState.segNum, "\n";
+        print "* Starting at 0x", Hex.NatToHex(startAddress),  "\n";
+        print "* Segment type is: ", prog.xs[currentState.segNum].SegTypeName(), "\n";
+        print "* Minimum stack size for this segment to prevent stack underflow: ", prog.WpOp(currentState.segNum), "\n";
+        var minCap := prog.WpCap(currentState.segNum);
+        print "* Minimum capacity for this segment to prevent stack overflow: ", minCap, "\n";
+        var netStackEffect := prog.StackEffect(currentState.segNum);
+        print "* Net Stack Effect: ", (if netStackEffect >= 0 then "+" else ""), netStackEffect , "\n";
+        var netCapEffect := prog.CapEffect(currentState.segNum);
+        print "* Net Capacity Effect: ", (if netCapEffect >= 0 then "+" else ""), netCapEffect , "\n";
+        print "*/\n";
+        print "function {:opaque} {:verify true} ExecuteFromCFGNode_s", index, "(s0: EState, gas: nat): (s': EState)\n";
+        print "  // PC requirement for this node.", "\n";
+        print "  requires s0.pc == 0x",  Hex.NatToHex(startAddress), " as nat\n";
+
+        //  requirements on the content of the stack at this node
+        print "  // Stack requirements for this node.", "\n";
+        print "  requires s0.Operands()", (if index ==0 then " >= " else " >= "), |currentState.st|, "\n";
+        for k := 0 to |currentState.st| {
+          if currentState.st[k].Value? {
+            print "\n  requires s0.stack[", k, "] == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
+          }
+        }
+        print "\n";
+        print "  decreases gas\n";
+
+        //  Print the code for this segment
+        var nodeInstructions := prog.xs[currentState.segNum].ins;
+        print "{\n";
+        print "if gas == 0 then s0", "\n";
+        print "else\n";
+        PrintInstructionsToDafny(nodeInstructions, EState(startAddress, currentState.st));
+        print "  ", PrintInstructionToDafny(prog.xs[currentState.segNum].lastIns, |nodeInstructions|, |nodeInstructions| + 1), "\n";
+
+        // TODO: assert |a.SuccNat(index)| <= 2;
+        //  Pretty-print the last state.
+        if  |a.SuccNat(index)| == 0 {
+          //    the last state is the state returned.
+          print "  // Segment is terminal (Revert, Stop or Return)\n";
+          print "  s", |nodeInstructions| + 1, "\n";
+        }
+        else if |a.SuccNat(index)| == 1 {
+          //    this is either a JUMP or a Cont but there is unique successor.
+          var commLine := match prog.xs[currentState.segNum]
+            case CONTSeg(_, _, _) => "//  Go to the next instruction at pc + 1"
+            case JUMPSeg(_, _, _) => "//  JUMP to the target at Peek(0)"
+            case _ => "// Segment has one successor but is not a JUMP nor a CONT"
+            ;
+          print "  ", commLine, "\n";
+          print "  ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
+
+        } else {
+          // This must must be two and a JUMPI
+          print "  // This is a JUMPI segment, determine next pc using second top-most element of stack\n";
+          print "  if s", |nodeInstructions|, ".stack[1] > 0 then\n";
+          print "   ExecuteFromCFGNode_s", a.SuccNat(index)[1], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
+          print "  else\n";
+          print "    ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)", "\n";
+        }
+        print "}\n";
+        PrintCFGVerifierBody(index + 1);
       }
     }
 
@@ -266,17 +369,17 @@ module CFGObject {
             xs[0].NextState(currentState, prog.jumpDests, 0)
           else
             currentState;
-        if newState.EState? && pos % 3 == 0 {
+        if newState.EState? && pos % 1 == 0 {
           for j := 0 to |newState.stack| {
             if newState.stack[j].Value?  {
-              print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
+              //   print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
+              print "  assert s", pos + 1, ".stack[", j, "] == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
             }
           }
         }
         PrintInstructionsToDafny(xs[1..], newState, pos + 1);
       }
     }
-
   }
 
 
