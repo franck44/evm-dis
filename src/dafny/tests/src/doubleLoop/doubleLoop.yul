@@ -8,10 +8,8 @@ object "Runtime" {
           }
         r := add(r, 1) 
       }
-
     mstore(0x40, r)
     return(0x40, 32)
-
   }
 }
 
