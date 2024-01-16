@@ -20,7 +20,7 @@ include "../utils/int.dfy"
 //    The bytecode in the Dafny EVM also uses a module name Int and if we import
 //    StackElem this creates a conflict.
 //    For the time being, we just re-declare locally StackElem and use
-//    the Int defined in the Dafny EVM module int.
+//    the Int defined in the Dafny EVM module Myint.
 //    The same holds for CFGState so we also use a local EState declaration here.
 module AbstractState {
 
@@ -67,7 +67,7 @@ module AbstractState {
     //   stack[k]
     // }
 
-    // function Extract(k: nat): Int.u256
+    // function Extract(k: nat): MyInt.u256
     //   requires IsValid()
     //   requires k < Operands()
     //   requires Peek(k).Value?
@@ -80,7 +80,7 @@ module AbstractState {
 /**
   * Provides the abstract semantics for external calls.
   */
-module AbstractSemantics {
+module AbstractSemantic {
 
   //   import opened EvmState
   //   import Bytecode
