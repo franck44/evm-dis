@@ -120,7 +120,7 @@ class CFGObj:
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
     def CFGCheckerToDafny(self, name, pathToEVMDafny):
-        _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantic/AbstractSemantics.dfy\""))).VerbatimString(False))
+        _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\""))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
         _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "module "))) + (name)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " {")))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
@@ -408,7 +408,7 @@ class CFGObj:
                     _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
                     d_1098_newState_: State.AState
                     d_1098_newState_ = (((xs)[0]).NextState(currentState, ((_this).prog).jumpDests, 0) if (currentState).is_EState else currentState)
-                    if ((d_1098_newState_).is_EState) and ((_dafny.euclidian_modulus(pos, 1)) == (0)):
+                    if ((d_1098_newState_).is_EState) and ((_dafny.euclidian_modulus(pos, 2)) == (0)):
                         hi10_ = len((d_1098_newState_).stack)
                         for d_1099_j_ in range(0, hi10_):
                             if (((d_1098_newState_).stack)[d_1099_j_]).is_Value:

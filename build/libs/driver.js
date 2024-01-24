@@ -6517,9 +6517,9 @@ let PrettyIns = (function() {
       } else if ((((i).dtor_op).dtor_opcode) === (17)) {
         return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := Gt(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
       } else if ((((i).dtor_op).dtor_opcode) === (18)) {
-        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := Slt(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
+        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := SLt(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
       } else if ((((i).dtor_op).dtor_opcode) === (19)) {
-        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := Sgt(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
+        return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := SGt(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
       } else if ((((i).dtor_op).dtor_opcode) === (20)) {
         return _dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), _dafny.Seq.UnicodeFromString(" := Eq(s")), PrettyIns.__default.DecToString(src)), _dafny.Seq.UnicodeFromString(");"));
       } else if ((((i).dtor_op).dtor_opcode) === (21)) {
@@ -9103,7 +9103,7 @@ let CFGObject = (function() {
     }
     CFGCheckerToDafny(name, pathToEVMDafny) {
       let _this = this;
-      process.stdout.write((_dafny.Seq.UnicodeFromString("include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantic/AbstractSemantics.dfy\"")).toVerbatimString(false));
+      process.stdout.write((_dafny.Seq.UnicodeFromString("include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"")).toVerbatimString(false));
       process.stdout.write((_dafny.Seq.UnicodeFromString("\n\n")).toVerbatimString(false));
       process.stdout.write((_dafny.Seq.Concat(_dafny.Seq.Concat(_dafny.Seq.UnicodeFromString("module "), name), _dafny.Seq.UnicodeFromString(" {"))).toVerbatimString(false));
       process.stdout.write((_dafny.Seq.UnicodeFromString("\n\n")).toVerbatimString(false));
@@ -9401,7 +9401,7 @@ let CFGObject = (function() {
           process.stdout.write((_dafny.Seq.UnicodeFromString("\n")).toVerbatimString(false));
           let _1114_newState;
           _1114_newState = (((currentState).is_EState) ? (((xs)[_dafny.ZERO]).NextState(currentState, ((_this).dtor_prog).dtor_jumpDests, _dafny.ZERO)) : (currentState));
-          if (((_1114_newState).is_EState) && (((pos).mod(_dafny.ONE)).isEqualTo(_dafny.ZERO))) {
+          if (((_1114_newState).is_EState) && (((pos).mod(new BigNumber(2))).isEqualTo(_dafny.ZERO))) {
             let _hi10 = new BigNumber(((_1114_newState).dtor_stack).length);
             for (let _1115_j = _dafny.ZERO; _1115_j.isLessThan(_hi10); _1115_j = _1115_j.plus(_dafny.ONE)) {
               if ((((_1114_newState).dtor_stack)[_1115_j]).is_Value) {
