@@ -50,8 +50,8 @@ module PrettyIns {
     // 0x10s: Comparison & Bitwise Logic
     case LT     => "var s" + DecToString(tgt) + " := Lt(s" + DecToString(src) + ");"
     case GT     => "var s" + DecToString(tgt) + " := Gt(s" + DecToString(src) + ");"
-    case SLT    => "var s" + DecToString(tgt) + " := Slt(s" + DecToString(src) + ");"
-    case SGT    => "var s" + DecToString(tgt) + " := Sgt(s" + DecToString(src) + ");"
+    case SLT    => "var s" + DecToString(tgt) + " := SLt(s" + DecToString(src) + ");"
+    case SGT    => "var s" + DecToString(tgt) + " := SGt(s" + DecToString(src) + ");"
     case EQ     => "var s" + DecToString(tgt) + " := Eq(s" + DecToString(src) + ");"
     case ISZERO => "var s" + DecToString(tgt) + " := IsZero(s" + DecToString(src) + ");"
     case AND    => "var s" + DecToString(tgt) + " := And(s" + DecToString(src) + ");"
