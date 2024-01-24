@@ -9,5 +9,5 @@ filename="${filename%.*}"
 
 echo "Shortname: " $shortname
 java -jar build/libs/Driver-java/evmdis.jar --title $shortname -p  --cfg 100 --raw --lib ../../../../../evm-dafny $(<$1) >$filename-proof.dfy
-dafny format $filename-proof.dfy
+# dafny format $filename-proof.dfy
 
