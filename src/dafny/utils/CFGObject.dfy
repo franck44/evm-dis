@@ -174,7 +174,7 @@ module CFGObject {
       requires this.HasNoErrorState()
     {
       //    optional include of the dafny-EVM files
-      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantic/AbstractSemantics.dfy\"", "\n\n";
+      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
 
       //    Module
       print "module " + name + " {", "\n\n";
@@ -369,7 +369,7 @@ module CFGObject {
             xs[0].NextState(currentState, prog.jumpDests, 0)
           else
             currentState;
-        if newState.EState? && pos % 1 == 0 {
+        if newState.EState? && pos % 2 == 0 {
           for j := 0 to |newState.stack| {
             if newState.stack[j].Value?  {
               //   print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
