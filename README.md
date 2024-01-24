@@ -5,7 +5,9 @@
 # Overview
 
 This project provides an EVM bytecode _disassembler_ and Control Flow Graph (CFG) generator.
-The disassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and `RJump`s, [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
+The disassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and is ready for `RJump`s (experimental, not tested), [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
+
+### Disassembler 
 The disassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it. 
 For instance the following binary string,  `prog` : 
 ```
@@ -83,7 +85,10 @@ the CFG is depicted on the right-hand side.
 </table>
 </center>
 
-The CFG generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
+### CFG Generator 
+The CFG generator outputs a DOT representation of the graph. Hovering some items (segments) reveals some information about the instructions, their gas cost, and for the segment about their _stack effects_.
+
+The generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. 
 It can re-construct CFGs with nested loops, function calls.
 
 Examples of CFGs in DOT format and SVG format are available in the [test folder](./src/dafny/tests/src/).
@@ -91,35 +96,38 @@ A front end is provided at [https://bytespector.org](https://bytespector.org) or
 you can use the [Graphviz-Online](https://dreampuf.github.io/GraphvizOnline/) tool to visualise the `dot` files.
 
 ## Usage
-The disassembler generates readable EVM assembly and the CFG generator DOT files.
+
 The input to the disassembler and CFG generator is the deployed (`bin-runtime`) part of the compiled code if you compile Solidity with `solc`.
 
 For the examples in the repo I have used Yul and `solc --yul` to get a text representation of the Yul code that includes the _binary representation_ hexadecimal  string. 
 
-The Dafny proof object feature is experimental.
+The CFGs can be _formally verified_ using a Dafny proof object.
 
-Dafny code can be used to generate some target code in several languages. To begin with we have generated
-Python, Java, JS (new!) and C# (Dotnet) code.
+The project is written in Dafny but Dafny's backends can be used to generate some target code in several languages. To begin with we have generated artefacts in **Python, Java, JS** and **C#** (Dotnet) code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
 ### Using the Python version of the disassembler/CFG generator
 The Python disassembler is in `build/driver-py`.
 
 It can be used with an input string as follows:
+
 ```zsh
-evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py                 
+evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py 
 Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
+usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--lib]  arg0 [--cfg]  arg0 [--raw]  [--size]  arg0 [--notable]  [--title]  arg0 [--info]  <string>
 
 options
 --help      [-h] Display help and exit
 --dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
+--proof     [-p] Generate proof object to verify the CFG for <string>
 --segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
 --lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
 --cfg       [-c] Max depth. Control flow graph in DOT format
 --raw       [-r] Display non-minimised and minimised CFGs
+--size      [-z] The max size of segments. Default is upto terminal instructions or JUMPDEST.
+--notable   [-n] Don't use tables to pretty-print DOT file. Reduces size of the DOT file.
+--title     [-t] The name of the program.
+--info      [-i] The stats of the program (size, segments).
 
 evm-dis git:(main) ✗ python3 build/libs/driver-py/__main__.py  "6040"
 PUSH1 0x40
@@ -146,89 +154,17 @@ function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
 }
 ```
 
-### Using the Java version of the disassembler/CFG generator
+### Using the Java/JS/C# versions of the disassembler/CFG generator
 
 The java disassembler is the file `evmdis.jar` in  `build/libs/Driver-java`.
 It can be used with an input string as follows:
 ```zsh
 evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar              
-Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
 
-options
---help      [-h] Display help and exit
---dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
---segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
---lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
---cfg       [-c] Max depth. Control flow graph in DOT format
---raw       [-r] Display non-minimised and minimised CFGs
-
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar "6040"
-PUSH1 0x40
-```
-To parse a binary representation from a file `file.evm` use:
-```zsh
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar $(<file.evm)
-PUSH1 0x40
-```
-To generate a Dafny proof object (only usable with the [Dafny-EVM](https://github.com/Consensys/evm-dafny)):
-```zsh
-evm-dis git:(main) ✗ java -jar build/libs/Driver-java/evmdis.jar -p "6040"    
-
-/** Code starting at 0x0 */
-function ExecuteFromTag_0(s0: EvmState.ExecutingState): (s': EvmState.State)
-  requires s0.PC() == 0x0 as nat
-  requires s0.Operands() >= 0
-  requires s0.Capacity() >= 1
-{
-  ValidJumpDest(s0);
-  var s1 := Push1(s0, 0x40);
-  s1
-}
-
-```
-
-### Using the C#/Dotnet version of the disassembler/CFG generator
-
-The C# version (`.dll`) is run using `dotnet` as follows:
-
-```zsh
 evm-dis git:(main) ✗ dotnet build/libs/driver.dll
-Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
 
-options
---help      [-h] Display help and exit
---dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
---segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
---lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
---cfg       [-c] Max depth. Control flow graph in DOT format
---raw       [-r] Display non-minimised and minimised CFGs
-```
-
-### Using the JS version of the disassembler/CFG generator
-The JS disassembler is in `build/driver.js`.
-
-```zsh
 evm-dis git:(main) ✗ node build/driver.js
-Not enough arguments
-usage: <this program>  [--help]  [--dis]  [--proof]  [--segment]  [--all]  [--lib]  arg0 [--cfg]  arg0 [--raw]  arg0 <string>
-
-options
---help      [-h] Display help and exit
---dis       [-d] Disassemble <string>
---proof     [-p] Generate proof object for <string>
---segment   [-s] Print segment of <string>
---all       [-a] Same as -d -p
---lib       [-l] The path to the Dafny-EVM source code. Used to add includes files in the proof object. 
---cfg       [-c] Max depth. Control flow graph in DOT format
---raw       [-r] Display non-minimised and minimised CFGs
 ```
-
 
 ## An EVM bytecode disassembler in Dafny
 
