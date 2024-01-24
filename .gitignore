@@ -75,3 +75,4 @@ src/dafny/**/*.runtimeconfig.json
 **/logs/
 /bin/
 **/.vscode
+*-proof.dfy
