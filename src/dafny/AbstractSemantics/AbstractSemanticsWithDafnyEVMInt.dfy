@@ -19,7 +19,7 @@ include "../../../../evm-dafny/src/dafny/util/int.dfy"
   *  This project and the Dafny-EVM both use an Int module.
   *  There is a name clash when we want to mix them together.
   *  For the time being the module in these files are copies
-  *  of the absttact semantics but using the Dafny-EVM int instead of
+  *  of the abstract semantics but using the Dafny-EVM int instead of
   *  of this project's Int module. 
   *  The two moduels are the same so it is not an issue.
   */
@@ -40,6 +40,7 @@ module AbstractStateDafnyEVM {
       && st.Operands() == Operands()
       && forall k:: 0 <= k < Operands() && stack[k].Value? ==> stack[k].v == st.GetStack().contents[k]
     }
+
   }
 }
 
