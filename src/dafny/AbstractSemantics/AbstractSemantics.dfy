@@ -14,7 +14,8 @@
 
 // include "../../../../evm-dafny/src/dafny/state.dfy"
 // include "../../../../evm-dafny/src/dafny/bytecode.dfy"
-include "../utils/int.dfy"
+// include "../utils/int.dfy"
+include "../../../../evm-dafny/src/dafny/util/int.dfy"
 
 //    StackElem already exists but uses the Int module in this project.
 //    The bytecode in the Dafny EVM also uses a module name Int and if we import
