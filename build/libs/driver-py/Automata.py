@@ -151,7 +151,7 @@ class Auto:
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "s_"))).VerbatimString(False))
             _dafny.print(_dafny.string_of(d_843_i_))
             _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " [label="))).VerbatimString(False))
-            _dafny.print(((nodeToString(((self).states)[d_843_i_])) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "]\n")))).VerbatimString(False))
+            _dafny.print(((nodeToString(((self).states)[d_843_i_], d_843_i_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "]\n")))).VerbatimString(False))
         hi1_ = len((self).states)
         for d_844_i_ in range(0, hi1_):
             hi2_ = len(((self).transitionsNat)[d_844_i_])

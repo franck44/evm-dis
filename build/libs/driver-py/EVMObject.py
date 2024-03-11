@@ -426,13 +426,13 @@ class EVMObj:
             return a, stats
         return a, stats
 
-    def ToHTML(self, a, withTable, minStackSizeForState):
+    def ToHTML(self, a, withTable, minStackSizeForState, index):
         if (a).is_ErrorGState:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"))
         elif withTable:
-            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<"))) + (HTML.default__.DOTSegTable(((self).xs)[(a).segNum], a, minStackSizeForState))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ">")))
+            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<"))) + (HTML.default__.DOTSegTable(((self).xs)[(a).segNum], a, minStackSizeForState, index))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ">")))
         elif True:
-            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<"))) + ((HTML.default__.DOTSeg(((self).xs)[(a).segNum], (a).segNum, minStackSizeForState))[0])) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ">")))
+            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "<"))) + ((HTML.default__.DOTSeg(((self).xs)[(a).segNum], (a).segNum, minStackSizeForState, index))[0])) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ">")))
 
     def DotLabel(self, s, exit):
         d_997_lab_ = (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Error")) if (s).is_ErrorGState else ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "tooltip=\"Jump\",style=dashed")) if ((((self).xs)[(s).segNum]).IsJump()) and ((exit) == (((((self).xs)[(s).segNum]).NumberOfExits()) - (1))) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "tooltip=\"Next\""))) if ((s).is_EGState) and ((exit) < ((((self).xs)[(s).segNum]).NumberOfExits())) else _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Error Number of exits"))))
