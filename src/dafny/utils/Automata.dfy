@@ -255,9 +255,9 @@ module Automata {
     }
 
     /** Print to Dot format. */
-    method {:print} ToDot(nodeToString: T --> string, labelToString: (T, nat, T) --> string, prefix: string := "", name: string := "G")
+    method {:print} ToDot(nodeToString: (T, nat) --> string, labelToString: (T, nat, T) --> string, prefix: string := "", name: string := "G")
       requires this.IsValid()
-      requires forall s:: s in states ==> nodeToString.requires(s)
+      requires forall s, k:: s in states ==> nodeToString.requires(s, k)
       requires forall s, s', n:: s in states && s' in states ==> labelToString.requires(s, n, s')
     {
       print "// Number of states: ", SSize(), "\n";
@@ -266,7 +266,7 @@ module Automata {
       print prefix, "\n";
       for i := 0 to |states|
       {
-        print "s_", i, " [label=", nodeToString(states[i]) + "]\n";
+        print "s_", i, " [label=", nodeToString(states[i], i) + "]\n";
       }
       for i := 0 to |states| {
         for j := 0 to |transitionsNat[i]| {

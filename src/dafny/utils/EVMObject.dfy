@@ -444,7 +444,7 @@ module EVMObject {
     /**
       * Generate the HTML representation of a given abstract state.
       */
-    function {:opaque} ToHTML(a: GState, withTable: bool := false, minStackSizeForState: Option<nat> := None): string
+    function {:opaque} ToHTML(a: GState, withTable: bool := false, minStackSizeForState: Option<nat> := None, index: nat := 0): string
       requires this.IsValid()
       requires a.IsBounded(|xs|) // a.EGState? ==> a.segNum < |xs|
     {
@@ -453,9 +453,9 @@ module EVMObject {
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else if withTable then
-        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState) +">" 
-      else
-        "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState).0 +">"
+        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState, index) +">" 
+      else 
+        "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState, index).0 +">"
     }
 
     /**

@@ -86,9 +86,9 @@ module CFGObject {
         print "Minimised CFG\n";
         print "*/\n";
       }
-
-      a.ToDot(
-        nodeToString := s requires s in a.states => prog.ToHTML(s, !noTable, if s.ErrorGState? then None else Some(|s.st|)),
+ 
+      a.ToDot( 
+        nodeToString := (s, k) requires s in a.states && 0 <= k => prog.ToHTML(s, !noTable, if s.ErrorGState? then None else Some(|s.st|), k as nat), 
         labelToString := (s, l, _) requires s in a.states && 0 <= l => prog.DotLabel(s, l),
         prefix :=
           "graph[labelloc=\"t\", labeljust=\"l\", label=<"

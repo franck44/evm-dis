@@ -119,7 +119,7 @@ module HTML {
   }
 
   /**   Print the content of a segment. */
-  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat, minStackSize: Option<nat>): (string, string)
+  function {:opaque} DOTSeg(s: ValidLinSeg, numSeg: nat, minStackSize: Option<nat>, index: nat): (string, string)
   {
     //  Jump target
     var jumpTip :=
@@ -138,6 +138,7 @@ module HTML {
     var minNumOpe := LINE_FEED_SYMBOL + "Stack Size on Entry for this segment " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(s.WeakestPreOperands());
     var minNumOpAtNode :=  if minStackSize.Some? then LINE_FEED_SYMBOL + "Stack Size on Entry for this segment at this node " + LARGER_OR_EQ_SYMBOL + " " + Int.NatToString(minStackSize.v) else "";
     var prefix := "<B>Segment "
+                  + "#" + Int.NatToString(index) + "|" 
                   + Int.NatToString(numSeg)
                   + " [0x"
                   + Hex.NatToHex(s.StartAddress())
@@ -149,7 +150,7 @@ module HTML {
   /**
     *   Print content of a segment in a table with tooltips.
     */
-  function DOTSegTable(s: ValidLinSeg, a: GState, minStackSize: Option<nat>): string
+  function DOTSegTable(s: ValidLinSeg, a: GState, minStackSize: Option<nat>, index: nat): string
     requires a.EGState?
   {
     //  Jump target
@@ -172,7 +173,8 @@ module HTML {
       body :=
         RowTR(
           CellTD(
-            "Segment " + Int.NatToString(a.segNum) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]")
+            "#" + Int.NatToString(index) + "|"
+            + "Segment " + Int.NatToString(a.segNum) + " [0x" + Hex.NatToHex(s.StartAddress()) + "]")
           + CellTD(
             body := Font(INFO_SYMBOL),
             tooltip :=
