@@ -15,7 +15,7 @@
 include "./disassembler/Disassembler.dfy"
 include "./proofobjectbuilder/Splitter.dfy"
 include "./proofobjectbuilder/SegmentBuilder.dfy"
-include "./proofobjectbuilder/ProofObjectBuilder.dfy"
+// include "./proofobjectbuilder/ProofObjectBuilder.dfy"
 include "./prettyprinters/Pretty.dfy"
 include "./utils/ArgParser.dfy"
 include "./utils/MiscTypes.dfy"
