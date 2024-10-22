@@ -285,7 +285,7 @@ module MiscTypes {
     * If two maps are revsered maps, then adding (key, val) to m and and (val, key) to m'
     * preserves the reverse map property.
     */
-  lemma ReverseAddKeyValPreservesReverseMaps<T>(m: map<T, seq<T>>, m': map<T, seq<T>>, i: T, j: T)
+  lemma ReverseAddKeyValPreservesReverseMaps<T(!new)>(m: map<T, seq<T>>, m': map<T, seq<T>>, i: T, j: T)
     requires i in m
     requires j in m'
     requires IsReverseMap(m, m')
@@ -293,7 +293,7 @@ module MiscTypes {
   {   //  Thanks Dafny
   }
 
-  lemma ReverseMapsIsCongruent<T>(m1: map<T, seq<T>>, m1': map<T, seq<T>>, m2: map<T, seq<T>>, m2': map<T, seq<T>>)
+  lemma ReverseMapsIsCongruent<T(!new)>(m1: map<T, seq<T>>, m1': map<T, seq<T>>, m2: map<T, seq<T>>, m2': map<T, seq<T>>)
     requires m1 == m2
     requires m1' == m2'
     requires IsReverseMap(m1, m1')
