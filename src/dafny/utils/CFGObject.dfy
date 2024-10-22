@@ -86,9 +86,9 @@ module {:disableNonlinearArithmetic} CFGObject {
         print "Minimised CFG\n";
         print "*/\n";
       }
- 
-      a.ToDot( 
-        nodeToString := (s, k) requires s in a.states && 0 <= k => prog.ToHTML(s, !noTable, if s.ErrorGState? then None else Some(|s.st|), k as nat), 
+
+      a.ToDot(
+        nodeToString := (s, k) requires s in a.states && 0 <= k => prog.ToHTML(s, !noTable, if s.ErrorGState? then None else Some(|s.st|), k as nat),
         labelToString := (s, l, _) requires s in a.states && 0 <= l => prog.DotLabel(s, l),
         prefix :=
           "graph[labelloc=\"t\", labeljust=\"l\", label=<"
@@ -186,6 +186,43 @@ module {:disableNonlinearArithmetic} CFGObject {
       print "}", "\n";
     }
 
+    method {:print} CFGRefineToDafny(name: string := "EVMProofObject", pathToEVMDafny: string := "")
+      requires this.IsValid()
+      requires this.HasNoErrorState()
+    {
+      //    optional include of the dafny-EVM files
+      print "include " + "\"" + pathToEVMDafny + "/src/dafny/state.dfy\"", "\n";
+      print "include " + "\"" + pathToEVMDafny + "/src/dafny/bytecode.dfy\"", "\n";
+
+      //    Module
+      print "module " + name + " {", "\n\n";
+      print "import EvmState", "\n";
+      print "import opened Bytecode", "\n";
+
+      // Add safe jump functions
+      print "function SafeJump(s: EvmState.State): (s': EvmState.State)", "\n";
+      //   requires s.EXECUTING?
+      //   requires s.Operands() >= 1
+      //   ensures s'.EXECUTING?
+      //   {
+      //      assume s.IsJumpDest(s.Peek(0));
+      //      Jump(s)
+      //   }
+
+      // function SafeJumpI(s: EvmState.State): (s': EvmState.State)
+      //     requires s.EXECUTING?
+      //     requires s.Operands() >= 2
+      //     ensures s'.EXECUTING?
+      // {
+      //     assume s.IsJumpDest(s.Peek(0));
+      //     Jump(s)
+      // }
+
+      // Print the transfer functions for each state of the graph.
+      PrintProofObjectBody();
+      print "}", "\n";
+    }
+
     /**
       * Iterate over the states of the CFG and print the transfer functions.
       * This proof object is for analysing and reasoning about the program.
@@ -212,31 +249,36 @@ module {:disableNonlinearArithmetic} CFGObject {
         var netCapEffect := prog.CapEffect(currentState.segNum);
         print "* Net Capacity Effect: ", (if netCapEffect >= 0 then "+" else ""), netCapEffect , "\n";
         print "*/\n";
-        print "function {:opaque} {:verify false} ExecuteFromCFGNode_s", index, "(s0: EState, gas: nat): (s': EState)\n";
-        // print "  // Writes permission for this segment.", "\n";
-        // print "  requires s0.WritesPermitted()", "\n";
+        print "function ExecuteFromCFGNode_s", index, "(s0: EvmState.State): (s': EvmState.State)\n";
+        print "  // Writes permission for this segment.", "\n";
         print "  // PC requirement for this node.", "\n";
-        print "  requires s0.pc == 0x",  Hex.NatToHex(startAddress), " as nat\n";
+        print "  requires s0.EXECUTING?", "\n";
+        print "  requires s0.WritesPermitted()", "\n";
+        print "  requires s0.PC() == 0x",  Hex.NatToHex(startAddress), " as nat\n";
 
         //  requirements on the content of the stack at this node
         print "  // Stack requirements for this node.", "\n";
-        print "  requires s0.IsValid() \n";
+        // print "  requires s0.IsValid() \n";
         print "  requires s0.Operands()", (if index ==0 then " == " else " >= "), |currentState.st|, "\n";
-        // print "  requires s0.Capacity() >= ", minCap, "\n";
+        print "  requires s0.Capacity() >= ", minCap, "\n";
         for k := 0 to |currentState.st| {
           if currentState.st[k].Value? {
-            // print "\n  requires s0.Peek(", k, ") == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
-            print "\n  requires s0.stack[", k, "] == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
+            print "\n  requires s0.Peek(", k, ") == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
+            // print "\n  requires s0.stack[", k, "] == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
           }
         }
         print "\n";
-        print "  decreases gas\n";
+        // Determine which type of states is returned.
+        print match prog.xs[currentState.segNum]
+              case STOPSeg(_, _, _) => "  ensures  s'.ERROR?\n"
+              case _ => "  ensures  s'.EXECUTING??\n";
+        // print "  decreases gas\n";
 
         //  Print the code for this segment
         var nodeInstructions := prog.xs[currentState.segNum].ins;
         print "{\n";
-        print "if gas == 0 then Revert(s0)", "\n";
-        print "else\n";
+        // print "if gas == 0 then Revert(s0)", "\n";
+        // print "else\n";
         // print "  ValidJumpDest(s0);\n";
         PrintInstructionsToDafny(nodeInstructions, EState(startAddress, currentState.st));
         // print "  ValidJumpDest(s", |nodeInstructions|, ");\n";
@@ -246,30 +288,31 @@ module {:disableNonlinearArithmetic} CFGObject {
 
         // TODO: assert |a.SuccNat(index)| <= 2;
         //  Pretty-print the last state.
-        if  |a.SuccNat(index)| == 0 {
-          //    the last state is the state returned.
-          print "  s", |nodeInstructions| + 1, "\n";
-        }
-        else if |a.SuccNat(index)| == 1 {
-          //    this is either a JUMP or a Next but there is unique successor.
-          print "  // jump to the successor Next() or Tgt of JUMP;\n";
-          //   print "  assert ExecuteFromCFGNode_s", a.SuccNat(index)[0], ".requires(s", |nodeInstructions|, ");\n";
-          //   print "s", |nodeInstructions|, "\n";
+        print "  s", |nodeInstructions| + 1, "\n";
+        // if  |a.SuccNat(index)| == 0 {
+        //   //    the last state is the state returned.
+        //   print "  s", |nodeInstructions| + 1, "\n";
+        // }
+        // else if |a.SuccNat(index)| == 1 {
+        //   //    this is either a JUMP or a Next but there is unique successor.
+        //   print "  // jump to the successor Next() or Tgt of JUMP;\n";
+        //   //   print "  assert ExecuteFromCFGNode_s", a.SuccNat(index)[0], ".requires(s", |nodeInstructions|, ");\n";
+        //   //   print "s", |nodeInstructions|, "\n";
 
-          print "  ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
+        //   print "  ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
 
-        } else {
-          // This must must be two and a JUMPI
-          print "  if s", |nodeInstructions|, ".stack[1] > 0 then ";
-          //   print "\nassert ExecuteFromCFGNode_s", a.SuccNat(index)[1], ".requires(s", |nodeInstructions|, ");\n";
-          //   print "s", |nodeInstructions|, "\n";
-          print "\n   ExecuteFromCFGNode_s", a.SuccNat(index)[1], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
+        // } else {
+        //   // This must must be two and a JUMPI
+        //   print "  if s", |nodeInstructions|, ".stack[1] > 0 then ";
+        //   //   print "\nassert ExecuteFromCFGNode_s", a.SuccNat(index)[1], ".requires(s", |nodeInstructions|, ");\n";
+        //   //   print "s", |nodeInstructions|, "\n";
+        //   print "\n   ExecuteFromCFGNode_s", a.SuccNat(index)[1], "(s", |nodeInstructions| + 1, ", gas - 1)\n";
 
-          //   print "  else assert ExecuteFromCFGNode_s", a.SuccNat(index)[0], ".requires(s", |nodeInstructions|, ")", ";\n";
-          //   print "s", |nodeInstructions|, "\n";
-          print "  else", "\n";
-          print "     ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)", "\n";
-        }
+        //   //   print "  else assert ExecuteFromCFGNode_s", a.SuccNat(index)[0], ".requires(s", |nodeInstructions|, ")", ";\n";
+        //   //   print "s", |nodeInstructions|, "\n";
+        //   print "  else", "\n";
+        //   print "     ExecuteFromCFGNode_s", a.SuccNat(index)[0], "(s", |nodeInstructions| + 1, ", gas - 1)", "\n";
+        // }
         print "}\n";
 
         PrintProofObjectBody(index + 1);
@@ -372,8 +415,8 @@ module {:disableNonlinearArithmetic} CFGObject {
         if newState.EState? && pos % 2 == 0 {
           for j := 0 to |newState.stack| {
             if newState.stack[j].Value?  {
-              //   print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
-              print "  assert s", pos + 1, ".stack[", j, "] == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
+              print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
+              //   print "  assert s", pos + 1, ".stack[", j, "] == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
             }
           }
         }
