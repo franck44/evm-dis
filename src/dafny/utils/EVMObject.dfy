@@ -25,7 +25,7 @@ include "../utils/Partition.dfy"
 include "../utils/Statistics.dfy"
 include "../utils/MinimiserGState.dfy"
 include "../utils/HTML.dfy"
- 
+
 /**
   *  Provides EVM Object.
   *  An EVM object is a list of segments together with some 
@@ -303,7 +303,7 @@ module EVMObject {
       * @param maxDepth The maximum depth of the DFS.
       * @param minimise If true, the CFG is minimised.   
       */
-    method {:print} {:timeLimitMultiplier 6} DFS(
+    method {:print} {:timeLimitMultiplier 10} {:isolate_assertions} {:disableNonlinearArithmetic} DFS(
       p: Path<GState>,
       a: ValidAuto<GState>,
       maxDepth: nat := 0,
