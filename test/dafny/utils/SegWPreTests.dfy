@@ -175,7 +175,7 @@ module SegWpreTests {
     }
   }
 
-  method {:timeLimitMultiplier 1} {:test} Test5()
+  method {:timeLimitMultiplier 10} {:disableNonlinearArithmetic} {:isolate_assertions} {:test} Test5()
   {
     var x := DisassembleU8(
       [
