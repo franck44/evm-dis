@@ -21,8 +21,8 @@ include "../../../src/dafny/utils/CFGState.dfy"
 include "../../../src/dafny/utils/MinimiserGState.dfy"
 include "../../../src/dafny/utils/Partition.dfy"
   
-module BuildCFGSimplifiedTests { 
- 
+module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
+
   import opened MiscTypes
   import opened Int
   import opened BinaryDecoder

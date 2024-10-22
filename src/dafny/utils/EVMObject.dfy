@@ -385,8 +385,8 @@ module EVMObject {
       }
     }
 
-    lemma {:timeLimitMultiplier 2} PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
-      requires this.IsValid() 
+    lemma {:timeLimitMultiplier 10}  {:isolate_assertions} PathHelperLemma(p: Path<GState>, i_th_succ: GState, i: nat)
+      requires this.IsValid()
       requires  |p.states| == |p.exits| + 1
       requires forall k:: 0 <= k < |p.states| ==> p.states[k].IsBounded(|xs|)
       requires (forall k:: 0 <= k < |p.exits| ==> p.exits[k] < |NextG(p.states[k])|)
