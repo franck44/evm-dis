@@ -83,13 +83,13 @@ module PrettyIns {
     case EXTCODEHASH    => "var s" + DecToString(tgt) + " := ExtCodeHash(s" + DecToString(src) + ");"
     // // 0x40s: Block Information
     case BLOCKHASH   => "var s" + DecToString(tgt) + " := BlockHash(s" + DecToString(src) + ");"
-    case COINBASE    => "var s" + DecToString(tgt) + " := Coinbase(s" + DecToString(src) + ");"
-    case TIMESTAMP   => "var s" + DecToString(tgt) + " := Timestamp(s" + DecToString(src) + ");"
+    case COINBASE    => "var s" + DecToString(tgt) + " := CoinBase(s" + DecToString(src) + ");"
+    case TIMESTAMP   => "var s" + DecToString(tgt) + " := TimeStamp(s" + DecToString(src) + ");"
     case NUMBER      => "var s" + DecToString(tgt) + " := Number(s" + DecToString(src) + ");"
     case DIFFICULTY  => "var s" + DecToString(tgt) + " := Difficulty(s" + DecToString(src) + ");"
     case GASLIMIT    => "var s" + DecToString(tgt) + " := GasLimit(s" + DecToString(src) + ");"
     case CHAINID     => "var s" + DecToString(tgt) + " := ChainID(s" + DecToString(src) + ");"
-    case SELFBALANCE => "var s" + DecToString(tgt) + " := SelfBalance(s" + DecToString(src) + ");"      
+    case SELFBALANCE => "var s" + DecToString(tgt) + " := SelfBalance(s" + DecToString(src) + ");"
     case BASEFEE     => "var s" + DecToString(tgt) + " := BaseFee(s" + DecToString(src) + ");"
     // // 0x50s: Stack, Memory, Storage and Flow
     case POP      => "var s" + DecToString(tgt) + " := Pop(s" + DecToString(src) + ");"

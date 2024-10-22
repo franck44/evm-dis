@@ -18,7 +18,7 @@
 <g id="node1" class="node">
 <title>s_0</title>
 <path fill="whitesmoke" stroke="none" d="M654,-11140C654,-11140 459,-11140 459,-11140 453,-11140 447,-11134 447,-11128 447,-11128 447,-10980 447,-10980 447,-10974 453,-10968 459,-10968 459,-10968 654,-10968 654,-10968 660,-10968 666,-10974 666,-10980 666,-10980 666,-11128 666,-11128 666,-11134 660,-11140 654,-11140"/>
-<text text-anchor="start" x="456" y="-11120.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
+<text text-anchor="start" x="456" y="-11120.58" font-family="arial" font-size="14.00">#0|Segment 0 [0x0]</text>
 <g id="a_node1_1"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0xd">
 <text text-anchor="start" x="620" y="-11121.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -97,7 +97,7 @@
 <g id="node2" class="node">
 <title>s_1</title>
 <path fill="whitesmoke" stroke="none" d="M471.5,-10580C471.5,-10580 277.5,-10580 277.5,-10580 271.5,-10580 265.5,-10574 265.5,-10568 265.5,-10568 265.5,-10516 265.5,-10516 265.5,-10510 271.5,-10504 277.5,-10504 277.5,-10504 471.5,-10504 471.5,-10504 477.5,-10504 483.5,-10510 483.5,-10516 483.5,-10516 483.5,-10568 483.5,-10568 483.5,-10574 477.5,-10580 471.5,-10580"/>
-<text text-anchor="start" x="274.5" y="-10560.58" font-family="arial" font-size="14.00">Segment 1 [0x9]</text>
+<text text-anchor="start" x="274.5" y="-10560.58" font-family="arial" font-size="14.00">#1|Segment 1 [0x9]</text>
 <g id="a_node2_16"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x4a2">
 <text text-anchor="start" x="437.5" y="-10561.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -144,7 +144,7 @@
 <g id="node3" class="node">
 <title>s_2</title>
 <path fill="whitesmoke" stroke="none" d="M783.5,-10932C783.5,-10932 581.5,-10932 581.5,-10932 575.5,-10932 569.5,-10926 569.5,-10920 569.5,-10920 569.5,-10676 569.5,-10676 569.5,-10670 575.5,-10664 581.5,-10664 581.5,-10664 783.5,-10664 783.5,-10664 789.5,-10664 795.5,-10670 795.5,-10676 795.5,-10676 795.5,-10920 795.5,-10920 795.5,-10926 789.5,-10932 783.5,-10932"/>
-<text text-anchor="start" x="578.5" y="-10912.58" font-family="arial" font-size="14.00">Segment 2 [0xd]</text>
+<text text-anchor="start" x="578.5" y="-10912.58" font-family="arial" font-size="14.00">#2|Segment 2 [0xd]</text>
 <g id="a_node3_23"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="749.5" y="-10913.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -274,7 +274,7 @@
 <g id="node4" class="node">
 <title>s_3</title>
 <path fill="whitesmoke" stroke="none" d="M491.5,-10020C491.5,-10020 297.5,-10020 297.5,-10020 291.5,-10020 285.5,-10014 285.5,-10008 285.5,-10008 285.5,-9908 285.5,-9908 285.5,-9902 291.5,-9896 297.5,-9896 297.5,-9896 491.5,-9896 491.5,-9896 497.5,-9896 503.5,-9902 503.5,-9908 503.5,-9908 503.5,-10008 503.5,-10008 503.5,-10014 497.5,-10020 491.5,-10020"/>
-<text text-anchor="start" x="294.5" y="-10000.58" font-family="arial" font-size="14.00">Segment 44 [0x4a2]</text>
+<text text-anchor="start" x="294.5" y="-10000.58" font-family="arial" font-size="14.00">#3|Segment 44 [0x4a2]</text>
 <g id="a_node4_46"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0">
 <text text-anchor="start" x="457.5" y="-10001.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -342,7 +342,7 @@
 <g id="node5" class="node">
 <title>s_4</title>
 <path fill="whitesmoke" stroke="none" d="M794.5,-10628C794.5,-10628 570.5,-10628 570.5,-10628 564.5,-10628 558.5,-10622 558.5,-10616 558.5,-10616 558.5,-10468 558.5,-10468 558.5,-10462 564.5,-10456 570.5,-10456 570.5,-10456 794.5,-10456 794.5,-10456 800.5,-10456 806.5,-10462 806.5,-10468 806.5,-10468 806.5,-10616 806.5,-10616 806.5,-10622 800.5,-10628 794.5,-10628"/>
-<text text-anchor="start" x="567.5" y="-10608.58" font-family="arial" font-size="14.00">Segment 3 [0x1c]</text>
+<text text-anchor="start" x="567.5" y="-10608.58" font-family="arial" font-size="14.00">#4|Segment 3 [0x1c]</text>
 <g id="a_node5_57"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?]&#10;Stack Size on Entry at this node ≥ 1&#10;Stack Size on Entry for this segment ≥ 1&#10;Exit Jump target: Constant 0x4a0">
 <text text-anchor="start" x="760.5" y="-10609.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -430,7 +430,7 @@
 <g id="node6" class="node">
 <title>s_5</title>
 <path fill="whitesmoke" stroke="none" d="M488.5,-1800C488.5,-1800 294.5,-1800 294.5,-1800 288.5,-1800 282.5,-1794 282.5,-1788 282.5,-1788 282.5,-1688 282.5,-1688 282.5,-1682 288.5,-1676 294.5,-1676 294.5,-1676 488.5,-1676 488.5,-1676 494.5,-1676 500.5,-1682 500.5,-1688 500.5,-1688 500.5,-1788 500.5,-1788 500.5,-1794 494.5,-1800 488.5,-1800"/>
-<text text-anchor="start" x="291.5" y="-1780.58" font-family="arial" font-size="14.00">Segment 74 [0x74a]</text>
+<text text-anchor="start" x="291.5" y="-1780.58" font-family="arial" font-size="14.00">#5|Segment 74 [0x74a]</text>
 <g id="a_node6_72"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 0">
 <text text-anchor="start" x="454.5" y="-1781.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -497,7 +497,7 @@
 <g id="node7" class="node">
 <title>s_6</title>
 <path fill="whitesmoke" stroke="none" d="M807.5,-10420C807.5,-10420 613.5,-10420 613.5,-10420 607.5,-10420 601.5,-10414 601.5,-10408 601.5,-10408 601.5,-10284 601.5,-10284 601.5,-10278 607.5,-10272 613.5,-10272 613.5,-10272 807.5,-10272 807.5,-10272 813.5,-10272 819.5,-10278 819.5,-10284 819.5,-10284 819.5,-10408 819.5,-10408 819.5,-10414 813.5,-10420 807.5,-10420"/>
-<text text-anchor="start" x="610.5" y="-10400.58" font-family="arial" font-size="14.00">Segment 4 [0x28]</text>
+<text text-anchor="start" x="610.5" y="-10400.58" font-family="arial" font-size="14.00">#6|Segment 4 [0x28]</text>
 <g id="a_node7_83"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: [?]&#10;Stack Size on Entry at this node ≥ 1&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x4a8">
 <text text-anchor="start" x="773.5" y="-10401.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -575,7 +575,7 @@
 <g id="node8" class="node">
 <title>s_7</title>
 <path fill="whitesmoke" stroke="none" d="M571,-10384C571,-10384 386,-10384 386,-10384 380,-10384 374,-10378 374,-10372 374,-10372 374,-10320 374,-10320 374,-10314 380,-10308 386,-10308 386,-10308 571,-10308 571,-10308 577,-10308 583,-10314 583,-10320 583,-10320 583,-10372 583,-10372 583,-10378 577,-10384 571,-10384"/>
-<text text-anchor="start" x="383" y="-10364.58" font-family="arial" font-size="14.00">Segment 43 [0x4a0]</text>
+<text text-anchor="start" x="383" y="-10364.58" font-family="arial" font-size="14.00">#7|Segment 43 [0x4a0]</text>
 <g id="a_node8_96"><a xlink:title="Stack Size Δ: &#45;1&#10;Abstract stack at this node: [?]&#10;Stack Size on Entry at this node ≥ 1&#10;Stack Size on Entry for this segment ≥ 1">
 <text text-anchor="start" x="537" y="-10365.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -621,7 +621,7 @@
 <g id="node9" class="node">
 <title>s_8</title>
 <path fill="whitesmoke" stroke="none" d="M812.5,-10236C812.5,-10236 558.5,-10236 558.5,-10236 552.5,-10236 546.5,-10230 546.5,-10224 546.5,-10224 546.5,-9692 546.5,-9692 546.5,-9686 552.5,-9680 558.5,-9680 558.5,-9680 812.5,-9680 812.5,-9680 818.5,-9680 824.5,-9686 824.5,-9692 824.5,-9692 824.5,-10224 824.5,-10224 824.5,-10230 818.5,-10236 812.5,-10236"/>
-<text text-anchor="start" x="555.5" y="-10216.58" font-family="arial" font-size="14.00">Segment 45 [0x4a8]</text>
+<text text-anchor="start" x="555.5" y="-10216.58" font-family="arial" font-size="14.00">#8|Segment 45 [0x4a8]</text>
 <g id="a_node9_103"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: [?,?]&#10;Stack Size on Entry at this node ≥ 2&#10;Stack Size on Entry for this segment ≥ 1">
 <text text-anchor="start" x="778.5" y="-10217.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -888,7 +888,7 @@
 <g id="node10" class="node">
 <title>s_9</title>
 <path fill="whitesmoke" stroke="none" d="M662,-9644C662,-9644 453,-9644 453,-9644 447,-9644 441,-9638 441,-9632 441,-9632 441,-9388 441,-9388 441,-9382 447,-9376 453,-9376 453,-9376 662,-9376 662,-9376 668,-9376 674,-9382 674,-9388 674,-9388 674,-9632 674,-9632 674,-9638 668,-9644 662,-9644"/>
-<text text-anchor="start" x="450" y="-9624.58" font-family="arial" font-size="14.00">Segment 46 [0x4d8]</text>
+<text text-anchor="start" x="450" y="-9624.58" font-family="arial" font-size="14.00">#9|Segment 46 [0x4d8]</text>
 <g id="a_node10_150"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="628" y="-9625.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1027,7 +1027,7 @@
 <g id="node11" class="node">
 <title>s_10</title>
 <path fill="whitesmoke" stroke="none" d="M624.5,-9340C624.5,-9340 146.5,-9340 146.5,-9340 140.5,-9340 134.5,-9334 134.5,-9328 134.5,-9328 134.5,-8796 134.5,-8796 134.5,-8790 140.5,-8784 146.5,-8784 146.5,-8784 624.5,-8784 624.5,-8784 630.5,-8784 636.5,-8790 636.5,-8796 636.5,-8796 636.5,-9328 636.5,-9328 636.5,-9334 630.5,-9340 624.5,-9340"/>
-<text text-anchor="start" x="143.5" y="-9320.58" font-family="arial" font-size="14.00">Segment 47 [0x4e9]</text>
+<text text-anchor="start" x="143.5" y="-9320.58" font-family="arial" font-size="14.00">#10|Segment 47 [0x4e9]</text>
 <g id="a_node11_173"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 5&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="590.5" y="-9321.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1293,7 +1293,7 @@
 <g id="node12" class="node">
 <title>s_11</title>
 <path fill="whitesmoke" stroke="none" d="M472.5,-8748C472.5,-8748 240.5,-8748 240.5,-8748 234.5,-8748 228.5,-8742 228.5,-8736 228.5,-8736 228.5,-8588 228.5,-8588 228.5,-8582 234.5,-8576 240.5,-8576 240.5,-8576 472.5,-8576 472.5,-8576 478.5,-8576 484.5,-8582 484.5,-8588 484.5,-8588 484.5,-8736 484.5,-8736 484.5,-8742 478.5,-8748 472.5,-8748"/>
-<text text-anchor="start" x="237.5" y="-8728.58" font-family="arial" font-size="14.00">Segment 48 [0x526]</text>
+<text text-anchor="start" x="237.5" y="-8728.58" font-family="arial" font-size="14.00">#11|Segment 48 [0x526]</text>
 <g id="a_node12_220"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 5&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="438.5" y="-8729.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1390,7 +1390,7 @@
 <g id="node13" class="node">
 <title>s_12</title>
 <path fill="whitesmoke" stroke="none" d="M461,-8540C461,-8540 252,-8540 252,-8540 246,-8540 240,-8534 240,-8528 240,-8528 240,-8092 240,-8092 240,-8086 246,-8080 252,-8080 252,-8080 461,-8080 461,-8080 467,-8080 473,-8086 473,-8092 473,-8092 473,-8528 473,-8528 473,-8534 467,-8540 461,-8540"/>
-<text text-anchor="start" x="249" y="-8520.58" font-family="arial" font-size="14.00">Segment 49 [0x52f]</text>
+<text text-anchor="start" x="249" y="-8520.58" font-family="arial" font-size="14.00">#12|Segment 49 [0x52f]</text>
 <g id="a_node13_235"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: [?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 5&#10;Stack Size on Entry for this segment ≥ 1&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="427" y="-8521.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1608,7 +1608,7 @@
 <g id="node14" class="node">
 <title>s_13</title>
 <path fill="whitesmoke" stroke="none" d="M497,-8044C497,-8044 288,-8044 288,-8044 282,-8044 276,-8038 276,-8032 276,-8032 276,-7620 276,-7620 276,-7614 282,-7608 288,-7608 288,-7608 497,-7608 497,-7608 503,-7608 509,-7614 509,-7620 509,-7620 509,-8032 509,-8032 509,-8038 503,-8044 497,-8044"/>
-<text text-anchor="start" x="285" y="-8024.57" font-family="arial" font-size="14.00">Segment 50 [0x546]</text>
+<text text-anchor="start" x="285" y="-8024.57" font-family="arial" font-size="14.00">#13|Segment 50 [0x546]</text>
 <g id="a_node14_274"><a xlink:title="Stack Size Δ: &#45;4&#10;Abstract stack at this node: [?,?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 7&#10;Stack Size on Entry for this segment ≥ 4&#10;Exit Jump target: Constant 0x604">
 <text text-anchor="start" x="463" y="-8025.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1807,7 +1807,7 @@
 <g id="node15" class="node">
 <title>s_14</title>
 <path fill="whitesmoke" stroke="none" d="M497,-7572C497,-7572 288,-7572 288,-7572 282,-7572 276,-7566 276,-7560 276,-7560 276,-7340 276,-7340 276,-7334 282,-7328 288,-7328 288,-7328 497,-7328 497,-7328 503,-7328 509,-7334 509,-7340 509,-7340 509,-7560 509,-7560 509,-7566 503,-7572 497,-7572"/>
-<text text-anchor="start" x="285" y="-7552.57" font-family="arial" font-size="14.00">Segment 51 [0x55c]</text>
+<text text-anchor="start" x="285" y="-7552.57" font-family="arial" font-size="14.00">#14|Segment 51 [0x55c]</text>
 <g id="a_node15_311"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="463" y="-7553.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -1926,161 +1926,161 @@
 <!-- s_15 -->
 <g id="node16" class="node">
 <title>s_15</title>
-<path fill="whitesmoke" stroke="none" d="M728,-4844C728,-4844 519,-4844 519,-4844 513,-4844 507,-4838 507,-4832 507,-4832 507,-4516 507,-4516 507,-4510 513,-4504 519,-4504 519,-4504 728,-4504 728,-4504 734,-4504 740,-4510 740,-4516 740,-4516 740,-4832 740,-4832 740,-4838 734,-4844 728,-4844"/>
-<text text-anchor="start" x="516" y="-4824.57" font-family="arial" font-size="14.00">Segment 58 [0x604]</text>
+<path fill="whitesmoke" stroke="none" d="M720,-4844C720,-4844 511,-4844 511,-4844 505,-4844 499,-4838 499,-4832 499,-4832 499,-4516 499,-4516 499,-4510 505,-4504 511,-4504 511,-4504 720,-4504 720,-4504 726,-4504 732,-4510 732,-4516 732,-4516 732,-4832 732,-4832 732,-4838 726,-4844 720,-4844"/>
+<text text-anchor="start" x="508" y="-4824.57" font-family="arial" font-size="14.00">#15|Segment 58 [0x604]</text>
 <g id="a_node16_332"><a xlink:title="Stack Size Δ: +4&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
-<text text-anchor="start" x="694" y="-4825.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="686" y="-4825.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node16_333"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="713" y="-4825.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="705" y="-4825.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node16_334"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 1 " target="_blank">
-<text text-anchor="start" x="518" y="-4804.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4804.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4802.7" font-family="arial" font-size="14.00">0x0604 </text>
+<text text-anchor="start" x="531" y="-4802.7" font-family="arial" font-size="14.00">0x0604 </text>
 <g id="a_node16_335"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" xlink:title="A valid destination for a jump" target="_blank">
-<path fill="thistle" stroke="none" d="M596.25,-4797.25C596.25,-4797.25 661.25,-4797.25 661.25,-4797.25 664.88,-4797.25 668.5,-4800.88 668.5,-4804.5 668.5,-4804.5 668.5,-4811.75 668.5,-4811.75 668.5,-4815.38 664.88,-4819 661.25,-4819 661.25,-4819 596.25,-4819 596.25,-4819 592.62,-4819 589,-4815.38 589,-4811.75 589,-4811.75 589,-4804.5 589,-4804.5 589,-4800.88 592.62,-4797.25 596.25,-4797.25"/>
-<text text-anchor="start" x="592" y="-4802.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
+<path fill="thistle" stroke="none" d="M588.25,-4797.25C588.25,-4797.25 653.25,-4797.25 653.25,-4797.25 656.88,-4797.25 660.5,-4800.88 660.5,-4804.5 660.5,-4804.5 660.5,-4811.75 660.5,-4811.75 660.5,-4815.38 656.88,-4819 653.25,-4819 653.25,-4819 588.25,-4819 588.25,-4819 584.62,-4819 581,-4815.38 581,-4811.75 581,-4811.75 581,-4804.5 581,-4804.5 581,-4800.88 584.62,-4797.25 588.25,-4797.25"/>
+<text text-anchor="start" x="584" y="-4802.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
 </a>
 </g>
 <g id="a_node16_336"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4780.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4780.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4778.7" font-family="arial" font-size="14.00">0x0605 </text>
+<text text-anchor="start" x="531" y="-4778.7" font-family="arial" font-size="14.00">0x0605 </text>
 <g id="a_node16_337"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4773.25C596.25,-4773.25 632.75,-4773.25 632.75,-4773.25 636.38,-4773.25 640,-4776.88 640,-4780.5 640,-4780.5 640,-4787.75 640,-4787.75 640,-4791.38 636.38,-4795 632.75,-4795 632.75,-4795 596.25,-4795 596.25,-4795 592.62,-4795 589,-4791.38 589,-4787.75 589,-4787.75 589,-4780.5 589,-4780.5 589,-4776.88 592.62,-4773.25 596.25,-4773.25"/>
-<text text-anchor="start" x="592" y="-4778.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4773.25C588.25,-4773.25 624.75,-4773.25 624.75,-4773.25 628.38,-4773.25 632,-4776.88 632,-4780.5 632,-4780.5 632,-4787.75 632,-4787.75 632,-4791.38 628.38,-4795 624.75,-4795 624.75,-4795 588.25,-4795 588.25,-4795 584.62,-4795 581,-4791.38 581,-4787.75 581,-4787.75 581,-4780.5 581,-4780.5 581,-4776.88 584.62,-4773.25 588.25,-4773.25"/>
+<text text-anchor="start" x="584" y="-4778.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="641" y="-4778.7" font-family="arial" font-size="14.00"> &#160;0x01c0</text>
+<text text-anchor="start" x="633" y="-4778.7" font-family="arial" font-size="14.00"> &#160;0x01c0</text>
 <g id="a_node16_338"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4756.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4756.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4754.7" font-family="arial" font-size="14.00">0x0608 </text>
+<text text-anchor="start" x="531" y="-4754.7" font-family="arial" font-size="14.00">0x0608 </text>
 <g id="a_node16_339"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 1st element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4749.25C596.25,-4749.25 623.75,-4749.25 623.75,-4749.25 627.38,-4749.25 631,-4752.88 631,-4756.5 631,-4756.5 631,-4763.75 631,-4763.75 631,-4767.38 627.38,-4771 623.75,-4771 623.75,-4771 596.25,-4771 596.25,-4771 592.62,-4771 589,-4767.38 589,-4763.75 589,-4763.75 589,-4756.5 589,-4756.5 589,-4752.88 592.62,-4749.25 596.25,-4749.25"/>
-<text text-anchor="start" x="592" y="-4754.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4749.25C588.25,-4749.25 615.75,-4749.25 615.75,-4749.25 619.38,-4749.25 623,-4752.88 623,-4756.5 623,-4756.5 623,-4763.75 623,-4763.75 623,-4767.38 619.38,-4771 615.75,-4771 615.75,-4771 588.25,-4771 588.25,-4771 584.62,-4771 581,-4767.38 581,-4763.75 581,-4763.75 581,-4756.5 581,-4756.5 581,-4752.88 584.62,-4749.25 588.25,-4749.25"/>
+<text text-anchor="start" x="584" y="-4754.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
 </a>
 </g>
 <g id="a_node16_340"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: Depends on memory expansion " target="_blank">
-<text text-anchor="start" x="518" y="-4732.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4732.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4730.7" font-family="arial" font-size="14.00">0x0609 </text>
+<text text-anchor="start" x="531" y="-4730.7" font-family="arial" font-size="14.00">0x0609 </text>
 <g id="a_node16_341"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1133" xlink:title="Read a word from memory" target="_blank">
-<path fill="wheat" stroke="none" d="M596.25,-4725.25C596.25,-4725.25 637.25,-4725.25 637.25,-4725.25 640.88,-4725.25 644.5,-4728.88 644.5,-4732.5 644.5,-4732.5 644.5,-4739.75 644.5,-4739.75 644.5,-4743.38 640.88,-4747 637.25,-4747 637.25,-4747 596.25,-4747 596.25,-4747 592.62,-4747 589,-4743.38 589,-4739.75 589,-4739.75 589,-4732.5 589,-4732.5 589,-4728.88 592.62,-4725.25 596.25,-4725.25"/>
-<text text-anchor="start" x="592" y="-4730.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
+<path fill="wheat" stroke="none" d="M588.25,-4725.25C588.25,-4725.25 629.25,-4725.25 629.25,-4725.25 632.88,-4725.25 636.5,-4728.88 636.5,-4732.5 636.5,-4732.5 636.5,-4739.75 636.5,-4739.75 636.5,-4743.38 632.88,-4747 629.25,-4747 629.25,-4747 588.25,-4747 588.25,-4747 584.62,-4747 581,-4743.38 581,-4739.75 581,-4739.75 581,-4732.5 581,-4732.5 581,-4728.88 584.62,-4725.25 588.25,-4725.25"/>
+<text text-anchor="start" x="584" y="-4730.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
 </a>
 </g>
 <g id="a_node16_342"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4708.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4708.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4706.7" font-family="arial" font-size="14.00">0x060a </text>
+<text text-anchor="start" x="531" y="-4706.7" font-family="arial" font-size="14.00">0x060a </text>
 <g id="a_node16_343"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4701.25C596.25,-4701.25 632.75,-4701.25 632.75,-4701.25 636.38,-4701.25 640,-4704.88 640,-4708.5 640,-4708.5 640,-4715.75 640,-4715.75 640,-4719.38 636.38,-4723 632.75,-4723 632.75,-4723 596.25,-4723 596.25,-4723 592.62,-4723 589,-4719.38 589,-4715.75 589,-4715.75 589,-4708.5 589,-4708.5 589,-4704.88 592.62,-4701.25 596.25,-4701.25"/>
-<text text-anchor="start" x="592" y="-4706.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4701.25C588.25,-4701.25 624.75,-4701.25 624.75,-4701.25 628.38,-4701.25 632,-4704.88 632,-4708.5 632,-4708.5 632,-4715.75 632,-4715.75 632,-4719.38 628.38,-4723 624.75,-4723 624.75,-4723 588.25,-4723 588.25,-4723 584.62,-4723 581,-4719.38 581,-4715.75 581,-4715.75 581,-4708.5 581,-4708.5 581,-4704.88 584.62,-4701.25 588.25,-4701.25"/>
+<text text-anchor="start" x="584" y="-4706.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="641" y="-4706.7" font-family="arial" font-size="14.00"> &#160;0x0160</text>
+<text text-anchor="start" x="633" y="-4706.7" font-family="arial" font-size="14.00"> &#160;0x0160</text>
 <g id="a_node16_344"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4684.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4684.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4682.7" font-family="arial" font-size="14.00">0x060d </text>
+<text text-anchor="start" x="531" y="-4682.7" font-family="arial" font-size="14.00">0x060d </text>
 <g id="a_node16_345"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4677.25C596.25,-4677.25 632.75,-4677.25 632.75,-4677.25 636.38,-4677.25 640,-4680.88 640,-4684.5 640,-4684.5 640,-4691.75 640,-4691.75 640,-4695.38 636.38,-4699 632.75,-4699 632.75,-4699 596.25,-4699 596.25,-4699 592.62,-4699 589,-4695.38 589,-4691.75 589,-4691.75 589,-4684.5 589,-4684.5 589,-4680.88 592.62,-4677.25 596.25,-4677.25"/>
-<text text-anchor="start" x="592" y="-4682.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4677.25C588.25,-4677.25 624.75,-4677.25 624.75,-4677.25 628.38,-4677.25 632,-4680.88 632,-4684.5 632,-4684.5 632,-4691.75 632,-4691.75 632,-4695.38 628.38,-4699 624.75,-4699 624.75,-4699 588.25,-4699 588.25,-4699 584.62,-4699 581,-4695.38 581,-4691.75 581,-4691.75 581,-4684.5 581,-4684.5 581,-4680.88 584.62,-4677.25 588.25,-4677.25"/>
+<text text-anchor="start" x="584" y="-4682.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="641" y="-4682.7" font-family="arial" font-size="14.00"> &#160;0x01e0</text>
+<text text-anchor="start" x="633" y="-4682.7" font-family="arial" font-size="14.00"> &#160;0x01e0</text>
 <g id="a_node16_346"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: Depends on memory expansion " target="_blank">
-<text text-anchor="start" x="518" y="-4660.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4660.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4658.7" font-family="arial" font-size="14.00">0x0610 </text>
+<text text-anchor="start" x="531" y="-4658.7" font-family="arial" font-size="14.00">0x0610 </text>
 <g id="a_node16_347"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1133" xlink:title="Read a word from memory" target="_blank">
-<path fill="wheat" stroke="none" d="M596.25,-4653.25C596.25,-4653.25 637.25,-4653.25 637.25,-4653.25 640.88,-4653.25 644.5,-4656.88 644.5,-4660.5 644.5,-4660.5 644.5,-4667.75 644.5,-4667.75 644.5,-4671.38 640.88,-4675 637.25,-4675 637.25,-4675 596.25,-4675 596.25,-4675 592.62,-4675 589,-4671.38 589,-4667.75 589,-4667.75 589,-4660.5 589,-4660.5 589,-4656.88 592.62,-4653.25 596.25,-4653.25"/>
-<text text-anchor="start" x="592" y="-4658.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
+<path fill="wheat" stroke="none" d="M588.25,-4653.25C588.25,-4653.25 629.25,-4653.25 629.25,-4653.25 632.88,-4653.25 636.5,-4656.88 636.5,-4660.5 636.5,-4660.5 636.5,-4667.75 636.5,-4667.75 636.5,-4671.38 632.88,-4675 629.25,-4675 629.25,-4675 588.25,-4675 588.25,-4675 584.62,-4675 581,-4671.38 581,-4667.75 581,-4667.75 581,-4660.5 581,-4660.5 581,-4656.88 584.62,-4653.25 588.25,-4653.25"/>
+<text text-anchor="start" x="584" y="-4658.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
 </a>
 </g>
 <g id="a_node16_348"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4636.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4636.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4634.7" font-family="arial" font-size="14.00">0x0611 </text>
+<text text-anchor="start" x="531" y="-4634.7" font-family="arial" font-size="14.00">0x0611 </text>
 <g id="a_node16_349"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" xlink:title="Push 1 byte" target="_blank">
-<path fill="powderblue" stroke="none" d="M595.5,-4629.25C595.5,-4629.25 632,-4629.25 632,-4629.25 635.62,-4629.25 639.25,-4632.88 639.25,-4636.5 639.25,-4636.5 639.25,-4643.75 639.25,-4643.75 639.25,-4647.38 635.62,-4651 632,-4651 632,-4651 595.5,-4651 595.5,-4651 591.88,-4651 588.25,-4647.38 588.25,-4643.75 588.25,-4643.75 588.25,-4636.5 588.25,-4636.5 588.25,-4632.88 591.88,-4629.25 595.5,-4629.25"/>
-<text text-anchor="start" x="591.25" y="-4634.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
+<path fill="powderblue" stroke="none" d="M587.5,-4629.25C587.5,-4629.25 624,-4629.25 624,-4629.25 627.62,-4629.25 631.25,-4632.88 631.25,-4636.5 631.25,-4636.5 631.25,-4643.75 631.25,-4643.75 631.25,-4647.38 627.62,-4651 624,-4651 624,-4651 587.5,-4651 587.5,-4651 583.88,-4651 580.25,-4647.38 580.25,-4643.75 580.25,-4643.75 580.25,-4636.5 580.25,-4636.5 580.25,-4632.88 583.88,-4629.25 587.5,-4629.25"/>
+<text text-anchor="start" x="583.25" y="-4634.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
 </a>
 </g>
-<text text-anchor="start" x="640.25" y="-4634.7" font-family="arial" font-size="14.00"> &#160;0x03</text>
+<text text-anchor="start" x="632.25" y="-4634.7" font-family="arial" font-size="14.00"> &#160;0x03</text>
 <g id="a_node16_350"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4612.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4612.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4610.7" font-family="arial" font-size="14.00">0x0613 </text>
+<text text-anchor="start" x="531" y="-4610.7" font-family="arial" font-size="14.00">0x0613 </text>
 <g id="a_node16_351"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 2nd element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4605.25C596.25,-4605.25 623.75,-4605.25 623.75,-4605.25 627.38,-4605.25 631,-4608.88 631,-4612.5 631,-4612.5 631,-4619.75 631,-4619.75 631,-4623.38 627.38,-4627 623.75,-4627 623.75,-4627 596.25,-4627 596.25,-4627 592.62,-4627 589,-4623.38 589,-4619.75 589,-4619.75 589,-4612.5 589,-4612.5 589,-4608.88 592.62,-4605.25 596.25,-4605.25"/>
-<text text-anchor="start" x="592" y="-4610.7" font-family="arial" font-size="14.00" fill="royalblue">DUP2</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4605.25C588.25,-4605.25 615.75,-4605.25 615.75,-4605.25 619.38,-4605.25 623,-4608.88 623,-4612.5 623,-4612.5 623,-4619.75 623,-4619.75 623,-4623.38 619.38,-4627 615.75,-4627 615.75,-4627 588.25,-4627 588.25,-4627 584.62,-4627 581,-4623.38 581,-4619.75 581,-4619.75 581,-4612.5 581,-4612.5 581,-4608.88 584.62,-4605.25 588.25,-4605.25"/>
+<text text-anchor="start" x="584" y="-4610.7" font-family="arial" font-size="14.00" fill="royalblue">DUP2</text>
 </a>
 </g>
 <g id="a_node16_352"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4588.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4588.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4586.7" font-family="arial" font-size="14.00">0x0614 </text>
+<text text-anchor="start" x="531" y="-4586.7" font-family="arial" font-size="14.00">0x0614 </text>
 <g id="a_node16_353"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L314" xlink:title="Unsigned Less than" target="_blank">
-<path fill="bisque" stroke="none" d="M596,-4581.25C596,-4581.25 603,-4581.25 603,-4581.25 606.5,-4581.25 610,-4584.75 610,-4588.25 610,-4588.25 610,-4596 610,-4596 610,-4599.5 606.5,-4603 603,-4603 603,-4603 596,-4603 596,-4603 592.5,-4603 589,-4599.5 589,-4596 589,-4596 589,-4588.25 589,-4588.25 589,-4584.75 592.5,-4581.25 596,-4581.25"/>
-<text text-anchor="start" x="592" y="-4586.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">LT</text>
+<path fill="bisque" stroke="none" d="M588,-4581.25C588,-4581.25 595,-4581.25 595,-4581.25 598.5,-4581.25 602,-4584.75 602,-4588.25 602,-4588.25 602,-4596 602,-4596 602,-4599.5 598.5,-4603 595,-4603 595,-4603 588,-4603 588,-4603 584.5,-4603 581,-4599.5 581,-4596 581,-4596 581,-4588.25 581,-4588.25 581,-4584.75 584.5,-4581.25 588,-4581.25"/>
+<text text-anchor="start" x="584" y="-4586.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">LT</text>
 </a>
 </g>
 <g id="a_node16_354"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4564.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4564.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4562.7" font-family="arial" font-size="14.00">0x0615 </text>
+<text text-anchor="start" x="531" y="-4562.7" font-family="arial" font-size="14.00">0x0615 </text>
 <g id="a_node16_355"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L424" xlink:title="Is equal to zero" target="_blank">
-<path fill="bisque" stroke="none" d="M596.25,-4557.25C596.25,-4557.25 638.75,-4557.25 638.75,-4557.25 642.38,-4557.25 646,-4560.88 646,-4564.5 646,-4564.5 646,-4571.75 646,-4571.75 646,-4575.38 642.38,-4579 638.75,-4579 638.75,-4579 596.25,-4579 596.25,-4579 592.62,-4579 589,-4575.38 589,-4571.75 589,-4571.75 589,-4564.5 589,-4564.5 589,-4560.88 592.62,-4557.25 596.25,-4557.25"/>
-<text text-anchor="start" x="592" y="-4562.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">ISZERO</text>
+<path fill="bisque" stroke="none" d="M588.25,-4557.25C588.25,-4557.25 630.75,-4557.25 630.75,-4557.25 634.38,-4557.25 638,-4560.88 638,-4564.5 638,-4564.5 638,-4571.75 638,-4571.75 638,-4575.38 634.38,-4579 630.75,-4579 630.75,-4579 588.25,-4579 588.25,-4579 584.62,-4579 581,-4575.38 581,-4571.75 581,-4571.75 581,-4564.5 581,-4564.5 581,-4560.88 584.62,-4557.25 588.25,-4557.25"/>
+<text text-anchor="start" x="584" y="-4562.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">ISZERO</text>
 </a>
 </g>
 <g id="a_node16_356"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="518" y="-4540.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4540.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4538.7" font-family="arial" font-size="14.00">0x0616 </text>
+<text text-anchor="start" x="531" y="-4538.7" font-family="arial" font-size="14.00">0x0616 </text>
 <g id="a_node16_357"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M596.25,-4533.25C596.25,-4533.25 632.75,-4533.25 632.75,-4533.25 636.38,-4533.25 640,-4536.88 640,-4540.5 640,-4540.5 640,-4547.75 640,-4547.75 640,-4551.38 636.38,-4555 632.75,-4555 632.75,-4555 596.25,-4555 596.25,-4555 592.62,-4555 589,-4551.38 589,-4547.75 589,-4547.75 589,-4540.5 589,-4540.5 589,-4536.88 592.62,-4533.25 596.25,-4533.25"/>
-<text text-anchor="start" x="592" y="-4538.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M588.25,-4533.25C588.25,-4533.25 624.75,-4533.25 624.75,-4533.25 628.38,-4533.25 632,-4536.88 632,-4540.5 632,-4540.5 632,-4547.75 632,-4547.75 632,-4551.38 628.38,-4555 624.75,-4555 624.75,-4555 588.25,-4555 588.25,-4555 584.62,-4555 581,-4551.38 581,-4547.75 581,-4547.75 581,-4540.5 581,-4540.5 581,-4536.88 584.62,-4533.25 588.25,-4533.25"/>
+<text text-anchor="start" x="584" y="-4538.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="641" y="-4538.7" font-family="arial" font-size="14.00"> &#160;0x074a</text>
+<text text-anchor="start" x="633" y="-4538.7" font-family="arial" font-size="14.00"> &#160;0x074a</text>
 <g id="a_node16_358"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 10 " target="_blank">
-<text text-anchor="start" x="518" y="-4516.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="510" y="-4516.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="539" y="-4514.7" font-family="arial" font-size="14.00">0x0619 </text>
+<text text-anchor="start" x="531" y="-4514.7" font-family="arial" font-size="14.00">0x0619 </text>
 <g id="a_node16_359"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1277" xlink:title="Conditional Jump" target="_blank">
-<path fill="thistle" stroke="none" d="M596.25,-4509.25C596.25,-4509.25 629,-4509.25 629,-4509.25 632.62,-4509.25 636.25,-4512.88 636.25,-4516.5 636.25,-4516.5 636.25,-4523.75 636.25,-4523.75 636.25,-4527.38 632.62,-4531 629,-4531 629,-4531 596.25,-4531 596.25,-4531 592.62,-4531 589,-4527.38 589,-4523.75 589,-4523.75 589,-4516.5 589,-4516.5 589,-4512.88 592.62,-4509.25 596.25,-4509.25"/>
-<text text-anchor="start" x="592" y="-4514.7" font-family="arial" font-size="14.00" fill="purple">JUMPI</text>
+<path fill="thistle" stroke="none" d="M588.25,-4509.25C588.25,-4509.25 621,-4509.25 621,-4509.25 624.62,-4509.25 628.25,-4512.88 628.25,-4516.5 628.25,-4516.5 628.25,-4523.75 628.25,-4523.75 628.25,-4527.38 624.62,-4531 621,-4531 621,-4531 588.25,-4531 588.25,-4531 584.62,-4531 581,-4527.38 581,-4523.75 581,-4523.75 581,-4516.5 581,-4516.5 581,-4512.88 584.62,-4509.25 588.25,-4509.25"/>
+<text text-anchor="start" x="584" y="-4514.7" font-family="arial" font-size="14.00" fill="purple">JUMPI</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="516,-4821 516,-4821 694,-4821 694,-4821 516,-4821"/>
-<polygon fill="black" stroke="black" points="694,-4821 694,-4821 713,-4821 713,-4821 694,-4821"/>
-<polygon fill="black" stroke="black" points="713,-4821 713,-4821 732,-4821 732,-4821 713,-4821"/>
+<polygon fill="black" stroke="black" points="508,-4821 508,-4821 686,-4821 686,-4821 508,-4821"/>
+<polygon fill="black" stroke="black" points="686,-4821 686,-4821 705,-4821 705,-4821 686,-4821"/>
+<polygon fill="black" stroke="black" points="705,-4821 705,-4821 724,-4821 724,-4821 705,-4821"/>
 </g>
 <!-- s_13&#45;&gt;s_15 -->
 <g id="edge20" class="edge">
 <title>s_13&#45;&gt;s_15</title>
 <g id="a_edge20"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M508.78,-7718.96C645.64,-7581.97 854.5,-7329.29 854.5,-7063 854.5,-7063 854.5,-7063 854.5,-5341 854.5,-5168.8 784.71,-4984.69 721.85,-4853.79"/>
-<polygon fill="black" stroke="black" points="725.12,-4852.51 717.62,-4845.03 718.82,-4855.56 725.12,-4852.51"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M508.78,-7718.96C645.64,-7581.97 854.5,-7329.29 854.5,-7063 854.5,-7063 854.5,-7063 854.5,-5341 854.5,-5168.45 782.55,-4984.74 717.6,-4854.07"/>
+<polygon fill="black" stroke="black" points="720.82,-4852.7 713.22,-4845.32 714.56,-4855.83 720.82,-4852.7"/>
 </a>
 </g>
 </g>
@@ -2097,7 +2097,7 @@
 <g id="node17" class="node">
 <title>s_16</title>
 <path fill="whitesmoke" stroke="none" d="M538,-7292C538,-7292 299,-7292 299,-7292 293,-7292 287,-7286 287,-7280 287,-7280 287,-6844 287,-6844 287,-6838 293,-6832 299,-6832 299,-6832 538,-6832 538,-6832 544,-6832 550,-6838 550,-6844 550,-6844 550,-7280 550,-7280 550,-7286 544,-7292 538,-7292"/>
-<text text-anchor="start" x="296" y="-7272.57" font-family="arial" font-size="14.00">Segment 52 [0x56c]</text>
+<text text-anchor="start" x="296" y="-7272.57" font-family="arial" font-size="14.00">#16|Segment 52 [0x56c]</text>
 <g id="a_node17_361"><a xlink:title="Stack Size Δ: +4&#10;Abstract stack at this node: [?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 5&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="504" y="-7273.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -2312,7 +2312,7 @@
 <g id="edge24" class="edge">
 <title>s_15&#45;&gt;s_5</title>
 <g id="a_edge24"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M518.23,-4504.04C513.31,-4492.11 508.98,-4480.03 505.5,-4468 448.49,-4271.02 486.5,-4212.06 486.5,-4007 486.5,-4007 486.5,-4007 486.5,-2609 486.5,-2323.91 510.46,-2249.03 462.5,-1968 453.28,-1913.98 434.77,-1854.97 418.96,-1810.37"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M517.6,-4504.28C512.92,-4492.24 508.8,-4480.08 505.5,-4468 451.43,-4270.19 486.5,-4212.06 486.5,-4007 486.5,-4007 486.5,-4007 486.5,-2609 486.5,-2323.91 510.46,-2249.03 462.5,-1968 453.28,-1913.98 434.77,-1854.97 418.96,-1810.37"/>
 <polygon fill="black" stroke="black" points="422.29,-1809.3 415.62,-1801.07 415.7,-1811.67 422.29,-1809.3"/>
 </a>
 </g>
@@ -2321,7 +2321,7 @@
 <g id="node23" class="node">
 <title>s_22</title>
 <path fill="whitesmoke" stroke="none" d="M736,-4468C736,-4468 527,-4468 527,-4468 521,-4468 515,-4462 515,-4456 515,-4456 515,-4188 515,-4188 515,-4182 521,-4176 527,-4176 527,-4176 736,-4176 736,-4176 742,-4176 748,-4182 748,-4188 748,-4188 748,-4456 748,-4456 748,-4462 742,-4468 736,-4468"/>
-<text text-anchor="start" x="524" y="-4448.57" font-family="arial" font-size="14.00">Segment 59 [0x61a]</text>
+<text text-anchor="start" x="524" y="-4448.57" font-family="arial" font-size="14.00">#22|Segment 59 [0x61a]</text>
 <g id="a_node23_400"><a xlink:title="Stack Size Δ: &#45;1&#10;Abstract stack at this node: [?,?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 7&#10;Stack Size on Entry for this segment ≥ 3&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="702" y="-4449.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -2450,8 +2450,8 @@
 <g id="edge23" class="edge">
 <title>s_15&#45;&gt;s_22</title>
 <g id="a_edge23"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M627.36,-4504.15C627.55,-4495.8 627.74,-4487.43 627.93,-4479.11"/>
-<polygon fill="black" stroke="black" points="631.43,-4479.41 628.16,-4469.33 624.43,-4479.25 631.43,-4479.41"/>
+<path fill="none" stroke="black" d="M623.22,-4504.15C623.6,-4495.8 623.98,-4487.43 624.36,-4479.11"/>
+<polygon fill="black" stroke="black" points="627.85,-4479.48 624.81,-4469.33 620.86,-4479.16 627.85,-4479.48"/>
 </a>
 </g>
 </g>
@@ -2468,7 +2468,7 @@
 <g id="node18" class="node">
 <title>s_17</title>
 <path fill="whitesmoke" stroke="none" d="M814,-6796C814,-6796 337,-6796 337,-6796 331,-6796 325,-6790 325,-6784 325,-6784 325,-6396 325,-6396 325,-6390 331,-6384 337,-6384 337,-6384 814,-6384 814,-6384 820,-6384 826,-6390 826,-6396 826,-6396 826,-6784 826,-6784 826,-6790 820,-6796 814,-6796"/>
-<text text-anchor="start" x="334" y="-6776.57" font-family="arial" font-size="14.00">Segment 53 [0x58e]</text>
+<text text-anchor="start" x="334" y="-6776.57" font-family="arial" font-size="14.00">#17|Segment 53 [0x58e]</text>
 <g id="a_node18_425"><a xlink:title="Stack Size Δ: &#45;5&#10;Abstract stack at this node: [?,?,?,?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 9&#10;Stack Size on Entry for this segment ≥ 5&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="780" y="-6777.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -2667,7 +2667,7 @@
 <g id="node19" class="node">
 <title>s_18</title>
 <path fill="whitesmoke" stroke="none" d="M662.5,-6348C662.5,-6348 430.5,-6348 430.5,-6348 424.5,-6348 418.5,-6342 418.5,-6336 418.5,-6336 418.5,-6188 418.5,-6188 418.5,-6182 424.5,-6176 430.5,-6176 430.5,-6176 662.5,-6176 662.5,-6176 668.5,-6176 674.5,-6182 674.5,-6188 674.5,-6188 674.5,-6336 674.5,-6336 674.5,-6342 668.5,-6348 662.5,-6348"/>
-<text text-anchor="start" x="427.5" y="-6328.57" font-family="arial" font-size="14.00">Segment 54 [0x5b8]</text>
+<text text-anchor="start" x="427.5" y="-6328.57" font-family="arial" font-size="14.00">#18|Segment 54 [0x5b8]</text>
 <g id="a_node19_460"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?]&#10;Stack Size on Entry at this node ≥ 4&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="628.5" y="-6329.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -2764,7 +2764,7 @@
 <g id="node20" class="node">
 <title>s_19</title>
 <path fill="whitesmoke" stroke="none" d="M651,-6140C651,-6140 442,-6140 442,-6140 436,-6140 430,-6134 430,-6128 430,-6128 430,-5692 430,-5692 430,-5686 436,-5680 442,-5680 442,-5680 651,-5680 651,-5680 657,-5680 663,-5686 663,-5692 663,-5692 663,-6128 663,-6128 663,-6134 657,-6140 651,-6140"/>
-<text text-anchor="start" x="439" y="-6120.57" font-family="arial" font-size="14.00">Segment 55 [0x5c1]</text>
+<text text-anchor="start" x="439" y="-6120.57" font-family="arial" font-size="14.00">#19|Segment 55 [0x5c1]</text>
 <g id="a_node20_475"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: [?,?,?,?]&#10;Stack Size on Entry at this node ≥ 4&#10;Stack Size on Entry for this segment ≥ 1&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="617" y="-6121.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -2982,7 +2982,7 @@
 <g id="node21" class="node">
 <title>s_20</title>
 <path fill="whitesmoke" stroke="none" d="M746.5,-5644C746.5,-5644 450.5,-5644 450.5,-5644 444.5,-5644 438.5,-5638 438.5,-5632 438.5,-5632 438.5,-5052 438.5,-5052 438.5,-5046 444.5,-5040 450.5,-5040 450.5,-5040 746.5,-5040 746.5,-5040 752.5,-5040 758.5,-5046 758.5,-5052 758.5,-5052 758.5,-5632 758.5,-5632 758.5,-5638 752.5,-5644 746.5,-5644"/>
-<text text-anchor="start" x="447.5" y="-5624.57" font-family="arial" font-size="14.00">Segment 56 [0x5d8]</text>
+<text text-anchor="start" x="447.5" y="-5624.57" font-family="arial" font-size="14.00">#20|Segment 56 [0x5d8]</text>
 <g id="a_node21_514"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 3&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="712.5" y="-5625.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -3253,7 +3253,7 @@
 <g id="edge34" class="edge">
 <title>s_20&#45;&gt;s_5</title>
 <g id="a_edge34"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M501.17,-5040.01C472.43,-4926.82 448.5,-4796.19 448.5,-4675 448.5,-4675 448.5,-4675 448.5,-2609 448.5,-2323.91 450.2,-2251.93 424.5,-1968 419.71,-1915.08 411.06,-1855.7 403.81,-1810.67"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M500.15,-5040.4C497.06,-5028.15 494.16,-5015.98 491.5,-5004 459.51,-4860.05 448.5,-4822.47 448.5,-4675 448.5,-4675 448.5,-4675 448.5,-2609 448.5,-2323.91 450.2,-2251.93 424.5,-1968 419.71,-1915.08 411.06,-1855.7 403.81,-1810.67"/>
 <polygon fill="black" stroke="black" points="407.31,-1810.35 402.25,-1801.04 400.4,-1811.47 407.31,-1810.35"/>
 </a>
 </g>
@@ -3261,67 +3261,67 @@
 <!-- s_21 -->
 <g id="node22" class="node">
 <title>s_21</title>
-<path fill="whitesmoke" stroke="none" d="M701,-5004C701,-5004 514,-5004 514,-5004 508,-5004 502,-4998 502,-4992 502,-4992 502,-4892 502,-4892 502,-4886 508,-4880 514,-4880 514,-4880 701,-4880 701,-4880 707,-4880 713,-4886 713,-4892 713,-4892 713,-4992 713,-4992 713,-4998 707,-5004 701,-5004"/>
-<text text-anchor="start" x="511" y="-4984.57" font-family="arial" font-size="14.00">Segment 57 [0x5ff]</text>
+<path fill="whitesmoke" stroke="none" d="M700,-5004C700,-5004 513,-5004 513,-5004 507,-5004 501,-4998 501,-4992 501,-4992 501,-4892 501,-4892 501,-4886 507,-4880 513,-4880 513,-4880 700,-4880 700,-4880 706,-4880 712,-4886 712,-4892 712,-4892 712,-4992 712,-4992 712,-4998 706,-5004 700,-5004"/>
+<text text-anchor="start" x="510" y="-4984.57" font-family="arial" font-size="14.00">#21|Segment 57 [0x5ff]</text>
 <g id="a_node22_565"><a xlink:title="Stack Size Δ: &#45;3&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 3">
-<text text-anchor="start" x="667" y="-4985.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="666" y="-4985.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node22_566"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="686" y="-4985.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="685" y="-4985.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node22_567"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="513" y="-4964.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="512" y="-4964.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="534" y="-4962.7" font-family="arial" font-size="14.00">0x05ff </text>
+<text text-anchor="start" x="533" y="-4962.7" font-family="arial" font-size="14.00">0x05ff </text>
 <g id="a_node22_568"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" xlink:title="Push 1 byte" target="_blank">
-<path fill="powderblue" stroke="none" d="M583.75,-4957.25C583.75,-4957.25 620.25,-4957.25 620.25,-4957.25 623.88,-4957.25 627.5,-4960.88 627.5,-4964.5 627.5,-4964.5 627.5,-4971.75 627.5,-4971.75 627.5,-4975.38 623.88,-4979 620.25,-4979 620.25,-4979 583.75,-4979 583.75,-4979 580.12,-4979 576.5,-4975.38 576.5,-4971.75 576.5,-4971.75 576.5,-4964.5 576.5,-4964.5 576.5,-4960.88 580.12,-4957.25 583.75,-4957.25"/>
-<text text-anchor="start" x="579.5" y="-4962.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
+<path fill="powderblue" stroke="none" d="M582.75,-4957.25C582.75,-4957.25 619.25,-4957.25 619.25,-4957.25 622.88,-4957.25 626.5,-4960.88 626.5,-4964.5 626.5,-4964.5 626.5,-4971.75 626.5,-4971.75 626.5,-4975.38 622.88,-4979 619.25,-4979 619.25,-4979 582.75,-4979 582.75,-4979 579.12,-4979 575.5,-4975.38 575.5,-4971.75 575.5,-4971.75 575.5,-4964.5 575.5,-4964.5 575.5,-4960.88 579.12,-4957.25 582.75,-4957.25"/>
+<text text-anchor="start" x="578.5" y="-4962.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
 </a>
 </g>
-<text text-anchor="start" x="628.5" y="-4962.7" font-family="arial" font-size="14.00"> &#160;0x20</text>
+<text text-anchor="start" x="627.5" y="-4962.7" font-family="arial" font-size="14.00"> &#160;0x20</text>
 <g id="a_node22_569"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 5 " target="_blank">
-<text text-anchor="start" x="513" y="-4940.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="512" y="-4940.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="534" y="-4938.7" font-family="arial" font-size="14.00">0x0601 </text>
+<text text-anchor="start" x="533" y="-4938.7" font-family="arial" font-size="14.00">0x0601 </text>
 <g id="a_node22_570"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L61" xlink:title="Unsigned integer multiplication modulo TWO_256" target="_blank">
-<path fill="#c6eb76" stroke="none" d="M591.25,-4933.25C591.25,-4933.25 612,-4933.25 612,-4933.25 615.62,-4933.25 619.25,-4936.88 619.25,-4940.5 619.25,-4940.5 619.25,-4947.75 619.25,-4947.75 619.25,-4951.38 615.62,-4955 612,-4955 612,-4955 591.25,-4955 591.25,-4955 587.62,-4955 584,-4951.38 584,-4947.75 584,-4947.75 584,-4940.5 584,-4940.5 584,-4936.88 587.62,-4933.25 591.25,-4933.25"/>
-<text text-anchor="start" x="587" y="-4938.7" font-family="arial" font-size="14.00" fill="#316152">MUL</text>
+<path fill="#c6eb76" stroke="none" d="M590.25,-4933.25C590.25,-4933.25 611,-4933.25 611,-4933.25 614.62,-4933.25 618.25,-4936.88 618.25,-4940.5 618.25,-4940.5 618.25,-4947.75 618.25,-4947.75 618.25,-4951.38 614.62,-4955 611,-4955 611,-4955 590.25,-4955 590.25,-4955 586.62,-4955 583,-4951.38 583,-4947.75 583,-4947.75 583,-4940.5 583,-4940.5 583,-4936.88 586.62,-4933.25 590.25,-4933.25"/>
+<text text-anchor="start" x="586" y="-4938.7" font-family="arial" font-size="14.00" fill="#316152">MUL</text>
 </a>
 </g>
 <g id="a_node22_571"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="513" y="-4916.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="512" y="-4916.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="534" y="-4914.7" font-family="arial" font-size="14.00">0x0602 </text>
+<text text-anchor="start" x="533" y="-4914.7" font-family="arial" font-size="14.00">0x0602 </text>
 <g id="a_node22_572"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L40" xlink:title="Unsigned integer addition modulo TWO_256" target="_blank">
-<path fill="#c6eb76" stroke="none" d="M591.25,-4909.25C591.25,-4909.25 611.25,-4909.25 611.25,-4909.25 614.88,-4909.25 618.5,-4912.88 618.5,-4916.5 618.5,-4916.5 618.5,-4923.75 618.5,-4923.75 618.5,-4927.38 614.88,-4931 611.25,-4931 611.25,-4931 591.25,-4931 591.25,-4931 587.62,-4931 584,-4927.38 584,-4923.75 584,-4923.75 584,-4916.5 584,-4916.5 584,-4912.88 587.62,-4909.25 591.25,-4909.25"/>
-<text text-anchor="start" x="587" y="-4914.7" font-family="arial" font-size="14.00" fill="#316152">ADD</text>
+<path fill="#c6eb76" stroke="none" d="M590.25,-4909.25C590.25,-4909.25 610.25,-4909.25 610.25,-4909.25 613.88,-4909.25 617.5,-4912.88 617.5,-4916.5 617.5,-4916.5 617.5,-4923.75 617.5,-4923.75 617.5,-4927.38 613.88,-4931 610.25,-4931 610.25,-4931 590.25,-4931 590.25,-4931 586.62,-4931 583,-4927.38 583,-4923.75 583,-4923.75 583,-4916.5 583,-4916.5 583,-4912.88 586.62,-4909.25 590.25,-4909.25"/>
+<text text-anchor="start" x="586" y="-4914.7" font-family="arial" font-size="14.00" fill="#316152">ADD</text>
 </a>
 </g>
 <g id="a_node22_573"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: Depends on memory expansion " target="_blank">
-<text text-anchor="start" x="513" y="-4892.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="512" y="-4892.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="534" y="-4890.7" font-family="arial" font-size="14.00">0x0603 </text>
+<text text-anchor="start" x="533" y="-4890.7" font-family="arial" font-size="14.00">0x0603 </text>
 <g id="a_node22_574"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1165" xlink:title="Store a word to memory" target="_blank">
-<path fill="wheat" stroke="none" d="M591.25,-4885.25C591.25,-4885.25 642,-4885.25 642,-4885.25 645.62,-4885.25 649.25,-4888.88 649.25,-4892.5 649.25,-4892.5 649.25,-4899.75 649.25,-4899.75 649.25,-4903.38 645.62,-4907 642,-4907 642,-4907 591.25,-4907 591.25,-4907 587.62,-4907 584,-4903.38 584,-4899.75 584,-4899.75 584,-4892.5 584,-4892.5 584,-4888.88 587.62,-4885.25 591.25,-4885.25"/>
-<text text-anchor="start" x="587" y="-4890.7" font-family="arial" font-size="14.00" fill="sienna">MSTORE</text>
+<path fill="wheat" stroke="none" d="M590.25,-4885.25C590.25,-4885.25 641,-4885.25 641,-4885.25 644.62,-4885.25 648.25,-4888.88 648.25,-4892.5 648.25,-4892.5 648.25,-4899.75 648.25,-4899.75 648.25,-4903.38 644.62,-4907 641,-4907 641,-4907 590.25,-4907 590.25,-4907 586.62,-4907 583,-4903.38 583,-4899.75 583,-4899.75 583,-4892.5 583,-4892.5 583,-4888.88 586.62,-4885.25 590.25,-4885.25"/>
+<text text-anchor="start" x="586" y="-4890.7" font-family="arial" font-size="14.00" fill="sienna">MSTORE</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="511,-4981 511,-4981 667,-4981 667,-4981 511,-4981"/>
-<polygon fill="black" stroke="black" points="667,-4981 667,-4981 686,-4981 686,-4981 667,-4981"/>
-<polygon fill="black" stroke="black" points="686,-4981 686,-4981 705,-4981 705,-4981 686,-4981"/>
+<polygon fill="black" stroke="black" points="510,-4981 510,-4981 666,-4981 666,-4981 510,-4981"/>
+<polygon fill="black" stroke="black" points="666,-4981 666,-4981 685,-4981 685,-4981 666,-4981"/>
+<polygon fill="black" stroke="black" points="685,-4981 685,-4981 704,-4981 704,-4981 685,-4981"/>
 </g>
 <!-- s_20&#45;&gt;s_21 -->
 <g id="edge33" class="edge">
 <title>s_20&#45;&gt;s_21</title>
 <g id="a_edge33"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M605.3,-5040.11C605.5,-5031.38 605.69,-5023.01 605.87,-5015.1"/>
-<polygon fill="black" stroke="black" points="609.36,-5015.43 606.09,-5005.36 602.36,-5015.28 609.36,-5015.43"/>
+<path fill="none" stroke="black" d="M604.55,-5040.11C604.72,-5031.38 604.89,-5023.01 605.05,-5015.1"/>
+<polygon fill="black" stroke="black" points="608.54,-5015.43 605.25,-5005.36 601.55,-5015.29 608.54,-5015.43"/>
 </a>
 </g>
 </g>
@@ -3329,8 +3329,8 @@
 <g id="edge35" class="edge">
 <title>s_21&#45;&gt;s_15</title>
 <g id="a_edge35"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M611.15,-4880.31C611.63,-4872.33 612.14,-4863.85 612.67,-4855.06"/>
-<polygon fill="black" stroke="black" points="616.15,-4855.47 613.26,-4845.28 609.16,-4855.05 616.15,-4855.47"/>
+<path fill="none" stroke="black" d="M608.55,-4880.31C608.82,-4872.33 609.11,-4863.85 609.41,-4855.06"/>
+<polygon fill="black" stroke="black" points="612.9,-4855.39 609.74,-4845.28 605.9,-4855.16 612.9,-4855.39"/>
 </a>
 </g>
 </g>
@@ -3346,126 +3346,126 @@
 <!-- s_23 -->
 <g id="node24" class="node">
 <title>s_23</title>
-<path fill="whitesmoke" stroke="none" d="M787,-4140C787,-4140 616,-4140 616,-4140 610,-4140 604,-4134 604,-4128 604,-4128 604,-3884 604,-3884 604,-3878 610,-3872 616,-3872 616,-3872 787,-3872 787,-3872 793,-3872 799,-3878 799,-3884 799,-3884 799,-4128 799,-4128 799,-4134 793,-4140 787,-4140"/>
-<text text-anchor="start" x="613" y="-4120.57" font-family="arial" font-size="14.00">Segment 60 [0x628]</text>
+<path fill="whitesmoke" stroke="none" d="M793,-4140C793,-4140 614,-4140 614,-4140 608,-4140 602,-4134 602,-4128 602,-4128 602,-3884 602,-3884 602,-3878 608,-3872 614,-3872 614,-3872 793,-3872 793,-3872 799,-3872 805,-3878 805,-3884 805,-3884 805,-4128 805,-4128 805,-4134 799,-4140 793,-4140"/>
+<text text-anchor="start" x="610.62" y="-4120.57" font-family="arial" font-size="14.00">#23|Segment 60 [0x628]</text>
 <g id="a_node24_576"><a xlink:title="Stack Size Δ: &#45;3&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 3">
-<text text-anchor="start" x="753" y="-4121.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="759" y="-4121.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node24_577"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="772" y="-4121.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="778" y="-4121.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node24_578"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-4100.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-4100.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-4098.7" font-family="arial" font-size="14.00">0x0628 </text>
+<text text-anchor="start" x="634" y="-4098.7" font-family="arial" font-size="14.00">0x0628 </text>
 <g id="a_node24_579"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 1st element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-4093.25C693.25,-4093.25 720.75,-4093.25 720.75,-4093.25 724.38,-4093.25 728,-4096.88 728,-4100.5 728,-4100.5 728,-4107.75 728,-4107.75 728,-4111.38 724.38,-4115 720.75,-4115 720.75,-4115 693.25,-4115 693.25,-4115 689.62,-4115 686,-4111.38 686,-4107.75 686,-4107.75 686,-4100.5 686,-4100.5 686,-4096.88 689.62,-4093.25 693.25,-4093.25"/>
-<text text-anchor="start" x="689" y="-4098.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
+<path fill="powderblue" stroke="none" d="M691.25,-4093.25C691.25,-4093.25 718.75,-4093.25 718.75,-4093.25 722.38,-4093.25 726,-4096.88 726,-4100.5 726,-4100.5 726,-4107.75 726,-4107.75 726,-4111.38 722.38,-4115 718.75,-4115 718.75,-4115 691.25,-4115 691.25,-4115 687.62,-4115 684,-4111.38 684,-4107.75 684,-4107.75 684,-4100.5 684,-4100.5 684,-4096.88 687.62,-4093.25 691.25,-4093.25"/>
+<text text-anchor="start" x="687" y="-4098.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
 </a>
 </g>
 <g id="a_node24_580"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-4076.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-4076.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-4074.7" font-family="arial" font-size="14.00">0x0629 </text>
+<text text-anchor="start" x="634" y="-4074.7" font-family="arial" font-size="14.00">0x0629 </text>
 <g id="a_node24_581"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 3rd element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-4069.25C693.25,-4069.25 720.75,-4069.25 720.75,-4069.25 724.38,-4069.25 728,-4072.88 728,-4076.5 728,-4076.5 728,-4083.75 728,-4083.75 728,-4087.38 724.38,-4091 720.75,-4091 720.75,-4091 693.25,-4091 693.25,-4091 689.62,-4091 686,-4087.38 686,-4083.75 686,-4083.75 686,-4076.5 686,-4076.5 686,-4072.88 689.62,-4069.25 693.25,-4069.25"/>
-<text text-anchor="start" x="689" y="-4074.7" font-family="arial" font-size="14.00" fill="royalblue">DUP3</text>
+<path fill="powderblue" stroke="none" d="M691.25,-4069.25C691.25,-4069.25 718.75,-4069.25 718.75,-4069.25 722.38,-4069.25 726,-4072.88 726,-4076.5 726,-4076.5 726,-4083.75 726,-4083.75 726,-4087.38 722.38,-4091 718.75,-4091 718.75,-4091 691.25,-4091 691.25,-4091 687.62,-4091 684,-4087.38 684,-4083.75 684,-4083.75 684,-4076.5 684,-4076.5 684,-4072.88 687.62,-4069.25 691.25,-4069.25"/>
+<text text-anchor="start" x="687" y="-4074.7" font-family="arial" font-size="14.00" fill="royalblue">DUP3</text>
 </a>
 </g>
 <g id="a_node24_582"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-4052.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-4052.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-4050.7" font-family="arial" font-size="14.00">0x062a </text>
+<text text-anchor="start" x="634" y="-4050.7" font-family="arial" font-size="14.00">0x062a </text>
 <g id="a_node24_583"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L40" xlink:title="Unsigned integer addition modulo TWO_256" target="_blank">
-<path fill="#c6eb76" stroke="none" d="M693.25,-4045.25C693.25,-4045.25 713.25,-4045.25 713.25,-4045.25 716.88,-4045.25 720.5,-4048.88 720.5,-4052.5 720.5,-4052.5 720.5,-4059.75 720.5,-4059.75 720.5,-4063.38 716.88,-4067 713.25,-4067 713.25,-4067 693.25,-4067 693.25,-4067 689.62,-4067 686,-4063.38 686,-4059.75 686,-4059.75 686,-4052.5 686,-4052.5 686,-4048.88 689.62,-4045.25 693.25,-4045.25"/>
-<text text-anchor="start" x="689" y="-4050.7" font-family="arial" font-size="14.00" fill="#316152">ADD</text>
+<path fill="#c6eb76" stroke="none" d="M691.25,-4045.25C691.25,-4045.25 711.25,-4045.25 711.25,-4045.25 714.88,-4045.25 718.5,-4048.88 718.5,-4052.5 718.5,-4052.5 718.5,-4059.75 718.5,-4059.75 718.5,-4063.38 714.88,-4067 711.25,-4067 711.25,-4067 691.25,-4067 691.25,-4067 687.62,-4067 684,-4063.38 684,-4059.75 684,-4059.75 684,-4052.5 684,-4052.5 684,-4048.88 687.62,-4045.25 691.25,-4045.25"/>
+<text text-anchor="start" x="687" y="-4050.7" font-family="arial" font-size="14.00" fill="#316152">ADD</text>
 </a>
 </g>
 <g id="a_node24_584"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-4028.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-4028.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-4026.7" font-family="arial" font-size="14.00">0x062b </text>
+<text text-anchor="start" x="634" y="-4026.7" font-family="arial" font-size="14.00">0x062b </text>
 <g id="a_node24_585"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1577" xlink:title="Swap top and 2nd element of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-4021.25C693.25,-4021.25 732,-4021.25 732,-4021.25 735.62,-4021.25 739.25,-4024.88 739.25,-4028.5 739.25,-4028.5 739.25,-4035.75 739.25,-4035.75 739.25,-4039.38 735.62,-4043 732,-4043 732,-4043 693.25,-4043 693.25,-4043 689.62,-4043 686,-4039.38 686,-4035.75 686,-4035.75 686,-4028.5 686,-4028.5 686,-4024.88 689.62,-4021.25 693.25,-4021.25"/>
-<text text-anchor="start" x="689" y="-4026.7" font-family="arial" font-size="14.00" fill="royalblue">SWAP1</text>
+<path fill="powderblue" stroke="none" d="M691.25,-4021.25C691.25,-4021.25 730,-4021.25 730,-4021.25 733.62,-4021.25 737.25,-4024.88 737.25,-4028.5 737.25,-4028.5 737.25,-4035.75 737.25,-4035.75 737.25,-4039.38 733.62,-4043 730,-4043 730,-4043 691.25,-4043 691.25,-4043 687.62,-4043 684,-4039.38 684,-4035.75 684,-4035.75 684,-4028.5 684,-4028.5 684,-4024.88 687.62,-4021.25 691.25,-4021.25"/>
+<text text-anchor="start" x="687" y="-4026.7" font-family="arial" font-size="14.00" fill="royalblue">SWAP1</text>
 </a>
 </g>
 <g id="a_node24_586"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 2 " target="_blank">
-<text text-anchor="start" x="615" y="-4004.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-4004.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-4002.7" font-family="arial" font-size="14.00">0x062c </text>
+<text text-anchor="start" x="634" y="-4002.7" font-family="arial" font-size="14.00">0x062c </text>
 <g id="a_node24_587"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1097" xlink:title="Pop top of stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M692.5,-3997.25C692.5,-3997.25 713.25,-3997.25 713.25,-3997.25 716.88,-3997.25 720.5,-4000.88 720.5,-4004.5 720.5,-4004.5 720.5,-4011.75 720.5,-4011.75 720.5,-4015.38 716.88,-4019 713.25,-4019 713.25,-4019 692.5,-4019 692.5,-4019 688.88,-4019 685.25,-4015.38 685.25,-4011.75 685.25,-4011.75 685.25,-4004.5 685.25,-4004.5 685.25,-4000.88 688.88,-3997.25 692.5,-3997.25"/>
-<text text-anchor="start" x="688.25" y="-4002.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
+<path fill="powderblue" stroke="none" d="M690.5,-3997.25C690.5,-3997.25 711.25,-3997.25 711.25,-3997.25 714.88,-3997.25 718.5,-4000.88 718.5,-4004.5 718.5,-4004.5 718.5,-4011.75 718.5,-4011.75 718.5,-4015.38 714.88,-4019 711.25,-4019 711.25,-4019 690.5,-4019 690.5,-4019 686.88,-4019 683.25,-4015.38 683.25,-4011.75 683.25,-4011.75 683.25,-4004.5 683.25,-4004.5 683.25,-4000.88 686.88,-3997.25 690.5,-3997.25"/>
+<text text-anchor="start" x="686.25" y="-4002.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
 </a>
 </g>
 <g id="a_node24_588"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-3980.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-3980.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-3978.7" font-family="arial" font-size="14.00">0x062d </text>
+<text text-anchor="start" x="634" y="-3978.7" font-family="arial" font-size="14.00">0x062d </text>
 <g id="a_node24_589"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1577" xlink:title="Swap top and 2nd element of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-3973.25C693.25,-3973.25 732,-3973.25 732,-3973.25 735.62,-3973.25 739.25,-3976.88 739.25,-3980.5 739.25,-3980.5 739.25,-3987.75 739.25,-3987.75 739.25,-3991.38 735.62,-3995 732,-3995 732,-3995 693.25,-3995 693.25,-3995 689.62,-3995 686,-3991.38 686,-3987.75 686,-3987.75 686,-3980.5 686,-3980.5 686,-3976.88 689.62,-3973.25 693.25,-3973.25"/>
-<text text-anchor="start" x="689" y="-3978.7" font-family="arial" font-size="14.00" fill="royalblue">SWAP1</text>
+<path fill="powderblue" stroke="none" d="M691.25,-3973.25C691.25,-3973.25 730,-3973.25 730,-3973.25 733.62,-3973.25 737.25,-3976.88 737.25,-3980.5 737.25,-3980.5 737.25,-3987.75 737.25,-3987.75 737.25,-3991.38 733.62,-3995 730,-3995 730,-3995 691.25,-3995 691.25,-3995 687.62,-3995 684,-3991.38 684,-3987.75 684,-3987.75 684,-3980.5 684,-3980.5 684,-3976.88 687.62,-3973.25 691.25,-3973.25"/>
+<text text-anchor="start" x="687" y="-3978.7" font-family="arial" font-size="14.00" fill="royalblue">SWAP1</text>
 </a>
 </g>
 <g id="a_node24_590"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 2 " target="_blank">
-<text text-anchor="start" x="615" y="-3956.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-3956.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-3954.7" font-family="arial" font-size="14.00">0x062e </text>
+<text text-anchor="start" x="634" y="-3954.7" font-family="arial" font-size="14.00">0x062e </text>
 <g id="a_node24_591"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1097" xlink:title="Pop top of stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-3949.25C693.25,-3949.25 714,-3949.25 714,-3949.25 717.62,-3949.25 721.25,-3952.88 721.25,-3956.5 721.25,-3956.5 721.25,-3963.75 721.25,-3963.75 721.25,-3967.38 717.62,-3971 714,-3971 714,-3971 693.25,-3971 693.25,-3971 689.62,-3971 686,-3967.38 686,-3963.75 686,-3963.75 686,-3956.5 686,-3956.5 686,-3952.88 689.62,-3949.25 693.25,-3949.25"/>
-<text text-anchor="start" x="689" y="-3954.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
+<path fill="powderblue" stroke="none" d="M691.25,-3949.25C691.25,-3949.25 712,-3949.25 712,-3949.25 715.62,-3949.25 719.25,-3952.88 719.25,-3956.5 719.25,-3956.5 719.25,-3963.75 719.25,-3963.75 719.25,-3967.38 715.62,-3971 712,-3971 712,-3971 691.25,-3971 691.25,-3971 687.62,-3971 684,-3967.38 684,-3963.75 684,-3963.75 684,-3956.5 684,-3956.5 684,-3952.88 687.62,-3949.25 691.25,-3949.25"/>
+<text text-anchor="start" x="687" y="-3954.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
 </a>
 </g>
 <g id="a_node24_592"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="615" y="-3932.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-3932.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-3930.7" font-family="arial" font-size="14.00">0x062f </text>
+<text text-anchor="start" x="634" y="-3930.7" font-family="arial" font-size="14.00">0x062f </text>
 <g id="a_node24_593"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 2nd element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M689.5,-3925.25C689.5,-3925.25 717,-3925.25 717,-3925.25 720.62,-3925.25 724.25,-3928.88 724.25,-3932.5 724.25,-3932.5 724.25,-3939.75 724.25,-3939.75 724.25,-3943.38 720.62,-3947 717,-3947 717,-3947 689.5,-3947 689.5,-3947 685.88,-3947 682.25,-3943.38 682.25,-3939.75 682.25,-3939.75 682.25,-3932.5 682.25,-3932.5 682.25,-3928.88 685.88,-3925.25 689.5,-3925.25"/>
-<text text-anchor="start" x="685.25" y="-3930.7" font-family="arial" font-size="14.00" fill="royalblue">DUP2</text>
+<path fill="powderblue" stroke="none" d="M687.5,-3925.25C687.5,-3925.25 715,-3925.25 715,-3925.25 718.62,-3925.25 722.25,-3928.88 722.25,-3932.5 722.25,-3932.5 722.25,-3939.75 722.25,-3939.75 722.25,-3943.38 718.62,-3947 715,-3947 715,-3947 687.5,-3947 687.5,-3947 683.88,-3947 680.25,-3943.38 680.25,-3939.75 680.25,-3939.75 680.25,-3932.5 680.25,-3932.5 680.25,-3928.88 683.88,-3925.25 687.5,-3925.25"/>
+<text text-anchor="start" x="683.25" y="-3930.7" font-family="arial" font-size="14.00" fill="royalblue">DUP2</text>
 </a>
 </g>
 <g id="a_node24_594"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: Depends on memory expansion " target="_blank">
-<text text-anchor="start" x="615" y="-3908.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-3908.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-3906.7" font-family="arial" font-size="14.00">0x0630 </text>
+<text text-anchor="start" x="634" y="-3906.7" font-family="arial" font-size="14.00">0x0630 </text>
 <g id="a_node24_595"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1165" xlink:title="Store a word to memory" target="_blank">
-<path fill="wheat" stroke="none" d="M693.25,-3901.25C693.25,-3901.25 744,-3901.25 744,-3901.25 747.62,-3901.25 751.25,-3904.88 751.25,-3908.5 751.25,-3908.5 751.25,-3915.75 751.25,-3915.75 751.25,-3919.38 747.62,-3923 744,-3923 744,-3923 693.25,-3923 693.25,-3923 689.62,-3923 686,-3919.38 686,-3915.75 686,-3915.75 686,-3908.5 686,-3908.5 686,-3904.88 689.62,-3901.25 693.25,-3901.25"/>
-<text text-anchor="start" x="689" y="-3906.7" font-family="arial" font-size="14.00" fill="sienna">MSTORE</text>
+<path fill="wheat" stroke="none" d="M691.25,-3901.25C691.25,-3901.25 742,-3901.25 742,-3901.25 745.62,-3901.25 749.25,-3904.88 749.25,-3908.5 749.25,-3908.5 749.25,-3915.75 749.25,-3915.75 749.25,-3919.38 745.62,-3923 742,-3923 742,-3923 691.25,-3923 691.25,-3923 687.62,-3923 684,-3919.38 684,-3915.75 684,-3915.75 684,-3908.5 684,-3908.5 684,-3904.88 687.62,-3901.25 691.25,-3901.25"/>
+<text text-anchor="start" x="687" y="-3906.7" font-family="arial" font-size="14.00" fill="sienna">MSTORE</text>
 </a>
 </g>
 <g id="a_node24_596"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 2 " target="_blank">
-<text text-anchor="start" x="615" y="-3884.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="613" y="-3884.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="636" y="-3882.7" font-family="arial" font-size="14.00">0x0631 </text>
+<text text-anchor="start" x="634" y="-3882.7" font-family="arial" font-size="14.00">0x0631 </text>
 <g id="a_node24_597"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1097" xlink:title="Pop top of stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M693.25,-3877.25C693.25,-3877.25 714,-3877.25 714,-3877.25 717.62,-3877.25 721.25,-3880.88 721.25,-3884.5 721.25,-3884.5 721.25,-3891.75 721.25,-3891.75 721.25,-3895.38 717.62,-3899 714,-3899 714,-3899 693.25,-3899 693.25,-3899 689.62,-3899 686,-3895.38 686,-3891.75 686,-3891.75 686,-3884.5 686,-3884.5 686,-3880.88 689.62,-3877.25 693.25,-3877.25"/>
-<text text-anchor="start" x="689" y="-3882.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
+<path fill="powderblue" stroke="none" d="M691.25,-3877.25C691.25,-3877.25 712,-3877.25 712,-3877.25 715.62,-3877.25 719.25,-3880.88 719.25,-3884.5 719.25,-3884.5 719.25,-3891.75 719.25,-3891.75 719.25,-3895.38 715.62,-3899 712,-3899 712,-3899 691.25,-3899 691.25,-3899 687.62,-3899 684,-3895.38 684,-3891.75 684,-3891.75 684,-3884.5 684,-3884.5 684,-3880.88 687.62,-3877.25 691.25,-3877.25"/>
+<text text-anchor="start" x="687" y="-3882.7" font-family="arial" font-size="14.00" fill="royalblue">POP</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="613,-4117 613,-4117 753,-4117 753,-4117 613,-4117"/>
-<polygon fill="black" stroke="black" points="753,-4117 753,-4117 772,-4117 772,-4117 753,-4117"/>
-<polygon fill="black" stroke="black" points="772,-4117 772,-4117 791,-4117 791,-4117 772,-4117"/>
+<polygon fill="black" stroke="black" points="611,-4117 611,-4117 759,-4117 759,-4117 611,-4117"/>
+<polygon fill="black" stroke="black" points="759,-4117 759,-4117 778,-4117 778,-4117 759,-4117"/>
+<polygon fill="black" stroke="black" points="778,-4117 778,-4117 797,-4117 797,-4117 778,-4117"/>
 </g>
 <!-- s_22&#45;&gt;s_23 -->
 <g id="edge36" class="edge">
 <title>s_22&#45;&gt;s_23</title>
 <g id="a_edge36"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M663.73,-4176.41C665.63,-4167.9 667.54,-4159.35 669.43,-4150.84"/>
-<polygon fill="black" stroke="black" points="672.83,-4151.7 671.59,-4141.18 665.99,-4150.18 672.83,-4151.7"/>
+<path fill="none" stroke="black" d="M664.65,-4176.41C666.61,-4167.9 668.57,-4159.35 670.52,-4150.84"/>
+<polygon fill="black" stroke="black" points="673.91,-4151.71 672.73,-4141.18 667.09,-4150.15 673.91,-4151.71"/>
 </a>
 </g>
 </g>
@@ -3473,7 +3473,7 @@
 <g id="node25" class="node">
 <title>s_24</title>
 <path fill="whitesmoke" stroke="none" d="M857,-3836C857,-3836 648,-3836 648,-3836 642,-3836 636,-3830 636,-3824 636,-3824 636,-3508 636,-3508 636,-3502 642,-3496 648,-3496 648,-3496 857,-3496 857,-3496 863,-3496 869,-3502 869,-3508 869,-3508 869,-3824 869,-3824 869,-3830 863,-3836 857,-3836"/>
-<text text-anchor="start" x="645" y="-3816.57" font-family="arial" font-size="14.00">Segment 61 [0x632]</text>
+<text text-anchor="start" x="645" y="-3816.57" font-family="arial" font-size="14.00">#24|Segment 61 [0x632]</text>
 <g id="a_node25_599"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x4d8">
 <text text-anchor="start" x="823" y="-3817.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -3622,8 +3622,8 @@
 <g id="edge38" class="edge">
 <title>s_23&#45;&gt;s_24</title>
 <g id="a_edge38"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M721.51,-3872.38C722.77,-3864.02 724.05,-3855.54 725.34,-3847.02"/>
-<polygon fill="black" stroke="black" points="728.77,-3847.71 726.8,-3837.3 721.85,-3846.67 728.77,-3847.71"/>
+<path fill="none" stroke="black" d="M722.73,-3872.38C723.94,-3864.02 725.17,-3855.54 726.4,-3847.02"/>
+<polygon fill="black" stroke="black" points="729.84,-3847.7 727.81,-3837.3 722.91,-3846.7 729.84,-3847.7"/>
 </a>
 </g>
 </g>
@@ -3640,7 +3640,7 @@
 <g id="node26" class="node">
 <title>s_25</title>
 <path fill="whitesmoke" stroke="none" d="M857,-3460C857,-3460 648,-3460 648,-3460 642,-3460 636,-3454 636,-3448 636,-3448 636,-3204 636,-3204 636,-3198 642,-3192 648,-3192 648,-3192 857,-3192 857,-3192 863,-3192 869,-3198 869,-3204 869,-3204 869,-3448 869,-3448 869,-3454 863,-3460 857,-3460"/>
-<text text-anchor="start" x="645" y="-3440.57" font-family="arial" font-size="14.00">Segment 62 [0x642]</text>
+<text text-anchor="start" x="645" y="-3440.57" font-family="arial" font-size="14.00">#25|Segment 62 [0x642]</text>
 <g id="a_node26_628"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 2">
 <text text-anchor="start" x="823" y="-3441.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -3769,7 +3769,7 @@
 <g id="node27" class="node">
 <title>s_26</title>
 <path fill="whitesmoke" stroke="none" d="M857,-3156C857,-3156 648,-3156 648,-3156 642,-3156 636,-3150 636,-3144 636,-3144 636,-2900 636,-2900 636,-2894 642,-2888 648,-2888 648,-2888 857,-2888 857,-2888 863,-2888 869,-2894 869,-2900 869,-2900 869,-3144 869,-3144 869,-3150 863,-3156 857,-3156"/>
-<text text-anchor="start" x="645" y="-3136.57" font-family="arial" font-size="14.00">Segment 63 [0x650]</text>
+<text text-anchor="start" x="645" y="-3136.57" font-family="arial" font-size="14.00">#26|Segment 63 [0x650]</text>
 <g id="a_node27_651"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="823" y="-3137.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -3908,7 +3908,7 @@
 <g id="node28" class="node">
 <title>s_27</title>
 <path fill="whitesmoke" stroke="none" d="M902,-2852C902,-2852 603,-2852 603,-2852 597,-2852 591,-2846 591,-2840 591,-2840 591,-2380 591,-2380 591,-2374 597,-2368 603,-2368 603,-2368 902,-2368 902,-2368 908,-2368 914,-2374 914,-2380 914,-2380 914,-2840 914,-2840 914,-2846 908,-2852 902,-2852"/>
-<text text-anchor="start" x="600" y="-2832.57" font-family="arial" font-size="14.00">Segment 64 [0x661]</text>
+<text text-anchor="start" x="600" y="-2832.57" font-family="arial" font-size="14.00">#27|Segment 64 [0x661]</text>
 <g id="a_node28_674"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: [?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 5&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="868" y="-2833.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -4136,7 +4136,7 @@
 <g id="node29" class="node">
 <title>s_28</title>
 <path fill="whitesmoke" stroke="none" d="M855,-2332C855,-2332 646,-2332 646,-2332 640,-2332 634,-2326 634,-2320 634,-2320 634,-1980 634,-1980 634,-1974 640,-1968 646,-1968 646,-1968 855,-1968 855,-1968 861,-1968 867,-1974 867,-1980 867,-1980 867,-2320 867,-2320 867,-2326 861,-2332 855,-2332"/>
-<text text-anchor="start" x="643" y="-2312.57" font-family="arial" font-size="14.00">Segment 65 [0x67f]</text>
+<text text-anchor="start" x="643" y="-2312.57" font-family="arial" font-size="14.00">#28|Segment 65 [0x67f]</text>
 <g id="a_node29_715"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 3&#10;Exit Jump target: Constant 0x74a">
 <text text-anchor="start" x="821" y="-2313.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -4313,7 +4313,7 @@
 <g id="node30" class="node">
 <title>s_29</title>
 <path fill="whitesmoke" stroke="none" d="M898,-1932C898,-1932 603,-1932 603,-1932 597,-1932 591,-1926 591,-1920 591,-1920 591,-1556 591,-1556 591,-1550 597,-1544 603,-1544 603,-1544 898,-1544 898,-1544 904,-1544 910,-1550 910,-1556 910,-1556 910,-1920 910,-1920 910,-1926 904,-1932 898,-1932"/>
-<text text-anchor="start" x="600" y="-1912.58" font-family="arial" font-size="14.00">Segment 66 [0x691]</text>
+<text text-anchor="start" x="600" y="-1912.58" font-family="arial" font-size="14.00">#29|Segment 66 [0x691]</text>
 <g id="a_node30_746"><a xlink:title="Stack Size Δ: &#45;3&#10;Abstract stack at this node: [?,?,?,?,?,?]&#10;Stack Size on Entry at this node ≥ 6&#10;Stack Size on Entry for this segment ≥ 3&#10;Exit Jump target: Constant 0x6c0">
 <text text-anchor="start" x="864" y="-1913.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -4492,193 +4492,193 @@
 <!-- s_30 -->
 <g id="node31" class="node">
 <title>s_30</title>
-<path fill="whitesmoke" stroke="none" d="M638,-1508C638,-1508 345,-1508 345,-1508 339,-1508 333,-1502 333,-1496 333,-1496 333,-1348 333,-1348 333,-1342 339,-1336 345,-1336 345,-1336 638,-1336 638,-1336 644,-1336 650,-1342 650,-1348 650,-1348 650,-1496 650,-1496 650,-1502 644,-1508 638,-1508"/>
-<text text-anchor="start" x="342" y="-1488.58" font-family="arial" font-size="14.00">Segment 67 [0x6ae]</text>
+<path fill="whitesmoke" stroke="none" d="M636,-1508C636,-1508 343,-1508 343,-1508 337,-1508 331,-1502 331,-1496 331,-1496 331,-1348 331,-1348 331,-1342 337,-1336 343,-1336 343,-1336 636,-1336 636,-1336 642,-1336 648,-1342 648,-1348 648,-1348 648,-1496 648,-1496 648,-1502 642,-1508 636,-1508"/>
+<text text-anchor="start" x="340" y="-1488.58" font-family="arial" font-size="14.00">#30|Segment 67 [0x6ae]</text>
 <g id="a_node31_779"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x6c3">
-<text text-anchor="start" x="604" y="-1489.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="602" y="-1489.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node31_780"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="623" y="-1489.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="621" y="-1489.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node31_781"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="344" y="-1468.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1468.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1466.7" font-family="arial" font-size="14.00">0x06ae </text>
+<text text-anchor="start" x="363" y="-1466.7" font-family="arial" font-size="14.00">0x06ae </text>
 <g id="a_node31_782"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1528" xlink:title="Push 8 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M422.25,-1461.25C422.25,-1461.25 458.75,-1461.25 458.75,-1461.25 462.38,-1461.25 466,-1464.88 466,-1468.5 466,-1468.5 466,-1475.75 466,-1475.75 466,-1479.38 462.38,-1483 458.75,-1483 458.75,-1483 422.25,-1483 422.25,-1483 418.62,-1483 415,-1479.38 415,-1475.75 415,-1475.75 415,-1468.5 415,-1468.5 415,-1464.88 418.62,-1461.25 422.25,-1461.25"/>
-<text text-anchor="start" x="418" y="-1466.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH8</text>
+<path fill="powderblue" stroke="none" d="M420.25,-1461.25C420.25,-1461.25 456.75,-1461.25 456.75,-1461.25 460.38,-1461.25 464,-1464.88 464,-1468.5 464,-1468.5 464,-1475.75 464,-1475.75 464,-1479.38 460.38,-1483 456.75,-1483 456.75,-1483 420.25,-1483 420.25,-1483 416.62,-1483 413,-1479.38 413,-1475.75 413,-1475.75 413,-1468.5 413,-1468.5 413,-1464.88 416.62,-1461.25 420.25,-1461.25"/>
+<text text-anchor="start" x="416" y="-1466.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH8</text>
 </a>
 </g>
-<text text-anchor="start" x="467" y="-1466.7" font-family="arial" font-size="14.00"> &#160;0x04c3c3d8fce25555</text>
+<text text-anchor="start" x="465" y="-1466.7" font-family="arial" font-size="14.00"> &#160;0x04c3c3d8fce25555</text>
 <g id="a_node31_783"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="344" y="-1444.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1444.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1442.7" font-family="arial" font-size="14.00">0x06b7 </text>
+<text text-anchor="start" x="363" y="-1442.7" font-family="arial" font-size="14.00">0x06b7 </text>
 <g id="a_node31_784"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M422.25,-1437.25C422.25,-1437.25 458.75,-1437.25 458.75,-1437.25 462.38,-1437.25 466,-1440.88 466,-1444.5 466,-1444.5 466,-1451.75 466,-1451.75 466,-1455.38 462.38,-1459 458.75,-1459 458.75,-1459 422.25,-1459 422.25,-1459 418.62,-1459 415,-1455.38 415,-1451.75 415,-1451.75 415,-1444.5 415,-1444.5 415,-1440.88 418.62,-1437.25 422.25,-1437.25"/>
-<text text-anchor="start" x="418" y="-1442.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M420.25,-1437.25C420.25,-1437.25 456.75,-1437.25 456.75,-1437.25 460.38,-1437.25 464,-1440.88 464,-1444.5 464,-1444.5 464,-1451.75 464,-1451.75 464,-1455.38 460.38,-1459 456.75,-1459 456.75,-1459 420.25,-1459 420.25,-1459 416.62,-1459 413,-1455.38 413,-1451.75 413,-1451.75 413,-1444.5 413,-1444.5 413,-1440.88 416.62,-1437.25 420.25,-1437.25"/>
+<text text-anchor="start" x="416" y="-1442.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="467" y="-1442.7" font-family="arial" font-size="14.00"> &#160;0x0200</text>
+<text text-anchor="start" x="465" y="-1442.7" font-family="arial" font-size="14.00"> &#160;0x0200</text>
 <g id="a_node31_785"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: Depends on memory expansion " target="_blank">
-<text text-anchor="start" x="344" y="-1420.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1420.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1418.7" font-family="arial" font-size="14.00">0x06ba </text>
+<text text-anchor="start" x="363" y="-1418.7" font-family="arial" font-size="14.00">0x06ba </text>
 <g id="a_node31_786"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1133" xlink:title="Read a word from memory" target="_blank">
-<path fill="wheat" stroke="none" d="M422.25,-1413.25C422.25,-1413.25 463.25,-1413.25 463.25,-1413.25 466.88,-1413.25 470.5,-1416.88 470.5,-1420.5 470.5,-1420.5 470.5,-1427.75 470.5,-1427.75 470.5,-1431.38 466.88,-1435 463.25,-1435 463.25,-1435 422.25,-1435 422.25,-1435 418.62,-1435 415,-1431.38 415,-1427.75 415,-1427.75 415,-1420.5 415,-1420.5 415,-1416.88 418.62,-1413.25 422.25,-1413.25"/>
-<text text-anchor="start" x="418" y="-1418.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
+<path fill="wheat" stroke="none" d="M420.25,-1413.25C420.25,-1413.25 461.25,-1413.25 461.25,-1413.25 464.88,-1413.25 468.5,-1416.88 468.5,-1420.5 468.5,-1420.5 468.5,-1427.75 468.5,-1427.75 468.5,-1431.38 464.88,-1435 461.25,-1435 461.25,-1435 420.25,-1435 420.25,-1435 416.62,-1435 413,-1431.38 413,-1427.75 413,-1427.75 413,-1420.5 413,-1420.5 413,-1416.88 416.62,-1413.25 420.25,-1413.25"/>
+<text text-anchor="start" x="416" y="-1418.7" font-family="arial" font-size="14.00" fill="sienna">MLOAD</text>
 </a>
 </g>
 <g id="a_node31_787"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="344" y="-1396.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1396.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1394.7" font-family="arial" font-size="14.00">0x06bb </text>
+<text text-anchor="start" x="363" y="-1394.7" font-family="arial" font-size="14.00">0x06bb </text>
 <g id="a_node31_788"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L314" xlink:title="Unsigned Less than" target="_blank">
-<path fill="bisque" stroke="none" d="M422,-1389.25C422,-1389.25 429,-1389.25 429,-1389.25 432.5,-1389.25 436,-1392.75 436,-1396.25 436,-1396.25 436,-1404 436,-1404 436,-1407.5 432.5,-1411 429,-1411 429,-1411 422,-1411 422,-1411 418.5,-1411 415,-1407.5 415,-1404 415,-1404 415,-1396.25 415,-1396.25 415,-1392.75 418.5,-1389.25 422,-1389.25"/>
-<text text-anchor="start" x="418" y="-1394.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">LT</text>
+<path fill="bisque" stroke="none" d="M420,-1389.25C420,-1389.25 427,-1389.25 427,-1389.25 430.5,-1389.25 434,-1392.75 434,-1396.25 434,-1396.25 434,-1404 434,-1404 434,-1407.5 430.5,-1411 427,-1411 427,-1411 420,-1411 420,-1411 416.5,-1411 413,-1407.5 413,-1404 413,-1404 413,-1396.25 413,-1396.25 413,-1392.75 416.5,-1389.25 420,-1389.25"/>
+<text text-anchor="start" x="416" y="-1394.7" font-family="arial" font-size="14.00" fill="darkgoldenrod">LT</text>
 </a>
 </g>
 <g id="a_node31_789"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="344" y="-1372.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1372.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1370.7" font-family="arial" font-size="14.00">0x06bc </text>
+<text text-anchor="start" x="363" y="-1370.7" font-family="arial" font-size="14.00">0x06bc </text>
 <g id="a_node31_790"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M421.5,-1365.25C421.5,-1365.25 458,-1365.25 458,-1365.25 461.62,-1365.25 465.25,-1368.88 465.25,-1372.5 465.25,-1372.5 465.25,-1379.75 465.25,-1379.75 465.25,-1383.38 461.62,-1387 458,-1387 458,-1387 421.5,-1387 421.5,-1387 417.88,-1387 414.25,-1383.38 414.25,-1379.75 414.25,-1379.75 414.25,-1372.5 414.25,-1372.5 414.25,-1368.88 417.88,-1365.25 421.5,-1365.25"/>
-<text text-anchor="start" x="417.25" y="-1370.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M419.5,-1365.25C419.5,-1365.25 456,-1365.25 456,-1365.25 459.62,-1365.25 463.25,-1368.88 463.25,-1372.5 463.25,-1372.5 463.25,-1379.75 463.25,-1379.75 463.25,-1383.38 459.62,-1387 456,-1387 456,-1387 419.5,-1387 419.5,-1387 415.88,-1387 412.25,-1383.38 412.25,-1379.75 412.25,-1379.75 412.25,-1372.5 412.25,-1372.5 412.25,-1368.88 415.88,-1365.25 419.5,-1365.25"/>
+<text text-anchor="start" x="415.25" y="-1370.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="466.25" y="-1370.7" font-family="arial" font-size="14.00"> &#160;0x06c3</text>
+<text text-anchor="start" x="464.25" y="-1370.7" font-family="arial" font-size="14.00"> &#160;0x06c3</text>
 <g id="a_node31_791"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 8 " target="_blank">
-<text text-anchor="start" x="344" y="-1348.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="342" y="-1348.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="365" y="-1346.7" font-family="arial" font-size="14.00">0x06bf </text>
+<text text-anchor="start" x="363" y="-1346.7" font-family="arial" font-size="14.00">0x06bf </text>
 <g id="a_node31_792"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1255" xlink:title="Uncoditional Jump" target="_blank">
-<path fill="thistle" stroke="none" d="M418.5,-1341.25C418.5,-1341.25 447.5,-1341.25 447.5,-1341.25 451.12,-1341.25 454.75,-1344.88 454.75,-1348.5 454.75,-1348.5 454.75,-1355.75 454.75,-1355.75 454.75,-1359.38 451.12,-1363 447.5,-1363 447.5,-1363 418.5,-1363 418.5,-1363 414.88,-1363 411.25,-1359.38 411.25,-1355.75 411.25,-1355.75 411.25,-1348.5 411.25,-1348.5 411.25,-1344.88 414.88,-1341.25 418.5,-1341.25"/>
-<text text-anchor="start" x="414.25" y="-1346.7" font-family="arial" font-size="14.00" fill="purple">JUMP</text>
+<path fill="thistle" stroke="none" d="M416.5,-1341.25C416.5,-1341.25 445.5,-1341.25 445.5,-1341.25 449.12,-1341.25 452.75,-1344.88 452.75,-1348.5 452.75,-1348.5 452.75,-1355.75 452.75,-1355.75 452.75,-1359.38 449.12,-1363 445.5,-1363 445.5,-1363 416.5,-1363 416.5,-1363 412.88,-1363 409.25,-1359.38 409.25,-1355.75 409.25,-1355.75 409.25,-1348.5 409.25,-1348.5 409.25,-1344.88 412.88,-1341.25 416.5,-1341.25"/>
+<text text-anchor="start" x="412.25" y="-1346.7" font-family="arial" font-size="14.00" fill="purple">JUMP</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="342,-1485 342,-1485 604,-1485 604,-1485 342,-1485"/>
-<polygon fill="black" stroke="black" points="604,-1485 604,-1485 623,-1485 623,-1485 604,-1485"/>
-<polygon fill="black" stroke="black" points="623,-1485 623,-1485 642,-1485 642,-1485 623,-1485"/>
+<polygon fill="black" stroke="black" points="340,-1485 340,-1485 602,-1485 602,-1485 340,-1485"/>
+<polygon fill="black" stroke="black" points="602,-1485 602,-1485 621,-1485 621,-1485 602,-1485"/>
+<polygon fill="black" stroke="black" points="621,-1485 621,-1485 640,-1485 640,-1485 621,-1485"/>
 </g>
 <!-- s_29&#45;&gt;s_30 -->
 <g id="edge48" class="edge">
 <title>s_29&#45;&gt;s_30</title>
 <g id="a_edge48"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M591.64,-1544.4C583.7,-1534.78 575.92,-1525.35 568.42,-1516.26"/>
-<polygon fill="black" stroke="black" points="571.35,-1514.31 562.29,-1508.82 565.95,-1518.77 571.35,-1514.31"/>
+<path fill="none" stroke="black" d="M591.16,-1545.3C583.03,-1535.53 575.07,-1525.94 567.39,-1516.71"/>
+<polygon fill="black" stroke="black" points="570.18,-1514.59 561.1,-1509.13 564.8,-1519.06 570.18,-1514.59"/>
 </a>
 </g>
 </g>
 <!-- s_31 -->
 <g id="node32" class="node">
 <title>s_31</title>
-<path fill="whitesmoke" stroke="none" d="M874.5,-1460C874.5,-1460 680.5,-1460 680.5,-1460 674.5,-1460 668.5,-1454 668.5,-1448 668.5,-1448 668.5,-1396 668.5,-1396 668.5,-1390 674.5,-1384 680.5,-1384 680.5,-1384 874.5,-1384 874.5,-1384 880.5,-1384 886.5,-1390 886.5,-1396 886.5,-1396 886.5,-1448 886.5,-1448 886.5,-1454 880.5,-1460 874.5,-1460"/>
-<text text-anchor="start" x="677.5" y="-1440.58" font-family="arial" font-size="14.00">Segment 68 [0x6c0]</text>
+<path fill="whitesmoke" stroke="none" d="M872.5,-1460C872.5,-1460 678.5,-1460 678.5,-1460 672.5,-1460 666.5,-1454 666.5,-1448 666.5,-1448 666.5,-1396 666.5,-1396 666.5,-1390 672.5,-1384 678.5,-1384 678.5,-1384 872.5,-1384 872.5,-1384 878.5,-1384 884.5,-1390 884.5,-1396 884.5,-1396 884.5,-1448 884.5,-1448 884.5,-1454 878.5,-1460 872.5,-1460"/>
+<text text-anchor="start" x="675.5" y="-1440.58" font-family="arial" font-size="14.00">#31|Segment 68 [0x6c0]</text>
 <g id="a_node32_794"><a xlink:title="Stack Size Δ: +1&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0">
-<text text-anchor="start" x="840.5" y="-1441.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="838.5" y="-1441.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node32_795"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="859.5" y="-1441.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="857.5" y="-1441.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node32_796"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 1 " target="_blank">
-<text text-anchor="start" x="679.5" y="-1420.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="677.5" y="-1420.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="700.5" y="-1418.7" font-family="arial" font-size="14.00">0x06c0 </text>
+<text text-anchor="start" x="698.5" y="-1418.7" font-family="arial" font-size="14.00">0x06c0 </text>
 <g id="a_node32_797"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" xlink:title="A valid destination for a jump" target="_blank">
-<path fill="thistle" stroke="none" d="M757,-1413.25C757,-1413.25 822,-1413.25 822,-1413.25 825.62,-1413.25 829.25,-1416.88 829.25,-1420.5 829.25,-1420.5 829.25,-1427.75 829.25,-1427.75 829.25,-1431.38 825.62,-1435 822,-1435 822,-1435 757,-1435 757,-1435 753.38,-1435 749.75,-1431.38 749.75,-1427.75 749.75,-1427.75 749.75,-1420.5 749.75,-1420.5 749.75,-1416.88 753.38,-1413.25 757,-1413.25"/>
-<text text-anchor="start" x="752.75" y="-1418.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
+<path fill="thistle" stroke="none" d="M755,-1413.25C755,-1413.25 820,-1413.25 820,-1413.25 823.62,-1413.25 827.25,-1416.88 827.25,-1420.5 827.25,-1420.5 827.25,-1427.75 827.25,-1427.75 827.25,-1431.38 823.62,-1435 820,-1435 820,-1435 755,-1435 755,-1435 751.38,-1435 747.75,-1431.38 747.75,-1427.75 747.75,-1427.75 747.75,-1420.5 747.75,-1420.5 747.75,-1416.88 751.38,-1413.25 755,-1413.25"/>
+<text text-anchor="start" x="750.75" y="-1418.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
 </a>
 </g>
 <g id="a_node32_798"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="679.5" y="-1396.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="677.5" y="-1396.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="700.5" y="-1394.7" font-family="arial" font-size="14.00">0x06c1 </text>
+<text text-anchor="start" x="698.5" y="-1394.7" font-family="arial" font-size="14.00">0x06c1 </text>
 <g id="a_node32_799"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1479" xlink:title="Push 1 byte" target="_blank">
-<path fill="powderblue" stroke="none" d="M757,-1389.25C757,-1389.25 793.5,-1389.25 793.5,-1389.25 797.12,-1389.25 800.75,-1392.88 800.75,-1396.5 800.75,-1396.5 800.75,-1403.75 800.75,-1403.75 800.75,-1407.38 797.12,-1411 793.5,-1411 793.5,-1411 757,-1411 757,-1411 753.38,-1411 749.75,-1407.38 749.75,-1403.75 749.75,-1403.75 749.75,-1396.5 749.75,-1396.5 749.75,-1392.88 753.38,-1389.25 757,-1389.25"/>
-<text text-anchor="start" x="752.75" y="-1394.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
+<path fill="powderblue" stroke="none" d="M755,-1389.25C755,-1389.25 791.5,-1389.25 791.5,-1389.25 795.12,-1389.25 798.75,-1392.88 798.75,-1396.5 798.75,-1396.5 798.75,-1403.75 798.75,-1403.75 798.75,-1407.38 795.12,-1411 791.5,-1411 791.5,-1411 755,-1411 755,-1411 751.38,-1411 747.75,-1407.38 747.75,-1403.75 747.75,-1403.75 747.75,-1396.5 747.75,-1396.5 747.75,-1392.88 751.38,-1389.25 755,-1389.25"/>
+<text text-anchor="start" x="750.75" y="-1394.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH1</text>
 </a>
 </g>
-<text text-anchor="start" x="801.75" y="-1394.7" font-family="arial" font-size="14.00"> &#160;0x00</text>
-<polygon fill="black" stroke="black" points="677.5,-1437 677.5,-1437 840.5,-1437 840.5,-1437 677.5,-1437"/>
-<polygon fill="black" stroke="black" points="840.5,-1437 840.5,-1437 859.5,-1437 859.5,-1437 840.5,-1437"/>
-<polygon fill="black" stroke="black" points="859.5,-1437 859.5,-1437 878.5,-1437 878.5,-1437 859.5,-1437"/>
+<text text-anchor="start" x="799.75" y="-1394.7" font-family="arial" font-size="14.00"> &#160;0x00</text>
+<polygon fill="black" stroke="black" points="675.5,-1437 675.5,-1437 838.5,-1437 838.5,-1437 675.5,-1437"/>
+<polygon fill="black" stroke="black" points="838.5,-1437 838.5,-1437 857.5,-1437 857.5,-1437 838.5,-1437"/>
+<polygon fill="black" stroke="black" points="857.5,-1437 857.5,-1437 876.5,-1437 876.5,-1437 857.5,-1437"/>
 </g>
 <!-- s_29&#45;&gt;s_31 -->
 <g id="edge49" class="edge">
 <title>s_29&#45;&gt;s_31</title>
 <g id="a_edge49"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M767.06,-1544.4C769.39,-1517.32 771.59,-1491.73 773.36,-1471.09"/>
-<polygon fill="black" stroke="black" points="776.83,-1471.62 774.2,-1461.36 769.86,-1471.02 776.83,-1471.62"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M765.83,-1544.4C767.99,-1517.32 770.03,-1491.73 771.67,-1471.09"/>
+<polygon fill="black" stroke="black" points="775.14,-1471.6 772.45,-1461.36 768.16,-1471.05 775.14,-1471.6"/>
 </a>
 </g>
 </g>
 <!-- s_32 -->
 <g id="node33" class="node">
 <title>s_32</title>
-<path fill="whitesmoke" stroke="none" d="M739,-1300C739,-1300 530,-1300 530,-1300 524,-1300 518,-1294 518,-1288 518,-1288 518,-1212 518,-1212 518,-1206 524,-1200 530,-1200 530,-1200 739,-1200 739,-1200 745,-1200 751,-1206 751,-1212 751,-1212 751,-1288 751,-1288 751,-1294 745,-1300 739,-1300"/>
-<text text-anchor="start" x="527" y="-1280.58" font-family="arial" font-size="14.00">Segment 69 [0x6c3]</text>
+<path fill="whitesmoke" stroke="none" d="M733,-1300C733,-1300 524,-1300 524,-1300 518,-1300 512,-1294 512,-1288 512,-1288 512,-1212 512,-1212 512,-1206 518,-1200 524,-1200 524,-1200 733,-1200 733,-1200 739,-1200 745,-1206 745,-1212 745,-1212 745,-1288 745,-1288 745,-1294 739,-1300 733,-1300"/>
+<text text-anchor="start" x="521" y="-1280.58" font-family="arial" font-size="14.00">#32|Segment 69 [0x6c3]</text>
 <g id="a_node33_801"><a xlink:title="Stack Size Δ: &#45;1&#10;Abstract stack at this node: [?,?,?,?]&#10;Stack Size on Entry at this node ≥ 4&#10;Stack Size on Entry for this segment ≥ 1&#10;Exit Jump target: Constant 0x731">
-<text text-anchor="start" x="705" y="-1281.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="699" y="-1281.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node33_802"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="724" y="-1281.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="718" y="-1281.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node33_803"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 1 " target="_blank">
-<text text-anchor="start" x="529" y="-1260.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="523" y="-1260.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="550" y="-1258.7" font-family="arial" font-size="14.00">0x06c3 </text>
+<text text-anchor="start" x="544" y="-1258.7" font-family="arial" font-size="14.00">0x06c3 </text>
 <g id="a_node33_804"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1334" xlink:title="A valid destination for a jump" target="_blank">
-<path fill="thistle" stroke="none" d="M606.5,-1253.25C606.5,-1253.25 671.5,-1253.25 671.5,-1253.25 675.12,-1253.25 678.75,-1256.88 678.75,-1260.5 678.75,-1260.5 678.75,-1267.75 678.75,-1267.75 678.75,-1271.38 675.12,-1275 671.5,-1275 671.5,-1275 606.5,-1275 606.5,-1275 602.88,-1275 599.25,-1271.38 599.25,-1267.75 599.25,-1267.75 599.25,-1260.5 599.25,-1260.5 599.25,-1256.88 602.88,-1253.25 606.5,-1253.25"/>
-<text text-anchor="start" x="602.25" y="-1258.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
+<path fill="thistle" stroke="none" d="M600.5,-1253.25C600.5,-1253.25 665.5,-1253.25 665.5,-1253.25 669.12,-1253.25 672.75,-1256.88 672.75,-1260.5 672.75,-1260.5 672.75,-1267.75 672.75,-1267.75 672.75,-1271.38 669.12,-1275 665.5,-1275 665.5,-1275 600.5,-1275 600.5,-1275 596.88,-1275 593.25,-1271.38 593.25,-1267.75 593.25,-1267.75 593.25,-1260.5 593.25,-1260.5 593.25,-1256.88 596.88,-1253.25 600.5,-1253.25"/>
+<text text-anchor="start" x="596.25" y="-1258.7" font-family="arial" font-size="14.00" fill="purple">JUMPDEST</text>
 </a>
 </g>
 <g id="a_node33_805"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="529" y="-1236.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="523" y="-1236.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="550" y="-1234.7" font-family="arial" font-size="14.00">0x06c4 </text>
+<text text-anchor="start" x="544" y="-1234.7" font-family="arial" font-size="14.00">0x06c4 </text>
 <g id="a_node33_806"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1486" xlink:title="Push 2 bytes" target="_blank">
-<path fill="powderblue" stroke="none" d="M606.5,-1229.25C606.5,-1229.25 643,-1229.25 643,-1229.25 646.62,-1229.25 650.25,-1232.88 650.25,-1236.5 650.25,-1236.5 650.25,-1243.75 650.25,-1243.75 650.25,-1247.38 646.62,-1251 643,-1251 643,-1251 606.5,-1251 606.5,-1251 602.88,-1251 599.25,-1247.38 599.25,-1243.75 599.25,-1243.75 599.25,-1236.5 599.25,-1236.5 599.25,-1232.88 602.88,-1229.25 606.5,-1229.25"/>
-<text text-anchor="start" x="602.25" y="-1234.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
+<path fill="powderblue" stroke="none" d="M600.5,-1229.25C600.5,-1229.25 637,-1229.25 637,-1229.25 640.62,-1229.25 644.25,-1232.88 644.25,-1236.5 644.25,-1236.5 644.25,-1243.75 644.25,-1243.75 644.25,-1247.38 640.62,-1251 637,-1251 637,-1251 600.5,-1251 600.5,-1251 596.88,-1251 593.25,-1247.38 593.25,-1243.75 593.25,-1243.75 593.25,-1236.5 593.25,-1236.5 593.25,-1232.88 596.88,-1229.25 600.5,-1229.25"/>
+<text text-anchor="start" x="596.25" y="-1234.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH2</text>
 </a>
 </g>
-<text text-anchor="start" x="651.25" y="-1234.7" font-family="arial" font-size="14.00"> &#160;0x0731</text>
+<text text-anchor="start" x="645.25" y="-1234.7" font-family="arial" font-size="14.00"> &#160;0x0731</text>
 <g id="a_node33_807"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 10 " target="_blank">
-<text text-anchor="start" x="529" y="-1212.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="523" y="-1212.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="550" y="-1210.7" font-family="arial" font-size="14.00">0x06c7 </text>
+<text text-anchor="start" x="544" y="-1210.7" font-family="arial" font-size="14.00">0x06c7 </text>
 <g id="a_node33_808"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1277" xlink:title="Conditional Jump" target="_blank">
-<path fill="thistle" stroke="none" d="M606.5,-1205.25C606.5,-1205.25 639.25,-1205.25 639.25,-1205.25 642.88,-1205.25 646.5,-1208.88 646.5,-1212.5 646.5,-1212.5 646.5,-1219.75 646.5,-1219.75 646.5,-1223.38 642.88,-1227 639.25,-1227 639.25,-1227 606.5,-1227 606.5,-1227 602.88,-1227 599.25,-1223.38 599.25,-1219.75 599.25,-1219.75 599.25,-1212.5 599.25,-1212.5 599.25,-1208.88 602.88,-1205.25 606.5,-1205.25"/>
-<text text-anchor="start" x="602.25" y="-1210.7" font-family="arial" font-size="14.00" fill="purple">JUMPI</text>
+<path fill="thistle" stroke="none" d="M600.5,-1205.25C600.5,-1205.25 633.25,-1205.25 633.25,-1205.25 636.88,-1205.25 640.5,-1208.88 640.5,-1212.5 640.5,-1212.5 640.5,-1219.75 640.5,-1219.75 640.5,-1223.38 636.88,-1227 633.25,-1227 633.25,-1227 600.5,-1227 600.5,-1227 596.88,-1227 593.25,-1223.38 593.25,-1219.75 593.25,-1219.75 593.25,-1212.5 593.25,-1212.5 593.25,-1208.88 596.88,-1205.25 600.5,-1205.25"/>
+<text text-anchor="start" x="596.25" y="-1210.7" font-family="arial" font-size="14.00" fill="purple">JUMPI</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="527,-1277 527,-1277 705,-1277 705,-1277 527,-1277"/>
-<polygon fill="black" stroke="black" points="705,-1277 705,-1277 724,-1277 724,-1277 705,-1277"/>
-<polygon fill="black" stroke="black" points="724,-1277 724,-1277 743,-1277 743,-1277 724,-1277"/>
+<polygon fill="black" stroke="black" points="521,-1277 521,-1277 699,-1277 699,-1277 521,-1277"/>
+<polygon fill="black" stroke="black" points="699,-1277 699,-1277 718,-1277 718,-1277 699,-1277"/>
+<polygon fill="black" stroke="black" points="718,-1277 718,-1277 737,-1277 737,-1277 718,-1277"/>
 </g>
 <!-- s_30&#45;&gt;s_32 -->
 <g id="edge50" class="edge">
 <title>s_30&#45;&gt;s_32</title>
 <g id="a_edge50"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M563,-1336C570.86,-1326.66 578.71,-1317.32 586.19,-1308.44"/>
-<polygon fill="black" stroke="black" points="588.79,-1310.78 592.55,-1300.87 583.43,-1306.27 588.79,-1310.78"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M559,-1336C566.64,-1326.66 574.27,-1317.32 581.54,-1308.44"/>
+<polygon fill="black" stroke="black" points="584.09,-1310.84 587.71,-1300.89 578.67,-1306.41 584.09,-1310.84"/>
 </a>
 </g>
 </g>
@@ -4686,8 +4686,8 @@
 <g id="edge51" class="edge">
 <title>s_31&#45;&gt;s_32</title>
 <g id="a_edge51"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M746.47,-1384.11C727.88,-1362.01 703.85,-1333.44 682.82,-1308.44"/>
-<polygon fill="black" stroke="black" points="685.61,-1306.32 676.49,-1300.92 680.25,-1310.82 685.61,-1306.32"/>
+<path fill="none" stroke="black" d="M743.6,-1384.11C724.49,-1362.01 699.79,-1333.44 678.17,-1308.44"/>
+<polygon fill="black" stroke="black" points="680.84,-1306.18 671.65,-1300.9 675.55,-1310.76 680.84,-1306.18"/>
 </a>
 </g>
 </g>
@@ -4695,7 +4695,7 @@
 <g id="node34" class="node">
 <title>s_33</title>
 <path fill="whitesmoke" stroke="none" d="M675,-1164C675,-1164 12,-1164 12,-1164 6,-1164 0,-1158 0,-1152 0,-1152 0,-668 0,-668 0,-662 6,-656 12,-656 12,-656 675,-656 675,-656 681,-656 687,-662 687,-668 687,-668 687,-1152 687,-1152 687,-1158 681,-1164 675,-1164"/>
-<text text-anchor="start" x="9" y="-1144.58" font-family="arial" font-size="14.00">Segment 70 [0x6c8]</text>
+<text text-anchor="start" x="9" y="-1144.58" font-family="arial" font-size="14.00">#33|Segment 70 [0x6c8]</text>
 <g id="a_node34_810"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0">
 <text text-anchor="start" x="641" y="-1145.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -4925,8 +4925,8 @@
 <g id="edge52" class="edge">
 <title>s_32&#45;&gt;s_33</title>
 <g id="a_edge52"><a xlink:title="Next">
-<path fill="none" stroke="black" d="M592.5,-1200.21C585.18,-1191.71 577.14,-1182.38 568.57,-1172.42"/>
-<polygon fill="black" stroke="black" points="571.41,-1170.36 562.23,-1165.06 566.11,-1174.92 571.41,-1170.36"/>
+<path fill="none" stroke="black" d="M587.36,-1200.21C580.2,-1191.71 572.32,-1182.38 563.93,-1172.42"/>
+<polygon fill="black" stroke="black" points="566.85,-1170.46 557.73,-1165.07 561.5,-1174.97 566.85,-1170.46"/>
 </a>
 </g>
 </g>
@@ -4934,7 +4934,7 @@
 <g id="node35" class="node">
 <title>s_34</title>
 <path fill="whitesmoke" stroke="none" d="M902,-936C902,-936 717,-936 717,-936 711,-936 705,-930 705,-924 705,-924 705,-896 705,-896 705,-890 711,-884 717,-884 717,-884 902,-884 902,-884 908,-884 914,-890 914,-896 914,-896 914,-924 914,-924 914,-930 908,-936 902,-936"/>
-<text text-anchor="start" x="714" y="-916.58" font-family="arial" font-size="14.00">Segment 71 [0x731]</text>
+<text text-anchor="start" x="714" y="-916.58" font-family="arial" font-size="14.00">#34|Segment 71 [0x731]</text>
 <g id="a_node35_853"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 0">
 <text text-anchor="start" x="868" y="-917.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -4961,8 +4961,8 @@
 <g id="edge53" class="edge">
 <title>s_32&#45;&gt;s_34</title>
 <g id="a_edge53"><a xlink:title="Jump">
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M672.02,-1200.22C680.21,-1188.63 688.52,-1176.12 695.5,-1164 738.33,-1089.69 776.73,-996.37 796.14,-946.43"/>
-<polygon fill="black" stroke="black" points="799.33,-947.87 799.67,-937.28 792.8,-945.35 799.33,-947.87"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M670.3,-1200.13C679.18,-1188.66 688.09,-1176.21 695.5,-1164 740.11,-1090.48 777.94,-996.48 796.75,-946.31"/>
+<polygon fill="black" stroke="black" points="799.96,-947.72 800.16,-937.12 793.4,-945.28 799.96,-947.72"/>
 </a>
 </g>
 </g>
@@ -4970,7 +4970,7 @@
 <g id="node36" class="node">
 <title>s_35</title>
 <path fill="whitesmoke" stroke="none" d="M980,-620C980,-620 771,-620 771,-620 765,-620 759,-614 759,-608 759,-608 759,-292 759,-292 759,-286 765,-280 771,-280 771,-280 980,-280 980,-280 986,-280 992,-286 992,-292 992,-292 992,-608 992,-608 992,-614 986,-620 980,-620"/>
-<text text-anchor="start" x="768" y="-600.58" font-family="arial" font-size="14.00">Segment 72 [0x732]</text>
+<text text-anchor="start" x="768" y="-600.58" font-family="arial" font-size="14.00">#35|Segment 72 [0x732]</text>
 <g id="a_node36_858"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x650">
 <text text-anchor="start" x="946" y="-601.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -5137,7 +5137,7 @@
 <g id="node37" class="node">
 <title>s_36</title>
 <path fill="whitesmoke" stroke="none" d="M980,-244C980,-244 771,-244 771,-244 765,-244 759,-238 759,-232 759,-232 759,-84 759,-84 759,-78 765,-72 771,-72 771,-72 980,-72 980,-72 986,-72 992,-78 992,-84 992,-84 992,-232 992,-232 992,-238 986,-244 980,-244"/>
-<text text-anchor="start" x="768" y="-224.57" font-family="arial" font-size="14.00">Segment 73 [0x742]</text>
+<text text-anchor="start" x="768" y="-224.57" font-family="arial" font-size="14.00">#36|Segment 73 [0x742]</text>
 <g id="a_node37_887"><a xlink:title="Stack Size Δ: &#45;2&#10;Abstract stack at this node: [?,?,?]&#10;Stack Size on Entry at this node ≥ 3&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Unknown">
 <text text-anchor="start" x="946" y="-225.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
