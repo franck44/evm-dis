@@ -368,8 +368,8 @@ module EVMObject {
             match SafeLoopFound(i_th_succ.segNum, p.states, p.exits + [i]) {
               case Some(index) =>
                 //  s' is the state that covers lastOnPath
-                // print "Found loop from ", lastOnPath.ToString(), " to ", p.states[index].ToString(), "\n"; 
-                // print "States numbers :", a'.indexOf[lastOnPath], " to ", a'.indexOf[p.states[index]], "\n"; 
+                // print "Found loop from ", lastOnPath.ToString(), " to ", p.states[index].ToString(), "\n";
+                // print "States numbers :", a'.indexOf[lastOnPath], " to ", a'.indexOf[p.states[index]], "\n";
                 a', stats' := a'.AddEdge(lastOnPath, p.states[index]), stats'.IncWpre();
               case None =>
                 //  not already seen and not covered
@@ -469,8 +469,8 @@ module EVMObject {
       if a.ErrorGState? then
         "<ErrorEnd <BR ALIGN=\"CENTER\"/>>"
       else if withTable then
-        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState, index) +">" 
-      else 
+        "<" + DOTSegTable(xs[a.segNum], a, minStackSizeForState, index) +">"
+      else
         "<" + DOTSeg(xs[a.segNum], a.segNum, minStackSizeForState, index).0 +">"
     }
 

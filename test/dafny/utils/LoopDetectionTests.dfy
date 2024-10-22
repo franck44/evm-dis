@@ -198,15 +198,15 @@ module LoopTests {
 
   }
 
-   method {:print} PrintPath(p: Path<GState>)
-      requires |p.states| == |p.exits| + 1
+  method {:print} PrintPath(p: Path<GState>)
+    requires |p.states| == |p.exits| + 1
+  {
+    print p.states[0].ToString();
+    for i := 0 to |p.exits|
     {
-      print p.states[0].ToString();
-      for i := 0 to |p.exits|
-      {
-        print " -- ", p.exits[i], " --> ", p.states[i + 1].ToString();
-      }
+      print " -- ", p.exits[i], " --> ", p.states[i + 1].ToString();
     }
+  }
 
   /** Double loop example */
   method {:test} {:verify true} Test00()
@@ -249,7 +249,7 @@ module LoopTests {
       invariant |path.states| == |path.exits| + 1
       invariant forall s:: s in path.states ==> s.EGState? && s.IsBounded(|prog.xs|)
       invariant s.EGState? ==> s.IsBounded(|prog.xs|)
-      invariant forall k:: 0 <= k < |path.exits| ==> path.exits[k] < |prog.NextG(s)| 
+      invariant forall k:: 0 <= k < |path.exits| ==> path.exits[k] < |prog.NextG(s)|
       invariant forall i:: 0 <= i < |path.exits| ==> path.exits[i] < |prog.NextG(path.states[i])|
     {
       expect s.EGState?;
@@ -258,9 +258,12 @@ module LoopTests {
       s := prog.NextG(s)[exits[k]];
       expect s.EGState?;
       var x := prog.FindFirstNodeWithSegIndex(s.segNum, path.states);
-    //   assume forall i:: 0 <= i < |path.exits| ==> path.exits[i] < |prog.NextG(path.states[i])|;
+      expect forall i:: 0 <= i < |path.exits| ==> path.exits[i] < |prog.NextG(path.states[i])|;
+      //   expect path.exits[k] < |prog.NextG(s)|;
+      //   expect prog.SafeLoopFound.requires(s.segNum, path.states, path.exits + [exits[k]]);
+      expect exits[k] < |prog.NextG(path.states[|path.exits|])|;
       print "FindFirst node with index ", s.segNum, " is ", x, "\n";
-      var loopFound := prog.SafeLoopFound(s.segNum, path.states, path.exits + [exits[k]]); 
+      var loopFound := prog.SafeLoopFound(s.segNum, path.states, path.exits + [exits[k]]);
       print "Safe to loop back? ", loopFound, "\n";
 
       path := Path(path.states + [s], path.exits + [exits[k]]);
@@ -268,8 +271,8 @@ module LoopTests {
       print " leads to state ", s.ToString(), "\n";
       PrintPath(path);
       print "\n";
-      
-    } 
+
+    }
 
   }
 }

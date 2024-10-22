@@ -58,7 +58,7 @@ module MinimiserTests {
     Minimised is:
     {0, 2} - F, T -> {1, 3} -- T -> {4}
     */
-    var p: Partition := PartitionMod.MakeInit(5); 
+    var p: Partition := PartitionMod.MakeInit(5);
     var p1: ValidPartition := p.SplitIn2(x => x <= 3);
     var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 2]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [1, 3]);
@@ -92,7 +92,7 @@ module MinimiserTests {
       {1, 2} -- a, b -> {1, 2}
       */
 
-    var p: Partition := PartitionMod.MakeInit(4); 
+    var p: Partition := PartitionMod.MakeInit(4);
     var p1: ValidPartition := p.SplitIn2(x => x == 0 || x == 3);
     var a1: ValidAuto<nat> := Auto().AddEdges(0, [1, 0]);
     var a2: ValidAuto<nat> := a1.AddEdges(1, [2, 1]);
@@ -141,7 +141,7 @@ module MinimiserTests {
     Minimised is:
     {0} - a, b -> {1, 3} -- b -> {2, 4}
     */
-    var p: Partition := PartitionMod.MakeInit(5); 
+    var p: Partition := PartitionMod.MakeInit(5);
     var p1: ValidPartition := p.SplitIn2(x => x <= 3);
     var a0: ValidAuto<nat> := Auto();
     var a1 := a0.AddStates(seq(5, i => i));
