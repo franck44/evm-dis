@@ -3,21 +3,21 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
 
 # Module: LinSegments
 
@@ -27,15 +27,15 @@ class default__:
 
     @staticmethod
     def StackEffectHelper(xs):
-        d_656___accumulator_ = 0
+        d_0___accumulator_ = 0
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (0) + (d_656___accumulator_)
+                    return (0) + (d_0___accumulator_)
                 elif True:
-                    d_656___accumulator_ = (d_656___accumulator_) + (((xs)[0]).StackEffect())
-                    in51_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in51_
+                    d_0___accumulator_ = (d_0___accumulator_) + (((xs)[0]).StackEffect())
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -46,12 +46,12 @@ class default__:
                 if (len(xs)) == (0):
                     return postCond
                 elif True:
-                    d_657_lastI_ = (xs)[(len(xs)) - (1)]
-                    d_658_e_ = (d_657_lastI_).WeakestPreCapacity(postCond)
-                    in52_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                    in53_ = d_658_e_
-                    xs = in52_
-                    postCond = in53_
+                    d_0_lastI_ = (xs)[(len(xs)) - (1)]
+                    d_1_e_ = (d_0_lastI_).WeakestPreCapacity(postCond)
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                    in1_ = d_1_e_
+                    xs = in0_
+                    postCond = in1_
                     raise _dafny.TailCall()
                 break
 
@@ -62,21 +62,19 @@ class default__:
                 if (len(xs)) == (0):
                     return s
                 elif True:
-                    d_659_next_ = ((xs)[0]).NextState(s, jumpDests, 0)
-                    source44_ = d_659_next_
-                    if source44_.is_EState:
-                        d_660___mcc_h0_ = source44_.pc
-                        d_661___mcc_h1_ = source44_.stack
-                        in54_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                        in55_ = d_659_next_
-                        in56_ = jumpDests
-                        xs = in54_
-                        s = in55_
-                        jumpDests = in56_
+                    d_0_next_ = ((xs)[0]).NextState(s, jumpDests, 0)
+                    source0_ = d_0_next_
+                    if True:
+                        if source0_.is_Error:
+                            return d_0_next_
+                    if True:
+                        in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                        in1_ = d_0_next_
+                        in2_ = jumpDests
+                        xs = in0_
+                        s = in1_
+                        jumpDests = in2_
                         raise _dafny.TailCall()
-                    elif True:
-                        d_662___mcc_h2_ = source44_.msg
-                        return d_659_next_
                 break
 
     @staticmethod
@@ -88,11 +86,11 @@ class default__:
                 elif not((c).is_StCond):
                     return c
                 elif True:
-                    d_663_c1_ = ((xs)[(len(xs)) - (1)]).WPre(c)
-                    in57_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                    in58_ = d_663_c1_
-                    xs = in57_
-                    c = in58_
+                    d_0_c1_ = ((xs)[(len(xs)) - (1)]).WPre(c)
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                    in1_ = d_0_c1_
+                    xs = in0_
+                    c = in1_
                     raise _dafny.TailCall()
                 break
 
@@ -103,78 +101,65 @@ class default__:
                 if (len(path)) == (0):
                     return c
                 elif True:
-                    d_664_w1_ = ((xs)[(path)[(len(path)) - (1)]]).WPre(c)
-                    d_665_wp2_ = ((xs)[(path)[(len(path)) - (1)]]).LeadsTo(tgtPC, (exits)[(len(exits)) - (1)])
-                    in59_ = _dafny.SeqWithoutIsStrInference((path)[:(len(path)) - (1):])
-                    in60_ = _dafny.SeqWithoutIsStrInference((exits)[:(len(exits)) - (1):])
-                    in61_ = (d_664_w1_).And(d_665_wp2_)
-                    in62_ = xs
-                    in63_ = ((xs)[(path)[(len(path)) - (1)]]).StartAddress()
-                    path = in59_
-                    exits = in60_
-                    c = in61_
-                    xs = in62_
-                    tgtPC = in63_
+                    d_0_w1_ = ((xs)[(path)[(len(path)) - (1)]]).WPre(c)
+                    d_1_wp2_ = ((xs)[(path)[(len(path)) - (1)]]).LeadsTo(tgtPC, (exits)[(len(exits)) - (1)])
+                    in0_ = _dafny.SeqWithoutIsStrInference((path)[:(len(path)) - (1):])
+                    in1_ = _dafny.SeqWithoutIsStrInference((exits)[:(len(exits)) - (1):])
+                    in2_ = (d_0_w1_).And(d_1_wp2_)
+                    in3_ = xs
+                    in4_ = ((xs)[(path)[(len(path)) - (1)]]).StartAddress()
+                    path = in0_
+                    exits = in1_
+                    c = in2_
+                    xs = in3_
+                    tgtPC = in4_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def EquivSeg(s1, s2):
-        source45_ = s1
-        if source45_.is_JUMPSeg:
-            d_666___mcc_h0_ = source45_.ins
-            d_667___mcc_h1_ = source45_.lastIns
-            d_668___mcc_h2_ = source45_.netOpEffect
-            def lambda35_(forall_var_3_):
-                d_669_i_: int = forall_var_3_
-                return not (((0) <= (d_669_i_)) and ((d_669_i_) < ((len((s1).ins)) - (1)))) or ((((s1).ins)[d_669_i_]).Equiv(((s2).ins)[d_669_i_]))
+        source0_ = s1
+        if True:
+            if source0_.is_JUMPSeg:
+                def lambda0_(forall_var_0_):
+                    d_0_i_: int = forall_var_0_
+                    return not (((0) <= (d_0_i_)) and ((d_0_i_) < ((len((s1).ins)) - (1)))) or ((((s1).ins)[d_0_i_]).Equiv(((s2).ins)[d_0_i_]))
 
-            return ((((s2).is_JUMPSeg) and (((len((s1).Ins())) == (len((s2).Ins()))) and ((len((s2).Ins())) >= (2)))) and ((((EVMConstants.default__.PUSH1) <= (((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode)) and ((((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode) == (((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode))) and ((((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode) <= (EVMConstants.default__.PUSH32)))) and (_dafny.quantifier(_dafny.IntegerRange(0, (len((s1).ins)) - (1)), True, lambda35_))
-        elif source45_.is_JUMPISeg:
-            d_670___mcc_h3_ = source45_.ins
-            d_671___mcc_h4_ = source45_.lastIns
-            d_672___mcc_h5_ = source45_.netOpEffect
-            def lambda36_(forall_var_4_):
-                d_673_i_: int = forall_var_4_
-                return not (((0) <= (d_673_i_)) and ((d_673_i_) < ((len((s1).ins)) - (1)))) or ((((s1).ins)[d_673_i_]).Equiv(((s2).ins)[d_673_i_]))
+                return ((((s2).is_JUMPSeg) and (((len((s1).Ins())) == (len((s2).Ins()))) and ((len((s2).Ins())) >= (2)))) and ((((EVMConstants.default__.PUSH1) <= (((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode)) and ((((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode) == (((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode))) and ((((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode) <= (EVMConstants.default__.PUSH32)))) and (_dafny.quantifier(_dafny.IntegerRange(0, (len((s1).ins)) - (1)), True, lambda0_))
+        if True:
+            if source0_.is_JUMPISeg:
+                def lambda1_(forall_var_1_):
+                    d_1_i_: int = forall_var_1_
+                    return not (((0) <= (d_1_i_)) and ((d_1_i_) < ((len((s1).ins)) - (1)))) or ((((s1).ins)[d_1_i_]).Equiv(((s2).ins)[d_1_i_]))
 
-            return ((((s2).is_JUMPISeg) and (((len((s1).Ins())) == (len((s2).Ins()))) and ((len((s2).Ins())) >= (2)))) and ((((EVMConstants.default__.PUSH1) <= (((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode)) and ((((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode) == (((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode))) and ((((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode) <= (EVMConstants.default__.PUSH32)))) and (_dafny.quantifier(_dafny.IntegerRange(0, (len((s1).ins)) - (1)), True, lambda36_))
-        elif source45_.is_RETURNSeg:
-            d_674___mcc_h6_ = source45_.ins
-            d_675___mcc_h7_ = source45_.lastIns
-            d_676___mcc_h8_ = source45_.netOpEffect
-            def lambda37_(forall_var_5_):
-                d_677_i_: int = forall_var_5_
-                return not (((0) <= (d_677_i_)) and ((d_677_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_677_i_]).Equiv(((s2).Ins())[d_677_i_]))
+                return ((((s2).is_JUMPISeg) and (((len((s1).Ins())) == (len((s2).Ins()))) and ((len((s2).Ins())) >= (2)))) and ((((EVMConstants.default__.PUSH1) <= (((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode)) and ((((((s1).ins)[(len((s1).ins)) - (1)]).op).opcode) == (((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode))) and ((((((s2).ins)[(len((s1).ins)) - (1)]).op).opcode) <= (EVMConstants.default__.PUSH32)))) and (_dafny.quantifier(_dafny.IntegerRange(0, (len((s1).ins)) - (1)), True, lambda1_))
+        if True:
+            if source0_.is_RETURNSeg:
+                def lambda2_(forall_var_2_):
+                    d_2_i_: int = forall_var_2_
+                    return not (((0) <= (d_2_i_)) and ((d_2_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_2_i_]).Equiv(((s2).Ins())[d_2_i_]))
 
-            return (((s2).is_RETURNSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda37_))
-        elif source45_.is_STOPSeg:
-            d_678___mcc_h9_ = source45_.ins
-            d_679___mcc_h10_ = source45_.lastIns
-            d_680___mcc_h11_ = source45_.netOpEffect
-            def lambda38_(forall_var_6_):
-                d_681_i_: int = forall_var_6_
-                return not (((0) <= (d_681_i_)) and ((d_681_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_681_i_]).Equiv(((s2).Ins())[d_681_i_]))
+                return (((s2).is_RETURNSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda2_))
+        if True:
+            if source0_.is_STOPSeg:
+                def lambda3_(forall_var_3_):
+                    d_3_i_: int = forall_var_3_
+                    return not (((0) <= (d_3_i_)) and ((d_3_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_3_i_]).Equiv(((s2).Ins())[d_3_i_]))
 
-            return (((s2).is_STOPSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda38_))
-        elif source45_.is_CONTSeg:
-            d_682___mcc_h12_ = source45_.ins
-            d_683___mcc_h13_ = source45_.lastIns
-            d_684___mcc_h14_ = source45_.netOpEffect
-            def lambda39_(forall_var_7_):
-                d_685_i_: int = forall_var_7_
-                return not (((0) <= (d_685_i_)) and ((d_685_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_685_i_]).Equiv(((s2).Ins())[d_685_i_]))
+                return (((s2).is_STOPSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda3_))
+        if True:
+            if source0_.is_CONTSeg:
+                def lambda4_(forall_var_4_):
+                    d_4_i_: int = forall_var_4_
+                    return not (((0) <= (d_4_i_)) and ((d_4_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_4_i_]).Equiv(((s2).Ins())[d_4_i_]))
 
-            return (((s2).is_CONTSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda39_))
-        elif True:
-            d_686___mcc_h15_ = source45_.ins
-            d_687___mcc_h16_ = source45_.lastIns
-            d_688___mcc_h17_ = source45_.netOpEffect
-            def lambda40_(forall_var_8_):
-                d_689_i_: int = forall_var_8_
-                return not (((0) <= (d_689_i_)) and ((d_689_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_689_i_]).Equiv(((s2).Ins())[d_689_i_]))
+                return (((s2).is_CONTSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda4_))
+        if True:
+            def lambda5_(forall_var_5_):
+                d_5_i_: int = forall_var_5_
+                return not (((0) <= (d_5_i_)) and ((d_5_i_) < (len((s1).Ins())))) or ((((s1).Ins())[d_5_i_]).Equiv(((s2).Ins())[d_5_i_]))
 
-            return (((s2).is_INVALIDSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda40_))
+            return (((s2).is_INVALIDSeg) and ((len((s1).Ins())) == (len((s2).Ins())))) and (_dafny.quantifier(_dafny.IntegerRange(0, len((s1).Ins())), True, lambda5_))
 
 
 class ValidLinSeg:
@@ -213,19 +198,19 @@ class LinSeg:
         return ((self).ins) + (_dafny.SeqWithoutIsStrInference([(self).lastIns]))
 
     def Size(self, xi):
-        d_690___accumulator_ = 0
+        d_0___accumulator_ = 0
         _this = self
         while True:
             with _dafny.label():
                 if (len(xi)) == (0):
-                    return (0) + (d_690___accumulator_)
+                    return (0) + (d_0___accumulator_)
                 elif True:
-                    d_690___accumulator_ = (d_690___accumulator_) + (((xi)[0]).Size())
-                    in64_ = _this
-                    in65_ = _dafny.SeqWithoutIsStrInference((xi)[1::])
-                    _this = in64_
+                    d_0___accumulator_ = (d_0___accumulator_) + (((xi)[0]).Size())
+                    in0_ = _this
+                    in1_ = _dafny.SeqWithoutIsStrInference((xi)[1::])
+                    _this = in0_
                     
-                    xi = in65_
+                    xi = in1_
                     raise _dafny.TailCall()
                 break
 
@@ -257,15 +242,15 @@ class LinSeg:
                 if (len(xs)) == (0):
                     return postCond
                 elif True:
-                    d_691_lastI_ = (xs)[(len(xs)) - (1)]
-                    d_692_e_ = (d_691_lastI_).WeakestPreOperands(postCond)
-                    in66_ = _this
-                    in67_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                    in68_ = d_692_e_
-                    _this = in66_
+                    d_0_lastI_ = (xs)[(len(xs)) - (1)]
+                    d_1_e_ = (d_0_lastI_).WeakestPreOperands(postCond)
+                    in0_ = _this
+                    in1_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                    in2_ = d_1_e_
+                    _this = in0_
                     
-                    xs = in67_
-                    postCond = in68_
+                    xs = in1_
+                    postCond = in2_
                     raise _dafny.TailCall()
                 break
 
@@ -279,46 +264,27 @@ class LinSeg:
         return default__.WeakestPreCapacityHelper((self).Ins(), n)
 
     def Run(self, s, exit, jumpDests):
-        d_693_s_k_ = default__.RunIns((self).ins, s, jumpDests)
-        if (d_693_s_k_).is_Error:
-            return d_693_s_k_
+        d_0_s_k_ = default__.RunIns((self).ins, s, jumpDests)
+        if (d_0_s_k_).is_Error:
+            return d_0_s_k_
         elif True:
-            return ((self).lastIns).NextState(d_693_s_k_, jumpDests, exit)
+            return ((self).lastIns).NextState(d_0_s_k_, jumpDests, exit)
 
     def WPre(self, c):
         return default__.WPreIns((self).Ins(), c)
 
     def NumberOfExits(self):
-        source46_ = self
-        if source46_.is_JUMPSeg:
-            d_694___mcc_h0_ = source46_.ins
-            d_695___mcc_h1_ = source46_.lastIns
-            d_696___mcc_h2_ = source46_.netOpEffect
-            return 1
-        elif source46_.is_JUMPISeg:
-            d_697___mcc_h6_ = source46_.ins
-            d_698___mcc_h7_ = source46_.lastIns
-            d_699___mcc_h8_ = source46_.netOpEffect
-            return 2
-        elif source46_.is_RETURNSeg:
-            d_700___mcc_h12_ = source46_.ins
-            d_701___mcc_h13_ = source46_.lastIns
-            d_702___mcc_h14_ = source46_.netOpEffect
-            return 0
-        elif source46_.is_STOPSeg:
-            d_703___mcc_h18_ = source46_.ins
-            d_704___mcc_h19_ = source46_.lastIns
-            d_705___mcc_h20_ = source46_.netOpEffect
-            return 0
-        elif source46_.is_CONTSeg:
-            d_706___mcc_h24_ = source46_.ins
-            d_707___mcc_h25_ = source46_.lastIns
-            d_708___mcc_h26_ = source46_.netOpEffect
-            return 1
-        elif True:
-            d_709___mcc_h30_ = source46_.ins
-            d_710___mcc_h31_ = source46_.lastIns
-            d_711___mcc_h32_ = source46_.netOpEffect
+        source0_ = self
+        if True:
+            if source0_.is_JUMPISeg:
+                return 2
+        if True:
+            if source0_.is_JUMPSeg:
+                return 1
+        if True:
+            if source0_.is_CONTSeg:
+                return 1
+        if True:
             return 0
 
     def IsJump(self):
@@ -328,82 +294,56 @@ class LinSeg:
         if (k) >= (Int.default__.TWO__256):
             return WeakPre.Cond_StFalse()
         elif True:
-            source47_ = self
-            if source47_.is_JUMPSeg:
-                d_712___mcc_h0_ = source47_.ins
-                d_713___mcc_h1_ = source47_.lastIns
-                d_714___mcc_h2_ = source47_.netOpEffect
-                if (exit) == (0):
-                    d_715_c_ = WeakPre.Cond_StCond(_dafny.SeqWithoutIsStrInference([0]), _dafny.SeqWithoutIsStrInference([k]))
-                    return default__.WPreIns((self).ins, d_715_c_)
-                elif True:
-                    return WeakPre.Cond_StFalse()
-            elif source47_.is_JUMPISeg:
-                d_716___mcc_h3_ = source47_.ins
-                d_717___mcc_h4_ = source47_.lastIns
-                d_718___mcc_h5_ = source47_.netOpEffect
-                if (exit) == (1):
-                    d_719_c_ = WeakPre.Cond_StCond(_dafny.SeqWithoutIsStrInference([0]), _dafny.SeqWithoutIsStrInference([k]))
-                    return default__.WPreIns((self).ins, d_719_c_)
-                elif (k) == ((self).StartAddressNextSeg()):
+            source0_ = self
+            if True:
+                if source0_.is_JUMPSeg:
+                    if (exit) == (0):
+                        d_0_c_ = WeakPre.Cond_StCond(_dafny.SeqWithoutIsStrInference([0]), _dafny.SeqWithoutIsStrInference([k]))
+                        return default__.WPreIns((self).ins, d_0_c_)
+                    elif True:
+                        return WeakPre.Cond_StFalse()
+            if True:
+                if source0_.is_JUMPISeg:
+                    if (exit) == (1):
+                        d_1_c_ = WeakPre.Cond_StCond(_dafny.SeqWithoutIsStrInference([0]), _dafny.SeqWithoutIsStrInference([k]))
+                        return default__.WPreIns((self).ins, d_1_c_)
+                    elif (k) == ((self).StartAddressNextSeg()):
+                        return WeakPre.Cond_StTrue()
+                    elif True:
+                        return WeakPre.Cond_StFalse()
+            if True:
+                if source0_.is_CONTSeg:
+                    if ((exit) == (0)) and ((k) == ((self).StartAddressNextSeg())):
+                        return WeakPre.Cond_StTrue()
+                    elif True:
+                        return WeakPre.Cond_StFalse()
+            if True:
+                if source0_.is_RETURNSeg:
                     return WeakPre.Cond_StTrue()
-                elif True:
-                    return WeakPre.Cond_StFalse()
-            elif source47_.is_RETURNSeg:
-                d_720___mcc_h6_ = source47_.ins
-                d_721___mcc_h7_ = source47_.lastIns
-                d_722___mcc_h8_ = source47_.netOpEffect
-                return WeakPre.Cond_StTrue()
-            elif source47_.is_STOPSeg:
-                d_723___mcc_h9_ = source47_.ins
-                d_724___mcc_h10_ = source47_.lastIns
-                d_725___mcc_h11_ = source47_.netOpEffect
-                return WeakPre.Cond_StTrue()
-            elif source47_.is_CONTSeg:
-                d_726___mcc_h12_ = source47_.ins
-                d_727___mcc_h13_ = source47_.lastIns
-                d_728___mcc_h14_ = source47_.netOpEffect
-                if ((exit) == (0)) and ((k) == ((self).StartAddressNextSeg())):
+            if True:
+                if source0_.is_STOPSeg:
                     return WeakPre.Cond_StTrue()
-                elif True:
-                    return WeakPre.Cond_StFalse()
-            elif True:
-                d_729___mcc_h15_ = source47_.ins
-                d_730___mcc_h16_ = source47_.lastIns
-                d_731___mcc_h17_ = source47_.netOpEffect
+            if True:
                 return WeakPre.Cond_StFalse()
 
     def SegTypeName(self):
-        source48_ = self
-        if source48_.is_JUMPSeg:
-            d_732___mcc_h0_ = source48_.ins
-            d_733___mcc_h1_ = source48_.lastIns
-            d_734___mcc_h2_ = source48_.netOpEffect
-            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMP Segment"))
-        elif source48_.is_JUMPISeg:
-            d_735___mcc_h3_ = source48_.ins
-            d_736___mcc_h4_ = source48_.lastIns
-            d_737___mcc_h5_ = source48_.netOpEffect
-            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMPI Segment"))
-        elif source48_.is_RETURNSeg:
-            d_738___mcc_h6_ = source48_.ins
-            d_739___mcc_h7_ = source48_.lastIns
-            d_740___mcc_h8_ = source48_.netOpEffect
-            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURN Segment"))
-        elif source48_.is_STOPSeg:
-            d_741___mcc_h9_ = source48_.ins
-            d_742___mcc_h10_ = source48_.lastIns
-            d_743___mcc_h11_ = source48_.netOpEffect
-            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "STOP Segment"))
-        elif source48_.is_CONTSeg:
-            d_744___mcc_h12_ = source48_.ins
-            d_745___mcc_h13_ = source48_.lastIns
-            d_746___mcc_h14_ = source48_.netOpEffect
-            return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT Segment"))
-        elif True:
-            d_747___mcc_h15_ = source48_.ins
-            d_748___mcc_h16_ = source48_.lastIns
-            d_749___mcc_h17_ = source48_.netOpEffect
+        source0_ = self
+        if True:
+            if source0_.is_JUMPSeg:
+                return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMP Segment"))
+        if True:
+            if source0_.is_JUMPISeg:
+                return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "JUMPI Segment"))
+        if True:
+            if source0_.is_RETURNSeg:
+                return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "RETURN Segment"))
+        if True:
+            if source0_.is_STOPSeg:
+                return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "STOP Segment"))
+        if True:
+            if source0_.is_CONTSeg:
+                return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "CONT Segment"))
+        if True:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "INVALID Segment"))
 
 

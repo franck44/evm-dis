@@ -3,23 +3,23 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
-import LinSegments
-import Splitter
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
+import LinSegments as LinSegments
+import Splitter as Splitter
 
 # Module: SegBuilder
 
@@ -38,19 +38,18 @@ class default__:
                 if (len(xs)) == (0):
                     return MiscTypes.Either_Right(pos)
                 elif True:
-                    d_754_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
-                    source49_ = d_754_x_
-                    if source49_.is_Left:
-                        d_755___mcc_h0_ = source49_.l
-                        d_756_v_ = d_755___mcc_h0_
-                        return MiscTypes.Either_Left(d_756_v_)
-                    elif True:
-                        d_757___mcc_h1_ = source49_.r
-                        d_758_v_ = d_757___mcc_h1_
-                        in89_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
-                        in90_ = d_758_v_
-                        xs = in89_
-                        pos = in90_
+                    d_0_x_ = ((xs)[(len(xs)) - (1)]).StackPosBackWardTracker(pos)
+                    source0_ = d_0_x_
+                    if True:
+                        if source0_.is_Left:
+                            d_1_v_ = source0_.l
+                            return MiscTypes.Either_Left(d_1_v_)
+                    if True:
+                        d_2_v_ = source0_.r
+                        in0_ = _dafny.SeqWithoutIsStrInference((xs)[:(len(xs)) - (1):])
+                        in1_ = d_2_v_
+                        xs = in0_
+                        pos = in1_
                         raise _dafny.TailCall()
                 break
 

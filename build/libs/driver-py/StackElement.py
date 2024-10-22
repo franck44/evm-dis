@@ -3,15 +3,15 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
 
 # Module: StackElement
 
@@ -21,15 +21,15 @@ class default__:
 
     @staticmethod
     def StackToString(s):
-        d_136___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(s)) == (0):
-                    return (d_136___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Ø")))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "Ø")))
                 elif True:
-                    d_136___accumulator_ = (d_136___accumulator_) + ((((s)[0]).ToString()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
-                    in18_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in18_
+                    d_0___accumulator_ = (d_0___accumulator_) + ((((s)[0]).ToString()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
+                    in0_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -47,23 +47,21 @@ class StackElem:
     def is_Random(self) -> bool:
         return isinstance(self, StackElem_Random)
     def ToString(self):
-        source26_ = self
-        if source26_.is_Value:
-            d_137___mcc_h0_ = source26_.v
-            d_138_v_ = d_137___mcc_h0_
-            return (((Int.default__.NatToString(d_138_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_138_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
-        elif True:
-            d_139___mcc_h1_ = source26_.s
+        source0_ = self
+        if True:
+            if source0_.is_Value:
+                d_0_v_ = source0_.v
+                return (((Int.default__.NatToString(d_0_v_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x")))) + (Hex.default__.NatToHex(d_0_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+        if True:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
 
     def ToHTML(self):
-        source27_ = self
-        if source27_.is_Value:
-            d_140___mcc_h0_ = source27_.v
-            d_141_v_ = d_140___mcc_h0_
-            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x"))) + (Hex.default__.NatToHex(d_141_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
-        elif True:
-            d_142___mcc_h1_ = source27_.s
+        source0_ = self
+        if True:
+            if source0_.is_Value:
+                d_0_v_ = source0_.v
+                return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(0x"))) + (Hex.default__.NatToHex(d_0_v_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+        if True:
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "?"))
 
     def Extract(self):

@@ -3,9 +3,9 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
 
 # Module: MiscTypes
 
@@ -35,19 +35,19 @@ class default__:
 
     @staticmethod
     def UnZip(x):
-        d_1_x0_ = _dafny.SeqWithoutIsStrInference([((x)[d_2_i_])[0] for d_2_i_ in range(len(x))])
-        d_3_x1_ = _dafny.SeqWithoutIsStrInference([((x)[d_4_i_])[1] for d_4_i_ in range(len(x))])
-        return (d_1_x0_, d_3_x1_)
+        d_0_x0_ = _dafny.SeqWithoutIsStrInference([((x)[d_1_i_])[0] for d_1_i_ in range(len(x))])
+        d_2_x1_ = _dafny.SeqWithoutIsStrInference([((x)[d_3_i_])[1] for d_3_i_ in range(len(x))])
+        return (d_0_x0_, d_2_x1_)
 
     @staticmethod
     def Filter(u, f):
-        d_5___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(u)) == (0):
-                    return (d_5___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif f((u)[0]):
-                    d_5___accumulator_ = (d_5___accumulator_) + (_dafny.SeqWithoutIsStrInference([(u)[0]]))
+                    d_0___accumulator_ = (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([(u)[0]]))
                     in0_ = _dafny.SeqWithoutIsStrInference((u)[1::])
                     in1_ = f
                     u = in0_
@@ -70,34 +70,34 @@ class default__:
                 elif f((xs)[0]):
                     return True
                 elif True:
-                    in4_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in5_ = f
-                    xs = in4_
-                    f = in5_
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in1_ = f
+                    xs = in0_
+                    f = in1_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def Flatten(x):
-        d_6___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(x)) == (0):
-                    return (d_6___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_6___accumulator_ = (d_6___accumulator_) + ((x)[0])
-                    in6_ = _dafny.SeqWithoutIsStrInference((x)[1::])
-                    x = in6_
+                    d_0___accumulator_ = (d_0___accumulator_) + ((x)[0])
+                    in0_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    x = in0_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def Map(t, f):
-        return _dafny.SeqWithoutIsStrInference([f((t)[d_7_i_]) for d_7_i_ in range(len(t))])
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_0_i_]) for d_0_i_ in range(len(t))])
 
     @staticmethod
     def MapP(t, f):
-        return _dafny.SeqWithoutIsStrInference([f((t)[d_8_i_]) for d_8_i_ in range(len(t))])
+        return _dafny.SeqWithoutIsStrInference([f((t)[d_0_i_]) for d_0_i_ in range(len(t))])
 
     @staticmethod
     def FoldLeft(t, u0, f):
@@ -106,26 +106,26 @@ class default__:
                 if (len(t)) == (0):
                     return u0
                 elif True:
-                    in7_ = _dafny.SeqWithoutIsStrInference((t)[1::])
-                    in8_ = f(u0, (t)[0])
-                    in9_ = f
-                    t = in7_
-                    u0 = in8_
-                    f = in9_
+                    in0_ = _dafny.SeqWithoutIsStrInference((t)[1::])
+                    in1_ = f(u0, (t)[0])
+                    in2_ = f
+                    t = in0_
+                    u0 = in1_
+                    f = in2_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def SeqToSet(t):
-        d_9___accumulator_ = _dafny.Set({})
+        d_0___accumulator_ = _dafny.Set({})
         while True:
             with _dafny.label():
                 if (len(t)) == (0):
-                    return (_dafny.Set({})) | (d_9___accumulator_)
+                    return (_dafny.Set({})) | (d_0___accumulator_)
                 elif True:
-                    d_9___accumulator_ = (d_9___accumulator_) | (_dafny.Set({(t)[0]}))
-                    in10_ = _dafny.SeqWithoutIsStrInference((t)[1::])
-                    t = in10_
+                    d_0___accumulator_ = (d_0___accumulator_) | (_dafny.Set({(t)[0]}))
+                    in0_ = _dafny.SeqWithoutIsStrInference((t)[1::])
+                    t = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -142,12 +142,12 @@ class default__:
                 elif ((x)[0]) == (t):
                     return Option_Some(i)
                 elif True:
-                    in11_ = _dafny.SeqWithoutIsStrInference((x)[1::])
-                    in12_ = t
-                    in13_ = (i) + (1)
-                    x = in11_
-                    t = in12_
-                    i = in13_
+                    in0_ = _dafny.SeqWithoutIsStrInference((x)[1::])
+                    in1_ = t
+                    in2_ = (i) + (1)
+                    x = in0_
+                    t = in1_
+                    i = in2_
                     raise _dafny.TailCall()
                 break
 
@@ -159,7 +159,7 @@ class default__:
 class Try:
     @classmethod
     def default(cls, ):
-        return lambda: Try_Failure(_dafny.Seq({}))
+        return lambda: Try_Failure(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
     def __ne__(self, __o: object) -> bool:
         return not self.__eq__(__o)
     @property
@@ -261,7 +261,7 @@ class WellDefined:
 
     @staticmethod
     def default():
-        def lambda0_(d_10_x_, d_11_xs_):
+        def lambda0_(d_0_x_, d_1_xs_):
             return Option_None()
 
         return lambda0_
@@ -272,7 +272,7 @@ class WellDefined2:
 
     @staticmethod
     def default():
-        def lambda1_(d_12_x_, d_13_xs_):
+        def lambda1_(d_2_x_, d_3_xs_):
             return Option_None()
 
         return lambda1_
@@ -283,7 +283,7 @@ class Foo:
 
     @staticmethod
     def default():
-        def lambda2_(d_14_x_):
+        def lambda2_(d_4_x_):
             return 0
 
         return lambda2_

@@ -3,8 +3,7 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
+import _dafny as _dafny
 
 # Module: System_
 
@@ -15,4 +14,7 @@ class nat:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        d_0_x_: int = source__
+        return (0) <= (d_0_x_)
 

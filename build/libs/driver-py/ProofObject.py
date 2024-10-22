@@ -3,25 +3,25 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
-import LinSegments
-import Splitter
-import SegBuilder
-import CFGState
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
+import LinSegments as LinSegments
+import Splitter as Splitter
+import SegBuilder as SegBuilder
+import CFGState as CFGState
 
 # Module: ProofObject
 
@@ -61,25 +61,14 @@ class ProofObj:
     def is_TERMINAL(self) -> bool:
         return isinstance(self, ProofObj_TERMINAL)
     def IsValid(self):
-        source51_ = self
-        if source51_.is_JUMP:
-            d_767___mcc_h0_ = source51_.s
-            d_768___mcc_h1_ = source51_.wpOp
-            d_769___mcc_h2_ = source51_.wpCap
-            d_770___mcc_h3_ = source51_.tgt
-            d_771___mcc_h4_ = source51_.stacks
-            return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
-        elif source51_.is_CONT:
-            d_772___mcc_h5_ = source51_.s
-            d_773___mcc_h6_ = source51_.wpOp
-            d_774___mcc_h7_ = source51_.wpCap
-            d_775___mcc_h8_ = source51_.stacks
-            return ((self).s).is_CONTSeg
-        elif True:
-            d_776___mcc_h9_ = source51_.s
-            d_777___mcc_h10_ = source51_.wpOp
-            d_778___mcc_h11_ = source51_.wpCap
-            d_779___mcc_h12_ = source51_.stacks
+        source0_ = self
+        if True:
+            if source0_.is_JUMP:
+                return (((self).s).is_JUMPSeg) or (((self).s).is_JUMPISeg)
+        if True:
+            if source0_.is_CONT:
+                return ((self).s).is_CONTSeg
+        if True:
             return ((((self).s).is_RETURNSeg) or (((self).s).is_STOPSeg)) or (((self).s).is_INVALIDSeg)
 
     def CollectJumpDest(self):

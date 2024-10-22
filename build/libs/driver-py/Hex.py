@@ -3,14 +3,14 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
 
 # Module: Hex
 
@@ -20,155 +20,119 @@ class default__:
 
     @staticmethod
     def IsHexString(s):
-        def lambda3_(forall_var_0_):
-            d_91_k_: int = forall_var_0_
-            return not (((0) <= (d_91_k_)) and ((d_91_k_) < (len(s)))) or (default__.IsHex((s)[d_91_k_]))
+        def lambda0_(forall_var_0_):
+            d_0_k_: int = forall_var_0_
+            return not (((0) <= (d_0_k_)) and ((d_0_k_) < (len(s)))) or (default__.IsHex((s)[d_0_k_]))
 
-        return _dafny.quantifier(_dafny.IntegerRange(0, len(s)), True, lambda3_)
+        return _dafny.quantifier(_dafny.IntegerRange(0, len(s)), True, lambda0_)
 
     @staticmethod
     def HexToU8(s):
-        source2_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
-        d_92___mcc_h0_ = source2_[0]
-        d_93___mcc_h1_ = source2_[1]
-        source3_ = d_92___mcc_h0_
-        if source3_.is_None:
-            source4_ = d_93___mcc_h1_
-            if source4_.is_None:
+        source0_ = (default__.HexVal((s)[0]), default__.HexVal((s)[1]))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_94___mcc_h2_ = source4_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_95___mcc_h4_ = source3_.v
-            source5_ = d_93___mcc_h1_
-            if source5_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_96___mcc_h6_ = source5_.v
-                d_97_v2_ = d_96___mcc_h6_
-                d_98_v1_ = d_95___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__4) * (d_98_v1_)) + (d_97_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__4) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def HexToU16(s):
-        source6_ = (default__.HexToU8(_dafny.SeqWithoutIsStrInference((s)[:2:])), default__.HexToU8(_dafny.SeqWithoutIsStrInference((s)[2::])))
-        d_99___mcc_h0_ = source6_[0]
-        d_100___mcc_h1_ = source6_[1]
-        source7_ = d_99___mcc_h0_
-        if source7_.is_None:
-            source8_ = d_100___mcc_h1_
-            if source8_.is_None:
+        source0_ = (default__.HexToU8(_dafny.SeqWithoutIsStrInference((s)[:2:])), default__.HexToU8(_dafny.SeqWithoutIsStrInference((s)[2::])))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_101___mcc_h2_ = source8_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_102___mcc_h4_ = source7_.v
-            source9_ = d_100___mcc_h1_
-            if source9_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_103___mcc_h6_ = source9_.v
-                d_104_v2_ = d_103___mcc_h6_
-                d_105_v1_ = d_102___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__8) * (d_105_v1_)) + (d_104_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__8) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def HexToU32(s):
-        source10_ = (default__.HexToU16(_dafny.SeqWithoutIsStrInference((s)[:4:])), default__.HexToU16(_dafny.SeqWithoutIsStrInference((s)[4::])))
-        d_106___mcc_h0_ = source10_[0]
-        d_107___mcc_h1_ = source10_[1]
-        source11_ = d_106___mcc_h0_
-        if source11_.is_None:
-            source12_ = d_107___mcc_h1_
-            if source12_.is_None:
+        source0_ = (default__.HexToU16(_dafny.SeqWithoutIsStrInference((s)[:4:])), default__.HexToU16(_dafny.SeqWithoutIsStrInference((s)[4::])))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_108___mcc_h2_ = source12_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_109___mcc_h4_ = source11_.v
-            source13_ = d_107___mcc_h1_
-            if source13_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_110___mcc_h6_ = source13_.v
-                d_111_v2_ = d_110___mcc_h6_
-                d_112_v1_ = d_109___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__16) * (d_112_v1_)) + (d_111_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__16) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def HexToU64(s):
-        source14_ = (default__.HexToU32(_dafny.SeqWithoutIsStrInference((s)[:8:])), default__.HexToU32(_dafny.SeqWithoutIsStrInference((s)[8::])))
-        d_113___mcc_h0_ = source14_[0]
-        d_114___mcc_h1_ = source14_[1]
-        source15_ = d_113___mcc_h0_
-        if source15_.is_None:
-            source16_ = d_114___mcc_h1_
-            if source16_.is_None:
+        source0_ = (default__.HexToU32(_dafny.SeqWithoutIsStrInference((s)[:8:])), default__.HexToU32(_dafny.SeqWithoutIsStrInference((s)[8::])))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_115___mcc_h2_ = source16_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_116___mcc_h4_ = source15_.v
-            source17_ = d_114___mcc_h1_
-            if source17_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_117___mcc_h6_ = source17_.v
-                d_118_v2_ = d_117___mcc_h6_
-                d_119_v1_ = d_116___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__32) * (d_119_v1_)) + (d_118_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__32) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def HexToU128(s):
-        source18_ = (default__.HexToU64(_dafny.SeqWithoutIsStrInference((s)[:16:])), default__.HexToU64(_dafny.SeqWithoutIsStrInference((s)[16::])))
-        d_120___mcc_h0_ = source18_[0]
-        d_121___mcc_h1_ = source18_[1]
-        source19_ = d_120___mcc_h0_
-        if source19_.is_None:
-            source20_ = d_121___mcc_h1_
-            if source20_.is_None:
+        source0_ = (default__.HexToU64(_dafny.SeqWithoutIsStrInference((s)[:16:])), default__.HexToU64(_dafny.SeqWithoutIsStrInference((s)[16::])))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_122___mcc_h2_ = source20_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_123___mcc_h4_ = source19_.v
-            source21_ = d_121___mcc_h1_
-            if source21_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_124___mcc_h6_ = source21_.v
-                d_125_v2_ = d_124___mcc_h6_
-                d_126_v1_ = d_123___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__64) * (d_126_v1_)) + (d_125_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__64) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def HexToU256(s):
-        source22_ = (default__.HexToU128(_dafny.SeqWithoutIsStrInference((s)[:32:])), default__.HexToU128(_dafny.SeqWithoutIsStrInference((s)[32::])))
-        d_127___mcc_h0_ = source22_[0]
-        d_128___mcc_h1_ = source22_[1]
-        source23_ = d_127___mcc_h0_
-        if source23_.is_None:
-            source24_ = d_128___mcc_h1_
-            if source24_.is_None:
+        source0_ = (default__.HexToU128(_dafny.SeqWithoutIsStrInference((s)[:32:])), default__.HexToU128(_dafny.SeqWithoutIsStrInference((s)[32::])))
+        if True:
+            d_00_ = source0_[0]
+            if d_00_.is_None:
                 return MiscTypes.Option_None()
-            elif True:
-                d_129___mcc_h2_ = source24_.v
+        if True:
+            d_10_ = source0_[1]
+            if d_10_.is_None:
                 return MiscTypes.Option_None()
-        elif True:
-            d_130___mcc_h4_ = source23_.v
-            source25_ = d_128___mcc_h1_
-            if source25_.is_None:
-                return MiscTypes.Option_None()
-            elif True:
-                d_131___mcc_h6_ = source25_.v
-                d_132_v2_ = d_131___mcc_h6_
-                d_133_v1_ = d_130___mcc_h4_
-                return MiscTypes.Option_Some(((Int.default__.TWO__128) * (d_133_v1_)) + (d_132_v2_))
+        if True:
+            d_01_ = source0_[0]
+            d_0_v1_ = d_01_.v
+            d_11_ = source0_[1]
+            d_1_v2_ = d_11_.v
+            return MiscTypes.Option_Some(((Int.default__.TWO__128) * (d_0_v1_)) + (d_1_v2_))
 
     @staticmethod
     def U8ToHex(n):
@@ -176,15 +140,15 @@ class default__:
 
     @staticmethod
     def HexHelper(s):
-        d_134___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(s)) == (0):
-                    return (d_134___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
                 elif True:
-                    d_134___accumulator_ = (d_134___accumulator_) + (default__.U8ToHex((s)[0]))
-                    in16_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in16_
+                    d_0___accumulator_ = (d_0___accumulator_) + (default__.U8ToHex((s)[0]))
+                    in0_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -210,100 +174,139 @@ class default__:
 
     @staticmethod
     def NatToHex(n):
-        d_135___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (16):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(n)])) + (d_135___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DecToHex(n)])) + (d_0___accumulator_)
                 elif True:
-                    d_135___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, 16))])) + (d_135___accumulator_)
-                    in17_ = _dafny.euclidian_division(n, 16)
-                    n = in17_
+                    d_0___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DecToHex(_dafny.euclidian_modulus(n, 16))])) + (d_0___accumulator_)
+                    in0_ = _dafny.euclidian_division(n, 16)
+                    n = in0_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def HexVal(c):
-        if (c) == (_dafny.CodePoint('0')):
-            return MiscTypes.Option_Some(0)
-        elif (c) == (_dafny.CodePoint('1')):
-            return MiscTypes.Option_Some(1)
-        elif (c) == (_dafny.CodePoint('2')):
-            return MiscTypes.Option_Some(2)
-        elif (c) == (_dafny.CodePoint('3')):
-            return MiscTypes.Option_Some(3)
-        elif (c) == (_dafny.CodePoint('4')):
-            return MiscTypes.Option_Some(4)
-        elif (c) == (_dafny.CodePoint('5')):
-            return MiscTypes.Option_Some(5)
-        elif (c) == (_dafny.CodePoint('6')):
-            return MiscTypes.Option_Some(6)
-        elif (c) == (_dafny.CodePoint('7')):
-            return MiscTypes.Option_Some(7)
-        elif (c) == (_dafny.CodePoint('8')):
-            return MiscTypes.Option_Some(8)
-        elif (c) == (_dafny.CodePoint('9')):
-            return MiscTypes.Option_Some(9)
-        elif (c) == (_dafny.CodePoint('a')):
-            return MiscTypes.Option_Some(10)
-        elif (c) == (_dafny.CodePoint('A')):
-            return MiscTypes.Option_Some(10)
-        elif (c) == (_dafny.CodePoint('b')):
-            return MiscTypes.Option_Some(11)
-        elif (c) == (_dafny.CodePoint('B')):
-            return MiscTypes.Option_Some(11)
-        elif (c) == (_dafny.CodePoint('c')):
-            return MiscTypes.Option_Some(12)
-        elif (c) == (_dafny.CodePoint('C')):
-            return MiscTypes.Option_Some(12)
-        elif (c) == (_dafny.CodePoint('d')):
-            return MiscTypes.Option_Some(13)
-        elif (c) == (_dafny.CodePoint('D')):
-            return MiscTypes.Option_Some(13)
-        elif (c) == (_dafny.CodePoint('e')):
-            return MiscTypes.Option_Some(14)
-        elif (c) == (_dafny.CodePoint('E')):
-            return MiscTypes.Option_Some(14)
-        elif (c) == (_dafny.CodePoint('f')):
-            return MiscTypes.Option_Some(15)
-        elif (c) == (_dafny.CodePoint('F')):
-            return MiscTypes.Option_Some(15)
-        elif True:
+        source0_ = c
+        if True:
+            if (source0_) == (_dafny.CodePoint('0')):
+                return MiscTypes.Option_Some(0)
+        if True:
+            if (source0_) == (_dafny.CodePoint('1')):
+                return MiscTypes.Option_Some(1)
+        if True:
+            if (source0_) == (_dafny.CodePoint('2')):
+                return MiscTypes.Option_Some(2)
+        if True:
+            if (source0_) == (_dafny.CodePoint('3')):
+                return MiscTypes.Option_Some(3)
+        if True:
+            if (source0_) == (_dafny.CodePoint('4')):
+                return MiscTypes.Option_Some(4)
+        if True:
+            if (source0_) == (_dafny.CodePoint('5')):
+                return MiscTypes.Option_Some(5)
+        if True:
+            if (source0_) == (_dafny.CodePoint('6')):
+                return MiscTypes.Option_Some(6)
+        if True:
+            if (source0_) == (_dafny.CodePoint('7')):
+                return MiscTypes.Option_Some(7)
+        if True:
+            if (source0_) == (_dafny.CodePoint('8')):
+                return MiscTypes.Option_Some(8)
+        if True:
+            if (source0_) == (_dafny.CodePoint('9')):
+                return MiscTypes.Option_Some(9)
+        if True:
+            if (source0_) == (_dafny.CodePoint('a')):
+                return MiscTypes.Option_Some(10)
+        if True:
+            if (source0_) == (_dafny.CodePoint('A')):
+                return MiscTypes.Option_Some(10)
+        if True:
+            if (source0_) == (_dafny.CodePoint('b')):
+                return MiscTypes.Option_Some(11)
+        if True:
+            if (source0_) == (_dafny.CodePoint('B')):
+                return MiscTypes.Option_Some(11)
+        if True:
+            if (source0_) == (_dafny.CodePoint('c')):
+                return MiscTypes.Option_Some(12)
+        if True:
+            if (source0_) == (_dafny.CodePoint('C')):
+                return MiscTypes.Option_Some(12)
+        if True:
+            if (source0_) == (_dafny.CodePoint('d')):
+                return MiscTypes.Option_Some(13)
+        if True:
+            if (source0_) == (_dafny.CodePoint('D')):
+                return MiscTypes.Option_Some(13)
+        if True:
+            if (source0_) == (_dafny.CodePoint('e')):
+                return MiscTypes.Option_Some(14)
+        if True:
+            if (source0_) == (_dafny.CodePoint('E')):
+                return MiscTypes.Option_Some(14)
+        if True:
+            if (source0_) == (_dafny.CodePoint('f')):
+                return MiscTypes.Option_Some(15)
+        if True:
+            if (source0_) == (_dafny.CodePoint('F')):
+                return MiscTypes.Option_Some(15)
+        if True:
             return MiscTypes.Option_None()
 
     @staticmethod
     def DecToHex(n):
-        if (n) == (0):
-            return _dafny.CodePoint('0')
-        elif (n) == (1):
-            return _dafny.CodePoint('1')
-        elif (n) == (2):
-            return _dafny.CodePoint('2')
-        elif (n) == (3):
-            return _dafny.CodePoint('3')
-        elif (n) == (4):
-            return _dafny.CodePoint('4')
-        elif (n) == (5):
-            return _dafny.CodePoint('5')
-        elif (n) == (6):
-            return _dafny.CodePoint('6')
-        elif (n) == (7):
-            return _dafny.CodePoint('7')
-        elif (n) == (8):
-            return _dafny.CodePoint('8')
-        elif (n) == (9):
-            return _dafny.CodePoint('9')
-        elif (n) == (10):
-            return _dafny.CodePoint('a')
-        elif (n) == (11):
-            return _dafny.CodePoint('b')
-        elif (n) == (12):
-            return _dafny.CodePoint('c')
-        elif (n) == (13):
-            return _dafny.CodePoint('d')
-        elif (n) == (14):
-            return _dafny.CodePoint('e')
-        elif True:
+        source0_ = n
+        if True:
+            if (source0_) == (0):
+                return _dafny.CodePoint('0')
+        if True:
+            if (source0_) == (1):
+                return _dafny.CodePoint('1')
+        if True:
+            if (source0_) == (2):
+                return _dafny.CodePoint('2')
+        if True:
+            if (source0_) == (3):
+                return _dafny.CodePoint('3')
+        if True:
+            if (source0_) == (4):
+                return _dafny.CodePoint('4')
+        if True:
+            if (source0_) == (5):
+                return _dafny.CodePoint('5')
+        if True:
+            if (source0_) == (6):
+                return _dafny.CodePoint('6')
+        if True:
+            if (source0_) == (7):
+                return _dafny.CodePoint('7')
+        if True:
+            if (source0_) == (8):
+                return _dafny.CodePoint('8')
+        if True:
+            if (source0_) == (9):
+                return _dafny.CodePoint('9')
+        if True:
+            if (source0_) == (10):
+                return _dafny.CodePoint('a')
+        if True:
+            if (source0_) == (11):
+                return _dafny.CodePoint('b')
+        if True:
+            if (source0_) == (12):
+                return _dafny.CodePoint('c')
+        if True:
+            if (source0_) == (13):
+                return _dafny.CodePoint('d')
+        if True:
+            if (source0_) == (14):
+                return _dafny.CodePoint('e')
+        if True:
             return _dafny.CodePoint('f')
 
     @staticmethod

@@ -3,29 +3,29 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
-import LinSegments
-import Splitter
-import SegBuilder
-import CFGState
-import ProofObject
-import PrettyIns
-import PrettyPrinters
-import Automata
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
+import LinSegments as LinSegments
+import Splitter as Splitter
+import SegBuilder as SegBuilder
+import CFGState as CFGState
+import ProofObject as ProofObject
+import PrettyIns as PrettyIns
+import PrettyPrinters as PrettyPrinters
+import Automata as Automata
 
 # Module: SeqOfSets
 
@@ -35,15 +35,15 @@ class default__:
 
     @staticmethod
     def SetU(xs):
-        d_846___accumulator_ = _dafny.Set({})
+        d_0___accumulator_ = _dafny.Set({})
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (_dafny.Set({})) | (d_846___accumulator_)
+                    return (_dafny.Set({})) | (d_0___accumulator_)
                 elif True:
-                    d_846___accumulator_ = (d_846___accumulator_) | ((xs)[0])
-                    in106_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    xs = in106_
+                    d_0___accumulator_ = (d_0___accumulator_) | ((xs)[0])
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    xs = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -58,50 +58,54 @@ class default__:
 
     @staticmethod
     def SplitSet(xs, f):
-        d_847_asSeq_ = default__.SetToSequence(xs)
-        return default__.SplitSeqTail(d_847_asSeq_, f, _dafny.Set({}), _dafny.Set({}), 0)
+        d_0_asSeq_ = default__.SetToSequence(xs)
+        return default__.SplitSeqTail(d_0_asSeq_, f, _dafny.Set({}), _dafny.Set({}), 0)
 
     @staticmethod
     def SplitSeqOfSet(xs, f):
-        d_848___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(xs)) == (0):
-                    return (d_848___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    d_848___accumulator_ = (d_848___accumulator_) + (_dafny.SeqWithoutIsStrInference([default__.SplitSet((xs)[0], f)]))
-                    in107_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in108_ = f
-                    xs = in107_
-                    f = in108_
+                    d_0___accumulator_ = (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([default__.SplitSet((xs)[0], f)]))
+                    in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in1_ = f
+                    xs = in0_
+                    f = in1_
                     raise _dafny.TailCall()
                 break
 
     @staticmethod
     def SetToSequence(s):
-        d_849___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
-                pat_let_tv4_ = s
+                pat_let_tv0_ = s
                 if (s) == (_dafny.Set({})):
-                    return (d_849___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference([]))
                 elif True:
-                    def iife6_(_let_dummy_3):
-                        d_850_x_: int = None
+                    def iife0_(_let_dummy_3):
+                        d_1_x_: int = None
                         with _dafny.label("_ASSIGN_SUCH_THAT_d_0"):
                             assign_such_that_0_: int
                             for assign_such_that_0_ in (s).Elements:
-                                d_850_x_ = assign_such_that_0_
-                                def lambda41_(forall_var_9_):
-                                    d_851_y_: int = forall_var_9_
-                                    return not ((d_851_y_) in (s)) or ((d_850_x_) <= (d_851_y_))
+                                d_1_x_ = assign_such_that_0_
+                                if System_.nat._Is(d_1_x_):
+                                    def lambda0_(forall_var_0_):
+                                        d_2_y_: int = forall_var_0_
+                                        if System_.nat._Is(d_2_y_):
+                                            return not ((d_2_y_) in (s)) or ((d_1_x_) <= (d_2_y_))
+                                        elif True:
+                                            return True
 
-                                if ((d_850_x_) in (s)) and (_dafny.quantifier((s).Elements, True, lambda41_)):
-                                    raise _dafny.Break("_ASSIGN_SUCH_THAT_d_0")
-                            raise Exception("assign-such-that search produced no value (line 218)")
+                                    if ((d_1_x_) in (s)) and (_dafny.quantifier((s).Elements, True, lambda0_)):
+                                        raise _dafny.Break("_ASSIGN_SUCH_THAT_d_0")
+                            raise Exception("assign-such-that search produced no value")
                             pass
-                        return (_dafny.SeqWithoutIsStrInference([d_850_x_])) + (default__.SetToSequence((pat_let_tv4_) - (_dafny.Set({d_850_x_}))))
-                    return iife6_(0)
+                        return (_dafny.SeqWithoutIsStrInference([d_1_x_])) + (default__.SetToSequence((pat_let_tv0_) - (_dafny.Set({d_1_x_}))))
+                    return iife0_(0)
                     
                 break
 
@@ -112,28 +116,28 @@ class default__:
                 if (len(xs)) == (index):
                     return (cTrue, cFalse)
                 elif f((xs)[index]):
-                    in109_ = xs
-                    in110_ = f
-                    in111_ = (cTrue) | (_dafny.Set({(xs)[index]}))
-                    in112_ = cFalse
-                    in113_ = (index) + (1)
-                    xs = in109_
-                    f = in110_
-                    cTrue = in111_
-                    cFalse = in112_
-                    index = in113_
+                    in0_ = xs
+                    in1_ = f
+                    in2_ = (cTrue) | (_dafny.Set({(xs)[index]}))
+                    in3_ = cFalse
+                    in4_ = (index) + (1)
+                    xs = in0_
+                    f = in1_
+                    cTrue = in2_
+                    cFalse = in3_
+                    index = in4_
                     raise _dafny.TailCall()
                 elif True:
-                    in114_ = xs
-                    in115_ = f
-                    in116_ = cTrue
-                    in117_ = (cFalse) | (_dafny.Set({(xs)[index]}))
-                    in118_ = (index) + (1)
-                    xs = in114_
-                    f = in115_
-                    cTrue = in116_
-                    cFalse = in117_
-                    index = in118_
+                    in5_ = xs
+                    in6_ = f
+                    in7_ = cTrue
+                    in8_ = (cFalse) | (_dafny.Set({(xs)[index]}))
+                    in9_ = (index) + (1)
+                    xs = in5_
+                    f = in6_
+                    cTrue = in7_
+                    cFalse = in8_
+                    index = in9_
                     raise _dafny.TailCall()
                 break
 

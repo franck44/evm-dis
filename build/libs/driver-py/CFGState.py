@@ -3,24 +3,24 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
-import LinSegments
-import Splitter
-import SegBuilder
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
+import LinSegments as LinSegments
+import Splitter as Splitter
+import SegBuilder as SegBuilder
 
 # Module: CFGState
 
@@ -45,36 +45,34 @@ class GState:
     def is_ErrorGState(self) -> bool:
         return isinstance(self, GState_ErrorGState)
     def ToString(self):
-        source50_ = self
-        if source50_.is_EGState:
-            d_759___mcc_h0_ = source50_.segNum
-            d_760___mcc_h1_ = source50_.st
-            d_761_st_ = d_760___mcc_h1_
-            d_762_segNum_ = d_759___mcc_h0_
-            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "("))) + (Int.default__.NatToString(d_762_segNum_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", [")))) + (StackElement.default__.StackToString(d_761_st_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "])")))
-        elif True:
-            d_763___mcc_h2_ = source50_.msg
-            d_764_msg_ = d_763___mcc_h2_
-            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ErrorGState("))) + (d_764_msg_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
+        source0_ = self
+        if True:
+            if source0_.is_EGState:
+                d_0_segNum_ = source0_.segNum
+                d_1_st_ = source0_.st
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "("))) + (Int.default__.NatToString(d_0_segNum_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", [")))) + (StackElement.default__.StackToString(d_1_st_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "])")))
+        if True:
+            d_2_msg_ = source0_.msg
+            return ((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ErrorGState("))) + (d_2_msg_)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ")")))
 
     def StackToHTML(self):
         if (len((self).st)) == (0):
             return _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))
         elif True:
-            d_765_o_ = GState.StackToHTMLHelper((self).st)
-            return _dafny.SeqWithoutIsStrInference((d_765_o_)[:(len(d_765_o_)) - (1):])
+            d_0_o_ = GState.StackToHTMLHelper((self).st)
+            return _dafny.SeqWithoutIsStrInference((d_0_o_)[:(len(d_0_o_)) - (1):])
 
     @staticmethod
     def StackToHTMLHelper(s):
-        d_766___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (len(s)) == (0):
-                    return (d_766___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
+                    return (d_0___accumulator_) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
                 elif True:
-                    d_766___accumulator_ = (d_766___accumulator_) + ((((s)[0]).ToHTML()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
-                    in91_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                    s = in91_
+                    d_0___accumulator_ = (d_0___accumulator_) + ((((s)[0]).ToHTML()) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ","))))
+                    in0_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                    s = in0_
                     raise _dafny.TailCall()
                 break
 

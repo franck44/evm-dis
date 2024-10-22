@@ -3,17 +3,17 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
 
 # Module: State
 
@@ -30,16 +30,16 @@ class default__:
 
     @staticmethod
     def BuildInitState(c, initpc):
-        d_170_s0_ = default__.DEFAULT__VALIDSTATE
+        d_0_s0_ = default__.DEFAULT__VALIDSTATE
         if (c).is_StCond:
-            d_171_dt__update__tmp_h0_ = d_170_s0_
-            d_172_dt__update_hpc_h0_ = initpc
-            d_173_dt__update_hstack_h0_ = (c).BuildStack(_dafny.SeqWithoutIsStrInference([]), 0)
-            return AState_EState(d_172_dt__update_hpc_h0_, d_173_dt__update_hstack_h0_)
+            d_1_dt__update__tmp_h0_ = d_0_s0_
+            d_2_dt__update_hpc_h0_ = initpc
+            d_3_dt__update_hstack_h0_ = (c).BuildStack(_dafny.SeqWithoutIsStrInference([]), 0)
+            return AState_EState(d_2_dt__update_hpc_h0_, d_3_dt__update_hstack_h0_)
         elif True:
-            d_174_dt__update__tmp_h1_ = d_170_s0_
-            d_175_dt__update_hpc_h1_ = initpc
-            return AState_EState(d_175_dt__update_hpc_h1_, (d_174_dt__update__tmp_h1_).stack)
+            d_4_dt__update__tmp_h1_ = d_0_s0_
+            d_5_dt__update_hpc_h1_ = initpc
+            return AState_EState(d_5_dt__update_hpc_h1_, (d_4_dt__update__tmp_h1_).stack)
 
     @_dafny.classproperty
     def DEFAULT__VALIDSTATE(instance):
@@ -52,6 +52,9 @@ class ValidState:
     @staticmethod
     def default():
         return default__.DEFAULT__VALIDSTATE
+    def _Is(source__):
+        d_0_s_: AState = source__
+        return (d_0_s_).is_EState
 
 class AState:
     @classmethod
@@ -66,17 +69,15 @@ class AState:
     def is_Error(self) -> bool:
         return isinstance(self, AState_Error)
     def ToString(self):
-        source33_ = self
-        if source33_.is_EState:
-            d_176___mcc_h0_ = source33_.pc
-            d_177___mcc_h1_ = source33_.stack
-            d_178_stack_ = d_177___mcc_h1_
-            d_179_pc_ = d_176___mcc_h0_
-            return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(pc=0x"))) + (Hex.default__.NatToHex(d_179_pc_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " stack:[")))) + (StackElement.default__.StackToString(d_178_stack_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "])")))
-        elif True:
-            d_180___mcc_h2_ = source33_.msg
-            d_181_m_ = d_180___mcc_h2_
-            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ErrorState "))) + (d_181_m_)
+        source0_ = self
+        if True:
+            if source0_.is_EState:
+                d_0_pc_ = source0_.pc
+                d_1_stack_ = source0_.stack
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "(pc=0x"))) + (Hex.default__.NatToHex(d_0_pc_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " stack:[")))) + (StackElement.default__.StackToString(d_1_stack_))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "])")))
+        if True:
+            d_2_m_ = source0_.msg
+            return (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "ErrorState "))) + (d_2_m_)
 
     def Size(self):
         return len((self).stack)
@@ -85,14 +86,14 @@ class AState:
         return (self).pc
 
     def Skip(self, n):
-        d_182_dt__update__tmp_h0_ = self
-        d_183_dt__update_hpc_h0_ = ((self).pc) + (n)
-        return AState_EState(d_183_dt__update_hpc_h0_, (d_182_dt__update__tmp_h0_).stack)
+        d_0_dt__update__tmp_h0_ = self
+        d_1_dt__update_hpc_h0_ = ((self).pc) + (n)
+        return AState_EState(d_1_dt__update_hpc_h0_, (d_0_dt__update__tmp_h0_).stack)
 
     def Goto(self, tgt):
-        d_184_dt__update__tmp_h0_ = self
-        d_185_dt__update_hpc_h0_ = tgt
-        return AState_EState(d_185_dt__update_hpc_h0_, (d_184_dt__update__tmp_h0_).stack)
+        d_0_dt__update__tmp_h0_ = self
+        d_1_dt__update_hpc_h0_ = tgt
+        return AState_EState(d_1_dt__update_hpc_h0_, (d_0_dt__update__tmp_h0_).stack)
 
     def Peek(self, k):
         return ((self).stack)[k]
@@ -101,33 +102,33 @@ class AState:
         return (self).PopN(1)
 
     def PopN(self, n):
-        d_186_dt__update__tmp_h0_ = self
-        d_187_dt__update_hstack_h0_ = _dafny.SeqWithoutIsStrInference(((self).stack)[n::])
-        return AState_EState((d_186_dt__update__tmp_h0_).pc, d_187_dt__update_hstack_h0_)
+        d_0_dt__update__tmp_h0_ = self
+        d_1_dt__update_hstack_h0_ = _dafny.SeqWithoutIsStrInference(((self).stack)[n::])
+        return AState_EState((d_0_dt__update__tmp_h0_).pc, d_1_dt__update_hstack_h0_)
 
     def Push(self, v):
-        d_188_dt__update__tmp_h0_ = self
-        d_189_dt__update_hstack_h0_ = (_dafny.SeqWithoutIsStrInference([v])) + ((self).stack)
-        return AState_EState((d_188_dt__update__tmp_h0_).pc, d_189_dt__update_hstack_h0_)
+        d_0_dt__update__tmp_h0_ = self
+        d_1_dt__update_hstack_h0_ = (_dafny.SeqWithoutIsStrInference([v])) + ((self).stack)
+        return AState_EState((d_0_dt__update__tmp_h0_).pc, d_1_dt__update_hstack_h0_)
 
     def PushNRandom(self, n):
-        d_190_xr_ = _dafny.SeqWithoutIsStrInference([StackElement.StackElem_Random(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))) for d_191___v0_ in range(n)])
-        d_192_dt__update__tmp_h0_ = self
-        d_193_dt__update_hstack_h0_ = (d_190_xr_) + ((self).stack)
-        return AState_EState((d_192_dt__update__tmp_h0_).pc, d_193_dt__update_hstack_h0_)
+        d_0_xr_ = _dafny.SeqWithoutIsStrInference([StackElement.StackElem_Random(_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ""))) for d_1___v0_ in range(n)])
+        d_2_dt__update__tmp_h0_ = self
+        d_3_dt__update_hstack_h0_ = (d_0_xr_) + ((self).stack)
+        return AState_EState((d_2_dt__update__tmp_h0_).pc, d_3_dt__update_hstack_h0_)
 
     def Dup(self, n):
-        d_194_nth_ = ((self).stack)[(n) - (1)]
-        d_195_dt__update__tmp_h0_ = self
-        d_196_dt__update_hstack_h0_ = (_dafny.SeqWithoutIsStrInference([d_194_nth_])) + ((self).stack)
-        return AState_EState((d_195_dt__update__tmp_h0_).pc, d_196_dt__update_hstack_h0_)
+        d_0_nth_ = ((self).stack)[(n) - (1)]
+        d_1_dt__update__tmp_h0_ = self
+        d_2_dt__update_hstack_h0_ = (_dafny.SeqWithoutIsStrInference([d_0_nth_])) + ((self).stack)
+        return AState_EState((d_1_dt__update__tmp_h0_).pc, d_2_dt__update_hstack_h0_)
 
     def Swap(self, n):
-        d_197_nth_ = ((self).stack)[n]
-        d_198_top_ = ((self).stack)[0]
-        d_199_dt__update__tmp_h0_ = self
-        d_200_dt__update_hstack_h0_ = (((self).stack).set(0, d_197_nth_)).set(n, d_198_top_)
-        return AState_EState((d_199_dt__update__tmp_h0_).pc, d_200_dt__update_hstack_h0_)
+        d_0_nth_ = ((self).stack)[n]
+        d_1_top_ = ((self).stack)[0]
+        d_2_dt__update__tmp_h0_ = self
+        d_3_dt__update_hstack_h0_ = (((self).stack).set(0, d_0_nth_)).set(n, d_1_top_)
+        return AState_EState((d_2_dt__update__tmp_h0_).pc, d_3_dt__update_hstack_h0_)
 
     def Sat(self, c):
         if ((c).Size()) == (1):

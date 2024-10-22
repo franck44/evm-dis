@@ -3,22 +3,22 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
-import Int
-import EVMConstants
-import EVMOpcodes
-import OpcodeDecoder
-import Hex
-import StackElement
-import WeakPre
-import State
-import EVMToolTips
-import Instructions
-import BinaryDecoder
-import LinSegments
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
+import Int as Int
+import EVMConstants as EVMConstants
+import EVMOpcodes as EVMOpcodes
+import OpcodeDecoder as OpcodeDecoder
+import Hex as Hex
+import StackElement as StackElement
+import WeakPre as WeakPre
+import State as State
+import EVMToolTips as EVMToolTips
+import Instructions as Instructions
+import BinaryDecoder as BinaryDecoder
+import LinSegments as LinSegments
 
 # Module: Splitter
 
@@ -28,19 +28,26 @@ class default__:
 
     @staticmethod
     def BuildSeg(xs, lastInst):
-        if (((lastInst).op).opcode) == (86):
-            return LinSegments.LinSeg_JUMPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif (((lastInst).op).opcode) == (87):
-            return LinSegments.LinSeg_JUMPISeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif (((lastInst).op).opcode) == (243):
-            return LinSegments.LinSeg_RETURNSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif (((lastInst).op).opcode) == (253):
-            return LinSegments.LinSeg_STOPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif (((lastInst).op).opcode) == (0):
-            return LinSegments.LinSeg_STOPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif (((lastInst).op).opcode) == (254):
-            return LinSegments.LinSeg_INVALIDSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
-        elif True:
+        source0_ = ((lastInst).op).opcode
+        if True:
+            if (source0_) == (86):
+                return LinSegments.LinSeg_JUMPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
+            if (source0_) == (87):
+                return LinSegments.LinSeg_JUMPISeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
+            if (source0_) == (243):
+                return LinSegments.LinSeg_RETURNSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
+            if (source0_) == (253):
+                return LinSegments.LinSeg_STOPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
+            if (source0_) == (0):
+                return LinSegments.LinSeg_STOPSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
+            if (source0_) == (254):
+                return LinSegments.LinSeg_INVALIDSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
+        if True:
             return LinSegments.LinSeg_CONTSeg(xs, lastInst, LinSegments.default__.StackEffectHelper((xs) + (_dafny.SeqWithoutIsStrInference([lastInst]))))
 
     @staticmethod
@@ -51,61 +58,61 @@ class default__:
                     if (len(curseq)) == (0):
                         return collected
                     elif True:
-                        d_750_newSeg_ = default__.BuildSeg(_dafny.SeqWithoutIsStrInference((curseq)[:(len(curseq)) - (1):]), (curseq)[(len(curseq)) - (1)])
-                        return (collected) + (_dafny.SeqWithoutIsStrInference([d_750_newSeg_]))
+                        d_0_newSeg_ = default__.BuildSeg(_dafny.SeqWithoutIsStrInference((curseq)[:(len(curseq)) - (1):]), (curseq)[(len(curseq)) - (1)])
+                        return (collected) + (_dafny.SeqWithoutIsStrInference([d_0_newSeg_]))
                 elif ((((xs)[0]).op).opcode) == (EVMConstants.default__.JUMPDEST):
                     if (len(curseq)) == (0):
-                        in69_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                        in70_ = maxSegSize
-                        in71_ = _dafny.SeqWithoutIsStrInference([(xs)[0]])
-                        in72_ = collected
-                        xs = in69_
-                        maxSegSize = in70_
-                        curseq = in71_
-                        collected = in72_
+                        in0_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                        in1_ = maxSegSize
+                        in2_ = _dafny.SeqWithoutIsStrInference([(xs)[0]])
+                        in3_ = collected
+                        xs = in0_
+                        maxSegSize = in1_
+                        curseq = in2_
+                        collected = in3_
                         raise _dafny.TailCall()
                     elif True:
-                        d_751_newSeg_ = default__.BuildSeg(_dafny.SeqWithoutIsStrInference((curseq)[:(len(curseq)) - (1):]), (curseq)[(len(curseq)) - (1)])
-                        in73_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                        in74_ = maxSegSize
-                        in75_ = _dafny.SeqWithoutIsStrInference([(xs)[0]])
-                        in76_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_751_newSeg_]))
-                        xs = in73_
-                        maxSegSize = in74_
-                        curseq = in75_
-                        collected = in76_
+                        d_1_newSeg_ = default__.BuildSeg(_dafny.SeqWithoutIsStrInference((curseq)[:(len(curseq)) - (1):]), (curseq)[(len(curseq)) - (1)])
+                        in4_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                        in5_ = maxSegSize
+                        in6_ = _dafny.SeqWithoutIsStrInference([(xs)[0]])
+                        in7_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_1_newSeg_]))
+                        xs = in4_
+                        maxSegSize = in5_
+                        curseq = in6_
+                        collected = in7_
                         raise _dafny.TailCall()
                 elif ((xs)[0]).IsTerminal():
-                    d_752_newSeg_ = default__.BuildSeg(curseq, (xs)[0])
-                    in77_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in78_ = maxSegSize
-                    in79_ = _dafny.SeqWithoutIsStrInference([])
-                    in80_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_752_newSeg_]))
-                    xs = in77_
-                    maxSegSize = in78_
-                    curseq = in79_
-                    collected = in80_
+                    d_2_newSeg_ = default__.BuildSeg(curseq, (xs)[0])
+                    in8_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in9_ = maxSegSize
+                    in10_ = _dafny.SeqWithoutIsStrInference([])
+                    in11_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_2_newSeg_]))
+                    xs = in8_
+                    maxSegSize = in9_
+                    curseq = in10_
+                    collected = in11_
                     raise _dafny.TailCall()
                 elif ((maxSegSize).is_Some) and ((len(curseq)) >= ((maxSegSize).v)):
-                    d_753_newSeg_ = default__.BuildSeg(curseq, (xs)[0])
-                    in81_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in82_ = maxSegSize
-                    in83_ = _dafny.SeqWithoutIsStrInference([])
-                    in84_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_753_newSeg_]))
-                    xs = in81_
-                    maxSegSize = in82_
-                    curseq = in83_
-                    collected = in84_
+                    d_3_newSeg_ = default__.BuildSeg(curseq, (xs)[0])
+                    in12_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in13_ = maxSegSize
+                    in14_ = _dafny.SeqWithoutIsStrInference([])
+                    in15_ = (collected) + (_dafny.SeqWithoutIsStrInference([d_3_newSeg_]))
+                    xs = in12_
+                    maxSegSize = in13_
+                    curseq = in14_
+                    collected = in15_
                     raise _dafny.TailCall()
                 elif True:
-                    in85_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
-                    in86_ = maxSegSize
-                    in87_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
-                    in88_ = collected
-                    xs = in85_
-                    maxSegSize = in86_
-                    curseq = in87_
-                    collected = in88_
+                    in16_ = _dafny.SeqWithoutIsStrInference((xs)[1::])
+                    in17_ = maxSegSize
+                    in18_ = (curseq) + (_dafny.SeqWithoutIsStrInference([(xs)[0]]))
+                    in19_ = collected
+                    xs = in16_
+                    maxSegSize = in17_
+                    curseq = in18_
+                    collected = in19_
                     raise _dafny.TailCall()
                 break
 

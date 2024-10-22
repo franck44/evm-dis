@@ -3,10 +3,10 @@ from typing import Callable, Any, TypeVar, NamedTuple
 from math import floor
 from itertools import count
 
-import module_
-import _dafny
-import System_
-import MiscTypes
+import module_ as module_
+import _dafny as _dafny
+import System_ as System_
+import MiscTypes as MiscTypes
 
 # Module: Int
 
@@ -37,15 +37,15 @@ class default__:
 
     @staticmethod
     def NatToString(n):
-        d_15___accumulator_ = _dafny.SeqWithoutIsStrInference([])
+        d_0___accumulator_ = _dafny.SeqWithoutIsStrInference([])
         while True:
             with _dafny.label():
                 if (n) < (10):
-                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_15___accumulator_)
+                    return (_dafny.SeqWithoutIsStrInference([default__.DigitToString(n)])) + (d_0___accumulator_)
                 elif True:
-                    d_15___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_15___accumulator_)
-                    in14_ = _dafny.euclidian_division(n, 10)
-                    n = in14_
+                    d_0___accumulator_ = (_dafny.SeqWithoutIsStrInference([default__.DigitToString(_dafny.euclidian_modulus(n, 10))])) + (d_0___accumulator_)
+                    in0_ = _dafny.euclidian_division(n, 10)
+                    n = in0_
                     raise _dafny.TailCall()
                 break
 
@@ -60,50 +60,71 @@ class default__:
 
     @staticmethod
     def DigitToString(n):
-        if (n) == (0):
-            return _dafny.CodePoint('0')
-        elif (n) == (1):
-            return _dafny.CodePoint('1')
-        elif (n) == (2):
-            return _dafny.CodePoint('2')
-        elif (n) == (3):
-            return _dafny.CodePoint('3')
-        elif (n) == (4):
-            return _dafny.CodePoint('4')
-        elif (n) == (5):
-            return _dafny.CodePoint('5')
-        elif (n) == (6):
-            return _dafny.CodePoint('6')
-        elif (n) == (7):
-            return _dafny.CodePoint('7')
-        elif (n) == (8):
-            return _dafny.CodePoint('8')
-        elif True:
+        source0_ = n
+        if True:
+            if (source0_) == (0):
+                return _dafny.CodePoint('0')
+        if True:
+            if (source0_) == (1):
+                return _dafny.CodePoint('1')
+        if True:
+            if (source0_) == (2):
+                return _dafny.CodePoint('2')
+        if True:
+            if (source0_) == (3):
+                return _dafny.CodePoint('3')
+        if True:
+            if (source0_) == (4):
+                return _dafny.CodePoint('4')
+        if True:
+            if (source0_) == (5):
+                return _dafny.CodePoint('5')
+        if True:
+            if (source0_) == (6):
+                return _dafny.CodePoint('6')
+        if True:
+            if (source0_) == (7):
+                return _dafny.CodePoint('7')
+        if True:
+            if (source0_) == (8):
+                return _dafny.CodePoint('8')
+        if True:
             return _dafny.CodePoint('9')
 
     @staticmethod
     def CharToDigit(c):
-        if (c) == (_dafny.CodePoint('0')):
-            return MiscTypes.Option_Some(0)
-        elif (c) == (_dafny.CodePoint('1')):
-            return MiscTypes.Option_Some(1)
-        elif (c) == (_dafny.CodePoint('2')):
-            return MiscTypes.Option_Some(2)
-        elif (c) == (_dafny.CodePoint('3')):
-            return MiscTypes.Option_Some(3)
-        elif (c) == (_dafny.CodePoint('4')):
-            return MiscTypes.Option_Some(4)
-        elif (c) == (_dafny.CodePoint('5')):
-            return MiscTypes.Option_Some(5)
-        elif (c) == (_dafny.CodePoint('6')):
-            return MiscTypes.Option_Some(6)
-        elif (c) == (_dafny.CodePoint('7')):
-            return MiscTypes.Option_Some(7)
-        elif (c) == (_dafny.CodePoint('8')):
-            return MiscTypes.Option_Some(8)
-        elif (c) == (_dafny.CodePoint('9')):
-            return MiscTypes.Option_Some(9)
-        elif True:
+        source0_ = c
+        if True:
+            if (source0_) == (_dafny.CodePoint('0')):
+                return MiscTypes.Option_Some(0)
+        if True:
+            if (source0_) == (_dafny.CodePoint('1')):
+                return MiscTypes.Option_Some(1)
+        if True:
+            if (source0_) == (_dafny.CodePoint('2')):
+                return MiscTypes.Option_Some(2)
+        if True:
+            if (source0_) == (_dafny.CodePoint('3')):
+                return MiscTypes.Option_Some(3)
+        if True:
+            if (source0_) == (_dafny.CodePoint('4')):
+                return MiscTypes.Option_Some(4)
+        if True:
+            if (source0_) == (_dafny.CodePoint('5')):
+                return MiscTypes.Option_Some(5)
+        if True:
+            if (source0_) == (_dafny.CodePoint('6')):
+                return MiscTypes.Option_Some(6)
+        if True:
+            if (source0_) == (_dafny.CodePoint('7')):
+                return MiscTypes.Option_Some(7)
+        if True:
+            if (source0_) == (_dafny.CodePoint('8')):
+                return MiscTypes.Option_Some(8)
+        if True:
+            if (source0_) == (_dafny.CodePoint('9')):
+                return MiscTypes.Option_Some(9)
+        if True:
             return MiscTypes.Option_None()
 
     @staticmethod
@@ -114,14 +135,14 @@ class default__:
                     return (default__.CharToDigit((s)[0])).is_Some
                 elif True:
                     source0_ = default__.CharToDigit((s)[0])
-                    if source0_.is_None:
+                    if True:
+                        if source0_.is_Some:
+                            d_0_v_ = source0_.v
+                            in0_ = _dafny.SeqWithoutIsStrInference((s)[1::])
+                            s = in0_
+                            raise _dafny.TailCall()
+                    if True:
                         return False
-                    elif True:
-                        d_16___mcc_h0_ = source0_.v
-                        d_17_v_ = d_16___mcc_h0_
-                        in15_ = _dafny.SeqWithoutIsStrInference((s)[1::])
-                        s = in15_
-                        raise _dafny.TailCall()
                 break
 
     @staticmethod
@@ -129,8 +150,8 @@ class default__:
         if (len(s)) == (1):
             return (default__.CharToDigit((s)[0])).v
         elif True:
-            d_18_v_ = (default__.CharToDigit((s)[(len(s)) - (1)])).v
-            return (d_18_v_) + ((10) * (default__.StringToNat(_dafny.SeqWithoutIsStrInference((s)[:(len(s)) - (1):]), 0)))
+            d_0_v_ = (default__.CharToDigit((s)[(len(s)) - (1)])).v
+            return (d_0_v_) + ((10) * (default__.StringToNat(_dafny.SeqWithoutIsStrInference((s)[:(len(s)) - (1):]), 0)))
 
     @_dafny.classproperty
     def TWO__8(instance):
@@ -179,6 +200,8 @@ class u8:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        return True
 
 class u16:
     def  __init__(self):
@@ -187,6 +210,8 @@ class u16:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        return True
 
 class u32:
     def  __init__(self):
@@ -195,6 +220,8 @@ class u32:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        return True
 
 class u64:
     def  __init__(self):
@@ -203,6 +230,8 @@ class u64:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        return True
 
 class u128:
     def  __init__(self):
@@ -211,6 +240,11 @@ class u128:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        d_0_i_: int = source__
+        if System_.nat._Is(d_0_i_):
+            return ((0) <= (d_0_i_)) and ((d_0_i_) <= (default__.MAX__U128))
+        return False
 
 class u256:
     def  __init__(self):
@@ -219,3 +253,8 @@ class u256:
     @staticmethod
     def default():
         return int(0)
+    def _Is(source__):
+        d_1_i_: int = source__
+        if System_.nat._Is(d_1_i_):
+            return ((0) <= (d_1_i_)) and ((d_1_i_) <= (default__.MAX__U256))
+        return False
