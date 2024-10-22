@@ -16,9 +16,6 @@ graph[labelloc="t", labeljust="l", label=<<B>Program Name: </B> max-max.bin<BR A
 node [shape=none, fontname=arial, style="rounded, filled", fillcolor= "whitesmoke"]
 edge [fontname=arial]
 ranking=TB
-nodesep=0.9
-{rank = same; s_0; s_1; s_4;s_5;}
-{rank = same; s_6; s_8;}
 s_0 [label=<<TABLE ALIGN="left" BORDER="0" CELLBORDER="0" CELLPADDING="0" CELLSPACING="1" COLOR="black" ><TR><TD ALIGN="left" fixedsize="false" BORDER="0" SIDES="" CELLPADDING="0" CELLSPACING="0" href="" >#0|Segment 0 [0x0]</TD>
 <TD ALIGN="left" fixedsize="false" BORDER="0" SIDES="" CELLPADDING="0" CELLSPACING="0" href="" tooltip="Stack Size &#916;: +5&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node &#8805; 0&#10;Stack Size on Entry for this segment &#8805; 0&#10;Exit Jump target: Constant 0x1b" ><FONT> &#8505;&#65039;</FONT></TD>
 <TD ALIGN="left" fixedsize="false" BORDER="0" SIDES="" CELLPADDING="0" CELLSPACING="0" href="" tooltip="lots of gas!" >&#9981; </TD>
@@ -241,9 +238,9 @@ s_8 [label=<<TABLE ALIGN="left" BORDER="0" CELLBORDER="0" CELLPADDING="0" CELLSP
 s_0 -> s_1 [tooltip="Jump",style=dashed];
 s_1 -> s_2 [tooltip="Next"];
 s_1 -> s_3 [tooltip="Jump",style=dashed];
-s_2:se -> s_4:w [tooltip="Jump",style=dashed];
+s_2 -> s_4 [tooltip="Jump",style=dashed];
 s_3 -> s_2 [tooltip="Jump",style=dashed];
-s_4:se -> s_5:nw [tooltip="Jump",style=dashed];
+s_4 -> s_5 [tooltip="Jump",style=dashed];
 s_5 -> s_6 [tooltip="Next"];
 s_5 -> s_7 [tooltip="Jump",style=dashed];
 s_6 -> s_8 [tooltip="Jump",style=dashed];

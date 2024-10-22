@@ -18,7 +18,7 @@
 <g id="node1" class="node">
 <title>s_0</title>
 <path fill="whitesmoke" stroke="none" d="M192.75,-468C192.75,-468 13.75,-468 13.75,-468 7.75,-468 1.75,-462 1.75,-456 1.75,-456 1.75,-356 1.75,-356 1.75,-350 7.75,-344 13.75,-344 13.75,-344 192.75,-344 192.75,-344 198.75,-344 204.75,-350 204.75,-356 204.75,-356 204.75,-456 204.75,-456 204.75,-462 198.75,-468 192.75,-468"/>
-<text text-anchor="start" x="10.75" y="-448.57" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
+<text text-anchor="start" x="10.75" y="-448.57" font-family="arial" font-size="14.00">#0|Segment 0 [0x0]</text>
 <g id="a_node1_1"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0&#10;Exit Jump target: Constant 0x10">
 <text text-anchor="start" x="158.75" y="-449.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -78,7 +78,7 @@
 <g id="node2" class="node">
 <title>s_1</title>
 <path fill="whitesmoke" stroke="none" d="M188.25,-308C188.25,-308 18.25,-308 18.25,-308 12.25,-308 6.25,-302 6.25,-296 6.25,-296 6.25,-220 6.25,-220 6.25,-214 12.25,-208 18.25,-208 18.25,-208 188.25,-208 188.25,-208 194.25,-208 200.25,-214 200.25,-220 200.25,-220 200.25,-296 200.25,-296 200.25,-302 194.25,-308 188.25,-308"/>
-<text text-anchor="start" x="15.25" y="-288.57" font-family="arial" font-size="14.00">Segment 2 [0x10]</text>
+<text text-anchor="start" x="15.25" y="-288.57" font-family="arial" font-size="14.00">#1|Segment 2 [0x10]</text>
 <g id="a_node2_12"><a xlink:title="Stack Size Δ: &#45;1&#10;Abstract stack at this node: [?,(0x7)]&#10;Stack Size on Entry at this node ≥ 2&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Stack on Entry.Peek(1)">
 <text text-anchor="start" x="154.25" y="-289.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -134,7 +134,7 @@
 <g id="node3" class="node">
 <title>s_2</title>
 <path fill="whitesmoke" stroke="none" d="M192.75,-172C192.75,-172 13.75,-172 13.75,-172 7.75,-172 1.75,-166 1.75,-160 1.75,-160 1.75,-12 1.75,-12 1.75,-6 7.75,0 13.75,0 13.75,0 192.75,0 192.75,0 198.75,0 204.75,-6 204.75,-12 204.75,-12 204.75,-160 204.75,-160 204.75,-166 198.75,-172 192.75,-172"/>
-<text text-anchor="start" x="10.75" y="-152.57" font-family="arial" font-size="14.00">Segment 1 [0x7]</text>
+<text text-anchor="start" x="10.75" y="-152.57" font-family="arial" font-size="14.00">#2|Segment 1 [0x7]</text>
 <g id="a_node3_21"><a xlink:title="Stack Size Δ: &#45;1&#10;Abstract stack at this node: [?]&#10;Stack Size on Entry at this node ≥ 1&#10;Stack Size on Entry for this segment ≥ 1">
 <text text-anchor="start" x="158.75" y="-153.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>

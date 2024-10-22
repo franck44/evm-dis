@@ -17,45 +17,45 @@
 <!-- s_0 -->
 <g id="node1" class="node">
 <title>s_0</title>
-<path fill="whitesmoke" stroke="none" d="M393.5,-612C393.5,-612 251.5,-612 251.5,-612 245.5,-612 239.5,-606 239.5,-600 239.5,-600 239.5,-548 239.5,-548 239.5,-542 245.5,-536 251.5,-536 251.5,-536 393.5,-536 393.5,-536 399.5,-536 405.5,-542 405.5,-548 405.5,-548 405.5,-600 405.5,-600 405.5,-606 399.5,-612 393.5,-612"/>
-<text text-anchor="start" x="248.5" y="-592.58" font-family="arial" font-size="14.00">Segment 0 [0x0]</text>
+<path fill="whitesmoke" stroke="none" d="M397,-612C397,-612 248,-612 248,-612 242,-612 236,-606 236,-600 236,-600 236,-548 236,-548 236,-542 242,-536 248,-536 248,-536 397,-536 397,-536 403,-536 409,-542 409,-548 409,-548 409,-600 409,-600 409,-606 403,-612 397,-612"/>
+<text text-anchor="start" x="244.62" y="-592.58" font-family="arial" font-size="14.00">#0|Segment 0 [0x0]</text>
 <g id="a_node1_1"><a xlink:title="Stack Size Δ: +2&#10;Abstract stack at this node: []&#10;Stack Size on Entry at this node ≥ 0&#10;Stack Size on Entry for this segment ≥ 0">
-<text text-anchor="start" x="359.5" y="-593.7" font-family="arial" font-size="14.00"> ℹ️</text>
+<text text-anchor="start" x="363" y="-593.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
 </g>
 <g id="a_node1_2"><a xlink:title="lots of gas!">
-<text text-anchor="start" x="378.5" y="-593.7" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="382" y="-593.7" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
 <g id="a_node1_3"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="250.5" y="-572.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="247" y="-572.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="271.5" y="-570.7" font-family="arial" font-size="14.00">0x00 </text>
+<text text-anchor="start" x="268" y="-570.7" font-family="arial" font-size="14.00">0x00 </text>
 <g id="a_node1_4"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1428" xlink:title="Push 0 on stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M313.75,-565.25C313.75,-565.25 350.25,-565.25 350.25,-565.25 353.88,-565.25 357.5,-568.88 357.5,-572.5 357.5,-572.5 357.5,-579.75 357.5,-579.75 357.5,-583.38 353.88,-587 350.25,-587 350.25,-587 313.75,-587 313.75,-587 310.12,-587 306.5,-583.38 306.5,-579.75 306.5,-579.75 306.5,-572.5 306.5,-572.5 306.5,-568.88 310.12,-565.25 313.75,-565.25"/>
-<text text-anchor="start" x="309.5" y="-570.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH0</text>
+<path fill="powderblue" stroke="none" d="M310.25,-565.25C310.25,-565.25 346.75,-565.25 346.75,-565.25 350.38,-565.25 354,-568.88 354,-572.5 354,-572.5 354,-579.75 354,-579.75 354,-583.38 350.38,-587 346.75,-587 346.75,-587 310.25,-587 310.25,-587 306.62,-587 303,-583.38 303,-579.75 303,-579.75 303,-572.5 303,-572.5 303,-568.88 306.62,-565.25 310.25,-565.25"/>
+<text text-anchor="start" x="306" y="-570.7" font-family="arial" font-size="14.00" fill="royalblue">PUSH0</text>
 </a>
 </g>
 <g id="a_node1_5"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/evm.dfy#L103" xlink:title="Gas: 3 " target="_blank">
-<text text-anchor="start" x="250.5" y="-548.2" font-family="arial" font-size="14.00">⛽ </text>
+<text text-anchor="start" x="247" y="-548.2" font-family="arial" font-size="14.00">⛽ </text>
 </a>
 </g>
-<text text-anchor="start" x="271.5" y="-546.7" font-family="arial" font-size="14.00">0x01 </text>
+<text text-anchor="start" x="268" y="-546.7" font-family="arial" font-size="14.00">0x01 </text>
 <g id="a_node1_6"><a xlink:href="https://github.com/Consensys/evm-dafny/blob/60bce44ee75978a4c97b9eab8e03424c9c233bbd/src/dafny/bytecode.dfy#L1568" xlink:title="Duplicate 1st element on top of the stack" target="_blank">
-<path fill="powderblue" stroke="none" d="M313.75,-541.25C313.75,-541.25 341.25,-541.25 341.25,-541.25 344.88,-541.25 348.5,-544.88 348.5,-548.5 348.5,-548.5 348.5,-555.75 348.5,-555.75 348.5,-559.38 344.88,-563 341.25,-563 341.25,-563 313.75,-563 313.75,-563 310.12,-563 306.5,-559.38 306.5,-555.75 306.5,-555.75 306.5,-548.5 306.5,-548.5 306.5,-544.88 310.12,-541.25 313.75,-541.25"/>
-<text text-anchor="start" x="309.5" y="-546.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
+<path fill="powderblue" stroke="none" d="M310.25,-541.25C310.25,-541.25 337.75,-541.25 337.75,-541.25 341.38,-541.25 345,-544.88 345,-548.5 345,-548.5 345,-555.75 345,-555.75 345,-559.38 341.38,-563 337.75,-563 337.75,-563 310.25,-563 310.25,-563 306.62,-563 303,-559.38 303,-555.75 303,-555.75 303,-548.5 303,-548.5 303,-544.88 306.62,-541.25 310.25,-541.25"/>
+<text text-anchor="start" x="306" y="-546.7" font-family="arial" font-size="14.00" fill="royalblue">DUP1</text>
 </a>
 </g>
-<polygon fill="black" stroke="black" points="248.5,-589 248.5,-589 359.5,-589 359.5,-589 248.5,-589"/>
-<polygon fill="black" stroke="black" points="359.5,-589 359.5,-589 378.5,-589 378.5,-589 359.5,-589"/>
-<polygon fill="black" stroke="black" points="378.5,-589 378.5,-589 397.5,-589 397.5,-589 378.5,-589"/>
+<polygon fill="black" stroke="black" points="245,-589 245,-589 363,-589 363,-589 245,-589"/>
+<polygon fill="black" stroke="black" points="363,-589 363,-589 382,-589 382,-589 363,-589"/>
+<polygon fill="black" stroke="black" points="382,-589 382,-589 401,-589 401,-589 382,-589"/>
 </g>
 <!-- s_1 -->
 <g id="node2" class="node">
 <title>s_1</title>
 <path fill="whitesmoke" stroke="none" d="M412,-500C412,-500 233,-500 233,-500 227,-500 221,-494 221,-488 221,-488 221,-340 221,-340 221,-334 227,-328 233,-328 233,-328 412,-328 412,-328 418,-328 424,-334 424,-340 424,-340 424,-488 424,-488 424,-494 418,-500 412,-500"/>
-<text text-anchor="start" x="230" y="-480.57" font-family="arial" font-size="14.00">Segment 1 [0x2]</text>
+<text text-anchor="start" x="230" y="-480.57" font-family="arial" font-size="14.00">#1|Segment 1 [0x2]</text>
 <g id="a_node2_8"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?]&#10;Stack Size on Entry at this node ≥ 2&#10;Stack Size on Entry for this segment ≥ 1&#10;Exit Jump target: Constant 0x13">
 <text text-anchor="start" x="378" y="-481.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -143,7 +143,7 @@
 <g id="node3" class="node">
 <title>s_2</title>
 <path fill="whitesmoke" stroke="none" d="M191,-232C191,-232 12,-232 12,-232 6,-232 0,-226 0,-220 0,-220 0,-72 0,-72 0,-66 6,-60 12,-60 12,-60 191,-60 191,-60 197,-60 203,-66 203,-72 203,-72 203,-220 203,-220 203,-226 197,-232 191,-232"/>
-<text text-anchor="start" x="9" y="-212.57" font-family="arial" font-size="14.00">Segment 2 [0xa]</text>
+<text text-anchor="start" x="9" y="-212.57" font-family="arial" font-size="14.00">#2|Segment 2 [0xa]</text>
 <g id="a_node3_23"><a xlink:title="Stack Size Δ: &#45;2&#10;Abstract stack at this node: [?,?]&#10;Stack Size on Entry at this node ≥ 2&#10;Stack Size on Entry for this segment ≥ 2">
 <text text-anchor="start" x="157" y="-213.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
@@ -232,7 +232,7 @@
 <g id="node4" class="node">
 <title>s_3</title>
 <path fill="whitesmoke" stroke="none" d="M412,-292C412,-292 233,-292 233,-292 227,-292 221,-286 221,-280 221,-280 221,-12 221,-12 221,-6 227,0 233,0 233,0 412,0 412,0 418,0 424,-6 424,-12 424,-12 424,-280 424,-280 424,-286 418,-292 412,-292"/>
-<text text-anchor="start" x="230" y="-272.57" font-family="arial" font-size="14.00">Segment 3 [0x13]</text>
+<text text-anchor="start" x="230" y="-272.57" font-family="arial" font-size="14.00">#3|Segment 3 [0x13]</text>
 <g id="a_node4_38"><a xlink:title="Stack Size Δ: 0&#10;Abstract stack at this node: [?,?]&#10;Stack Size on Entry at this node ≥ 2&#10;Stack Size on Entry for this segment ≥ 2&#10;Exit Jump target: Constant 0x2">
 <text text-anchor="start" x="378" y="-273.7" font-family="arial" font-size="14.00"> ℹ️</text>
 </a>
