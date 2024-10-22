@@ -25,7 +25,7 @@ include "../prettyprinters/PrettyInstruction.dfy"
 /**
   *  Provides CFG objects & types.
   */
-module CFGObject {
+module {:disableNonlinearArithmetic} CFGObject {
 
   import opened MiscTypes
   import opened LinSegments

@@ -58,7 +58,7 @@ module Automata {
       * Add a state to the automaton.
       * @param i  The state to add.
       */
-    function {:timeLimitMultiplier 8} {:opaque} AddState(i: T): (a: ValidAuto<T>)
+    function {:timeLimitMultiplier 10} {:opaque} {:verify true} AddState(i: T): (a: ValidAuto<T>)
       requires IsValid()
       ensures i in a.states
       ensures forall s:: s in states ==> s in a.states
@@ -76,6 +76,7 @@ module Automata {
         assert i !in indexOf;
         assert (indexOf + map[i := |states|]).Values == indexOf.Values + { |states| };
         assert indexOf[i := |states|] == indexOf + map[i := |states|];
+        assert i in states + [i];
         this.(
         states := states + [i],
         indexOf := indexOf[i := |states|],
@@ -87,7 +88,7 @@ module Automata {
     /**
       * Add several states to the automaton.
       */
-    function {:opaque} AddStates(xs: seq<T>): (a: ValidAuto<T>)
+    function {:opaque} {:verify true} AddStates(xs: seq<T>): (a: ValidAuto<T>)
       requires IsValid()
       ensures a.IsValid()
       ensures forall s:: s in states ==> s in a.states

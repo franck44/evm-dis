@@ -18,13 +18,13 @@ include "./MiscTypes.dfy"
 /** 
   * Provides partitions of sets of integers of the form {0, ..., n}.
   */
-module PartitionMod {
+module {:disableNonlinearArithmetic} PartitionMod {
 
   import opened SeqOfSets
   import opened MiscTypes
 
   /** A Valid partition. */
-  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1) 
+  type ValidPartition = x: Partition | x.IsValid() witness MakeInit(1)
 
   /**
     *   Generate the trivial and valid partition of {0, ..., n - 1}.
@@ -73,10 +73,10 @@ module PartitionMod {
     }
 
     /**
-     *  Split an trivial partition (one class) into two partitions.
-     *  @param  f   A predicate on the elements of the set.
-     *  @returns    A valid partition of {0, ..., n - 1} with at most two classes.
-     */
+      *  Split an trivial partition (one class) into two partitions.
+      *  @param  f   A predicate on the elements of the set.
+      *  @returns    A valid partition of {0, ..., n - 1} with at most two classes.
+      */
     function SplitIn2(f: nat -> bool): (p': Partition)
       requires this.IsValid()
       requires |elem| == 1
@@ -255,15 +255,15 @@ module PartitionMod {
     * @note           The sequence of sets returned is a partition of xs.
     * @note           The sequence of sets returned is a coarsest partition of xs.
     */
-  function {:timeLimitMultiplier 2} {:opaque} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
-    requires forall x:: x in xs ==> x < n
+  function {:timeLimitMultiplier 30} {:opaque} {:isolate_assertions} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
+    requires forall x::  x in xs ==> x < n
     requires xs != {}
     requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
     requires IsEquivRel(equiv, n)
 
     ensures 1 <= |r| <= |xs|
     ensures SetU(r) == xs
-    ensures forall x:: x in SetU(r) ==> x < n
+    ensures forall x:: x in SetU(r) ==> x in xs && x < n
     ensures forall i, i':: i in r && i' in i ==> i' < n
     ensures AllNonEmpty(r)
     ensures DisjointAnyTwo(r)
@@ -278,9 +278,29 @@ module PartitionMod {
     var xsTrue := set x: nat | x in xs && equiv(first, x);
     assert first in xsTrue;
     var xsFalse := xs - xsTrue;
-    if xsFalse == {} then [xsTrue]
+    if xsFalse == {} then
+      [xsTrue]
     else
+      lem1(xsTrue, SplitTrueAndFalse(xsFalse, equiv, n));
+      lem2(xsTrue, SplitTrueAndFalse(xsFalse, equiv, n));
       [xsTrue] + SplitTrueAndFalse(xsFalse, equiv, n)
+  }
+
+  //  Helper lemmas
+  lemma lem1<T>(xs: set<T>, r: seq<set<T>>)
+    requires xs != {}
+    requires AllNonEmpty(r)
+    ensures AllNonEmpty([xs] + r)
+  {
+    //  thanks Dafny
+  }
+
+  lemma lem2<T>(xs: set<T>, r: seq<set<T>>)
+    requires xs * SetU(r) == {}
+    requires DisjointAnyTwo(r)
+    ensures DisjointAnyTwo([xs] + r)
+  {
+    //  thanks Dafny
   }
 
   /**

@@ -13,17 +13,17 @@
  */
 
 
-include "./Minimiser.dfy" 
+include "./Minimiser.dfy"
 include "./CFGState.dfy"
 
 /**  
   * Provides minimisation of finite deterministic automata
   * with states of type GState.
-  */ 
-module GStateMinimiser refines Minimiser {
+  */
+module {:disableNonlinearArithmetic} GStateMinimiser refines Minimiser {
 
-  import opened CFGState 
+  import opened CFGState
   type T = CFGState.GState
-  const DEFAULT_STATE := CFGState.DEFAULT_GSTATE 
+  const DEFAULT_STATE := CFGState.DEFAULT_GSTATE
 
 }
