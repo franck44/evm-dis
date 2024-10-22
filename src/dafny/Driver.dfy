@@ -39,7 +39,6 @@ module Driver {
   import opened MiscTypes
   import opened Int
   import opened Statistics
-  import opened ProofObjectBuilder
   import opened CFGObject
   import opened ProofObject
 
