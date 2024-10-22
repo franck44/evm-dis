@@ -397,6 +397,22 @@ module EVMObject {
               && (forall k:: 0 <= k < |p'.exits| ==> p'.exits[k] < |NextG(p'.states[k])|)
               && (forall k:: 0 <= k < |p'.exits| ==> p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]])
     {   //  Thanks Dafny
+      var p' := Path(p.states + [i_th_succ], p.exits + [i]);
+      forall (k |  0 <= k < |p'.exits|)
+        ensures p'.exits[k] < |NextG(p'.states[k])|
+      {
+        if k == |p'.exits| - 1 {
+          assert p'.exits[k] < |NextG(p'.states[k])|;
+        }
+      }
+      forall (k |  0 <= k < |p'.exits|)
+        ensures  p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]]
+      {
+        if k == |p'.exits| - 1 {
+          assert p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]];
+        }
+        assert  p'.states[k + 1] == NextG(p'.states[k])[p'.exits[k]];
+      }
     }
 
     /** 
