@@ -47,7 +47,7 @@ module BuildCFGTests {
       expect g.TSize() == 1;
       if debug {
         print "CFG Test1\n";
-        g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+        g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
               labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
       }
     }
@@ -113,7 +113,7 @@ module BuildCFGTests {
     expect g.TSize() == 5;
     if debug {
       print "CFG Test5\n";
-      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+      g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
               labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
@@ -131,7 +131,7 @@ module BuildCFGTests {
     expect g.TSize() == 10;
     if debug {
       print "CFG Test6\n";
-      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+      g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
               labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }

@@ -65,15 +65,15 @@ module BuildCFGBlogTests {
       expect g.TSize() == 4;
       if debug {
         print "CFG Test1\n";
-        g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+        g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
                 labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
       }
     }
   }
 
 
-  /**   Run more than one segment
-    *   max-return.bin program
+  /**   A loop with growing stack.
+    *  bytecode is 60025b5f908056
     */
   method {:test} {:verify true} Test5()
   {
@@ -106,7 +106,7 @@ module BuildCFGBlogTests {
     expect g.TSize() == 2;
     if debug {
       print "CFG Test1\n";
-      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+      g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
               labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }
@@ -125,7 +125,7 @@ module BuildCFGBlogTests {
     expect g.TSize() == 10;
     if debug {
       print "CFG Test1\n";
-      g.ToDot(nodeToString := s requires s in g.states => p.ToHTML(s),
+      g.ToDot(nodeToString := (s, _) requires s in g.states => p.ToHTML(s),
               labelToString := (s, l, _) requires s in g.states && 0 <= l => p.DotLabel(s, l));
     }
   }

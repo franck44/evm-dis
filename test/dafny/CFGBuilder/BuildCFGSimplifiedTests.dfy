@@ -17,10 +17,10 @@ include "../../../src/dafny/utils/int.dfy"
 include "../../../src/dafny/disassembler/disassembler.dfy"
 include "../../../src/dafny/proofobjectbuilder/Splitter.dfy"
 include "../../../src/dafny/utils/EVMObject.dfy"
-include "../../../src/dafny/utils/CFGState.dfy" 
+include "../../../src/dafny/utils/CFGState.dfy"
 include "../../../src/dafny/utils/MinimiserGState.dfy"
 include "../../../src/dafny/utils/Partition.dfy"
-  
+
 module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
 
   import opened MiscTypes
@@ -90,8 +90,8 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
       var a1, _ := p.BuildCFG();
       assert a1.IsValid();
       print "Size of a1: ", a1.SSize(), "\n";
-      a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
+      a1.ToDot(nodeToString := (s, _) requires s in a1.states => p.ToHTML(s),
+               labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
 
       //    Minimisation
       expect a1.SSize() >= 1;
@@ -99,7 +99,7 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
 
       //  create an equivalence relation on nodes
       var e :=
-        (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize() 
+        (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
         => if x == y then
             true
           else
@@ -111,8 +111,8 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
 
       var vp: GStateMinimiser.Pair := Pair(a1, p1);
       var a2 := vp.Minimise();
-      a2.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
+      a2.ToDot(nodeToString := (s, _) requires s in a1.states => p.ToHTML(s),
+               labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
 
     }
   }
@@ -133,8 +133,8 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
         var a1, _ := p.BuildCFG();
         assert a1.IsValid();
         print "Size of a1: ", a1.SSize(), "\n";
-        a1.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l)); 
+        a1.ToDot(nodeToString := (s, _) requires s in a1.states => p.ToHTML(s),
+                 labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
 
         //  Minimisation
         expect a1.SSize() >= 1;
@@ -143,7 +143,7 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
         //  create an equivalence relation on nodes
         var e :=
           (x:nat, y:nat) requires 0 <= x < a1.SSize() && 0 <= y < a1.SSize()
-          => if x == y then 
+          => if x == y then
               true
             else
               match (a1.states[x], a1.states[y])
@@ -151,13 +151,13 @@ module {:disableNonlinearArithmetic} BuildCFGSimplifiedTests {
               case (_, _) => false
           ;
         assert IsEquivRel(e, a1.SSize());
-        var p2 := p1.ComputeFinest(e); 
+        var p2 := p1.ComputeFinest(e);
         assert a1.IsValid();
         assert p2.n == a1.SSize();
         var vp: GStateMinimiser.ValidPair := Pair(a1, p2);
         var a2 := vp.Minimise();
-        a2.ToDot(nodeToString := s requires s in a1.states => p.ToHTML(s),
-              labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
+        a2.ToDot(nodeToString := (s, _) requires s in a1.states => p.ToHTML(s),
+                 labelToString := (s, l, _) requires s in a1.states && 0 <= l => p.DotLabel(s, l));
       } else {
         print "No segments\n";
       }
