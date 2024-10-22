@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Franck Cassez
+ * Copyright 2024 Franck Cassez
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -29,9 +29,10 @@ module CFGState {
     *   @param segNum   the segment number.
     *   @param st       the stack.
     */
-  datatype GState = EGState(segNum: nat, st: seq<StackElem>) | ErrorGState(msg: string := "")
+  datatype GState = EGState(segNum: nat, st: seq<StackElem>) 
+                    | ErrorGState(msg: string := "")
   {
-    /**
+    /**ˇ
       * Pretty print a state
       */
     function ToString(): string
