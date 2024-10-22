@@ -55,7 +55,8 @@ module Driver {
 
     //  Register the options and their descriptions
     optionParser.AddOption("-d", "--dis", 0, "Disassemble <string>");
-    optionParser.AddOption("-p", "--proof", 0, "Generate proof object to verify the CFG for <string>");
+    optionParser.AddOption("-p", "--proof", 1, "Generate proof object to verify/use the CFG for <string>");
+    optionParser.AddOption("-e", "--refine", 1, "Generate proof object with distinct segments <string>");
     optionParser.AddOption("-s", "--segment", 0, "Print segment of <string>");
     optionParser.AddOption("-l", "--lib", 1, "The path to the Dafny-EVM source code. Used to add includes files in the proof object. ");
     optionParser.AddOption("-c", "--cfg", 1, "Max depth. Control flow graph in DOT format");
@@ -100,12 +101,13 @@ module Driver {
         print "String must be hexadecimal\n";
       } else {
         var x := Disassemble(if stringToProcess[..2] == "0x" then stringToProcess[2..] else stringToProcess);
-        // //  Parse arguments
+        //  Parse arguments
         var optArgs := args[1..|args| - 1];
-        // // Note: we use an if-then-else as otherwise compileToJava fails
+        // Note: we use an if-then-else as otherwise compileToJava fails
         var disOpt: bool := if optionParser.GetArgs("--dis", optArgs).Success? then true else false;
         var segmentOpt: bool := if optionParser.GetArgs("--segment", optArgs).Success? then true else false;
         var proofOpt: bool := if optionParser.GetArgs("--proof", optArgs).Success? then true else false;
+        var proofRefine: bool := if optionParser.GetArgs("--refine", optArgs).Success? then true else false;
         var libOpt: string :=
           match optionParser.GetArgs("--lib", optArgs)
           case Success(p) => p[0]
@@ -116,16 +118,16 @@ module Driver {
           case Failure(_) => 0;
         var rawOpt := if optionParser.GetArgs("--raw", optArgs).Success? then true else false;
         var noTable :=  if optionParser.GetArgs("--notable", optArgs).Success? then true else false;
-        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false; 
+        var info :=  if optionParser.GetArgs("--info", optArgs).Success? then true else false;
         var maxSegSize :=
-          match optionParser.GetArgs("--size", optArgs) 
+          match optionParser.GetArgs("--size", optArgs)
           case Success(args) =>  if |args[0]| >= 1 && IsNatNumber(args[0]) then Some(StringToNat(args[0])) else None
           case Failure(_) => None;
 
         var name: string :=
           match optionParser.GetArgs("--title", optArgs)
           case Success(args) => args[0]
-          case Failure(_) => "Name not set"; 
+          case Failure(_) => "Name not set";
 
         //    Process options
         if disOpt {
@@ -152,14 +154,6 @@ module Driver {
           print "----------------- Segments -------------------\n";
         }
 
-        if proofOpt && cfgDepthOpt == 0 {
-          assert forall k:: 0 <= k < |y| ==> y[k].IsValid();
-          var z := BuildProofObject(y);
-          print "Dafny Proof Object:\n";
-          PrintProofObjectToDafny(z, libOpt);
-          print "----------------- Proof -------------------\n";
-        }
-
         if cfgDepthOpt > 0 && |y| > 0 && y[0].StartAddress() == 0 {
           var a1, s1 := prog.BuildCFG(maxDepth := cfgDepthOpt, minimise := !rawOpt);
           assert a1.IsValid();
@@ -168,9 +162,16 @@ module Driver {
 
           if proofOpt {
             if cfgObj.HasNoErrorState() {
-                cfgObj.CFGCheckerToDafny(pathToEVMDafny := libOpt);
+              cfgObj.CFGCheckerToDafny(pathToEVMDafny := libOpt);
             } else {
-                print "The CFG has some error states and the Dafny proof object cannot be generated\n";
+              print "The CFG has some error states and the Dafny proof object cannot be generated\n";
+            }
+          } else
+          if proofRefine {
+            if cfgObj.HasNoErrorState() {
+              cfgObj.CFGRefineToDafny(pathToEVMDafny := libOpt);
+            } else {
+              print "The CFG has some error states and the Dafny proof object cannot be generated\n";
             }
           } else {
             cfgObj.ToDot(noTable, name);
