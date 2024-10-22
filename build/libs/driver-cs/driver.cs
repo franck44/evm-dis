@@ -3234,7 +3234,7 @@ module {:disableNonlinearArithmetic} CFGObject {
       decreases this, name, pathToEVMDafny
     {
       print ""include \""/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"""", ""\n\n"";
-      print ""module "" + name + "" {"", ""\n\n"";
+      print ""module  {:disableNonlinearArithmetic} {:isolate_assertions} "" + name + "" {"", ""\n\n"";
       print ""import opened AbstractSemantics"", ""\n"";
       print ""import opened AbstractState"", ""\n"";
       PrintCFGVerifierBody();
@@ -3248,7 +3248,7 @@ module {:disableNonlinearArithmetic} CFGObject {
     {
       print ""include "" + ""\"""" + pathToEVMDafny + ""/src/dafny/state.dfy\"""", ""\n"";
       print ""include "" + ""\"""" + pathToEVMDafny + ""/src/dafny/bytecode.dfy\"""", ""\n"";
-      print ""module "" + name + "" {"", ""\n\n"";
+      print ""module {:disableNonlinearArithmetic} {:isolate_assertions} "" + name + "" {"", ""\n\n"";
       print ""import EvmState"", ""\n"";
       print ""import opened Bytecode"", ""\n"";
       print ""function SafeJump(s: EvmState.State): (s': EvmState.State)"", ""\n"";
@@ -23061,7 +23061,7 @@ namespace CFGObject {
     {
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
+      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module  {:disableNonlinearArithmetic} {:isolate_assertions} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("import opened AbstractSemantics")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
@@ -23077,7 +23077,7 @@ namespace CFGObject {
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("include "), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\"")), pathToEVMDafny), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("/src/dafny/bytecode.dfy\""))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
+      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module {:disableNonlinearArithmetic} {:isolate_assertions} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("import EvmState")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));

@@ -1,0 +1,62 @@
+file_format_version = "1.0"
+dafny_version = "4.8.1.0"
+[options_by_module.MiscTypes]
+legacy-module-names = false
+[options_by_module.Int]
+legacy-module-names = false
+[options_by_module.EVMConstants]
+legacy-module-names = false
+[options_by_module.EVMOpcodes]
+legacy-module-names = false
+[options_by_module.OpcodeDecoder]
+legacy-module-names = false
+[options_by_module.Hex]
+legacy-module-names = false
+[options_by_module.StackElement]
+legacy-module-names = false
+[options_by_module.WeakPre]
+legacy-module-names = false
+[options_by_module.State]
+legacy-module-names = false
+[options_by_module.EVMToolTips]
+legacy-module-names = false
+[options_by_module.Instructions]
+legacy-module-names = false
+[options_by_module.BinaryDecoder]
+legacy-module-names = false
+[options_by_module.LinSegments]
+legacy-module-names = false
+[options_by_module.Splitter]
+legacy-module-names = false
+[options_by_module.SegBuilder]
+legacy-module-names = false
+[options_by_module.CFGState]
+legacy-module-names = false
+[options_by_module.ProofObject]
+legacy-module-names = false
+[options_by_module.PrettyIns]
+legacy-module-names = false
+[options_by_module.PrettyPrinters]
+legacy-module-names = false
+[options_by_module.Automata]
+legacy-module-names = false
+[options_by_module.SeqOfSets]
+legacy-module-names = false
+[options_by_module.PartitionMod]
+legacy-module-names = false
+[options_by_module.Minimiser]
+legacy-module-names = false
+[options_by_module.GStateMinimiser]
+legacy-module-names = false
+[options_by_module.Statistics]
+legacy-module-names = false
+[options_by_module.HTML]
+legacy-module-names = false
+[options_by_module.EVMObject]
+legacy-module-names = false
+[options_by_module.ArgParser]
+legacy-module-names = false
+[options_by_module.CFGObject]
+legacy-module-names = false
+[options_by_module.Driver]
+legacy-module-names = false
