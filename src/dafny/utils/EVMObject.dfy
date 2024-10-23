@@ -568,7 +568,10 @@ module EVMObject {
             var seg := xs[a.states[index].segNum];
             //    Collect max of successors of i
             assert forall k:: k in a.SuccNat(index) ==> k < |xc|;
-            var succWPre := MapP(a.SuccNat(index), i requires 0 <= i < |xc| => xc[i]) ;
+            assert forall i:: 0 <= i < |a.SuccNat(index)| ==> a.SuccNat(index)[i] < |xc|;
+            // ghost var succWPre2 := MapP(a.SuccNat(index), i requires 0 <= i < |xc| => xc[i]) ;
+            var succWPre := seq(|a.SuccNat(index)|, i requires 0 <= i < |a.SuccNat(index)| => xc[a.SuccNat(index)[i]]);
+            // assert succWPre == succWPre2;
             var m := MaxNatSeq(succWPre);
             assert xs[a.states[index].segNum].WeakestPreOperands() == wpre0[index];
             var d := seg.FastWeakestPreOperands(m, wpre0[index]);
