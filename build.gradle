@@ -37,7 +37,7 @@ if(project.hasProperty("randomize")) {
 // Configure Z3
 // ======================================================================
 
-def DAFNY_HOME = System.env.'DAFNY_HOME'
+def DAFNY_HOME = System.getenv.'DAFNY_HOME'
 // Configure Z3_PATH based on DAFNY_HOME
 def Z3_PATH = DAFNY_HOME != null ? DAFNY_HOME + "/z3/bin/z3-4.12.1" : null
 def JAVA_HOME = System.env.'JAVA_HOME'
@@ -452,7 +452,7 @@ clean.dependsOn cleanDafny, deleteTestBuild
 // Java Application
 // ======================================================================
 
-application {
-    mainClass = 'driver.Main'
-    applicationName = 'driver'
-}
+// application {
+//     mainClass = 'driver.Main'
+//     applicationName = 'driver'
+// }
