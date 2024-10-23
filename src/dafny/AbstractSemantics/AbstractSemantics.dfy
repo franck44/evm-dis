@@ -650,6 +650,19 @@ module AbstractSemantics {
     EState(s.pc + 1, [s.stack[3]] + s.stack)
   }
 
+  function Dup5(s: EState): (s': EState)
+    requires s.Operands() > 4
+    ensures s'.Operands() == s.Operands() + 1
+    //  writing the stack conditions as follows
+    //  the condition s'.stack == [s.stack[3]] + s.stack is
+    //  not explicit enough and proofs can fail.
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[4]
+    ensures s'.pc == s.pc + 1
+  {
+    EState(s.pc + 1, [s.stack[4]] + s.stack)
+  }
+
   function Swap(s: EState, k: nat): (s': EState)
     requires 1 <= k <= 16
     requires s.Operands() > k
@@ -681,6 +694,20 @@ module AbstractSemantics {
     ensures s'.pc == s.pc + 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[3..] == s.stack[3..]
+    ensures s'.stack[1] == s.stack[1]
+    ensures s'.stack[0] == s.stack[2]
+    ensures s'.stack[2] == s.stack[0]
+    // ensures s'.stack == s.stack[0 := s.stack[2]][2 := s.stack[0]]
+  {
+    EState(s.pc + 1, s.stack[0 := s.stack[2]][2 := s.stack[0]])
+  }
+
+  function Swap3(s: EState): (s': EState)
+    requires s.Operands() > 3
+    ensures s'.pc == s.pc + 1
+    ensures s'.Operands() == s.Operands()
+    ensures s'.stack[4..] == s.stack[4..]
+    ensures s'.stack[3] == s.stack[3]
     ensures s'.stack[1] == s.stack[1]
     ensures s'.stack[0] == s.stack[2]
     ensures s'.stack[2] == s.stack[0]

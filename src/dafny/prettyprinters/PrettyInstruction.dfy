@@ -161,7 +161,7 @@ module PrettyIns {
     // // 0x90s: Exchange operations
     case SWAP1 => "var s" + DecToString(tgt) + " := Swap1(s" + DecToString(src) + ");"
     case SWAP2 => "var s" + DecToString(tgt) + " := Swap2(s" + DecToString(src) + ");"
-    case SWAP3 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 3);"
+    case SWAP3 => "var s" + DecToString(tgt) + " := Swap3(s" + DecToString(src) + ");"
     case SWAP4 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 4);"
     case SWAP5 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 5);"
     case SWAP6 => "var s" + DecToString(tgt) + " := Swap(s" + DecToString(src) + ", 6);"

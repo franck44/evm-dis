@@ -1,5 +1,4 @@
 
-# key="${ETHERSCAN_API_KEY}"
 
 # Generate a directory of contracts from a list of addresses in a file.
 echo "Collecting stats Etherscan for contract address in file: " $1
