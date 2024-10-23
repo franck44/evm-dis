@@ -1,25 +1,28 @@
+#!/bin/bash
 
-resultfile="etherscan/verification-stats-batch5.txt"
-echo "" >$resultfile
+# usage ./verifyEtherscan.sh <filename> segsize <resultfile>
+resultfile=$3
+echo "% Segsize is $2" >$resultfile
+
+mkdir -p build/proofs/etherscan/
 
 while read line; do # 'line' is the variable name
-    filename=$line
-    shortname=$(basename -- "$filename")
-    extension="${filename##*.}"
-    filename="${filename%.*}"
-   java -jar build/libs/Driver-java/evmdis.jar --title $shortname -p  --size 1 --cfg 100 --raw --lib ../../../../../evm-dafny $(<etherscan/$line/bytecode_$line.evm) >etherscan/$line/$line-cfg-verifier.dfy
-    dafny format etherscan/$line/$line-cfg-verifier.dfy
-    dafny verify --cores=12 etherscan/$line/$line-cfg-verifier.dfy
+    filename=${line:0:42}
+    # shortname=$(basename -- "$filename")
+    # extension="${filename##*.}"
+    # filename="${filename%.*}"
+    mkdir -p build/proofs/etherscan/$filename
+   java -jar build/libs/Driver-java/evmdis.jar --title $shortname -p  --size $2 --cfg 100 --raw --lib ../../../../../evm-dafny $(<etherscan/$filename/bytecode_$filename.evm) >build/proofs/etherscan/$filename/$filename-cfg-verifier.dfy
+    sed -i '' -e 's/include\ \"/include\ \"..\//g' build/proofs/etherscan/$filename/$filename-cfg-verifier.dfy
+    dafny format build/proofs/etherscan/$filename/$filename-cfg-verifier.dfy
+    dafny verify --cores=12 build/proofs/etherscan/$filename/$filename-cfg-verifier.dfy
     if [ $? -eq 0 ] 
     then 
         echo "Success" 
-        echo $line " verified: true"  >>$resultfile
+        echo $filename " verified: true"  >>$resultfile
     else 
         echo "Failure" 
-        echo $line " verified: false"  >>$resultfile
+        echo $filename " verified: false"  >>$resultfile
     fi
-    # dafny /dafnyVerify:1 /compile:0 /traceTimes /tracePOs --format csv $filename-cfg-verifier.dfy
-    # status=$(grep "Dafny program verifier finished with" verif-res.tmp)
-    # echo "Verified processing contract address: " $line " status" $status >>etherscan/verification-stats.txt
 done <$1
 
