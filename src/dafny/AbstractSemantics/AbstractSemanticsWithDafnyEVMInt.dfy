@@ -60,42 +60,56 @@ module AbstractSemanticsDafnyEVM {
 
   function Add(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Sub(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Mul(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Div(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function SDiv(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function Mod(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
 
   function SMod(s: EState): (s': EState)
     requires s.Operands() >= 2
+    ensures s'.Operands() == s.Operands() - 1
+    ensures s'.stack[1..] == s.stack[2..]
   {
     EState(s.pc + 1, [Random()] + s.stack[2..])
   }
