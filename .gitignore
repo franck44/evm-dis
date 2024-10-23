@@ -69,11 +69,18 @@ scripts/__pycache__/pytesttests.cpython-37-pytest-5.4.1.pyc
 **/*.code-workspace
 /target/
 /.gradle/
+etherscan/
 # /build/
 test/dafny/**/*.runtimeconfig.json
 src/dafny/**/*.runtimeconfig.json
 # /libs/
 **/logs/
 /bin/
+**/docs/**
 **/.vscode
 *-proof.dfy
+TestResults/
+**/obj/
+**/ref/
+build/tests/
+build/proofs/
