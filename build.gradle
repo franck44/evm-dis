@@ -97,7 +97,7 @@ final DAFNY4_CS_DOTNET_BUILD_FLAGS = [
     'build',
     '--no-verify',
     '--target','cs',
-    '--output','build/libs/driver',
+    '--output','build/libs/driver-cs/driver',
     '--function-syntax','4',
     '--quantifier-syntax','4',
 ]
@@ -131,13 +131,15 @@ final DAFNY4_JS_BUILD_FLAGS = [
 
 final DAFNY4_VERIFY_FLAGS = [
     'verify',
-    '--verification-time-limit', '20'
+    '--verification-time-limit', '20',
     // '/dafnyVerify:1',
     // '--isolate-assertions'
     // '/compile:0',
     // '/rlimit:100000000',
     // '/timeLimit:20',
-    // '--resource-limit','10000000',
+    // '--resource-limit','100000000',
+    '--allow-warnings',
+    '--cores','8',
     // '--verify-included-files',
     // '--log-format','csv;LogFileName=build/logs/verify.csv',
     // '--relax-definite-assignment',
@@ -149,6 +151,9 @@ final DAFNY4_VERIFY_FLAGS = [
 
 final DAFNY4_TEST_FLAGS = [
     'test',
+    '--verification-time-limit', '20',
+    '--allow-warnings',
+    '--output', 'build/tests/bin/test.cs', 
     // '--no-verify',
     // '--target','java',
     // '--function-syntax','4',
@@ -173,7 +178,8 @@ task verify {
         mkdir "build/logs"
         //
         fileTree("src/dafny").include('**/*.dfy').exclude('tests/src/**/*.dfy').each {
-            File file -> {
+            file -> 
+            
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))
                 def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
@@ -185,7 +191,7 @@ task verify {
                     executable DAFNY_HOME + '/dafny'
                     args DAFNY4_VERIFY_FLAGS + logging + [file]
                 }
-            }
+            
         }
     }
 }
@@ -204,7 +210,7 @@ task testDafny {
         // Verify and execute all Dafny tests found in the test
         // directory.
         fileTree("test/dafny").include('**/*.dfy').each {
-            File file -> {
+            file -> 
                 // Construct logging option
                 def name = file.name.take(file.name.lastIndexOf('.'))
                 // def logging = '--log-format:csv;LogFileName=build/logs/' + name + '.csv'
@@ -216,7 +222,6 @@ task testDafny {
                     executable DAFNY_HOME + '/dafny'
                     args DAFNY4_TEST_FLAGS + [file]
                 }
-            }
         }
     }
 
@@ -236,7 +241,8 @@ task compileToJava {
     doLast {
         // Generate Dafny Source
         exec {
-            executable DAFNY_HOME + '/dafny'
+            // executable DAFNY_HOME + '/dafny'
+            executable '/Users/franck/local/dafny-4.6/dafny'
             args DAFNY4_JAVA_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
     }
@@ -331,7 +337,8 @@ task compileToJs {
     doLast {
         // Generate Dafny Source
         exec {
-            executable DAFNY_HOME + '/dafny'
+            // executable DAFNY_HOME + '/dafny'
+            executable '/Users/franck/local/dafny-4.4/dafny'
             args DAFNY4_JS_BUILD_FLAGS + ['src/dafny/Driver.dfy']
         }
     }
@@ -342,12 +349,25 @@ task generateTestCFGs {
     inputs.files(fileTree('src/dafny/').include('**/*.bin'))
     doLast {
         fileTree("src/dafny/tests/src/").include('**/*.bin').exclude('strings/**','vyper/harmony/CurveCryptoSwapHarmony.vy.bin', 'fibonacci/**').each {
-            File file -> {
+            file -> 
                 exec {
                     executable = './makeCFG.sh' 
                     args = [file]
                 }
-            }
+        }
+    }
+}
+
+task verifyTestCFGs {
+    // Specify inputs
+    inputs.files(fileTree('src/dafny/').include('**/*.bin'))
+    doLast {
+        fileTree("src/dafny/tests/src/").include('**/*.bin').exclude('strings/**','vyper/harmony/CurveCryptoSwapHarmony.vy.bin', 'fibonacci/**').each {
+            file -> 
+                exec {
+                    executable = './verifyCFG.sh' 
+                    args = [file, 10]
+                }
         }
     }
 }
@@ -356,7 +376,7 @@ task generateTestCFGs {
 
 task deleteTestBuild(type: Delete) {
     delete fileTree('test/dafny') {
-        include '**/*.dll',  '**/*.json'
+        include '**/*.dll',  '**/*.json', '**/*.cs' , '**/*.csproj', '**/*.pdb'
     }
 }
 
@@ -374,7 +394,8 @@ task cleanDafny(type: Delete) {
 }
 
 task buildArtefacts 
-buildArtefacts.dependsOn compileToJava, compileToPy, compileToCs, compileToJs
+buildArtefacts.dependsOn compileToJava, compileToPy, compileToCs 
+// compileToJs
 
 clean.dependsOn cleanDafny, deleteTestBuild
 
