@@ -37,7 +37,7 @@ module SimluationProof {
   //  Arith Op
   lemma SimulationCorrectnessArithOp(s: EState, st: ExecutingState)
     requires s.Abstracts(st)
-    ensures Bytecode.Stop(st).RETURNS? ==> Stop.requires(s) 
+    ensures Bytecode.Stop(st).RETURNS? ==> Stop.requires(s)
     ensures Bytecode.Add(st).EXECUTING? ==> Add.requires(s) && Add(s).Abstracts(Bytecode.Add(st))
     ensures Bytecode.Sub(st).EXECUTING? ==> Sub.requires(s) && Sub(s).Abstracts(Bytecode.Sub(st))
     ensures Bytecode.Mul(st).EXECUTING? ==> Mul.requires(s) && Mul(s).Abstracts(Bytecode.Mul(st))
@@ -249,7 +249,7 @@ module SimluationProof {
     // ensures Bytecode.Create(st).EXECUTING? ==> AbstractSemanticsDafnyEVM.Create.requires(s) && AbstractSemanticsDafnyEVM.Create(s).Abstracts(Bytecode.Create(st))
     // ensures Bytecode.Call(st).EXECUTING? ==> AbstractSemanticsDafnyEVM.Call.requires(s) && AbstractSemanticsDafnyEVM.Call(s).Abstracts(Bytecode.Call(st))
     // ensures Bytecode.CallCode(st).EXECUTING? ==> AbstractSemanticsDafnyEVM.CallCode.requires(s) && AbstractSemanticsDafnyEVM.CallCode(s).Abstracts(Bytecode.CallCode(st))
-    ensures Bytecode.Return(st).RETURNS? ==> AbstractSemanticsDafnyEVM.Return.requires(s) 
+    ensures Bytecode.Return(st).RETURNS? ==> AbstractSemanticsDafnyEVM.Return.requires(s)
   {   //  Thanks Dafny
   }
 
@@ -259,7 +259,7 @@ module SimluationProof {
     // ensures Bytecode.Create2(st).EXECUTING? ==> Create2.requires(s) && Create2(s).Abstracts(Bytecode.Create2(st))
     // ensures Bytecode.StaticCall(st).EXECUTING? ==> AbstractSemanticsDafnyEVM.StaticCall.requires(s) && AbstractSemanticsDafnyEVM.StaticCall(s).Abstracts(Bytecode.StaticCall(st))
     ensures Bytecode.Revert(st).EXECUTING? ==> Revert.requires(s)
-    // ensures Bytecode.SelfDestruct(st).EXECUTING? ==> SelfDestruct.requires(s) && SelfDestruct(s).Abstracts(Bytecode.SelfDestruct(st)) 
+    // ensures Bytecode.SelfDestruct(st).EXECUTING? ==> SelfDestruct.requires(s) && SelfDestruct(s).Abstracts(Bytecode.SelfDestruct(st))
   {   //  Thanks Dafny
   }
 
