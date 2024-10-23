@@ -167,10 +167,10 @@ class default__:
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := BlockHash(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (65):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Coinbase(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := CoinBase(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (66):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Timestamp(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := TimeStamp(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (67):
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Number(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
@@ -239,10 +239,10 @@ class default__:
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Push0(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (96):
-                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 1, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Push1(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (97):
-                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 2, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Push2(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (98):
                 return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 3, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
@@ -296,7 +296,7 @@ class default__:
                 return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 19, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (115):
-                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 20, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
+                return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Push20(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (116):
                 return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 21, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
@@ -335,19 +335,19 @@ class default__:
                 return ((((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := PushN(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 32, 0x")))) + ((i).arg)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (128):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 1);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup1(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (129):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 2);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup2(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (130):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 3);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup3(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (131):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 4);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup4(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (132):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 5);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup5(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (133):
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 6);")))
@@ -383,10 +383,10 @@ class default__:
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Dup(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 16);")))
         if True:
             if (source0_) == (144):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Swap(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 1);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Swap1(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (145):
-                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Swap(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 2);")))
+                return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Swap2(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ");")))
         if True:
             if (source0_) == (146):
                 return ((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "var s"))) + (default__.DecToString(tgt))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " := Swap(s")))) + (default__.DecToString(src))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, ", 3);")))

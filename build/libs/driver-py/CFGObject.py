@@ -119,9 +119,9 @@ class CFGObj:
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
 
     def CFGCheckerToDafny(self, name, pathToEVMDafny):
-        _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\""))).VerbatimString(False))
+        _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "include \"../../../src/dafny/AbstractSemantics/AbstractSemantics.dfy\""))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
-        _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "module  {:disableNonlinearArithmetic} {:isolate_assertions} "))) + (name)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " {")))).VerbatimString(False))
+        _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "module  {:disableNonlinearArithmetic} "))) + (name)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " {")))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "import opened AbstractSemantics"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
@@ -136,7 +136,7 @@ class CFGObj:
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
         _dafny.print(((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "include "))) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\"")))) + (pathToEVMDafny)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "/src/dafny/bytecode.dfy\"")))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
-        _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "module {:disableNonlinearArithmetic} {:isolate_assertions} "))) + (name)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " {")))).VerbatimString(False))
+        _dafny.print((((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "module {:disableNonlinearArithmetic} "))) + (name)) + (_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, " {")))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n\n"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "import EvmState"))).VerbatimString(False))
         _dafny.print((_dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "\n"))).VerbatimString(False))
