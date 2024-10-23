@@ -174,10 +174,10 @@ module {:disableNonlinearArithmetic} CFGObject {
       requires this.HasNoErrorState()
     {
       //    optional include of the dafny-EVM files
-      print "include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
+      print "include \"../../../src/dafny/AbstractSemantics/AbstractSemantics.dfy\"", "\n\n";
 
       //    Module
-      print "module " + name + " {", "\n\n";
+      print "module  {:disableNonlinearArithmetic} " + name + " {", "\n\n";
       print "import opened AbstractSemantics", "\n";
       print "import opened AbstractState", "\n";
 
@@ -195,7 +195,7 @@ module {:disableNonlinearArithmetic} CFGObject {
       print "include " + "\"" + pathToEVMDafny + "/src/dafny/bytecode.dfy\"", "\n";
 
       //    Module
-      print "module " + name + " {", "\n\n";
+      print "module {:disableNonlinearArithmetic} {:isolate_assertions} " + name + " {", "\n\n";
       print "import EvmState", "\n";
       print "import opened Bytecode", "\n";
 
