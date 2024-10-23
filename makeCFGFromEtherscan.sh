@@ -1,4 +1,3 @@
-#!/bin/sh
 # address is first param 
 echo "Fetching bytecode from Etherscan for contract address: " $1
 

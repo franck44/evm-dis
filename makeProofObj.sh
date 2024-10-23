@@ -1,4 +1,3 @@
-#!/bin/sh
 
 echo "Processing file: " $1
 

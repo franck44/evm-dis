@@ -1,4 +1,3 @@
-#!/bin/sh
 
 # key="${ETHERSCAN_API_KEY}"
 

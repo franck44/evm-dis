@@ -1,4 +1,3 @@
-#!/bin/sh
 
 echo "Processing file: " $1
 
@@ -16,6 +15,6 @@ echo "seg size: $segsize"
 
 java -jar build/libs/Driver-java/evmdis.jar --title $shortname -p  --size $segsize --cfg 100 --raw --lib ../../../../../evm-dafny $(<$1) >$filename-cfg-verifier.dfy
 dafny format  $filename-cfg-verifier.dfy
-dafny verify --allow-warnings $filename-cfg-verifier.dfy
+dafny verify --allow-warnings --verification-time-limit 200 --isolate-assertions $filename-cfg-verifier.dfy
 
 
