@@ -195,7 +195,7 @@ module {:disableNonlinearArithmetic} CFGObject {
       print "include " + "\"" + pathToEVMDafny + "/src/dafny/bytecode.dfy\"", "\n";
 
       //    Module
-      print "module {:disableNonlinearArithmetic} {:isolate_assertions} " + name + " {", "\n\n";
+      print "module {:disableNonlinearArithmetic} " + name + " {", "\n\n";
       print "import EvmState", "\n";
       print "import opened Bytecode", "\n";
 
