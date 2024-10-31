@@ -17,10 +17,15 @@ Docker version 27.2.0, build 3ab4256
 # Using the Docker image
 
 The Docker image contains a working version of Dafny (4.8.1), Java (23.0.1), Python3.
+You can download the image with (this can take while to download ...):
 
-It also contains some examples of bytecode in the `src/dafny/test/src` folder.
+```zsh
+docker image pull franck44/tacas25:latest --platform linux/amd64
+```
 
-You can start a Docker container with the image  with the command:
+The image also contains some examples of bytecode in the `src/dafny/test/src` folder.
+
+You can now start a Docker container with the image  with the command:
 
 ```zsh
 evm-dis git:(main) ✗ docker run -it tacas25
