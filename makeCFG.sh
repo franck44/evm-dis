@@ -22,5 +22,6 @@ echo "Max depth size: $depthsize"
 
 echo "Shortname: " $shortname
 java -jar build/libs/Driver-java/evmdis.jar --title $shortname --cfg $depthsize $(<$1) >$output
-#dot -Tsvg $filename-cfg.dot -o $filename-cfg.svg
+echo "CFG (DOT) format generared in $output"
+
 
