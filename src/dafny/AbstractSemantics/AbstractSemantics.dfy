@@ -38,7 +38,7 @@ module AbstractState {
 }
 
 /**
-  * Provides the abstract semantics for external calls.
+  * Provides the abstract semantics for opcodes of the EVM.
   */
 module AbstractSemantics {
 
@@ -55,6 +55,7 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
     ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
@@ -64,6 +65,7 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
     ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
@@ -73,6 +75,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -81,6 +85,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -89,6 +95,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -97,6 +105,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -105,6 +115,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -113,6 +125,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 2
     ensures s'.stack[1..] == s.stack[3..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[3..])
   }
@@ -121,6 +135,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 2
     ensures s'.stack[1..] == s.stack[3..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[3..])
   }
@@ -129,6 +145,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -137,6 +155,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -147,6 +167,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -155,6 +177,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -163,6 +187,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -171,6 +197,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -179,6 +207,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -187,6 +217,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -197,6 +229,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -205,6 +239,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -213,6 +249,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -221,6 +259,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -229,6 +269,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -237,6 +279,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -245,6 +289,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -253,6 +299,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -263,6 +311,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack[1..] == s.stack[2..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[2..])
   }
@@ -272,6 +322,8 @@ module AbstractSemantics {
   function Address(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -280,6 +332,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -287,6 +341,8 @@ module AbstractSemantics {
   function Origin(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -294,6 +350,8 @@ module AbstractSemantics {
   function Caller(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -301,6 +359,8 @@ module AbstractSemantics {
   function CallValue(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -309,8 +369,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands() + 0
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
     ensures s'.pc == s.pc + 1
-
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -318,6 +378,8 @@ module AbstractSemantics {
   function CallDataSize(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -326,6 +388,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 3
     ensures s'.stack == s.stack[3..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 3]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[3..])
   }
@@ -333,6 +397,8 @@ module AbstractSemantics {
   function CodeSize(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -341,6 +407,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 3
     ensures s'.stack == s.stack[3..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 3]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[3..])
   }
@@ -348,15 +416,18 @@ module AbstractSemantics {
   function GasPrice(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
-
 
   function ExtCodeSize(s: EState): (s': EState)
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -365,6 +436,8 @@ module AbstractSemantics {
     requires s.Operands() >= 4
     ensures s'.Operands() == s.Operands() - 4
     ensures s'.stack == s.stack[4..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 4]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[4..])
   }
@@ -372,6 +445,8 @@ module AbstractSemantics {
   function ReturnDataSize(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -380,6 +455,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 3
     ensures s'.stack == s.stack[3..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 3]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[3..])
   }
@@ -388,6 +465,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -398,6 +477,8 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures s'.pc == s.pc + 1
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
   {
     EState(s.pc + 1, [0] + s.stack[1..])
   }
@@ -405,6 +486,8 @@ module AbstractSemantics {
   function CoinBase(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -412,6 +495,8 @@ module AbstractSemantics {
   function TimeStamp(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures  forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -419,6 +504,8 @@ module AbstractSemantics {
   function Number(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -426,6 +513,8 @@ module AbstractSemantics {
   function Difficulty(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall  i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -433,6 +522,8 @@ module AbstractSemantics {
   function GasLimit(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -440,6 +531,8 @@ module AbstractSemantics {
   function ChainID(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -447,6 +540,8 @@ module AbstractSemantics {
   function SelfBalance(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -454,6 +549,8 @@ module AbstractSemantics {
   function BaseFee(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -464,6 +561,7 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.stack == s.stack[1..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
     ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[1..])
@@ -473,6 +571,7 @@ module AbstractSemantics {
     requires s.Operands() >= 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[1..] == s.stack[1..]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i]
     ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[1..])
@@ -482,6 +581,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 2
     ensures s'.stack == s.stack[2..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[2..])
   }
@@ -490,6 +591,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 2
     ensures s'.stack == s.stack[2..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[2..])
   }
@@ -506,6 +609,8 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.Operands() == s.Operands() - 2
     ensures s'.stack == s.stack[2..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[2..])
   }
@@ -516,6 +621,7 @@ module AbstractSemantics {
     ensures s'.Operands() == s.Operands() - 1
     ensures s'.pc == s.stack[0] as nat
     ensures s'.stack == s.stack[1..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1]
   {
     EState(s.stack[0] as nat, s.stack[1..])
   }
@@ -524,6 +630,7 @@ module AbstractSemantics {
     requires s.Operands() >= 2
     ensures s'.pc == s.stack[0] as nat || s'.pc == s.pc + 1
     ensures s'.stack == s.stack[2..]
+    ensures forall i :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2]
   {
     EState(if s.stack[1] > 0 then s.stack[0] as nat else s.pc + 1 as nat, s.stack[2..])
   }
@@ -531,6 +638,8 @@ module AbstractSemantics {
   function MSize(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -538,6 +647,8 @@ module AbstractSemantics {
   function Gas(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
   }
@@ -545,6 +656,7 @@ module AbstractSemantics {
   function JumpDest(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands()
     ensures s'.stack == s.stack
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack)
   }
@@ -552,6 +664,7 @@ module AbstractSemantics {
   function Push0(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
     ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack)
@@ -561,8 +674,10 @@ module AbstractSemantics {
     requires k <= Int.MAX_U256
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
     ensures s'.stack[0] == k as Int.u256
     ensures s'.pc == s.pc + 2
+    ensures s' == PushN(s, 1, k)
   {
     EState(s.pc + 1 + 1, [k as Int.u256] + s.stack)
   }
@@ -571,20 +686,72 @@ module AbstractSemantics {
     requires k <= Int.MAX_U256
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
     ensures s'.stack[0] == k as Int.u256
     ensures s'.pc == s.pc + 3
+    ensures s' == PushN(s, 2, k)
   {
     EState(s.pc + 3, [k as Int.u256] + s.stack)
+  }
+
+  function Push3(s: EState, k: nat): (s': EState)
+    requires k <= Int.MAX_U256
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == k as Int.u256
+    ensures s'.pc == s.pc + 4
+    ensures s' == PushN(s, 3, k)
+  {
+    EState(s.pc + 4, [k as Int.u256] + s.stack)
+  }
+
+  function Push4(s: EState, k: nat): (s': EState)
+    requires k <= Int.MAX_U256
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == k as Int.u256
+    ensures s'.pc == s.pc + 5
+    ensures s' == PushN(s, 4, k)
+  {
+    EState(s.pc + 5, [k as Int.u256] + s.stack)
+  }
+
+  function Push8(s: EState, k: nat): (s': EState)
+    requires k <= Int.MAX_U256
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == k as Int.u256
+    ensures s'.pc == s.pc + 9
+    ensures s' == PushN(s, 8, k)
+  {
+    EState(s.pc + 9, [k as Int.u256] + s.stack)
   }
 
   function Push20(s: EState, k: nat): (s': EState)
     requires k <= Int.MAX_U256
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
     ensures s'.stack[0] == k as Int.u256
     ensures s'.pc == s.pc + 21
+    ensures s' == PushN(s, 20, k)
   {
     EState(s.pc + 21, [k as Int.u256] + s.stack)
+  }
+
+  function Push32(s: EState, k: nat): (s': EState)
+    requires k <= Int.MAX_U256
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == k as Int.u256
+    ensures s'.pc == s.pc + 33
+    ensures s' == PushN(s, 32, k)
+  {
+    EState(s.pc + 33, [k as Int.u256] + s.stack)
   }
 
   function PushN(s: EState, n: nat, k: nat): (s': EState)
@@ -592,6 +759,7 @@ module AbstractSemantics {
     requires k <= Int.MAX_U256
     ensures s'.Operands() == s.Operands() + 1
     ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
     ensures s'.stack[0] == k as Int.u256
     ensures s'.pc == s.pc + n + 1
   {
@@ -613,6 +781,8 @@ module AbstractSemantics {
     ensures s'.stack[0] == s.stack[0]
     ensures s'.stack == [s.stack[0]] + s.stack
     ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s' == Dup(s, 1)
   {
     EState(s.pc + 1, [s.stack[0]] + s.stack)
   }
@@ -623,6 +793,8 @@ module AbstractSemantics {
     ensures s'.stack[1..] == s.stack
     ensures s'.stack[0] == s.stack[1]
     ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s' == Dup(s, 2)
   {
     EState(s.pc + 1, [s.stack[1]] + s.stack)
   }
@@ -633,6 +805,8 @@ module AbstractSemantics {
     ensures s'.stack[1..] == s.stack
     ensures s'.stack[0] == s.stack[2]
     ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s' == Dup(s, 3)
   {
     EState(s.pc + 1, [s.stack[2]] + s.stack)
   }
@@ -646,6 +820,9 @@ module AbstractSemantics {
     ensures s'.stack[1..] == s.stack
     ensures s'.stack[0] == s.stack[3]
     ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+
+    ensures s' == Dup(s, 4)
   {
     EState(s.pc + 1, [s.stack[3]] + s.stack)
   }
@@ -653,14 +830,145 @@ module AbstractSemantics {
   function Dup5(s: EState): (s': EState)
     requires s.Operands() > 4
     ensures s'.Operands() == s.Operands() + 1
-    //  writing the stack conditions as follows
-    //  the condition s'.stack == [s.stack[3]] + s.stack is
-    //  not explicit enough and proofs can fail.
     ensures s'.stack[1..] == s.stack
     ensures s'.stack[0] == s.stack[4]
     ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s' == Dup(s, 5)
   {
     EState(s.pc + 1, [s.stack[4]] + s.stack)
+  }
+
+  function Dup6(s: EState): (s': EState)
+    requires s.Operands() > 5
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[5]
+    ensures s'.pc == s.pc + 1
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s' == Dup(s, 6)
+  {
+    EState(s.pc + 1, [s.stack[5]] + s.stack)
+  }
+
+  function Dup7(s: EState): (s': EState)
+    requires s.Operands() > 6
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[6]
+    ensures forall i: nat :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 7)
+  {
+    EState(s.pc + 1, [s.stack[6]] + s.stack)
+  }
+
+  function Dup8(s: EState): (s': EState)
+    requires s.Operands() > 7
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[7]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 8)
+  {
+    EState(s.pc + 1, [s.stack[7]] + s.stack)
+  }
+
+  function Dup9(s: EState): (s': EState)
+    requires s.Operands() > 8
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[8]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 9)
+  {
+    EState(s.pc + 1, [s.stack[8]] + s.stack)
+  }
+
+  function Dup10(s: EState): (s': EState)
+    requires s.Operands() > 9
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures s'.stack[0] == s.stack[9]
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 10)
+  {
+    EState(s.pc + 1, [s.stack[9]] + s.stack)
+  }
+
+  function Dup11(s: EState): (s': EState)
+    requires s.Operands() > 10
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[10]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 11)
+  {
+    EState(s.pc + 1, [s.stack[10]] + s.stack)
+  }
+
+  function Dup12(s: EState): (s': EState)
+    requires s.Operands() > 11
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[11]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 12)
+  {
+    EState(s.pc + 1, [s.stack[11]] + s.stack)
+  }
+
+  function Dup13(s: EState): (s': EState)
+    requires s.Operands() > 12
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[12]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 13)
+  {
+    EState(s.pc + 1, [s.stack[12]] + s.stack)
+  }
+
+  function Dup14(s: EState): (s': EState)
+    requires s.Operands() > 13
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[13]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 14)
+  {
+    EState(s.pc + 1, [s.stack[13]] + s.stack)
+  }
+
+  function Dup15(s: EState): (s': EState)
+    requires s.Operands() > 14
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[14]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 15)
+  {
+    EState(s.pc + 1, [s.stack[14]] + s.stack)
+  }
+
+  function Dup16(s: EState): (s': EState)
+    requires s.Operands() > 15
+    ensures s'.Operands() == s.Operands() + 1
+    ensures s'.stack[1..] == s.stack
+    ensures forall i :: 1 <= i < s.Operands() ==> s'.stack[i] == s.stack[i - 1]
+    ensures s'.stack[0] == s.stack[15]
+    ensures s'.pc == s.pc + 1
+    ensures s' == Dup(s, 16)
+  {
+    EState(s.pc + 1, [s.stack[15]] + s.stack)
   }
 
   function Swap(s: EState, k: nat): (s': EState)
@@ -681,10 +989,10 @@ module AbstractSemantics {
     ensures s'.pc == s.pc + 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[2..] == s.stack[2..]
+    ensures forall i: nat :: 2 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
     ensures s'.stack[1] == s.stack[0]
     ensures s'.stack[0] == s.stack[1]
-    ensures forall k:: 1 < k < s'.Operands() ==> s'.stack[k] == s.stack[k]
-    // ensures s'.stack == s.stack[1 := s.stack[0]][0 := s.stack[1]]
+    ensures s' == Swap(s, 1)
   {
     EState(s.pc + 1, s.stack[0 := s.stack[1]][1 := s.stack[0]])
   }
@@ -694,10 +1002,11 @@ module AbstractSemantics {
     ensures s'.pc == s.pc + 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[3..] == s.stack[3..]
+    ensures forall i: nat :: 3 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
     ensures s'.stack[1] == s.stack[1]
     ensures s'.stack[0] == s.stack[2]
     ensures s'.stack[2] == s.stack[0]
-    // ensures s'.stack == s.stack[0 := s.stack[2]][2 := s.stack[0]]
+    ensures s' == Swap(s, 2)
   {
     EState(s.pc + 1, s.stack[0 := s.stack[2]][2 := s.stack[0]])
   }
@@ -707,23 +1016,150 @@ module AbstractSemantics {
     ensures s'.pc == s.pc + 1
     ensures s'.Operands() == s.Operands()
     ensures s'.stack[4..] == s.stack[4..]
-    ensures s'.stack[3] == s.stack[3]
+    ensures forall i: nat :: 4 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
     ensures s'.stack[1] == s.stack[1]
-    ensures s'.stack[0] == s.stack[2]
-    ensures s'.stack[2] == s.stack[0]
-    // ensures s'.stack == s.stack[0 := s.stack[2]][2 := s.stack[0]]
+    ensures s'.stack[2] == s.stack[2]
+    ensures s'.stack[0] == s.stack[3]
+    ensures s'.stack[3] == s.stack[0]
+    ensures s' == Swap(s, 3)
   {
-    EState(s.pc + 1, s.stack[0 := s.stack[2]][2 := s.stack[0]])
+    EState(s.pc + 1, s.stack[0 := s.stack[3]][3 := s.stack[0]])
   }
 
+  function Swap4(s: EState): (s': EState)
+    requires s.Operands() > 4
+    ensures s'.pc == s.pc + 1
+    ensures s'.Operands() == s.Operands()
+    ensures s'.stack[5..] == s.stack[5..]
+    ensures forall i: nat :: 5 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.stack[1] == s.stack[1]
+    ensures s'.stack[2] == s.stack[2]
+    ensures s'.stack[3] == s.stack[3]
+    ensures s'.stack[0] == s.stack[4]
+    ensures s'.stack[4] == s.stack[0]
+    ensures s' == Swap(s, 4)
+  {
+    EState(s.pc + 1, s.stack[0 := s.stack[4]][4 := s.stack[0]])
+  }
+
+  function Swap5(s: EState): (s': EState)
+    requires s.Operands() > 5
+    ensures s'.pc == s.pc + 1
+    ensures s'.Operands() == s.Operands()
+    ensures s'.stack[6..] == s.stack[6..]
+    ensures forall i: nat :: 6 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.stack[1] == s.stack[1]
+    ensures s'.stack[2] == s.stack[2]
+    ensures s'.stack[3] == s.stack[3]
+    ensures s'.stack[4] == s.stack[4]
+    ensures s'.stack[0] == s.stack[5]
+    ensures s'.stack[5] == s.stack[0]
+    ensures s' == Swap(s, 5)
+  {
+    EState(s.pc + 1, s.stack[0 := s.stack[5]][5 := s.stack[0]])
+  }
+
+  function Swap6(s: EState): (s': EState)
+    requires s.Operands() > 6
+    ensures s'.pc == s.pc + 1
+    ensures s'.Operands() == s.Operands()
+    ensures s'.stack[7..] == s.stack[7..]
+    ensures forall i: nat :: 7 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.stack[1] == s.stack[1]
+    ensures s'.stack[2] == s.stack[2]
+    ensures s'.stack[3] == s.stack[3]
+    ensures s'.stack[4] == s.stack[4]
+    ensures s'.stack[5] == s.stack[5]
+    ensures s'.stack[0] == s.stack[6]
+    ensures s'.stack[6] == s.stack[0]
+    ensures s' == Swap(s, 6)
+  {
+    EState(s.pc + 1, s.stack[0 := s.stack[6]][6 := s.stack[0]])
+  }
+
+  function Swap7(s: EState): (s': EState)
+    requires s.Operands() > 7
+    ensures s'.pc == s.pc + 1
+    ensures s'.Operands() == s.Operands()
+    ensures s'.stack[8..] == s.stack[8..]
+    ensures forall i: nat :: 8 <= i < s.Operands() ==> s'.stack[i] == s.stack[i]
+    ensures s'.stack[1] == s.stack[1]
+    ensures s'.stack[2] == s.stack[2]
+    ensures s'.stack[3] == s.stack[3]
+    ensures s'.stack[4] == s.stack[4]
+    ensures s'.stack[5] == s.stack[5]
+    ensures s'.stack[6] == s.stack[6]
+    ensures s'.stack[0] == s.stack[7]
+    ensures s'.stack[7] == s.stack[0]
+    ensures s' == Swap(s, 7)
+  {
+    EState(s.pc + 1, s.stack[0 := s.stack[7]][7 := s.stack[0]])
+  }
 
   //  Log op
   function LogN(s: EState, n: nat): (s': EState)
     requires n <= 4
     requires s.Operands() >= n + 2
     ensures s'.Operands() == s.Operands() - (n + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + n + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack[n + 2..])
+  }
+
+  function Log0(s: EState): (s': EState)
+    // requires n <= 4
+    requires s.Operands() >= 0 + 2
+    ensures s'.Operands() == s.Operands() - (0 + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 0 + 2]
+    ensures s'.pc == s.pc + 1
+    ensures s' == LogN(s, 0)
+  {
+    EState(s.pc + 1, s.stack[0 + 2..])
+  }
+
+  function Log1(s: EState): (s': EState)
+    // requires n <= 4
+    requires s.Operands() >= 1 + 2
+    ensures s'.Operands() == s.Operands() - (1 + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 1 + 2]
+    ensures s'.pc == s.pc + 1
+    ensures s' == LogN(s, 1)
+  {
+    EState(s.pc + 1, s.stack[1 + 2..])
+  }
+
+  function Log2(s: EState): (s': EState)
+    // requires n <= 4
+    requires s.Operands() >= 2 + 2
+    ensures s'.Operands() == s.Operands() - (2 + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 2 + 2]
+    ensures s'.pc == s.pc + 1
+    ensures s' == LogN(s, 2)
+  {
+    EState(s.pc + 1, s.stack[2 + 2..])
+  }
+
+  function Log3(s: EState): (s': EState)
+    // requires n <= 4
+    requires s.Operands() >= 3 + 2
+    ensures s'.Operands() == s.Operands() - (3 + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 3 + 2]
+    ensures s'.pc == s.pc + 1
+    ensures s' == LogN(s, 3)
+  {
+    EState(s.pc + 1, s.stack[3 + 2..])
+  }
+
+  function Log4(s: EState): (s': EState)
+    // requires n <= 4
+    requires s.Operands() >= 4 + 2
+    ensures s'.Operands() == s.Operands() - (4 + 2)
+    ensures forall i: nat :: 0 <= i < s'.Operands() ==> s'.stack[i] == s.stack[i + 4 + 2]
+    ensures s'.pc == s.pc + 1
+    ensures s' == LogN(s, 4)
+  {
+    EState(s.pc + 1, s.stack[4 + 2..])
   }
 
   //  System op
@@ -732,6 +1168,8 @@ module AbstractSemantics {
     requires s.Operands() >= 3
     ensures s'.Operands() == s.Operands() - 3 + 1
     ensures s'.stack[1..] == s.stack[3..]
+    ensures forall i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 2]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[3..])
   }
@@ -740,6 +1178,8 @@ module AbstractSemantics {
     requires s.Operands() >= 7
     ensures s'.Operands() == s.Operands() - 7 + 1
     ensures s'.stack[1..] == s.stack[7..]
+    ensures forall  i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 6]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[7..])
   }
@@ -748,6 +1188,8 @@ module AbstractSemantics {
     requires s.Operands() >= 7
     ensures s'.Operands() == s.Operands() - 7 + 1
     ensures s'.stack[1..] == s.stack[7..]
+    ensures forall i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 6]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[7..])
   }
@@ -755,6 +1197,7 @@ module AbstractSemantics {
   function Return(s: EState): (s': EState)
     ensures s'.Operands() == s.Operands()
     ensures s'.stack == s.stack
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, s.stack)
   }
@@ -763,6 +1206,8 @@ module AbstractSemantics {
     requires s.Operands() >= 6
     ensures s'.Operands() == s.Operands() - 6 + 1
     ensures s'.stack[1..] == s.stack[6..]
+    ensures forall i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 5]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[6..])
   }
@@ -771,6 +1216,8 @@ module AbstractSemantics {
     requires s.Operands() >= 4
     ensures s'.Operands() == s.Operands() - 4 + 1
     ensures s'.stack[1..] == s.stack[4..]
+    ensures forall i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 3]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[4..])
   }
@@ -779,6 +1226,8 @@ module AbstractSemantics {
     requires s.Operands() >= 6
     ensures s'.Operands() == s.Operands() - 6 + 1
     ensures s'.stack[1..] == s.stack[6..]
+    ensures forall i: nat :: 1 <= i < s'.Operands()  ==> s'.stack[i] == s.stack[i + 5]
+    ensures s'.pc == s.pc + 1
   {
     EState(s.pc + 1, [0] + s.stack[6..])
   }
