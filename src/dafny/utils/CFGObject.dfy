@@ -386,8 +386,8 @@ module {:disableNonlinearArithmetic} CFGObject {
             xs[0].NextState(currentState, prog.jumpDests, 0)
           else
             currentState;
-        //  Insert stack assertions every 10 stesp to help prover.
-        if newState.EState? && pos % 10 == 0 {
+        //  Insert stack assertions every 10 steps to help prover.
+        if newState.EState? && pos >0 && pos % 10 == 0 {
           for j := 0 to |newState.stack| {
             if newState.stack[j].Value?  {
               print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
