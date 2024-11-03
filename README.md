@@ -132,7 +132,11 @@ evm-dis git:(main) ✗ ./disassemble.sh file.evm
 To generate the CFG in DOT format for the bytecode in a file `file.evm` use the following command:
 
 ```zsh
-evm-dis git:(main) ✗ ./makeCFG.sh file.evm
+evm-dis git:(main) ✗ ./makeCFG.sh src/dafny/tests/src/simple/simpleCall.bin
+Processing file:  src/dafny/tests/src/simple/simpleCall.bin
+Max depth size: 100
+Shortname:  simpleCall.bin
+CFG (DOT) format generared in build/dot/simpleCall.bin/simpleCall.bin.dot
 ```
 
 ### Generate the CFG verifier (Dafny code)
