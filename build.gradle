@@ -393,6 +393,13 @@ task cleanDafny(type: Delete) {
     delete "build/logs"
 }
 
+task cleanEtherscan(type: Delete) {
+    delete fileTree('etherscan/') {
+        include '**/*.dot',  '**/*.svg', '**/*.dfy'
+    }
+    // delete "build/logs"
+}
+
 task buildArtefacts 
 buildArtefacts.dependsOn compileToJava, compileToPy, compileToCs 
 // compileToJs
