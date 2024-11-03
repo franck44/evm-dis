@@ -82,3 +82,7 @@ TestResults/
 **/obj/
 **/ref/
 build/tests/
+build/dot/*
+!build/dot/etherscan/*
+build/proofs/*
+!build/proofs/etherscan/*
