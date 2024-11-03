@@ -191,7 +191,7 @@ Out of the 1704 contracts (addresss) in `less_than_3000_opcodes.txt`, 979 contra
 
 The bytecode for the benchmarks contracts is in the [.etherscan](./etherscan) folder.
 The corresponding CFGs are in the [./build/dot/etherscan](./build/dot/etherscan) folder.
-The verification files  [./build/proofs/etherscan](./build/proofs/etherscan) folder.
+The verification files (`.dfy`) and the verification results (`*-stats.csv`) are in the [./build/proofs/etherscan](./build/proofs/etherscan) folder.
 
 ### Useful Resources
 
