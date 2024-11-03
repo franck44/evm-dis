@@ -395,7 +395,7 @@ class CFGObj:
                         d_1_newState_ = ((xs)[0]).NextState(currentState, ((_this).prog).jumpDests, 0)
                     elif True:
                         d_1_newState_ = currentState
-                    if ((d_1_newState_).is_EState) and ((_dafny.euclidian_modulus(pos, 2)) == (0)):
+                    if (((d_1_newState_).is_EState) and ((pos) > (0))) and ((_dafny.euclidian_modulus(pos, 10)) == (0)):
                         hi0_ = len((d_1_newState_).stack)
                         for d_2_j_ in range(0, hi0_):
                             if (((d_1_newState_).stack)[d_2_j_]).is_Value:

@@ -3233,8 +3233,8 @@ module {:disableNonlinearArithmetic} CFGObject {
       requires this.HasNoErrorState()
       decreases this, name, pathToEVMDafny
     {
-      print ""include \""/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"""", ""\n\n"";
-      print ""module  {:disableNonlinearArithmetic} {:isolate_assertions} "" + name + "" {"", ""\n\n"";
+      print ""include \""../../../src/dafny/AbstractSemantics/AbstractSemantics.dfy\"""", ""\n\n"";
+      print ""module  {:disableNonlinearArithmetic} "" + name + "" {"", ""\n\n"";
       print ""import opened AbstractSemantics"", ""\n"";
       print ""import opened AbstractState"", ""\n"";
       PrintCFGVerifierBody();
@@ -3248,7 +3248,7 @@ module {:disableNonlinearArithmetic} CFGObject {
     {
       print ""include "" + ""\"""" + pathToEVMDafny + ""/src/dafny/state.dfy\"""", ""\n"";
       print ""include "" + ""\"""" + pathToEVMDafny + ""/src/dafny/bytecode.dfy\"""", ""\n"";
-      print ""module {:disableNonlinearArithmetic} {:isolate_assertions} "" + name + "" {"", ""\n\n"";
+      print ""module {:disableNonlinearArithmetic} "" + name + "" {"", ""\n\n"";
       print ""import EvmState"", ""\n"";
       print ""import opened Bytecode"", ""\n"";
       print ""function SafeJump(s: EvmState.State): (s': EvmState.State)"", ""\n"";
@@ -3303,7 +3303,7 @@ module {:disableNonlinearArithmetic} CFGObject {
       }
     }
 
-    method PrintCFGVerifierBody(index: nat := 0)
+    method {:print} PrintCFGVerifierBody(index: nat := 0)
       requires this.IsValid()
       requires this.HasNoErrorState()
       requires index <= |a.states|
@@ -3368,7 +3368,7 @@ module {:disableNonlinearArithmetic} CFGObject {
         var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
         print ""  "", k, ""\n"";
         var newState := if currentState.EState? then xs[0].NextState(currentState, prog.jumpDests, 0) else currentState;
-        if newState.EState? && pos % 2 == 0 {
+        if newState.EState? && pos > 0 && pos % 10 == 0 {
           for j: int := 0 to |newState.stack| {
             if newState.stack[j].Value? {
               print ""   assert s"", pos + 1, "".Peek("", j, "") == "", ""0x"" + Hex.NatToHex(newState.stack[j].Extract() as nat), "";\n"";
@@ -3475,9 +3475,9 @@ module PrettyIns {
     case BLOCKHASH =>
       ""var s"" + DecToString(tgt) + "" := BlockHash(s"" + DecToString(src) + "");""
     case COINBASE =>
-      ""var s"" + DecToString(tgt) + "" := Coinbase(s"" + DecToString(src) + "");""
+      ""var s"" + DecToString(tgt) + "" := CoinBase(s"" + DecToString(src) + "");""
     case TIMESTAMP =>
-      ""var s"" + DecToString(tgt) + "" := Timestamp(s"" + DecToString(src) + "");""
+      ""var s"" + DecToString(tgt) + "" := TimeStamp(s"" + DecToString(src) + "");""
     case NUMBER =>
       ""var s"" + DecToString(tgt) + "" := Number(s"" + DecToString(src) + "");""
     case DIFFICULTY =>
@@ -3523,13 +3523,13 @@ module PrettyIns {
     case PUSH0 =>
       ""var s"" + DecToString(tgt) + "" := Push0(s"" + DecToString(src) + "");""
     case PUSH1 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 1, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push1(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH2 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 2, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push2(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH3 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 3, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push3(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH4 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 4, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push4(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH5 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 5, 0x"" + i.arg + "");""
     case PUSH6 =>
@@ -3537,7 +3537,7 @@ module PrettyIns {
     case PUSH7 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 7, 0x"" + i.arg + "");""
     case PUSH8 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 8, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push8(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH9 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 9, 0x"" + i.arg + "");""
     case PUSH10 =>
@@ -3561,7 +3561,7 @@ module PrettyIns {
     case PUSH19 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 19, 0x"" + i.arg + "");""
     case PUSH20 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 20, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push20(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case PUSH21 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 21, 0x"" + i.arg + "");""
     case PUSH22 =>
@@ -3585,53 +3585,53 @@ module PrettyIns {
     case PUSH31 =>
       ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 31, 0x"" + i.arg + "");""
     case PUSH32 =>
-      ""var s"" + DecToString(tgt) + "" := PushN(s"" + DecToString(src) + "", 32, 0x"" + i.arg + "");""
+      ""var s"" + DecToString(tgt) + "" := Push32(s"" + DecToString(src) + "", 0x"" + i.arg + "");""
     case DUP1 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 1);""
+      ""var s"" + DecToString(tgt) + "" := Dup1(s"" + DecToString(src) + "");""
     case DUP2 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 2);""
+      ""var s"" + DecToString(tgt) + "" := Dup2(s"" + DecToString(src) + "");""
     case DUP3 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 3);""
+      ""var s"" + DecToString(tgt) + "" := Dup3(s"" + DecToString(src) + "");""
     case DUP4 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 4);""
+      ""var s"" + DecToString(tgt) + "" := Dup4(s"" + DecToString(src) + "");""
     case DUP5 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 5);""
+      ""var s"" + DecToString(tgt) + "" := Dup5(s"" + DecToString(src) + "");""
     case DUP6 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 6);""
+      ""var s"" + DecToString(tgt) + "" := Dup6(s"" + DecToString(src) + "");""
     case DUP7 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 7);""
+      ""var s"" + DecToString(tgt) + "" := Dup7(s"" + DecToString(src) + "");""
     case DUP8 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 8);""
+      ""var s"" + DecToString(tgt) + "" := Dup8(s"" + DecToString(src) + "");""
     case DUP9 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 9);""
+      ""var s"" + DecToString(tgt) + "" := Dup9(s"" + DecToString(src) + "");""
     case DUP10 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 10);""
+      ""var s"" + DecToString(tgt) + "" := Dup10(s"" + DecToString(src) + "");""
     case DUP11 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 11);""
+      ""var s"" + DecToString(tgt) + "" := Dup11(s"" + DecToString(src) + "");""
     case DUP12 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 12);""
+      ""var s"" + DecToString(tgt) + "" := Dup12(s"" + DecToString(src) + "");""
     case DUP13 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 13);""
+      ""var s"" + DecToString(tgt) + "" := Dup13(s"" + DecToString(src) + "");""
     case DUP14 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 14);""
+      ""var s"" + DecToString(tgt) + "" := Dup14(s"" + DecToString(src) + "");""
     case DUP15 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 15);""
+      ""var s"" + DecToString(tgt) + "" := Dup15(s"" + DecToString(src) + "");""
     case DUP16 =>
-      ""var s"" + DecToString(tgt) + "" := Dup(s"" + DecToString(src) + "", 16);""
+      ""var s"" + DecToString(tgt) + "" := Dup16(s"" + DecToString(src) + "");""
     case SWAP1 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 1);""
+      ""var s"" + DecToString(tgt) + "" := Swap1(s"" + DecToString(src) + "");""
     case SWAP2 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 2);""
+      ""var s"" + DecToString(tgt) + "" := Swap2(s"" + DecToString(src) + "");""
     case SWAP3 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 3);""
+      ""var s"" + DecToString(tgt) + "" := Swap3(s"" + DecToString(src) + "");""
     case SWAP4 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 4);""
+      ""var s"" + DecToString(tgt) + "" := Swap4(s"" + DecToString(src) + "");""
     case SWAP5 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 5);""
+      ""var s"" + DecToString(tgt) + "" := Swap5(s"" + DecToString(src) + "");""
     case SWAP6 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 6);""
+      ""var s"" + DecToString(tgt) + "" := Swap6(s"" + DecToString(src) + "");""
     case SWAP7 =>
-      ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 7);""
+      ""var s"" + DecToString(tgt) + "" := Swap7(s"" + DecToString(src) + "");""
     case SWAP8 =>
       ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 8);""
     case SWAP9 =>
@@ -3651,15 +3651,17 @@ module PrettyIns {
     case SWAP16 =>
       ""var s"" + DecToString(tgt) + "" := Swap(s"" + DecToString(src) + "", 16);""
     case LOG0 =>
-      ""var s"" + DecToString(tgt) + "" := LogN(s"" + DecToString(src) + "", 0);""
+      ""var s"" + DecToString(tgt) + "" := Log0(s"" + DecToString(src) + "");""
     case LOG1 =>
-      ""var s"" + DecToString(tgt) + "" := LogN(s"" + DecToString(src) + "", 1);""
+      ""var s"" + DecToString(tgt) + "" := Log1(s"" + DecToString(src) + "");""
     case LOG2 =>
-      ""var s"" + DecToString(tgt) + "" := LogN(s"" + DecToString(src) + "", 2);""
+      ""var s"" + DecToString(tgt) + "" := Log2(s"" + DecToString(src) + "");""
     case LOG3 =>
-      ""var s"" + DecToString(tgt) + "" := LogN(s"" + DecToString(src) + "", 3);""
+      ""var s"" + DecToString(tgt) + "" := Log3(s"" + DecToString(src) + "");""
     case LOG4 =>
-      ""var s"" + DecToString(tgt) + "" := LogN(s"" + DecToString(src) + "", 4);""
+      ""var s"" + DecToString(tgt) + "" := Log4(s"" + DecToString(src) + "");""
+    case CREATE =>
+      ""var s"" + DecToString(tgt) + "" := Create(s"" + DecToString(src) + "");""
     case CALL =>
       ""var s"" + DecToString(tgt) + "" := Call(s"" + DecToString(src) + "");""
     case CALLCODE =>
@@ -20001,12 +20003,12 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(65))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Coinbase(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := CoinBase(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(66))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Timestamp(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := TimeStamp(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -20121,22 +20123,22 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(96))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 1, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push1(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(97))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 2, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push2(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(98))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 3, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push3(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(99))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 4, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push4(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -20156,7 +20158,7 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(103))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 8, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push8(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -20216,7 +20218,7 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(115))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 20, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push20(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -20276,122 +20278,122 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(127))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := PushN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 32, 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Push32(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0x")), (i).dtor_arg), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(128))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 1);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup1(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(129))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 2);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup2(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(130))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 3);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup3(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(131))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 4);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup4(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(132))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 5);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup5(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(133))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 6);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup6(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(134))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 7);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup7(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(135))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 8);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup8(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(136))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 9);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup9(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(137))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 10);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup10(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(138))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 11);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup11(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(139))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 12);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup12(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(140))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 13);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup13(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(141))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 14);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup14(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(142))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 15);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup15(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(143))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 16);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Dup16(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(144))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 1);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap1(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(145))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 2);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap2(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(146))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 3);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap3(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(147))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 4);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap4(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(148))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 5);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap5(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(149))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 6);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap6(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(150))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 7);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Swap7(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -20441,27 +20443,32 @@ namespace PrettyIns {
       }
       {
         if ((_source0) == ((byte)(160))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := LogN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 0);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Log0(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(161))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := LogN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 1);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Log1(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(162))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := LogN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 2);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Log2(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(163))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := LogN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 3);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Log3(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
         if ((_source0) == ((byte)(164))) {
-          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := LogN(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(", 4);"));
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Log4(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
+        }
+      }
+      {
+        if ((_source0) == ((byte)(240))) {
+          return Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("var s"), PrettyIns.__default.DecToString(tgt)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" := Create(s")), PrettyIns.__default.DecToString(src)), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(");"));
         }
       }
       {
@@ -23059,9 +23066,9 @@ namespace CFGObject {
     }
     public void CFGCheckerToDafny(Dafny.ISequence<Dafny.Rune> name, Dafny.ISequence<Dafny.Rune> pathToEVMDafny)
     {
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("include \"/Users/franck/development/evm-dis/src/dafny/AbstractSemantics/AbstractSemantics.dfy\"")).ToVerbatimString(false));
+      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("include \"../../../src/dafny/AbstractSemantics/AbstractSemantics.dfy\"")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module  {:disableNonlinearArithmetic} {:isolate_assertions} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
+      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module  {:disableNonlinearArithmetic} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("import opened AbstractSemantics")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
@@ -23077,7 +23084,7 @@ namespace CFGObject {
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("include "), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\"")), pathToEVMDafny), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("/src/dafny/bytecode.dfy\""))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module {:disableNonlinearArithmetic} {:isolate_assertions} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
+      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.Concat(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("module {:disableNonlinearArithmetic} "), name), Dafny.Sequence<Dafny.Rune>.UnicodeFromString(" {"))).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n\n")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("import EvmState")).ToVerbatimString(false));
       Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("\n")).ToVerbatimString(false));
@@ -23348,7 +23355,7 @@ namespace CFGObject {
         } else {
           _1_newState = currentState;
         }
-        if (((_1_newState).is_EState) && ((Dafny.Helpers.EuclideanModulus(pos, new BigInteger(2))).Sign == 0)) {
+        if ((((_1_newState).is_EState) && ((pos).Sign == 1)) && ((Dafny.Helpers.EuclideanModulus(pos, new BigInteger(10))).Sign == 0)) {
           BigInteger _hi0 = new BigInteger(((_1_newState).dtor_stack).Count);
           for (BigInteger _2_j = BigInteger.Zero; _2_j < _hi0; _2_j++) {
             if ((((_1_newState).dtor_stack).Select(_2_j)).is_Value) {
