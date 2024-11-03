@@ -22,6 +22,7 @@ include "../utils/CFGState.dfy"
 include "../utils/EVMObject.dfy"
 include "../utils/Statistics.dfy"
 include "../prettyprinters/PrettyInstruction.dfy"
+
 /**
   *  Provides CFG objects & types.
   */
@@ -49,7 +50,7 @@ module {:disableNonlinearArithmetic} CFGObject {
   datatype CFGObj = CFGObj(prog: ValidEVMObj, maxDepth: nat, a: ValidAuto<GState>, minimised: bool, stats: Stats) {
 
     /**
-      * The automaton of this should be bounded
+      * The automaton (of this) should be bounded
       * This implies that each EGState has a segNum component that is 
       * bounded by the number of segments in the program.
       */
@@ -58,6 +59,9 @@ module {:disableNonlinearArithmetic} CFGObject {
       && (forall s:: s in a.states ==> s.IsBounded(|prog.xs|))
     }
 
+    /**
+      *  The CFG has no error state.
+      */
     predicate HasNoErrorState()
     {
       prog.HasNoErrorState(a)
@@ -67,7 +71,7 @@ module {:disableNonlinearArithmetic} CFGObject {
       * Print the CFG in dot format and add stats in comments.
       * @param noTable: if true, the HTML labels of the nodes are simplified (no tootips, no table).
       *                 This is useful for large CFGs.
-      * @param name: the name of the program.
+      * @param name:    the name of the program.
       */
     method {:print} ToDot(noTable: bool, name: string)
       requires this.IsValid()
@@ -104,7 +108,7 @@ module {:disableNonlinearArithmetic} CFGObject {
     }
 
     /**
-      *  Whether the CFG has some reachable states that correspond to invalid segments.
+      *  The nodes of the CFG that correspond to invalid segments.
       */
     function ReachableInvalidSegs(): (r: seq<GState>)
       requires this.IsValid()
@@ -143,23 +147,8 @@ module {:disableNonlinearArithmetic} CFGObject {
 
       //    Module
       print "module " + name + " {", "\n\n";
-      //   print "import opened Int", "\n";
-      //   print "import EvmState", "\n";
-      //   print "import opened Bytecode", "\n";
-      //   print "import ExternalCallLib", "\n";
       print "import opened AbstractSemantics", "\n";
       print "import opened AbstractState", "\n";
-
-      //  build a const with the jumpdests
-      //   var j := Map(prog.jumpDests, k => "0x" + Hex.NatToHex(k) + ",");
-      /** Set of jumdests. */
-      //   var jAsString := if |j| == 0 then "{}" else "{" + Init(Flatten(j)) + "}";
-      //   print "/** Set of valid JUMPDESTS for this program. */", "\n";
-      //   print "const VALID_JUMPDESTS: set<u256> := " + jAsString + "\n";
-      //   print "\n";
-      //   print "/** Lemma for Jumpdest */", "\n";
-      //   print "lemma {:axiom} ValidJumpDest(s: EvmState.ExecutingState)", "\n";
-      //   print "   ensures forall k:: k in VALID_JUMPDESTS ==> s.IsJumpDest(k)", "\n";
 
       // Print the transfer functions for each state of the graph.
       PrintProofObjectBody();
@@ -201,22 +190,6 @@ module {:disableNonlinearArithmetic} CFGObject {
 
       // Add safe jump functions
       print "function SafeJump(s: EvmState.State): (s': EvmState.State)", "\n";
-      //   requires s.EXECUTING?
-      //   requires s.Operands() >= 1
-      //   ensures s'.EXECUTING?
-      //   {
-      //      assume s.IsJumpDest(s.Peek(0));
-      //      Jump(s)
-      //   }
-
-      // function SafeJumpI(s: EvmState.State): (s': EvmState.State)
-      //     requires s.EXECUTING?
-      //     requires s.Operands() >= 2
-      //     ensures s'.EXECUTING?
-      // {
-      //     assume s.IsJumpDest(s.Peek(0));
-      //     Jump(s)
-      // }
 
       // Print the transfer functions for each state of the graph.
       PrintProofObjectBody();
@@ -264,7 +237,6 @@ module {:disableNonlinearArithmetic} CFGObject {
         for k := 0 to |currentState.st| {
           if currentState.st[k].Value? {
             print "\n  requires s0.Peek(", k, ") == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
-            // print "\n  requires s0.stack[", k, "] == ", "0x" + Hex.NatToHex(currentState.st[k].Extract() as nat), "\n";
           }
         }
         print "\n";
@@ -323,7 +295,7 @@ module {:disableNonlinearArithmetic} CFGObject {
     /**
       * This proof object is for verifying/validating the CFG.
       */
-    method PrintCFGVerifierBody(index: nat := 0)
+    method {:print} PrintCFGVerifierBody(index: nat := 0)
       requires this.IsValid()
       requires this.HasNoErrorState()
       requires index <= |a.states|
@@ -399,24 +371,26 @@ module {:disableNonlinearArithmetic} CFGObject {
     }
 
     /**
-      *   Print out a sequence of instructions in the Dafny-EVM format.
+      *  Print out a sequence of instructions in the Dafny-EVM format.
+      *  @param xs              the sequence of instructions.
+      *  @param currentState    the current state of the program.
+      *  @param pos             the position in the sequence of instructions.
       */
     method PrintInstructionsToDafny(xs:seq<ValidInstruction>, currentState: AState, pos: nat := 0)
     {
       if |xs| > 0 {
         var k := PrintInstructionToDafny(xs[0], pos, pos + 1);
         print "  ", k, "\n";
-        // var newState := currentState;
         var newState :=
           if currentState.EState? then
             xs[0].NextState(currentState, prog.jumpDests, 0)
           else
             currentState;
-        if newState.EState? && pos % 2 == 0 {
+        //  Insert stack assertions every 10 stesp to help prover.
+        if newState.EState? && pos % 10 == 0 {
           for j := 0 to |newState.stack| {
             if newState.stack[j].Value?  {
               print "   assert s", pos + 1, ".Peek(", j, ") == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
-              //   print "  assert s", pos + 1, ".stack[", j, "] == ", "0x" + Hex.NatToHex(newState.stack[j].Extract() as nat), ";\n";
             }
           }
         }
