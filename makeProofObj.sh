@@ -29,8 +29,7 @@ java -jar build/libs/Driver-java/evmdis.jar --title $shortname -p  --size $segsi
 
 # format the code
 dafny format  $output
-# do not verify with dafny 
-# dafny verify --allow-warnings --verification-time-limit 200  $output
+
 
 
 
