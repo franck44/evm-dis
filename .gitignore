@@ -86,3 +86,5 @@ build/dot/*
 !build/dot/etherscan/*
 build/proofs/*
 !build/proofs/etherscan/*
+
+**.sln
