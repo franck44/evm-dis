@@ -116,8 +116,6 @@ final DAFNY4_GO_BUILD_FLAGS = [
     '--no-verify',
     '--target','go',
     '--output','build/libs/driver',
-    '--function-syntax','4',
-    '--quantifier-syntax','4',
 ]
 
 final DAFNY4_JS_BUILD_FLAGS = [
@@ -125,8 +123,6 @@ final DAFNY4_JS_BUILD_FLAGS = [
     '--no-verify',
     '--target','js',
     '--output','build/libs/driver',
-    '--function-syntax','4',
-    '--quantifier-syntax','4',
 ]
 
 final DAFNY4_VERIFY_FLAGS = [
