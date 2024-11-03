@@ -82,5 +82,3 @@ TestResults/
 **/obj/
 **/ref/
 build/tests/
-build/proofs/
-build/dot/
