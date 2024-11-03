@@ -7,7 +7,14 @@ This is ByteSpector, a tool to analyse EVM bytecode. A quick preview of what Byt
 # Overview
 
 This project provides an EVM bytecode _disassembler_ and Control Flow Graph (CFG) _generator_.
-The disassembler should support the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and is ready for `RJump`s (but not fully implemented yet), [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200).
+ByteSpector can verify the CFGs by generating a [Dafny](https://github.com/dafny-lang/dafny) file that encodes the semantics of the EVM bytecode.
+The Dafny file can be verified with Dafny. If a CFG is successfully _verified_, we obtain the following guarantees on the CFG and the bytecode:
+
+- the CFG _simulates_ the bytecode concrete executions ; as a result the CFG can be used to over-approximate the behaviour of the bytecode;
+= the bytecode does not generate _stack-underflow_ exceptions. (_stack-overflows_ can be checked too).
+
+> [!WARNING]
+> The disassembler supports the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and is ready for `RJump`s [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200)  but they are not fully implemented yet.
 
 ### Disassembler
 
@@ -101,7 +108,8 @@ evm-dis git:(main) ✗ ./disassemble.sh <file>
 
 The CFG generator outputs a DOT representation of the graph. Hovering some items (segments) reveals some information about the instructions, their gas cost, and for the segment about their _stack effects_.
 
-The generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. It can re-construct CFGs with nested loops, function calls.
+> [!TIP]
+> The generator uses a combination of abstract interpretation, loop folding (using weakest pre-conditions) and automata minimisation. It can re-construct CFGs with nested loops, function calls.
 
 Examples of CFGs in DOT format and SVG format are available in the [test folder](./src/dafny/tests/src/).
 A front end is provided at [https://bytespector.org](https://bytespector.org) or alternatively,
@@ -115,7 +123,7 @@ For the examples in the repo I have used Yul and `solc --yul` to get a text repr
 
 The CFGs can be _formally verified_ using a Dafny proof object.
 
-The project is written in Dafny but Dafny's backends can be used to generate some target code in several languages. To begin with we have generated artefacts in **Python, Java and **C#** (Dotnet) code.
+The project is written in Dafny but Dafny's backends can be used to generate some target code in several languages. To begin with we have generated artefacts in **Python, Java and C#** (Dotnet) code.
 So you don't need to install Dafny to use the disassembler, you can run the Python or java versions provided in the `build/libs`.
 
 ### Disassemble the bytecode in a file
@@ -187,9 +195,11 @@ options
 
 ByteSpector can re-construct CFGs and verify them for a large number of deployed contracts.
 For example, we have used it on the list `less_than_3000_opcodes.txt` from [EVMLisa](https://github.com/lisa-analyzer/evm-lisa).
-Out of the 1704 contracts (addresss) in `less_than_3000_opcodes.txt`, 979 contracts were successfully disassembled and CFGs generated. The remaining 725 contracts were not disassembled due to the presence of `RJUMP`s in the bytecode which is not fully implemented yet.
 
-The bytecode for the benchmarks contracts is in the [.etherscan](./etherscan) folder.
+> [!NOTE]
+> Out of the 1704 contracts (address) in `less_than_3000_opcodes.txt`, 979 contracts were successfully disassembled and CFGs generated. The remaining 725 contracts were not disassembled due to the presence of `RJUMP`s in the bytecode which is not fully implemented yet.
+
+The bytecode for the 979 benchmarks contracts is in the [./etherscan](./etherscan) folder.
 The corresponding CFGs are in the [./build/dot/etherscan](./build/dot/etherscan) folder.
 The verification files (`.dfy`) and the verification results (`*-stats.csv`) are in the [./build/proofs/etherscan](./build/proofs/etherscan) folder.
 
