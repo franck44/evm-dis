@@ -140,8 +140,8 @@ evm-dis git:(main) ✗ ./makeCFG.sh file.evm
 To generate the Dafny verifier for the bytecode in a file `file.evm` use the following command:
 
 ```zsh
-evm-dis git:(main) ✗ ./makeProofObj.sh '/Users/franck/development/evm-dis/src/dafny/tests/src/simple/simpleCall.bin'
-Processing file:  /Users/franck/development/evm-dis/src/dafny/tests/src/simple/simpleCall.bin
+evm-dis git:(main) ✗ ./makeProofObj.sh 'src/dafny/tests/src/simple/simpleCall.bin'
+Processing file:  src/dafny/tests/src/simple/simpleCall.bin
 Shortname:  simpleCall // resulting file:  build/proofs/simpleCall/simpleCall-cfg-verifier.dfy
 seg size: 20
 ```
