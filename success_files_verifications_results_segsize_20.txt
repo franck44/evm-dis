@@ -1,2 +1,0 @@
-% Segsize is 20
-0xe99fcd9396dbc294055350267b8257e9b05f01ac  verified: true
