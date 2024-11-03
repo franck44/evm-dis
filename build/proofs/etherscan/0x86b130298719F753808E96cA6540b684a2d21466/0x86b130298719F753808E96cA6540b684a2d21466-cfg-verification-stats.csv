@@ -1,0 +1,4 @@
+TestResult.DisplayName,TestResult.Outcome,TestResult.Duration,TestResult.ResourceCount,RandomSeed
+EVMProofObject.ExecuteFromCFGNode_s0 (well-formedness),Passed,00:00:00.1112448,316339,0
+EVMProofObject.ExecuteFromCFGNode_s1 (well-formedness),Passed,00:00:00.0728197,33266,0
+EVMProofObject.ExecuteFromCFGNode_s2 (well-formedness),Passed,00:00:00.0728077,35852,0

@@ -1,0 +1,11 @@
+TestResult.DisplayName,TestResult.Outcome,TestResult.Duration,TestResult.ResourceCount,RandomSeed
+EVMProofObject.ExecuteFromCFGNode_s0 (well-formedness),Passed,00:00:00.8803928,149415,0
+EVMProofObject.ExecuteFromCFGNode_s1 (well-formedness),Passed,00:00:00.7275199,34770,0
+EVMProofObject.ExecuteFromCFGNode_s2 (well-formedness),Passed,00:00:00.5440397,128729,0
+EVMProofObject.ExecuteFromCFGNode_s3 (well-formedness),Passed,00:00:00.3541216,134431,0
+EVMProofObject.ExecuteFromCFGNode_s6 (well-formedness),Passed,00:00:00.2021716,106452,0
+EVMProofObject.ExecuteFromCFGNode_s8 (well-formedness),Passed,00:00:00.1815271,94720,0
+EVMProofObject.ExecuteFromCFGNode_s4 (well-formedness),Passed,00:00:00.1049475,106650,0
+EVMProofObject.ExecuteFromCFGNode_s9 (well-formedness),Passed,00:00:00.0963192,37152,0
+EVMProofObject.ExecuteFromCFGNode_s7 (well-formedness),Passed,00:00:00.0760641,73725,0
+EVMProofObject.ExecuteFromCFGNode_s5 (well-formedness),Passed,00:00:00.0597038,37271,0
