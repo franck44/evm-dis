@@ -181,13 +181,13 @@ module SimluationProof {
         assert st'.PC() == st.Peek(0) as nat;
         var s' := s.(pc := s.stack[0].v as nat, stack := s.stack[2..]);
         //  Here we are resolving non-determinism in JumpI
-        assume s' == JumpI(s);
+        assume {:axiom} s' == JumpI(s);
         assert s'.Abstracts(Bytecode.JumpI(st));
       } else {
         assert st'.PC() == st.PC() + 1;
         var s' := s.(pc := s.pc + 1, stack := s.stack[2..]);
         //  Here we are resolving non-determinism in JumpI
-        assume s' == JumpI(s);
+        assume {:axiom} s' == JumpI(s);
         assert s'.Abstracts(Bytecode.JumpI(st));
       }
     }
