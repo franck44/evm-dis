@@ -424,11 +424,17 @@ module AbstractSemanticsDafnyEVM {
 
   // The semantics of JumpI is non-deterninisitic and can lead to
   //    to two different state.
-  function JumpI(s: EState): (s': EState)
+  function JumpI(s: EState, branch: bool): (s': EState)
     requires s.Operands() >= 2
     requires s.stack[0].Value?
-    ensures s'.pc == s.stack[0].v as nat || s'.pc == s.pc + 1
     ensures s'.stack == s.stack[2..]
+  {
+    if branch then
+      EState(s.stack[0].v as nat, s.stack[2..])
+    else
+      EState(s.pc + 1, s.stack[2..])
+
+  }
 
   // RJUMPs, PC not supported,
 

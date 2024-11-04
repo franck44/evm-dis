@@ -168,26 +168,27 @@ module SimluationProof {
     *    a case split. Indeed, JUMPI can lead to two different states depending on the
     *    value of the second-topmost element  of the stack.
     */
-  lemma SimulationCorrectnessJumpI(s: EState, st: ExecutingState)
+  lemma SimulationCorrectnessJumpI(s: EState, st: ExecutingState, branch: bool)
+    requires st.Operands() >= 2
     requires s.Abstracts(st)
+    requires branch == (st.Peek(1) > 0)
     ensures Bytecode.JumpI(st).EXECUTING? && s.stack[0].Value?  ==>
-              JumpI.requires(s) && (exists s': EState :: s' == JumpI(s) && s'.Abstracts(Bytecode.JumpI(st)))
+              JumpI.requires(s, branch)
+              && (exists s': EState :: s' == JumpI(s, branch)
+                                       && s'.Abstracts(Bytecode.JumpI(st)))
   {
     var st' := Bytecode.JumpI(st);
     if st'.EXECUTING? && s.stack[0].Value? {
-      assert JumpI.requires(s);
-      if st.Peek(1) > 0 {
-        assert st.IsJumpDest(st.Peek(0)) ;
-        assert st'.PC() == st.Peek(0) as nat;
+      //  If a step can be performed from st, the stack must have >= 2 elements
+      assert st.Operands() >= 2;
+      if branch {
         var s' := s.(pc := s.stack[0].v as nat, stack := s.stack[2..]);
         //  Here we are resolving non-determinism in JumpI
-        assume {:axiom} s' == JumpI(s);
         assert s'.Abstracts(Bytecode.JumpI(st));
       } else {
         assert st'.PC() == st.PC() + 1;
         var s' := s.(pc := s.pc + 1, stack := s.stack[2..]);
         //  Here we are resolving non-determinism in JumpI
-        assume {:axiom} s' == JumpI(s);
         assert s'.Abstracts(Bytecode.JumpI(st));
       }
     }
