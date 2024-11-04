@@ -255,7 +255,7 @@ module {:disableNonlinearArithmetic} PartitionMod {
     * @note           The sequence of sets returned is a partition of xs.
     * @note           The sequence of sets returned is a coarsest partition of xs.
     */
-  function {:timeLimitMultiplier 30} {:opaque} {:isolate_assertions} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
+  function {:timeLimitMultiplier 10} {:opaque} {:isolate_assertions} SplitTrueAndFalse(xs: set<nat>, equiv: (nat, nat) --> bool, n: nat): (r :seq<set<nat>>)
     requires forall x::  x in xs ==> x < n
     requires xs != {}
     requires forall x,y:: 0 <= x < n && 0 <= y < n ==> equiv.requires(x, y)
@@ -267,40 +267,23 @@ module {:disableNonlinearArithmetic} PartitionMod {
     ensures forall i, i':: i in r && i' in i ==> i' < n
     ensures AllNonEmpty(r)
     ensures DisjointAnyTwo(r)
-    ensures forall x:: x in r ==> (forall y, y':: y in x && y' in x ==> equiv(y, y'))
     ensures AllClassesAreEquiv(r, equiv, n)
-    ensures forall i, i', x, x':: (0 <= i < i' < |r| &&  x in r[i] && x' in r[i']) ==> !equiv(x, x')
     ensures DisjointClassesAreNonEquiv(r, equiv, n)
   {
     reveal_SetU();
-    reveal_SetToSequence();
+    var a := SetToSequence(xs);
     var first := SetToSequence(xs)[0];
     var xsTrue := set x: nat | x in xs && equiv(first, x);
-    assert first in xsTrue;
     var xsFalse := xs - xsTrue;
     if xsFalse == {} then
       [xsTrue]
     else
-      lem1(xsTrue, SplitTrueAndFalse(xsFalse, equiv, n));
-      lem2(xsTrue, SplitTrueAndFalse(xsFalse, equiv, n));
-      [xsTrue] + SplitTrueAndFalse(xsFalse, equiv, n)
-  }
-
-  //  Helper lemmas
-  lemma lem1<T>(xs: set<T>, r: seq<set<T>>)
-    requires xs != {}
-    requires AllNonEmpty(r)
-    ensures AllNonEmpty([xs] + r)
-  {
-    //  thanks Dafny
-  }
-
-  lemma lem2<T>(xs: set<T>, r: seq<set<T>>)
-    requires xs * SetU(r) == {}
-    requires DisjointAnyTwo(r)
-    ensures DisjointAnyTwo([xs] + r)
-  {
-    //  thanks Dafny
+      var iter := SplitTrueAndFalse(xsFalse, equiv, n);
+      assert AllClassesAreEquiv(iter, equiv, n);
+      assert forall x, r1, x':: x in xsTrue && r1 in iter && x' in r1 ==> !equiv(x, x');
+      assert DisjointClassesAreNonEquiv(iter , equiv, n);
+      assert DisjointClassesAreNonEquiv([xsTrue] + iter , equiv, n);
+      [xsTrue] + iter
   }
 
   /**
