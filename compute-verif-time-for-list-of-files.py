@@ -37,7 +37,7 @@ def main():
             input_file = f"build/proofs/etherscan/{file_path}/{file_path}-cfg-verification-stats.csv"
             total_duration = sum_durations(input_file)
             # total_duration = 0
-            print(f"file {file_path} {input_file} {total_duration}")
+            print(f"file {file_path} {total_duration}")
             results.append((file_path, total_duration))
 
     with open(args.output_file, mode='w') as file:
