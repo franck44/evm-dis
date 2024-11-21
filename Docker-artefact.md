@@ -1,5 +1,4 @@
 
-https://zenodo.org/records/14195026
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14195026.svg)](https://doi.org/10.5281/zenodo.14195026)
 
