@@ -16,6 +16,8 @@ The Dafny file can be verified with Dafny. If a CFG is successfully _verified_, 
 > [!WARNING]
 > The disassembler supports the latest opcodes like `PUSH0`, [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855), and is ready for `RJump`s [EIP-4200](https://eips.ethereum.org/EIPS/eip-4200)  but they are not fully implemented yet.
 
+> [!WARNING] Using the tool with the Java implementation requires Java version >= 23. 
+
 ### Disassembler
 
 The disassembler takes as an input some _binary representation_, EVM bytecode, and produces a _readable version_ of it.
