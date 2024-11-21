@@ -28,7 +28,7 @@ The image also contains some examples of bytecode in the `src/dafny/test/src` fo
 You can now start a Docker container with the image  with the command:
 
 ```zsh
-evm-dis git:(main) ✗ docker run -it tacas25
+evm-dis git:(main) ✗ docker run -it franck44/tacas25
 root@70bf3cda14c9:/# cd tacas25/evm-dis
 root@70bf3cda14c9:/tacas25/evm-dis# java -version
 java version "23.0.1" 2024-10-15
@@ -72,8 +72,10 @@ You can generate a CFG (DOT format) for the binary the command:
 ```zsh
 root@70bf3cda14c9:/tacas25/evm-dis# ./makeCFG.sh src/dafny/tests/src/simple/simpleCall.bin 
 Processing file:  src/dafny/tests/src/simple/simpleCall.bin
+simpleCall
 Max depth size: 100
 Shortname:  simpleCall.bin
+CFG (DOT) format generared in build/dot/simpleCall/simpleCall.dot
 root@70bf3cda14c9:/tacas25/evm-dis#  more build/dot/simpleCall.bin/simpleCall.bin.dot 
 /*
 maxDepth is:100
@@ -166,6 +168,126 @@ root@09b31c7a9d50:/tacas25/evm-dis#
 The DOT file `simpleCall.bin.dot` will be available on your **host** `/tmp` folder.
 
 you can use the [Graphviz-Online](https://dreampuf.github.io/GraphvizOnline/) tool to visualise the `dot` files.
+
+## Generating and Verifying the Etherscamn benchmarks
+The generation and verification of the 978 Etherscan benchmarks is done with the following commands:
+(arguments are the input file, the maximum segment size, and the output result file):
+```zsh 
+root@09b31c7a9d50:/# ./makeProofObjEtherscan.sh etherscan/success_files_1_100.txt 40 result_generation_files_1_100.txt 
+0xe99fcd9396dbc294055350267b8257e9b05f01ac: Success
+0xfcd5b675ae8e9dd0172c84568b6ef504e1dc8619: Success
+0xa24d3886be3557782eeffb5f6ac6a4bb24faff55: Success
+0x5d5bb5bdb7a228fd2f0f90c5ec7e5bc609529821: Success
+0x1a0205cd3fa5b3d8a11444a14b6c0fc993c2dc14: Success
+...
+```
+
+The result file will indicate for each benchmark whether the generation of the proof objeft was successful or not.
+
+```zsh
+root@09b31c7a9d50:/# more result_generation_files_1_100.txt 
+% Segsize is 40
+0xe99fcd9396dbc294055350267b8257e9b05f01ac  proof object generated: true
+0xfcd5b675ae8e9dd0172c84568b6ef504e1dc8619  proof object generated: true
+0xa24d3886be3557782eeffb5f6ac6a4bb24faff55  proof object generated: true
+0x5d5bb5bdb7a228fd2f0f90c5ec7e5bc609529821  proof object generated: true
+0x1a0205cd3fa5b3d8a11444a14b6c0fc993c2dc14  proof object generated: true
+0xDcfCcaf54CB8c7c30bb7959929AbA24bF136FF57  proof object generated: true
+0x5b348ec54c290683697f6a812ca1bfbb0e74c70d  proof object generated: true
+0x9a1ba1687c2759fe96bfacbfb5300458b7d726f0  proof object generated: true
+... 
+```
+
+The benchmarks are verified with the following command:
+```zsh
+root@09b31c7a9d50:/# ./verifyEtherscan.sh etherscan/success_files_1_100.txt 
+processing 0xe99fcd9396dbc294055350267b8257e9b05f01ac
+Dafny program verifier finished with 224 verified, 0 errors
+Results File: /Users/franck/development/evm-dis/build/proofs/etherscan/0xe99fcd9396dbc294055350267b8257e9b05f01ac/0xe99fcd9396dbc294055350267b8257e9b05f01ac-cfg-verification-stats.csv
+Success
+...
+``` 
+The verificaiton result (csv) file contains the verification status for each node in the CFG.
+
+
+To collect the results of the verification for a set of benchmarks, you can use the following command:
+```zsh
+root@09b31c7a9d50:/# ./collectEtherscanResults.sh etherscan/success_files_1_100.txt
+build/proofs/etherscan/0xe99fcd9396dbc294055350267b8257e9b05f01ac/0xe99fcd9396dbc294055350267b8257e9b05f01ac-cfg-verifier.dfy: errors:        0
+0xe99fcd9396dbc294055350267b8257e9b05f01ac: Success
+build/proofs/etherscan/0xfcd5b675ae8e9dd0172c84568b6ef504e1dc8619/0xfcd5b675ae8e9dd0172c84568b6ef504e1dc8619-cfg-verifier.dfy: errors:        0
+0xfcd5b675ae8e9dd0172c84568b6ef504e1dc8619: Success
+build/proofs/etherscan/0xa24d3886be3557782eeffb5f6ac6a4bb24faff55/0xa24d3886be3557782eeffb5f6ac6a4bb24faff55-cfg-verifier.dfy: errors:        0
+0xa24d3886be3557782eeffb5f6ac6a4bb24faff55: Success
+build/proofs/etherscan/0x5d5bb5bdb7a228fd2f0f90c5ec7e5bc609529821/0x5d5bb5bdb7a228fd2f0f90c5ec7e5bc609529821-cfg-verifier.dfy: errors:        0
+0x5d5bb5bdb7a228fd2f0f90c5ec7e5bc609529821: Success
+build/proofs/etherscan/0x1a0205cd3fa5b3d8a11444a14b6c0fc993c2dc14/0x1a0205cd3fa5b3d8a11444a14b6c0fc993c2dc14-cfg-verifier.dfy: errors:        0
+0x1a0205cd3fa5b3d8a11444a14b6c0fc993c2dc14: Success
+build/proofs/etherscan/0xDcfCcaf54CB8c7c30bb7959929AbA24bF136FF57/0xDcfCcaf54CB8c7c30bb7959929AbA24bF136FF57-cfg-verifier.dfy: errors:        0
+0xDcfCcaf54CB8c7c30bb7959929AbA24bF136FF57: Success
+build/proofs/etherscan/0x5b348ec54c290683697f6a812ca1bfbb0e74c70d/0x5b348ec54c290683697f6a812ca1bfbb0e74c70d-cfg-verifier.dfy: errors:        0
+0x5b348ec54c290683697f6a812ca1bfbb0e74c70d: Success
+...
+```
+The number of failed verification can be obtained with the following command:
+```zsh 
+root@09b31c7a9d50:/# ./collectEtherscanResults.sh etherscan/success_files_1_100.txt | grep Failure | wc -l
+ 0
+root@09b31c7a9d50:/#
+```
+
+Finally, the verification times can be consolidated with the following command:
+```zsh
+root@09b31c7a9d50:/# python3 ./compute-verif-time-for-list-of-files.py etherscan/success_files_1_100.txt t.txt
+...
+file 0x325b549a92ffcaaa5dc90a77bc8b37c69268a1e9 0:00:52.885215
+file 0x4fb610a0be1965b943ee17df7c7d80071835e056 0:00:09.718108
+file 0x790888d358963e0dd6ad3036cf40db2297f4d5f8 0:01:01.541117
+file 0xA651332Bf73905c326bdA4549A59c05Aa3bF7DA0 0:00:44.060206
+file 0x317649779b7ca2fa139c79c3628e11da92d6a91b 0:00:52.337053
+file 0x4502e675bda0a3e86eb7dc2ed5cb7c9465aa6ea8 0:01:09.235403
+file 0x8F18602AF63138fB598772410BFB2514746f61E0 0:01:16.835714
+file 0xe743a92cf9ec592593055a6d4bf940c645db2e61 0:00:44.259891
+file 0x6705c9f03763d0b509c5d4aa5144963cb7641dd9 0:00:38.348125
+file 0x9264Ac4E52EDdb5D0fb345CAE8E47A8b420a96fd 0:00:34.616653
+file 0xdf3a6e9bb8980666d4b6e94897487715f6b96132 0:01:25.287386
+file 0x57e5112c8741fa606e344c19a73679a671a8ffd2 0:01:27.743567
+file 0xbbA444b7201AfE9911BeA144907187EbB1184f7C 0:01:29.433966
+file 0x9f22c4b3Dbe693a34f2aF61a16a022F87d9499EE 0:00:00.077550
+file 0x203b87e9b22a1b27a684cdb923d7646b12e39760 0:00:05.731754
+file 0xf365cfabd90a1f954d377d3be32e4e251dcb0d95 0:01:00.696350
+file 0x84e24271c69e1cd4574432ea2177e2d2b6ea04cd 0:01:01.211748
+```
+which indicates the duration of the verification for each benchmark. (0:01:01.541117 is 1 minute 1 second).
+
+## Verifying the simulation proof
+
+The simulation proof is available in the `src/dafny/AbstractSemantics/SimulationProof.dfy` file.
+It can be verified with the command:
+```zsh
+root@182b4415675f:/tacas25/evm-dis# dafny verify src/dafny/AbstractSemantics/SimulationProof.dfy
+/tacas25/evm-dafny/src/dafny/util/int.dfy(303,26): Warning: The {:verify false} attribute should only be used during development. Consider using a bodyless lemma together with the {:axiom} attribute instead
+    |
+303 |     lemma {:verify false} LemmaToFromBytes(bytes:seq<u8>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+/tacas25/evm-dafny/src/dafny/bytecode.dfy(448,29): Warning: The {:verify false} attribute should only be used during development. Consider using a bodyless function together with the {:axiom} attribute instead
+    |
+448 |     function {:verify false} And(st: ExecutingState): (st': State)
+    |                              ^^^
+
+/tacas25/evm-dafny/src/dafny/bytecode.dfy(487,29): Warning: The {:verify false} attribute should only be used during development. Consider using a bodyless function together with the {:axiom} attribute instead
+    |
+487 |     function {:verify false} Xor(st: ExecutingState): (st': State)
+    |                              ^^^
+
+Dafny program verifier finished with 46 verified, 0 errors
+Compilation failed because warnings were found and --allow-warnings is false
+root@182b4415675f:/tacas25/evm-dis#
+```
+
+Note that the command generates several _warnings_ that are not errors and originate from the Dafny-EVM code.
+The warnings are related to the use of the `{:verify false}` attribute in the Dafny code for the Dafny-EVM.Note That these functions have been verified in the past, and the `{:verify false}` attribute may have been set to reduce the verification time. The Dafny_EVM is not part of this project and maintained independently.
 
 ## Front-end, web interface
 
